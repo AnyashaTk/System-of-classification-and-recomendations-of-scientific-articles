@@ -69,4 +69,3 @@ class PDFParser(object):
             lambda x: max([len(line) for line in x])
         )
         self.df['max_str_len'] = tmp_max_len.copy()
-        self.df.to_csv("df.csv",index=False)
