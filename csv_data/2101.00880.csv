@@ -1,0 +1,1444 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Abstract,14,TimesNewRomanPS-BoldMT,,8,8
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,11,TimesNewRomanPSMT,,0,0
+"Hybrid adaptive splines for luminous intensity data regression in I-
+tables",15,TimesNewRomanPS-BoldMT,,75,68
+L. Lipnický,12,TimesNewRomanPSMT,,11,11
+1,8,TimesNewRomanPSMT,,1,1
+", R. Dubni",12,TimesNewRomanPSMT,,10,10
+č,12,TimesNewRomanPSMT,,1,1
+ka,12,TimesNewRomanPSMT,,2,2
+1,8,TimesNewRomanPSMT,,1,1
+", J.",12,TimesNewRomanPSMT,,4,4
+Petržala,12,TimesNewRomanPSMT,,8,8
+2,8,TimesNewRomanPSMT,,1,1
+and L. Kómar,12,TimesNewRomanPSMT,,12,12
+"2,*",8,TimesNewRomanPSMT,,3,3
+,12,TimesNewRomanPSMT,,0,0
+1,8,TimesNewRomanPS-ItalicMT,,1,1
+"Faculty of Electrical Engineering and Information Technology, Slovak University of",12,TimesNewRomanPS-ItalicMT,,82,82
+"Technology, Ilkovi ova 3, Bratislava, Slovakia",12,TimesNewRomanPS-ItalicMT,,46,46
+2,8,TimesNewRomanPS-ItalicMT,,1,1
+"ICA, Slovak Academy of Sciences, Dúbravská cesta 9, Bratislava, Slovakia",12,TimesNewRomanPS-ItalicMT,,72,72
+"* corresponding author: usarlako@savba.sk 
+
+Preprint: 21.11.2020",12,TimesNewRomanPSMT,,64,42
+"The I-table contains luminous intensity values over the range of angles for the luminaires used in 
+the road lighting in accordance with technical report CIE 121:1996. A limited number of angles 
+causes smoothing of the luminous intensity diagram omitting possible local extremal values which 
+affect  the  calculations  of  the  photometric  parameters  such  as  average  illuminance,  average 
+luminance,  uniformity  or  treshold  increment.  The  interpolating  methods  used  to  calculate  the 
+luminous intensity can significantly improve the accuracy of the calculations and redound to more 
+effective and reliable road lighting design. In the paper standard interpolation methods used up to 
+now are compared with newly proposed hybrid adaptive splines. Calculated values of luminous 
+intensity are compared and verified by goniophotometric measurements.",12,TimesNewRomanPSMT,,864,104
+Keywords,12,TimesNewRomanPS-BoldMT,,8,8
+": road lighting, luminous intensity, I-table, interpolation, adaptive regression",12,TimesNewRomanPSMT,,80,80
+1    Introduction,14,TimesNewRomanPS-BoldMT,,17,17
+"The purpose of the road lighting is to increase the safety and comfort of traffic participants 
+at night. Road lighting provides good visibility conditions by illuminating the road and surrounding 
+surfaces and by making objects visible to the drivers or pedestrians. Construction of road lighting 
+can reduce night-time accidents by 20-40 %, especially when a participant of the car accident is a 
+pedestrian.  In  the  1930s,  the  pioneer  work  of  Waldram  defined  the  silhouette  principle  of  road 
+lighting which states that targets on illuminated roads are seen as dark silhouettes against the bright 
+road surface [1]. Since the late 1970s, systematic studies and improvements to the lighting of streets 
+resulted in reduction of the crime in night-time.",12,TimesNewRomanPSMT,,767,109
+"The  design  of  road  lighting  installation  was  shifted  from  that  time  towards  the  visible 
+quantities, such as target luminance, road surface luminance, luminance uniformity, and restriction 
+of  glare  [2].  A  comprehensive  analysis  of  62  studies  from  15  countries  published  by  CIE",12,TimesNewRomanPSMT,,304,101
+(Commission  Internationale  de  l’Éclairage,12,TimesNewRomanPSMT,,44,44
+"-  International  Commision  on  Illumination)  has  the 
+relevant  answers  for  the  illumination  of  the  roads  today.  Several  studies  have  tried  to  evaluate 
+which photometric parameters (average illuminance, average luminance, uniformity of luminance, 
+etc.) are important and how levels of these parameters are related to accident rate during night-",12,TimesNewRomanPSMT,,363,111
+c,12,TimesNewRomanPSMT,,1,1
+"time. Results of these studies have been collected and published as CIE document No.93, ""Road 
+lighting as an accident countermeasure"" [3]. Nowadays, the road lighting design is based on CIE 
+publications No. 115 ""Lighting of roads for motor and pedestrian traffic"" [4], and No. 140 ""Road 
+Lighting Calculations"" published in 2019 [5].",12,TimesNewRomanPSMT,,335,97
+"Road lighting can improve the appearance of the environment at night, but care has to be 
+taken to the upward light from the luminaires, which can form the sky glow, better known as light 
+pollution  [6].  In  addition  to  making  the  astronomical  observations  of  sky  objects  difficult  or 
+impossible, a lot of negative effects are reported on animals, vegetation and mankind [7]. Also an 
+inappropriate  lighting  installation  close  to  the  housing  can  acts  disturbingly  to  some  residents.",12,TimesNewRomanPSMT,,507,109
+"Therefore, correct quantification of the luminaire‘s photometric parameters play",12,TimesNewRomanPSMT,,80,80
+"a decisive role in 
+the road lighting design, and thus, the elimination of the unwanted light pollution effect. 
+The performance of an installation is assessed on basis of five characteristics, utilizing the most 
+important photometric quantities: average luminance or illuminace of the road surface, the overall 
+uniformity,  the  longitudinal  uniformity,  treshold  increment  and  edge  illuminance  ratio.  For 
+acquiring  and  evaluation  of  these  quantities,  the  luminous  intensity  distribution  curve  of  the 
+luminaires which are used in the road lighting must be known precisely. For this purpose, the so-
+called I-tables exist, which contain the luminous intensity values over the range of angles. In fact, 
+the step in angles in the I-table is usually not sufficient for accurate calculations, especially for new 
+LED  luminaires  with  various  optical  elements  and  luminaires  with  faceted  optical  systems. 
+Therefore, two different approaches are preferred; more precise goniophotometric measurements 
+or fast and accurate interpolating methods. This paper proposes the usage of hybrid adaptive splines 
+(HAS), known from other fields of science (e.g. geosciences [8], neurophysiology [9], economy 
+[10], daylight engineering [11], etc.) to reconstruct the luminous intensity distribution curve from 
+the  I-table  with  arbitrary  precision.  The  proposed  method  was  compared  with  obviously  used 
+interpolating methods (linear, polynomial and cubic spline) in terms of I-table data reconstruction 
+and verified by the goniophotometric measurements.",12,TimesNewRomanPSMT,,1584,107
+2    Theoretical background,14,TimesNewRomanPS-BoldMT,,27,27
+"The luminaires used in road lighting are characterized by the luminous intensities measured 
+in",12,TimesNewRomanPSMT,,95,92
+"(C,",12,TimesNewRomanPS-ItalicMT,,3,3
+,12,SymbolMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+"coordinate system. They have specific shapes of the luminous intensity distribution curves 
+because of their usage for lighting of a limited area in accordance with given possibilities of their 
+location. The orientation of the C-planes is presented in Figure 1. As it can be seen, the plane C0-
+C180 is parallel with the road and the plane C90-C270 is perpendicular to the road. Every luminaire 
+is therefore characterized by the luminous intensity distribution curve describing the luminous flux 
+flowing  through the space, and thus,  the maximum  luminous intensity, radiation  angle, shading 
+angle, etc. can be easily find out. Luminous intensity distribution curves are usually reported in the",12,TimesNewRomanPSMT,,700,102
+manufacturer’s  catalogs  recalculated  to  1000  lm.  In  the  manufacturer’s  catalogs  the  luminous,12,TimesNewRomanPSMT,,103,103
+intensity distribution curves for road lighting are stated in the planes C0-C180 and C90-C270.,12,TimesNewRomanPSMT,,94,94
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Figure 1.,12,TimesNewRomanPS-BoldMT,,9,9
+Orientation of the selected C-planes on a road.,12,TimesNewRomanPSMT,,47,47
+"Photometric parameters of the luminaire are inevitable for the quantitative characterization 
+of the road lighting. The parameters are usually arranged in the I-tables in accordance with [12]. 
+Nowadays, the file formats with a specific structure are recommended, such as EULUMDAT, IES, 
+CIE, CEN, CIBSE TM14, etc. Given file formats are used in the appropriate software packages for 
+road lighting design. Each producer offers a given electronic file format for its own luminaires, 
+however,  no  unified  file  format  exists  which  would  eliminate  deficiencies  like  omitting  the 
+temperature,  light  source  location  or  the  effect  of  the  input  voltage.  The  I-table  contains  the 
+luminosity distribution of the luminaire to each relevant direction. In [5], the recommended angular 
+resolution is maximally 5",12,TimesNewRomanPSMT,,827,110
+o,8,TimesNewRomanPSMT,,1,1
+for C-planes and 2.5,12,TimesNewRomanPSMT,,20,20
+o,8,TimesNewRomanPSMT,,1,1
+for,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+". In fact, new luminaires with specific optical 
+elements can have local extremal values of luminous intensities at the angles not listed in I-tables 
+what  can  cause  unwanted  glare  in  result.  Omitting  this  extremal  values,  the  calculation  of  the",12,TimesNewRomanPSMT,,259,108
+"photometric parameters is skewed and inaccurate. Therefore, the goniophotometric measurements",12,TimesNewRomanPSMT,,93,93
+are needed which can reach the angular resolution up to 0.5,12,TimesNewRomanPSMT,,59,59
+o,8,TimesNewRomanPSMT,,1,1
+,12,TimesNewRomanPSMT,,0,0
+–,12,TimesNewRomanPSMT,,1,1
+1,12,TimesNewRomanPSMT,,1,1
+o,8,TimesNewRomanPSMT,,1,1
+". If it is necessary to estimate the 
+values between the measuring points of the I-table, a fast and accurate interpolating method should 
+be used.",12,TimesNewRomanPSMT,,147,100
+"3    Interpolation methods obviously used for luminous intensity calculation 
+from I-table",14,TimesNewRomanPS-BoldMT,,90,77
+,12,TimesNewRomanPSMT,,0,0
+Interpolation is a method of finding unknown function values using a given set of known,11,TimesNewRomanPSMT,,87,87
+"values in surrounding points. If the new value has to be found from two given points then the linear 
+interpolation formula is used, whereas if a set of numbers is available, polynomial fit or cubic spline 
+can be used to find the value at a given coordinate. In general, the Lagrange polynomial has the",12,TimesNewRomanPSMT,,303,104
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,11,TimesNewRomanPSMT,,0,0
+form:,12,TimesNewRomanPSMT,,5,5
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(1),12,TimesNewRomanPSMT,,3,3
+where,12,TimesNewRomanPSMT,,5,5
+y(x),12,TimesNewRomanPS-ItalicMT,,4,4
+is the interpolated value at a point,12,TimesNewRomanPSMT,,36,36
+x,12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+n,12,TimesNewRomanPS-ItalicMT,,1,1
+is the total number of points,12,TimesNewRomanPSMT,,29,29
+x,12,TimesNewRomanPS-ItalicMT,,1,1
+i,8,TimesNewRomanPS-ItalicMT,,1,1
+,12,TimesNewRomanPS-ItalicMT,,0,0
+"with known 
+values",12,TimesNewRomanPSMT,,18,11
+y,12,TimesNewRomanPS-ItalicMT,,1,1
+i,8,TimesNewRomanPS-ItalicMT,,1,1
+,12,TimesNewRomanPS-ItalicMT,,0,0
+"between which we interpolate. The most frequently used interpolating method in road 
+lighting  calculations  is  the  linear  interpolation.  Also  the  quadratic  interpolation  was  allowed  in 
+older publication [13]. Selection of the interpolating method strongly depends on the accuracy as 
+well as on the necessary CPU time. Note, that there is a 2D array in all I-tables, thus an interpolation 
+in both dimensions is required which can significantly extend a time for the mass calculations.",12,TimesNewRomanPSMT,,497,111
+,12,TimesNewRomanPSMT,,0,0
+3.1    Linear interpolation,14,TimesNewRomanPS-BoldMT,,27,27
+To obtain a value of the luminous intensity,12,TimesNewRomanPSMT,,43,43
+"I(C,",12,TimesNewRomanPS-ItalicMT,,4,4
+,12,SymbolMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+"lying between the measured values in 
+the I-table four neighboring measured values of",12,TimesNewRomanPSMT,,85,47
+I,12,TimesNewRomanPS-ItalicMT,,1,1
+"are needed. The well-known equation for linear 
+interpolation was used in the form:",12,TimesNewRomanPSMT,,83,47
+,12,TimesNewRomanPSMT,,0,0
+(2),12,TimesNewRomanPSMT,,3,3
+The coordinates,12,TimesNewRomanPSMT,,15,15
+"x, x",12,TimesNewRomanPS-ItalicMT,,4,4
+1,8,TimesNewRomanPS-ItalicMT,,1,1
+", x",12,TimesNewRomanPS-ItalicMT,,3,3
+2,8,TimesNewRomanPS-ItalicMT,,1,1
+are at first replaced by the azimuth angle,12,TimesNewRomanPSMT,,42,42
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+"and then by the photometric 
+angle",12,TimesNewRomanPSMT,,34,28
+,12,SymbolMT,,1,1
+. The order of,12,TimesNewRomanPSMT,,14,14
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+will not affect the results. If coordinates,12,TimesNewRomanPSMT,,43,43
+"x, x",12,TimesNewRomanPS-ItalicMT,,4,4
+1,8,TimesNewRomanPS-ItalicMT,,1,1
+", x",12,TimesNewRomanPS-ItalicMT,,3,3
+2,8,TimesNewRomanPS-ItalicMT,,1,1
+"are at first replaced 
+by the azimuthal angle",12,TimesNewRomanPSMT,,45,22
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+then the terms,12,TimesNewRomanPSMT,,14,14
+"I(C,",12,TimesNewRomanPS-ItalicMT,,4,4
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,0,0
+),12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+"I(C,",12,TimesNewRomanPS-ItalicMT,,4,4
+,12,SymbolMT,,1,1
+j+1,8,TimesNewRomanPS-ItalicMT,,3,3
+,12,SymbolMT,,0,0
+),12,TimesNewRomanPS-ItalicMT,,1,1
+"are obtained. Consequently, using 
+this terms we obtain a searched value of the luminous intensity",12,TimesNewRomanPSMT,,98,63
+"I(C,",12,TimesNewRomanPS-ItalicMT,,4,4
+,12,SymbolMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+in accordance with [5]:,12,TimesNewRomanPSMT,,23,23
+,12,TimesNewRomanPSMT,,0,0
+(3),12,TimesNewRomanPSMT,,3,3
+,12,TimesNewRomanPSMT,,0,0
+3.2    Polynomial interpolation of higher degree,14,TimesNewRomanPS-BoldMT,,48,48
+"A  commonly  used  procedure  in  various  fields  of  science  is  to  find  the  unknown  value 
+between  data  point  in  form  of  the  polynomial  of  the  higher  degree.  Note  that  the  polynomial 
+interpolation of the first degree corresponds to linear interpolation. Polynomial interpolation relies 
+on the fact that there is a unique polynomial of degree",12,TimesNewRomanPSMT,,366,107
+n,12,TimesNewRomanPS-ItalicMT,,1,1
+that passes through these,12,TimesNewRomanPSMT,,25,25
+n+1,12,TimesNewRomanPS-ItalicMT,,3,3
+"data points. 
+To  find  the  unique  polynomial,  we  need  to  solve  a  set  of",12,TimesNewRomanPSMT,,81,67
+n+1,12,TimesNewRomanPS-ItalicMT,,3,3
+"equations  with  the  unknown 
+coefficients.  Let",12,TimesNewRomanPSMT,,49,30
+(X,12,TimesNewRomanPS-ItalicMT,,2,2
+i,8,TimesNewRomanPS-ItalicMT,,1,1
+",  y",12,TimesNewRomanPS-ItalicMT,,4,4
+i,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+be  the,12,TimesNewRomanPSMT,,7,7
+i,12,TimesNewRomanPS-ItalicMT,,1,1
+th,8,TimesNewRomanPS-ItalicMT,,2,2
+data  point  where,12,TimesNewRomanPSMT,,18,18
+"i 
+  (n+1)",12,TimesNewRomanPS-ItalicMT,,10,7
+",",12,TimesNewRomanPSMT,,1,1
+X,12,TimesNewRomanPS-BoldItalicMT,,1,1
+i,8,TimesNewRomanPS-BoldItalicMT,,1,1
+,12,TimesNewRomanPS-ItalicMT,,0,0
+"is  a  vector  given  by  a  set  of 
+coordinates in I-table as follows:",12,TimesNewRomanPSMT,,72,37
+X,12,TimesNewRomanPS-BoldItalicMT,,1,1
+i,8,TimesNewRomanPS-BoldItalicMT,,1,1
+= (C,12,TimesNewRomanPS-ItalicMT,,4,4
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+y,12,TimesNewRomanPS-ItalicMT,,1,1
+i,8,TimesNewRomanPS-ItalicMT,,1,1
+= I(C,12,TimesNewRomanPS-ItalicMT,,5,5
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+". Then, we have a set of equations:",12,TimesNewRomanPSMT,,35,35
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(),15,SymbolMT,,2,2
+=,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+=,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+",",6,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+".,",11,TimesNewRomanPSMT,,2,2
+nn,6,TimesNewRomanPS-ItalicMT,,2,2
+jiijjiij,6,TimesNewRomanPS-ItalicMT,,8,8
+xxyxyxx,11,TimesNewRomanPS-ItalicMT,,7,7
+,6,SymbolMT,,1,1
+,11,SymbolMT,,2,2
+−,11,SymbolMT,,1,1
+,11,SymbolMT,,4,4
+−,11,SymbolMT,,1,1
+,11,SymbolMT,,2,2
+,18,SymbolMT,,1,1
+,18,SymbolMT,,1,1
+(),15,SymbolMT,,2,2
+21121221,6,TimesNewRomanPSMT,,8,8
+=,11,TimesNewRomanPSMT,,1,1
+.,11,TimesNewRomanPSMT,,1,1
+xxxxyxyyxxxx,11,TimesNewRomanPS-ItalicMT,,12,12
+,11,SymbolMT,,4,4
+−−+,11,SymbolMT,,3,3
+,11,SymbolMT,,4,4
+−−,11,SymbolMT,,2,2
+,11,SymbolMT,,4,4
+(),15,SymbolMT,,2,2
+(),18,SymbolMT,,2,2
+1,6,TimesNewRomanPSMT,,1,1
+",=,",11,TimesNewRomanPSMT,,3,3
+jjjj,6,TimesNewRomanPS-ItalicMT,,4,4
+ICIC,11,TimesNewRomanPS-ItalicMT,,4,4
+,11,SymbolMT,,6,6
++,6,SymbolMT,,1,1
+−+−,11,SymbolMT,,4,4
+()(),18,SymbolMT,,4,4
+1,6,TimesNewRomanPSMT,,1,1
+",,.",11,TimesNewRomanPSMT,,3,3
+jj,6,TimesNewRomanPS-ItalicMT,,2,2
+ICIC,11,TimesNewRomanPS-ItalicMT,,4,4
+,11,SymbolMT,,2,2
++,6,SymbolMT,,1,1
+−,11,SymbolMT,,5,5
+<,12,TimesNewRomanPSMT,,1,1
+20111111,6,TimesNewRomanPSMT,,8,8
+=,11,TimesNewRomanPSMT,,1,1
+nn,6,TimesNewRomanPS-ItalicMT,,2,2
+aaXaXaXy,11,TimesNewRomanPS-ItalicMT,,8,8
+++++,11,SymbolMT,,4,4
+20121222,6,TimesNewRomanPSMT,,8,8
+=,11,TimesNewRomanPSMT,,1,1
+nn,6,TimesNewRomanPS-ItalicMT,,2,2
+aaXaXaXy,11,TimesNewRomanPS-ItalicMT,,8,8
+++++,11,SymbolMT,,4,4
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(4),12,TimesNewRomanPSMT,,3,3
+"which can be solve in a matrix form using Gaussian elimination method to obtain the unknown 
+coefficients",12,TimesNewRomanPSMT,,105,92
+a,12,TimesNewRomanPS-ItalicMT,,1,1
+0,8,TimesNewRomanPS-ItalicMT,,1,1
+... a,12,TimesNewRomanPS-ItalicMT,,5,5
+n,8,TimesNewRomanPS-ItalicMT,,1,1
+". There are various disadvantages of the interpolating polynomials method. The 
+major disadvantage is that as the number of data points increases, the order of the interpolating 
+polynomial  increases  as  well.  However,  for  large  degree  (",12,TimesNewRomanPSMT,,244,98
+n  >  10,12,TimesNewRomanPS-ItalicMT,,8,8
+"),  the  polynomial  would  be 
+oscillating wildly between the data points leading to large errors in the interpolated values. As it 
+will be shown in this paper, this method scarcely can be used for data reconstruction in I-tables.",12,TimesNewRomanPSMT,,232,101
+,12,TimesNewRomanPSMT,,0,0
+3.3    Cubic spline,14,TimesNewRomanPS-BoldMT,,19,19
+"Linear  interpolation  has  some  loss  in  accuracy,  if  larger  angular  intervals  are  used  and 
+polynomial  interpolation  of  higher  degree  has  a  well-known  inaccuracy  for  huge  data  set. 
+Therefore, cubic spline is derived as follows:",12,TimesNewRomanPSMT,,251,102
+We are looking for the coefficients of following polynomial system to find the value of,12,TimesNewRomanPSMT,,87,87
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+,12,TimesNewRomanPSMT,,0,0
+(5),12,TimesNewRomanPSMT,,3,3
+at an angle of,12,TimesNewRomanPSMT,,14,14
+,12,SymbolMT,,1,1
+j-1,8,TimesNewRomanPS-ItalicMT,,3,3
+.,12,TimesNewRomanPSMT,,1,1
+Conditions for a natural cubic spline can be written as:,12,TimesNewRomanPSMT,,56,56
+,12,TimesNewRomanPSMT,,0,0
+The coefficients,12,TimesNewRomanPSMT,,16,16
+"b ,c ,d",12,TimesNewRomanPS-ItalicMT,,7,7
+are calculated using the following formulas:,12,TimesNewRomanPSMT,,44,44
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(6),12,TimesNewRomanPSMT,,3,3
+,12,TimesNewRomanPSMT,,0,0
+(7),12,TimesNewRomanPSMT,,3,3
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+20111111,6,TimesNewRomanPSMT,,8,8
+=,11,TimesNewRomanPSMT,,1,1
+nnnnnn,6,TimesNewRomanPS-ItalicMT,,6,6
+aa,11,TimesNewRomanPS-ItalicMT,,2,2
+X,11,TimesNewRomanPS-ItalicMT,,1,1
+a,11,TimesNewRomanPS-ItalicMT,,1,1
+X,11,TimesNewRomanPS-ItalicMT,,1,1
+a,11,TimesNewRomanPS-ItalicMT,,1,1
+X,11,TimesNewRomanPS-ItalicMT,,1,1
+y,11,TimesNewRomanPS-ItalicMT,,1,1
+++++,6,SymbolMT,,4,4
+++++,11,SymbolMT,,4,4
+()()()(),15,SymbolMT,,8,8
+23,6,TimesNewRomanPSMT,,2,2
+iiiiiii,6,TimesNewRomanPSMT,,7,7
+x,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+a,11,TimesNewRomanPSMT,,1,1
+bxx,11,TimesNewRomanPSMT,,3,3
+c,11,TimesNewRomanPSMT,,1,1
+xxdxx,11,TimesNewRomanPSMT,,5,5
+.,11,TimesNewRomanPSMT,,1,1
+i,6,TimesNewRomanPS-ItalicMT,,1,1
+S,11,TimesNewRomanPS-ItalicMT,,1,1
++−+−+−,11,SymbolMT,,6,6
+()()()(),15,SymbolMT,,8,8
+23000,6,TimesNewRomanPSMT,,5,5
+m,6,TimesNewRomanPSMT,,1,1
+10,6,TimesNewRomanPSMT,,2,2
+m,6,TimesNewRomanPSMT,,1,1
+10,6,TimesNewRomanPSMT,,2,2
+m,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+C,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+a,11,TimesNewRomanPSMT,,1,1
+b,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+c,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+d,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+",",11,TimesNewRomanPSMT,,1,1
+S,11,TimesNewRomanPS-ItalicMT,,1,1
+−−−,6,SymbolMT,,3,3
++−+−+−,11,SymbolMT,,6,6
+()()()(),15,SymbolMT,,8,8
+23111,6,TimesNewRomanPSMT,,5,5
+m,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+m,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+m,6,TimesNewRomanPSMT,,1,1
+C,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+a,11,TimesNewRomanPSMT,,1,1
+b,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+c,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+d,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+",",11,TimesNewRomanPSMT,,1,1
+S,11,TimesNewRomanPS-ItalicMT,,1,1
++−+−+−,11,SymbolMT,,6,6
+()()()(),15,SymbolMT,,8,8
+23222,6,TimesNewRomanPSMT,,5,5
+m,6,TimesNewRomanPSMT,,1,1
+12,6,TimesNewRomanPSMT,,2,2
+m,6,TimesNewRomanPSMT,,1,1
+12,6,TimesNewRomanPSMT,,2,2
+m,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+C,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+a,11,TimesNewRomanPSMT,,1,1
+b,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+c,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+d,11,TimesNewRomanPSMT,,1,1
+CC,11,TimesNewRomanPSMT,,2,2
+.,11,TimesNewRomanPSMT,,1,1
+S,11,TimesNewRomanPS-ItalicMT,,1,1
++++,6,SymbolMT,,3,3
++−+−+−,11,SymbolMT,,6,6
+(,16,SymbolMT,,1,1
+),16,SymbolMT,,1,1
+0,7,TimesNewRomanPSMT,,1,1
+m,7,TimesNewRomanPSMT,,1,1
+10,7,TimesNewRomanPSMT,,2,2
+S,12,TimesNewRomanPSMT,,1,1
+C,12,TimesNewRomanPSMT,,1,1
+=,12,TimesNewRomanPSMT,,1,1
+02,12,TimesNewRomanPSMT,,2,2
+=,12,TimesNewRomanPSMT,,1,1
+0,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+c,12,TimesNewRomanPS-ItalicMT,,1,1
+−,7,SymbolMT,,1,1
+,12,SymbolMT,,1,1
+()(),16,SymbolMT,,4,4
+2m2222m1,7,TimesNewRomanPSMT,,8,8
+SC=026C=0.,12,TimesNewRomanPSMT,,10,10
+m,7,TimesNewRomanPS-ItalicMT,,1,1
+cdC,12,TimesNewRomanPS-ItalicMT,,3,3
++++,7,SymbolMT,,3,3
++−,12,SymbolMT,,3,3
+i,7,TimesNewRomanPS-ItalicMT,,1,1
+i,7,TimesNewRomanPS-ItalicMT,,1,1
+i,7,TimesNewRomanPS-ItalicMT,,1,1
+(),15,SymbolMT,,2,2
+i1iiii1ii1i1i2i1i,6,TimesNewRomanPSMT,,17,17
+"yyhc2hhchc=3,",11,TimesNewRomanPSMT,,13,13
+hh,11,TimesNewRomanPSMT,,2,2
+++++++,6,SymbolMT,,6,6
++++−,11,SymbolMT,,12,12
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(8),12,TimesNewRomanPSMT,,3,3
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+"Therefore,  it  is  needed  to  repeat  this  procedure  for  angles",12,TimesNewRomanPSMT,,68,68
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j+1,8,TimesNewRomanPS-ItalicMT,,3,3
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j+2,8,TimesNewRomanPS-ItalicMT,,3,3
+to  find  the,12,TimesNewRomanPSMT,,13,13
+interpolated value,12,TimesNewRomanPSMT,,18,18
+"I(C,",12,TimesNewRomanPS-ItalicMT,,4,4
+).,12,TimesNewRomanPS-ItalicMT,,2,2
+,12,TimesNewRomanPSMT,,0,0
+4    Proposal of hybrid adaptive splines for I-tables,14,TimesNewRomanPS-BoldMT,,53,53
+,12,TimesNewRomanPSMT,,0,0
+4.1    Smoothing splines,14,TimesNewRomanPS-BoldMT,,24,24
+"When  observational  data  are  loaded  by  measurement  errors,  we  propose  an  unknown 
+function which does not coincide with given data points exactly. To obtain the unknown function 
+based on noisy data we use the method of smoothing splines first. It is a trade-off between fidelity 
+to the data and a requirement of adequate smoothness of a so-called regression function. In general, 
+we can suppose a function",12,TimesNewRomanPSMT,,418,101
+f,12,TimesNewRomanPS-ItalicMT,,1,1
+of two variables,12,TimesNewRomanPSMT,,16,16
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+"which correspond to the coordinate system 
+defined in I-table:",12,TimesNewRomanPSMT,,62,42
+,12,TimesNewRomanPSMT,,0,0
+(9),12,TimesNewRomanPSMT,,3,3
+where,12,TimesNewRomanPSMT,,5,5
+w,12,TimesNewRomanPS-ItalicMT,,1,1
+k,8,TimesNewRomanPS-ItalicMT,,1,1
+(C,12,TimesNewRomanPS-ItalicMT,,2,2
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+"k = 1, …, N",12,TimesNewRomanPS-ItalicMT,,11,11
+"are the measured values of the luminous intensity corresponding to 
+the",12,TimesNewRomanPSMT,,71,67
+N,12,TimesNewRomanPS-ItalicMT,,1,1
+data points,12,TimesNewRomanPSMT,,11,11
+(C,12,TimesNewRomanPS-ItalicMT,,2,2
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+k,8,TimesNewRomanPS-ItalicMT,,1,1
+is zero-mean independent random error with a common variance,12,TimesNewRomanPSMT,,60,60
+,12,SymbolMT,,1,1
+,8,SymbolMT,,1,1
+,12,SymbolMT,,1,1
+We are looking for a such regression function,12,TimesNewRomanPSMT,,45,45
+f,12,TimesNewRomanPS-ItalicMT,,1,1
+which minimizes the spline functional,12,TimesNewRomanPSMT,,37,37
+,12,TimesNewRomanPSMT,,0,0
+(10),12,TimesNewRomanPSMT,,4,4
+where,12,TimesNewRomanPSMT,,5,5
+J,12,TimesNewRomanPS-ItalicMT,,1,1
+p,8,TimesNewRomanPS-ItalicMT,,1,1
+is in general some functional which secures smoothness of,12,TimesNewRomanPSMT,,57,57
+f,12,TimesNewRomanPS-ItalicMT,,1,1
+"up to an ""order""",12,TimesNewRomanPSMT,,16,16
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+(,12,TimesNewRomanPSMT,,1,1
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+is an,12,TimesNewRomanPSMT,,5,5
+"integer 
+  2).  The  smoothing  parameter",12,TimesNewRomanPSMT,,41,32
+,12,SymbolMT,,1,1
+"controls  the  trade-off  between  smoothness  of  the 
+regression  function  and  fidelity  to  the  data.  The  optimal  values  of  the  parameters",12,TimesNewRomanPSMT,,150,94
+,12,SymbolMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+"is 
+determined from measured data.",12,TimesNewRomanPSMT,,34,30
+"In our case, we try to  estimate a luminous intensity on the sphere, thus  we will use the 
+method of smoothing spline on the sphere as can be found in  [14]. We have a set  of measured 
+values",12,TimesNewRomanPSMT,,193,94
+w,12,TimesNewRomanPS-ItalicMT,,1,1
+k,8,TimesNewRomanPS-ItalicMT,,1,1
+(C,12,TimesNewRomanPS-ItalicMT,,2,2
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+in points,12,TimesNewRomanPSMT,,9,9
+(C,12,TimesNewRomanPS-ItalicMT,,2,2
+m,8,TimesNewRomanPS-ItalicMT,,1,1
+",",12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,1,1
+j,8,TimesNewRomanPS-ItalicMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+", where",12,TimesNewRomanPSMT,,7,7
+,12,SymbolMT,,1,1
+"is a 
+spherical longitude. The functional",12,TimesNewRomanPSMT,,41,35
+J,12,TimesNewRomanPS-ItalicMT,,1,1
+p,8,TimesNewRomanPS-ItalicMT,,1,1
+now has the form,12,TimesNewRomanPSMT,,16,16
+is a spherical latitude and,12,TimesNewRomanPSMT,,27,27
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+,12,TimesNewRomanPSMT,,0,0
+(11),12,TimesNewRomanPSMT,,4,4
+for,12,TimesNewRomanPSMT,,3,3
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+"even, and",12,TimesNewRomanPSMT,,9,9
+(),15,SymbolMT,,2,2
+iiii,6,TimesNewRomanPSMT,,4,4
+1,6,TimesNewRomanPSMT,,1,1
+ii,6,TimesNewRomanPSMT,,2,2
+yhb,11,TimesNewRomanPSMT,,3,3
+=,11,TimesNewRomanPSMT,,1,1
+c,11,TimesNewRomanPSMT,,1,1
+2,11,TimesNewRomanPSMT,,1,1
+c,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+h3,11,TimesNewRomanPSMT,,2,2
++,6,SymbolMT,,1,1
+,11,SymbolMT,,1,1
+−+,11,SymbolMT,,2,2
+i,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+iii,6,TimesNewRomanPSMT,,3,3
+cc,11,TimesNewRomanPSMT,,2,2
+d,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+.,11,TimesNewRomanPSMT,,1,1
+3h,11,TimesNewRomanPSMT,,2,2
++,6,SymbolMT,,1,1
+−,11,SymbolMT,,1,1
+,11,SymbolMT,,1,1
+(),18,SymbolMT,,2,2
+(,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+),11,TimesNewRomanPSMT,,1,1
+,11,TimesNewRomanPSMT,,0,0
+=,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+m,6,TimesNewRomanPS-ItalicMT,,1,1
+j,6,TimesNewRomanPS-ItalicMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+m,6,TimesNewRomanPS-ItalicMT,,1,1
+j,6,TimesNewRomanPS-ItalicMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+wC,11,TimesNewRomanPS-ItalicMT,,2,2
+f,11,TimesNewRomanPS-ItalicMT,,1,1
+C,11,TimesNewRomanPS-ItalicMT,,1,1
+,11,SymbolMT,,2,2
+,11,SymbolMT,,1,1
++,11,SymbolMT,,1,1
+(),15,SymbolMT,,2,2
+(),18,SymbolMT,,2,2
+(),20,SymbolMT,,2,2
+2,6,TimesNewRomanPSMT,,1,1
+",",6,TimesNewRomanPSMT,,1,1
+=,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+1,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+(,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+),11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+N,6,TimesNewRomanPS-ItalicMT,,1,1
+p,6,TimesNewRomanPS-ItalicMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+m,6,TimesNewRomanPS-ItalicMT,,1,1
+j,6,TimesNewRomanPS-ItalicMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+m,6,TimesNewRomanPS-ItalicMT,,1,1
+j,6,TimesNewRomanPS-ItalicMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+F,11,TimesNewRomanPS-ItalicMT,,1,1
+f,11,TimesNewRomanPS-ItalicMT,,1,1
+wC,11,TimesNewRomanPS-ItalicMT,,2,2
+f,11,TimesNewRomanPS-ItalicMT,,1,1
+CN,11,TimesNewRomanPS-ItalicMT,,2,2
+,6,SymbolMT,,1,1
+,11,SymbolMT,,2,2
+−+,11,SymbolMT,,2,2
+,17,SymbolMT,,1,1
+(),15,SymbolMT,,2,2
+",",11,TimesNewRomanPSMT,,1,1
+p,6,TimesNewRomanPS-ItalicMT,,1,1
+J,11,TimesNewRomanPS-ItalicMT,,1,1
+f,11,TimesNewRomanPS-ItalicMT,,1,1
+,11,SymbolMT,,1,1
+,12,SymbolMT,,1,1
+,12,SymbolMT,,1,1
+0,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+"0,2",12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,3,3
+()(),15,SymbolMT,,4,4
+22/2,6,TimesNewRomanPSMT,,4,4
+00,6,TimesNewRomanPSMT,,2,2
+"=,sin",12,TimesNewRomanPSMT,,5,5
+p,6,TimesNewRomanPS-ItalicMT,,1,1
+p,6,TimesNewRomanPS-ItalicMT,,1,1
+JffCddC,12,TimesNewRomanPS-ItalicMT,,7,7
+,6,SymbolMT,,2,2
+,12,SymbolMT,,8,8
+,18,SymbolMT,,2,2
+,12,TimesNewRomanPSMT,,0,0
+(12),12,TimesNewRomanPSMT,,4,4
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,11,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+for,12,TimesNewRomanPSMT,,3,3
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+odd. The term,12,TimesNewRomanPSMT,,13,13
+,12,SymbolMT,,1,1
+"represents the Laplace operator, which on the sphere has the form",12,TimesNewRomanPSMT,,65,65
+,12,TimesNewRomanPSMT,,0,0
+(13),12,TimesNewRomanPSMT,,4,4
+"Now, let us use a standard unit direction vector defined as",12,TimesNewRomanPSMT,,59,59
+with its beginning in the center of the sphere for determining of a point’s position,12,TimesNewRomanPSMT,,84,84
+"(C,",12,TimesNewRomanPS-ItalicMT,,3,3
+,12,SymbolMT,,1,1
+),12,TimesNewRomanPS-ItalicMT,,1,1
+"on the 
+sphere. We can write the solution of the minimization problem of the functional (11)-(13) in the 
+form",12,TimesNewRomanPSMT,,110,97
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,11,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(14),12,TimesNewRomanPSMT,,4,4
+where,12,TimesNewRomanPSMT,,5,5
+P,12,TimesNewRomanPS-ItalicMT,,1,1
+v,8,TimesNewRomanPS-ItalicMT,,1,1
+"are the Legendre polynomials. For more detailed derivation, see [11]. The function",12,TimesNewRomanPSMT,,82,82
+f,12,TimesNewRomanPS-ItalicMT,,1,1
+"p,",8,TimesNewRomanPS-ItalicMT,,2,2
+,8,SymbolMT,,1,1
+represents the solution of the minimalization problem for some given values of,12,TimesNewRomanPSMT,,78,78
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+", and thus, 
+the goal to find a searched value of the luminous intensity in the I-table. The criterion for a good 
+choice of the smoothing parameter",12,TimesNewRomanPSMT,,148,101
+,12,SymbolMT,,1,1
+"and ""the order of smoothness""",12,TimesNewRomanPSMT,,29,29
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+"is the ability to predict the 
+value of the investigated field beside the known data points. The typical method for the parameters 
+optimization is the method of generalized cross-validation (see e.g. [15] or [16]).",12,TimesNewRomanPSMT,,215,100
+,12,TimesNewRomanPSMT,,0,0
+4.2    Hybrid adaptive splines,14,TimesNewRomanPS-BoldMT,,30,30
+"When sharp local peaks appear in measured data, some adaptive spline method must be 
+used to estimate the true function. It can be done by some smoothing spline method with locally 
+variable smoothing parameters or by a regression spline method with adaptive placing of knots (or,",12,TimesNewRomanPSMT,,280,98
+"equivalently,  adaptive  selection  of  spline  basis  functions).  We  will  use  the  method  of  hybrid",12,TimesNewRomanPSMT,,106,106
+"adaptive splines (HAS) proposed by [17] which combines features of adaptive regression splines 
+and smoothing splines on sphere presented above.",12,TimesNewRomanPSMT,,144,95
+"In the case of smoothing splines on the sphere, we was looking for a regression function 
+minimizing the functional",12,TimesNewRomanPSMT,,115,89
+F,12,TimesNewRomanPS-ItalicMT,,1,1
+"p,",8,TimesNewRomanPS-ItalicMT,,2,2
+,8,SymbolMT,,1,1
+( f ),12,TimesNewRomanPS-ItalicMT,,5,5
+"generated by  the basis functions 
+  =  1, ...,",12,TimesNewRomanPSMT,,47,34
+N,12,TimesNewRomanPS-ItalicMT,,1,1
+". The 
+HAS method is based on selection of a convenient subset of these basis functions and minimizing 
+of the functional",12,TimesNewRomanPSMT,,121,96
+F,12,TimesNewRomanPS-ItalicMT,,1,1
+"p,",8,TimesNewRomanPS-ItalicMT,,2,2
+,8,SymbolMT,,1,1
+( f ),12,TimesNewRomanPS-ItalicMT,,5,5
+"in the function space generated by this subset. When we were chosen the 
+optimal system of",12,TimesNewRomanPSMT,,90,72
+(M+1),12,TimesNewRomanPS-ItalicMT,,5,5
+"basis functions (method is described in [11]), the regresion function will 
+have a form",12,TimesNewRomanPSMT,,87,75
+",",12,TimesNewRomanPSMT,,1,1
+,12,TimesNewRomanPSMT,,0,0
+(15),12,TimesNewRomanPSMT,,4,4
+,12,TimesNewRomanPSMT,,0,0
+(),15,SymbolMT,,2,2
+2122200,6,TimesNewRomanPSMT,,7,7
+1,12,TimesNewRomanPSMT,,1,1
+=,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+pp,6,TimesNewRomanPS-ItalicMT,,2,2
+J,12,TimesNewRomanPS-ItalicMT,,1,1
+f,12,TimesNewRomanPS-ItalicMT,,1,1
+CC,12,TimesNewRomanPS-ItalicMT,,2,2
+,6,SymbolMT,,2,2
+,12,SymbolMT,,2,2
+−,6,SymbolMT,,1,1
+,12,SymbolMT,,1,1
+,12,SymbolMT,,4,4
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
++,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+,12,SymbolMT,,4,4
+,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+,18,SymbolMT,,2,2
+(),15,SymbolMT,,2,2
+212,6,TimesNewRomanPSMT,,3,3
+",",12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+,12,TimesNewRomanPSMT,,0,0
+m,6,TimesNewRomanPS-ItalicMT,,1,1
+f,12,TimesNewRomanPS-ItalicMT,,1,1
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+dd,12,TimesNewRomanPS-ItalicMT,,2,2
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,4,4
+−,6,SymbolMT,,1,1
+,12,SymbolMT,,1,1
+,12,SymbolMT,,4,4
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+,12,SymbolMT,,4,4
+,12,SymbolMT,,1,1
+,12,SymbolMT,,2,2
+,12,SymbolMT,,1,1
+222,6,TimesNewRomanPSMT,,3,3
+11,12,TimesNewRomanPSMT,,2,2
+,12,TimesNewRomanPSMT,,0,0
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+.,12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+C,12,TimesNewRomanPS-ItalicMT,,1,1
+,12,SymbolMT,,5,5
+,12,SymbolMT,,2,2
+,12,SymbolMT,,3,3
+,12,SymbolMT,,1,1
++,12,SymbolMT,,2,2
+,12,SymbolMT,,2,2
+,12,SymbolMT,,3,3
+,12,SymbolMT,,2,2
+e,12,TimesNewRomanPS-ItalicMT,,1,1
+=,12,TimesNewRomanPSMT,,1,1
+(,12,TimesNewRomanPSMT,,1,1
+c,12,TimesNewRomanPSMT,,1,1
+o,12,TimesNewRomanPSMT,,1,1
+ss,12,TimesNewRomanPSMT,,2,2
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+i,12,TimesNewRomanPSMT,,1,1
+n,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+c,12,TimesNewRomanPSMT,,1,1
+o,12,TimesNewRomanPSMT,,1,1
+s,12,TimesNewRomanPSMT,,1,1
+),12,TimesNewRomanPSMT,,1,1
+CC,12,TimesNewRomanPS-ItalicMT,,2,2
+,12,SymbolMT,,3,3
+−,12,SymbolMT,,1,1
+(,15,SymbolMT,,1,1
+)(),15,SymbolMT,,3,3
+",",6,TimesNewRomanPSMT,,1,1
+=,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+,11,TimesNewRomanPSMT,,0,0
+",",11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+N,6,TimesNewRomanPS-ItalicMT,,1,1
+p,6,TimesNewRomanPS-ItalicMT,,1,1
+kkk,6,TimesNewRomanPS-ItalicMT,,3,3
+f,11,TimesNewRomanPS-ItalicMT,,1,1
+ec,11,TimesNewRomanPS-ItalicMT,,2,2
+K,11,TimesNewRomanPS-ItalicMT,,1,1
+e,11,TimesNewRomanPS-ItalicMT,,1,1
+e,11,TimesNewRomanPS-ItalicMT,,1,1
+d,11,TimesNewRomanPS-ItalicMT,,1,1
+,6,SymbolMT,,1,1
++,11,SymbolMT,,1,1
+,17,SymbolMT,,1,1
+()(,15,SymbolMT,,3,3
+),15,SymbolMT,,1,1
+(,15,SymbolMT,,1,1
+),15,SymbolMT,,1,1
+=,6,TimesNewRomanPSMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+121,11,TimesNewRomanPSMT,,3,3
+",",11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+,11,TimesNewRomanPSMT,,0,0
+41,11,TimesNewRomanPSMT,,2,2
+kk,6,TimesNewRomanPS-ItalicMT,,2,2
+p,6,TimesNewRomanPS-ItalicMT,,1,1
+K,11,TimesNewRomanPS-ItalicMT,,1,1
+ee,11,TimesNewRomanPS-ItalicMT,,2,2
+P,11,TimesNewRomanPS-ItalicMT,,1,1
+ee,11,TimesNewRomanPS-ItalicMT,,2,2
+,6,SymbolMT,,2,2
+,11,SymbolMT,,1,1
+,11,SymbolMT,,1,1
+,11,SymbolMT,,2,2
+,6,SymbolMT,,1,1
++,11,SymbolMT,,1,1
+,11,SymbolMT,,1,1
++,11,SymbolMT,,1,1
+,11,SymbolMT,,4,4
+,17,SymbolMT,,1,1
+(,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+),12,TimesNewRomanPSMT,,1,1
+i,7,TimesNewRomanPS-ItalicMT,,1,1
+K,12,TimesNewRomanPS-ItalicMT,,1,1
+ee,12,TimesNewRomanPS-ItalicMT,,2,2
+i,11,TimesNewRomanPS-ItalicMT,,1,1
+(),15,SymbolMT,,2,2
+(),22,SymbolMT,,2,2
+",=1",6,TimesNewRomanPSMT,,3,3
+"=     , .",11,TimesNewRomanPSMT,,9,9
+Mplill,6,TimesNewRomanPS-ItalicMT,,6,6
+fedcKee,11,TimesNewRomanPS-ItalicMT,,7,7
+,6,SymbolMT,,1,1
++,11,SymbolMT,,1,1
+,17,SymbolMT,,1,1
+where,12,TimesNewRomanPSMT,,5,5
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+For the coefficients,12,TimesNewRomanPSMT,,20,20
+d,12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+=,12,TimesNewRomanPSMT,,1,1
+the following expressions hold,12,TimesNewRomanPSMT,,30,30
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+(16),12,TimesNewRomanPSMT,,4,4
+(17),12,TimesNewRomanPSMT,,4,4
+As  in  the  case  of  the  smoothing  splines  we  must  optimize  the  free  parameters,12,TimesNewRomanPSMT,,89,89
+p,12,TimesNewRomanPS-ItalicMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+".  The 
+convenient  values  of  the  parameters  are  determined  by  minimizing  of  the  generalized  cross-
+validation function analogically as in the case of the smoothing splines.",12,TimesNewRomanPSMT,,184,102
+"The  procedure  of  HAS  seems  to  be  complicated  and  non-effective,  but  the  routine 
+calculations  on  a  standard  PC  prove  its  speed  and  high  accuracy,  especially  if  significant  non-
+homogeneities occure in measured data in the I-tables. MATLAB code for HAS calculation as well 
+as calculation of rRMSE and R",12,TimesNewRomanPSMT,,328,109
+2,8,TimesNewRomanPSMT,,1,1
+"for interpolating methods discussed in this paper is freely available 
+on webpage: www.skyglow.sav.sk.",12,TimesNewRomanPSMT,,102,70
+5    Numerical examples and validation,14,TimesNewRomanPS-BoldMT,,38,38
+"Three luminaires with different luminous intensity  distribution curves obtained from the 
+manufacturer  have  been  selected  for  the  purpose  of  the  accuracy  testing  of  the  described 
+interpolation  methods.  The  relative  root  mean  square  error  (rRMSE)  and  coefficient  of",12,TimesNewRomanPSMT,,290,102
+determination (R,12,TimesNewRomanPSMT,,16,16
+2,8,TimesNewRomanPSMT,,1,1
+) were chosen as appropriate statistical indicators to compare the calculated data,12,TimesNewRomanPSMT,,82,82
+with the goniophotometric measurement with the step 2.5 degree in the C-planes and 0.5 degree in,12,TimesNewRomanPSMT,,96,96
+,12,SymbolMT,,1,1
+"-angles. For the road lighting purposes data in the I-tables are commonly tabled with the step of 5 
+degree in the C-planes and 2.5 degree in",12,TimesNewRomanPSMT,,141,100
+,12,SymbolMT,,1,1
+"-angles. Therefore, we compared the accuracy of the 
+interpolation methods to the experimentally obtained data for this frequently used grid.",12,TimesNewRomanPSMT,,141,88
+,12,TimesNewRomanPSMT,,0,0
+Linear,12,TimesNewRomanPS-BoldMT,,6,6
+,12,TimesNewRomanPSMT,,0,0
+Polynomial,12,TimesNewRomanPS-BoldMT,,10,10
+,12,TimesNewRomanPSMT,,0,0
+Cubic spline,12,TimesNewRomanPS-BoldMT,,12,12
+,12,TimesNewRomanPSMT,,0,0
+HAS,12,TimesNewRomanPS-BoldMT,,3,3
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Luminaire 1,12,TimesNewRomanPS-BoldMT,,11,11
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+rRMSE (%),12,TimesNewRomanPS-BoldMT,,9,9
+"7.46   
+  43.75   
+  6.99   
+  2.21",12,TimesNewRomanPSMT,,35,10
+,12,TimesNewRomanPSMT,,0,0
+R,12,TimesNewRomanPS-BoldMT,,1,1
+2,8,TimesNewRomanPS-BoldMT,,1,1
+"0.9967       
+  0.8740   
+  0.9971   
+  0.9995",12,TimesNewRomanPSMT,,46,13
+,12,TimesNewRomanPSMT,,0,0
+Luminaire 2,12,TimesNewRomanPS-BoldMT,,11,11
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+rRMSE (%),12,TimesNewRomanPS-BoldMT,,9,9
+"6.22   
+  49.54   
+  6.07   
+  2.61",12,TimesNewRomanPSMT,,35,10
+,12,TimesNewRomanPSMT,,0,0
+Luminaire 3,12,TimesNewRomanPS-BoldMT,,11,11
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+R,12,TimesNewRomanPS-BoldMT,,1,1
+2,8,TimesNewRomanPS-BoldMT,,1,1
+"0.9982   
+  0.8733   
+  0.9983   
+  0.9993",12,TimesNewRomanPSMT,,42,11
+,12,TimesNewRomanPSMT,,0,0
+rRMSE (%),12,TimesNewRomanPS-BoldMT,,9,9
+"14.16   
+  43.99   
+  14.08   
+  4.23",12,TimesNewRomanPSMT,,37,10
+,12,TimesNewRomanPSMT,,0,0
+R,12,TimesNewRomanPS-BoldMT,,1,1
+2,8,TimesNewRomanPS-BoldMT,,1,1
+"0.9846   
+  0.8290   
+  0.9848   
+  0.9982",12,TimesNewRomanPSMT,,42,11
+1,6,TimesNewRomanPSMT,,1,1
+(,11,TimesNewRomanPSMT,,1,1
+",...,",11,TimesNewRomanPSMT,,5,5
+),11,TimesNewRomanPSMT,,1,1
+T,6,TimesNewRomanPS-ItalicMT,,1,1
+M,6,TimesNewRomanPS-ItalicMT,,1,1
+cc,11,TimesNewRomanPS-ItalicMT,,2,2
+c,12,TimesNewRomanPS-ItalicMT,,1,1
+(),20,SymbolMT,,2,2
+11111,6,TimesNewRomanPSMT,,5,5
+=,12,TimesNewRomanPSMT,,1,1
+",",12,TimesNewRomanPSMT,,1,1
+TT,6,TimesNewRomanPS-ItalicMT,,2,2
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+d,12,TimesNewRomanPS-ItalicMT,,1,1
+L,12,TimesNewRomanPS-ItalicMT,,1,1
+H,12,TimesNewRomanPS-ItalicMT,,1,1
+K,12,TimesNewRomanPS-ItalicMT,,1,1
+TL,12,TimesNewRomanPS-ItalicMT,,2,2
+H,12,TimesNewRomanPS-ItalicMT,,1,1
+Kw,12,TimesNewRomanPS-ItalicMT,,2,2
+−−−,6,SymbolMT,,3,3
+(),20,SymbolMT,,2,2
+11,6,TimesNewRomanPSMT,,2,2
+=,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+T,6,TimesNewRomanPS-ItalicMT,,1,1
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+c,11,TimesNewRomanPS-ItalicMT,,1,1
+H,11,TimesNewRomanPS-ItalicMT,,1,1
+Kw,11,TimesNewRomanPS-ItalicMT,,2,2
+T,11,TimesNewRomanPS-ItalicMT,,1,1
+d,11,TimesNewRomanPS-ItalicMT,,1,1
+−,6,SymbolMT,,1,1
+−,11,SymbolMT,,1,1
+112,6,TimesNewRomanPSMT,,3,3
+=,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+T,6,TimesNewRomanPS-ItalicMT,,1,1
+H,11,TimesNewRomanPS-ItalicMT,,1,1
+KKNK,11,TimesNewRomanPS-ItalicMT,,4,4
+,11,SymbolMT,,1,1
++,11,SymbolMT,,1,1
+(),18,SymbolMT,,2,2
+11112,6,TimesNewRomanPSMT,,5,5
+=,11,TimesNewRomanPSMT,,1,1
+TT,6,TimesNewRomanPS-ItalicMT,,2,2
+LT,11,TimesNewRomanPS-ItalicMT,,2,2
+KKKK,11,TimesNewRomanPS-ItalicMT,,4,4
+−,6,SymbolMT,,1,1
+(),23,SymbolMT,,2,2
+1,6,TimesNewRomanPSMT,,1,1
+=,12,TimesNewRomanPSMT,,1,1
+",,",12,TimesNewRomanPSMT,,2,2
+=,12,TimesNewRomanPSMT,,1,1
+1,12,TimesNewRomanPSMT,,1,1
+",...,,",12,TimesNewRomanPSMT,,6,6
+=,12,TimesNewRomanPSMT,,1,1
+1,12,TimesNewRomanPSMT,,1,1
+",...,",12,TimesNewRomanPSMT,,5,5
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+il,6,TimesNewRomanPS-ItalicMT,,2,2
+KK,12,TimesNewRomanPS-ItalicMT,,2,2
+ee,12,TimesNewRomanPS-ItalicMT,,2,2
+k,12,TimesNewRomanPS-ItalicMT,,1,1
+N,12,TimesNewRomanPS-ItalicMT,,1,1
+l,12,TimesNewRomanPS-ItalicMT,,1,1
+M,12,TimesNewRomanPS-ItalicMT,,1,1
+(),23,SymbolMT,,2,2
+2,6,TimesNewRomanPSMT,,1,1
+=,12,TimesNewRomanPSMT,,1,1
+",,",12,TimesNewRomanPSMT,,2,2
+=,12,TimesNewRomanPSMT,,1,1
+1,12,TimesNewRomanPSMT,,1,1
+",...,,",12,TimesNewRomanPSMT,,6,6
+=,12,TimesNewRomanPSMT,,1,1
+1,12,TimesNewRomanPSMT,,1,1
+",...,",12,TimesNewRomanPSMT,,5,5
+ii,6,TimesNewRomanPS-ItalicMT,,2,2
+k,6,TimesNewRomanPS-ItalicMT,,1,1
+l,6,TimesNewRomanPS-ItalicMT,,1,1
+KK,12,TimesNewRomanPS-ItalicMT,,2,2
+eek,12,TimesNewRomanPS-ItalicMT,,3,3
+M,12,TimesNewRomanPS-ItalicMT,,1,1
+l,12,TimesNewRomanPS-ItalicMT,,1,1
+M,12,TimesNewRomanPS-ItalicMT,,1,1
+1,6,TimesNewRomanPSMT,,1,1
+1,11,TimesNewRomanPSMT,,1,1
+=,11,TimesNewRomanPSMT,,1,1
+",",11,TimesNewRomanPSMT,,1,1
+1,11,TimesNewRomanPSMT,,1,1
+N,6,TimesNewRomanPS-ItalicMT,,1,1
+T,11,TimesNewRomanPS-ItalicMT,,1,1
+,6,SymbolMT,,1,1
+,11,SymbolMT,,2,2
+,11,SymbolMT,,2,2
+,11,SymbolMT,,6,6
+Table 1.,12,TimesNewRomanPS-BoldMT,,8,8
+The relative root mean square error (rRMSE) and coefficient of determination (R,12,TimesNewRomanPSMT,,79,79
+2,8,TimesNewRomanPSMT,,1,1
+") for 
+various interpolating methods. Input data are for the grid with step in C-plane 5",12,TimesNewRomanPSMT,,88,81
+o,8,TimesNewRomanPSMT,,1,1
+and in,12,TimesNewRomanPSMT,,6,6
+,12,SymbolMT,,1,1
+"-plane 
+2.5",12,TimesNewRomanPSMT,,11,7
+o,8,TimesNewRomanPSMT,,1,1
+and calculation grid corresponds to step in C-plane 2.5,12,TimesNewRomanPSMT,,55,55
+o,8,TimesNewRomanPSMT,,1,1
+and in,12,TimesNewRomanPSMT,,6,6
+,12,SymbolMT,,1,1
+-plane 0.5,12,TimesNewRomanPSMT,,10,10
+o,8,TimesNewRomanPSMT,,1,1
+.,12,TimesNewRomanPSMT,,1,1
+"As can be seen from Table 1, the polynomial fit of higher degree (",12,TimesNewRomanPSMT,,66,66
+n = 10,12,TimesNewRomanPS-ItalicMT,,6,6
+") is far beyond 
+tolerable accuracy, and therefore it is not recommended to use it to reconstruct the missing I-table 
+data.  The  linear  interpolation  is  realistically  accurate  if  we  meet  the  rRMSE  range  of  6-14% 
+depending  on  the  luminaire.  Luminaire  3  has  the  most  sharp  peaks  in  luminous  intensity 
+distribution, so this luminaire has a higher error than other luminaires when reconstructing data 
+with  linear  interpolation.  However,  this  type  of  interpolation  responds  very  slowly  to  sudden 
+fluctuations in luminous intensity value and it is therefore more suitable for reconstructing more 
+shallow luminous intensity distributions (like in cases of Luminaire 1 and 2). Also, the examined 
+cubic spline shows a slightly lower rRMSE in Luminaire 3 than linear interpolation, therefore it 
+seems  to  be  more  accurate  when  reconstructing  luminous  intensity  distribution  without  the 
+presence of significant local extremes. HAS is  far more accurate on average compared to other 
+interpolation methods, with rRMSE not exceeding 4.3% even with Luminaire 3 with more local 
+peaks. This is due to the adaptive selection of local base functions in nodes that are sufficiently 
+surrounded by known data.",12,TimesNewRomanPSMT,,1247,107
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Figure 2.,12,TimesNewRomanPS-BoldMT,,9,9
+"Goniophotometric mesaurement of luminous intensity distribution curve of the 
+Luminaire 1 in planes (C0-C180 and C90-C270).",12,TimesNewRomanPSMT,,123,77
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Figure 3.,12,TimesNewRomanPS-BoldMT,,9,9
+"Goniophotometric mesaurement of luminous intensity distribution curve of the 
+Luminaire 2 in planes (C0-C180 and C90-C270).",12,TimesNewRomanPSMT,,123,77
+,12,TimesNewRomanPSMT,,0,0
+,11,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Figure 4.,12,TimesNewRomanPS-BoldMT,,9,9
+"Goniophotometric mesaurement of luminous intensity distribution curve of the 
+Luminaire 3 in planes (C0-C180 and C90-C270).",12,TimesNewRomanPSMT,,123,77
+"Figures 2 - 4 shows the luminous intensity distribution curves of the tested luminaires in 
+the  C0-C180  and  C90-C270  planes  which  were  measured  in  the  laboratory.  These  curves  were 
+compared  with  the  curves  reconstructed  by  selected  interpolation  methods  from  input  values 
+measured with steps in C-plane = 2.5",12,TimesNewRomanPSMT,,334,102
+o,8,TimesNewRomanPSMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+-plane = 0.5,12,TimesNewRomanPSMT,,12,12
+o,8,TimesNewRomanPSMT,,1,1
+.,12,TimesNewRomanPSMT,,1,1
+"Figure 5 shows the luminous intensity distribution of the luminaire in the polar coordinates 
+given by the planes C in the range of 0 - 360 degrees and the plane",12,TimesNewRomanPSMT,,161,93
+,12,SymbolMT,,1,1
+"in the range of 0 - 80 degrees 
+due to the most significant changes at just 80 degrees. In Figure 5b, the polynomial fit of 10",12,TimesNewRomanPSMT,,126,94
+th,8,TimesNewRomanPSMT,,2,2
+"order 
+clearly distorts the luminous intensity values while the linear interpolation and HAS give more or 
+less realistic values, whereas the HAS (Figure 5c) better describes the distinct peaks in luminous 
+intensity values.",12,TimesNewRomanPSMT,,224,99
+Figure 5.,12,TimesNewRomanPS-BoldMT,,9,9
+"Luminance distribution for Luminaire 3 calculated by linear interpolation (a), 
+polynomial of 10",12,TimesNewRomanPSMT,,96,79
+th,8,TimesNewRomanPSMT,,2,2
+degree (b) and HAS (c).,12,TimesNewRomanPSMT,,23,23
+"Figure  6  shows  the  relative  deviations  between  the  calculated  luminous  intensity  values 
+using four interpolation methods and data measured by a goniophotometer with steps in C-plane = 
+2.5",12,TimesNewRomanPSMT,,200,99
+o,8,TimesNewRomanPSMT,,1,1
+and,12,TimesNewRomanPSMT,,3,3
+,12,SymbolMT,,1,1
+-plane = 0.5,12,TimesNewRomanPSMT,,12,12
+o,8,TimesNewRomanPSMT,,1,1
+"for Luminaire 3. Obviously, the polynomial fit (Figure 6b) gives deviations 
+>  20%,  especially  in  the  parts  of  increased  luminance  as  well  as  at  the  edges.  It  is  therefore 
+extremely unsuitable for reconstructing data in the I-table.",12,TimesNewRomanPSMT,,250,112
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+,12,TimesNewRomanPSMT,,0,0
+Figure 6.,12,TimesNewRomanPS-BoldMT,,9,9
+"Realtive deviation between measured and calculated luminances for Luminaire 3 and 
+four interpolating methods: (a)",12,TimesNewRomanPSMT,,114,82
+–,12,TimesNewRomanPSMT,,1,1
+"linear, (b)",12,TimesNewRomanPSMT,,11,11
+–,12,TimesNewRomanPSMT,,1,1
+polynomial of 10,12,TimesNewRomanPSMT,,16,16
+th,8,TimesNewRomanPSMT,,2,2
+"degree, (c)",12,TimesNewRomanPSMT,,11,11
+–,12,TimesNewRomanPSMT,,1,1
+cubic spline and (d),12,TimesNewRomanPSMT,,20,20
+–,12,TimesNewRomanPSMT,,1,1
+HAS on 2.5,12,TimesNewRomanPSMT,,10,10
+o,8,TimesNewRomanPSMT,,1,1
+x 0.5,12,TimesNewRomanPSMT,,5,5
+o,8,TimesNewRomanPSMT,,1,1
+grid.,12,TimesNewRomanPSMT,,5,5
+"The linear interpolation (Figure 6a) and cubic spline (Figure 6c) show very similar relative 
+deviation distributions, but on average the cubic spline has lower deviations. This also corresponds 
+to  a  slightly  lower  rRMSE  for  cubic  spline  (see  Table  1).  In  the  case  of  HAS  (Figure  6d),  the 
+relative deviation is the lowest in the middle of the graph, i.e. for angles in",12,TimesNewRomanPSMT,,388,112
+,12,SymbolMT,,1,1
+"-plane up to 45 degrees, 
+with peaks being reconstructed within the deviation of 10%. The increase in relative margin in Fig. 
+6d (",12,TimesNewRomanPSMT,,131,100
+,12,SymbolMT,,1,1
+> 65,12,TimesNewRomanPSMT,,4,4
+o,8,TimesNewRomanPSMT,,1,1
+") is due to the less data needed to create the interpolation model. However, the HAS 
+method reliably reconstructs I-table data for smaller angles in",12,TimesNewRomanPSMT,,149,85
+,12,SymbolMT,,1,1
+"-plane even in a sudden change in 
+luminous intensity values. For angles",12,TimesNewRomanPSMT,,72,37
+,12,SymbolMT,,1,1
+> 65,12,TimesNewRomanPS-ItalicMT,,4,4
+o,8,TimesNewRomanPS-ItalicMT,,1,1
+", it is recommended to use linear interpolation or cubic 
+spline in case of a denser grid in road lighting calculation, respectively.",12,TimesNewRomanPSMT,,133,75
+,12,TimesNewRomanPSMT,,0,0
+6    Conclusions,14,TimesNewRomanPS-BoldMT,,16,16
+The presented paper deals with various interpolation methods used in the reconstruction of,12,TimesNewRomanPSMT,,90,90
+"data  from  I-table,  their  comparison  with  goniophotometric  measurements,  as  well  as  testing  of",11,TimesNewRomanPSMT,,105,105
+"hybrid adaptive splines that have not been used in this field so far. Linear interpolation, 10",12,TimesNewRomanPSMT,,94,94
+th,8,TimesNewRomanPSMT,,2,2
+"degree 
+polynomial fit, cubic spline and hybrid adaptive spline were compared. As the results show, the so 
+far  used  linear  interpolation  provides  sufficient  accuracy  in  data  reconstruction,  but  relatively",12,TimesNewRomanPSMT,,216,108
+"slowly responds to sudden changes in luminous intensity distribution. This reduces its accuracy, 
+especially for luminaires with local extremes, which can cause glare of road users. Cubic spline 
+shows little higher accuracy than linear interpolation, but fails again at local extremes. Therefore, 
+the  HAS  method  was  designed  to  adaptively  respond  to  local  extremes  in  luminous  intensity 
+distribution  and  it  provides  the  highest  match  compared  to  the  measured  data.  However,  this 
+method fails in the edges where the number of data is limited to create an accurate interpolation 
+model. It is therefore questionable under what conditions to use this method to ensure sufficient 
+accuracy and to identify possible angles that may cause glare. Ultimately, it can be stated that the 
+cubic spline method is recommended to be used in all cases of flat luminous intensity distribution, 
+also  limited  to  curves  with  local  extremes,  where  it  exhibits  comparable  accuracy  as  linear 
+interpolation.  In  the  case  of  a  redundant  network  of  points  it  is  recommended  to  use  HAS, 
+especially at angles <",12,TimesNewRomanPSMT,,1144,105
+65,12,TimesNewRomanPS-ItalicMT,,2,2
+degrees in,12,TimesNewRomanPSMT,,10,10
+,12,SymbolMT,,1,1
+-,12,TimesNewRomanPS-ItalicMT,,1,1
+"plane. The polynomial fit was tested only to make sure it was 
+an inappropriate method and should not be used to reconstruct the data from the light curve at all.",12,TimesNewRomanPSMT,,162,99
+"This  work  was  supported  by  the  Slovak  Research  and  Development  Agency  under  the 
+contract  No.  APVV-18-0014  and  by  the  Grant  Agency  VEGA  under  the  contract  number  No. 
+1/0640/17.",12,TimesNewRomanPSMT,,202,98
+,12,TimesNewRomanPSMT,,0,0
+Acknowledgements,14,TimesNewRomanPS-BoldMT,,16,16
+,12,TimesNewRomanPSMT,,0,0
+References,14,TimesNewRomanPS-BoldMT,,10,10
+,12,TimesNewRomanPSMT,,0,0
+"[1] Waldram JM. Formation of bright patches, The Illuminating Engineer, 1934, p. 305. 
+
+[2] de Boer JB. Developments in illuminating engineering in the 20th century,",12,TimesNewRomanPSMT,,165,86
+"Lighting Res. 
+Technol.",12,TimesNewRomanPS-ItalicMT,,23,14
+"1982; Vol. 14, No. 4: 207-217. 
+
+[3]",12,TimesNewRomanPSMT,,36,31
+CIE Commission Internationale de l’Éclairage,12,TimesNewRomanPSMT,,44,44
+", Road lighting as an accident countermeasure, 
+Publication No. 93, 1992. 
+
+[4]",12,TimesNewRomanPSMT,,79,47
+CIE Commission Internationale de l’Éclairage TC 4,12,TimesNewRomanPSMT,,49,49
+-36. Visibility design for roadway,12,TimesNewRomanPSMT,,34,34
+"lighting, Draft, Division 4 & 5 Meeting 2008, Helsinki, Finland.",12,TimesNewRomanPSMT,,64,64
+"[5] CIE, Commission Internat",12,TimesNewRomanPSMT,,28,28
+ionale de l’Éclairage Road Li,12,TimesNewRomanPSMT,,29,29
+"ghting Calculations 2nd edition, 
+Publication No. 140, 2019. 
+
+[6] Pollard N. Sky-glow conscious lighting design.",12,TimesNewRomanPSMT,,113,50
+Lighting Res. Technnol.,12,TimesNewRomanPS-ItalicMT,,23,23
+"1994; 26: 151. 
+
+[7] Cinzano, P. Internal Report 11, Department of Astronomy, Padova, 1994,",12,TimesNewRomanPSMT,,91,74
+www.pd.astro.it/cinzano/refer/,12,TimesNewRomanPS-ItalicMT,,30,30
+,12,TimesNewRomanPSMT,,0,0
+,11,TimesNewRomanPSMT,,0,0
+[8] Enting IG. On the use of smoothing splines to filter CO2 data.,12,TimesNewRomanPSMT,,66,66
+J. Geophys. Res.,12,TimesNewRomanPS-ItalicMT,,16,16
+"1987; 92(D9): 
+10977-10984.",12,TimesNewRomanPSMT,,27,14
+"[9] Perrin F, Pernier J, Bertrand O and Echallier JF. Spherical splines for scalp potential and 
+current density mapping.",12,TimesNewRomanPSMT,,121,96
+Electroencephalography and clinical Neurophysiology,12,TimesNewRomanPS-ItalicMT,,51,51
+"1989; 72: 184-
+187. 
+
+[10] Greiner A and Kauermann G. Sustainability of US public debt: Estimating smoothing spline 
+regressions.",12,TimesNewRomanPSMT,,129,94
+Economic Modelling,12,TimesNewRomanPS-ItalicMT,,18,18
+"2007; 24(2): 350-364. 
+
+[11]",12,TimesNewRomanPSMT,,28,22
+Petržala J,12,TimesNewRomanPSMT,,10,10
+"and Kómar L. Data regression on sphere for luminance map creation from sky 
+scanner measurements.",12,TimesNewRomanPSMT,,97,75
+Sol. Energy,12,TimesNewRomanPS-ItalicMT,,11,11
+"2015; 117: 203-212. 
+
+[12]",12,TimesNewRomanPSMT,,26,20
+"CIE Commission Internationale de l’Éclairage, The",12,TimesNewRomanPSMT,,49,49
+"Photometry and Goniophotometry of 
+Luminaires , 1996. 
+
+[13]",12,TimesNewRomanPSMT,,60,34
+CIE Commission Internationale de l’Éclairage,12,TimesNewRomanPSMT,,44,44
+", Road Lighting Calculations, Publication No. 
+140, 2000. 
+
+[14] Wahba G. Spline interpolation and smoothening on the sphere.",12,TimesNewRomanPSMT,,125,65
+SIAM J. Sci. Stat. Comput.,12,TimesNewRomanPS-ItalicMT,,26,26
+"1980; 2: 5-16. 
+
+[15] Craven P and Wahba G. Smoothing noisy data with spline functions: estimating the correct 
+degree of smoothing by the method of generalized cross-validation.",12,TimesNewRomanPSMT,,178,94
+Numer. Math.,12,TimesNewRomanPS-ItalicMT,,12,12
+"1979; 31: 377-
+403. 
+
+[16] Wahba G. Spline models for observational data.",12,TimesNewRomanPSMT,,73,51
+SIAM,12,TimesNewRomanPS-ItalicMT,,4,4
+"1990, Philadelfia, PA. 
+
+[17] Lou Z and Wahba G. Hybrid adaptive splines.",12,TimesNewRomanPSMT,,73,48
+J. Am. Stat. Assoc.,12,TimesNewRomanPS-ItalicMT,,19,19
+1997; 92: 107-116.,12,TimesNewRomanPSMT,,18,18

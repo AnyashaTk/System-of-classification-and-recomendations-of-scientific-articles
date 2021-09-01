@@ -1,0 +1,3432 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+y,10,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+M,17,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+6,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+c,8,Times-Roman,,1,1
+q,10,Times-Roman,,1,1
+"-
+r",6,Times-Roman,,3,1
+g,10,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"4
+v
+8
+8
+1
+1
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+Rapid and Robust Parameter Inference for Binary Mergers,11,CMBX12,,55,55
+Neil J. Cornish,9,CMR10,,15,15
+"eXtreme Gravity Institute, Department of Physics,
+Montana State University, Bozeman, Montana 59717, USA",8,CMTI9,,103,53
+"The detection rate for compact binary mergers has grown as the sensitivity of the global network
+of ground based gravitational wave detectors has improved, now reaching the stage where robust
+automation of the analyses is essential. Automated low-latency algorithms have been developed
+that send out alerts when candidate signals are detected. The alerts include sky maps to facilitate
+electromagnetic follow up observations, along with probabilities that the system might contain a
+neutron star, and hence be more likely to generate an electromagnetic counterpart. Data quality is-
+sues, such as loud noise transients (glitches), can adversely aﬀect the low-latency algorithms, causing
+false alarms and throwing oﬀ parameter estimation. Here a new analysis method is presented that is
+robust against glitches, and capable of producing fully Bayesian parameter inference, including sky
+maps and mass estimates, in a matter of minutes. Key elements of the method are wavelet-based
+de-noising, penalized maximization of the likelihood during the initial search, rapid sky localization
+using pre-computed inner products, and heterodyned likelihoods for full Bayesian inference.",8,CMR9,,1174,103
+I.,8,CMBX9,,2,2
+INTRODUCTION,8,CMBX9,,12,12
+"What started with a trickle in 2015 [1] has now turned
+into a veritable deluge [2, 3] of gravitational wave signals
+detected by the LIGO and Virgo instruments. Keep-
+ing up with the ever increasing event rate is challeng-
+ing. While the searches for gravitational wave signals are
+now highly automated and capable of producing near-
+real time alerts [4–8], full parameter inference [9, 10] has
+lagged behind. This is in part due to the large compu-
+tational cost of fully Bayesian parameter inference, and
+in part due to the challenge of working with data that
+needs to be carefully calibrated [11, 12] and cleaned of
+various noise contaminants [13–16].",9,CMR10,,653,60
+"The instrument noise in the LIGO and Virgo data is,
+for the most part, well described as locally stationary
+and Gaussian [17]. Short duration signals, such as high
+mass binary black holes, are in the sensitive band of the
+detector for a second or less, and the odds of the signal
+encountering a noise transient is low. However, for longer
+duration signals, such as low mass black hole binaries or
+systems that include a neutron star, the signals are in the
+sensitive band of the detectors for tens of seconds or even
+minutes, and it is likely that the signal will encounter a",9,CMR10,,575,59
+"noise transient. As the low-frequency sensitivity of the
+detectors improve, low mass systems are virtually guar-
+anteed to encounter noise transients. The LIGO/Virgo
+analyses have been fortiﬁed against noise transients using
+a combination of vetoes [18], glitch robust search statis-
+tics [19], gating [20] and glitch subtraction [16]. Gating
+of glitches is used in the online searches, while glitch sub-
+traction is performed prior to oﬀ-line parameter estima-
+tion.",9,CMR10,,467,61
+Here a proof of concept for a robust end-to-end,9,CMR10,,47,47
+low-latency Bayesian parameter estimation algorithm -,9,CMR10,,53,53
+QuickCBC,9,CMTT10,,8,8
+- is presented. The,9,CMR10,,19,19
+QuickCBC,9,CMTT10,,8,8
+"algorithm reads
+in calibrated strain data, performs robust on-source spec-
+tral estimation, executes a rapid search for compact bi-
+nary coalescence (CBC) signals, uses wavelet de-noising
+to subtract any glitches from the search residuals, pro-",9,CMR10,,244,58
+duces low-latency sky maps and initial parameter es-,9,CMR10,,52,52
+"followed by full Bayesian parameter estima-
+timates,
+tion. For binary black holes the",9,CMR10,,85,43
+entire,9,CMTI10,,6,6
+"process takes
+just minutes on a laptop; for binary neutron stars, ini-
+tial sky maps and mass estimates are ready in min-
+utes, and full results are ready in less than an hour.
+The",9,CMR10,,180,56
+QuickCBC,9,CMTT10,,8,8
+code is open source,9,CMR10,,19,19
+"https://github.
+com/eXtremeGravityInstitute/QuickCBC",9,CMTT10,,52,36
+", and can be
+used to analyze public LIGO-Virgo data hosted by the
+Gravitational Wave Open Science Center",9,CMR10,,104,52
+"https://www.
+gw-openscience.org",9,CMTT10,,31,18
+". For testing purposes the algo-
+rithm was run in real time during the LIGO-Virgo O3
+observing run, automatically generating results for trig-
+gers sent to the Gravitational-Wave Candidate Event
+Database.",9,CMR10,,204,57
+"Existing algorithms can perform most of the indi-
+vidual steps in the",9,CMR10,,69,49
+QuickCBC,9,CMTT10,,8,8
+"algorithm. For example,
+the",9,CMR10,,27,23
+PyCBC,9,CMTT10,,5,5
+"search algorithm [20] performs low-latency
+searches for CBC signals that incorporate glitch mit-
+igation via a chi-squared test [19] and automatic gat-
+ing of loud glitches [20]. The",9,CMR10,,182,54
+BayesWave,9,CMTT10,,9,9
+"algorithm [16,
+21, 22], produces on-source spectral estimates and per-
+forms glitch subtraction [3, 23, 24]. The",9,CMR10,,112,55
+BayesStar,9,CMTT10,,9,9
+"algo-
+rithm [25] produces low-latency sky maps to help guide",9,CMR10,,60,54
+"the search for electromagnetic counterparts to binary
+mergers, and several rapid parameter estimation algo-
+rithms have been developed [26–30]. What is novel is
+that",9,CMR10,,165,53
+QuickCBC,9,CMTT10,,8,8
+"is a fully automated, end-to-end analy-
+sis algorithm that is robust against glitches, and able to
+produce reliable results in a matter of minutes. Many
+of the methods used by",9,CMR10,,175,58
+QuickCBC,9,CMTT10,,8,8
+", such as wavelet de-
+noising [31], banded likelihoods for glitch rejection, and
+heterodyned likelihoods for rapid inference [32, 33], are
+new to LIGO-Virgo data analysis.",9,CMR10,,171,58
+Core elements of the,9,CMR10,,20,20
+QuickCBC,9,CMTT10,,8,8
+algorithm have been,9,CMR10,,19,19
+merged with the,9,CMR10,,15,15
+BayesWave,9,CMTT10,,9,9
+"algorithm [34]. The key
+diﬀerence between the implementations is that the",9,CMR10,,73,49
+BayesWave,9,CMTT10,,9,9
+"variant [35] jointly marginalizes over the CBC
+signal parameters, a model for the power spectral density
+(PSD) and a wavelet based model for noise transients.",9,CMR10,,158,57
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"algorithm uses a ﬁxed PSD and a point
+estimate for any noise transients. The other key diﬀer-
+ence is speed:",9,CMR10,,108,55
+QuickCBC,9,CMTT10,,8,8
+"can be provide results with a la-
+tency of minutes, while the more reﬁned",9,CMR10,,73,39
+BayesWave+CBC,9,CMTT10,,13,13
+analysis [35] takes hours.,9,CMR10,,26,26
+II. OVERVIEW OF THE,8,CMBX9,,19,19
+QUICKCBC,8,CMTT9,,8,8
+ALGORITHM,8,CMBX9,,9,9
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"algorithm works with short snippets of
+LIGO-Virgo data, typically 4 to 8 seconds in length when
+searching for binary black holes and 16 to 32 seconds in
+length when searching for binary neutron stars. The run
+time scales roughly linearly with the data volume.",9,CMR10,,259,56
+"The ﬁrst step is to produce estimates for the power
+spectral density in each detector. On-source spectral es-
+timation, where the short segment of data to be searched
+is also used to estimate the power spectral density (PSD),
+can be thrown oﬀ by the presence of loud signals or loud",9,CMR10,,282,58
+"glitches. To avoid such biases,",9,CMR10,,31,31
+QuickCBC,9,CMTT10,,8,8
+"uses an itera-
+tive approach that combines a running median estimate
+for the spectrum with spectral line identiﬁcation and
+wavelet de-noising [31]. The de-noising removes signals
+and glitches, so only the spectral estimate from the ﬁrst
+stage of the analysis is passes to the second stage. The
+second stage performs a rapid, network coherent search
+for CBC signals using a parallel tempered Markov Chain
+Monte Carlo algorithm (PTMCMC) [36] with a banded
+likelihood that is analytically maximized over amplitude,
+phase and arrival time. Only the intrinsic parameters
+of the signal - masses and spins - are explored by the
+PTMCMC. The banded likelihood automatically identi-
+ﬁes and rejects frequency bands that are impacted by
+noise transients. The removal is done separately for each
+time delay, resulting in a robust time-frequency glitch
+rejection method that can detect signals in the presence
+of glitches. The third stage subtracts the best-ﬁt CBC
+waveform from the data, and performs a second round
+of spectral estimation and wavelet de-noising. The de-
+noising produces a glitch model that is subtracted from
+the original data, while preserving any gravitational wave",9,CMR10,,1173,58
+"signals. The cleaned data and updated spectral estimates
+are used in the subsequent stages of the analysis. The
+fourth stage reﬁnes the estimates of the intrinsic param-
+eters using a standard non-maximized and non-banded
+likelihood function. Consequently, the amplitude, phase
+and arrival time at each detector also have to be explored
+by the PTMCMC. The reﬁned estimates for the intrinsic
+parameters are then passed to the ﬁfth stage of the anal-
+ysis, which uses a PTMCMC algorithm with an algebraic
+likelihood function to map out the extrinsic parameters
+of the source - sky location, luminosity distance, inclina-",9,CMR10,,618,59
+tion and polarization angles while holding the intrinsic,9,CMR10,,56,56
+"parameters ﬁxed. Since the extrinsic parameters only im-
+pact the projection of the waveform onto the detectors,
+the inner products in the likelihood can be pre-computed,
+resulting in an algebraic likelihood function that can be
+evaluated in a fraction of a microsecond [37]. With the",9,CMR10,,284,57
+2,9,CMR10,,1,1
+"ﬁrst ﬁve stages complete the algorithm will have pro-
+duced a full three-dimensional sky map (RA, DEC and
+luminosity distance), along with estimates for the com-
+ponent masses and spins. All in about the time is took
+you to read this paragraph. The precise run time will
+depend on the duration and bandwidth of the signal and
+the speed and number of computations cores. For binary
+black hole systems at current LIGO/Virgo sensitivity it is
+usually suﬃcient to use 4 seconds of data sampled at 2048
+Hz. For neutron star - black hole systems it is enough
+to use 8 to 16 seconds of data sampled at 2048 Hz, while
+for binary neutron star systems we need 16 to 32 seconds
+of data sampled at 4096 Hz. For a binary black hole
+system, running on a 2016 MacBook Pro laptop with
+a 2.9 GHz quad-core processor, it takes",9,CMR10,,808,58
+∼,9,CMSY10,,1,1
+"60 seconds
+for the PSD estimation and intrinsic parameter search,
+and an additional",9,CMR10,,83,54
+∼,9,CMSY10,,1,1
+"30 seconds to complete the extrin-
+sic parameter search and produce sky maps. The cost
+of the intrinsic parameter search scales linearly with the",9,CMR10,,145,58
+"data duration, while the cost of the extrinsic parameter
+search scales linearly with the sample rate. Thus, the in-
+trinsic parameter search for neutron-star black hole bina-
+ries takes either two to four times longer than for binary
+black holes, but time to produce a sky map is the same.
+Sky maps can be produced in very low latency by skip-
+ping the intrinsic search and instead using the intrinsic
+parameters provided by the search pipelines (as is done
+by",9,CMR10,,460,58
+BayesStar,9,CMTT10,,9,9
+"[25]). The run time to produce a sky map
+with",9,CMR10,,45,40
+QuickCBC,9,CMTT10,,8,8
+"is comparable to, or a little faster than,",9,CMR10,,42,42
+BayesStar,9,CMTT10,,9,9
+. The main diﬀerence is that the,9,CMR10,,32,32
+QuickCBC,9,CMTT10,,8,8
+"maps are fully Bayesian, while",9,CMR10,,30,30
+BayesStar,9,CMTT10,,9,9
+"maps are only
+approximately so.",9,CMR10,,31,17
+"The ﬁnal stage of the algorithm reﬁnes the initial pa-
+rameter estimates using a PTMCMC algorithm and a
+fast, heterodyned likelihood function [32, 33]. The het-
+erodyned likelihood oﬀers signiﬁcant speed advantages,
+especially for long duration signals such as binary neu-
+tron star inspirals. The run-time for the ﬁnal PTMCMC
+stage scales linearly with the sample rate and is indepen-
+dent of the observation time. On the same laptop com-
+puter described earlier, the PTMCMC stage takes four
+minutes for black hole binaries and neutron star - black
+hole binaries, and eight minutes for neutron star bina-",9,CMR10,,605,58
+"ries. These run-times are several orders magnitude faster
+than the hours or days it takes for",9,CMR10,,93,57
+LALinference,9,CMTT10,,12,12
+"[9, 10]
+to produce results.",9,CMR10,,27,19
+A. Spectral Estimation and Wavelet De-noising,8,CMBX9,,45,45
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"algorithm is design to work with short
+stretches of data, typically between",9,CMR10,,75,38
+T,9,CMMI10,,1,1
+obs,6,CMR7,,3,3
+= 4 and,9,CMR10,,7,7
+T,9,CMMI10,,1,1
+obs,6,CMR7,,3,3
+=,9,CMR10,,1,1
+32 seconds in duration. Traditional spectral estimation,9,CMR10,,55,55
+"techniques, such as Welch averaging, can not be used on
+short data segments like these. The advantages of work-
+ing with short data segments are speed and robustness
+against non-stationary drifts in the power spectrum. The
+disadvantages are low spectral resolution and possible bi-",9,CMR10,,281,58
+3,9,CMR10,,1,1
+"FIG. 2: Time-frequency maps illustrating the spectral es-
+timation and de-noising procedure applied to four seconds
+of LIGO Hanford data surrounding GPS time 1126259462.
+The initial spectral estimation and whitening (upper panel)",8,CMR9,,229,59
+"is impacted by the loud signal from GW150914. Wavelet de-
+noising is used to remove the excess power, then the spectral
+estimation is repeated. The original data is re-whitened (mid-
+dle panel) ready for the next iteration. The process is iterated
+until the excess SNR plateaus. The bottom panel shows the
+de-noised data used to produce the ﬁnal spectral estimate.",8,CMR9,,364,64
+smoothing window ∆,9,CMR10,,18,18
+f,9,CMMI10,,1,1
+"is chosen to strike a balance be-
+tween following the slope of the spectrum (small ∆",9,CMR10,,84,50
+f,9,CMMI10,,1,1
+"’s
+follow the slope), and ignoring sharp spectral lines (large
+∆",9,CMR10,,64,59
+f,9,CMMI10,,1,1
+"’s are robust against lines). More accurately, it is the
+number of Fourier samples in the smoothing window that
+is critical, so for longer observation times smaller win-
+dows can be used. For the shortest 4 second segments
+the default width is ∆",9,CMR10,,245,57
+f,9,CMMI10,,1,1
+"= 16 Hz. The smoothed spectral
+estimate",9,CMR10,,39,30
+S,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") is used to identify spectral lines, which
+are found by taking the ratio",9,CMR10,,73,43
+R,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+S,9,CMMI10,,1,1
+p,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+/S,9,CMMI10,,2,2
+s,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+"), with
+lines deﬁned as regions where this ratio exceeds",9,CMR10,,56,48
+R,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+"= 10.
+The full spectral estimate is then given by",9,CMR10,,49,43
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+,9,CMEX10,,0,0
+S,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+for,9,CMR10,,3,3
+R,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+≤,9,CMSY10,,1,1
+R,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+S,9,CMMI10,,1,1
+p,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+for,9,CMR10,,3,3
+R,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+> R,9,CMMI10,,3,3
+∗,6,CMSY7,,1,1
+.,9,CMMI10,,1,1
+(1),9,CMR10,,3,3
+"The initial spectral estimate is used to whiten the
+˜",9,CMR10,,53,51
+d,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+→,9,CMSY10,,1,1
+˜,9,CMR10,,1,1
+d,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) = ˜,9,CMR10,,5,5
+d,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+/,9,CMMI10,,1,1
+,9,CMEX10,,0,0
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+"). The whitened
+data:
+data is wavelet transformed using an over-complete col-
+lection of Morlet-Gabor continuous wavelets (see the
+top panel of Figure 2). A wavelet de-noising proce-
+dure [31] is then used to remove any non-Gaussian fea-
+tures from the data. Wavelet de-noising is basically a
+time-frequency thresholding technique. For stationary
+Gaussian noise, the wavelet power spectrum,",9,CMR10,,390,55
+S,9,CMMI10,,1,1
+nm,6,CMMI7,,2,2
+", should",9,CMR10,,8,8
+follow a chi-squared distribution with two degrees of free-,9,CMR10,,59,59
+"dom. Wavelet pixels with power above a certain thresh-
+old are identiﬁed, then an inverse wavelet transform of
+these pixels is used to produce a whitened time domain
+reconstruction of the excess power. The reconstructed
+feature is re-colored using the smooth component of the",9,CMR10,,275,55
+FIG. 1: Workﬂow diagram for the,8,CMR9,,31,31
+QuickCBC,8,CMTT9,,8,8
+"algorithm. The
+time domain data,",8,CMR9,,32,17
+d,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+t,8,CMMI9,,1,1
+"), is read in, windowed, and Fourier
+transform to produce ˜",8,CMR9,,59,36
+d,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+f,8,CMMI9,,1,1
+"). An initial on-source PSD esti-
+mate",8,CMR9,,38,33
+S,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+f,8,CMMI9,,1,1
+") is produced using wavelet de-noising to remove
+glitch and signal power. Next the data is searched using a
+glitch-robust likelihood function that maximizes over extrin-
+sic parameters and returns initial estimates for the intrinsic
+parameters",8,CMR9,,243,62
+η,8,CMMI9,,1,1
+". The PSD estimation is then repeated on the
+residual",8,CMR9,,53,44
+d,8,CMMI9,,1,1
+−,8,CMSY9,,1,1
+h,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+η,8,CMMI9,,1,1
+"), and wavelet de-noising is used to ﬁt and re-
+move any glitches ˜",8,CMR9,,67,47
+g,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+f,8,CMMI9,,1,1
+") that might be present in the data. The
+de-glitched data, ˜",8,CMR9,,60,40
+d,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+f,8,CMMI9,,1,1
+),8,CMR9,,1,1
+−,8,CMSY9,,1,1
+˜,8,CMR9,,1,1
+g,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+f,8,CMMI9,,1,1
+"), is used to pre-compute various
+inner products for the projected network likelihood, allowing",8,CMR9,,95,61
+for a rapid mapping of the extrinsic parameters,8,CMR9,,47,47
+,8,CMMI9,,0,0
+ξ,8,CMMI9,,1,1
+", such as the",8,CMR9,,13,13
+"sky position and luminosity distance. The initial estimates
+for the full set of parameters",8,CMR9,,90,59
+θ,8,CMMI9,,1,1
+=,8,CMR9,,1,1
+{,8,CMSY9,,1,1
+"η, ξ",8,CMMI9,,4,4
+},8,CMSY9,,1,1
+", are used along with
+the de-glitched data and reﬁned PSD estimate to initialize the
+heterodyned likelihood function that is used by the PTMCMC
+algorithm to rapidly produce full posterior distribution.",8,CMR9,,201,62
+"ases due to the presence of loud signals or glitches. To
+guard against such biases an iterative wavelet de-noising
+approach is used to remove non-Gaussian features from",9,CMR10,,168,57
+the data.,9,CMR10,,9,9
+"The iterative spectral estimation procedure proceeds
+as follows: A Tukey window is applied to the data to
+limit spectral leakage. A FFT is then used to produce
+a periodogram",9,CMR10,,173,53
+S,9,CMMI10,,1,1
+p,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+). A running median of width ∆,9,CMR10,,30,30
+f,9,CMMI10,,1,1
+is used to smooth the periodogram. The width of the,9,CMR10,,51,51
+4,9,CMR10,,1,1
+BayesWave,9,CMTT10,,9,9
+"trans-dimensional spectral model [21, 22] to
+the glitch-subtracted data. The spectral model includes
+a smooth component described by a cubic spline, and line
+features described by a Lorentzian line model. The run-
+ning median is used to initialize the spline model. The
+spacing of the spline points is determined by comparing
+two running averages of the running median, one with a
+window twice as wide as the other. The usual choice is to
+use 4 Hz and an 8 Hz window. The spline control points
+are spaced more closely in regions where the two aver-
+ages diverge, and spaced further apart in regions where
+the two averages converge. The minimum spacing of the
+spline control points is set at 4 Hz and the maximum
+spacing is set at 32 Hz. The threshold on the ratio of the
+the two averages is set at 20%. The Lorentzian line model
+is initialized using the outliers from the running median
+to set the initial location, amplitude and width of the
+lines. A simple ﬁxed dimension MCMC is then used to
+reﬁne the model parameters. To control unphysical oscil-",9,CMR10,,1051,58
+"lations in the spline model, a prior is used that penalizes
+points with large second derivatives. Figure 4 compares
+the",9,CMR10,,119,59
+QuickCBC,9,CMTT10,,8,8
+spectral estimate to the estimate from the,9,CMR10,,42,42
+BayesWave,9,CMTT10,,9,9
+"algorithm [21, 22]. The",9,CMR10,,23,23
+QuickCBC,9,CMTT10,,8,8
+"estimate
+agrees very well with the",9,CMR10,,34,25
+BayesWave,9,CMTT10,,9,9
+"estimate. The key
+diﬀerence is that the",9,CMR10,,39,21
+QuickCBC,9,CMTT10,,8,8
+"estimate is produced in
+seconds, while the more reﬁned",9,CMR10,,54,30
+BayesWave,9,CMTT10,,9,9
+"estimate takes
+tens of minutes or longer to produce.",9,CMR10,,52,37
+power spectrum,9,CMR10,,14,14
+S,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") and subtracted from the original
+time domain data. The thresholding procedure starts by
+identifying pixels with",9,CMR10,,113,54
+S,9,CMMI10,,1,1
+nm,6,CMMI7,,2,2
+> S,9,CMMI10,,3,3
+0,6,CMR7,,1,1
+", then surrounding pix-
+els with",9,CMR10,,32,23
+S,9,CMMI10,,1,1
+n,6,CMMI7,,1,1
+±,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+m,6,CMMI7,,1,1
+±,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+> S,9,CMMI10,,3,3
+1,6,CMR7,,1,1
+"are also ﬂagged, with the goal
+of identifying clusters of excess power. The standard
+threshold values are",9,CMR10,,105,53
+S,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+= 10 and,9,CMR10,,8,8
+S,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+"= 6. The power
+spectral estimation is repeated using the de-noised data.
+The updated power spectrum is then used to whiten the
+original data, and the wavelet de-noising procedure is re-
+peated. The entire procedure is iterated until the signal-
+to-noise of the non-Gaussian excess plateaus. This typi-
+cally takes just one or two iterations, but data with very
+loud glitches may require as many as ﬁve or six iterations
+for the procedure to converge.",9,CMR10,,450,58
+"Figure 2 illustrates the spectral estimation and de-
+noising procedure using 4 seconds of data surrounding
+GW150914. The initial spectral estimate used to whiten
+the data (top panel) overestimates the height of the spec-
+trum through the band between",9,CMR10,,250,58
+∼,9,CMSY10,,1,1
+40Hz,9,CMR10,,4,4
+→,9,CMSY10,,1,1
+120Hz due,9,CMR10,,9,9
+"to the loud gravitational wave signal. The data in the
+middle panel is whitened using the updated spectrum
+found after the initial round of wavelet de-noising. More
+features are now visible in the mid-band frequencies. In
+this example the procedure converged after two itera-
+tions. The lower panel shows the de-noised data that
+was used to produce the ﬁnal spectral estimate. Figure
+3 shows the whitened time domain reconstruction of the
+feature that was removed by the de-noising process. In
+this instance the feature is the gravitational wave signal
+from a binary black hole merger. It would be a bad idea
+to use the wavelet de-noised data from the spectral esti-
+mation procedure for subsequent stages in the analysis!
+Instead, just the spectral estimate is used.",9,CMR10,,767,58
+"FIG. 4:
+A comparison of power spectral density esti-
+mates using four seconds of LIGO Hanford data surround-
+ing GW150914 centered on GPS time 1126259462. The low-
+latency",8,CMR9,,171,55
+QuickCBC,8,CMTT9,,8,8
+"algorithm produces a good approximation
+to the reference",8,CMR9,,56,39
+BayesWave,8,CMTT9,,9,9
+"estimate. A Welch average us-
+ing 2048 seconds of data surrounding the event is shown for
+comparison.",8,CMR9,,101,59
+B. Parallel Tempered Markov Chain Monte Carlo,8,CMBX9,,45,45
+"FIG. 3: The non-Gaussian feature removed by wavelet de-
+noising during the iterative spectral estimation procedure ap-
+plied to four seconds of LIGO Hanford data centered on GPS
+time 1126259462. In this instance the non-Gaussian feature",8,CMR9,,236,62
+"is the gravitational wave signal from the binary black hole
+merger GW150914.",8,CMR9,,76,59
+The ﬁnal stage of the,9,CMR10,,21,21
+QuickCBC,9,CMTT10,,8,8
+"spectral estimation
+procedure is to ﬁt a ﬁxed dimension version of the",9,CMR10,,70,50
+The,9,CMR10,,3,3
+QuickCBC,9,CMTI10,,8,8
+"algorithm uses a Parallel Tempered
+Markov Chain Monte Carlo (PTMCMC) algorithm [36,
+38, 39] for both the initial search, the fast sky map-",9,CMR10,,138,54
+"-6
+
+-4
+
+-2",6,Helvetica,,10,2
+,6,unknown,,0,0
+0,6,Helvetica,,1,1
+,6,unknown,,0,0
+2,6,Helvetica,,1,1
+,6,unknown,,0,0
+4,6,Helvetica,,1,1
+,6,unknown,,0,0
+6,6,Helvetica,,1,1
+,6,unknown,,0,0
+0.3,6,Helvetica,,3,3
+,6,unknown,,0,0
+0.32,6,Helvetica,,4,4
+,6,unknown,,0,0
+0.34,6,Helvetica,,4,4
+,6,unknown,,0,0
+0.36,6,Helvetica,,4,4
+,6,unknown,,0,0
+0.38,6,Helvetica,,4,4
+,6,unknown,,0,0
+0.4,6,Helvetica,,3,3
+,6,unknown,,0,0
+0.42,6,Helvetica,,4,4
+,6,unknown,,0,0
+0.44,6,Helvetica,,4,4
+,6,unknown,,0,0
+0.46,6,Helvetica,,4,4
+g,3,Helvetica,,1,1
+(,2,Helvetica,,1,1
+t,1,Helvetica,,1,1
+),2,Helvetica,,1,1
+t,6,Helvetica,,1,1
+,6,unknown,,0,0
+(s),6,Helvetica,,3,3
+H1,6,Helvetica,,2,2
+,6,unknown,,0,0
+excess,6,Helvetica,,6,6
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-47,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-46,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-45,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-44,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-43,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-42,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-41,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-40,4,Helvetica,,3,3
+,6,unknown,,0,0
+1x10,6,Helvetica,,4,4
+-39,4,Helvetica,,3,3
+,6,unknown,,0,0
+100,6,Helvetica,,3,3
+,6,unknown,,0,0
+1000,6,Helvetica,,4,4
+S,4,Helvetica,,1,1
+(,2,Helvetica,,1,1
+f,1,Helvetica,,1,1
+),2,Helvetica,,1,1
+,1,unknown,,0,0
+(,2,Helvetica,,1,1
+H,4,Helvetica,,1,1
+z,3,Helvetica,,1,1
+-,1,Helvetica,,1,1
+1,2,Helvetica,,1,1
+),2,Helvetica,,1,1
+f,6,Helvetica,,1,1
+,6,unknown,,0,0
+(Hz)Welch,6,Helvetica,,9,9
+,6,unknown,,0,0
+"Average
+
+H1",6,Helvetica,,11,7
+,6,unknown,,0,0
+"BW
+
+H1",6,Helvetica,,6,2
+,6,unknown,,0,0
+QuickCBC,6,Helvetica,,8,8
+"ping and the full parameter inference. The implemen-
+tation varies slightly between the diﬀerent stages, mostly
+in terms of the likelihood function used, but the central
+engine is the same.",9,CMR10,,189,58
+"The PTMCMC algorithm uses a collection of chains
+that explore likelihoods that are scaled by “inverse tem-
+ln",9,CMR10,,109,57
+L,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+", θ",9,CMMI10,,3,3
+) =,9,CMR10,,3,3
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+θ,9,CMMI10,,1,1
+"). Chains with
+peratures”",9,CMR10,,25,14
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+:,9,CMR10,,1,1
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+"= 1 explore the target posterior, while chains with",9,CMR10,,51,51
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+>,9,CMMI10,,1,1
+"1 range more widely, and help chains to escape
+from local maxima. Chains with",9,CMR10,,77,46
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+<,9,CMMI10,,1,1
+"1 can be used to
+help lock on to weak signals. The temperature ladder
+is set so that there are multiple “cold” chains:",9,CMR10,,118,52
+β,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+"= 1
+for",9,CMR10,,7,3
+i,9,CMMI10,,1,1
+= [1,9,CMR10,,4,4
+", N",9,CMMI10,,3,3
+c,6,CMR7,,1,1
+] that interact with,9,CMR10,,20,20
+N,9,CMMI10,,1,1
+h,6,CMMI7,,1,1
+"“hot” chains on a
+geometrically spaced temperature ladder:",9,CMR10,,58,40
+β,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+α,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+for,9,CMR10,,3,3
+k,9,CMMI10,,1,1
+= [1,9,CMR10,,4,4
+", N",9,CMMI10,,3,3
+h,6,CMR7,,1,1
+]. The choice of increment,9,CMR10,,26,26
+α,9,CMMI10,,1,1
+"and the num-
+ber of hot chains are tunable parameters. Setting",9,CMR10,,62,49
+α,9,CMMI10,,1,1
+"too
+large will result in poor exchange between chains. Set-
+ting",9,CMR10,,64,55
+α,9,CMMI10,,1,1
+"too small will require a prohibitive number of
+chains to reach the desired maximum temperature. A",9,CMR10,,97,50
+"good rule-of-thumb for the maximum temperature is that
+the eﬀective signal-to-noise ratio for the hottest chain,
+SNR",9,CMR10,,116,57
+N,6,CMMI7,,1,1
+h,4,CMMI5,,1,1
+= SNR,9,CMR10,,5,5
+,9,CMEX10,,0,0
+β,9,CMMI10,,1,1
+N,6,CMMI7,,1,1
+k,4,CMMI5,,1,1
+"should be of order 4-5. For typ-
+ical LIGO-Virgo signals with SNR",9,CMR10,,65,32
+∼,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+→,9,CMSY10,,1,1
+20 we need,9,CMR10,,10,10
+β,9,CMMI10,,1,1
+N,6,CMMI7,,1,1
+k,4,CMMI5,,1,1
+∼,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+/,9,CMMI10,,1,1
+4,9,CMR10,,1,1
+→,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+/,9,CMMI10,,1,1
+16. Using a spacing of,9,CMR10,,22,22
+α,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"8 requires
+of order",9,CMR10,,19,10
+N,9,CMMI10,,1,1
+h,6,CMMI7,,1,1
+∼,9,CMSY10,,1,1
+6,9,CMR10,,1,1
+→,9,CMSY10,,1,1
+"12 hot chains to reach the desired
+maximum temperature. These rule-of-thumb settings for
+the PTMCMC temperature ladder have been found to
+work in practice, but the eﬃciency could be improved
+by using dynamic temperature spacing [39]. When loud
+signals (SNR",9,CMR10,,256,53
+>,9,CMMI10,,1,1
+"30) are detected, it may be necessary to
+start a new analysis with additional chains to have a high
+enough maximum temperature.",9,CMR10,,127,58
+"Each chain is updated using a mixture of proposal
+distributions. The standard mix includes draws from
+the prior distribution, jumps along eigenvectors of the
+Fisher information matrix, diﬀerential evolution, Gaus-
+sian jumps along each intrinsic parameter direction and
+a dedicated extrinsic parameter proposal that draws new
+sky locations that maintain the time delay between a
+randomly selected pair of detectors, while analytically
+adjusting the other extrinsic parameters to keep the de-
+tector frame waveforms unchanged. The extrinsic pro-",9,CMR10,,544,56
+posal is described in detail in section IVa of Ref. [16].,9,CMR10,,57,57
+The Fisher information matrix proposal is based on a,9,CMR10,,52,52
+quadratic expansion of the log likelihood:,9,CMR10,,42,42
+Γ,9,CMR10,,1,1
+ij,6,CMMI7,,2,2
+(,9,CMR10,,1,1
+θ,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+−,9,CMSY10,,1,1
+∂,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+∂,9,CMMI10,,1,1
+j,6,CMMI7,,1,1
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+",i",6,CMMI7,,2,2
+A,9,CMSY10,,1,1
+ab,6,CMMI7,,2,2
+,9,CMEX10,,0,0
+A,9,CMSY10,,1,1
+ab,6,CMMI7,,2,2
+,9,CMEX10,,0,0
+= 4,9,CMR10,,3,3
+ab,6,CMMI7,,2,2
+ab,6,CMMI7,,2,2
+Φ,9,CMR10,,1,1
+ab,6,CMMI7,,2,2
+",i",6,CMMI7,,2,2
+Φ,9,CMR10,,1,1
+"ab
+,j",6,CMMI7,,5,2
+",j",6,CMMI7,,2,2
++,9,CMR10,,1,1
+A,9,CMSY10,,1,1
+2,6,CMR7,,1,1
+S,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+df .,9,CMMI10,,4,4
+(2),9,CMR10,,3,3
+Here the derivatives are taken with respect to the wave-,9,CMR10,,56,56
+form parameters,9,CMR10,,15,15
+θ,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+centered on some reference value,9,CMR10,,32,32
+,9,CMMI10,,0,0
+θ,9,CMMI10,,1,1
+".
+The sum is over the detectors,",9,CMR10,,32,30
+a,9,CMMI10,,1,1
+", in the network, and the
+harmonics,",9,CMR10,,36,25
+b,9,CMMI10,,1,1
+", of the gravitational wave signal:",9,CMR10,,35,35
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+A,9,CMSY10,,1,1
+ab,6,CMMI7,,2,2
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+e,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+Φ,6,CMR7,,1,1
+ab,4,CMMI5,,2,2
+(,6,CMR7,,1,1
+f,6,CMMI7,,1,1
+),6,CMR7,,1,1
+.,9,CMMI10,,1,1
+(3),9,CMR10,,3,3
+,9,CMEX10,,0,0
+b,6,CMMI7,,1,1
+5,9,CMR10,,1,1
+(4),9,CMR10,,3,3
+(5),9,CMR10,,3,3
+The reference value,9,CMR10,,19,19
+θ,9,CMMI10,,1,1
+"is updated to the current value of
+the chain every few hundred iterations and the Fisher
+matrix is recomputed at the new location. The Fisher
+matrix proposal employs the eigenvectors",9,CMR10,,182,53
+v,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+k,6,CMMI7,,1,1
+),6,CMR7,,1,1
+"and eigen-
+values",9,CMR10,,17,10
+λ,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+", found by solving the linear system",9,CMR10,,36,36
+Jumps from the current location,9,CMR10,,31,31
+x,9,CMBX10,,1,1
+"to candidate loca-
+tion",9,CMR10,,23,18
+y,9,CMBX10,,1,1
+"are proposed by ﬁrst randomly selecting an eigen-
+direction",9,CMR10,,59,49
+p,9,CMMI10,,1,1
+", and setting",9,CMR10,,13,13
+Γ,9,CMR10,,1,1
+ij,6,CMMI7,,2,2
+v,9,CMMI10,,1,1
+j,6,CMMI7,,1,1
+(,6,CMR7,,1,1
+k,6,CMMI7,,1,1
+),6,CMR7,,1,1
+=,9,CMR10,,1,1
+λ,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+v,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+(,6,CMR7,,1,1
+k,6,CMMI7,,1,1
+),6,CMR7,,1,1
+.,9,CMMI10,,1,1
+y,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+x,9,CMBX10,,1,1
++,9,CMR10,,1,1
+v,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+p,6,CMMI7,,1,1
+),6,CMR7,,1,1
+",",9,CMMI10,,1,1
+γ,9,CMMI10,,1,1
+,9,CMEX10,,0,0
+λ,9,CMMI10,,1,1
+p,6,CMMI7,,1,1
+where,9,CMR10,,5,5
+γ,9,CMMI10,,1,1
+∼ N,9,CMSY10,,3,3
+(0,9,CMR10,,2,2
+",",9,CMMI10,,1,1
+"1) is a zero mean, unit variance Gaus-
+sian deviate. The proposal densities for this jump can-
+cel in the Metropolis-Hastings ratio since the Fisher ma-
+trix is held ﬁxed (aside from occasional infrequent up-
+dates). Jumping along eigen-directions is more robust",9,CMR10,,262,57
+"that drawing from the full Fisher matrix, as the matri-
+ces are often poorly-conditioned. The poor conditioning
+typically only impacts one or two eigen-directions, and
+still allows for good acceptance of jumps along the other
+eigen-directions. Small Gaussian jumps along individual
+parameter directions are included in the proposal mix to
+help cover directions that might not be explored well by
+the Fisher matrix jumps.",9,CMR10,,420,57
+"Diﬀerential evolution (DE) proposals [40] are particu-
+larly good at exploring degenerate directions in parame-
+ter space - the very same directions that cause the Fisher
+matrix to become ill-conditioned. The variant of diﬀer-
+ential evolution used by",9,CMR10,,251,58
+QuickCBC,9,CMTT10,,8,8
+"works as follows: A
+history array of past samples,",9,CMR10,,50,30
+z,9,CMBX10,,1,1
+"is collected for each tem-
+perature level (with multiple copies for the cold chains).
+The array is initialized with draws from the prior. Sam-
+ples are added to the history array after every",9,CMR10,,190,58
+∼,9,CMSY10,,1,1
+"10 it-
+erations. A counter",9,CMR10,,26,19
+j,9,CMMI10,,1,1
+"keeps track of how many samples
+have been added. The new sample added is added to the
+array at index",9,CMR10,,100,53
+j,9,CMMI10,,1,1
+(mod,9,CMR10,,4,4
+N,9,CMMI10,,1,1
+H,6,CMMI7,,1,1
+"). That is, when",9,CMR10,,16,16
+j,9,CMMI10,,1,1
+reaches,9,CMR10,,7,7
+N,9,CMMI10,,1,1
+H,6,CMMI7,,1,1
+"the ﬁrst entry in the array gets replaced and so on. The
+DE proposal is made as follows: Two samples,",9,CMR10,,101,56
+"k, l",9,CMMI10,,4,4
+", are
+drawn from the history array and used to propose a new",9,CMR10,,60,54
+location,9,CMR10,,8,8
+y,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+x,9,CMBX10,,1,1
++,9,CMR10,,1,1
+γ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+z,9,CMBX10,,1,1
+k,6,CMBX7,,1,1
+−,9,CMSY10,,1,1
+z,9,CMBX10,,1,1
+l,6,CMBX7,,1,1
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+(6),9,CMR10,,3,3
+√,9,CMSY10,,1,1
+Here,9,CMR10,,4,4
+γ,9,CMMI10,,1,1
+is drawn from a Gaussian of width 2,9,CMR10,,35,35
+.,9,CMMI10,,1,1
+38,9,CMR10,,2,2
+/,9,CMMI10,,1,1
+2,9,CMR10,,1,1
+d,9,CMMI10,,1,1
+"for
+90% of the DE updates, where",9,CMR10,,32,28
+d,9,CMMI10,,1,1
+"is number of parameters,
+and set to",9,CMR10,,35,24
+γ,9,CMMI10,,1,1
+"= 1 for the rest. The proposal is symmet-
+ric, so the proposal densities cancel in the Metropolis-
+Hastings ratio. The Gaussian DE jumps are good for
+exploring local correlations, while the",9,CMR10,,189,56
+γ,9,CMMI10,,1,1
+= 1 DE jumps,9,CMR10,,12,12
+allow the chains to move between discrete modes of the,9,CMR10,,54,54
+posterior.,9,CMR10,,10,10
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"sampler is currently limited to using
+waveform templates that describe non-precessing, quasi-
+circular binaries. These templates can be parameterized
+in terms of four intrinsic parameters and seven extrinsic",9,CMR10,,207,57
+"parameters. The intrinsic parameters are the individual
+mass",9,CMR10,,60,55
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+", m",9,CMMI10,,3,3
+2,6,CMR7,,1,1
+and the aligned dimensionless spins,9,CMR10,,35,35
+χ,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+", χ",9,CMMI10,,3,3
+2,6,CMR7,,1,1
+".
+Here",9,CMR10,,6,4
+χ,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+·,9,CMSY10,,1,1
+ˆ,9,CMR10,,1,1
+L,9,CMMI10,,1,1
+", where",9,CMR10,,7,7
+χ,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+S/m,9,CMMI10,,3,3
+2,6,CMR7,,1,1
+"is the dimensionless
+spin vector and ˆ",9,CMR10,,38,20
+L,9,CMMI10,,1,1
+"is a unit vector aligned with the orbital
+angular momentum. The seven extrinsic parameters are
+the sky location RA, DEC = (",9,CMR10,,123,52
+"α, β",9,CMMI10,,4,4
+"), luminosity distance",9,CMR10,,22,22
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+", polarization and inclination (",9,CMR10,,32,32
+"ψ, ι",9,CMMI10,,4,4
+"), merger time and
+merger phase (",9,CMR10,,33,18
+t,9,CMMI10,,1,1
+c,6,CMMI7,,1,1
+", φ",9,CMMI10,,3,3
+c,6,CMMI7,,1,1
+).,9,CMR10,,2,2
+√,9,CMSY10,,1,1
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"sampler uses the modiﬁed collection
+of parameters",9,CMR10,,49,35
+η,9,CMMI10,,1,1
+→ {,9,CMSY10,,3,3
+ln,9,CMR10,,2,2
+M,9,CMSY10,,1,1
+",",9,CMMI10,,1,1
+ln,9,CMR10,,2,2
+"M, χ",9,CMMI10,,4,4
+1,6,CMR7,,1,1
+", χ",9,CMMI10,,3,3
+2,6,CMR7,,1,1
+},9,CMSY10,,1,1
+and,9,CMR10,,3,3
+ξ,9,CMMI10,,1,1
+"→
+{",9,CMSY10,,3,1
+"α,",9,CMMI10,,2,2
+sin,9,CMR10,,3,3
+"β,",9,CMMI10,,2,2
+ln,9,CMR10,,2,2
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+", ψ,",9,CMMI10,,4,4
+cos,9,CMR10,,3,3
+"ι, φ",9,CMMI10,,4,4
+c,6,CMMI7,,1,1
+", t",9,CMMI10,,3,3
+c,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+},9,CMSY10,,1,1
+", where",9,CMR10,,7,7
+M,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
++,9,CMR10,,1,1
+m,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+"is
+the total mass and",9,CMR10,,21,18
+M,9,CMSY10,,1,1
+= (,9,CMR10,,3,3
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+m,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+),9,CMR10,,1,1
+3,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+5,6,CMR7,,1,1
+/M,9,CMMI10,,2,2
+1,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+5,6,CMR7,,1,1
+"is the chirp
+mass. The priors are taken to be uniform in all the pa-
+rameters save for",9,CMR10,,86,55
+M,9,CMSY10,,1,1
+", M, D",9,CMMI10,,6,6
+L,6,CMMI7,,1,1
+". For the masses the pri-
+ors are uniform in",9,CMR10,,44,25
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+", m",9,CMMI10,,3,3
+2,6,CMR7,,1,1
+", which can be enforced us-",9,CMR10,,27,27
+M,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+4,9,CMR10,,1,1
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+m,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+".
+ing the Jacobian factor",9,CMR10,,25,23
+J,9,CMMI10,,1,1
+M,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+M m,9,CMMI10,,3,3
+1,6,CMR7,,1,1
+m,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+/,9,CMMI10,,1,1
+"For the distance, the prior is taken to be uniform in lu-
+minosity distance volume, which can be enforced using
+the Jacobian factor",9,CMR10,,131,57
+J,9,CMMI10,,1,1
+D,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+D,9,CMMI10,,1,1
+3,6,CMR7,,1,1
+L,6,CMMI7,,1,1
+. Some waveform mod-,9,CMR10,,20,20
+"els, such as the IMRPhenomD model [41, 42] used to
+produce the plots in this paper, are only considered
+to be reliable for a sub-set of mass ratios and spins.
+To account for this, the prior ranges for the IMRPhe-
+nomD analyses are restricted such that",9,CMR10,,251,54
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+/m,9,CMMI10,,2,2
+2,6,CMR7,,1,1
+<,9,CMMI10,,1,1
+18 and,9,CMR10,,6,6
+|,9,CMSY10,,1,1
+χ,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+< χ,9,CMMI10,,3,3
+max,6,CMR7,,3,3
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"85. The default prior on the spins is uni-
+form in the aligned spin component. To facilitate com-
+parison with the IMRPhenomPv2 precessing model [43],
+which uses a uniform-in-direction spin prior, a second
+spin prior option can be selected that is uniform in the
+aligned spin component for isotopically distributed spins,
+namely,",9,CMR10,,329,58
+p,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+) = ln(,9,CMR10,,7,7
+χ,9,CMMI10,,1,1
+max,6,CMR7,,3,3
+/,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+χ,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+),9,CMR10,,1,1
+/,9,CMMI10,,1,1
+(2,9,CMR10,,2,2
+χ,9,CMMI10,,1,1
+max,6,CMR7,,3,3
+).,9,CMR10,,2,2
+C. Glitch Robust Coherent Search,8,CMBX9,,32,32
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"algorithm can be used to search for CBC
+signals in segments of LIGO/Virgo data. The standard
+usage is to follow-up triggers from template-bank based
+CBC search pipelines, but any valid GPS time will do.",9,CMR10,,202,55
+QuickCBC,9,CMTT10,,8,8
+"executes a stochastic search using a PTMCMC
+algorithm and a glitch-robust maximized likelihood func-
+tion. The search is limited to the dominant waveform",9,CMR10,,153,56
+"harmonic for non-precessing, quasi-circular binaries. As
+such, the search may fail to detect systems with signiﬁ-
+cant contributions from higher modes, strongly precess-
+ing systems, or highly eccentric systems. Extending the
+search to include higher modes is straightforward.
+In-
+cluding precession and eccentricity is far more challeng-
+ing.",9,CMR10,,343,57
+"The dominant waveform harmonic for non-precessing,
+quasi-circular binaries has polarization states related:",9,CMR10,,107,56
+h,9,CMMI10,,1,1
+×,6,CMSY7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) = i,9,CMR10,,5,5
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) where,9,CMR10,,7,7
+,9,CMMI10,,0,0
+=,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+2 cos,9,CMR10,,5,5
+ι,9,CMMI10,,1,1
+(1 + cos,9,CMR10,,8,8
+2,6,CMR7,,1,1
+ι,9,CMMI10,,1,1
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+The detector response can be written as:,9,CMR10,,40,40
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+"θ, f",9,CMMI10,,4,4
+) =,9,CMR10,,3,3
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+(,9,CMR10,,1,1
+"η, f",9,CMMI10,,4,4
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
++ i,9,CMR10,,3,3
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+,9,CMEX10,,0,0
+e,9,CMR10,,1,1
+2,6,CMR7,,1,1
+π,6,CMMI7,,1,1
+i,6,CMR7,,1,1
+f,6,CMMI7,,1,1
+∆,6,CMR7,,1,1
+t,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+e,9,CMR10,,1,1
+i,6,CMR7,,1,1
+φ,6,CMMI7,,1,1
+c,4,CMMI5,,1,1
+(8),9,CMR10,,3,3
+D,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+6,9,CMR10,,1,1
+(9),9,CMR10,,3,3
+(10),9,CMR10,,4,4
++,6,CMR7,,1,1
+(,9,CMR10,,1,1
+"α, β, ψ",9,CMMI10,,7,7
+) and,9,CMR10,,5,5
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+where,9,CMR10,,5,5
+a,9,CMMI10,,1,1
+"labels the detector,",9,CMR10,,20,20
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+(,9,CMR10,,1,1
+"α, β, ψ",9,CMMI10,,7,7
+")
+are the antenna response patterns, ∆",9,CMR10,,38,36
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+"is the arrival time
+relative to the geocenter time,",9,CMR10,,51,31
+φ,9,CMMI10,,1,1
+c,6,CMMI7,,1,1
+"is the merger phase, and",9,CMR10,,24,24
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+"is the luminosity distance. The reference geocenter
+waveform",9,CMR10,,60,51
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+(,9,CMR10,,1,1
+"η, f",9,CMMI10,,4,4
+") is generated using an arbitrary ﬁdu-
+cial luminosity distance",9,CMR10,,63,38
+D,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+", with merger time and phase
+set equal to zero. As such, the reference waveform only
+depends on the four intrinsic parameters",9,CMR10,,125,55
+η,9,CMMI10,,1,1
+. Deﬁning,9,CMR10,,9,9
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+D,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
+2,6,CMR7,,1,1
++,9,CMR10,,1,1
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+2,6,CMR7,,1,1
+,9,CMEX10,,0,0
+1,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+2,6,CMR7,,1,1
+and,9,CMR10,,3,3
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+= atan(,9,CMR10,,7,7
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+/F,9,CMMI10,,2,2
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
+) +,9,CMR10,,3,3
+φ,9,CMMI10,,1,1
+c,6,CMMI7,,1,1
+the response can be written as,9,CMR10,,30,30
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+"θ, f",9,CMMI10,,4,4
+) =,9,CMR10,,3,3
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+(,9,CMR10,,1,1
+"η, f",9,CMMI10,,4,4
+),9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+e,9,CMR10,,1,1
+i,6,CMR7,,1,1
+λ,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+e,9,CMR10,,1,1
+2,6,CMR7,,1,1
+π,6,CMMI7,,1,1
+i,6,CMR7,,1,1
+f,6,CMMI7,,1,1
+∆,6,CMR7,,1,1
+t,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+.,9,CMMI10,,1,1
+(11),9,CMR10,,4,4
+We see that the waveforms in each detector are identi-,9,CMR10,,54,54
+"cal up to an overall amplitude scaling, time shift and
+phase shift. Denoting the data in detector",9,CMR10,,97,54
+a,9,CMMI10,,1,1
+as,9,CMR10,,2,2
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+"),
+the Gaussian log likelihood is given by",9,CMR10,,42,39
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+= (,9,CMR10,,3,3
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+(12),9,CMR10,,4,4
+"1
+2",9,CMR10,,3,1
+"1
+2",9,CMR10,,3,1
+Here (,9,CMR10,,6,6
+x,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+y,9,CMMI10,,1,1
+) denotes the noise weighted inner product,9,CMR10,,42,42
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+y,9,CMMI10,,1,1
+) = 2,9,CMR10,,5,5
+,9,CMEX10,,0,0
+x,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+y,9,CMMI10,,1,1
++,9,CMR10,,1,1
+y,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+x,9,CMMI10,,1,1
+"df ,",9,CMMI10,,4,4
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+(13),9,CMR10,,4,4
+where,9,CMR10,,5,5
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") is the power spectral density of the noise.
+The network log likelihood is found by summing the in-
+dividual contributions: ln",9,CMR10,,127,54
+L,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+a,6,CMMI7,,1,1
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+.,9,CMR10,,1,1
+1. Maximized likelihood,8,CMTI9,,23,23
+"During the search stage, the power spectral density
+is held ﬁxed and the (",9,CMR10,,74,51
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+") term is a constant that
+can be ignored. Standard tricks are used to maximize
+over the amplitude, phase and arrival time of the wave-",9,CMR10,,134,55
+"forms. Writing the signal in terms of unit normalized
+sine and cosine quadratures, (",9,CMR10,,84,53
+h,9,CMMI10,,1,1
+"a,s",6,CMMI7,,3,3
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+"a,s",6,CMMI7,,3,3
+) = (,9,CMR10,,5,5
+h,9,CMMI10,,1,1
+"a,c",6,CMMI7,,3,3
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+"a,c",6,CMMI7,,3,3
+") = 1,
+(",9,CMR10,,8,6
+h,9,CMMI10,,1,1
+"a,s",6,CMMI7,,3,3
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+"a,c",6,CMMI7,,3,3
+) = 0:,9,CMR10,,6,6
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+A,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+"a,s",6,CMMI7,,3,3
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) sin,9,CMR10,,5,5
+φ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
++,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+"a,c",6,CMMI7,,3,3
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) cos,9,CMR10,,5,5
+φ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+(14),9,CMR10,,4,4
+the log likelihood (dropping the (,9,CMR10,,34,34
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+") constant term)
+becomes",9,CMR10,,24,16
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+A,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+) cos(,9,CMR10,,6,6
+φ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+ϕ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+)),9,CMR10,,2,2
+−,9,CMSY10,,1,1
+(15),9,CMR10,,4,4
+"1
+2",9,CMR10,,3,1
+A,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+(7),9,CMR10,,3,3
+where,9,CMR10,,5,5
+η,9,CMMI10,,1,1
+"are the intrinsic parameters of the source, and",9,CMR10,,47,47
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+) =,9,CMR10,,3,3
+|,9,CMSY10,,1,1
+z,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+),9,CMR10,,1,1
+|,9,CMSY10,,1,1
+",",9,CMR10,,1,1
+ϕ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+) = arg,9,CMR10,,7,7
+{,9,CMSY10,,1,1
+z,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+),9,CMR10,,1,1
+},9,CMSY10,,1,1
+where,9,CMR10,,5,5
+z,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+) = 4,9,CMR10,,5,5
+,9,CMEX10,,0,0
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+h,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+"a,c",6,CMMI7,,3,3
+(,9,CMR10,,1,1
+"f, η",9,CMMI10,,4,4
+),9,CMR10,,1,1
+S,9,CMMI10,,1,1
+n,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+e,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+π,6,CMMI7,,1,1
+i,6,CMR7,,1,1
+f t,6,CMMI7,,3,3
+a,4,CMMI5,,1,1
+.,9,CMMI10,,1,1
+(16),9,CMR10,,4,4
+"The likelihood is maximized with respect to amplitude
+and phase by setting",9,CMR10,,74,53
+A,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+and,9,CMR10,,3,3
+φ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+ϕ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+:,9,CMR10,,1,1
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+"a,",6,CMMI7,,2,2
+max,6,CMR7,,3,3
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+) =,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+(17),9,CMR10,,4,4
+"1
+2",9,CMR10,,3,1
+The complex SNR time series,9,CMR10,,27,27
+z,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+") can be computed
+using an inverse fast Fourier transform. The likelihood
+can then be maximized with respect to the time oﬀset",9,CMR10,,126,55
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+by sorting the resulting time series,9,CMR10,,36,36
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+"). The network
+likelihood",9,CMR10,,25,14
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+max,6,CMR7,,3,3
+(,9,CMR10,,1,1
+{,9,CMSY10,,1,1
+t,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+", η",9,CMMI10,,3,3
+) =,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+),9,CMR10,,1,1
+(18),9,CMR10,,4,4
+"1
+2",9,CMR10,,3,1
+,9,CMEX10,,0,0
+a,6,CMMI7,,1,1
+"can be maximized with respect to the arrival times in
+each detector,",9,CMR10,,68,53
+{,9,CMSY10,,1,1
+t,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+", subject to the constraint that the
+time diﬀerences ∆",9,CMR10,,54,36
+t,9,CMMI10,,1,1
+ij,6,CMMI7,,2,2
+=,9,CMR10,,1,1
+|,9,CMSY10,,1,1
+t,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+t,9,CMMI10,,1,1
+j,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+"are less than the light
+travel times between the detector sites. The maximiza-
+tion is done pair-wise between detectors, starting with
+a reference detector. For networks with three or more",9,CMR10,,188,55
+"detectors the pair-wise approach can yield collections of
+time delays that do not correspond to any physical sky lo-
+cation. Similarly, the relative phases may not correspond
+to any physical sky location, inclination and polarization
+angle. In most cases this is not a problem as the extrin-
+sic parameters get reﬁned in the subsequent sky-mapping
+stage of the analysis.",9,CMR10,,370,58
+"When glitches are present in the data, the log likeli-
+hood times series in each detector, ln",9,CMR10,,93,54
+L,9,CMMI10,,1,1
+"a,",6,CMMI7,,2,2
+max,6,CMR7,,3,3
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", η",9,CMMI10,,3,3
+"), may
+have multiple distinct maxima. Some of these maxima
+will be associated with glitches and some will be asso-
+ciated with the signal. To account for this possibility,
+all maxima that are at least 50 ms apart are recored for
+each detector before applying the network time-delay re-
+striction. The algorithm can return multiple solutions,
+each with diﬀerent arrival times, amplitudes and phases.
+A glitch rejection step is then applied to each candidate
+solution before arriving at a unique maximum likelihood
+solution.",9,CMR10,,522,57
+2. Banded Glitch Rejection,8,CMTI9,,26,26
+CBC searches use variants of the,9,CMR10,,32,32
+ρ,9,CMMI10,,1,1
+"search statistic,",9,CMR10,,17,17
+deﬁned for data,9,CMR10,,15,15
+d,9,CMMI10,,1,1
+and templates,9,CMR10,,13,13
+h,9,CMMI10,,1,1
+as,9,CMR10,,2,2
+ρ,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+(,9,CMR10,,1,1
+d,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+")
+(",9,CMR10,,3,1
+h,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+),9,CMR10,,1,1
+1,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+2,6,CMR7,,1,1
+.,9,CMMI10,,1,1
+(19),9,CMR10,,4,4
+"When a glitch is present in the data,",9,CMR10,,37,37
+d,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+n,9,CMMI10,,1,1
++,9,CMR10,,1,1
+g,9,CMMI10,,1,1
+", the
+template can ring-oﬀ against the glitch. Usually this oc-
+curs across a narrow band of frequencies. Looking at
+how",9,CMR10,,120,57
+ρ,9,CMMI10,,1,1
+"accumulates with frequency can be used to detect
+glitches. Rather than steadily accumulating,",9,CMR10,,93,48
+ρ,9,CMMI10,,1,1
+gets a big,9,CMR10,,10,10
+boost in the frequency band where the signal crosses a,9,CMR10,,54,54
+"glitch. Motivated by these considerations, a chi-squared
+test for glitch rejection has been incorporated into CBC
+searches [19]. The statistic uses frequency bands on vary-
+ing width, with the width chosen so that the template has
+equal SNR=",9,CMR10,,241,58
+,9,CMEX10,,0,0
+(,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+) in each band.,9,CMR10,,15,15
+7,9,CMR10,,1,1
+FIG. 5: The banded ¯,8,CMR9,,20,20
+ρ,8,CMMI9,,1,1
+"statistic as a function of central fre-
+quency for a template with chirp mass",8,CMR9,,77,39
+M,8,CMSY9,,1,1
+= 1,8,CMR9,,3,3
+.,8,CMMI9,,1,1
+197,8,CMR9,,3,3
+M,8,CMMI9,,1,1
+,5,CMSY6,,0,0
+", total
+mass",8,CMR9,,12,7
+M,8,CMMI9,,1,1
+= 2,8,CMR9,,3,3
+.,8,CMMI9,,1,1
+8,8,CMR9,,1,1
+M,8,CMMI9,,1,1
+,5,CMSY6,,0,0
+and merger time,8,CMR9,,15,15
+t,8,CMMI9,,1,1
+c,5,CMMI6,,1,1
+= 1187008882,8,CMR9,,12,12
+.,8,CMMI9,,1,1
+"4486
+GPS seconds. The ¯",8,CMR9,,23,18
+ρ,8,CMMI9,,1,1
+"statistic successfully identiﬁes the fre-
+quency bands where the signal track crosses a loud noise tran-",8,CMR9,,104,62
+sient in the LIGO Livingston detector.,8,CMR9,,38,38
+Here we introduce a variant of this approach with,9,CMR10,,49,49
+ﬁxed-width frequency bands. Deﬁning the ¯,9,CMR10,,41,41
+ρ,9,CMMI10,,1,1
+statistic:,9,CMR10,,10,10
+¯,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"f,",9,CMMI10,,2,2
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+(,9,CMR10,,1,1
+d,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+),9,CMR10,,1,1
+max,6,CMR7,,3,3
+φ,6,CMMI7,,1,1
+0,4,CMR5,,1,1
+(,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+),9,CMR10,,1,1
+1,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+2,6,CMR7,,1,1
+(20),9,CMR10,,4,4
+"where the noise-weighted inner products are computed
+across a frequency band of width ∆",9,CMR10,,87,52
+f,9,CMMI10,,1,1
+", centered at fre-
+quency",9,CMR10,,25,18
+f,9,CMMI10,,1,1
+". The inner product of the residual,",9,CMR10,,36,36
+d,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+", and
+the template,",9,CMR10,,19,13
+h,9,CMMI10,,1,1
+", is analytically maximized with respect to
+the overall phase in that band using sine/cosine quadra-
+tures. In pure Gaussian noise,",9,CMR10,,131,56
+d,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+n,9,CMMI10,,1,1
+", we have",9,CMR10,,9,9
+E[¯,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+] = 1,9,CMR10,,5,5
+−,9,CMSY10,,1,1
+SNR,9,CMR10,,3,3
+",",9,CMMI10,,1,1
+Var[¯,9,CMR10,,5,5
+ρ,9,CMMI10,,1,1
+] = 1,9,CMR10,,5,5
+.,9,CMMI10,,1,1
+(21),9,CMR10,,4,4
+"When the template matches a signal in the data,",9,CMR10,,47,47
+d,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+n,9,CMMI10,,1,1
++,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+", we have",9,CMR10,,9,9
+E[¯,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+] = 1,9,CMR10,,5,5
+",",9,CMMI10,,1,1
+Var[¯,9,CMR10,,5,5
+ρ,9,CMMI10,,1,1
+] = 1,9,CMR10,,5,5
+.,9,CMMI10,,1,1
+(22),9,CMR10,,4,4
+"When a glitch is present in the data,",9,CMR10,,37,37
+d,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+n,9,CMMI10,,1,1
++,9,CMR10,,1,1
+g,9,CMMI10,,1,1
+"the
+template rings-oﬀ against a glitch and ¯",9,CMR10,,44,40
+ρ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"f,",9,CMMI10,,2,2
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") becomes
+large and positive. Frequency bands where ¯",9,CMR10,,53,43
+ρ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"f,",9,CMMI10,,2,2
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+>,9,CMMI10,,1,1
+"4
+are excluded from the likelihood calculation. The am-
+plitude and phase maximization are repeated for the full
+template with any glitch-impacted bands removed. The
+banded glitch rejection is applied to the collection of can-
+didate solutions from the original likelihood maximiza-
+tion step. The solution with the largest banded likelihood
+is returned and used by the PTMCMC search algorithm.",9,CMR10,,394,60
+D. Glitch Removal,8,CMBX9,,17,17
+"The PTMCMC search using the banded maximum
+likelihood function returns an initial estimate for the ex-
+trinsic parameters of the signal, along with the arrival",9,CMR10,,159,59
+-5,6,Helvetica,,2,2
+,6,unknown,,0,0
+0,6,Helvetica,,1,1
+,6,unknown,,0,0
+5,6,Helvetica,,1,1
+,6,unknown,,0,0
+10,6,Helvetica,,2,2
+,6,unknown,,0,0
+15,6,Helvetica,,2,2
+,6,unknown,,0,0
+20,6,Helvetica,,2,2
+,6,unknown,,0,0
+25,6,Helvetica,,2,2
+,6,unknown,,0,0
+30,6,Helvetica,,2,2
+,6,unknown,,0,0
+35,6,Helvetica,,2,2
+,6,unknown,,0,0
+40,6,Helvetica,,2,2
+,6,unknown,,0,0
+50,6,Helvetica,,2,2
+,6,unknown,,0,0
+100,6,Helvetica,,3,3
+,6,unknown,,0,0
+150,6,Helvetica,,3,3
+,6,unknown,,0,0
+200,6,Helvetica,,3,3
+,6,unknown,,0,0
+250,6,Helvetica,,3,3
+,6,unknown,,0,0
+300,6,Helvetica,,3,3
+,6,unknown,,0,0
+350,6,Helvetica,,3,3
+ρ,4,Helvetica,,1,1
+-,2,Helvetica,,1,1
+f,6,Helvetica,,1,1
+,6,unknown,,0,0
+"(Hz)H1
+
+L1",6,Helvetica,,10,6
+"times, amplitudes and phases in each detector. This
+solution is then used to subtract the CBC signal from
+the data. The residual is then processed through the
+same spectral estimation procedure that was applied to
+the original data. Figure 6 shows the reconstructed
+glitch model for residual in the LIGO Livingston detec-
+tor roughly a second before the merger of binary neutron
+star GW170817.",9,CMR10,,393,56
+8,9,CMR10,,1,1
+"FIG. 6: The whitened glitch model in LIGO Livingston data
+centered at GPS time 1187008882. The glitch reconstruc-
+tion was performed after a low-latency point estimate for the
+GW170817 signal, which is coincident with the glitch, was
+subtracted from the data.",8,CMR9,,259,61
+"Figure 7 shows time-frequency maps of the LIGO Liv-
+ingston data surrounding the GW170817 event. The up-
+per panel shows the time-frequency track for the point
+estimate of the signal that was subtracted from the data
+prior to the second round of spectral estimation and
+wavelet de-noising. The lower panel shows the whitened
+data after the noise transient has been removed. All sub-
+sequent stages of the analysis are performed using the
+glitch subtracted data.",9,CMR10,,461,57
+"FIG. 7: Time-frequency maps of the LIGO Livingston data
+centered at GPS time 1187008882. The upper panel shows the
+raw whitened data. The black line indicates the reconstructed",8,CMR9,,176,61
+"time-frequency track for GW170817 found using the banded
+maximum likelihood. The best-ﬁt signal is subtracted from
+the data, then wavelet de-noising is used to identify any noise
+transients in the data. The noise transients are removed from
+the original data in preparation for more reﬁned parameter
+estimation (lower panel).",8,CMR9,,325,63
+equation 11). Taking a reference waveform ˆ,9,CMR10,,43,43
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+", scaled to
+unity at some reference distance",9,CMR10,,44,32
+D,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", the log likelihood
+can be written as",9,CMR10,,38,20
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+a,6,CMMI7,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+D,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+where,9,CMR10,,5,5
+,9,CMEX10,,0,0
+e,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+i,6,CMR7,,1,1
+λ,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+) +,9,CMR10,,3,3
+e,9,CMMI10,,1,1
+i,6,CMR7,,1,1
+λ,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+C,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+−,9,CMSY10,,1,1
+.,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+D,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+F,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+2,9,CMR10,,1,1
+D,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+L,6,CMMI7,,1,1
+(23),9,CMR10,,4,4
+C,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+) =,9,CMR10,,3,3
+e,9,CMR10,,1,1
+2,6,CMR7,,1,1
+π,6,CMMI7,,1,1
+i,6,CMR7,,1,1
+f t,6,CMMI7,,3,3
+a,4,CMMI5,,1,1
+"df ,",9,CMMI10,,4,4
+(24),9,CMR10,,4,4
+,9,CMEX10,,0,0
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+ˆ,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
++,6,CMR7,,1,1
+S,9,CMMI10,,1,1
+n,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+E. Low Latency Sky Mapping,8,CMBX9,,26,26
+"The search phase delivers an estimate for the intrinsic
+parameters, in addition to the amplitudes, phases and
+arrival times in each detector. The next step is to ﬁnd ex-
+trinsic parameters that are consistent with the waveforms
+seen in each detector. With three or more detectors the
+problem of solving for the extrinsic parameters",9,CMR10,,331,59
+ξ,9,CMMI10,,1,1
+"given
+the relative amplitudes, arrival times and phases is over-
+constrained, and often ill-posed due to noise. Rather
+than trying to solve the problem analytically, we once",9,CMR10,,173,58
+"again resort to a Monte Carlo approach, this time aided",9,CMR10,,55,55
+by an extremely cheap-to-compute likelihood function.,9,CMR10,,53,53
+When the intrinsic parameters,9,CMR10,,29,29
+η,9,CMMI10,,1,1
+"are held ﬁxed, the
+response in each detector can be found by applying pro-
+jections to a reference geocenter waveform that amount
+to amplitude re-scalings, phase shifts and time shifts (see",9,CMR10,,189,59
+can be evaluated using a Fast Fourier transform (FFT).,9,CMR10,,54,54
+"In order to have suﬃcient time resolution (typically a
+tenth of a millisecond or less), it is necessary to zero-
+pad the frequency series prior to performing the FFT.
+Nonetheless, the computational cost is small. Putting
+everything together we have",9,CMR10,,248,57
+a,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"ξ, θ",9,CMMI10,,4,4
+) =,9,CMR10,,3,3
+2,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+C,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+|,9,CMSY10,,1,1
+cos(,9,CMR10,,4,4
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+arg,9,CMR10,,3,3
+{,9,CMSY10,,1,1
+C,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+},9,CMSY10,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+F,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+D,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+2,9,CMR10,,1,1
+D,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+L,6,CMMI7,,1,1
+(25),9,CMR10,,4,4
+The quantities,9,CMR10,,14,14
+D,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+and,9,CMR10,,3,3
+C,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+) can be pre-computed and,9,CMR10,,25,25
+stored for any choice of intrinsic parameters,9,CMR10,,45,45
+η,9,CMMI10,,1,1
+". The like-
+lihood for any set of extrinsic parameters can then be
+found at the cost of a few multiplications and a cosine,
+allowing for millions of likelihood evaluations per second.
+Similar techniques can be used to accelerate the calcula-",9,CMR10,,241,59
+.,9,CMMI10,,1,1
+-100,6,Helvetica,,4,4
+-50,6,Helvetica,,3,3
+,6,unknown,,0,0
+0,6,Helvetica,,1,1
+,6,unknown,,0,0
+50,6,Helvetica,,2,2
+,6,unknown,,0,0
+100,6,Helvetica,,3,3
+"-1
+
+-0.9
+
+-0.8
+
+-0.7
+
+-0.6
+
+-0.5
+
+-0.4
+
+-0.3
+
+-0.2",6,Helvetica,,50,4
+g,3,Helvetica,,1,1
+(,2,Helvetica,,1,1
+t,1,Helvetica,,1,1
+),2,Helvetica,,1,1
+t,6,Helvetica,,1,1
+,6,unknown,,0,0
+(s),6,Helvetica,,3,3
+L1,6,Helvetica,,2,2
+,6,unknown,,0,0
+glitch,6,Helvetica,,6,6
+"tion of the extrinsic Fisher matrix, Γ",9,CMR10,,38,38
+E,6,CMMI7,,1,1
+ij,6,CMMI7,,2,2
+= (,9,CMR10,,3,3
+∂,9,CMMI10,,1,1
+ξ,6,CMMI7,,1,1
+i,4,CMMI5,,1,1
+h,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+∂,9,CMMI10,,1,1
+ξ,6,CMMI7,,1,1
+j,4,CMMI5,,1,1
+h,9,CMMI10,,1,1
+):,9,CMR10,,2,2
+Γ,9,CMR10,,1,1
+E,6,CMMI7,,1,1
+ij,6,CMMI7,,2,2
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+(,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+F,9,CMMI10,,1,1
+"a,j",6,CMMI7,,3,3
++,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+λ,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+λ,9,CMMI10,,1,1
+"a,j",6,CMMI7,,3,3
+),9,CMR10,,1,1
+H,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+a,6,CMMI7,,1,1
++,9,CMR10,,1,1
+δ,9,CMMI10,,1,1
+it,6,CMMI7,,2,2
+c,4,CMMI5,,1,1
+(2,9,CMR10,,2,2
+πF,9,CMMI10,,2,2
+2,6,CMR7,,1,1
++,9,CMR10,,1,1
+δ,9,CMMI10,,1,1
+it,6,CMMI7,,2,2
+c,4,CMMI5,,1,1
+δ,9,CMMI10,,1,1
+jt,6,CMMI7,,2,2
+c,4,CMMI5,,1,1
+(4,9,CMR10,,2,2
+π,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+F,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+λ,9,CMMI10,,1,1
+",i",6,CMMI7,,2,2
+t,9,CMMI10,,1,1
+"a,j",6,CMMI7,,3,3
+λ,9,CMMI10,,1,1
+",j",6,CMMI7,,2,2
+t,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+),9,CMR10,,1,1
+H,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+a,6,CMMI7,,1,1
+t,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+t,9,CMMI10,,1,1
+"a,j",6,CMMI7,,3,3
+),9,CMR10,,1,1
+H,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+(26),9,CMR10,,4,4
+where,9,CMR10,,5,5
+H,9,CMMI10,,1,1
+ka,6,CMMI7,,2,2
+= (,9,CMR10,,3,3
+f,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+|,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
++,6,CMR7,,1,1
+),9,CMR10,,1,1
+a,6,CMMI7,,1,1
+. The inner products,9,CMR10,,20,20
+H,9,CMMI10,,1,1
+ka,6,CMMI7,,2,2
+"are
+computed once and stored. The luminosity distance can
+be extracted from the reference waveform by re-scaling
+the response function such that",9,CMR10,,144,54
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+→,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+D,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+/D,9,CMMI10,,2,2
+L,6,CMMI7,,1,1
+),9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", with",9,CMR10,,6,6
+D,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+scaled such that,9,CMR10,,16,16
+H,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+a,6,CMMI7,,1,1
+"= 1. The derivatives of ar-
+rival time at each detector,",9,CMR10,,56,28
+t,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+", are non-vanishing for",9,CMR10,,23,23
+{,9,CMSY10,,1,1
+"α, β, t",9,CMMI10,,7,7
+c,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+. The phase derivatives are non-vanishing for,9,CMR10,,45,45
+{,9,CMSY10,,1,1
+"α, β, ψ, ι, φ",9,CMMI10,,13,13
+c,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+:,9,CMR10,,1,1
+λ,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+=,9,CMR10,,1,1
+δ,9,CMMI10,,1,1
+iφ,6,CMMI7,,2,2
+c,4,CMMI5,,1,1
++,9,CMR10,,1,1
+(,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
+(,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+),9,CMR10,,1,1
+",i",6,CMMI7,,2,2
+−,9,CMSY10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+F,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
+",i",6,CMMI7,,2,2
+(,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+)),9,CMR10,,2,2
+.,9,CMMI10,,1,1
+(27),9,CMR10,,4,4
+"while the derivatives of the re-scaled antenna pattern are
+non-vanishing for",9,CMR10,,76,58
+{,9,CMSY10,,1,1
+"α, β, ψ, ι, D",9,CMMI10,,13,13
+L,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+:,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+"a,i",6,CMMI7,,3,3
+=,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+δ,9,CMMI10,,1,1
+iD,6,CMMI7,,2,2
+L,4,CMMI5,,1,1
++,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+D,9,CMMI10,,1,1
+L,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
++,6,CMR7,,1,1
+",i",6,CMMI7,,2,2
++ (,9,CMR10,,3,3
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+)(,9,CMR10,,2,2
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+×,6,CMSY7,,1,1
+),9,CMR10,,1,1
+",i",6,CMMI7,,2,2
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+(28),9,CMR10,,4,4
+F,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+9,9,CMR10,,1,1
+Γ,9,CMR10,,1,1
+"E
+ij",6,CMMI7,,4,2
+"; small Gaussian jumps along each extrinsic parameter
+direction; and deterministic jumps along sky rings that
+preserve the time delay between a randomly selected pair
+of detectors [16]. Samples from the chains with unit in-
+verse temperature are used to produce low latency sky
+maps such as the example shown in Figure 8.",9,CMR10,,321,56
+F. CBC Parameter Estimation,8,CMBX9,,27,27
+"The rapid coherent search and low latency sky map-
+ping yield a good starting solution for a Bayesian explo-
+ration of source parameters. The inference is performed
+using the PTMCMC sampler Fisher matrix proposals,
+diﬀerential evolution, deterministic sky ring jumps in the
+extrinsic parameters and small Gaussian jumps along
+each parameter direction. The analysis is sped up by
+using a heteroydned likelihood function [32, 33].",9,CMR10,,428,58
+The heteroydyned likelihood uses a reference waveform,9,CMR10,,53,53
+¯,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+", in this case the maximum likelihood solution from the
+search, to re-write the log likelihood as",9,CMR10,,97,55
+"1
+2",9,CMR10,,3,1
+ln,9,CMR10,,2,2
+L,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+= (¯,9,CMR10,,4,4
+r,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+¯,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+) +,9,CMR10,,3,3
+(¯,9,CMR10,,2,2
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+¯,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+(¯,9,CMR10,,2,2
+r,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+∆¯,9,CMR10,,2,2
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+(∆¯,9,CMR10,,3,3
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+∆¯,9,CMR10,,2,2
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+"(29)
+where ¯",9,CMR10,,12,7
+r,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+d,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+¯,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+and ∆,9,CMR10,,5,5
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+= ¯,9,CMR10,,3,3
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+. The (¯,9,CMR10,,8,8
+r,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+¯,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+") and
+(¯",9,CMR10,,8,5
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+¯,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+") terms in the likelihood can be computed once and
+stored. The (∆",9,CMR10,,65,50
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+) term can be written as,9,CMR10,,24,24
+"1
+2",9,CMR10,,3,1
+,9,CMEX10,,0,0
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+∗,6,CMSY7,,1,1
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+4,9,CMR10,,1,1
+df,9,CMMI10,,2,2
+= 4,9,CMR10,,3,3
+,9,CMEX10,,0,0
+¯,9,CMR10,,1,1
+A,9,CMSY10,,1,1
+2,6,CMR7,,1,1
++,9,CMR10,,1,1
+A,9,CMSY10,,1,1
+2,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+2 ¯,9,CMR10,,3,3
+AA,9,CMSY10,,2,2
+cos ∆Φ,9,CMR10,,6,6
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+df,9,CMMI10,,2,2
+(30),9,CMR10,,4,4
+where we have used,9,CMR10,,18,18
+h,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+A,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+e,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+Φ(,6,CMR7,,2,2
+f,6,CMMI7,,1,1
+),6,CMR7,,1,1
+", ¯",9,CMR10,,3,3
+h,9,CMMI10,,1,1
+= ¯,9,CMR10,,3,3
+A,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+e,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+¯Φ(,6,CMR7,,3,3
+f,6,CMMI7,,1,1
+),6,CMR7,,1,1
+"and
+∆Φ(",9,CMR10,,7,3
+f,9,CMMI10,,1,1
+) = ¯Φ(,9,CMR10,,7,7
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+Φ(,9,CMR10,,2,2
+f,9,CMMI10,,1,1
+"). The phase diﬀerence between the
+reference waveform ¯",9,CMR10,,55,34
+h,9,CMMI10,,1,1
+", and waveforms drawn from the
+posterior distribution",9,CMR10,,53,30
+h,9,CMMI10,,1,1
+"will always be small, so using a
+reference waveform eﬀectively heterodynes the numera-
+tor of equation (30), rending it a slowly varying function
+of frequency. The (¯",9,CMR10,,166,58
+r,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+") in the likelihood can be writ-
+ten as",9,CMR10,,39,32
+,9,CMEX10,,0,0
+(¯,9,CMR10,,2,2
+r,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+|,9,CMSY10,,1,1
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+) = 4,9,CMR10,,5,5
+(,9,CMR10,,1,1
+,9,CMSY10,,0,0
+¯,9,CMR10,,1,1
+r,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
++,9,CMR10,,1,1
+,9,CMSY10,,0,0
+¯,9,CMR10,,1,1
+r,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+),9,CMR10,,1,1
+"df ,",9,CMMI10,,4,4
+(31),9,CMR10,,4,4
+FIG. 8: Low latency sky map for GW170817. The blue star,8,CMR9,,55,55
+"indicates the location of the electromagnetic counterpart to
+the BNS merger.",8,CMR9,,76,60
+where,9,CMR10,,5,5
+"A PTMCMC algorithm is used to explore the extrinsic
+parameters. The initial “burn-in” phase can be acceler-
+ated by randomly trying out sky locations until one is
+found that yields the correct time delays between the de-
+tectors to within some pre-deﬁned tolerance. However
+the likelihood evaluation is so fast that such acceleration
+is not necessary, and the chains can simply be initialized
+at some random draw from the prior distribution. During",9,CMR10,,448,59
+the burn-in phase the extrinsic PTMCMC uses the same,9,CMR10,,52,52
+"number of chains and the same temperature ladder as
+the intrinsic PTMCMC from the coherent search. Each
+chain inherits the intrinsic parameters from the search
+phase. A mixture of proposal distributions are employed:
+Jumps along eigenvectors of the extrinsic Fisher matrix",9,CMR10,,272,56
+¯,9,CMR10,,1,1
+r,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+¯,9,CMR10,,1,1
+r e,9,CMMI10,,3,3
+−,6,CMSY7,,1,1
+i,6,CMMI7,,1,1
+¯Φ(,6,CMR7,,3,3
+f,6,CMMI7,,1,1
+),6,CMR7,,1,1
+S,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+2,6,CMR7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+s,6,CMMI7,,1,1
+S,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+(32),9,CMR10,,4,4
+(33),9,CMR10,,4,4
+"is the whitened reference residual heterodyned by the
+reference phase and",9,CMR10,,73,53
+,9,CMEX10,,0,0
+¯,9,CMR10,,1,1
+A,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+− A,9,CMSY10,,3,3
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+e,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+i,6,CMMI7,,1,1
+∆Φ(,6,CMR7,,3,3
+f,6,CMMI7,,1,1
+),6,CMR7,,1,1
+,9,CMEX10,,0,0
+∆,9,CMR10,,1,1
+h,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+S,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+/,6,CMMI7,,1,1
+2,6,CMR7,,1,1
+s,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+"is the heterodyned diﬀerence in the waveforms, whitened
+by the smooth component of the amplitude spectral den-
+sity. The integrands in (30) and (31) can be written as
+products of a slowly varying function",9,CMR10,,204,55
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") and a rapidly
+In equation (30) the numerator
+varying function",9,CMR10,,63,30
+r,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+).,9,CMR10,,2,2
+"is a slowly varying function, while the inverse of the
+full power spectral density is a rapidly varying function
+due to the spectral lines. In equation (31) the real and
+imaginary parts of ∆",9,CMR10,,190,57
+h,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+"are slowly varying while the real
+and imaginary parts of the heterodyned residual ¯",9,CMR10,,83,49
+r,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+"are
+rapidly varying. The integrals (in practice sums over fre-
+quency) can be evaluated accurately and rapidly using a
+Legendre polynomial expansion. The sum over frequency
+is broken up into bands of width ∆",9,CMR10,,207,58
+f,9,CMMI10,,1,1
+"and the discrete
+Legendre polynomial expansions of the rapidly varying
+function",9,CMR10,,79,53
+r,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") are computed once and stored for each fre-
+quency band. Each frequency band covers",9,CMR10,,84,44
+M,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+T,9,CMMI10,,1,1
+obs,6,CMR7,,3,3
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+"frequencies, and the number of bands is",9,CMR10,,39,39
+K,9,CMMI10,,1,1
+= 2,9,CMR10,,3,3
+f,9,CMMI10,,1,1
+ring,6,CMR7,,4,4
+/,9,CMMI10,,1,1
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+",
+where",9,CMR10,,7,5
+f,9,CMMI10,,1,1
+ring,6,CMR7,,4,4
+"is the ringdown frequency of the reference
+waveform. The discrete values of the rapidly varying
+function in each band can be expanded in a sum of dis-
+crete Legendre polynomials:",9,CMR10,,178,54
+M,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+,6,CMMI7,,0,0
+=0,6,CMR7,,2,2
+M,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+k,6,CMMI7,,1,1
+=0,6,CMR7,,2,2
+r,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+P,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+(,9,CMR10,,1,1
+k,9,CMMI10,,1,1
+),9,CMR10,,1,1
+(34),9,CMR10,,4,4
+where,9,CMR10,,5,5
+P,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+(,9,CMR10,,1,1
+k,9,CMMI10,,1,1
+") are the discrete Legendre polynomials of or-
+der",9,CMR10,,50,46
+,9,CMMI10,,0,0
+[44] and the expansion coeﬃcients are given by,9,CMR10,,46,46
+ρ,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+=,9,CMR10,,1,1
+α,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+P,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+(,9,CMR10,,1,1
+k,9,CMMI10,,1,1
+),9,CMR10,,1,1
+r,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+(35),9,CMR10,,4,4
+where,9,CMR10,,5,5
+α,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+"is a normalization constant. The contribution
+to the inner products from each frequency band are given
+by",9,CMR10,,105,56
+M,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+k,6,CMMI7,,1,1
+=0,6,CMR7,,2,2
+1,6,CMR7,,1,1
+,9,CMEX10,,0,0
+,6,CMMI7,,0,0
+=0,6,CMR7,,2,2
+s,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+r,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+α,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+,6,CMMI7,,0,0
+ρ,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+σ,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+",",9,CMMI10,,1,1
+(36),9,CMR10,,4,4
+where,9,CMR10,,5,5
+σ,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+"are the expansion coeﬃcients for the slowly
+varying function",9,CMR10,,60,43
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") and the sum has been restricted to
+just the ﬁrst two terms in the Legendre expansion, which
+is usually suﬃcient when using short frequency bands,
+∆",9,CMR10,,149,56
+f,9,CMMI10,,1,1
+≤,9,CMSY10,,1,1
+4 Hz. For the slowly varying function,9,CMR10,,37,37
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+") the
+required expansion coeﬃcients in the",9,CMR10,,42,36
+k < K,9,CMMI10,,5,5
+"frequency
+band are given by",9,CMR10,,27,17
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+= (,9,CMR10,,3,3
+s,9,CMMI10,,1,1
+((,9,CMR10,,2,2
+k,9,CMMI10,,1,1
++ 1)∆,9,CMR10,,5,5
+f,9,CMMI10,,1,1
+) +,9,CMR10,,3,3
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+k,9,CMMI10,,1,1
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+)),9,CMR10,,2,2
+/,9,CMMI10,,1,1
+2 and,9,CMR10,,5,5
+σ,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+= (,9,CMR10,,3,3
+s,9,CMMI10,,1,1
+((,9,CMR10,,2,2
+k,9,CMMI10,,1,1
++ 1)∆,9,CMR10,,5,5
+f,9,CMMI10,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+k,9,CMMI10,,1,1
+∆,9,CMR10,,1,1
+f,9,CMMI10,,1,1
+)),9,CMR10,,2,2
+/,9,CMMI10,,1,1
+"2. The sum (36) includes
+the ﬁrst and last bins in each frequency band, so there is
+a double counting of the contributions from these bins,
+which can be corrected for by subtracting the sum over
+the",9,CMR10,,198,58
+K,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+"2 repeated values values. The heterodyning pro-
+cedure speeds up the likelihood calculations by a factor
+of",9,CMR10,,107,56
+∼,9,CMSY10,,1,1
+M,9,CMMI10,,1,1
+", with the largest speed up being for low mass,
+long duration signals such as those from binary neutron
+star mergers.",9,CMR10,,117,55
+G. Examples from GWTC-2,8,CMBX9,,23,23
+"To illustrate the performance of the sampler, two ex-
+amples were chosen from the second Gravitational Wave
+Transient Catalog, GWTC-2 [3]. The ﬁrst example,",9,CMR10,,156,53
+10,9,CMR10,,2,2
+"GW190924 021846, was chosen as it was one of the
+signals ﬂagged for glitch removal.The second example,
+GW190719 215514, was chosen as it has among the low-
+est signal-to-noise ratios, and thus posed more of a chal-
+lenge for the initial search.",9,CMR10,,244,58
+"The prior ranges on the masses were set between
+0",9,CMR10,,49,47
+.,9,CMMI10,,1,1
+25,9,CMR10,,2,2
+M,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+and 150,9,CMR10,,7,7
+M,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+". The priors on the aligned spin com-
+ponents were chosen to correspond to a uniform distri-
+bution of spin directions and magnitudes in an eﬀort to
+mimic the priors used in the reference LIGO/Virgo anal-
+yses which using the IMRPhenomPv2 precessing spin
+model [43]. The analyses shown here used the IMRPhe-
+nomD phenomenological model [42], which describes the
+dominant",9,CMR10,,370,55
+,9,CMMI10,,0,0
+=,9,CMR10,,1,1
+|,9,CMSY10,,1,1
+m,9,CMMI10,,1,1
+|,9,CMSY10,,1,1
+"= 2 mode of a quasi-circular, spin-
+aligned binary system. To stay within the domain of
+validity of this model the maximum spin magnitude was
+set to",9,CMR10,,148,53
+χ,9,CMMI10,,1,1
+max,6,CMR7,,3,3
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"85 and the maximum mass ratio was set
+to",9,CMR10,,40,37
+m,9,CMMI10,,1,1
+1,6,CMR7,,1,1
+/m,9,CMMI10,,2,2
+2,6,CMR7,,1,1
+<,9,CMMI10,,1,1
+18.,9,CMR10,,3,3
+"FIG. 9: Time-frequency maps of LIGO Livingston data cen-
+tered at GPS time 1253326744. The black line indicates the
+reconstructed time-frequency track for GW190924 021846.
+The upper panel shows the raw whitened data, while the lower",8,CMR9,,232,60
+panel shows the whitened data after wavelet de-noising.,8,CMR9,,55,55
+"Figure 9 illustrates the output of the search phase and
+glitch removal for GW190924 021846. A moderately loud
+glitch that intersects the time-frequency track of the sig-
+nal was identiﬁed and removed from the data.",9,CMR10,,214,59
+Figure 10 compares the output of the full,9,CMR10,,41,41
+QuickCBC,9,CMTT10,,8,8
+"analysis using the internally de-noised with the pub-
+licly released",9,CMR10,,68,53
+LALinference,9,CMTT10,,12,12
+"samples available from the
+GWOSC website. The",9,CMR10,,45,26
+LALinference,9,CMTT10,,12,12
+used a,9,CMR10,,6,6
+BayesWave,9,CMTT10,,9,9
+PSD and glitch model. The results show good agree-,9,CMR10,,50,50
+"ment, the main diﬀerence being that the",9,CMR10,,39,39
+QuickCBC,9,CMTT10,,8,8
+"anal-
+ysis took a few minutes while the",9,CMR10,,39,33
+LALinference,9,CMTT10,,12,12
+"analysis
+took a few days.",9,CMR10,,25,16
+Figure 11 compares the,9,CMR10,,22,22
+QuickCBC,9,CMTT10,,8,8
+and,9,CMR10,,3,3
+LALinference,9,CMTT10,,12,12
+event,9,CMR10,,5,5
+low signal-to-noise,9,CMR10,,19,19
+ratio,9,CMR10,,5,5
+analyses,9,CMR10,,8,8
+the,9,CMR10,,3,3
+for,9,CMR10,,3,3
+"iterations. The posterior distributions from the two
+samplers are again in good agreement.",9,CMR10,,90,52
+11,9,CMR10,,2,2
+III. SUMMARY,8,CMBX9,,12,12
+The,9,CMR10,,3,3
+QuickCBC,9,CMTT10,,8,8
+"analysis pipeline is an end-to-end, open-
+source tool for gravitational wave data analysis. Its key
+features are speed and robustness against noise tran-
+sients. The main limitation of the pipeline is that it
+currently only works with the IMRPhenomD waveform
+model. A near-term development goal
+is to expand
+the range of waveform models, starting with the IM-
+RPhenomHM model [45], which includes contributions
+from higher modes, and the IMRPhenomD NRTidal
+model [46] which includes tidal eﬀects for binanry neu-
+tron star mergers. A longer term goal is to add precessing
+spin models.",9,CMR10,,584,58
+Possible uses for the,9,CMR10,,21,21
+QuickCBC,9,CMTT10,,8,8
+"pipeline for researchers
+outside the LIGO/Virgo collaboration are as a platform
+to develop novel analyses that can be applied to the pub-
+licly released data. Within the LIGO/Virgo collabora-
+tion the pipeline could be used to generate low latency
+sky maps, and to provide estimates for how likely it is
+that the system will result in the disruption of a neu-
+tron star, and thus a good candidate for producing an
+electromagnetic counterpart.",9,CMR10,,442,57
+Acknowledgments,8,CMBX9,,15,15
+"The author is grateful for the support provided by
+NSF award PHY1912053. This work was initiated while
+the author was on sabbatical at the Observatoire de la
+Cˆote d’Azur, kindly hosted by Nelson Christensen. Dis-
+cussions with Tyson Littenberg, Katerina Chatziioannou
+and Marcella Wijngaarden were very helpful. The author
+greatly appreciates Marcella Wijngaarden’s help in track-
+ing down an error in the sky localization algorithm, Char-
+lie Hoy’s help in extracting the",9,CMR10,,473,58
+LALinference,9,CMTT10,,12,12
+"samples
+and Bence B´ecsy’s for writing the scripts for automating",9,CMR10,,65,57
+"the running of the pipeline in response to triggers from
+the Gravitational-Wave Candidate Event Database. The
+author appreciates feedback on a draft version from Will
+Farr and Nelson Christensen. This research has made
+use of data obtained from the Gravitational Wave Open
+Science Center (https://www.gw-openscience.org), a ser-
+vice of LIGO Laboratory, the LIGO Scientiﬁc Collabo-
+ration and the Virgo Collaboration. LIGO is funded by
+the U.S. National Science Foundation. Virgo is funded
+by the French Centre National de Recherche Scientiﬁque",9,CMR10,,544,56
+"(CNRS), the Italian Istituto Nazionale della Fisica Nu-",9,CMR10,,55,55
+"cleare (INFN) and the Dutch Nikhef, with contributions
+by Polish and Hungarian institutes.",9,CMR10,,90,54
+"FIG. 10:
+A comparison of parameter inference for
+GW190924 021846 showing the preferred",8,CMR9,,86,39
+LALinference,8,CMTT9,,12,12
+"IM-
+RPhenomPv2 samples and the",8,CMR9,,30,26
+QuickCBC,8,CMTT9,,8,8
+"IMRPhenomD sam-
+ples.",8,CMR9,,21,15
+"FIG. 11:
+A comparison of parameter inference for
+GW190719 215514 showing the preferred",8,CMR9,,86,39
+LALinference,8,CMTT9,,12,12
+"IM-
+RPhenomPv2 samples and the",8,CMR9,,30,26
+QuickCBC,8,CMTT9,,8,8
+"IMRPhenomD sam-
+ples.",8,CMR9,,21,15
+"GW190719 215514.
+signal
+posed no obstacle to the",9,CMR10,,48,24
+QuickCBC,9,CMTT10,,8,8
+"analysis, with the
+search phase locking onto the signal after a few hundred",9,CMR10,,75,56
+The weakness of,9,CMR10,,15,15
+the,9,CMR10,,3,3
+12,9,CMR10,,2,2
+"[1] B. P. Abbott et al. (Virgo, LIGO Scientiﬁc), Phys. Rev.",8,CMR9,,59,59
+X6,8,CMBX9,,2,2
+", 041015 (2016), 1606.04856.",8,CMR9,,28,28
+"[2] B. Abbott et al. (LIGO Scientiﬁc, Virgo), Phys. Rev. X",8,CMR9,,58,58
+9,8,CMBX9,,1,1
+", 031040 (2019), 1811.12907.",8,CMR9,,28,28
+"[16] N. J. Cornish, T. B. Littenberg, B. B´ecsy, K. Chatziioan-
+nou, J. A. Clark, S. Ghonge, and M. Millhouse (2020),
+2011.09494.",8,CMR9,,129,63
+"[17] B. P. Abbott et al. (LIGO Scientiﬁc, Virgo), Class.",8,CMR9,,56,56
+"[3] R. Abbott et al. (LIGO Scientiﬁc, Virgo) (2020),",8,CMR9,,52,52
+Quant. Grav.,8,CMR9,,12,12
+37,8,CMBX9,,2,2
+", 055002 (2020), 1908.11170.",8,CMR9,,28,28
+2010.14527.,8,CMR9,,11,11
+"[4] C. Messick, K. Blackburn, P. Brady, P. Brockill, K. Can-
+non, R. Cariou, S. Caudill, S. J. Chamberlin, J. D.
+Creighton, R. Everett, et al., Physical Review D",8,CMR9,,161,60
+95,8,CMBX9,,2,2
+"(2017), ISSN 2470-0029, URL",8,CMR9,,27,27
+"http://dx.doi.org/10.
+1103/PhysRevD.95.042001",8,CMTT9,,45,23
+.,8,CMR9,,1,1
+"[5] S. Klimenko, G. Vedovato, M. Drago, F. Salemi, V. Ti-
+wari, G. Prodi, C. Lazzaro, K. Ackley, S. Tiwari,
+C. Da Silva, et al., Physical Review D",8,CMR9,,146,57
+93,8,CMBX9,,2,2
+"(2016),
+ISSN 2470-0029, URL",8,CMR9,,27,19
+"http://dx.doi.org/10.1103/
+PhysRevD.93.042004",8,CMTT9,,45,26
+.,8,CMR9,,1,1
+"[6] T. D. Canton, A. H. Nitz, B. Gadre, G. S. Davies,
+V. Villa-Ortega, T. Dent, I. Harry, and L. Xiao,",8,CMR9,,102,53
+"Real-
+time search for compact binary mergers in advanced ligo",8,CMTI9,,61,55
+and virgo’s third observing run using pycbc live,8,CMTI9,,48,48
+"(2020),
+2008.07494.",8,CMR9,,19,11
+"[7] T. Adams, D. Buskulic, V. Germain, G. M. Guidi,
+F. Marion, M. Montani, B. Mours, F. Piergiovanni, and
+G. Wang, Classical and Quantum Gravity",8,CMR9,,144,53
+33,8,CMBX9,,2,2
+", 175012
+(2016), ISSN 1361-6382, URL",8,CMR9,,36,27
+"http://dx.doi.org/10.
+1088/0264-9381/33/17/175012",8,CMTT9,,49,27
+.,8,CMR9,,1,1
+"[18] B. P. Abbott, R. Abbott, T. D. Abbott, M. R. Aber-
+nathy, F. Acernese, K. Ackley, C. Adams, T. Adams,
+P. Addesso, R. X. Adhikari, et al., Classical and Quan-
+tum Gravity",8,CMR9,,174,55
+35,8,CMBX9,,2,2
+", 065010 (2018), ISSN 1361-6382, URL",8,CMR9,,36,36
+http://dx.doi.org/10.1088/1361-6382/aaaafa,8,CMTT9,,42,42
+".
+[19] B. Allen, Phys. Rev. D",8,CMR9,,29,27
+71,8,CMBX9,,2,2
+", 062001 (2005), gr-qc/0405045.
+[20] S. A. Usman et al., Class. Quant. Grav.",8,CMR9,,76,44
+33,8,CMBX9,,2,2
+", 215004",8,CMR9,,8,8
+"(2016), 1508.02357.",8,CMR9,,19,19
+"[21] N. J. Cornish and T. B. Littenberg, Class. Quant. Grav.",8,CMR9,,60,60
+32,8,CMBX9,,2,2
+", 135012 (2015), 1410.3835.",8,CMR9,,27,27
+"[22] T. B. Littenberg and N. J. Cornish, Phys. Rev. D",8,CMR9,,53,53
+91,8,CMBX9,,2,2
+", 084034 (2015), URL",8,CMR9,,20,20
+"https://link.aps.org/doi/
+10.1103/PhysRevD.91.084034",8,CMTT9,,52,26
+.,8,CMR9,,1,1
+"[23] B. Abbott et al. (LIGO Scientiﬁc, Virgo), Phys. Rev.",8,CMR9,,57,57
+Lett.,8,CMR9,,5,5
+119,8,CMBX9,,3,3
+", 161101 (2017), 1710.05832.",8,CMR9,,28,28
+"[24] C. Pankow et al., Phys. Rev. D",8,CMR9,,35,35
+98,8,CMBX9,,2,2
+", 084016 (2018),",8,CMR9,,16,16
+"[25] L. P. Singer and L. R. Price, Phys. Rev. D",8,CMR9,,47,47
+93,8,CMBX9,,2,2
+", 024013",8,CMR9,,8,8
+1808.03619.,8,CMR9,,11,11
+"(2016), 1508.03634.",8,CMR9,,19,19
+"[26] C. Pankow, P. Brady, E. Ochsner, and R. O’Shaughnessy,",8,CMR9,,59,59
+Phys. Rev. D,8,CMR9,,12,12
+92,8,CMBX9,,2,2
+", 023002 (2015), 1502.04370.",8,CMR9,,28,28
+"[8] Q. Chu, Ph.D. thesis, The University of Western Aus-",8,CMR9,,56,56
+"[27] D. George and E. Huerta, Phys. Lett. B",8,CMR9,,43,43
+778,8,CMBX9,,3,3
+", 64 (2018),",8,CMR9,,12,12
+tralia (2017).,8,CMR9,,14,14
+1711.03121.,8,CMR9,,11,11
+"[9] J. Veitch, V. Raymond, B. Farr, W. Farr, P. Graﬀ, S. Vi-
+tale, B. Aylott, K. Blackburn, N. Christensen, M. Cough-
+lin, et al., Physical Review D",8,CMR9,,148,60
+91,8,CMBX9,,2,2
+"(2015), ISSN 1550-
+2368, URL",8,CMR9,,28,18
+"http://dx.doi.org/10.1103/PhysRevD.91.
+042003",8,CMTT9,,45,38
+.,8,CMR9,,1,1
+"[10] G. Ashton, M. H¨ubner, P. D. Lasky, C. Talbot, K. Ack-
+ley, S. Biscoveanu, Q. Chu, A. Divakarla, P. J. Easter,
+B. Goncharov, et al., The Astrophysical Journal Sup-
+plement Series",8,CMR9,,183,59
+241,8,CMBX9,,3,3
+", 27 (2019), ISSN 1538-4365, URL",8,CMR9,,32,32
+http://dx.doi.org/10.3847/1538-4365/ab06fc,8,CMTT9,,42,42
+".
+[11] A. D. Viets, M. Wade, A. L. Urban, S. Kand-
+hasamy, J. Betzwieser, D. A. Brown, J. Burguet-Castell,
+C. Cahillane, E. Goetz, K. Izumi, et al., Classical and
+Quantum Gravity",8,CMR9,,178,55
+35,8,CMBX9,,2,2
+", 095015 (2018), ISSN 1361-6382,
+URL",8,CMR9,,36,32
+http://dx.doi.org/10.1088/1361-6382/aab658,8,CMTT9,,42,42
+.,8,CMR9,,1,1
+"[12] V. Collaboration, F. Acernese, T. Adams, K. Agatsuma,
+L. Aiello, A. Allocca, M. A. Aloy, A. Amato, S. Antier,
+M. Ar`ene, et al.,",8,CMR9,,133,58
+"Calibration of advanced virgo and re-
+construction of the gravitational wave signal h(t) during
+the observing run o2",8,CMTI9,,116,57
+"(2018), 1807.03275.",8,CMR9,,19,19
+"[13] J. Driggers, S. Vitale, A. Lundgren, M. Evans,
+K. Kawabe, S. Dwyer, K. Izumi, R. Schoﬁeld, A. Eﬄer,
+D. Sigg, et al., Physical Review D",8,CMR9,,139,52
+99,8,CMBX9,,2,2
+"(2019), ISSN 2470-
+0029, URL",8,CMR9,,28,18
+"http://dx.doi.org/10.1103/PhysRevD.99.
+042001",8,CMTT9,,45,38
+.,8,CMR9,,1,1
+"[14] D. Davis, T. Massinger, A. Lundgren, J. C. Driggers,
+A. L. Urban, and L. Nuttall, Classical and Quantum",8,CMR9,,108,57
+Gravity,8,CMR9,,7,7
+36,8,CMBX9,,2,2
+", 055011 (2019), ISSN 1361-6382, URL",8,CMR9,,36,36
+http:,8,CMTT9,,5,5
+//dx.doi.org/10.1088/1361-6382/ab01c5,8,CMTT9,,37,37
+.,8,CMR9,,1,1
+"[15] G. Vajente, Y. Huang, M. Isi, J. Driggers, J. Kissel,
+M. Szczepa´nczyk, and S. Vitale, Physical Review D",8,CMR9,,109,58
+101,8,CMBX9,,3,3
+"(2020), ISSN 2470-0029, URL",8,CMR9,,27,27
+"http://dx.doi.org/10.
+1103/PhysRevD.101.042003",8,CMTT9,,46,24
+.,8,CMR9,,1,1
+"[28] D. Wysocki, R. O’Shaughnessy, J. Lange, and Y.-L. L.
+Fang, Phys. Rev. D",8,CMR9,,76,57
+99,8,CMBX9,,2,2
+", 084026 (2019), 1902.04934.
+[29] R. J. Smith, G. Ashton, A. Vajpeyi, and C. Talbot, Mon.
+Not. Roy. Astron. Soc.",8,CMR9,,112,60
+498,8,CMBX9,,3,3
+", 4492 (2020), 1909.11873.
+[30] A. Delaunoy, A. Wehenkel, T. Hinderer, S. Nissanke,
+C. Weniger, A. R. Williamson, and G. Louppe (2020),
+2010.12931.",8,CMR9,,147,56
+"[31] C. Torrence and G. P. Compo, Bulletin of the American",8,CMR9,,58,58
+Meteorological Society,8,CMR9,,22,22
+79,8,CMBX9,,2,2
+", 61 (1998).",8,CMR9,,12,12
+"[32] N. J. Cornish (2010), 1007.4820.
+[33] N. J. Cornish and K. Shuman, Phys. Rev. D",8,CMR9,,84,46
+101,8,CMBX9,,3,3
+", 124008",8,CMR9,,8,8
+"(2020), 2005.03610.",8,CMR9,,19,19
+"[34] K. Chatziioannou, N. J. Cornish, M. Wijngaarden, and
+T. B. Littenberg (2020), unpublished Manuscript.
+[35] K. Chatziioannou, N. Cornish, M. Wijngaarden, and",8,CMR9,,161,57
+"T. B. Littenberg (2021), 2101.01200.",8,CMR9,,36,36
+"[36] R. H. Swendsen and J.-S. Wang, Phys. Rev. Lett.",8,CMR9,,52,52
+57,8,CMBX9,,2,2
+", 2607 (1986), URL",8,CMR9,,18,18
+"https://link.aps.org/doi/10.
+1103/PhysRevLett.57.2607",8,CMTT9,,53,28
+".
+[37] N. J. Cornish (2016), 1606.00953.
+[38] T. B. Littenberg and N. J. Cornish, Physical Review D",8,CMR9,,99,58
+80,8,CMBX9,,2,2
+"(2009), ISSN 1550-2368, URL",8,CMR9,,27,27
+"http://dx.doi.org/
+10.1103/PhysRevD.80.063007",8,CMTT9,,45,26
+.,8,CMR9,,1,1
+"[39] W. D. Vousden, W. M. Farr, and I. Mandel, Monthly No-
+tices of the Royal Astronomical Society",8,CMR9,,98,58
+455,8,CMBX9,,3,3
+", 1919–1937
+(2015), ISSN 1365-2966, URL",8,CMR9,,39,27
+"http://dx.doi.org/10.
+1093/mnras/stv2422",8,CMTT9,,40,21
+.,8,CMR9,,1,1
+"[40] C. J. Ter Braak, Statistics and Computing",8,CMR9,,46,46
+16,8,CMBX9,,2,2
+", 239",8,CMR9,,5,5
+(2006).,8,CMR9,,7,7
+"[41] S. Husa, S. Khan, M. Hannam, M. P¨urrer, F. Ohme,
+X. Jim´enez Forteza, and A. Boh´e, Phys. Rev. D",8,CMR9,,102,54
+93,8,CMBX9,,2,2
+",
+044006 (2016), 1508.07250.",8,CMR9,,28,26
+"[42] S. Khan, S. Husa, M. Hannam, F. Ohme, M. P¨urrer,",8,CMR9,,54,54
+"X. Jim´enez Forteza, and A. Boh´e, Phys. Rev. D",8,CMR9,,47,47
+93,8,CMBX9,,2,2
+",
+044007 (2016), 1508.07253.",8,CMR9,,28,26
+"[43] M. Hannam, P. Schmidt, A. Boh´e, L. Haegel, S. Husa,
+F. Ohme, G. Pratten, and M. P¨urrer, Physical Review
+Letters",8,CMR9,,118,57
+113,8,CMBX9,,3,3
+"(2014), ISSN 1079-7114, URL",8,CMR9,,27,27
+"http://dx.
+doi.org/10.1103/PhysRevLett.113.151101",8,CMTT9,,49,38
+.,8,CMR9,,1,1
+"[44] C. P. Neuman and D. I. Schonbach, International Jour-
+nal for Numerical Methods in Engineering",8,CMR9,,99,58
+8,8,CMBX9,,1,1
+", 743 (1974),
+https://onlinelibrary.wiley.com/doi/pdf/10.1002/nme.1620080406,
+URL",8,CMR9,,81,63
+"https://onlinelibrary.wiley.com/doi/abs/10.
+1002/nme.1620080406",8,CMTT9,,63,43
+.,8,CMR9,,1,1
+"[45] L. London, S. Khan, E. Fauchon-Jones, C. Garc´ıa,
+M. Hannam, S. Husa, X. Jim´enez-Forteza, C. Kalaghatgi,
+F. Ohme, and F. Pannarale, Phys. Rev. Lett.",8,CMR9,,154,55
+120,8,CMBX9,,3,3
+",
+161102 (2018), URL",8,CMR9,,20,18
+"https://link.aps.org/doi/10.
+1103/PhysRevLett.120.161102",8,CMTT9,,56,28
+.,8,CMR9,,1,1
+"[46] T. Dietrich, S. Khan, R. Dudi, S. J. Kapadia, P. Ku-
+mar, A. Nagar, F. Ohme, F. Pannarale, A. Samaj-
+dar, S. Bernuzzi, et al., Physical Review D",8,CMR9,,149,57
+99,8,CMBX9,,2,2
+"(2019),
+ISSN 2470-0029, URL",8,CMR9,,27,19
+"http://dx.doi.org/10.1103/
+PhysRevD.99.024029",8,CMTT9,,45,26
+.,8,CMR9,,1,1
+13,9,CMR10,,2,2

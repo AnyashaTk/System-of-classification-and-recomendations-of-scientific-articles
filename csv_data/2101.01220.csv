@@ -1,0 +1,925 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+n,10,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+J,7,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+4,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+R,13,Times-Roman,,1,1
+S,11,Times-Roman,,1,1
+.,5,Times-Roman,,1,1
+"h
+p",10,Times-Roman,,3,1
+-,6,Times-Roman,,1,1
+o,10,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+t,5,Times-Roman,,1,1
+s,7,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"1
+v
+0
+2
+2
+1
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+"Draft version January 6, 2021",7,CMCSC10,,29,29
+Typeset using L,7,CMR8,,15,15
+A,5,CMR6,,1,1
+TEX default style in AASTeX62,7,CMR8,,29,29
+Helioseismic Signatures of One- and Two-Cell Meridional Circulation,9,CMR10,,67,67
+"Andrey M. Stejko,",8,CMCSC10,,17,17
+1,5,CMCSC10,,1,1
+"Alexander G. Kosovichev,",8,CMCSC10,,24,24
+1,5,CMCSC10,,1,1
+and Valery V. Pipin,8,CMCSC10,,19,19
+2,5,CMCSC10,,1,1
+1,5,CMR6,,1,1
+"New Jersey Institute of Technology
+323 Dr Martin Luther King Jr Blvd.
+Newark, NJ 07012, USA",7,CMTI8,,91,34
+2,5,CMR6,,1,1
+"Institute of Solar-Terrestrial Physics
+Russian Academy of Sciences
+Irkutsk, 664033, Russia",7,CMTI8,,90,38
+(Received –; Revised –; Accepted –),8,CMR9,,35,35
+Submitted to ApJ,9,CMR10,,16,16
+ABSTRACT,9,CMR10,,8,8
+"Using a 3D global solver of the linearized Euler equations, we model acoustic oscillations over back-
+ground velocity ﬂow ﬁelds of single-cell meridional circulation with deep and shallow return ﬂows as
+well as a double-cell meridional circulation proﬁle. The velocities are generated using a mean-ﬁeld
+hydrodynamic and dynamo model – moving through the regimes with minimal parameter changes;
+counter-rotation near the base of the tachocline is induced by sign inversion of the non-diﬀusive action
+of turbulent Reynolds stresses (Λ-eﬀect) due to the radial inhomogeneity of the Coriolis number. By
+mimicking the stochastic excitation of resonant modes in the convective interior, we simulate real-
+ization noise present in solar observations. Using deep-focusing to analyze diﬀerences in travel-time
+signatures between the three regimes, as well as comparing to solar observations, we show that current
+helioseismology techniques may oﬀer important insights about the location of the return ﬂow, how-
+ever, that it may not be possible to deﬁnitively distinguish between proﬁles of single-cell or double-cell
+meridional circulation.",9,CMR10,,1132,106
+Keywords:,9,CMTI10,,9,9
+"Helioseismology, Computational Methods, Solar Meridional Circulation",9,CMR10,,68,68
+1.,8,CMR9,,2,2
+INTRODUCTION,9,CMR10,,12,12
+"Meridional mass ﬂows are characterized by large circulation structures, redistributing angular momentum and mag-
+netic ﬂux (Hathaway et al. 2003) throughout the convective interior of the Sun. Doppler measurements have been used
+to study the surface expressions of these circulation cells in detail (Duvall 1979; Hathaway 1996; Ulrich 2010), showing",9,CMR10,,349,120
+strong poleward ﬂows (20 m s,9,CMR10,,28,28
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+") in each hemisphere. The Michelson Doppler Imager (MDI) (Scherrer et al. 1995)
+of the Solar and Heliospheric Observatory (SOHO) (Domingo et al. 1995), its successor – the Helioseismic Magnetic
+Imager (HMI) (Scherrer et al. 2012) aboard the Solar Data Observatory (SDO) spacecraft (Pesnell et al. 2012), as well
+as the Global Oscillation Network Group (GONG) (Harvey et al. 1996) have been instrumental in providing the long
+term observational data needed to analyze these structures.",9,CMR10,,484,117
+"Applying techniques in local helioseismology to these observations allows us to probe below the solar surface
+(Christensen-Dalsgaard 2002; Gizon & Birch 2005); cross-correlating measurements of surface oscillations provides
+insight into the structure of ﬂows that advect acoustic rays resonating throughout the convective interior. While
+measurements in subsurface layers (",9,CMR10,,373,113
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+96,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+") have remained relatively consistent (e.g. Giles et al. 1997; Zhao &
+Kosovichev 2004), complications arise when attempting to probe deeper into the solar interior. The return ﬂow of the",9,CMR10,,186,116
+circulation cell has historically been theorized to sit near the tachocline (,9,CMR10,,77,77
+∼,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+72 R,9,CMR10,,4,4
+,6,CMSY7,,0,0
+"), with a velocity weaker than that",9,CMR10,,35,35
+of the surface ﬂow by an order of magnitude (,9,CMR10,,45,45
+∼,9,CMSY10,,1,1
+2 m s,9,CMR10,,5,5
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+") (Giles 1999) – the minimal impact of these ﬂows, along with",9,CMR10,,61,61
+"Corresponding author: Andrey Stejko
+ams226@njit.edu",7,CMR8,,51,35
+2,9,CMR10,,1,1
+Stejko et al.,9,CMCSC10,,13,13
+"systematic errors that are not yet fully understood (Rajaguru & Antia 2020), lead to signiﬁcant diﬃculties in clearly
+resolving deep meridional circulation structures.",9,CMR10,,167,117
+"The manifestation of these diﬃculties can be seen in the variability of inferred meridional velocity proﬁles, with
+more recent estimates of much shallower return ﬂow depths (from",9,CMR10,,178,114
+∼,9,CMSY10,,1,1
+40 to,9,CMR10,,5,5
+∼,9,CMSY10,,1,1
+"70 Mm; Mitra-Kraev & Thompson
+(2007); Hathaway (2012) respectively). The nature of the single-cell model has also been put into question with a
+helioseismic analysis of HMI data (Zhao et al. 2013; Chen 2019) inferring a two-cell structure – a result whose viability
+has been validated by numerical, convectively driven, MHD/HD simulations (Brun & Toomre 2002; Miesch et al. 2006;
+Guerrero et al. 2013; Matilsky et al. 2019). Recent analysis of MDI and GONG data, however, continues to insist
+on the single-cell model (Gizon et al. 2020) – typically employed by mean-ﬁeld simulations of the Sun (Rempel 2005;
+Hotta & Yokoyama 2011; K¨uker et al. 2011; Kitchatinov 2013) and other late-type stars (Kitchatinov & Olemskoy
+2012).",9,CMR10,,725,121
+"The transition between single- and double-cell circulation structures has been explored in conjunction with anti-Solar
+and Solar proﬁles of diﬀerential rotation in the convectively driven hydrodynamic models of Guerrero et al. (2013);
+Gastine et al. (2014); K¨apyl¨a et al. (2014); Featherstone & Miesch (2015). These simulations highlight the impact
+of angular momentum transport by non-diﬀusive turbulent Reynolds stresses via gyroscopic pumping (the Λ-eﬀect,
+Ruediger (1989); Kichatinov & Rudiger (1993)). Mean-ﬁeld modeling has shown that altering this parameter (Λ)
+(Bekki & Yokoyama 2017) can induce the formation of counter-rotation cells in the lower convection zone, with Pipin",9,CMR10,,686,118
+"& Kosovichev (2018) demonstrating that radial variations of the Coriolis number near the tachocline can be a potential
+physical basis for inducing a sign inversion in Λ.",9,CMR10,,169,118
+"In this paper, we employ the GALE (Global Acoustic Linearized Euler) code (Stejko et al. 2021), simulating the
+propagation of acoustic waves through shallow and deep single-cell, as well as double-cell regimes of meridional back-
+ground ﬂows – generated by the mean-ﬁeld non-linear hydrodynamic and dynamo models of Pipin & Kosovichev (2018,
+2019). These models allow us to examine the helioseismic signatures generated by each regime, as well as oﬀering a
+baseline for the low-end of variance in travel-time measurements that characterize shallow single-cell and double-cell
+meridional circulation – generated by minimal parameter changes near the base of the tachocline. Previous conclu-
+sions on the nature of meridional circulation circulation structure have been inferred with the aid of ad-hoc models
+(Zhao et al. 2013; Chen 2019; Hartlep et al. 2013; Gizon et al. 2020); we hope that a forward-modeling approach to
+examining velocity proﬁles generated by mean-ﬁeld models will lend important insights into observations made with
+current helioseismology techniques.",9,CMR10,,1071,118
+This paper is organized as follows. In,9,CMR10,,38,38
+§,9,SFRM1000,,1,1
+2 we brieﬂy describe the formulation of the GALE code. In,9,CMR10,,57,57
+§,9,SFRM1000,,1,1
+"3 we outline
+the deep focusing method used to measure travel-time diﬀerences of acoustic rays propagating throughout the solar
+interior, and in",9,CMR10,,143,113
+§,9,SFRM1000,,1,1
+"4, we present the results of these measurements on three models (K1, M1 & M2) of meridional
+circulation. In",9,CMR10,,107,91
+§,9,SFRM1000,,1,1
+5 we oﬀer an analysis and discussion of these results.,9,CMR10,,54,54
+2.,8,CMR9,,2,2
+MODEL BACKGROUND,9,CMR10,,16,16
+"The GALE (Global Acoustic Linearized Euler) algorithm (Stejko et al. 2021) solves the conservation form of the
+linearized compressible Euler equations on a fully global 3-dimensional grid: 0",9,CMR10,,190,110
+≤,9,CMSY10,,1,1
+φ,9,CMMI10,,1,1
+≤,9,CMSY10,,1,1
+2,9,CMR10,,1,1
+π,9,CMMI10,,1,1
+", 0",9,CMR10,,3,3
+< θ < π,9,CMMI10,,7,7
+", 0",9,CMR10,,3,3
+< r,9,CMMI10,,3,3
+≤,9,CMSY10,,1,1
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+. The,9,CMR10,,5,5
+"linear approximation is solved for perturbations of the potential ﬂow ﬁeld (denoted by a prime), over background ﬁeld
+terms (denoted by a tilde) derived from the standard solar model S (Christensen-Dalsgaard et al. 1996).",9,CMR10,,221,117
+∂ρ,9,CMMI10,,2,2
+,6,CMSY7,,0,0
+∂t,9,CMMI10,,2,2
++ Υ,9,CMR10,,3,3
+,6,CMSY7,,0,0
+= 0,9,CMR10,,3,3
+",",9,CMMI10,,1,1
+∂,9,CMMI10,,1,1
+Υ,9,CMR10,,1,1
+,6,CMSY7,,0,0
+∂t,9,CMMI10,,2,2
+∂p,9,CMMI10,,2,2
+,6,CMSY7,,0,0
+∂t,9,CMMI10,,2,2
+=,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+,9,CMEX10,,0,0
+Γ,9,CMR10,,1,1
+1,6,CMR7,,1,1
+˜,9,CMR10,,1,1
+p,9,CMMI10,,1,1
+˜,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
++,9,CMR10,,1,1
+∇,9,CMBSY10,,1,1
+: (,9,CMR10,,3,3
+m,9,CMBX10,,1,1
+,6,CMSY7,,0,0
+˜,9,CMR10,,1,1
+u,9,CMBX10,,1,1
++ ˜,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+˜,9,CMR10,,1,1
+uu,9,CMBX10,,2,2
+,6,CMSY7,,0,0
+) =,9,CMR10,,3,3
+−∇,9,CMSY10,,2,2
+2,6,CMR7,,1,1
+(,9,CMR10,,1,1
+p,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+),9,CMR10,,1,1
+− ∇ ·,9,CMSY10,,5,5
+(,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+˜,9,CMR10,,1,1
+g,9,CMMI10,,1,1
+r,6,CMMI7,,1,1
+ˆr,9,CMBX10,,2,2
+) +,9,CMR10,,3,3
+∇ ·,9,CMSY10,,3,3
+S,9,CMMI10,,1,1
+ˆr,9,CMBX10,,2,2
+",",9,CMMI10,,1,1
+∇ ·,9,CMSY10,,3,3
+˜,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+u,9,CMBX10,,1,1
+,6,CMSY7,,0,0
++,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+∇ ·,9,CMSY10,,3,3
+˜,9,CMR10,,1,1
+u,9,CMBX10,,1,1
+−,9,CMSY10,,1,1
+˜,9,CMR10,,1,1
+u,9,CMBX10,,1,1
+· ∇,9,CMSY10,,3,3
+˜,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
++ ˜,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+u,9,CMBX10,,1,1
+,6,CMSY7,,0,0
+·,9,CMSY10,,1,1
+p,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+˜,9,CMR10,,1,1
+p,9,CMMI10,,1,1
+,9,CMEX10,,0,0
+N,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+g,9,CMMI10,,1,1
+ˆr,9,CMBX10,,2,2
+.,9,CMMI10,,1,1
+(1),9,CMR10,,3,3
+(2),9,CMR10,,3,3
+(3),9,CMR10,,3,3
+Υ is deﬁned as the divergence of the momentum ﬁeld,9,CMR10,,50,50
+m,9,CMBX10,,1,1
+(Υ =,9,CMR10,,4,4
+∇·,9,CMSY10,,2,2
+m,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+∇·,9,CMSY10,,2,2
+ρ,9,CMMI10,,1,1
+u,9,CMBX10,,1,1
+"), computing perturbations in the potential",9,CMR10,,43,43
+"ﬂow ﬁeld and omitting solenoidal terms in our governing equations. Perturbations are initiated by a randomized
+source function (",9,CMR10,,128,110
+S,9,CMMI10,,1,1
+"), mimicking the stochastic excitation of acoustic modes in the convective interior (Woodard 1984).
+Governing Eqns. (1) - (3) are computed in the pseudo-spectral regime through spherical harmonic decomposition
+(",9,CMR10,,211,109
+f,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+lm,6,CMMI7,,2,2
+aY,9,CMMI10,,2,2
+lm,6,CMMI7,,2,2
+") of ﬁeld terms (Υ,",9,CMR10,,19,19
+ρ,9,CMMI10,,1,1
+",",9,CMR10,,1,1
+p,9,CMMI10,,1,1
+",",9,CMR10,,1,1
+u,9,CMBX10,,1,1
+) using the Libsharp spherical harmonic library (Reinecke & Seljebotn 2013).,9,CMR10,,76,76
+Meridional Circulation,9,CMCSC10,,22,22
+3,9,CMR10,,1,1
+"The current form of our governing equations (Eqns. 1 - 3) are solved in a vector spherical harmonic (VSH) basis, while
+the material derivative is solved in its Cauchy conservation form (",9,CMR10,,186,118
+∇,9,CMBSY10,,1,1
+: (,9,CMR10,,3,3
+m,9,CMBX10,,1,1
+,6,CMSY7,,0,0
+˜,9,CMR10,,1,1
+u,9,CMBX10,,1,1
++ ˜,9,CMR10,,3,3
+ρ,9,CMMI10,,1,1
+˜,9,CMR10,,1,1
+uu,9,CMBX10,,2,2
+,6,CMSY7,,0,0
+")) using a symmetric tensor spherical
+harmonic (TSH) basis. This formulation allows for the use of recursion relations to compute derivatives tangent to
+the surface of the sphere (",9,CMR10,,180,114
+"∂/∂θ, ∂/∂φ",9,CMMI10,,10,10
+"), resulting in the 1D radial relations we solve in our time-discretization scheme.
+The conservation of energy (Eq. 3) is computed as a relationship between pressure and the compressible momentum
+ﬁeld in the adiabatic approximation (Christensen-Dalsgaard 2014), where heat transfer is neglected. Convective action
+in the background model is treated separately by isolating the Brunt-V¨ais¨al¨a frequency (",9,CMR10,,405,117
+N,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+").
+In order to avoid
+growing convective instabilities, we set the slightly negative values of the Brunt-V¨ais¨al¨a frequency in the convection
+zone (",9,CMR10,,149,121
+N,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+<,9,CMMI10,,1,1
+"0) to zero – obviating the need to modify background proﬁles of density, pressure and the adiabatic
+ratio (Γ",9,CMR10,,108,99
+1,6,CMR7,,1,1
+"), see Hanasoge et al. (2006); Parchevsky & Kosovichev (2007); Papini et al. (2014). A full description and
+validation of the model’s algorithm can be found Stejko et al. (2021).",9,CMR10,,178,107
+3.,8,CMR9,,2,2
+METHOD,9,CMR10,,6,6
+The spatial resolution of the model is set by the spherical harmonic degree,9,CMR10,,75,75
+l,9,CMMI10,,1,1
+"= 200. This value corresponds to an
+azimuthal resolution of",9,CMR10,,59,35
+N,9,CMMI10,,1,1
+φ,6,CMMI7,,1,1
+= 600 and a latitudinal resolution of,9,CMR10,,37,37
+N,9,CMMI10,,1,1
+θ,6,CMMI7,,1,1
+"= 450, chosen to avoid aliasing errors during
+sampling. This resolution allows for the detection of signals throughout the convection zone to an upper limit of",9,CMR10,,159,113
+∼,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+96,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+. The temporal cadence of the model is 3 seconds with data being saved at 1 minute intervals for a total,9,CMR10,,104,104
+of 67 hours (4000 minutes) – a time-scale too short to eﬀectively resolve signals in the convection zone (Braun &,9,CMR10,,113,113
+"Birch 2008). We can improve the signal-to-noise ratio (SNR) by increasing the background velocities in our model
+by a factor of 36 (see Hartlep et al. (2013)), mimicking the SNR we would expect in approximately a decade of solar
+observations – within the operational time-frame of HMI.",9,CMR10,,285,115
+"Acoustic oscillations traveling through the solar interior are advected by regimes of mean mass ﬂows in the convection
+zone. Measuring perturbations on the solar surface allows for the application of local helioseismology techniques (see
+Gizon & Birch (2005)) in order to infer the structure of these internal ﬂow velocities. We employ the technique of
+deep focusing (Charbonneau 2005; Zhao et al. 2009), in which radial velocity perturbtaions at two points on the
+model surface, separated by some angular distance (∆), are cross-correlated. The resulting correlation signal forms
+the charectristic proﬁle of a Gabor wavelet (Kosovichev & Duvall 1997; Giles 1999; Nigam et al. 2007), which can be
+described by the function:",9,CMR10,,723,118
+Ψ(,9,CMR10,,2,2
+"τ,",9,CMMI10,,2,2
+∆),9,CMR10,,2,2
+∝,9,CMSY10,,1,1
+,9,CMEX10,,0,0
+cos,9,CMR10,,3,3
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+ω,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+τ,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+,9,CMEX10,,0,0
+exp,9,CMR10,,3,3
+−,9,CMSY10,,1,1
+,9,CMEX10,,0,0
+∆,9,CMR10,,1,1
+v,9,CMMI10,,1,1
+δω,9,CMMI10,,2,2
+2,6,CMR7,,1,1
+4,9,CMR10,,1,1
+,9,CMEX10,,0,0
+τ,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+∆,9,CMR10,,1,1
+u,9,CMMI10,,1,1
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+,9,CMEX10,,0,0
+.,9,CMMI10,,1,1
+δv,6,CMMI7,,2,2
+τ,9,CMMI10,,1,1
+"is the time-lag between the signals,",9,CMR10,,36,36
+ω,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+and,9,CMR10,,3,3
+δω,9,CMMI10,,2,2
+are the central frequency and width of the frequency ﬁlter respectively.,9,CMR10,,72,72
+v,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+ω/,9,CMMI10,,2,2
+,9,CMEX10,,0,0
+l,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+l,9,CMMI10,,1,1
++ 1) is the horizontal phase velocity and,9,CMR10,,41,41
+u,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+∂ω/∂k,9,CMMI10,,5,5
+h,6,CMMI7,,1,1
+"is the horizontal group velocity. The function is
+summed over a narrow range of phase velocities",9,CMR10,,96,49
+δv,9,CMMI10,,2,2
+". We ﬁt this function (Eq. 4) to our cross-correlated signal using
+the iterative Levenberg-Marquardt method, providing an estimate of the time-lag from the group and phase velocities.
+In order to measure the impact of meridional ﬂow ﬁelds on acoustic rays, we subtract the time-lag (",9,CMR10,,283,116
+τ,9,CMMI10,,1,1
+") of southward
+traveling waves from their northward traveling counterparts (",9,CMR10,,76,61
+δτ,9,CMMI10,,2,2
+N S,6,CMMI7,,3,3
+). The ray-path approximation (Giles 1999) then,9,CMR10,,47,47
+"oﬀers a basis for inferring the magnitude of the velocity ﬁeld in the direction of the travelling acoustic ray (assuming
+the path of the ray Γ",9,CMR10,,142,120
+0,6,CMR7,,1,1
+remains unperturbed).,9,CMR10,,21,21
+,9,CMEX10,,0,0
+δτ,9,CMMI10,,2,2
+=,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+2,9,CMR10,,1,1
+u,9,CMBX10,,1,1
+·,9,CMSY10,,1,1
+n,9,CMBX10,,1,1
+c,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+ds .,9,CMMI10,,4,4
+Γ,6,CMR7,,1,1
+0,4,CMR5,,1,1
+"Although this functions omits non-linear eﬀects of large ﬂow velocities, it serves as a good approximation of travel-time
+diﬀerences – seen by computed travel-time comparisons in Fig. 4.",9,CMR10,,186,121
+"This method is applied to the surface mesh-grid of our model, sampled at approximately 300 km above the photo-
+sphere (1",9,CMR10,,120,110
+.,9,CMMI10,,1,1
+0004,9,CMR10,,4,4
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+). Each pixel (,9,CMR10,,15,15
+N,9,CMMI10,,1,1
+θ,6,CMMI7,,1,1
+x,9,CMR10,,1,1
+N,9,CMMI10,,1,1
+φ,6,CMMI7,,1,1
+"= 450 x 600) is treated as a center point around which cubic hermite splines
+are used to remap a 60",9,CMR10,,99,76
+◦,6,CMSY7,,1,1
+x 60,9,CMR10,,4,4
+◦,6,CMSY7,,1,1
+patch into azimuthal equidistant coordinates (Postel’s proejection) at a resolution of,9,CMR10,,86,86
+approximately 0,9,CMR10,,15,15
+.,9,CMMI10,,1,1
+6,9,CMR10,,1,1
+◦,6,CMSY7,,1,1
+per pixel. Great circle distances (∆) are selected at every interval (1,9,CMR10,,71,71
+.,9,CMMI10,,1,1
+2,9,CMR10,,1,1
+◦,6,CMSY7,,1,1
+) from 0,9,CMR10,,8,8
+◦,6,CMSY7,,1,1
+to 60,9,CMR10,,5,5
+◦,6,CMSY7,,1,1
+", for
+which 30",9,CMR10,,14,8
+◦,6,CMSY7,,1,1
+"wide sectors in the north and south (2 pixels in radius) are averaged and cross-correlated with each other.
+This signal can be enhanced by averaging over every point in the longitude (",9,CMR10,,184,107
+N,9,CMMI10,,1,1
+φ,6,CMMI7,,1,1
+= 600) and smoothed by averaging,9,CMR10,,32,32
+±,9,CMSY10,,1,1
+3,9,CMR10,,1,1
+◦,6,CMSY7,,1,1
+(,9,CMR10,,1,1
+±,9,CMSY10,,1,1
+5 pix) in the latitude. We can further smooth our data by averaging the diameter of each great circle over,9,CMR10,,106,106
+±,9,CMSY10,,1,1
+2,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+4,9,CMR10,,1,1
+◦,6,CMSY7,,1,1
+", where travel time oﬀsets are interpolated to an estimated time-lag using the ray-path approximation (Thank",9,CMR10,,108,108
+(4),9,CMR10,,3,3
+(5),9,CMR10,,3,3
+4,9,CMR10,,1,1
+Stejko et al.,9,CMCSC10,,13,13
+"you to Dr. Ruizhu Chen for suggesting this smoothing technique). The application of this method allows for the
+measurement of acoustic travel times and inferences of meridional velocities throughout the convection zone – from
+the convective-radiative interface at the tachocline (0",9,CMR10,,281,114
+.,9,CMMI10,,1,1
+70,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+) to near the solar surface (0,9,CMR10,,30,30
+.,9,CMMI10,,1,1
+96,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+"). An illustration of the
+remapping and pixel selection technique, along with corresponding acoustic ray-paths through the model interior can
+be seen in Fig. 1.",9,CMR10,,160,115
+Figure 1.,8,CMBX9,,9,9
+An illustration of the deep-focusing method. Left) A 60,8,CMR9,,55,55
+◦,5,CMSY6,,1,1
+x 60,8,CMR9,,4,4
+◦,5,CMSY6,,1,1
+"patch is remapped into azimuthal equidistant
+coordinates, pixels are selected in 30",8,CMR9,,83,44
+◦,5,CMSY6,,1,1
+"wide northern and southern sectors (2 pixels in radius). Right) The acoustic ray-paths
+associated with the selected travel distances.",8,CMR9,,133,86
+4.,8,CMR9,,2,2
+"MERIDIONAL PROFILES
+We apply the deep focusing method (",9,CMR10,,55,35
+§,9,SFRM1000,,1,1
+"3) to three proﬁles of meridional circulation generated by non-linear mean-
+ﬁeld hydrodynamic and dynamo models. The ﬁrst is a single-cell meridional circulation model with a deep return ﬂow
+situated near the base of the tachocline – based on the mean-ﬁeld model of Kichatinov (2004) and described as model
+M2 in Pipin & Kosovichev (2018); in this paper we will refer to this model as K1 in order to avoid confusion. The
+next two are a shallow single-cell, with return ﬂow at approximately 0",9,CMR10,,491,115
+.,9,CMMI10,,1,1
+80,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+", and a double-cell meridional circulation
+proﬁle referred to as M1 and M2 respectively in Pipin & Kosovichev (2019). These meridional velocities are used as
+the background terms (˜",9,CMR10,,181,114
+u,9,CMMI10,,1,1
+r,6,CMMI7,,1,1
+",˜",9,CMR10,,2,2
+u,9,CMMI10,,1,1
+θ,6,CMMI7,,1,1
+) in our governing equations (1-3). The latitudinal velocities (˜,9,CMR10,,65,65
+u,9,CMMI10,,1,1
+θ,6,CMMI7,,1,1
+") for the models (M1 &
+M2) are shown in Fig. 2, with streamlines representing the circulation proﬁle.",9,CMR10,,101,78
+We characterize internal meridional ﬂow proﬁles by plotting N-S travel-time diﬀerences (,9,CMR10,,88,88
+δτ,9,CMMI10,,2,2
+N S,6,CMMI7,,3,3
+") as a function of their
+travel distance (∆ = 12",9,CMR10,,48,24
+◦,6,CMSY7,,1,1
+−,9,CMSY10,,1,1
+42,9,CMR10,,2,2
+◦,6,CMSY7,,1,1
+) – corresponding to an increasing depth in the convection zone (,9,CMR10,,65,65
+r,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+93,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+72,9,CMR10,,2,2
+R,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+"). In Fig. 3, we show 5 latitudinal averages (30",9,CMR10,,48,48
+◦,6,CMSY7,,1,1
+N,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+50,9,CMR10,,2,2
+◦,6,CMSY7,,1,1
+"N, 10",9,CMR10,,5,5
+◦,6,CMSY7,,1,1
+N,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+30,9,CMR10,,2,2
+◦,6,CMSY7,,1,1
+"N, 10",9,CMR10,,5,5
+◦,6,CMSY7,,1,1
+S,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+◦,6,CMSY7,,1,1
+"N, 10",9,CMR10,,5,5
+◦,6,CMSY7,,1,1
+S,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+30,9,CMR10,,2,2
+◦,6,CMSY7,,1,1
+"S, 30",9,CMR10,,5,5
+◦,6,CMSY7,,1,1
+S,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+50,9,CMR10,,2,2
+◦,6,CMSY7,,1,1
+S) of,9,CMR10,,5,5
+"these travel-time diﬀerences for our regimes of meridional circulation. Measured travel-time diﬀerences (solid lines)
+are compared to theoretical travel-time diﬀerences (dashed lines) computed using the ray-path approximation (Eq. 5).
+Randomized functions are used to generate the oscillatory signal in our source (",9,CMR10,,315,117
+S,9,CMMI10,,1,1
+", Eq. 2, see Stejko et al. (2021) for
+a detailed description) resulting in unique proﬁles of realization noise – of which three diﬀerent proﬁles are shown for
+models K1, M1 and M2 (Fig. 3). To measure the bounds of our noise, we use 100 unique source functions on a model
+with no background ﬂows; the noise can then be characterized as the standard deviation (",9,CMR10,,360,120
+σ,9,CMMI10,,1,1
+N S,6,CMMI7,,3,3
+") of the measured signal
+from zero:",9,CMR10,,35,24
+σ,9,CMMI10,,1,1
+N S,6,CMMI7,,3,3
+=,9,CMR10,,1,1
+"
+
+
+",9,CMEX10,,3,0
+1,9,CMR10,,1,1
+N,9,CMMI10,,1,1
+N,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+i,6,CMMI7,,1,1
+=1,6,CMR7,,2,2
+δτ,9,CMMI10,,2,2
+2,6,CMR7,,1,1
+i,6,CMMI7,,1,1
+.,9,CMMI10,,1,1
+(6),9,CMR10,,3,3
+"Error-bars in Fig. 3 show one standard deviation of the noise. We can improve the SNR in our measurements
+signiﬁcantly – especially at larger travel distances, by applying a phase-velocity ﬁlter to our data prior to deep focusing.
+The ﬁlter is deﬁned as a Gaussian function in phase-velocity space (Nigam et al. 2007) with a width of",9,CMR10,,333,124
+σ,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+v,9,CMMI10,,1,1
+",
+where",9,CMR10,,7,5
+v,9,CMMI10,,1,1
+is the phase speed (,9,CMR10,,20,20
+ω/l,9,CMMI10,,3,3
+(,9,CMR10,,1,1
+l,9,CMMI10,,1,1
++ 1)). The resulting travel-time diﬀerences can be seen at the bottom of Fig. 3.,9,CMR10,,80,80
+Meridional Circulation,9,CMCSC10,,22,22
+5,9,CMR10,,1,1
+Figure 2.,8,CMBX9,,9,9
+Latitudinal velocities (˜,8,CMR9,,25,25
+u,8,CMMI9,,1,1
+θ,5,CMMI6,,1,1
+"), generated by the mean-ﬁeld models of Pipin & Kosovichev (2018) (K1 – referred to as
+M2 in their paper) and Pipin & Kosovichev (2019) (M1 and M2). a) Single-cell meridional circulation with a deep return ﬂow",8,CMR9,,209,122
+near the base of the tachocline. b) Single-cell meridional circulation with a shallow return ﬂow at,8,CMR9,,99,99
+∼,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+80,8,CMR9,,2,2
+R,8,CMMI9,,1,1
+,5,CMSY6,,0,0
+". c) Double-cell
+meridional circulation. Solid and dashed contours represent counterclockwise and clockwise rotation respectively.",8,CMR9,,130,113
+Figure 3.,8,CMBX9,,9,9
+The N-S travel-time diﬀerences (,8,CMR9,,32,32
+δτ,8,CMMI9,,2,2
+N S,5,CMMI6,,3,3
+") as a function of travel distance (∆) for models K1 (left; a,d), M1 (center;
+b,e) and M2 (right; c,f). The travel-time measurements are shown unﬁltered (a,b,c) and under the application of Gaussian
+phase-speed ﬁlter (",8,CMR9,,218,120
+σ,8,CMMI9,,1,1
+= 0,8,CMR9,,3,3
+.,8,CMMI9,,1,1
+05,8,CMR9,,2,2
+v,8,CMMI9,,1,1
+p,5,CMMI6,,1,1
+"; d,e,f) for 5 latitudinal averages spanning 30",8,CMR9,,47,47
+◦,5,CMSY6,,1,1
+N,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+50,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+N,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+30,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+30,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"S,
+30",8,CMR9,,5,2
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+50,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"S. Dashed lines are theoretical times computed using the ray-path approximation (Eq. 5). Error bars show the
+standard deviation of the measured realization noise (",8,CMR9,,163,108
+σ,8,CMMI9,,1,1
+N S,5,CMMI6,,3,3
+", Eq. 6).",8,CMR9,,9,9
+"Comparing the signals from the three models, we see a noticeable variation in the travel-time diﬀerences of the",9,CMR10,,111,111
+"deep single-cell (K1) proﬁle – showing a much less rapid decrease with travel distance, resulting in a gap wider than
+one standard deviation of the noise throughout a large part of the convective interior. The shallow single-cell and
+double-cell regimes (M1 and M2 respectively) however, fall within one standard deviation of the range of realization
+noise, even with the signiﬁcant increase in the SNR through the application of a phase-velocity ﬁlter. These results",9,CMR10,,467,117
+6,9,CMR10,,1,1
+Stejko et al.,9,CMCSC10,,13,13
+"have positive implications for distinguishing between deep and shallow single-cell meridional circulation, however
+the diﬀerences between shallow single- and double-cell proﬁles are much more subtle; using current helioseismology
+techniques, within the time-frame of HMI measurements (",9,CMR10,,285,114
+∼,9,CMSY10,,1,1
+"10 years), any deﬁnitive statements on whether meridional
+circulation has one or two cells may be diﬃcult to make.",9,CMR10,,114,57
+"In order to highlight systematic errors present in our model, as well as compare our measurements to ray-path
+theory, we subtract noise proﬁles from our measurements of travel-time diﬀerences in models K1, M1 and M2, for the
+phase-speed ﬁltered data-set (Fig. 4) – revealing a close and consistent agreement with the travel-time diﬀerences
+computed using the ray-path approximation.",9,CMR10,,382,114
+Figure 4.,8,CMBX9,,9,9
+The N-S travel-time diﬀerences (,8,CMR9,,32,32
+δτ,8,CMMI9,,2,2
+N S,5,CMMI6,,3,3
+") as a function of travel distance (∆) for models K1 (a), M1 (b) and M2
+(c) under the application of Gaussian phase-speed ﬁlter (",8,CMR9,,129,71
+σ,8,CMMI9,,1,1
+= 0,8,CMR9,,3,3
+.,8,CMMI9,,1,1
+05,8,CMR9,,2,2
+v,8,CMMI9,,1,1
+p,5,CMMI6,,1,1
+") with proﬁles of noise subtracted, showing 5 latitudinal
+averages spanning 30",8,CMR9,,78,57
+◦,5,CMSY6,,1,1
+N,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+50,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+N,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+30,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+30,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"S, 30",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+50,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"S. Dashed lines are theoretical times
+computed using the ray-path approximation (Eq. 5).",8,CMR9,,88,50
+"We further compare our models to the publicly available data from the analysis of Gizon et al. (2020) (Fig. 5),
+scaling the travel-time diﬀerences computed using the ray-path approximation in our models (K1, M1 & M2), to their
+travel-time measurements using MDI/GONG observations for Solar Cycle 24 (2008-2019).
+It is apparent that the
+level of noise is too large to draw signiﬁcant conclusions distinguishing single- and double-cell regimes of of meridional
+circulation (M1 & M2), however the measurements do seem to be more consistent with shallower return ﬂow (M1) as
+opposed to a deeper one (K1).",9,CMR10,,600,122
+Figure 5.,8,CMBX9,,9,9
+The N-S travel-time diﬀerences (,8,CMR9,,32,32
+δτ,8,CMMI9,,2,2
+N S,5,CMMI6,,3,3
+") as a function of travel distance (∆) for MDI/GONG data published by
+Gizon et al. (2020). Latitude ranges in both hemispheres (10",8,CMR9,,130,69
+◦,5,CMSY6,,1,1
+N,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+30,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+"N, 10",8,CMR9,,5,5
+◦,5,CMSY6,,1,1
+S,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+30,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+S) are averaged in order to reduce noise,8,CMR9,,40,40
+"and are compared to dashed lines representing latitudinal averages for models K1, M1 and M2 as measured using the ray-path
+approximation (Eq. 5). Error-bars are computed as the standard deviation (",8,CMR9,,197,122
+σ,8,CMMI9,,1,1
+", Eq. 6) of the travel-time diﬀerences in the
+10",8,CMR9,,48,45
+◦,5,CMSY6,,1,1
+N,8,CMR9,,1,1
+−,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+◦,5,CMSY6,,1,1
+S latitude range from zero.,8,CMR9,,27,27
+Meridional Circulation,9,CMCSC10,,22,22
+5.,8,CMR9,,2,2
+DISCUSSION,9,CMR10,,10,10
+7,9,CMR10,,1,1
+"The question on the nature of meridional circulation remains an outstanding one. Large variations in inferences
+have been made using similar local helioseismology techniques – from a double-cell meridional circulation proﬁle seen
+in HMI observations (Zhao et al. 2013; Chen 2019) to recent re-assertions of a single cell proﬁle from MDI/GONG
+data (Gizon et al. 2020). The feasibility of the two regimes has been explored in recent years, with convectively driven
+MHD and HD models reproducing the necessary environment for both.",9,CMR10,,528,120
+"The actual diﬀerences may lie somewhere in between the large variations inferred in the two models. To that end
+we test the feasibly of discerning between deep and shallow single-cell as well as double-cell proﬁles of meridional
+circulation, generated by the same mean-ﬁeld model, operating with minimal parameter changes (K1 in Pipin &
+Kosovichev (2018) – referred to as M2 in their paper; M1 & M2 in Pipin & Kosovichev (2019)). Using the GALE code
+(Stejko et al. 2021) to simulate the stochastic excitation of acoustic modes throughout the convective interior, we apply
+the deep focusing method to measure the resulting travel-time diﬀerences. Analyzing the proﬁles of realization noise
+generated by the model shows that the maximal diﬀerences between a shallow single-cell and double-cell regime fall well
+within one standard deviation of error for both phase-speed ﬁltered and unﬁltered deep-focusing measurements. The
+deep single-cell proﬁle (K1), however, shows enough diﬀerences to be distinguishable from the two other models (M1
+& M2). Comparing the resulting proﬁles to a decade of solar observations shows that while any deﬁnitive statements
+on the prevalence of either a single- or double-cell regime should be taken with a grain of salt, meaningful conclusions",9,CMR10,,1273,121
+on the nature of the return ﬂow are within the reach of current techniques in helioseismology.,9,CMR10,,94,94
+"AMS would like to thank the heliophysics modeling and simulation team at NASA Ames Research Center for help
+and guidance. VVP would like to thank the FR project II.16.3 of ISTP SB RAS for their support. This work is
+supported by the NASA grants: 80NSSC19K0630, 80NSSC19K1436, NNX14AB7CG and NNX17AE76A.",9,CMR10,,302,107
+REFERENCES,9,CMR10,,10,10
+"Bekki, Y., Yokoyama, T. 2017, ApJ, 835, 9",8,CMR9,,41,41
+"Hanasoge, S. M., Larsen, R.‘M., Duvall, T. L., Jr., et al.",8,CMR9,,58,58
+"Braun, D. C., Birch, A. C. 2008, ApJ, 689, 161",8,CMR9,,46,46
+"2006, ApJ, 648, 1268",8,CMR9,,20,20
+"Brun A. S., Toomre J. 2002, ApJ, 570, 865",8,CMR9,,41,41
+"Hartlep, T., Zhao, J., Kosovichev, A. G., Mansour, N. N.",8,CMR9,,56,56
+"Chaplin, W. J., Elsworth, Y., Isaak, G. R., et al. 1996,",8,CMR9,,56,56
+"2013, ApJ, 762, 132",8,CMR9,,19,19
+"MNRAS, 283, 31",8,CMR9,,14,14
+"Charbonneau, P. 2005, LRSP, 2, 2",8,CMR9,,32,32
+"Harvey, J. W., Hill, F., Hubbard, R. P., et al. 1996, Sci,",8,CMR9,,58,58
+"272, 1284",8,CMR9,,9,9
+"Chen, R. 2019, Ph.D. Thesis, Stanford University",8,CMR9,,48,48
+"Hathaway, D. H. 1996, ApJ, 460, 1027",8,CMR9,,36,36
+"Christensen-Dalsgaard, J., Dappen, W., Ajukov, S. V. 1996,",8,CMR9,,58,58
+"Hathaway, D. H., Nandy, D., Wilson, R. M., Reichmann,",8,CMR9,,53,53
+"Sci, 272, 1286",8,CMR9,,14,14
+"E. J. 1996, ApJ, 589, 665",8,CMR9,,25,25
+"Christensen-Dalsgaard, J., 2002, RvMP, 74, 1073",8,CMR9,,47,47
+"Hathaway, D. H. 2012, ApJ, 760, 84",8,CMR9,,34,34
+"Christensen-Dalsgaard, J., 2014, D.f.I.Print, Aarhus.",8,CMR9,,53,53
+"Hotta, H., Yokoyama, T. 2011, ApJ, 740, 12",8,CMR9,,42,42
+"Domingo, V., Fleck, B., Poland, A. I. 1995, SoPh, 162, 1",8,CMR9,,56,56
+"K¨apyl¨a, P. J., K¨apyl¨a, M. J., Brandenburg, A. 2014, A&A,",8,CMR9,,60,60
+"Duvall, T. L., Jr. 1979, SoPh, 63, 3",8,CMR9,,36,36
+"570, 43",8,CMR9,,7,7
+"Featherstone, N. A., Miesch M. S. 2015, ApJ, 804, 67",8,CMR9,,52,52
+"Kichatinov, L. L., Rudiger, G. 1993, A&A, 276, 96",8,CMR9,,49,49
+"Gastine, T., Yadav, R. K., Morin, J., Reiners, A., Wicht, J.",8,CMR9,,60,60
+"Kichatinov, L. L. 2004, ARep, 48, 153",8,CMR9,,37,37
+"2014, MNRAS, 438, 76",8,CMR9,,20,20
+"Kitchatinov, L. L., Olemskoy, S. V. 2012, MNRAS, 423,",8,CMR9,,53,53
+"Giles, P. M., Duvall, T. L., Scherrer, P. H., Bogart, R. S.",8,CMR9,,59,59
+3344,8,CMR9,,4,4
+"1997, Nature, 390, 52",8,CMR9,,21,21
+"Kitchatinov, L. L. 2013, IAUS, 294, 399",8,CMR9,,39,39
+"Giles, P. M. 1999, Ph.D. Thesis, Stanford University",8,CMR9,,52,52
+"Kosovichev, A. G., Duvall, T. L., Jr. 1997, ASSL, 225, 241",8,CMR9,,58,58
+"Gizon, L, Birch, A. C. 2005, LRSP, 2, 6",8,CMR9,,39,39
+"K¨uker, M., R¨udiger, G., Kitchatinov, L. L. 2011, A&A, 530,",8,CMR9,,60,60
+"Gizon, L., Cameron, R. H., Pourabdian, M., et al. 2020,",8,CMR9,,55,55
+48,8,CMR9,,2,2
+"Sci, 368, 1469",8,CMR9,,14,14
+"Matilsky, L. I.; Hindman, B. W., Toomre, J. 2019, ApJ,",8,CMR9,,54,54
+"Guerrero, G., Smolarkiewicz, P. K., Kosovichev, A. G.,",8,CMR9,,54,54
+"871, 217 s",8,CMR9,,10,10
+"Mansour N. N. 2013, ApJ, 779, 176",8,CMR9,,33,33
+"Miesch, M. S., Brun A. S., Toomre J. 2006, ApJ, 641, 618",8,CMR9,,56,56
+8,9,CMR10,,1,1
+"328, 1009",8,CMR9,,9,9
+"659, 1736",8,CMR9,,9,9
+"Mitra-Kraev, U., Thompson, M. J. 2007, Astron.Nachr.,",8,CMR9,,53,53
+"Scherrer, P. H., Schou, J., Bush, R. I., et al. 2012, SoPh,",8,CMR9,,59,59
+"Nigam, R., Kosovichev, A. G., Scherrer, P. H. 2007, ApJ,",8,CMR9,,56,56
+"Stejko, A. S., Kosovichev, A.G., Mansour, N. N., 2021,",8,CMR9,,54,54
+Stejko et al.,9,CMCSC10,,13,13
+"275, 207",8,CMR9,,8,8
+arXiv:2011.03131,8,CMR9,,16,16
+"Ulrich, R. K. ApJ, 725, 658",8,CMR9,,27,27
+"Papini, E.; Gizon, L.; Birch, A. C. 2014, SoPh, 289, 1919
+Parchevsky, K. V., Kosovichev, A. G. 2007, ApJ, 666, 547
+Pesnell, W. D., Thompson, B. J., Chamberlin, P. C. 2012,",8,CMR9,,171,57
+"SoPh, 275, 3",8,CMR9,,12,12
+"Pipin, V. V., Kosovichev, A. G. 2018, ApJ, 854, 67
+Pipin, V. V., Kosovichev, A. G. 2019, ApJ, 887, 215
+Rajaguru, S. P., Antia, H. M. 2020, arXiv:2004.12708
+Reinecke, M., Seljebotn, D. S. 2013, A&A, 554, 112
+Rempel, M. 2005, ApJ, 622, 1320
+Ruediger, G. 1989, Akademie Verlag, Berlin
+Scherrer, P. H., Bogart, R. S., Bush, R. I., et al. 1995,",8,CMR9,,339,57
+"SoPh, 162, 129",8,CMR9,,14,14
+"Woodard, M. F. 1984, Ph.D. Thesis, University of",8,CMR9,,48,48
+"California, San Diego",8,CMR9,,21,21
+"Zhao, J., Kosovichev, A. G., 2004, ApJ, 603, 776",8,CMR9,,48,48
+"Zhao, J., Hartlep, T., Kosovichev, A. G., Mansour, N. N.",8,CMR9,,56,56
+"2009, ApJ, 702, 1150",8,CMR9,,20,20
+"Zhao, J., Bogart, R. S., Kosovichev, A. G., Duvall Jr.,",8,CMR9,,55,55
+"T. L., Hartlep, T. 2013, ApJL, 774, 29",8,CMR9,,38,38

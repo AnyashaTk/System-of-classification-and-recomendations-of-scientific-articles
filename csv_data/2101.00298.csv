@@ -1,0 +1,1537 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"Draft version March 15, 2021",7,CMCSC10,,28,28
+Typeset using L,7,CMR8,,15,15
+A,5,CMR6,,1,1
+TEX,7,CMR8,,3,3
+RNAAS,7,CMBX8,,5,5
+style in AASTeX63,7,CMR8,,17,17
+Fisher Matrix Stability,9,CMBX10,,23,23
+"Naren Bhandari,",8,CMR9,,15,15
+"1,",5,CMR6,,2,2
+∗,5,CMSY6,,1,1
+"C. Danielle Leonard,",8,CMR9,,20,20
+"2,",5,CMR6,,2,2
+†,5,CMSY6,,1,1
+"Markus Michael Rau,",8,CMR9,,19,19
+"1,",5,CMR6,,2,2
+‡,5,CMSY6,,1,1
+and Rachel Mandelbaum,8,CMR9,,21,21
+"1,",5,CMR6,,2,2
+§,5,CMSY6,,1,1
+1,5,CMR6,,1,1
+"McWilliams Center for Cosmology, Department of Physics, Carnegie Mellon University,
+Pittsburgh, PA 15213, USA",7,CMTI8,,109,83
+2,5,CMR6,,1,1
+"School of Mathematics, Statistics and Physics, Newcastle University, Newcastle upon Tyne, NE1 7RU, UK",7,CMTI8,,101,101
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+M,17,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"2
+1",10,Times-Roman,,3,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+O,14,Times-Roman,,1,1
+C,13,Times-Roman,,1,1
+.,5,Times-Roman,,1,1
+"h
+p",10,Times-Roman,,3,1
+-,6,Times-Roman,,1,1
+o,10,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+t,5,Times-Roman,,1,1
+s,7,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"2
+v
+8
+9
+2
+0
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1",10,Times-Roman,,5,1
+2,10,Times-Roman,,1,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+"Fisher forecasts are a common tool in cosmology with applications ranging from survey planning to the development
+of new cosmological probes. While frequently adopted, they are subject to numerical instabilities that need to be
+carefully investigated to ensure accurate and reproducible results. This research note discusses these challenges using
+the example of a weak lensing data vector and proposes procedures that can help in their solution.",9,CMR10,,446,119
+ABSTRACT,9,CMR10,,8,8
+INTRODUCTION,9,CMR10,,12,12
+"With the advent of ongoing large photometric surveys like the Dark Energy Survey (DES; The Dark Energy Survey
+Collaboration 2005), the Kilo-Degree Survey (KiDS; de Jong et al. 2013), the Hyper Suprime-Cam survey (HSC; Aihara
+et al. 2018) and upcoming surveys like the Vera C. Rubin Observatory Legacy Survey of Space and Time (LSST; Ivezi´c
+et al. 2019) and",9,CMR10,,357,115
+Euclid,9,CMTI10,,6,6
+"(Laureijs et al. 2011), the need for computationally eﬃcient forecasting for survey planning or
+to investigate the impact of sources of systematic error increases. Fisher forecasts are a commonly used tool for this
+purpose, that has been adopted early in many areas of astrophysics and cosmology (e.g. Bassett et al. 2011; Cutler
+& Flanagan 1994; Jungman et al. 1996a,b; Tegmark 1997; Tegmark et al. 1997; Hart & Chluba 2020) to forecast
+parameter constraints without the barrier of the computational expense of e.g. Markov chain Monte Carlo methods.
+However, in making use of them, there are issues of which we must be aware. We highlight the importance of rigorous
+investigations of numerical stability in Fisher forecasts while using a weak lensing convergence power spectrum data
+vector. We discuss possible pitfalls in the application of Fisher forecasts and propose methodological tests to ensure
+numerical accuracy. Our work builds on that of Yahia-Cherif et al. (2020), where this question was considered for the
+complementary case of a data vector consisting of the galaxy power spectrum measured from a spectroscopic galaxy
+survey (with a speciﬁc focus on",9,CMR10,,1165,118
+Euclid,9,CMTI10,,6,6
+"), and on that of Blanchard et al. (2020), which performed an analytic estimation
+of the relationship between the maximum fractional error on an element of the Fisher matrix and the error on the
+elements of the resulting forecast parameter covariance matrix.",9,CMR10,,258,112
+"In the course of this investigation we will use two libraries that provide the capability to model weak lensing
+convergence power spectra: CCL v2.0.1 (Chisari et al. 2019) and CosmoSIS v1.6 (Zuntz et al. 2015). We note that the
+settings for CosmoSIS that we use in this work are optimized for MCMC sampling and not for high accuracy Fisher",9,CMR10,,339,115
+"matrix calculations. This is not a limitation of the code itself, since higher accuracy conﬁgurations are supported.
+The purpose of this work is not to perform a code comparison, but rather to investigate the importance and impact of
+numerical derivative calculations on the reliability of Fisher forecasts, and to provide tests that can be used to avoid
+numerical pitfalls. The CosmoSIS code package has been subject to signiﬁcant scrutiny in terms of the accuracy of
+likelihood evaluations in e.g. Krause et al. (2017).",9,CMR10,,521,120
+The structure of this research note is as follows.,9,CMR10,,50,50
+"In the ‘Forecast Methodology’ section, we outline our ﬁducial
+assumptions and how we set up our Fisher forecast. In the ‘Results’ section, we detail our ﬁndings using both libraries
+and gauge their numerical stability in the context of Fisher forecasting. Finally, in the ‘Conclusions’, we summarize
+and present our conclusions regarding these forecasts.",9,CMR10,,354,119
+∗,5,CMSY6,,1,1
+nbhandar@andrew.cmu.edu,7,CMR8,,23,23
+†,5,CMSY6,,1,1
+danielle.leonard@ncl.ac.uk,7,CMR8,,26,26
+‡,5,CMSY6,,1,1
+markusmichael.rau@gmail.com,7,CMR8,,27,27
+§,5,CMSY6,,1,1
+rmandelb@andrew.cmu.edu,7,CMR8,,23,23
+2,9,CMR10,,1,1
+Figure 1.,8,CMBX9,,9,9
+"Redshift probability density function,",8,CMR9,,38,38
+p,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+z,8,CMMI9,,1,1
+"), as a function of redshift,",8,CMR9,,29,29
+z,8,CMMI9,,1,1
+.,8,CMR9,,1,1
+FORECAST METHODOLOGY,9,CMR10,,20,20
+"We perform a Fisher forecast for an LSST-like convergence power spectrum data vector assuming the ﬁducial
+cosmology and survey setup summarized in Table 1. We use",9,CMR10,,162,105
+θ,9,CMMI10,,1,1
+= (Ω,9,CMR10,,4,4
+c,6,CMMI7,,1,1
+", w",9,CMMI10,,3,3
+0,6,CMR7,,1,1
+", h,",9,CMMI10,,4,4
+10,9,CMR10,,2,2
+9,6,CMR7,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+Ω,9,CMR10,,1,1
+b,6,CMMI7,,1,1
+", n",9,CMMI10,,3,3
+s,6,CMMI7,,1,1
+", w",9,CMMI10,,3,3
+a,6,CMMI7,,1,1
+") as our cosmological
+parameter vector and we use a redshift distribution",9,CMR10,,73,51
+1,6,CMR7,,1,1
+"from the LSST Dark Energy Science Collaboration (DESC)
+Science Requirements Document v1 (The LSST Dark Energy Science Collaboration et al. 2018a,b) which we bin into
+ﬁve tophat tomographic bins that are equally spaced in redshift. Figure 1 shows the redshift probability density
+function,",9,CMR10,,288,112
+p,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+z,9,CMMI10,,1,1
+"), i.e. the probability that a randomly selected galaxy has redshift",9,CMR10,,68,68
+z,9,CMMI10,,1,1
+", along with the ﬁve tophat selections.
+Furthermore, we take the fractional sky coverage,",9,CMR10,,89,49
+f,9,CMMI10,,1,1
+sky,6,CMR7,,3,3
+", from Table 1.1 in LSST Science Collaboration et al. (2009),
+and choose the number density,",9,CMR10,,92,61
+n,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+", to be consistent with Table 1 in Chang et al. (2013).",9,CMR10,,55,55
+Table 1.,8,CMBX9,,8,8
+Fiducial Parameter Values and Survey Assumptions,8,CMR9,,48,48
+Cosmological/Survey Parameter,8,CMR9,,29,29
+"Dark Matter Density
+Baryon Density
+Dark Energy Equation of State",8,CMR9,,64,29
+w,8,CMMI9,,1,1
+(,8,CMR9,,1,1
+a,8,CMMI9,,1,1
+) =,8,CMR9,,3,3
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
++,8,CMR9,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+(1,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+a,8,CMMI9,,1,1
+),8,CMR9,,1,1
+"Reduced Hubble Constant
+Primordial Power Spectrum Amplitude",8,CMR9,,59,35
+Slope of Primordial Power Spectrum,8,CMR9,,34,34
+"Shape Noise
+Fractional Sky Coverage
+Number of Galaxies per Steradian",8,CMR9,,68,32
+Value,8,CMR9,,5,5
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"25
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+04,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"90
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"00
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"72
+2",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+10,8,CMR9,,2,2
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"96
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"23
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"48
+3",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+1,8,CMR9,,1,1
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+8,5,CMR6,,1,1
+Ω,8,CMR9,,1,1
+c,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+b,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+h,8,CMMI9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+n,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+σ,8,CMMI9,,1,1
+2,5,CMR6,,1,1
+,5,CMMI6,,0,0
+f,8,CMMI9,,1,1
+sky,5,CMR6,,3,3
+n,8,CMMI9,,1,1
+g,5,CMMI6,,1,1
+Convergence Power Spectrum Modelling,8,CMTI9,,36,36
+—,8,CMR9,,1,1
+"Using CCL and CosmoSIS, we calculate the shear-shear angular power spectra
+which serve as our data vector. The convergence power spectrum",9,CMR10,,137,74
+C,9,CMMI10,,1,1
+κ,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+") probes the spatial correlation of the lensing
+convergence signal (e.g. Blandford et al. 1991; Kaiser 1992; Bartelmann & Schneider 2001)",9,CMR10,,137,89
+C,9,CMMI10,,1,1
+κ,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+) =,9,CMR10,,3,3
+Ω,9,CMR10,,1,1
+2,6,CMR7,,1,1
+m,6,CMMI7,,1,1
+H,9,CMMI10,,1,1
+"4
+0",6,CMR7,,3,1
+"9
+4",9,CMR10,,3,1
+,9,CMEX10,,0,0
+χ,6,CMMI7,,1,1
+H,4,CMMI5,,1,1
+0,6,CMR7,,1,1
+d,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+q,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+),9,CMR10,,1,1
+a,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+P,9,CMMI10,,1,1
+δ,6,CMMI7,,1,1
+k,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+", χ",9,CMMI10,,3,3
+.,9,CMMI10,,1,1
+"
+f",9,CMMI10,,2,1
+K,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+),9,CMR10,,1,1
+(1),9,CMR10,,3,3
+1,5,CMR6,,1,1
+We use the,7,CMR8,,10,10
+zdistri model z0=1.100000e-01 beta=6.800000e-01 Y10 source,7,CMTT8,,58,58
+redshift distribution,7,CMR8,,21,21
+"Here, Ω",9,CMR10,,7,7
+m,6,CMMI7,,1,1
+",",9,CMR10,,1,1
+H,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+"denote the matter density and Hubble constant respectively,",9,CMR10,,59,59
+χ,9,CMMI10,,1,1
+H,6,CMMI7,,1,1
+is the comoving distance,9,CMR10,,24,24
+χ,9,CMMI10,,1,1
+for which,9,CMR10,,9,9
+χ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+a,9,CMMI10,,1,1
+),9,CMR10,,1,1
+→,9,CMSY10,,1,1
+χ,9,CMMI10,,1,1
+H,6,CMMI7,,1,1
+as the scale factor,9,CMR10,,19,19
+a,9,CMMI10,,1,1
+→,9,CMSY10,,1,1
+0. Note that Ω,9,CMR10,,14,14
+m,6,CMMI7,,1,1
+= Ω,9,CMR10,,3,3
+b,6,CMMI7,,1,1
++ Ω,9,CMR10,,3,3
+c,6,CMMI7,,1,1
+". From the structure of Eq. 1 we see that the matter
+is projected along the line-of-sight using a geometrical factor, the ‘lensing weight’:
+power spectrum",9,CMR10,,154,86
+P,9,CMMI10,,1,1
+δ,6,CMMI7,,1,1
+k,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+,6,CMMI7,,0,0
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+f,6,CMMI7,,1,1
+K,4,CMMI5,,1,1
+(,6,CMR7,,1,1
+χ,6,CMMI7,,1,1
+),6,CMR7,,1,1
+", χ",9,CMMI10,,3,3
+q,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+,4,CMSY5,,0,0
+d,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+,4,CMSY5,,0,0
+n,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+χ,6,CMMI7,,1,1
+H,4,CMMI5,,1,1
+χ,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+,4,CMSY5,,0,0
+f,9,CMMI10,,1,1
+K,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+χ,9,CMMI10,,1,1
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+",",9,CMMI10,,1,1
+f,9,CMMI10,,1,1
+K,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+,4,CMSY5,,0,0
+),9,CMR10,,1,1
+where the function,9,CMR10,,18,18
+f,9,CMMI10,,1,1
+K,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+) is a curvature-dependent factor in the FLRW metric. We see that this geometrical factor,9,CMR10,,89,89
+,4,CMSY5,,0,0
+critically depends on the redshift distribution,9,CMR10,,47,47
+n,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+χ,9,CMMI10,,1,1
+") that constitutes an important source of systematic uncertainty in
+weak lensing measurements. For a more detailed treatment of the convergence power spectrum we refer the reader to
+the aforementioned references. For the matter power spectrum",9,CMR10,,242,113
+P,9,CMMI10,,1,1
+δ,6,CMMI7,,1,1
+", we use the Takahashi et al. (2012) version of the
+nonlinear power spectrum from Haloﬁt (Smith et al. 2003).",9,CMR10,,109,57
+Covariance Matrix Modelling,8,CMTI9,,27,27
+—,8,CMR9,,1,1
+"As in Kirk et al. (2015), we use the convergence power spectrum to calculate the
+covariance matrix. The Gaussian model for the covariance matrix of the data vector is given as",9,CMR10,,175,94
+Σ,9,CMR10,,1,1
+(,6,CMR7,,1,1
+"k,m",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,6,CMR7,,1,1
+"i,j",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+) =,9,CMR10,,3,3
+"1
+(2",9,CMR10,,4,2
+,9,CMMI10,,0,0
++ 1),9,CMR10,,4,4
+f,9,CMMI10,,1,1
+sky,6,CMR7,,3,3
+,9,CMEX10,,0,0
+C,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+"i,k",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,6,CMR7,,1,1
+"j,m",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+) +,9,CMR10,,3,3
+C,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+"i,m",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,6,CMR7,,1,1
+"j,k",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+C,9,CMMI10,,1,1
+,9,CMEX10,,0,0
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+where,9,CMR10,,5,5
+(,6,CMR7,,1,1
+"i,j",6,CMMI7,,3,3
+),6,CMR7,,1,1
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+) =,9,CMR10,,3,3
+C,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+"i,j",6,CMMI7,,3,3
+),6,CMR7,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+) +,9,CMR10,,3,3
+δ,9,CMMI10,,1,1
+"i,j",6,CMMI7,,3,3
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+σ,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+,6,CMMI7,,0,0
+2,9,CMR10,,1,1
+n,9,CMMI10,,1,1
+"i
+g",6,CMMI7,,3,1
+.,9,CMMI10,,1,1
+"Here,",9,CMR10,,5,5
+n,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+g,6,CMMI7,,1,1
+denotes the number of galaxies per steradian and,9,CMR10,,48,48
+σ,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+is the shape noise expressed as a standard deviation.,9,CMR10,,53,53
+"Note that the indices denote samples selected in bins of increasing redshift, i.e. tomographic bins, whose redshift
+probability density functions are shown in Fig. 1. The index combinations (",9,CMR10,,191,115
+"i, j",9,CMMI10,,4,4
+) denote the respective auto- (,9,CMR10,,31,31
+i,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+j,9,CMMI10,,1,1
+")
+and cross-correlations (",9,CMR10,,26,24
+i,9,CMMI10,,1,1
+,9,CMSY10,,0,0
+=,9,CMR10,,1,1
+j,9,CMMI10,,1,1
+) obtained by correlating the samples in the tomographic selections,9,CMR10,,67,67
+i,9,CMMI10,,1,1
+and,9,CMR10,,3,3
+j,9,CMMI10,,1,1
+". For example,
+at ﬁxed",9,CMR10,,22,14
+,9,CMMI10,,0,0
+", the correlation between the auto-correlation convergence power spectrum of the ﬁrst bin with the cross-
+correlation convergence power spectrum of ﬁrst and second tomographic redshift bin, would be Σ",9,CMR10,,200,105
+(,6,CMR7,,1,1
+k,6,CMMI7,,1,1
+=1,6,CMR7,,2,2
+",m",6,CMMI7,,2,2
+"=1)
+(",6,CMR7,,5,3
+i,6,CMMI7,,1,1
+=1,6,CMR7,,2,2
+",j",6,CMMI7,,2,2
+=2),6,CMR7,,3,3
+. At each,9,CMR10,,9,9
+,9,CMMI10,,0,0
+", the data-vector, denoted by",9,CMR10,,29,29
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+"), is constructed from all convergence power spectra formed from the available
+tomographic redshift bins, i.e., by enumerating the possible combinations we can map the pair of indices (",9,CMR10,,185,106
+"i, j",9,CMMI10,,4,4
+") to a
+single index and make a vector. Similarly, at each",9,CMR10,,57,50
+,9,CMMI10,,0,0
+", the data-covariance matrix, denoted by Σ(",9,CMR10,,43,43
+,9,CMMI10,,0,0
+"), is constructed such
+that the rows and columns are indexed by the enumeration above.",9,CMR10,,86,63
+Fisher Forecast,8,CMTI9,,15,15
+—,8,CMR9,,1,1
+Suppose that the negative log-likelihood of our data vector is,9,CMR10,,62,62
+L,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+);,9,CMR10,,2,2
+θ,9,CMMI10,,1,1
+"). Then the Fisher matrix is
+deﬁned as the expectation value of the Hessian matrix of",9,CMR10,,85,56
+L,9,CMSY10,,1,1
+with respect to the parameters,9,CMR10,,30,30
+θ,9,CMMI10,,1,1
+:,9,CMR10,,1,1
+Assuming a Gaussian likelihood and that Σ(,9,CMR10,,42,42
+,9,CMMI10,,0,0
+) is independent of,9,CMR10,,19,19
+θ,9,CMMI10,,1,1
+", we can calculate the Fisher matrix as",9,CMR10,,39,39
+F,9,CMMI10,,1,1
+αβ,6,CMMI7,,2,2
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+∂,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+L,9,CMSY10,,1,1
+∂θ,9,CMMI10,,2,2
+α,6,CMMI7,,1,1
+∂θ,9,CMMI10,,2,2
+β,6,CMMI7,,1,1
+F,9,CMMI10,,1,1
+αβ,6,CMMI7,,2,2
+=,9,CMR10,,1,1
+∂C,9,CMMI10,,2,2
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+T,6,CMMI7,,1,1
+∂θ,9,CMMI10,,2,2
+α,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+,6,CMMI7,,0,0
+·,9,CMSY10,,1,1
+Σ(,9,CMR10,,2,2
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+·,9,CMSY10,,1,1
+∂C,9,CMMI10,,2,2
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+∂θ,9,CMMI10,,2,2
+β,6,CMMI7,,1,1
+where the derivatives are evaluated at the ﬁducial parameter values (Kirk et al. 2015). The sum is taken over,9,CMR10,,109,109
+,9,CMMI10,,0,0
+min,6,CMR7,,3,3
+"= 76
+to",9,CMR10,,7,4
+,9,CMMI10,,0,0
+max,6,CMR7,,3,3
+"= 999 — this range is motivated by accessible values to the aforementioned surveys and also to stay in the
+linear and quasi-linear regime. We refer the reader to Tegmark (1997); Tegmark et al. (1997); Bassett et al. (2011);
+Heavens et al. (2014) for more detailed treatments of the Fisher matrix formalism.",9,CMR10,,306,116
+Numerical Diﬀerentiation,8,CMTI9,,24,24
+—,8,CMR9,,1,1
+"We calculate the derivatives above numerically by using centered ﬁnite diﬀerence methods
+outlined in Fornberg (1988):",9,CMR10,,117,88
+"∂f
+∂x",9,CMMI10,,5,2
+"
+
+
+",9,CMEX10,,3,0
+x,6,CMMI7,,1,1
+=,6,CMR7,,1,1
+x,6,CMMI7,,1,1
+0,4,CMR5,,1,1
+=,9,CMR10,,1,1
+n,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+j,6,CMMI7,,1,1
+=,6,CMR7,,1,1
+−,6,CMSY7,,1,1
+n,6,CMMI7,,1,1
+µ,9,CMMI10,,1,1
+j,6,CMMI7,,1,1
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
++,9,CMR10,,1,1
+j,9,CMMI10,,1,1
+∆,9,CMR10,,1,1
+s,9,CMMI10,,1,1
+),9,CMR10,,1,1
+where,9,CMR10,,5,5
+f,9,CMMI10,,1,1
+is some function that depends on the variable,9,CMR10,,45,45
+x,9,CMMI10,,1,1
+",",9,CMR10,,1,1
+µ,9,CMMI10,,1,1
+j,6,CMMI7,,1,1
+"’s are coeﬃcients given by the aforementioned reference,
+∆",9,CMR10,,58,56
+s,9,CMMI10,,1,1
+"is the step-size, and",9,CMR10,,21,21
+n,9,CMMI10,,1,1
+is an integer that determines the number of points surrounding the reference point where the,9,CMR10,,92,92
+3,9,CMR10,,1,1
+(2),9,CMR10,,3,3
+(3),9,CMR10,,3,3
+(4),9,CMR10,,3,3
+(5),9,CMR10,,3,3
+(6),9,CMR10,,3,3
+(7),9,CMR10,,3,3
+4,9,CMR10,,1,1
+"derivative needs to be approximated. The geometrical arrangement of these points is referred to as the ‘stencil’. The
+number of points in the stencil, namely 2",9,CMR10,,159,117
+n,9,CMMI10,,1,1
+"+ 1 for centered ﬁnite diﬀerence methods, determines how the numerical
+error of the stencil method scales with the step-size. For example, the ﬁve-point stencil approximation is given by",9,CMR10,,186,115
+"∂f
+∂x",9,CMMI10,,5,2
+"
+
+
+",9,CMEX10,,3,0
+x,6,CMMI7,,1,1
+=,6,CMR7,,1,1
+x,6,CMMI7,,1,1
+0,4,CMR5,,1,1
+=,9,CMR10,,1,1
+"1
+12∆",9,CMR10,,5,3
+s,9,CMMI10,,1,1
+"8
+12∆",9,CMR10,,5,3
+s,9,CMMI10,,1,1
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+2∆,9,CMR10,,2,2
+s,9,CMMI10,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+∆,9,CMR10,,1,1
+s,9,CMMI10,,1,1
+) + 0,9,CMR10,,5,5
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+) +,9,CMR10,,3,3
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+0,6,CMR7,,1,1
++ ∆,9,CMR10,,3,3
+s,9,CMMI10,,1,1
+),9,CMR10,,1,1
+−,9,CMSY10,,1,1
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+0,6,CMR7,,1,1
++ 2∆,9,CMR10,,4,4
+s,9,CMMI10,,1,1
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+(8),9,CMR10,,3,3
+"8
+12∆",9,CMR10,,5,3
+s,9,CMMI10,,1,1
+"1
+12∆",9,CMR10,,5,3
+s,9,CMMI10,,1,1
+"Note that all the centered ﬁnite diﬀerences we use have a zero coeﬃcient on the central term. As such, while entering
+into the theoretical modelling of the covariance matrix, the central term does not enter the calculation of the numerical
+derivative. Thus, the order of accuracy is given by 2",9,CMR10,,293,121
+n,9,CMMI10,,1,1
+", i.e., evaluating more points in our stencil will lead to more
+accurate derivatives at the cost of computational complexity (here, more calls to CCL or CosmoSIS). We will investigate
+the numerical performance as a function of the number of points in the stencil and the step-size. We do so by calculating
+derivatives using three-, ﬁve-, seven-, and nine-point stencils and seeing how some ﬁgure of merit changes in response
+to varying the step-size ∆",9,CMR10,,451,121
+s,9,CMMI10,,1,1
+", looking for a region where it is stable — henceforth, we will refer to this process as tuning
+the derivatives.
+In this context it is noteworthy that other derivative tuning methods have been employed by the
+community. For example Camera et al. (2017), due the large number of observables and cosmological parameters in
+their work, use a linear interpolation constructed on a set of sampling points around the ﬁducial value for derivative",9,CMR10,,439,118
+"estimation. They then decrease the point spacing adaptively until the required numerical accuracy is met. In this
+work we will restrict our approach to a visual approach to gain understanding of the behaviour of diﬀerent codes as
+a function of step size. For the sake of comparisons, it will be convenient to work with a normalized step-size given
+by the nominal step-size divided by the absolute value of the ﬁducial parameter value instead. For the parameter,",9,CMR10,,461,117
+w,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+",
+which has a ﬁducial value of 0, we divide the nominal step size by the absolute value of the ﬁducial value of",9,CMR10,,111,109
+w,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+", which
+is nonzero.",9,CMR10,,19,11
+Performance Evaluation Metrics,8,CMTI9,,30,30
+—,8,CMR9,,1,1
+"In order to gauge how well the measurement we are forecasting constrains dark energy,
+we use the Dark Energy Task Force’s Figure of Merit (DETF FoM) given by",9,CMR10,,157,85
+DETF FoM =,9,CMR10,,10,10
+det,9,CMR10,,3,3
+F,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+0,4,CMR5,,1,1
+w,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+√,9,CMSY10,,1,1
+(9),9,CMR10,,3,3
+where,9,CMR10,,5,5
+F,9,CMMI10,,1,1
+w,6,CMMI7,,1,1
+0,4,CMR5,,1,1
+w,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+"is the reduced Fisher matrix, obtained by inverting the Fisher matrix",9,CMR10,,69,69
+F,9,CMMI10,,1,1
+", marginalizing over parameters
+that are not",9,CMR10,,44,31
+w,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+or,9,CMR10,,2,2
+w,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", and inverting back (Albrecht et al. 2006). Note that we can also deﬁne similar quantities for
+other pairs of parameters, like Ω",9,CMR10,,129,95
+c,6,CMMI7,,1,1
+and 10,9,CMR10,,6,6
+9,6,CMR7,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"for example. To distinguish which pairs of parameters we are talking
+about, we refer explicitly to the",9,CMR10,,102,68
+w,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+w,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+FoM (as in Eq. 9) or Ω,9,CMR10,,22,22
+c,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+9,6,CMR7,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"FoM where necessary. Since the main
+purpose of this note is to study how numerical errors can bias Fisher matrix inference, we are not marginalizing over
+intrinsic alignments or other sources of systematic uncertainty.",9,CMR10,,218,117
+"Both CCL and CosmoSIS are well-trusted and mature libraries that we would expect to produce theoretical predic-
+tions and forecasts that are consistent, so we begin by checking this assumption. As a ﬁrst test of consistency between
+the data vectors produced by CCL and CosmoSIS we investigate the signal-to-noise ratio (SNR) given by:",9,CMR10,,334,119
+SNR =,9,CMR10,,5,5
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+·,9,CMSY10,,1,1
+Σ(,9,CMR10,,2,2
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+·,9,CMSY10,,1,1
+C,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+,9,CMMI10,,0,0
+),9,CMR10,,1,1
+(10),9,CMR10,,4,4
+RESULTS,9,CMR10,,7,7
+,9,CMEX10,,0,0
+,6,CMMI7,,0,0
+These were calculated to be 342,9,CMR10,,31,31
+.,9,CMMI10,,1,1
+58 and 342,9,CMR10,,10,10
+.,9,CMMI10,,1,1
+"44 for CCL and CosmoSIS, respectively — a relative diﬀerence of",9,CMR10,,63,63
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+"04%,
+which we consider to be a good agreement. This ﬁrst test is important to ensure that the data vector and the covariance
+calculation give reasonable results, before numerical diﬀerentiation introduces numerical sources of error that need to
+be isolated.",9,CMR10,,257,119
+"In order to calculate the Fisher Matrices, we tune the derivatives as mentioned in the ‘Forecast Methodology’ Section.",9,CMR10,,118,118
+We select 0.01 as an initial guess for a starting normalized step-size for all parameters and calculate all the derivatives,9,CMR10,,123,123
+"using a ﬁve-point stencil and arrive at an initial DETF FoM estimate. To then tune the derivatives, we calculate
+them using the three-, ﬁve-, seven-, and nine-point stencils, varying the normalized step-size to look for regions where
+the DETF FoM does not vary much. In the CCL case, we were able to ﬁnd clear regions of stability, wherein the
+normalized step-sizes for all parameters was chosen to be 0.01 using a nine-point stencil — a few examples can be seen",9,CMR10,,462,120
+5,9,CMR10,,1,1
+"in Figure 2. This spacing is of the same order of magnitude as that determined to be optimal for each cosmological
+parameter in Yahia-Cherif et al. (2020) for the spectroscopic galaxy case; this makes sense as both observables rely on
+underlying calculations of the power spectrum via Boltzmann codes. In the CosmoSIS case, we were unable ﬁnd such a
+region of stability for the parameters Ω",9,CMR10,,390,119
+c,6,CMMI7,,1,1
+and,9,CMR10,,3,3
+w,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+", seen in Figure 3. However, for the sake of further comparison, we can
+pick values of the normalized step-sizes and the number of points in the stencil used (like 0.02 for the nine-point stencil
+for Ω",9,CMR10,,201,123
+c,6,CMMI7,,1,1
+") that bring the DETF FoM as close as possible to its CCL counterpart, as seen in the third column of Table 2.
+(Despite this, we still see, in the next column, that the analogous FoM for Ω",9,CMR10,,188,110
+c,6,CMMI7,,1,1
+and 10,9,CMR10,,6,6
+9,6,CMR7,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"are quite diﬀerent between
+CCL and CosmoSIS). While we were unable to successfully tune derivatives for CosmoSIS, there are other methods
+of forecasting with the library. We note that our CosmoSIS setup is mainly optimized for MCMC techniques that
+may not require a high numerical precision in the calculation of angular power spectra. Both the internal Boltzmann
+solvers and the CosmoSIS modules that perform the integration over the window functions can be adjusted towards
+increased numerical accuracy and are subject to future accuracy improvements. We reiterate that we aren’t trying to
+compare the numerical accuracy of the two libraries, but use them to investigate numerical issues that can arise in
+Fisher forecasts.",9,CMR10,,725,115
+Figure 2.,8,CMBX9,,9,9
+"Derivative tunings for CCL, focusing on parameters Ω",8,CMR9,,52,52
+c,5,CMMI6,,1,1
+(left) and,8,CMR9,,10,10
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+"(right), using various order stencils. Note that
+a normalized step-size of 0.01 appears stable.",8,CMR9,,95,48
+Figure 3.,8,CMBX9,,9,9
+"Derivative tunings for CosmoSIS, focusing on parameters Ω",8,CMR9,,57,57
+c,5,CMMI6,,1,1
+(left) and,8,CMR9,,10,10
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+"(right) using various order stencils. Note
+that there does not seem to be a clear region of stability in either case. In the latter case, this is true even restricting the range
+of the plot to focus on the larger normalized step-sizes.",8,CMR9,,235,134
+6,9,CMR10,,1,1
+"Continuing with the calculation of our Fisher forecast, we get Fisher matrices from CCL and CosmoSIS that have
+entry-wise relative diﬀerences that are no larger than 0",9,CMR10,,167,110
+.,9,CMMI10,,1,1
+"6% in magnitude as seen in Table 3. However, these Fisher
+matrices have high condition numbers (see Table 2) that lead to large magniﬁcations in the entry-wise relative diﬀer-
+ences when we invert the matrices and look at the corresponding covariance matrices as seen in Table 4. At worst, the
+relative diﬀerence is almost a factor of 15. This highlights how small instabilities in the Fisher matrix can translate
+to much larger deviations in the parameter covariance matrix. Note that we use the inversion method,",9,CMR10,,514,119
+linalg.inv,9,CMTT10,,10,10
+",
+implemented in the NumPy package (Oliphant 2006; Van Der Walt et al. 2011) that is based on LU decomposition.
+In the following paragraph we will describe the consistency tests we performed to ensure numerical accuracy in the
+inversion.",9,CMR10,,237,114
+"Given the high condition numbers, we gauge how accurate our calculated inverses are by one of two methods:",9,CMR10,,106,106
+1. We multiply a Fisher matrix with its corresponding covariance matrix (its inverse) and check whether we get,9,CMR10,,110,110
+something that is numerically close to the identity matrix.,9,CMR10,,59,59
+"2. We follow K¨ohlinger et al. (2017), which uses a technique from Newman et al. (1974) to verify matrix inversions
+in its forecasts. The latter gives upper and lower bounds on the matrix norm of the diﬀerence between the
+calculated and actual inverse of a matrix. Let",9,CMR10,,268,115
+C,9,CMMI10,,1,1
+be our calculated inverse to the Fisher matrix,9,CMR10,,46,46
+F,9,CMMI10,,1,1
+", let",9,CMR10,,5,5
+F,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+"be
+the actual inverse of",9,CMR10,,24,21
+F,9,CMMI10,,1,1
+", let",9,CMR10,,5,5
+I,9,CMMI10,,1,1
+"be the Identity matrix, let",9,CMR10,,27,27
+R,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+I,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+F C,9,CMMI10,,3,3
+and let,9,CMR10,,7,7
+N,9,CMMI10,,1,1
+be a matrix norm (we use the,9,CMR10,,28,28
+Frobenius norm). Then,9,CMR10,,21,21
+N,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+CR,9,CMMI10,,2,2
+")
+1 +",9,CMR10,,5,3
+N,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+R,9,CMMI10,,1,1
+),9,CMR10,,1,1
+≤,9,CMSY10,,1,1
+N,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+F,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+C,9,CMMI10,,1,1
+),9,CMR10,,1,1
+≤,9,CMSY10,,1,1
+N,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+CR,9,CMMI10,,2,2
+")
+1",9,CMR10,,3,1
+−,9,CMSY10,,1,1
+N,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+R,9,CMMI10,,1,1
+),9,CMR10,,1,1
+(11),9,CMR10,,4,4
+"For CCL, the lower bound was calculated to be 1",9,CMR10,,47,47
+.,9,CMMI10,,1,1
+88,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+−,6,CMSY7,,1,1
+12,6,CMR7,,2,2
+and the upper bound diﬀered by 1,9,CMR10,,32,32
+.,9,CMMI10,,1,1
+70,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+−,6,CMSY7,,1,1
+22,6,CMR7,,2,2
+".
+For CosmoSIS, the respective lower bound was 3",9,CMR10,,48,46
+.,9,CMMI10,,1,1
+09,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+−,6,CMSY7,,1,1
+13,6,CMR7,,2,2
+and the upper bound diﬀered by 2,9,CMR10,,32,32
+.,9,CMMI10,,1,1
+28,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+−,6,CMSY7,,1,1
+23,6,CMR7,,2,2
+". By
+subtracting the lower bound from the upper bound, we get the size of the interval that contains the norm in
+question. This ‘Inverse Norm Spread’ is shown again in the last column of Table 2. Since these spreads are very
+small in all cases, we have another test suggesting that our calculated inverses are accurate.",9,CMR10,,319,111
+We also test the sensitivity of our results with respect to a reparametrization wherein we use Ω,9,CMR10,,96,96
+c,6,CMMI7,,1,1
+h,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+and Ω,9,CMR10,,5,5
+b,6,CMMI7,,1,1
+h,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+"instead
+of Ω",9,CMR10,,12,7
+c,6,CMMI7,,1,1
+and Ω,9,CMR10,,5,5
+b,6,CMMI7,,1,1
+"respectively, and repeat the above steps. The last row of Table 2 summarize the condition number, the
+DETF and Ω",9,CMR10,,112,101
+c,6,CMMI7,,1,1
+h,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"FoM, and the Inverse Norm Spread for this case using CCL. While the condition number is
+still high, the DETF FoM is roughly the same as earlier and the small Inverse Norm Spread suggests our calculated
+covariance matrix is numerically accurate.",9,CMR10,,244,113
+"In the ﬁeld of numerical stability, it is well known that when inverting a matrix, it should be equilibrated, i.e., given
+a norm, its rows (and columns) should have similar lengths in that norm. This ensures that small perturbations in
+all rows (or columns) are of similar magnitude. For a more detailed treatment of the subject, we refer the reader to
+Croz & Higham (1992); Wilkinson (1961); Bunch (1971). In the context of Fisher forecasting, if one is using",9,CMR10,,460,121
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"as
+a parameter, equilibration can be used to lower the condition number. For example, we can scale",9,CMR10,,98,95
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+by 10,9,CMR10,,5,5
+9,6,CMR7,,1,1
+"and use
+10",9,CMR10,,10,7
+9,6,CMR7,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"as a parameter. While this does not aﬀect the relative diﬀerences in the Fisher and covariance matrix, we found
+that it does make eigenvalue/eigenvector calculations more accurate. Since doing so comes at no computational cost,",9,CMR10,,227,115
+we incorporated this into our ﬁducial ansatz. Note that log[10,9,CMR10,,62,62
+10,6,CMR7,,2,2
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+"] has been used as well (Planck Collaboration et al.
+2016; Raveri et al. 2016; Ballardini et al. 2018).",9,CMR10,,103,52
+"Additionally, we also test how adding priors on Ω",9,CMR10,,49,49
+b,6,CMMI7,,1,1
+and,9,CMR10,,3,3
+h,9,CMMI10,,1,1
+"aﬀects our results. Using Monte Carlo Markov Chains
+provided in the 2015 release of data products",9,CMR10,,97,51
+2,6,CMR7,,1,1
+"by the Planck Collaboration et al. (2016), we create a covariance matrix
+containing the parameters we are interested in. By taking the square root of the diagonal elements corresponding to
+Ω",9,CMR10,,190,115
+b,6,CMMI7,,1,1
+and,9,CMR10,,3,3
+h,9,CMMI10,,1,1
+", we get the uncertainties",9,CMR10,,26,26
+σ,9,CMMI10,,1,1
+Ω,6,CMR7,,1,1
+b,4,CMMI5,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+00066 and,9,CMR10,,9,9
+σ,9,CMMI10,,1,1
+h,6,CMMI7,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"0057. To add these priors to our Fisher matrices, we add",9,CMR10,,56,56
+σ,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+2,6,CMR7,,1,1
+"to the corresponding diagonal values in the original matrices. We therefore neglect, for simplicity, the",9,CMR10,,104,104
+h,6,CMMI7,,1,1
+correlation between,9,CMR10,,19,19
+h,9,CMMI10,,1,1
+and Ω,9,CMR10,,5,5
+b,6,CMMI7,,1,1
+"in the Planck prior. We note that our goal is not primarily to perform a realistic forecast,
+but to study the impact of prior choices on the numerical stability of the Fisher analysis in a simple framework.",9,CMR10,,206,113
+and,9,CMR10,,3,3
+σ,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+"2
+Ω",6,CMR7,,3,1
+b,4,CMMI5,,1,1
+While adding this prior reduces the largest entry-wise relative diﬀerences between the covariance matrices (for the,9,CMR10,,115,115
+h,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+w,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+and,9,CMR10,,3,3
+n,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+w,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+elements) from a factor of,9,CMR10,,26,26
+∼,9,CMSY10,,1,1
+15 to,9,CMR10,,5,5
+∼,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+"5, it also increases other elements like the",9,CMR10,,44,44
+h,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+10,9,CMR10,,2,2
+9,6,CMR7,,1,1
+A,9,CMMI10,,1,1
+s,6,CMMI7,,1,1
+element,9,CMR10,,7,7
+2,5,CMR6,,1,1
+We use the chains in the,7,CMR8,,24,24
+base plikHM TT lowTEB post BAO.txt,7,CMTT8,,34,34
+"ﬁles from the ‘Planck baseline model: TT low-ell temperature and LFI
+polarization (bﬂike, 2",7,CMR8,,91,68
+<,7,CMMI8,,1,1
+= ell,7,CMR8,,5,5
+<,7,CMMI8,,1,1
+"= 29)’ data available at https://pla.esac.esa.int/pla/aio/product-action?COSMOLOGY.FILE ID=COM
+CosmoParams base-plikHM-TT-lowTEB R2.00.tar.gz",7,CMR8,,141,94
+7,9,CMR10,,1,1
+from a factor of,9,CMR10,,16,16
+∼,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5 to,9,CMR10,,4,4
+∼,9,CMSY10,,1,1
+"2. As such, we do not ﬁnd that adding priors solves the problem of high entry-wise relative
+diﬀerences upon inversion of Fisher matrices.",9,CMR10,,137,91
+"Lastly, it is worth noting that the high condition numbers appear to stem from the size of our parameter space.
+By only varying a subset of our original parameters, we can reduce the size of the parameter space and generate new
+Fisher matrices using CCL and CosmoSIS. After trying various combinations of parameters, we found that once the
+parameter space included at least four parameters, then entry-wise relative diﬀerences between the inverted Fisher
+matrices started to exceed 10%, despite much smaller entry-wise relative diﬀerences, of similar magnitude to those
+in Table 4, in the original Fisher matrices. This agrees with idea that increasing the dimensionality of a matrix to
+be inverted results in this inversion being more sensitive to small deviations in the original matrix, as discussed in a
+Fisher forecasting in e.g. Blanchard et al. (2020).",9,CMR10,,859,120
+Table 2.,8,CMBX9,,8,8
+Summary table for CCL and CosmoSIS forecasts.,8,CMR9,,45,45
+Forecast,8,CMR9,,8,8
+Condition Number,8,CMR9,,16,16
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+−,8,CMSY9,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+FoM Ω,8,CMR9,,5,5
+c,5,CMMI6,,1,1
+−,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+FoM Ω,8,CMR9,,5,5
+c,5,CMMI6,,1,1
+h,8,CMMI9,,1,1
+2,5,CMR6,,1,1
+−,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+FoM Inverse Norm Spread,8,CMR9,,23,23
+"CCL
+CosmoSIS
+CCL (Ω",8,CMR9,,19,8
+c,5,CMMI6,,1,1
+h,8,CMMI9,,1,1
+2,5,CMR6,,1,1
+& Ω,8,CMR9,,3,3
+b,5,CMMI6,,1,1
+h,8,CMMI9,,1,1
+2,5,CMR6,,1,1
+),8,CMR9,,1,1
+1,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+07,8,CMR9,,2,2
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+7,5,CMR6,,1,1
+8,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+08,8,CMR9,,2,2
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+6,5,CMR6,,1,1
+3,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+33,8,CMR9,,2,2
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+7,5,CMR6,,1,1
+25,8,CMR9,,2,2
+.,8,CMMI9,,1,1
+"24
+29",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+"50
+26",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+84,8,CMR9,,2,2
+96,8,CMR9,,2,2
+.,8,CMMI9,,1,1
+"07
+221",8,CMR9,,6,3
+.,8,CMMI9,,1,1
+"5
+N/A",8,CMR9,,5,3
+"N/A
+N/A
+70",8,CMR9,,10,3
+.,8,CMMI9,,1,1
+89,8,CMR9,,2,2
+1,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+70,8,CMR9,,2,2
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+−,5,CMSY6,,1,1
+22,5,CMR6,,2,2
+2,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+28,8,CMR9,,2,2
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+−,5,CMSY6,,1,1
+23,5,CMR6,,2,2
+1,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+55,8,CMR9,,2,2
+×,8,CMSY9,,1,1
+10,8,CMR9,,2,2
+−,5,CMSY6,,1,1
+21,5,CMR6,,2,2
+Table 3.,8,CMBX9,,8,8
+"Magnitude of relative diﬀerences for CCL and CosmoSIS Fisher matrices.
+The largest diﬀerences are highlighted in bold.",8,CMR9,,118,70
+Ω,8,CMR9,,1,1
+c,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+h,8,CMMI9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+b,5,CMMI6,,1,1
+n,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+c,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+h,8,CMMI9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+b,5,CMMI6,,1,1
+n,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+"4.68E-5
+3.26E-4
+1.92E-3
+1.92E-3",8,CMR9,,31,7
+3.84E-3,8,CMBX9,,7,7
+"2.39E-3
+7.20E-4
+2.39E-3
+3.26E-4
+1.77E-4
+1.53E-3
+5.98E-4
+1.41E-3
+5.61E-4
+1.49E-3
+4.82E-5
+1.36E-3
+1.01E-4
+5.84E-4
+2.34E-3
+1.93E-4",8,CMR9,,127,7
+"1.01E-4
+1.49E-3
+5.98E-4
+1.36E-3
+5.61E-4
+1.53E-3
+4.82E-5
+1.41E-3
+1.77E-4
+9.57E-4
+2.47E-3
+1.05E-3
+2.47E-3",8,CMR9,,103,7
+5.90E-3,8,CMBX9,,7,7
+"1.84E-4
+6.15E-4
+1.84E-4
+9.57E-4
+6.83E-4
+2.51E-3
+4.11E-4",8,CMR9,,55,7
+"1.93E-4
+2.34E-3
+5.84E-4
+4.11E-4
+2.51E-3
+6.83E-4
+3.32E-5",8,CMR9,,55,7
+Table 4.,8,CMBX9,,8,8
+"Magnitude of relative diﬀerences for CCL and CosmoSIS covariance matrices.
+The largest diﬀerences are highlighted in bold.",8,CMR9,,122,74
+Ω,8,CMR9,,1,1
+c,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+h,8,CMMI9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+b,5,CMMI6,,1,1
+n,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+c,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+0,5,CMR6,,1,1
+h,8,CMMI9,,1,1
+10,8,CMR9,,2,2
+9,5,CMR6,,1,1
+A,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+Ω,8,CMR9,,1,1
+b,5,CMMI6,,1,1
+n,8,CMMI9,,1,1
+s,5,CMMI6,,1,1
+w,8,CMMI9,,1,1
+a,5,CMMI6,,1,1
+"7.91E-1
+1.14E+0
+7.71E-1
+7.36E-1
+7.82E-1
+6.20E-1",8,CMR9,,47,7
+1.00E+0,8,CMR9,,7,7
+"1.14E+0
+3.54E-1",8,CMR9,,15,7
+1.15E+1,8,CMBX9,,7,7
+"2.88E-2
+7.35E-1",8,CMR9,,15,7
+1.48E+1,8,CMBX9,,7,7
+3.60E-1,8,CMR9,,7,7
+7.71E-1,8,CMR9,,7,7
+7.36E-1,8,CMR9,,7,7
+1.15E+1,8,CMBX9,,7,7
+"2.88E-2
+4.71E-1
+2.00E-1
+4.66E-1
+3.17E-1",8,CMR9,,39,7
+1.31E+1,8,CMBX9,,7,7
+3.34E-2,8,CMR9,,7,7
+"6.73E-1
+4.71E-1
+6.82E-1
+4.20E-1",8,CMR9,,31,7
+6.20E-1,8,CMR9,,7,7
+"7.82E-1
+7.35E-1",8,CMR9,,15,7
+1.48E+1,8,CMBX9,,7,7
+"6.82E-1
+4.66E-1
+6.51E-1
+5.95E-1",8,CMR9,,31,7
+5.55E-1,8,CMR9,,7,7
+"4.20E-1
+3.17E-1
+5.95E-1
+3.15E-4",8,CMR9,,31,7
+3.45E-1,8,CMR9,,7,7
+"1.00E+0
+3.60E-1",8,CMR9,,15,7
+1.31E+1,8,CMBX9,,7,7
+"3.34E-2
+5.55E-1
+3.45E-1",8,CMR9,,23,7
+2.99E-1,8,CMR9,,7,7
+8,9,CMR10,,1,1
+CONCLUSIONS,9,CMR10,,11,11
+"In this note, we investigated numerical issues that may arise when Fisher forecasting LSST-like weak lensing probes
+to constrain dark energy, focusing on an angular power spectrum formalism whose performance was gauged by the
+DETF FoM. Using two numerical libraries, CCL and CosmoSIS, we generated data-vectors and data-covariances that
+were very close numerically, as seen by their signal-to-noise ratios having a relative diﬀerence of",9,CMR10,,436,115
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+"04%. However,
+when trying to calculate the Fisher matrix, we found that numerical instability can arise when tuning the step-size for
+the derivatives that go into Equation 6, which consequently introduces numerical instability in the DETF FoM as seen
+in Figure 3. Furthermore, even with two Fisher matrices whose entry-wise relative diﬀerences were small (around 0.6%
+at most), we found that these small perturbations can be magniﬁed greatly upon inversion (to order of magnitude
+diﬀerences) due to these Fisher matrices having high condition numbers — due, at least in part, to the number of
+parameters chosen to investigate. Our work agrees with similar ﬁndings in Blanchard et al. (2020) and Yahia-Cherif
+et al. (2020), with the former estimating that for the forecast parameter covariance matrix to be stable to 10%, the
+maximum error on an element of the Fisher matrix permitted would be 0.01%. Ensuring all parameters have a similar
+order of magnitude may help reduce the condition number; however, reparameterizing Ω",9,CMR10,,1023,119
+c,6,CMMI7,,1,1
+by Ω,9,CMR10,,4,4
+c,6,CMMI7,,1,1
+h,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+and Ω,9,CMR10,,5,5
+b,6,CMMI7,,1,1
+and Ω,9,CMR10,,5,5
+b,6,CMMI7,,1,1
+h,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+",
+or even applying priors on certain parameters does not necessarily yield signiﬁcant beneﬁts. While the large condition
+numbers may not necessarily propagate into large diﬀerences for the DETF FoM, as in our case, it worth carrying
+out similar numerical stability tests in future work with Fisher forecasts, as it may impact other quantities whose",9,CMR10,,348,118
+derivation involves inverting the Fisher matrix.,9,CMR10,,48,48
+ACKNOWLEDGMENTS,9,CMR10,,15,15
+"We thank the CCL team for making their code available at https://github.com/LSSTDESC/CCL and the CosmoSIS
+team for making their code available at https://bitbucket.org/joezuntz/cosmosis. We also thank Alain Blanchard,
+Stefano Camera, Luke Hart, Mark Kamionkowski, Eric Linder, An˘ze Slosar and Joe Zuntz, for useful discussions that
+improved the content of this paper.",9,CMR10,,368,114
+REFERENCES,9,CMR10,,10,10
+"Aihara, H., Arimoto, N., Armstrong, R., et al. 2018, PASJ,",8,CMR9,,58,58
+"Chang, C., Jarvis, M., Jain, B., et al. 2013, MNRAS, 434,",8,CMR9,,57,57
+"70, S4, doi: 10.1093/pasj/psx066",8,CMR9,,32,32
+"2121, doi: 10.1093/mnras/stt1156",8,CMR9,,32,32
+"Albrecht, A., Bernstein, G., Cahn, R., et al. 2006, Report of",8,CMR9,,61,61
+"the Dark Energy Task Force.
+https://arxiv.org/abs/astro-ph/0609591",8,CMR9,,66,38
+"Ballardini, M., Finelli, F., Maartens, R., & Moscardini, L.
+2018, Journal of Cosmology and Astroparticle Physics,
+2018, 044, doi: 10.1088/1475-7516/2018/04/044",8,CMR9,,159,59
+"Bartelmann, M., & Schneider, P. 2001, PhR, 340, 291,",8,CMR9,,52,52
+doi: 10.1016/S0370-1573(00)00082-X,8,CMR9,,34,34
+"Chisari, N. E., Alonso, D., Krause, E., et al. 2019, The",8,CMR9,,56,56
+"Astrophysical Journal Supplement Series, 242, 2,",8,CMR9,,48,48
+doi: 10.3847/1538-4365/ab1658,8,CMR9,,29,29
+"Croz, J. J. D., & Higham, N. J. 1992, IMA Journal of",8,CMR9,,52,52
+"Numerical Analysis, 12, 1, doi: 10.1093/imanum/12.1.1",8,CMR9,,53,53
+"Cutler, C., & Flanagan,",8,CMR9,,23,23
+´,8,CMR9,,1,1
+"E. E. 1994, PhRvD, 49, 2658,",8,CMR9,,28,28
+doi: 10.1103/PhysRevD.49.2658,8,CMR9,,29,29
+"Bassett, B. A., Fantaye, Y., Hlozek, R., & Kotze, J. 2011,",8,CMR9,,58,58
+"de Jong, J. T. A., Verdoes Kleijn, G. A., Kuijken, K. H., &",8,CMR9,,59,59
+"International Journal of Modern Physics D, 20,
+2559–2598, doi: 10.1142/s0218271811020548",8,CMR9,,88,46
+"Blanchard, A., Camera, S., Carbone, C., et al. 2020,",8,CMR9,,52,52
+"Astronomy & Astrophysics, 642, A191",8,CMR9,,35,35
+"Blandford, R. D., Saust, A. B., Brainerd, T. G., &",8,CMR9,,50,50
+"Villumsen, J. V. 1991, MNRAS, 251, 600,
+doi: 10.1093/mnras/251.4.600",8,CMR9,,68,39
+"Bunch, J. R. 1971, J. ACM, 18, 566–572,",8,CMR9,,39,39
+doi: 10.1145/321662.321670,8,CMR9,,26,26
+"Valentijn, E. A. 2013, Experimental Astronomy, 35, 25,",8,CMR9,,54,54
+doi: 10.1007/s10686-012-9306-1,8,CMR9,,30,30
+"Fornberg, B. 1988, Mathematics of computation, 51, 699",8,CMR9,,54,54
+"Hart, L., & Chluba, J. 2020, MNRAS, 495, 4210,",8,CMR9,,46,46
+doi: 10.1093/mnras/staa1426,8,CMR9,,27,27
+"Heavens, A. F., Seikel, M., Nord, B. D., et al. 2014,",8,CMR9,,53,53
+"Monthly Notices of the Royal Astronomical Society, 445,",8,CMR9,,55,55
+"1687–1693, doi: 10.1093/mnras/stu1866",8,CMR9,,37,37
+"Ivezi´c, ˇZ., Kahn, S. M., Tyson, J. A., et al. 2019, ApJ, 873,",8,CMR9,,63,63
+"Camera, S., Harrison, I., Bonaldi, A., & Brown, M. L. 2017,",8,CMR9,,59,59
+"MNRAS, 464, 4747, doi: 10.1093/mnras/stw2688",8,CMR9,,44,44
+"111, doi: 10.3847/1538-4357/ab042c",8,CMR9,,34,34
+"Jungman, G., Kamionkowski, M., Kosowsky, A., & Spergel,",8,CMR9,,55,55
+"Smith, R. E., Peacock, J. A., Jenkins, A., et al. 2003,",8,CMR9,,55,55
+"D. N. 1996a, PhRvD, 54, 1332,
+doi: 10.1103/PhysRevD.54.1332",8,CMR9,,59,29
+"—. 1996b, PhRvL, 76, 1007,",8,CMR9,,26,26
+doi: 10.1103/PhysRevLett.76.1007,8,CMR9,,32,32
+"Kaiser, N. 1992, ApJ, 388, 272, doi: 10.1086/171151
+Kirk, D., Lahav, O., Bridle, S., et al. 2015, MNRAS, 451,",8,CMR9,,109,57
+"4424, doi: 10.1093/mnras/stv1268",8,CMR9,,32,32
+"Krause, E., Eiﬂer, T. F., Zuntz, J., et al. 2017, arXiv",8,CMR9,,55,55
+"e-prints, arXiv:1706.09359.
+https://arxiv.org/abs/1706.09359",8,CMR9,,60,32
+"K¨ohlinger, F., Viola, M., Joachimi, B., et al. 2017, Monthly
+Notices of the Royal Astronomical Society, 471, 4412,
+doi: 10.1093/mnras/stx1820",8,CMR9,,142,61
+"Laureijs, R., Amiaux, J., Arduini, S., et al. 2011, arXiv",8,CMR9,,57,57
+preprint arXiv:1110.3193,8,CMR9,,24,24
+"LSST Science Collaboration, Abell, P. A., Allison, J., et al.",8,CMR9,,61,61
+"2009, arXiv e-prints, arXiv:0912.0201.
+https://arxiv.org/abs/0912.0201",8,CMR9,,70,38
+"Newman, M., et al. 1974, J. Res. Nat. Bur. Stand., 78, 65
+Oliphant, T. E. 2006, A guide to NumPy, Vol. 1 (Trelgol",8,CMR9,,113,57
+Publishing USA),8,CMR9,,15,15
+"Planck Collaboration, Adam, R., Ade, P. A. R., et al. 2016,",8,CMR9,,59,59
+"A&A, 594, A1, doi: 10.1051/0004-6361/201527101
+Raveri, M., Martinelli, M., Zhao, G., & Wang, Y. 2016,",8,CMR9,,101,54
+"Information Gain in Cosmology: From the Discovery of
+Expansion to Future Surveys.
+https://arxiv.org/abs/1606.06273",8,CMR9,,114,52
+9,9,CMR10,,1,1
+"Monthly Notices of the Royal Astronomical Society, 341,
+1311–1332, doi: 10.1046/j.1365-8711.2003.06503.x
+Takahashi, R., Sato, M., Nishimichi, T., Taruya, A., &
+Oguri, M. 2012, The Astrophysical Journal, 761, 152,
+doi: 10.1088/0004-637x/761/2/152",8,CMR9,,245,55
+"Tegmark, M. 1997, Physical Review Letters, 79, 3806–3809,",8,CMR9,,57,57
+doi: 10.1103/physrevlett.79.3806,8,CMR9,,32,32
+"Tegmark, M., Taylor, A. N., & Heavens, A. F. 1997, The
+Astrophysical Journal, 480, 22–35, doi: 10.1086/303939
+The Dark Energy Survey Collaboration. 2005, The Dark",8,CMR9,,162,54
+Energy Survey. https://arxiv.org/abs/astro-ph/0510346,8,CMR9,,53,53
+"The LSST Dark Energy Science Collaboration,",8,CMR9,,43,43
+"Mandelbaum, R., Eiﬂer, T., et al. 2018a, The LSST Dark
+Energy Science Collaboration (DESC) Science
+Requirements Document v1 Released Data Products,
+1.0.1, Zenodo, doi: 10.5281/zenodo.2662127",8,CMR9,,190,54
+"—. 2018b, arXiv e-prints, arXiv:1809.01669.",8,CMR9,,43,43
+https://arxiv.org/abs/1809.01669,8,CMR9,,32,32
+"Van Der Walt, S., Colbert, S. C., & Varoquaux, G. 2011,",8,CMR9,,55,55
+"Computing in Science & Engineering, 13, 22",8,CMR9,,42,42
+"Wilkinson, J. H. 1961, J. ACM, 8, 281–330,",8,CMR9,,42,42
+doi: 10.1145/321075.321076,8,CMR9,,26,26
+"Yahia-Cherif, S., Blanchard, A., Camera, S., et al. 2020,",8,CMR9,,57,57
+arXiv preprint arXiv:2007.01812,8,CMR9,,31,31
+"Zuntz, J., Paterno, M., Jennings, E., et al. 2015, Astronomy",8,CMR9,,60,60
+"and Computing, 12, 45–59,
+doi: 10.1016/j.ascom.2015.05.005",8,CMR9,,58,32

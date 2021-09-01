@@ -1,0 +1,465 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+y,10,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+M,17,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+6,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+M,17,Times-Roman,,1,1
+I,6,Times-Roman,,1,1
+.,5,Times-Roman,,1,1
+"h
+p",10,Times-Roman,,3,1
+-,6,Times-Roman,,1,1
+o,10,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+t,5,Times-Roman,,1,1
+s,7,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"3
+v
+1
+4
+9
+0
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+Implementing CUDA Streams into AstroAccelerate – A Case Study,17,CMR17,,61,61
+Jan Novotn´y,11,CMR12,,12,12
+"1,3",7,CMR8,,3,3
+", Karel Ad´amek",11,CMR12,,15,15
+"1,2",7,CMR8,,3,3
+", and Wes Armour",11,CMR12,,16,16
+1,7,CMR8,,1,1
+1,7,CMR8,,1,1
+"Oxford e-Research Centre, Department of Engineering Science, University of Oxford, 7 Keble Rd,
+Oxford OX1 3QG, United Kingdom.",11,CMTI12,,126,94
+2,7,CMR8,,1,1
+"Faculty of Information Technology, Czech Technical University, Th´akurova 9, 160 00, Prague, Czech
+Republic.",11,CMTI12,,108,98
+3,7,CMR8,,1,1
+"Research Centre for Theoretical Physics and Astrophysics, Institute of Physics, Silesian University in
+Opava, Bezruˇcovo n´am. 13, CZ-74601 Opava, Czech Republic.",11,CMTI12,,162,102
+"May 7, 2021",11,CMR12,,11,11
+Abstract,14,CMBX12,,8,8
+"To be able to run tasks asynchronously on NVIDIA
+GPUs a programmer must explicitly implement asyn-
+chronous execution in their code using the syntax of
+CUDA streams. Streams allow a programmer to launch
+independent concurrent execution tasks, providing the
+ability to utilise diﬀerent functional units on the GPU
+asynchronously. For example, it is possible to transfer
+the results from a previous computation performed on
+input data n-1, over the PCIe bus whilst computing
+the result for input data n, by placing diﬀerent tasks
+in diﬀerent CUDA streams. The beneﬁt of such an
+approach is that the time taken for the data transfer
+between the host (server hosting the GPU) and device
+(the GPU) can be hidden with computation. This case
+study deals with the implementation of CUDA streams
+into AstroAccelerate. AstroAccelerate is a GPU ac-
+celerated real-time signal processing pipeline for time-",10,CMR10,,894,56
+domain radio astronomy.,10,CMR10,,23,23
+1,14,CMBX12,,1,1
+Introduction,14,CMBX12,,12,12
+"With new coming technological instruments in all ﬁelds
+of science the need to improve computational algo-
+improve
+rithms, fully utilise hardware architectures,
+softwares, and compete in upcoming data challenges
+[Geist and Lucas, 2009], is becoming ever more impor-",10,CMR10,,264,54
+"tant. Today, by looking to the worlds most powerful
+machines [TOP500.org, a,b], we can be certain that to
+reach exaFLOPS performance, heterogeneous comput-
+ing is necessary. Clear leaders in this area are systems",10,CMR10,,212,56
+"using the power of GPUs, which provide excellent en-
+ergy eﬃciency [Mittal and Vetter, 2015, Cebri’n et al.,
+2012]. To eﬃciently use such a system we need to
+ensure that the applications ideally execute functions
+(kernels) concurrently and the data transfers are hid-
+den by computations. Beginning with CUDA 7, we
+can manage this asynchronous behaviour by introduc-
+ing “streams”. One of the simplest guides to using this
+functionality is provided by Harris [2012, 2015].",10,CMR10,,472,55
+"In this paper we study the implementation of streams
+into the AstroAccelerate (AA) project. AA is a GPU-
+enabled software package that focuses on enabling real-
+time processing of time-domain radio-astronomy data.
+It uses the CUDA programming language for NVIDIA
+GPUs and can perform tasks such as dedispersion,
+single pulse searching [Ad´amek and Armour, 2020]
+and Fourier Domain Acceleration Searches (FDAS)
+[Dimoudi et al., 2018, Ad´amek et al., 2017] in real time",10,CMR10,,467,57
+"on very large data-sets which are comparable to those
+which will be produced by next generation radio-
+telescopes such as the Square Kilometre Array (SKA).",10,CMR10,,155,53
+"The AA code can be divided into few main parts
+as show in Fig. 1. The ﬁrst part performs the prepa-
+ration of system and reading user data. The second
+part consists of mapping tasks to suitable resources
+and allocation of all necessary memory. The third part,
+which is the part of the code in which we have imple-",10,CMR10,,313,55
+"mented streams, is responsible for the dedispersion of
+data and single pulse searching. The fourth part oﬀers
+optional features like FDAS (Fourier Domain Acceler-
+ation Search) or periodicity searching.",10,CMR10,,202,54
+To achieve the desired asynchronous behaviour (as,10,CMR10,,49,49
+1,10,CMR10,,1,1
+pulse search.,10,CMR10,,13,13
+1,7,CMR8,,1,1
+"For the correctness of the streams im-
+plementation we use visual inspection of the timeline
+in NVidia Visual Proﬁler (nvvp). All testing is done
+on a Tesla V100 GPU.",10,CMR10,,166,53
+2.1 Dedispersion phase,11,CMBX12,,22,22
+"The host memory is pageable by default, which means
+that the GPU cannot address the data directly. To
+be able to overlap kernel execution and data trans-
+fers the host memory involved must be pinned –
+in CUDA",10,CMR10,,208,51
+cudaMallocHost(),10,CMTT10,,16,16
+or,10,CMR10,,2,2
+cudaHostAlloc(),10,CMTT10,,15,15
+"is
+used to allocate pinned memory, to deallocate use",10,CMR10,,52,49
+cudaFreeHost(),10,CMTT10,,14,14
+.,10,CMR10,,1,1
+"When applying the above mentioned points we ﬁnd
+that an increase in the throughput of the memory
+transfers by",10,CMR10,,109,48
+∼,10,CMSY10,,1,1
+"30 % can be achieved, along with the",10,CMR10,,36,36
+beneﬁt of partially overlapping kernels execution.,10,CMR10,,50,50
+2,7,CMR8,,1,1
+"An-
+other beneﬁt we obtain is the removal of timing gaps
+between copies from device to host. The gaps are
+caused by the fact that when the copy is invoked the
+driver must allocate a temporary page-locked (pinned)
+host array and transfer the data there (see Fig. 3). To
+be precise the time saved is just moved to the alloca-
+tion and deallocation of memory where we see signiﬁ-
+cant increase (note the increase will be even higher for
+systems with larger host memory).",10,CMR10,,467,56
+n,5,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+t,3,Roboto-Regular,,1,1
+a,5,Roboto-Regular,,1,1
+z,4,Roboto-Regular,,1,1
+"i
+l",2,Roboto-Regular,,3,1
+a,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+t,3,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+n,5,Roboto-Regular,,1,1
+I,2,Roboto-Regular,,1,1
+n,5,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+t,3,Roboto-Regular,,1,1
+a,5,Roboto-Regular,,1,1
+c,4,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+"l
+l",2,Roboto-Regular,,3,1
+a,5,Roboto-Regular,,1,1
+,2,Roboto-Regular,,0,0
+y,4,Roboto-Regular,,1,1
+r,3,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+m,8,Roboto-Regular,,1,1
+e,4,Roboto-Regular,,1,1
+m,8,Roboto-Regular,,1,1
+n,5,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+t,3,Roboto-Regular,,1,1
+a,5,Roboto-Regular,,1,1
+r,3,Roboto-Regular,,1,1
+a,5,Roboto-Regular,,1,1
+p,5,Roboto-Regular,,1,1
+e,4,Roboto-Regular,,1,1
+r,3,Roboto-Regular,,1,1
+P,5,Roboto-Regular,,1,1
+g,5,Roboto-Regular,,1,1
+n,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+t,3,Roboto-Regular,,1,1
+u,5,Roboto-Regular,,1,1
+p,5,Roboto-Regular,,1,1
+m,8,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+C,6,Roboto-Regular,,1,1
+t_Chunk_0,6,Roboto-Regular,,9,9
+DDTR,6,Roboto-Regular,,4,4
+SPDT,6,Roboto-Regular,,4,4
+t_Chunk_1,6,Roboto-Regular,,9,9
+DDTR,6,Roboto-Regular,,4,4
+SPDT,6,Roboto-Regular,,4,4
+".
+.
+.",3,Roboto-Regular,,5,1
+t_Chunk_n,6,Roboto-Regular,,9,9
+DDTR,6,Roboto-Regular,,4,4
+SPDT,6,Roboto-Regular,,4,4
+?,4,Roboto-Regular,,1,1
+S,5,Roboto-Regular,,1,1
+A,6,Roboto-Regular,,1,1
+D,6,Roboto-Regular,,1,1
+F,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+,2,Roboto-Regular,,0,0
+",",1,Roboto-Regular,,1,1
+y,4,Roboto-Regular,,1,1
+t,3,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+c,4,Roboto-Regular,,1,1
+d,5,Roboto-Regular,,1,1
+o,5,Roboto-Regular,,1,1
+i,2,Roboto-Regular,,1,1
+r,3,Roboto-Regular,,1,1
+e,4,Roboto-Regular,,1,1
+P,5,Roboto-Regular,,1,1
+"Figure 1: Simpliﬁed schema of the AstroAccelerate
+workﬂow.",10,CMR10,,58,49
+"shown in Fig. 2, bottom right) of data transfers and
+computing, we split the input signal to",10,CMR10,,92,52
+n,10,CMMI10,,1,1
+"time chunks
+(these chunks represent the amount of signal that can
+ﬁt to GPU memory), and again divide them by the",10,CMR10,,113,53
+"number of desired CUDA streams into smaller chunks.
+These smaller chunks are then associated with a stream
+ID. This process is repeated for all time chunks un-
+til all data are processed. Care has to be taken to
+distribute the correct chunk of memory to the correct
+CUDA stream.",10,CMR10,,278,54
+Available free memory,7,Roboto-Regular,,21,21
+Available free memory,7,Roboto-Regular,,21,21
+t_chunk_x,10,Roboto-Regular,,9,9
+default stream 0,6,Roboto-Regular,,16,16
+H2D,6,Roboto-Regular,,3,3
+t_chunk_x,6,Roboto-Regular,,9,9
+D2H,6,Roboto-Regular,,3,3
+t_chunk_y0,7,Roboto-Regular,,10,10
+t_chunk_y1,7,Roboto-Regular,,10,10
+stream 1,5,Roboto-Regular,,8,8
+stream 2,5,Roboto-Regular,,8,8
+H2D,6,Roboto-Regular,,3,3
+t_chunk_y0,4,Roboto-Regular,,10,10
+D2H,6,Roboto-Regular,,3,3
+H2D,6,Roboto-Regular,,3,3
+t_chunk_y1,4,Roboto-Regular,,10,10
+D2H,6,Roboto-Regular,,3,3
+"Figure 2: Schematic idea of 5the implementation of
+CUDA streams into AA.",10,CMR10,,72,50
+2,14,CMBX12,,1,1
+Implementation,14,CMBX12,,14,14
+"Figure 3: Timeline from nvvp showing the default
+stream (top) launching data transfers and kernels. A",10,CMR10,,101,52
+"magniﬁed view of the timeline showing the data trans-
+fer gaps when pageable memory is used (bottom).",10,CMR10,,101,53
+"To successfully obtain overlapping data transfers and
+coherent execution of kernels we perform the follow-
+ing steps: 1) create CUDA streams; 2) pinning host
+memory; 3) substitute the commands",10,CMR10,,192,53
+cudaMemcpy,10,CMTT10,,10,10
+to,10,CMR10,,2,2
+cudaMemcpyAsync,10,CMTT10,,15,15
+"; 4) associate streams ID to kernels
+and memory transfers; 5) appropriately change all",10,CMR10,,86,49
+"other explicit (wait event commands) and implicit (e.g.
+memory set, memory allocation) synchronisation com-
+mands to non-blocking ones.",10,CMR10,,135,55
+"We divide the implementation into two phases: com-
+putation of the dedispersion data, and then the single",10,CMR10,,105,54
+To,10,CMR10,,2,2
+the,10,CMR10,,3,3
+time,10,CMR10,,4,4
+caused,10,CMR10,,6,6
+decrease,10,CMR10,,8,8
+"alloca-
+by
+tion/deallocation of
+the host memory we create
+smaller temporary buﬀers to move the data from
+host (big pageable memory) to host (small pinned
+memory). Using this approach signiﬁcant time can
+be saved in the preparation of the host memory.",10,CMR10,,250,48
+1,5,CMR6,,1,1
+"These parts consists of several kernels, however we name",8,CMR9,,56,56
+them by their main meaning.,8,CMR9,,27,27
+2,5,CMR6,,1,1
+"The concurrency of kernels can happen when the resources
+of the GPU are not fully utilised. This can be seen usually at
+the end of kernel executions when the resources are released.",8,CMR9,,181,62
+2,10,CMR10,,1,1
+"However, the host to host copies block the CUDA
+streams. A multi-threaded approach can be used to
+solve this issue, i.e., for every stream ID we create a
+corresponding CPU thread using OpenMP. The ﬁnal
+achieved coherence and overlapping is shown in Fig. 4.",10,CMR10,,256,55
+"Figure 4: Timeline from nvvp showing the CUDA
+streams working in AA.",10,CMR10,,68,45
+References,14,CMBX12,,10,10
+2.2 Single pulse search phase,11,CMBX12,,29,29
+This part of the code deals with single pulse search.,10,CMR10,,53,53
+"In Fig. 1 this step is designated as SPDT. As dynamic
+allocation and deallocation of memory is used in this
+step which gives rise to synchronous behaviour, we
+have moved memory allocations from the Computation
+phase to the Preparation/Memory allocation phase of
+the code. The ﬁnal change required was to change or
+remove the explicit synchronisation events to stream ID
+synchronisation events with their appropriate stream
+IDs.",10,CMR10,,427,55
+"During the implementation of CUDA streams in this
+phase several problems were encountered. The most
+crucial is the fact that the",10,CMR10,,128,49
+cudaStreamWaitEvent(),10,CMTT10,,21,21
+"does not work properly when atomic operations are
+used. This forced us to leave the implementation of
+CUDA streams in this phase for future work.",10,CMR10,,145,51
+3 Conclusion,14,CMBX12,,12,12
+"Introducing CUDA streams into sophisticated software
+like AstroAccelerate was not a straightforward job. We
+have run into several issues such as stream event bar-
+riers not working with atomic operations or signiﬁcant
+increases in allocation time for pinned host memory.
+As a result CUDA streams are used only in the dedis-
+persion phase of our code. We have tested the AA
+stream version of our code on an SKA-like input signal",10,CMR10,,427,54
+"(1400 MHz central frequency, sampling rate 64",10,CMR10,,45,45
+µ,10,CMMI10,,1,1
+"s, 4096
+channels, 300 MHz bandwidth) and achieved an over-
+all speedup of 1.33 against the non-streams version of
+AA with a dispersion measure plan computing",10,CMR10,,157,54
+∼,10,CMSY10,,1,1
+"6000
+trials from 0–3000 pc cm",10,CMR10,,29,24
+−,7,CMSY8,,1,1
+3,7,CMR8,,1,1
+.,10,CMR10,,1,1
+4 Acknowledgements,14,CMBX12,,18,18
+"The authors would like to express their gratitude
+to the Research Centre for Theoretical Physics and
+Astrophysics, Institute of Physics, Silesian Univer-
+sity in Opava for institutional support, and the
+the OP VVV MEYS funded project
+support of
+CZ.02.1.01/0.0/0.0/16 019/0000765 ”Research Center
+for Informatics.",10,CMR10,,312,52
+at,10,CMR10,,2,2
+"Al Geist and Robert Lucas.
+challenges",10,CMR10,,37,26
+Major computer,10,CMR10,,14,14
+Inter-,10,CMTI10,,6,6
+science,10,CMR10,,7,7
+"national Journal of High Performance Com-
+puting",10,CMTI10,,48,41
+"2009.
+23(4):427–436,
+doi:
+URL
+1 0 . 1 1 7 7 / 1 0 9 4 3 4 2 0 0 9 3 4 7 4 45.",10,CMR10,,77,47
+https://doi.org/10.1177/1094342009347445,10,CMTT10,,40,40
+.,10,CMR10,,1,1
+Applications,10,CMTI10,,12,12
+",",10,CMR10,,1,1
+exascale.,10,CMR10,,9,9
+The,10,CMTI10,,3,3
+TOP500.org.,10,CMR10,,11,11
+Home –,10,CMR10,,6,6
+|,10,CMSY10,,1,1
+"TOP500,",10,CMR10,,7,7
+a.,10,CMR10,,2,2
+URL,10,CMR10,,3,3
+https://www.top500.org/,10,CMTT10,,23,23
+.,10,CMR10,,1,1
+TOP500.org.,10,CMR10,,11,11
+Green500 –,10,CMR10,,10,10
+|,10,CMSY10,,1,1
+"TOP500, b.",10,CMR10,,10,10
+URL,10,CMR10,,3,3
+https://www.top500.org/lists/green500/,10,CMTT10,,38,38
+.,10,CMR10,,1,1
+Sparsh Mittal and Jeﬀrey S. Vetter.,10,CMR10,,35,35
+"A survey
+of cpu-gpu heterogeneous computing techniques.",10,CMR10,,55,46
+ACM Comput. Surv.,10,CMTI10,,17,17
+", 47(4), July 2015.
+ISSN
+0360-0300.
+URL
+1 0 . 1 1 4 5 / 2 7 8 8 3 9 6.",10,CMR10,,70,30
+https://doi.org/10.1145/2788396,10,CMTT10,,31,31
+.,10,CMR10,,1,1
+doi:,10,CMR10,,4,4
+"J. M. Cebri’n, G. D. Guerrero, and J. M. Garc´ıa.
+In",10,CMR10,,52,49
+2012 IEEE,10,CMTI10,,9,9
+Energy eﬃciency analysis of gpus.,10,CMR10,,33,33
+"26th International Parallel and Distributed Process-
+ing Symposium Workshops PhD Forum",10,CMTI10,,86,52
+", pages 1014–
+1022, 2012. doi: 10.1109/IPDPSW.2012.124.",10,CMR10,,55,41
+Mark Harris. How to Overlap Data Transfers in CUDA,10,CMR10,,50,50
+"C/C++, December 2012.",10,CMR10,,21,21
+Karel Ad´amek and Wesley Armour.,10,CMR10,,32,32
+"Single-
+pulse detection algorithms for real-time fast ra-
+dio burst searches using gpus.",10,CMR10,,88,49
+"The Astrophys-
+ical Journal Supplement Series",10,CMTI10,,45,30
+", 247(2):56, 2020.",10,CMR10,,18,18
+"doi:
+URL
+1 0 . 3 8 4 7 / 1 5 3 8 - 4 3 6 5 / a b 7 9 94.",10,CMR10,,56,47
+https://doi.org/10.3847/1538-4365/ab7994,10,CMTT10,,40,40
+.,10,CMR10,,1,1
+"Soﬁa Dimoudi, Karel Adamek, Prabu Thiagaraj,
+Scott M Ransom, Aris Karastergiou, and Wesley",10,CMR10,,90,45
+3,10,CMR10,,1,1
+Mark Harris.,10,CMR10,,12,12
+GPU Pro Tip:,10,CMR10,,12,12
+"CUDA 7
+URL",10,CMR10,,10,6
+"Streams Simplify Concurrency,",10,CMR10,,29,29
+https://developer.nvidia.com/blog/how-overlap-data-transfers-cuda-cc/,10,CMTT10,,69,69
+.,10,CMR10,,1,1
+2015.,10,CMR10,,5,5
+"Armour. A gpu implementation of the correlation
+technique for real-time fourier domain pulsar accel-
+eration searches.",10,CMR10,,118,52
+"The Astrophysical Journal Supple-
+ment Series",10,CMTI10,,45,33
+", 239(2):28, 2018. doi: 10.3847/1538-436
+5/aabe88.",10,CMR10,,50,40
+"Karel Ad´amek, Soﬁa Dimoudi, Mike Giles, and Wesley
+Armour. Improved acceleration of the gpu fourier do-
+main acceleration search algorithm.",10,CMR10,,140,52
+"arXiv preprint
+arXiv:1711.10855",10,CMTI10,,31,16
+", 2017.",10,CMR10,,7,7
+4,10,CMR10,,1,1
