@@ -5,11 +5,11 @@ import pandas as pd
 import nltk
 from bs4 import BeautifulSoup
 import tempfile
-
+from pdfminer.pdftypes import LITERALS_JBIG2_DECODE
 
 class PDFParser(object):
-    pathToScript = 'pdf2txt.sh'
-    tmp_dir = '../data/'
+    pathToScript = '/home/stork/PycharmProjects/ClsRecArticles/SCRSA/Parser/pdf2txt.sh'
+    tmp_dir = '/home/stork/PycharmProjects/ClsRecArticles/SCRSA/data'
     font_size_diff_range = 2
     min_title_len = 10
 
@@ -27,7 +27,7 @@ class PDFParser(object):
                                            pathPDFinput)
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
         process.wait()
-
+        c=process.returncode
         assert process.returncode == 0
 
         html = open(pathHTMLoutput, 'r')
