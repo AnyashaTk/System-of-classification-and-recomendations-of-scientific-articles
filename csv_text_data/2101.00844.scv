@@ -1,0 +1,1930 @@
+0
+"MNRAS 000, 1–17 (2019) Preprint 8 January 2021 Compiled using MNRAS LATEX style file v3.0"
+"Rivers of Gas I.: Unveiling The Properties of High Redshift
+Filaments"
+"Marius Ramsøy1★, Adrianne Slyz1, Julien Devriendt1, Clotilde Laigle1,2 and
+Yohan Dubois2
+1 Sub-department of Astrophysics, University of Oxford, Keble Road, Oxford OX1 3RH, UK
+2 Sorbonne Universités, CNRS, UMR 7095, Institut d’Astrophysique de Paris, 98 bis bd Arago, 75014 Paris, France"
+Accepted XXX. Received YYY; in original form ZZZ
+"ABSTRACT
+At high redshift, the cosmic web is widely expected to have a significant impact on the mor-
+phologies, dynamics and star formation rates of the galaxies embedded within it, underscoring
+the need for a comprehensive study of the properties of such a filamentary network. With this
+goal in mind, we perform an analysis of high-𝑧 gas and dark matter (DM) filaments around
+a Milky Way-like progenitor simulated with the ramses adaptive mesh refinement (AMR)
+code from cosmic scales (∼1 Mpc) down to the virial radius of its DM halo host (∼20 kpc
+at 𝑧 = 4). Radial density profiles of both gas and DM filaments are found to have the same
+functional form, namely a plummer-like profile modified to take into account the wall within
+which these filaments are embedded. Measurements of the typical filament core radius 𝑟0 from
+the simulation are consistent with that of isothermal cylinders in hydrostatic equilibrium. Such
+an analytic model also predicts a redshift evolution for the core radius of filaments in fair
+agreement with the measured value for DM (𝑟0 ∝ (1 + 𝑧)−3.18±0.28). Gas filament cores grow
+as (𝑟0 ∝ (1 + 𝑧)−2.72±0.26). In both gas and DM, temperature and vorticity sharply drop at the
+edge of filaments, providing an excellent way to constrain the outer filament radius. When
+feedback is included the gas temperature and vorticity fields are strongly perturbed, hindering
+such a measurement in the vicinity of the galaxy. However, the core radius of the filaments as
+measured from the gas density field is largely unaffected by feedback, and the median central
+density is only reduced by about 20%."
+"Key words: galaxies: formation — galaxies: evolution — cosmology: large-scale structure of
+Universe — methods: numerical"
+1 INTRODUCTION
+"Galactic surveys have revealed the presence of anisotropic structure
+on scales ofMpc,made up of nodes, voids, sheets and filaments (e.g.
+Davis et al. 1982; de Lapparent et al. 1986; Geller & Huchra 1989).
+Cosmological simulations are able to reproduce this network, the
+so-called cosmic web (Bond et al. 1996; Pogosyan et al. 1998), and
+unveil its existence not just for the distribution of galaxies but also
+for the underlying gas and DM density, as a consequence of the hi-
+erarchical growth of structures in ΛCDM. Gravity amplifies small
+anisotropies, resulting in a near homogenous background collapsing
+to form sheets which can collapse again along another axis to form
+filaments. Halos form at filament intersections where, according to
+cosmological hydrodynamics simulations, galaxies at high redshift
+grow in mass and angular momentum primarily by material trans-
+ported along these filaments (Birnboim & Dekel 2003; Kereš et al."
+★ E-mail: marius.ramsoy@physics.ox.ac.uk
+"2005; Ocvirk et al. 2008; Pichon et al. 2011; Danovich et al. 2012;
+Stewart et al. 2013)."
+"While at large scale gas filaments closely follow the structure
+of their DM counterparts in the cosmic web, at the scale of halos
+they can penetrate deep into the virial radius and even connect to
+galactic disks triggering star formation episodes (see e.g. Katz et al.
+2003; Kereš et al. 2005; Woods et al. 2014; Stewart et al. 2017).
+The erosion of these small-scale gas filaments at lower redshifts is
+argued to be at least partly responsible for the bimodal distribution
+in colour, star formation rates and morphology of galaxies (Dekel
+& Birnboim 2006) (though quenching of the largest galaxies are
+dependent on AGN feedback, see e.g. Croton et al. (2006)). Other
+implicit evidence for the presence of inflows is the presence of
+low metallicity G-dwarfs in the solar neighbourhood, as established
+in the seminal work of van den Bergh (1962). As gas depletion
+timescales are estimated to be on the order of a few Gyrs for local
+disk galaxies (e.g. Bigiel et al. 2011; Leroy et al. 2013; Rahman et al.
+2012), replenishment by inflow of pristine gas is required to match
+the observations. This finding is also supported by observations"
+© 2019 The Authors
+2 Marius Ramsøy et al.
+"of extended gas disks around galaxies (co-rotating with the stellar
+disk), either directly in emission (e.g. from Lyman-𝛼, Prescott et al.
+2015) or indirectly in absorption (e.g. from galaxy-quasar pairs,
+as studied in Zabl et al. 2019; Ho & Martin 2019), all suggesting
+filamentary accretion from the cosmic web."
+"Rather than directly pursuing the filament properties them-
+selves, it is possible to infer them through indirect methods. On
+large-scales, many authors have measured halo or galaxy spin align-
+ment with cosmic filaments both in simulations (see e.g. Aragón-
+Calvo et al. 2007; Codis et al. 2012; Dubois et al. 2014; Laigle et al.
+2015; Ganeshaiah Veena et al. 2018; Kraljic et al. 2019) and low-𝑧
+spectroscopic observations (e.g. Tempel & Libeskind 2013; Chen
+et al. 2019; Krolewski et al. 2019, among others). These results
+highlight a redshift and mass dependence of the alignment signal,
+with halos with masses above 𝑀h > 1012M� displaying spins per-
+pendicularly oriented with respect to the nearest filament, whereas
+spins of halos with masses below 𝑀h < 1012M� align with the
+nearest filament. At low masses this is thought to be due to accre-
+tion of vorticity rich gas that drive spins to align with the filament.
+At high masses this behaviour is overcome by mergers, or as Laigle
+et al. (2015) argues, the accretion of material from multiple vortic-
+ity domains. This dichotomy in galaxy spins shows the profound
+impact of cosmic filaments on the galaxies embedded within them.
+The inverse problem has also been studied (Pandya et al. 2019) at-
+tempting to use the alignment of galaxies to detect the cosmic web
+with the CANDELS survey (Grogin et al. 2011; Koekemoer et al.
+2011). The non-detection of the alignment signal is likely due to
+the number of prolate galaxies with spectroscopically determined
+redshifts with stellar masses 9 < log(M∗/M�) < 10 in the survey,
+as well as these galaxies’ nearest neighbours. ."
+"On smaller scales, the misalignment of gas and DM angular
+momenta in simulations has been attributed to different redistri-
+bution processes during halo virialisation (e.g. Kimm et al. 2011;
+Stewart et al. 2013). However, it has also been argued that instabili-
+ties within the filaments could develop, leading to their fragmenta-
+tion and breakup, thereby preventing cold gas from being smoothly
+accreted by the host galaxy. In such a scenario, the angular mo-
+mentum segregation between DM and gas could be construed as an
+artefact of poor numerical resolution in filaments. Several authors
+(Freundlich et al. 2014; Mandelker et al. 2016; Padnos et al. 2018;
+Mandelker et al. 2019; Berlok & Pfrommer 2019) carried out ide-
+alised simulations of filaments entering a halo, and concluded that
+they should be stable, given their width and velocity. Cornuault et al.
+(2018) used a phenomenological model of a gas stream to explore
+the possibility of a turbulent, multi-phase filament. The accretion ef-
+ficiency of such a filament would be reduced, but it remains unclear
+as to whether such a multi-phase model constitutes an acceptable
+description of cosmological filaments. Using a cosmological zoom
+simulation tailored to achieve maximum resolution in the filaments,
+Rosdahl & Blaizot (2012) find that they remain stable within halos
+with masses of up to a few 1011M� at least as to low as 𝑧 = 3,
+whilst they show more disruption within halos of larger masses (in
+line with arguments made in Birnboim & Dekel 2003)."
+"Ultimately, to distinguish between these scenarios and better
+assess the role played by filaments on galaxy evolution, quantitative
+direct measurements of their properties need to be made. How-
+ever, these have proven notoriously elusive so far (see e.g. Kimm
+et al. 2011, for a more detailed discussion). Indeed, direct obser-
+vations of the distant cosmic web suffer from the steep scaling of
+surface brightness with redshift, which makes the cold filaments
+extremely hard to detect in emission (though not impossible, see
+e.g. Giavalisco et al. 2011; Ribaudo et al. 2011; Kacprzak et al."
+"2012; Martin et al. 2016; Gallego et al. 2018; Elias et al. 2020), and
+thus rely on stacking, or back-lighting by a bright source. Future
+surveys using the James Webb Space Telescope (JWST) (Gardner
+et al. 2006) while being insensitive to the smoothly accreting gas
+itself, the telescope will be sensitive to a range of associated phe-
+nomena. Filaments are typically traced by Lyman-𝛼 blobs (LABs)
+and emitters (LAEs) (e.g. Kikuta et al. 2019; Umehata et al. 2019),
+which will be observable by the NIRspec instrument (Latif et al.
+2011). In addition, LAEs should be detectable with the proposed
+BlueMUSE instrument. On larger scales, filamentary gas can be
+detected in the radio with the Square Kilometer Array (Kooistra
+et al. 2019). Lyman-𝛼 forest tomography also allows the probing of
+the cosmic web in the IGM, with the feasibility of observations for
+the Very Large Telescope investigated by (Lee et al. 2014) and the
+European Extremely Large Telescope by (Japelj et al. 2019). This
+will enable the detection and exploration of the full 3 dimensional
+structure of the cosmic web."
+"Efforts to understand observed filament properties are corre-
+spondingly mirrored by simulations (e.g. Gheller et al. 2015, 2016).
+On large scales, filaments of the cosmic web are reported to have
+a radial power law profile in density with a power law index com-
+prised between -1 and -2 (see e.g. Colberg et al. 2005; Dolag et al.
+2006; Aragón-Calvo et al. 2010). Smaller scale studies have been
+performed by e.g. Ocvirk et al. (2016), who determined the outer
+radii of filaments in their simulation to be about 50ℎ−1kpc at 𝑧 = 4.3
+by looking at the separation between temperature peaks caused by
+the accretion shock, although these authors acknowledge that they
+did not separate edge-on sheets from filaments in their sample. Us-
+ing cosmological simulations, Dekel et al. (2009) found that DM
+filament radii are comparable to the virial radius of the halos they
+connect, and that the cold gas streams residing within the halos are
+considerably narrower, typically a few percent of the virial radius.
+The scale free nature of CDM results in progressively smaller fila-
+ments feeding into larger ones at all scales, down to the numerical
+resolution of the simulation in this case. However, alternative DM
+theories could result in different DM structures, (e.g. Warm DM
+Gao & Theuns 2007). This produces filaments down to Mpc-scales,
+while erasing smaller scale structure. Mocz et al. (2019) studied
+filaments under the Fuzzy DM regime, where an additional quan-
+tum pressure prevents the formation of lower mass filaments. Both
+WDM and FDM result in higher density filaments at earlier times,
+with the formation of population III occurring within them (Mocz
+et al. 2019), further distinguishing these versions of DM fromCDM.
+It is possible that the supernovae of these stars will be detectable
+with JWST (Hartwig et al. 2018)."
+"To date, the rich complexity of the filamentary network con-
+necting halos of various masses and its evolution with redshift has
+yet to be investigated systematically. In this paper we argue that
+to do so, it is pivotal to work on a cosmological sample of well-
+resolved filaments and take a step in this direction by measuring
+filament profiles from the density, vorticity, and temperature field
+information available in a zoom-in cosmological simulation. Our
+focus is on intermediate-scale filaments, that is, those connecting to
+a M★ galaxy, at moderate to high redshift (𝑧 ≥ 3). We also inves-
+tigate how stellar feedback can perturb these filaments. Given the
+limited sample considered in this work, it should be considered a
+pilot study. In an upcoming paper, the methods developed here will
+be applied to New-Horizon, a larger volume simulation (∼ 4200
+(Mpc/h)3) with similar resolution (Park et al. 2019, Dubois et al.
+in prep), where a statistical sample of filaments can be obtained,
+connecting a more diverse ensemble of galaxies."
+The structure of this paper is as follows: in section 2.1 we
+"MNRAS 000, 1–17 (2019)"
+High Redshift Filaments 3
+1.25 Mpc
+"625 kpc
+313 kpc"
+156 kpc
+"Figure 1. Zooming in on the NUT galaxy gas density field at 𝑧 = 4. The leftmost panel shows a gas density projection of the entire simulation volume (12.5
+comoving Mpc), with the high resolution zoom region enclosed in the square located in the bottom right corner of the first panel. Each subsequent panel, going
+from left to right, displays a projection of 1/8th of the volume of the previous panel. The size of each volume in physical units is indicated. The middle panel
+shows the region within which the analysis in this paper is performed, chosen so as to maximize the length of the studied filament."
+"outline the simulation set up. In section 2.2 we describe how we
+identify the filaments and perform the analysis. Section 3 presents
+the results of our work, compares filament properties to an analytic
+model and discusses the robustness of our measurements vis-à-vis
+resolution. We summarize our results in section 4."
+2 NUMERICAL METHODS
+2.1 Simulations
+"The analysis is performed on two simulations of the nut suite (Pow-
+ell et al. 2011), a series of cosmological zoom-in simulations of a
+Milky Way like galaxy designed to study the effects of resolution
+and various physical processes on its formation and evolution us-
+ing the Adaptive Mesh Refinement (AMR) code ramses (Teyssier
+2002). Initial conditions are generated at redshift 𝑧 = 499 using the
+MPGrafic code (Prunet et al. 2008) with cosmological parameters
+set in accordance with the WMAP5 results (Dunkley et al. 2009).
+The simulation volume is a cubic box 9ℎ−1Mpc on a side and a
+coarse root grid of 1283 cells. A series of three nested grids are then
+centred on a sphere with radius 2.7ℎ−1Mpc which encompasses the
+Lagrangian volume occupied by the galaxy (host dark matter halo
+mass of 𝑀vir = 5 × 1011M� by 𝑧 = 0). AMR refinement is then
+enabled within that sphere using a quasi-Lagrangian refinement cri-
+terion to achieve a maximal spatial resolution of 10pc at all times
+whilst forcing the mass of each individual cell to remain roughly
+constant. The collisionless fluid in this high resolution region con-
+sists of dark matter (DM) particles each with mass 5.6 × 104𝑀� ,
+whereas the gas evolution equations are solved on the AMR grid
+by means of a Godunov method (HLLC Riemann solver) with a
+MinMod limiter to reconstruct variables at cell interfaces. The gas
+density field in the simulation is shown in Fig. 1 at 𝑧 = 4, gradually
+zooming in from the full box onto the central galaxy itself."
+"In this paper, we use a nut simulation with no feedback, and
+one with mechanical supernova feedback as defined in Kimm et al.
+(2015). In the following,we refer to these two simulations as the “no-
+feedback"" and “feedback"" runs respectively. The feedback recipe of
+Kimm et al. (2015) ensures that the appropriate energy or momen-
+tum is deposited into the cells around the supernova, depending on
+whether the Sedov-Taylor phase of the blast wave is resolved or not.
+This prevents the supernova energy from being artificially radiated
+away, as would happen if solely thermal energy was injected (the
+so called over-cooling problem described in Katz 1992). Both runs
+under study use cooling tables calculated by Sutherland & Dopita
+(1993), down to 104 K, and the Rosen & Bregman (1995) approxi-
+mation for temperatures below this threshold. A UV background is"
+"Figure 2. Resolution map for a slice of thickness 300pc, across a (625kpc)2
+region of the computational domain at 𝑧 = 4, with each colour representing
+a different resolution level as indicated on the figure. At this redshift, the
+filament is uniformely sampled at 1.2 kpc resolution (AMR level 11: green)
+and partly at 0.61 kpc (AMR level 12: yellow) around the most massive
+halos embedded in it. Even though the highest spatial resolution reached in
+the simulation is 10 pc, which corresponds to AMR level 20, levels above
+13 are not shown as they are confined to the galaxies themselves and their
+immediate vicinity."
+"instantaneously turned on at 𝑧 = 8.5 to account for the re-ionisation
+of the Universe, while star formation is allowed to proceed when
+gas densities become greater than 4×102H.cm−3 with an efficiency
+of 1% per free-fall time, calibrated on observations by Kennicutt
+(1998). A detailed description of the implementation of star for-
+mation used in this version of ramses may be found in Rasera &
+Teyssier (2006) and Dubois & Teyssier (2008). For the feedback
+run, a Chabrier initial mass function Chabrier (2003) is adopted,
+with 31.7% of the mass fraction of each star particle ending up as
+a single type II supernovae and releasing 1050 ergM−1� of energy
+after a 10 Myr time delay and expelling heavy elements with a 5%
+yield."
+2.2 Filament Identification
+"As we aim to measure the properties of the cosmic web filaments,
+both in the DM and gas density fields, we now describe how we
+identify these structures in the simulations."
+"MNRAS 000, 1–17 (2019)"
+"4 Marius Ramsøy et al.
+kp
+c"
+DM Gas (no feedback) Gas (feedback)
+"C
+ol
+um
+n
+D
+en
+si
+ty
+(g
+cm"
+"Te
+m
+pe
+ra
+tu
+re
+(K
+)"
+"V
+or
+tic
+ity
+(𝑠"
+"Figure 3. DM (left column) and gas (no-feedback run, middle column; feedback run, right column), with each row showing column density (top), temperature
+(middle) and vorticity (bottom) in a slice 625 kpc across and 1 kpc thick at 𝑧 = 4. The main filament, as extracted from the DM density field, is overplotted (blue
+solid line) on the column density maps. The virial radii of the 50 largest halos are marked as circles. The differences between the feedback and no-feedback
+skeletons are caused by small differences in the noise level associated with DM particles: they yield slightly different paths which have a very similar length,
+so that either path can be chosen by the algorithm described in the text. The colour bar for the density represents the gas. To estimate it for the DM, one
+simply needs to divide the numbers shown by the universal baryon fraction. For the DM temperature, velocity dispersion is used as a proxy, with dark blue
+corresponding to regions of ∼ 0.02 km s−1 and deep red with ∼ 100 km s−1. In the vorticity panels, red represents matter swirling counter clockwise around
+the filament, and blue is for matter rotating in the opposite direction."
+2.2.1 Method
+"The DM particle distribution is tessellated using the Delaunay Tes-
+sellation Field Estimator tool (Schaap 2007) and fed to the code
+DisPerSE (Sousbie 2011). DisPerSE computes stationary points
+(maxima, minima and saddle points) of the density field using the
+Hessian matrix and assigns to each pair of critical points (e.g.
+maxima-saddle) a persistence, namely a measure of how signifi-
+cant it is with respect to a Poisson distribution. The persistence
+threshold is the single parameter that determines which features are
+considered as noise and which robustly pertain to the topology of
+the underlying density field. From this set of stationary points that
+characterize the topology of the field,DisPerSE connects saddles to"
+"maxima following the direction of least gradient to create a network
+of filaments which will be referred to in this paper as the “skeleton”,
+and we will call “nodes"" the maxima of the density field."
+2.2.2 Extraction of the skeleton from the simulations
+"For each simulation, filaments are extracted from the Delaunay tes-
+sellation reconstruction of theDMdensity field, setting a persistence
+threshold of 10𝜎. This persistence threshold is chosen such that the
+observed skeleton is in good visual agreement with the DM density
+field. Our results are in fact insensitive to the exact value chosen for
+this threshold, aswe are only studying themain filaments feeding the"
+"MNRAS 000, 1–17 (2019)"
+High Redshift Filaments 5
+"galaxy (see Section 2.2.3). The skeleton is additionally processed
+with skelconv (seeDisPerSEmanual1) using the breakdown and
+smooth functions. breakdown removes duplicate segments enter-
+ing a node from two different starting points. These segments can be
+so close as to be indistinguishable from one another and as such are
+removed to prevent their over-representation in the final skeleton.
+The skeleton is then smoothed by averaging over the positions of the
+30 nearest neighbours of each segment. This mitigates the effects
+of Poisson noise on the skeleton, ensuring that individual segments
+locally follow the global direction of the filament they belong to.
+In both the feedback and no-feedback runs, 1.22 physical kpc is
+the maximum spatial resolution reached in filaments, defined as
+the size of an individual cell on the highest AMR grid level that
+entirely maps the filament (see Fig. 2). As is clear from Figure
+2, higher refinement levels are triggered within filaments but their
+coverage is patchy, and mostly concentrated around halos/galaxies
+embedded within these elongated structures. As we argue in our
+convergence analysis (Section 3), we believe 1.22 kpc is enough to
+resolve the radial structure of filaments, at least those that connect
+to halos/galaxies with masses similar (or larger) to the one we study
+in this paper (roughly M★). We emphasize that this is a much higher
+resolution than that currently reached in large-scale cosmological
+hydrodynamics simulations, where ' 1 kpc resolution is only at-
+tained within galaxies (e.g. Dubois et al. 2014; Vogelsberger et al.
+2014; Nelson et al. 2018; Davé et al. 2019; Schaye et al. 2015;
+Nelson et al. 2019a). The main drawback of our study is that such
+resolution is obtained at the cost of simulating a much smaller vol-
+ume, and thus focuses on a single object. Filament extraction is per-
+formed at the maximum level of resolution thus defined. However,
+as highlighted by Rosdahl & Blaizot (2012) and in our convergence
+study (Section 3), increasing the resolution does not seem to affect
+the filament properties much, and we thus expect that our results
+only weakly depend on resolution.
+Finally, we note that DisPerSE applied to the DM particle distri-
+bution, as is done in this paper, only allows the extraction of the
+filaments down to a scale comparable with the virial radius of DM
+halos. Below this scale, DMfilaments (at least in standard 3D space)
+are washed out by the virialisation process at the origin of halo for-
+mation and evolution. Therefore, we restrict our measurements of
+filament properties to filament segments located outside of the virial
+radii of embedded DM halos."
+2.2.3 Identifying the main filament
+"The gas and DM distributions differ significantly even for the no-
+feedback run (compare left and middle panels of Fig. 3), with the
+gas density field presenting much fewer filamentary structures than
+the DM2. In addition, even though dwarf galaxies residing within
+filaments are affected by feedback, the impact of this feedback on
+the growth of the central galaxy is minimal (it does not lead to
+the disruption of the main filament) as the majority of the gas
+feeding it at high redshift is accreted via filaments, and not from
+mergers (Danovich et al. 2012; Tillson et al. 2015). However, the gas
+density field in the run with feedback will be more perturbed due
+to interactions with galaxy winds and shocks (see middle and right"
+"1 http://www2.iap.fr/users/sousbie/web/html/index4f3e.html?category/Manual
+2 This is a consequence of re-ionisation reheating the gas of the IGM and
+preventing accretion into the shallow potentials of DM filaments (Katz et al.
+2019)."
+"panels of Fig. 3), making the comparison between feedback and no-
+feedback runs difficult. Furthermore,DisPerSE is designed to work
+with particle data, as it allows in this case a meaningful definition
+of persistence (the very concept of which relies on quantifying the
+significance of a feature with respect to Poisson noise). For these
+reasons, and given that we are not interested in probing the existence
+of filaments within the virial radius of DM halos in this work, the
+DM density field seems more appropriate to carry out filament
+extraction."
+"We therefore elect to extract the skeleton from the DM density
+field, but trim it in order to keep only the main filament, along which
+most material flows onto the galaxy. For an M★ central galaxy, the
+main filament traced in the gas clearly coincides with its DM coun-
+terpart (see top panels of Fig. 3). As we are analyzing a filament
+connecting to a single object, we identify the approximate region
+where it begins and ends by eye, and select the highest density point
+in this region as its starting/end point3. We then use Dĳkstra’s al-
+gorithm (Dĳkstra 1959) to compute the shortest path (following the
+skeleton) between the start and end points. This works by assigning
+to each segment a distance from the start point, travelling along all
+the various possible paths of the skeleton. Whenever a shorter path
+to a given segment, 𝑠, is found, then the selected path is updated
+up to 𝑠, and the distances to all segments connected to 𝑠 along this
+path which have a longer path length, are updated. This process
+is iterated until the network is traversed, yielding the shortest path
+between the given start and end point. The method is valid provided
+the main filament flows mostly straight onto the galaxy, which, in
+turn, holds until the filament gets close to the galaxy disk (Powell
+et al. 2011)."
+"In order to avoid the filament passing through halos, filament
+segments located in regions with densities higher than 130 times
+the mean density of the Universe were excluded4. This density
+threshold is chosen empirically, but the resulting skeleton does not
+depend very sensitively on the chosen value provided this latter is on
+the order of 100 times the mean density of the Universe. The entire
+initial filamentary network and the resultingmain filament extracted
+after post-processing are shown in Fig. 4. Fig. 3 highlights that the
+skeletons extracted from the DM density fields of the feedback
+and no-feedback runs are slightly different. In this Figure, one can
+clearly see a pair of filaments on the left side of the central galaxy,
+which are in the final stages of merging. As a result, our algorithm
+identifies two possible paths along which the main filament would
+have essentially the same length. Small changes in the noise level
+associated with the DMparticles in the two different runs change the
+exact way that segments connect, resulting in the algorithm picking
+one of these paths in one run and the other path in the other run.
+Our results are, by and large, independent of such small randomly
+induced differences."
+"3 For larger volume cosmological simulations where an ensemble of fila-
+ments is available one can forgo the inspection by eye and simply use the
+closest pair of galaxies with similar masses which are linked by the skeleton
+as the starting and end points of a filament.
+4 This value is lower than 200 times the critical density of the Universe
+which is commonly used in the literature to define virialised structures. This
+reflects the fact that the density of halos at the virial radius is lower than
+their average density by about a factor 3."
+"MNRAS 000, 1–17 (2019)"
+http://www2.iap.fr/users/sousbie/web/html/index4f3e.html?category/Manual
+"
+6 Marius Ramsøy et al.
+kp
+c"
+"Fi
+la
+m
+en
+tg
+as
+de
+ns
+ity
+(g
+/c
+m
+3 )"
+"Figure 4. The left plot shows the raw skeleton extracted by DisPerSE, which traces all the filaments of the DM density field, coloured according to the relative
+density (with low density in red and higher density in blue) . Using Dĳkstra’s algorithm we then obtain the skeleton on the right, where we have removed
+filament segments from regions with densities greater than 130 times the mean density, resulting in gaps around virialized halos and sub-halos (indicated by
+circles enclosing their virial radii on Fig. 3). In both panels, the skeleton is overplotted on a 𝑧 = 4 projection of the DM density field."
+2.3 Cross-section measurements
+2.3.1 Calculating DM temperature and vorticity fields
+"Due to the discrete Lagrangian nature of the numerical technique
+used to evolve the DM density field, a simple cloud-in-cell interpo-
+lation onto a reasonably sized regular grid generates a non-smooth
+density field in poorly sampled, low density regions. To get around
+this difficulty, a Delaunay tessellation (Schaap & van de Weygaert
+2000) is computed from the DM density and velocity fields (see e.g.
+Schaap 2007), which ensures their spatial continuity. The Delaunay
+grid is then projected onto a regular uniform grid, coinciding with
+AMR grid level 11, which corresponds to the maximum resolution
+mapping of the entire filament (cubic cells 1.22 kpc on a side, see
+Fig. 2). This uniform grid is used for measurement of all quantities
+in this paper unless otherwise stated. The DM velocity dispersion
+field – used as a proxy for temperature – is then obtained by com-
+puting the square of the difference between each particle velocity
+and the value of its nearest neighbour grid cell and re-applying the
+Delaunay tessellation with this dispersion as the weight. Every time
+the Delaunay tessellation is projected onto the grid, we average all
+the tetrahedra (or volume fractions of) that co-exist in each grid
+cell. The vorticity, on the other hand, is simply calculated by taking
+the curl of the velocity field on the uniform grid. As this latter is ex-
+tremely noisy, a Gaussian smoothing is applied prior to computing
+vorticity, with a width of 2 cells."
+2.3.2 Cross-section extraction and radial profiles
+"For each segment of the skeleton, a field (density, temperature or
+vorticity) is linearly interpolated in a plane, the thickness of which
+is equal to the skeleton segment length (typically 0.3 kpc, though
+this depends on the local density). This plane is perpendicular to
+the segment and centred on it. An example of individual cross-
+sections in the density, temperature and vorticity fields is displayed
+in Fig. 5. Note that the position of the DM or gas density peak
+does not necessarily lie exactly at the centre of the plane due to
+the smoothing of the skeleton. Smoothing is required to ensure that
+individual segments point along the filament direction, and thus"
+"that the extracted planes are truly perpendicular to the filament.
+The gas density maximum is not tied to the DM density maximum
+and thus is also unlikely to be at the centre of the plane. In order
+to correct for such small offsets which nevertheless do affect pro-
+file measurements, each plane is shifted using a method similar to
+the ’shrinking sphere’ method outlined in Power et al. (2003). The
+centre of mass of a circle centred (with a radius greater than the
+truncation radius) on the initial guess from DisPerSE is calculated.
+The circle is moved to the centre of mass before the procedure is
+repeated with a smaller circle. This method is more robust to the
+presence of additional substructure within the filament, particularly
+as cells with 𝜌 > 40〈𝜌〉 have had their density reduced to 40〈𝜌〉 for
+the calculation of the centre of mass. This prevents halos existing
+within or near the filament from being chosen as the filament centre
+and distorting the filament profile. DM and gas planes are there-
+fore translated independently. This procedure allows us to align all
+segments when stacking cross-sections."
+"Vorticity and temperature fields interpolated onto the plane
+perpendicular to the segments are then translated with the same
+shift as the density field. When looking in the plane perpendicular
+to them, filaments appear as strong peaks in the projected density
+field (see top row of Fig. 5). Alongside this, the major walls asso-
+ciated with these filaments is often visible extending out from the
+peaks, forming thick elongated structures which are not necessarily
+straight. In the temperature field (middle row and middle column
+of Fig. 5), strong radial shocks are observed around the filaments
+themselves, with weaker shocks also present at the wall boundaries
+and where the walls intersect to form the filaments. In the vorticity
+field (bottom row, middle column of Fig. 5) both filaments and walls
+are identified with the regions of highest vorticity amplitude. The
+DM filaments (left column of Figs. 3 and 5) appear wider than their
+gaseous counterparts. Supernovae feedback (right column of Figs. 3
+and 5) renders filaments and walls imperceptible in the gas vorticity
+field (bottom right panels) although radial shocks are still present
+at the filament edges (middle right panel) and the gas density peak
+remains clearly visible (top right panel)."
+"Radial profiles are measured from the 2D cross-sections by
+computing the azimuthal average in concentric shells centred on"
+"MNRAS 000, 1–17 (2019)"
+"High Redshift Filaments 7
+kp
+c"
+DM Gas (no feedback) Gas (feedback)
+"D
+en
+si
+ty
+(g
+cm"
+"Te
+m
+pe
+ra
+tu
+re
+(K
+)"
+"V
+or
+tic
+ity
+(k
+m
+s−
+1
+kp
+c−
+1 )"
+"Figure 5. A typical filament cross-section, extracted 200 kpc away from the central galaxy in DM (left column) and gas (no-feedback run, middle column;
+feedback run, right column) at 𝑧 = 4. The thickness of the slice is of order 1 kpc. Note how the central filament (density peak in the 2D slice) is embedded in a
+weaker wall structure (which appears as a thick elongated tube encompassing the peak). From top to bottom row: density, temperature (or velocity dispersion
+for DM, running from 0 to 25 kms−1, dark blue to red) and vorticity along the filament, with red representing matter rotating counter-clockwise and blue in the
+opposite direction."
+"the highest density point. When discussing the effects of resolution
+on the filament profile, we take the median value for the distribution
+of all filament segments at a given resolution and for each radius, as a
+single profile is required. However, for the rest of the measurements
+in this paper, we consider individual profiles fitted to each cross-
+section over the entire radius range. In Fig. 6 the median profile
+obtained in that way is indicated by the filled red disk symbols
+joined by the red solid line, with the 1 𝜎 scatter around the median
+profile indicated by the shaded area. The advantage of this second
+method (fitting the whole profile) is that we can easily bin results
+according to other filament properties, such as distance to the central
+galaxy. This should more accurately reflect the underlying filament
+property distribution."
+2.3.3 The special case of vorticity cross-sections
+"Vorticity being a vector, the structure of the vorticity field is farmore
+complex than density or temperature (as illustrated by the bottom
+panels of Figs. 3 and 5) and, as a result, it not easy to stack indi-
+vidual vorticity profiles obtained for each skeleton segment. When
+stacking is required, we therefore use the modulus of the vorticity
+parallel to the direction of the filament and ignore azimuthal varia-
+tions in vorticity. The vorticity field in the direction of the filament
+is extracted in the same way as described in the previous section
+for the density and temperature. As shown in the bottom panels of
+Fig. 5, the vorticity has a multipolar structure, with several rotat-
+ing and counter-rotating vortices surrounding the filament. Outside
+the filament the amplitude of vorticity rapidly declines. Within fil-
+aments, the geometry of the vorticity field is mainly quadrupolar
+(see Laigle et al. 2015, though we found that dipoles and higher"
+"MNRAS 000, 1–17 (2019)"
+8 Marius Ramsøy et al.
+"order structures are not uncommon reflecting that the flow have
+shell-crossed several times). This larger diversity in the structure of
+the vorticity field probably reflects the fact that the analysis in this
+paper looks at smaller scale vorticity than Laigle et al. (2015), and
+extends the measurement to gas. We recall that primordial vortic-
+ity is destroyed in an expanding Universe, and therefore voids are
+extremely vorticity poor. Vorticity can later be produced by shocks
+or shell-crossing (respectively for gas and DM), and as result is
+chiefly confined to walls, filaments and nodes (see e.g. Pichon &
+Bernardeau 1999)."
+3 RESULTS: MEASURING THE FILAMENT PROFILES
+"In the following, we first derive analytically the radial profiles of
+filaments under the assumption that they are in hydrostatic equilib-
+rium, and then compare them to the profiles directly measured in
+the simulation."
+3.1 An analytic description of DM and gas filament profiles
+"To obtain our analytic solution, we make the simple assumption that
+filaments may be modelled as infinite self-gravitating isothermal
+cylinders. Fig. 7 presents the sound speed and velocity dispersion
+profiles in filaments. We have been careful to subtract the bulk ve-
+locity of the material when extracting this data. Within the filament,
+the sound speed and velocity dispersion are flat and dominate over
+the accretion velocity onto the filament, which suggests – for the
+centre of the filament at least – that the filament may indeed be
+treated as an isothermal cylinder in hydrostatic equilibrium5 , i.e."
+"∇𝜙 = −
+∇𝑃
+𝜌"
+"where 𝑃 = K𝜌, and K = kB𝑇/(`mp), with 𝜌 the density, 𝑇 the
+temperature, kB the Boltzmann constant,mp the proton mass and `
+the mean molecular weight of the gas. Stodólkiewicz (1963) solved
+this equation in the case of cylindrical symmetry (see also Ostriker
+1964), and we will discuss the solution shortly. However, before we
+do, we briefly outline why it also applies to the collisionless DM
+fluid. Let us consider the time independent Jeans equations (Jeans
+1915) for such a collisionless system:"
+"𝜕𝑥𝑖
+(𝑛𝑣𝑖) = 0 ; 𝑛𝑣𝑖"
+"𝜕𝑥𝑖
+= −𝑛"
+"𝜕𝑥 𝑗
+−"
+"𝜕 (𝑛𝜎2
+𝑖 𝑗
+)"
+"𝜕𝑥𝑖
+. (2)"
+"where 𝑣𝑖 are the velocities, 𝜎𝑖 𝑗 are velocity dispersions and 𝑛 is the
+DM number density. Under cylindrical symmetry, we may neglect
+all but the radial component of these equations. Further assuming
+steady state (i.e. that 𝑣𝑟 = 0, such that accretion onto the filament is
+negligible compared to internal pressure support) and that velocity
+dispersion is isotropic, the equations simplify to:"
+"𝑑𝑟
+(𝑛𝑣𝑟 ) = 0 ;"
+"𝑑𝑟
+= −
+1
+𝑛"
+"𝑑 (𝑛𝜎2)
+𝑑𝑟"
+"The second equation in (3) is entirely analogous to equation (1),
+withK = 𝜎2, though it is clear that accretion flow onto the filament"
+"5 At least in the plane perpendicular to the filament, as we know that
+eventually, DM and gas flow along the filament into dark matter halos. In the
+steady state regime however, such a flow should not perturb the equilibrium."
+"cannot be ignored at large radii (see Fig. 7). The solution to both
+equations is therefore that given by Stodólkiewicz (1963):"
+"𝜌(𝑟) =
+𝜌0("
+"1 + (𝑟/𝑟0)2
+)2 with 𝑟0 ="
+"√︄
+2K
+𝜋𝐺𝜌0"
+"where𝐺 is Newton’s gravitational constant, 𝜌0 is the central density
+and 𝑟0 the core radius of the filament. Note however that it is the
+gravitational potential common to both components which should
+appear on the left hand side in both the second equation in (3) and
+in eq. (1), so that technically speaking only the DM is truly close to
+a self-gravitating isothermal cylinder, the gas being in hydrostatic
+equilibrium in the potential well of the DM filament."
+"As a preliminary test of the model, we can use a typical DM
+filament central density of 𝜌0 ∼ 1.7×10−26g cm−3, i.e. ∼100 times
+the mean density of the Universe (central filament density is subject
+to significant variations but this is typical of themedian DMdensity,
+see left panel of Fig. 6) at 𝑧 = 4 for our choice of cosmological
+parameters, and a velocity dispersion 𝜎 ∼ 10 km/s (typical of the
+median DM velocity dispersion we measure, see Fig. 7). Plugging
+these values in the second equation (4), we find a scale radius
+𝑟0 ∼ 8kpc, which is broadly in agreement with the typical radius
+of the inner profile measured in the simulation, as shown in Fig. 6
+(left panel) and in table A1. As the width of the gas filament is
+set by the depth of the DM potential and the gas temperature, one
+needs to artificially use the DM central density for 𝜌0 in equation
+(4) rather than that of the gas to obtain an estimate of 𝑟0 for this
+latter (as shown on Fig 6 the gas density is about a factor 5 lower
+than that of the DM throughout the filament, in agreement with the
+universal value ΩDM/Ω𝐵). As the DM velocity dispersion for the
+particular filament we study is comparable to the gas sound speed
+(i.e. ∼ 10 km/s or 104K which corresponds the bottom temperature
+of the cooling curve for atomic hydrogen, see Fig. 7) we expect a
+core radius for the gas similar to that of the DM, i.e. 𝑟0 ∼ 8kpc, and
+this indeed seems to be within a factor of 2 of the measured value
+(see right panel of Fig. 6 and table A1)."
+"However, the isolated, infinite isothermal cylinder appears too
+highly idealised a model in at least one aspect, as can be seen by
+the failure of the yellow dashed curves (best fit obtained using the
+first equation (4)) to match the measured median profiles (solid red
+lines and red disk symbols) in Fig. 6. In reality filaments are born
+from the intersection of walls (see Fig. 5 middle column panels),
+the presence of which will modify the filament profile, especially in
+the outer regions. Assuming that these walls may also be treated as
+hydrostatic atmospheres, but this time confined to a plane containing
+the filament, the equations governing their profiles are identical to
+eqs. (1) and (3). These latter simply need to be solved in 1D instead
+of 2D, yielding in the direction 𝑦 perpendicular to the plane (Spitzer
+1978):"
+"𝜌(𝑦) = 𝜌𝑦0 sech
+2 (𝑦/ℎ) , (5)"
+"with the scale height ℎ =
+√︁
+K/(2𝜋𝐺𝜌𝑦0 ) taking a very similar"
+"functional form as 𝑟0 in eq. (4), and 𝜌𝑦0 standing for the density in
+the mid-plane (𝑦 = 0) of the wall. However, we need to integrate
+this wall profile over concentric cylindrical shells to evaluate how
+it modifies the filament profile. Unfortunately, this integral does
+not possess a simple analytic closed form, so we approximate the
+azimuthally averaged density of the wall by:"
+"𝜌(𝑟) =
+𝜌𝑦0"
+"tanh(𝛼𝑟/ℎ)
+𝑟/ℎ"
+with 𝛼 = 𝜋/2. Such an approximation captures the asymptotic
+"MNRAS 000, 1–17 (2019)"
+"High Redshift Filaments 9
+lo
+g 1
+0
+D
+en
+si
+ty
+(g
+/c
+m
+3 )"
+Radius (kpc)
+DM gas
+"Figure 6. Fits of the median DM (left panel) and gas (right panel) density profiles (red solid line and red disk symbols) at 𝑧 = 4, using a filament plus wall
+Mfil+wall (green dashed line)or a filament only Mfil (yellow dashed line) model. The blue lines shows the Mfil+wall decomposed in the filament (dot-dashed)
+and wall (dotted). The shaded area represents a 1 sigma deviation estimated by bootstrap re-sampling the values at each radial distance."
+"behaviour of the correct solution for 𝑟 � ℎ, and is accurate to better
+than 14% for all values of 𝑟 . As can be seen in Fig. 6, the inclusion of
+a wall modifies the shape of the outer filament. This might (at least
+partially) explain the discrepancy between filament density profiles
+previously reported in the literature, with power-law slopes ranging
+between -1 and -2 (see e.g. Colberg et al. 2005; Dolag et al. 2006;
+Aragón-Calvo et al. 2010). However we caution that these studies
+were performed on much larger scales and so may not be directly
+comparable to our work as they might potentially be affected by
+different biases."
+"One can easily show that in the case where the gas isothermal
+sound speed 𝑐𝑠 ="
+"√︁
+kB𝑇/(`mp) equals the DM dispersion velocity"
+"𝜎, the density profiles of the gas and DM have the same exact
+shape, differing only by their normalisation, i.e. the value of the
+central density. In the more general case where these two velocities
+differ, one can write the gas density profile:"
+"𝜌𝑔 (𝑟) = 𝜌𝑔0
+(
+1 + (𝑟/𝑟0)2"
+")−2𝜎2/𝑐2𝑠
+,"
+"so that if 𝑐𝑠 > 𝜎, it is shallower than that of the DM, and vice-versa.
+Katz et al. (2019) measured this effect by comparing two versions
+of the same cosmological simulation with and without reionisation.
+They find that narrow streams are widened by the photo-heating of
+the gas, and that the gas counterparts of the lightest DM filaments
+can even be entirely erased."
+"Note that this reasoning also applies to the isothermal gas
+density profile of a DM dominated isolated wall: when 𝑐𝑠 and 𝜎
+differ, it becomes"
+"𝜌𝑔 (𝑦) = 𝜌𝑔𝑦0 sech
+2𝜎2/𝑐2𝑠 (𝑦/ℎ) ,"
+3.2 Testing the simple model
+"The first assumption we have made concerns the isothermality of
+the filament-wall system and that accretion onto the filament pro-
+vides it with negligible support. In Fig. 7 we can see that for the
+no feedback run both the gas sound speed (black solid line and
+solid disk symbols) and the DM velocity dispersion (red solid line
+and solid disk symbols) stay constant over most of the width of the
+filament, indicating that the isothermal approximation does indeed
+hold rather well. In addition, the gas andDM accretion velocities are
+considerably lower than the sound speed and velocity dispersion re-
+spectively, and as such the dynamics of the system should be mainly
+driven by the pressure support. Moreover, the accretion shock itself
+is also non-adiabatic. Indeed, the upstream mach number (beyond
+20 kpc) isM𝑢 ≈ 50/10 = 5, thus the Rankine-Hugoniot jump con-
+ditions lead to a downstream Mach numberM𝑑 = 0.47, and it thus
+follows that the downstream sound speed (within 10 kpc of filament
+centre) should be 40 km s−1, i.e. twice the value of that measured.
+This indicates that the filament accretion shock is radiative rather
+than adiabatic. Finally, we also plot on Fig. 7, the circular velocity
+𝑉𝑐 ≡ (𝐺𝑀/𝑟)1/2 (blue solid linewith solid disk symbols)measured
+for the filament, where 𝑀 is the mass enclosed by a cylindrical shell
+of radius 𝑟 . We find that it is comparable to or lower than the sound
+speed/velocity dispersion, which further indicates that the filament
+is chiefly supported by pressure rather than by rotation, contrarily
+to what is argued in Mandelker et al. (2018)."
+"In Fig. 6 we present 2 models, pure filament (Mfil), filament
+with wall (Mfil+wall). In practice, this means that along each indi-
+vidual skeleton segment, we fit the radial density using the formula:"
+"𝜌(𝑟) =
+𝜌0("
+"1 + (𝑟/𝑟0)2
+)2 + 𝜌1 tanh(𝛼𝑟/𝑟1) 𝑟1𝑟 , (6)"
+"MNRAS 000, 1–17 (2019)"
+10 Marius Ramsøy et al.
+"V
+el
+oc
+ity
+(k
+m
+s−
+1 )"
+Radius (kpc)
+"c𝑠v𝑟,𝑔
+𝜎
+v𝑟,𝐷𝑀
+v𝑐"
+"Figure 7. Median values for gas sound speed (black) from the no feedback
+run, DM velocity dispersion (red), gas (green) and DM (yellow) accretion
+velocity and circular velocity (blue) profiles at 𝑧 = 4, with shaded regions
+representing the 1 sigma scatter about the mode for each data point. Note
+that in the inner filament region, one measures a near constant sound speed
+and velocity dispersion, which indicates the filament is, to a large extent,
+isothermal. This breaks down at larger radii, due to both higher rates of
+radial inflow and falling sound speed and velocity dispersion."
+"where 𝑟1 = ℎ, and 𝜌1 = 𝜌𝑦0𝛼
+−1. In principle, the values for 𝜎 and"
+"𝑐𝑠 could be different for the wall and embedded filament. However,
+for sake of simplicity and since we expect these two quantities to
+roughly behave in a similar manner, at least in the vicinity of the
+filament, we ignore the possible change in the ratio of 𝜎2/𝑐2𝑠 in our
+Mfil+wall model (see Fig 7 for the validity of this assumption). The
+fit is performed using the Levenberg-Marquardt algorithm where
+the wall is first fit to the outer half of the profile with the filament
+contribution set to zero. The wall parameters are then frozen in
+place while fitting the filament parameters. In the case of a pure
+filament model (i.e. Mfil), the filament is fit to the entire profile,
+setting 𝜌1 = 0. The procedure was tested by applying it to a sample
+of artificial profiles, which typically returned radii within 1 cell of
+the input radius, but does break down when the filament is too wide
+(i.e. extends into the region where the wall is fitted). While this is a
+suitable range for the purposes of this paper, filaments continue to
+grow as time progresses, and this method may become unsuitable
+at later times. In Fig. 6, we show how each of the two models fares
+against the measured median density profile of the DM (left panel)
+or gas (right panel) at 𝑧 = 4. Errors on the radius are estimated
+by considering the full distribution of density profiles measured
+from individual skeleton segments, and fitting this distribution with
+the best matched normal distribution to evaluate the value of the
+standard deviation. For errors on the density,we use the bestmatched
+log-normal distribution instead, which is better suited to density
+distributions in filaments (see e.g. Cautun et al. 2014)."
+"Looking at Fig 6, it is not possible to distinguish the two
+models, Mfil+wall (green curve) and Mfil (yellow curve), in the
+inner region (𝑟 ≤20 kpc). When the profiles are stacked as in this
+figure the fits work equally well with or without the wall. However
+the size of the core radius that these models return are very different"
+"when considering individual profiles: 𝑟0 = 19.34±7.15 kpc forMfil
+compared to 𝑟0 = 8.39±3.82 kpc forMfil+wall for the DM filament.
+This factor of 2 discrepancy is also present for the gas filament:
+𝑟0 = 8.99± 1.86 kpc forMfil compared to 𝑟0 = 5.04± 1.96 kpc for
+Mfil+wall. The core radii given by theMfil model can be rejected by
+simple visual inspection of Fig. 3: they are comparable to the outer
+edge radius of the filaments."
+"Although we only show the 𝑧 = 4 median profiles, this be-
+haviour of the two models holds for all redshift outputs examined
+in this work (see table A1 for a list)."
+"We now discuss how each model fits individual cross-section
+density profiles (examples of these are shown as thin dashed curves
+on Fig. 6) rather than the median. In this case, errors on the density
+are estimated by calculating the gradient of the density profile and
+multiplying it by the spatial resolution (size of cell). For the DM
+density, a Poisson noise contribution is also added in quadrature to
+the error estimate. We plot in Fig 8 the corresponding distributions
+of reduced 𝜒2a which peaks at 3 for the DM density profile and
+0.5 for the gas in the preferred modelMfil+wall (dashed and solid
+green lines in Fig 8 respectively). For theMfil model these same
+distributions are much less strongly peaked around 𝜒2a = 6 and
+𝜒2a = 4 for the DM and gas density profiles respectively (dashed and
+solid yellow curves). Note that themeasurement errors are relatively
+large, especially at the centre of the filament for the gas, and overall
+for the DM because of a significant Poisson noise contribution.
+Though these values of 𝜒2 suggest a fit to the simulation data which
+lies somewhat on the poor side, it is unclear that the validity of
+the model should be measured by 𝜒2 statistics in the first place.
+Indeed individual profiles deviations from the model are very likely
+correlated with one another when substructures residing within the
+filament perturb its density field."
+"For sake of completeness, let us mention that at 𝑧 = 4, the fits
+of the full set of skeleton segments using theMfil+wall model to the
+DM component for the no feedback run returns 𝑟0 = 8.39±3.82 kpc
+as the mode and width of the fitted gaussian for the core radius of the
+filament (as previously mentioned), and 𝑟1 = 6.79±2.80 kpc for the
+scale height of the wall. Similarly we fit a log normal distribution
+to the DM central densities to obtain log10 (𝜌0/gcm−3) = −25.83±
+0.49 for the filament and log10 (𝜌1/gcm−3) = −26.45 ± 0.45 for
+the wall. As for the gas, we obtain 𝑟0 = 5.04 ± 1.96 kpc and 𝑟1 =
+7.70±3.00 kpc, with densities of log10 (𝜌0/gcm−3) = −26.53±0.45
+and log10 (𝜌1/gcm−3) = −27.12 ± 0.37. A list of values for the
+filament radii and densities at other redshifts is provided in tables
+A1 and A3."
+"As gas filament temperature remains around 104 K at all times
+after re-ionization, their density profile flattens rapidly as themass of
+their DM counterpart decreases and the sound speed approaches the
+critical value of 𝑐𝑠 ="
+"√
+2𝜎. This means that low mass filaments will"
+"only exist in the DM component (compare the top left and middle
+panels in Fig 3), as a 104 K gas has too much pressure to be trapped
+in the DM potential well in that case, and thus, talking about a gas
+𝑟0 becomes quite meaningless. On the other side of the mass range,
+we expect more massive filaments, where DM has a larger velocity
+dispersion, to have better defined cores in the gas than DM, as this
+former should still radiatively cool down to ∼ 104 K and thus have
+a much steeper density profile than its DM counterpart. As a result
+of this cooling, it is possible that the central gas density of massive
+filaments will become comparable to that of the DM, in which case
+our assumption that the DM sets the gravitational potential would
+cease to be valid and the core radii of the two componentsmight then
+differ substantially. However, for the filament system considered in"
+"MNRAS 000, 1–17 (2019)"
+High Redshift Filaments 11
+"Figure 8. Normalised distributions of reduced 𝜒2a obtained when fitting the
+filament only (yellow), or filament plus wall (green) models to filament den-
+sity projections in individual slices perpendicular to each skeleton segment
+at 𝑧 = 4 (see text for detail). The gas filament is represented by the solid
+curves, whilst the DM counterpart is shown as dashed lines."
+"this paper, the approximation of similar DM and gas density profiles
+seems to hold quite well (see Fig 6)."
+"In light of the previous discussion, we interpret the difference
+between the measured and predicted median values of 𝑟0 as a depar-
+ture from the isothermal/hydrostatic approximations for the filament
+(see Fig. 9, middle panels), rather than to asymmetry or a systematic
+variation of core size as a function of distance to the galaxy (see
+section 11 for more detail concerning this latter variation). For the
+DM, the filament median velocity dispersion varies by 10% within
+∼ 2 − 3 core radii. For the gas, where a shock is clearly visible
+around 15 kpc away from the centre of the filament (middle right
+panel of Fig. 9), the temperature varies by less than 60% between
+the centre of the filament and the maximum of the shock."
+"These discrepancies notwithstanding, it is striking how fila-
+ments in our cosmological simulations resemble those obtained in
+a much more idealised set-up with similar resolution presented in
+Klar &Mücket (2012). More specifically, even though these authors
+ignore the DM component as well as the fragmentation and merg-
+ers of filaments, they find that their gaseous linear structures are in
+radial hydrostatic equilibrium and exhibit an isothermal core sev-
+eral kpc wide with central densities and temperatures remarkably
+similar to those we measure in a more realistic context. They also
+identify an outer shocked region with similar properties as ours, but
+with a gravitational focusing which reduces 𝑟0 and increases 𝜌0 as
+the filament approaches the DM halo to which it is connected. As
+previously mentioned, we will come back to this latter point in sec-
+tion 3.4 of our results devoted to the temporal and spatial evolution
+of filament properties, but already note that such a focusing effect
+is not as pronounced in our simulations."
+"3.3 Vorticity, temperature and the radial extent of filaments"
+"Having extracted the main filament from the simulation and mea-
+sured the characteristic radius of its core through the use of a sim-
+plified model of hydrostatic equilibrium for its density profile, we"
+"now turn to the question of determining its outer size, or truncation
+radius, as the analytic profile cannot extend to infinity in the radial
+direction."
+"Beyond a certain radius it is no longer true that sound and
+dispersion velocities dominate over the accretion velocity, as can
+be seen in Fig. 7. A failure of the hydrostatic model will thus oc-
+cur, leading to a potential definition of the truncation radius, which
+also coincides with the position of the accretion shock onto the
+filament for the gas. We have opted not to use the peak tempera-
+ture position as a definition of the truncation radius, as individual
+skeleton segment profiles, both in temperature and vorticity are
+often asymmetric and/or distorted by their environment, and may
+contain multiple peaks when averaged over concentric radial shells
+as a result (see Fig 5 for an example). Moreover, such a definition
+would not apply to DM velocity dispersion profiles. We have there-
+fore chosen to use a universal method for all physical quantities
+and types of filament (gas or DM), which also has the benefit of
+providing internal consistency between measurements. We thus de-
+fine the truncation radius as the point where the steepest descent
+in the temperature/vorticity/velocity dispersion profile is attained.
+In the DM, this is analogous to the splashback radius for halos as
+defined in Diemer et al. (2017), as vorticity and velocity dispersion
+is only generated in the DM where shell crossing has occurred At
+𝑧 = 4 this yields a truncation radius of 18.6 ± 4.0 kpc for the gas
+temperature profile, while the gas vorticity profile gives 21.7 ± 6.6
+kpc. The DM filament at the same redshift has a measured trun-
+cation radius of 28.6 ± 6.5 kpc when using the velocity dispersion
+profile, and 25.9 ± 4.5 kpc if we consider its vorticity profile (see
+Table A1). It is interesting to note that the accretion shock of the gas
+filament seems positioned well within the DM filament (roughly at
+half the DM truncation radius). In order to check the robustness of
+these measurements vis-à-vis resolution the data was extracted at
+four different spatial resolutions. Note that this is not a study where
+we change the resolution and re-run the simulation, but simply a
+post-processing of the same simulation at different resolutions, so
+we expect to achieve better agreement than if we had done a proper
+resolution study. As resolution increases progressively from 10 kpc
+to 1.22 kpc (level 8 to 11), the profiles are seen to converge across
+every panel of Fig 9. Note that for comparison, our lowest level
+of resolution, i.e. 10 kpc roughly corresponds to the highest level
+of resolution available to capture filaments in current cosmological
+simulations with volumes on the order of 100 Mpc on the side, like
+Mare Nostrum (Ocvirk et al. 2008), Horizon-AGN (Dubois et al.
+2014), MassiveBlackII (Khandai et al. 2015), Eagle (Schaye et al.
+2015), IllustrisTNG (Nelson et al. 2018) or SIMBA (Davé et al.
+2019)."
+"Looking first at the density profiles both of the DM and gas
+filaments (top panels of Fig. 9), one can see that in going from the
+highest resolution level to the lowest one, the central density (inside
+the core) is underestimated by about an order of magnitude, and
+one becomes unable to measure the core radius of the profile with a
+reasonable accuracy. On the other hand, the DM velocity dispersion
+profiles (middle left panel of Fig 9) seem to converge faster than
+the density ones, with the lower resolution estimates compatible
+with the higher resolution ones at all radii. This seemingly rapid
+convergence is induced by the shape of the isothermal profiles which
+are, by definition, flat, especially in the case of the DM. For the
+gas (middle right panel of Fig 9), the temperature does not show
+as marked a convergence as the DM velocity dispersion because
+of the presence of the accretion shock: the low resolution data
+(black curve), which barely resolves the truncation radius of the
+filament underestimates the shock temperature and overestimates"
+"MNRAS 000, 1–17 (2019)"
+12 Marius Ramsøy et al.
+"lo
+g 1
+0
+𝜌
+(g
+cm"
+"lo
+g 1
+0
+𝜎
+(k
+m
+s−
+1 )"
+"lo
+g 1
+0
+𝜔
+(k
+m
+s−
+1
+kp
+c−
+1 )"
+"lo
+g 1
+0
+𝜌
+(g
+cm"
+"lo
+g 1
+0
+T
+(K
+)"
+"lo
+g 1
+0
+𝜔
+(k
+m
+s−
+1
+kp
+c−
+1 )"
+DM Gas
+"Level 8
+Level 9
+Level 10
+Level 11"
+"Figure 9. The median radial profiles of the filaments in DM (left column) and gas in the no-feedback run (right column), for density (top row), temperature
+(middle row) and vorticity (bottom row) at 𝑧 = 4. Displayed profiles (from black to yellow) represent data extracted at different spatial resolutions of the AMR
+simulation grid (vertical dashed lines or levels 8 to 11 respectively, see text for detail). Error bars are generated by bootstrapping the distribution of individual
+filaments profiles, and taking the root mean square at each radius."
+"MNRAS 000, 1–17 (2019)"
+High Redshift Filaments 13
+"the core temperature by a similar amount.Having said that, the shock
+position is fairly robust to resolution changes despite being radially
+asymmetric, which leads to its ‘smearing’. A minimum resolution
+of 2.4 kpc is required to correctly capture both the temperature of
+the accretion shock and that of the gas filament core."
+"3.4 Evolution of filament profiles over cosmic time and
+distance from central halo"
+"Having focused, so far, the discussion of the filament profile at
+𝑧 = 4, we now address the issue of its temporal evolution. Since
+𝑟0 ="
+"√︁
+2K/𝜋𝐺𝜌0, we naively expect that 𝑟0 ∝ (1+ 𝑧)−3/2, provided"
+"the filament central density scales with that of the background Uni-
+verse — which we measure to be the case (see Table A3) — and
+its central temperature/velocity dispersion remains roughly con-
+stant with redshift. Conversely, we can deduce the scaling of fil-
+ament temperature/velocity dispersion with redshift by measuring
+the departure of 𝑟0 from this specific power law scaling. In our
+simulation, we find that for the gaseous filament, the central ra-
+dius grows as 𝑟0 ∝ (1 + 𝑧)−2.72±0.26, which means that the sound
+speed should scale like 𝑐𝑠 ∝ (1 + 𝑧)−1.22±0.12 whereas we measure
+𝑐𝑠 ∝ (1 + 𝑧)−1.41±0.28, i.e. an evolution quite consistent with the
+naive expectation."
+"For the DM filament counterpart, the growth of 𝑟0 is faster,
+with a measurement of 𝑟0 ∝ (1 + 𝑧)−3.18±0.28 (see Fig 10), a faster
+rate than the approximate size of the central galaxy (𝑟gal = 0.2𝑟vir,
+blue solid line on the Figure). This implies that𝜎 ∝ (1+𝑧)−1.68±0.15
+as redshift decreases, whereas we measure in the simulation that 𝜎
+scales as (1 + 𝑧)−1.46±0.39. The evolution of both gas and DM fila-
+ment core radii are therefore consistent with the naive expectation
+at a ∼ 1 𝜎 confidence level. Strictly speaking, any evolution of the
+central sound speed and velocity dispersion is in contradiction with
+the underlying assumption of isothermality used to derive the fila-
+ment profiles, as this latter requires no change in either quantity with
+redshift. However, as the evolution is slow compared to the sound
+crossing time of the central region, an instantaneous isothermal
+profile fits the data fairly well."
+"The explanation for the somewhat faster growth of the core
+radius of the filaments than the radius of the central halo to which it
+is connected is that the ’old’ core material is preferentially drained
+by halos residing within the filament, while a ’new’ core forms out
+of more freshly accreted matter onto the filament (see e.g. Pichon
+et al. 2011). As a result, the filament core radius is more sensi-
+tive to the recent accretion history onto the filament than the halo.
+Such a behaviour is reminiscent, at least qualitatively, to that of
+the Navarro–Frenk–White density profile scale radius, 𝑟𝑠 , found by
+e.g. Muñoz-Cuartas et al. (2011) whose time evolution also differs
+significantly from that of the virial radius of the DM halo (except
+in that case it is the opposite: 𝑟𝑠 , which is less sensitive to the halo
+recent accretion history, starts decreasing with redshift earlier than
+𝑟vir, see their Figure 5). As the gas can be considered, to first order,
+in hydrostatic equilibrium in the DM filament potential well, we
+expect the evolution of its core radius to be somewhat influenced
+by that of the DM, i.e. that its growth also be sped up. We intend
+to explore this effect in more detail and with a larger sample of
+filaments to better assess the universality of this behaviour."
+"As for the truncation radius for the gas/DM filaments, deter-
+mined from either the vorticity or the temperature/velocity disper-
+sion, it represents the locus where fresh material is accreting, and
+as such is the rough equivalent of the halo virial radius. Fig. 10
+shows the evolution of this radius as a function of redshift, along"
+"with the size of the main halo embedded in the filament (𝑟vir, or-
+ange solid line). For the DM filament, the truncation radius evolves
+as 𝑟𝜔 ∝ (1 + 𝑧)−1.99±0.09 or 𝑟𝑇 ∝ (1 + 𝑧)−2.16±0.12, depend-
+ing on whether ones uses vorticity or velocity dispersion to de-
+fine it. This is a growth rate very similar to that of the halo size
+𝑟vir ∝ (1 + 𝑧)−2.11±0.02 in this range of redshifts. However, the
+gas truncation radius, either derived from the vorticity or temper-
+ature of the gas filament which scale as 𝑟𝜔 ∝ (1 + 𝑧)−2.85±0.17
+and 𝑟𝑇 ∝ (1 + 𝑧)−3.36±0.12 respectively, grows significantly faster
+than its DM counterpart. This is reminiscent of the stability driven
+argument for the propagation of a radiative shock within DM halos
+advanced by Birnboim & Dekel (2003), but this time applied to
+the filament: as time progresses and density drops the shock is able
+to propagate outwards and ends up filling the entire DM filament
+volume. Practically, this means that even though the gas filament
+starts off being smaller than the central halo embedded within it
+(see Fig. 10) at high redshift, the truncation radius rapidly catches
+up with the virial radius. In our specific case, they are essentially
+the same size by 𝑧 = 3.5."
+"We now go back to 𝑧 = 4 to explore the effect of distance
+to the galaxy on the width of the filament. As can be seen in Fig.
+11 (top panel), both the core and truncation radii of the gas fila-
+ment decrease by less than a factor 2 as a function of the distance
+to the main galaxy embedded within it. This decrease is progres-
+sive, from a maximum radius at 300 kpc away, which corresponds
+to the distance of either ends of the filament (see Fig. 1), to the
+virial radius of the central galaxy. We caution the reader that this is
+somewhat different to the reported behaviour of the filament once
+it enters the virial radius of the embedded DM halo (e.g. Danovich
+et al. 2012). Indeed, within the virial radius, one expects the gas
+filament to undergo more important gravitational focusing (Klar &
+Mücket 2012). The reason why this does not happen as strongly
+in our case very likely has to do with the fact that, as previously
+mentioned, we chose to excise embedded DM halos to focus our
+analysis on filament properties. However, while the filament radii
+do not decrease much as the gas approaches the halo, it is still
+enough to increase the central density, rising by a factor of a ∼ 5
+(dark solid line and symbols in the bottom panel of Fig. 11). Note
+that such a behaviour is not specific to the gas as the DM central
+density (green solid line in the bottom panel of Fig. 11) undergoes
+a similar change with distance to the galaxy, which is consistent
+with an interpretation in terms of mild gravitational focusing but
+also of the progressive draining of the filament core draining by
+the halo, as previously mentioned. Finally we want to emphasize
+that the nut galaxy, essentially connected to one (two if counting
+each direction as an individual object) filament(s) could be some-
+what of a peculiar case. In Mpc scale filaments Galárraga-Espinosa
+et al. (2020) using the Illustris-TNG (Nelson et al. 2019b) found
+filament properties to be dependent on filament environment, with
+longer filaments typically (and therefore more distant from dense
+structures) hosting colder gas. Once again, further high resolution
+work on a much larger sample of filament/galaxies is required to
+investigate the influence of connectivity and/or halo mass on the
+results for filaments on kpc scales."
+3.5 The impact of stellar feedback on filaments
+"Stellar feedback has a profound impact on the region surrounding
+the galaxy and filament. Given enough time, the superbubbles it
+generates extend most of the way up the filament, as can be seen in
+the central and bottom right panels of Fig. 3. These galactic winds
+inject vorticity on large scales, and as such, this physical quantity is"
+"MNRAS 000, 1–17 (2019)"
+"14 Marius Ramsøy et al.
+R
+ad
+iu
+s
+(k
+pc
+)"
+Redshift z
+"DM gas
+r0r𝑇
+r𝜔r𝑣𝑖𝑟
+Δ𝑥
+r𝑔𝑎𝑙"
+"Figure 10. Evolution of the core (black curves) and truncation radii (red and green curves for estimates based on the vorticity and temperature respectively)
+of the filaments with redshift. The left panel represents the DM filament, and its gas counterpart is on the right. Dashed lines represent the feedback run. The
+virial radius is shown in orange and the approximate extent of the central galaxy (20% of virial radius) in yellow. Finally, the spatial resolution of the simulation
+in the filament is indicated by the solid blue line at the bottom of each panel."
+"no longer confined to the filamentary gas. Note that, in spite of this,
+larger scale cosmic web filaments (i.e. larger than the superbubble)
+could still have well defined vorticity quadrants. More importantly,
+vorticity in the dark matter filament counterpart (bottom left panel
+of Fig. 3) remains by-and-large unaffected, to the point that we do
+not deem it necessary to plot it on Fig. 11 for the run with feedback."
+"The CGM/IGM gas is also strongly heated by this stellar feed-
+back, and so the temperature signature of the accretion shock onto
+the filament is lost as well, as the middle right panel of Fig 3 demon-
+strates. Once again, this signature survives in the velocity dispersion
+of the DM component (middle left panel of Fig 3). Despite such
+significant perturbations, the presence of a DM filament potential
+well coupled to the relatively high density of the gas ensures that
+the cooling time within the filament remains short. As a result, the
+filament is still visible as a cold stream cutting through the hot
+superbubble in the middle right panel of Fig. 3."
+"Due to these consequent perturbations induced by the stellar
+feedback, we cannot use either the temperature or vorticity to define
+the gas filament truncation radii in the feedback run. It should also be
+noted that our assumption of isothermality of the filaments becomes
+less valid than in the no stellar feedback case as stronger temperature
+gradients develop between core and outer envelope. To be more
+specific, in the no feedback case, the temperature varies between
+core and truncation radius by about a factor of two, but in the
+feedback case in can reach an order of magnitude. However, most
+of this gradient is localised in the outer parts of the filament, so that
+the central region retains a significantly large isothermal core. This
+can be understood by performing the following simple calculation.
+Neglecting the presence of the wall, we may integrate both the gas
+and DM density profiles (from Eq. 4) to obtain the filament mass"
+"per unit length, `, and its half-mass radius:"
+"`(𝑟) =
+𝜌0 𝜋𝑟"
+"1 + (𝑟/𝑟0)2
+and 𝑟1/2 = 𝑟0. (7)"
+"The fact that the (small) core radius contains half of the mass
+makes the filamentary material relatively impervious to the stellar
+feedback/filament interaction: provided the core is shielded from
+it, there can only be a minor change in the amount of gas mass
+the filament carries. It has been suggested in the literature that
+Kelvin-Helmholtz instabilities could be triggered at the interface
+between cold filament gas and the feedback powered, hot, galac-
+tic wind (e.g. Mandelker et al. 2016, and subsequent work). These
+will depend non trivially on redshift and the distance of a fila-
+ment segment to the central galaxy, so it is quite difficult to de-
+fine a unique characteristic timescale, 𝑡KH. Nevertheless, writing
+𝑡KH (𝑟) = (𝑟/𝑣𝑤 )"
+"√︁
+𝜌(𝑟)/𝜌𝑤 where 𝑣𝑤 is the relative velocity be-"
+"tween the wind and the gas filament and 𝜌𝑤 the density of the wind,
+we can see that given the steepness of the filament density profile we
+measure, 𝑡KH becomes larger as the perturbation progresses deeper
+in the filament. This means that the timescale is ultimately set by
+𝑡KH (𝑟0). Plugging in typical numbers for our feedback run at 𝑧 = 4,
+i.e. 𝑟0 ∼ 5 kpc, 𝜌(𝑟0) ∼ 3 × 10−27g cm−3, 𝑣𝑤 ∼ 100 km/s, and
+𝜌𝑤 ∼ 3 × 10−28g cm−3, we thus get 𝑡KH ∼ 20Myr which is about
+an order of magnitude shorter than the infall time from the virial
+radius of the embedded halo. The conclusion is thus that our gas
+filaments should not survive the interaction."
+"Notwithstanding that this does not happen in our simulations,
+which might admittedly be of too low a resolution to capture the
+instability properly, the calculation ignores both the importance
+of radiative cooling within the filament which might confine the"
+"MNRAS 000, 1–17 (2019)"
+High Redshift Filaments 15
+"R
+ad
+iu
+s
+(k
+pc
+)"
+"lo
+g 1
+0
+𝜌
+(g
+/c
+m
+3 )"
+Distance to central galaxy (kpc)
+r0r𝑇r𝜔r𝑣𝑖𝑟
+"𝜌𝑔
+𝜌𝐷𝑀"
+"Figure 11. Top: Gas filament radii as a function of distance to the galaxy,
+in the no-feedback (solid line) and feedback runs (dashed line) at 𝑧 = 4.
+The core radius is in black, whereas the truncation radius estimated from the
+temperature and the vorticity profiles are in green and red respectively. Note
+that the truncation radius cannot be determined from either the vorticity
+or temperature when feedback is included. Bottom: Central density of the
+filament as a function of distance to the galaxy. Gas is black, DM is green,
+with solid and dashed lines representing no feedback and feedback runs
+respectively. The vertical blue dashed line indicates the virial radius of the
+halo."
+"perturbations at the surface Vietri et al. (1997), and the important
+fact that, as we have previously discussed, gas filaments are not
+self-gravitating but are located within a dominant DM filament
+potential well. Because of this, it is unclear as to whether Kelvin-
+Helmholtz instabilities can impart to the gas a radial velocity (as in
+perpendicular to the filament axis) larger than the escape velocity
+necessary to climb out of this potential well. Should they not, they
+would simply render the gas flow within the filament turbulent
+without affecting the filamentary nature of gas accretion onto halos."
+"In the feedback case, we measure that the core radius of the gas
+filament evolves with redshift as 𝑟0 ∝ (1 + 𝑧)−2.24±0.34, i.e. with a
+scaling very similar to the no feedback run (see Fig 10). Neverthe-
+less, given the importance of the stellar feedback perturbations, one
+expects gas accretion onto the filament to be reduced in their pres-
+ence. To quantify this effect, we plot the ratio of median feedback to"
+"𝜌
+fb
+/𝜌
+no
+fb"
+"Radius (kpc)
+z"
+"Figure 12. Ratio of the median gas density profiles in the feedback and no
+feedback runs, 𝜌fb/𝜌nofb, as a function of distance to the filament center.
+Curves of different colours represent different redshifts, as indicated on the
+figure. Very early in the simulation (𝑧 = 8) feedback enhances the density
+of gas in the filament. However, at almost all other redshifts, the reverse
+happens: the filament is depleted of gas in the feedback run as compared
+to the no-feedback run. The amplitude of the effect is not monotonic with
+redshift."
+"no feedback gas density profiles along the filament as a function of
+redshift in Fig. 12. From the figure, one can see that while the size
+of core radius is not significantly affected by feedback, the central
+density is, to a larger extent. At 𝑧 = 7 a 40% reduction is measured,
+though this falls to 20% at 𝑧 = 3.6, at which point the feedback
+ceases to have an effect on the filament core. We emphasize that
+contrary to the growth of the core/truncation radii, the impact of
+feedback does not scale monotonically with redshift, as it depends
+both on the global properties of the IGM/filament and the star for-
+mation history of the galaxy which drives the feedback. Indeed, as
+shown on Fig. 12, at early times (𝑧 ∼ 8) the filament core density is
+even enhanced by the action of feedback. It is possible that some of
+this extra gas will be entrained in the filament, but another possibil-
+ity is that it will act as a shield from fresh feedback at later times. In
+a future paper, we plan to use tracer particles developed in Cadiou
+et al. (2019) to distinguish between these two situations. Outside the
+filament, the density is seen to be enhanced in the simulation with
+feedback, which is somehow expected from mass conservation of
+the filamentary gas and the presence of the extra material brought
+by the galactic winds."
+"It should be noted that the stellar feedback implemented in
+our simulation is the supernova prescription of Kimm et al. (2015),
+which ensures that the correct energy/momentum is given to the gas
+irrespective of whether the Taylor-Sedov phase of the supernova
+is spatially resolved. As such if the filaments are not destroyed
+by this supernova feedback then they are unlikely to be destroyed
+by any ’realistic’ supernova feedback. Yet, other types of stellar
+feedback are also present which could alter filament properties,
+whether by direct action of the feedback on the filaments or through
+suppression of star formation and thereby the supernova feedback
+(e.g. resonant scattering of Lyman alpha photons in high redshift
+dwarf galaxies Kimm et al. 2018). There is, of course, photo-heating
+due to ionising radiation which can induce an important gas density
+depletion especially in filaments connecting low mass halos (see
+Katz et al. 2019, for detail). We believe that this effect is, by-"
+"MNRAS 000, 1–17 (2019)"
+16 Marius Ramsøy et al.
+"and-large, captured by the UV background model implementation
+present in both the stellar feedback and no-feedback runs. However,
+another mode of stellar feedback which we do not account for, might
+be more effective at filament disruption as it is less confined to the
+galaxy: cosmic rays (see e.g. Pfrommer et al. 2017), . Finally, for
+filaments connecting halos of higher mass, Dubois et al. (2013)
+showed that AGN are also very effective at disrupting filaments,
+and can even destroy their cores."
+4 CONCLUSIONS
+"Theory suggests (e.g. Kereš et al. 2005; Dekel & Birnboim 2006;
+Pichon et al. 2011) that filaments play an extremely important role
+in the evolution of galaxies at high redshift. However, their basic
+characteristics are, as yet, not completely understood, and they are
+extremely hard to detect observationally. We used a suite of high
+resolution cosmological zoom-in simulations, progressively includ-
+ing more of the relevant physics, to place constraints on the physical
+properties of such a filament, from large (Mpc) scales to the point
+where it connects to the virial sphere of the central galaxy. Our main
+findings are as follows:"
+"• The filament in both DM and gas simulations can be described
+fairly accurately by a universal density profile 𝜌 = 𝜌𝑜(1+(𝑟/𝑟0)2)2
+corresponding to a cylinder in isothermal equilibrium
+• the filament core radius evolves for the gas grows as 𝑟0 ∝ (1 +
+𝑧)−2.72±0.26, with the DM filament core evolving as 𝑟0 ∝ (1 +
+𝑧)−3.18±0.28. This evolution of 𝑟0 for the gas closely tracks that of
+the size of the galaxy (0.2𝑟vir).
+• The filament has a second characteristic radius, the truncation
+radius, which is detectable (at least in simulations) in the temper-
+ature/velocity dispersion or vorticity fields. This radius scales as
+𝑟tr ∝ (1 + 𝑧)−2.07±0.07 for DM and 𝑟tr ∝ (1 + 𝑧)−3.10±0.10 for the
+gas. The DM truncation radius closely matches the virial radius of
+the galaxy. The gas truncation radius is generally thinner at early
+times.
+• The filament properties are mildly affected by stellar feedback
+from the central galaxy. The core radius of the gas filament hardly
+changes, but its central density is generally reduced by ∼20-30
+percent, but this does not happen monotonically with redshift. The
+DM filament properties hardly undergo any change."
+"Our simulations also establish that filaments need to be re-
+solved with a minimum of ∼ 2 kpc for a Milky Way sized halo
+in order to capture the filament properties. This might have impor-
+tant consequences for the angular momentum content of the gas
+transported to the galaxy. Still higher resolution will be required to
+capture the filaments around dwarf galaxies, though these are far
+more vulnerable to photoionisation and so probably do not need
+be resolved in detail beyond 𝑧 = 6. While the mass brought by the
+inflowing filament gas is affected to a level of ∼20-30 percent as a
+result of stellar feedback from the central galaxy, a further reduction
+is likely to occur as the filament enters the virial radius. We plan to
+tackle this issue using tracer particles in the near future. The inter-
+action of the filament with galactic winds and the virialised halo hot
+atmosphere will also be a function of the halo mass, and therefore
+our results need to be extended to a larger sample."
+"Indeed, our analysis was performed on the filament feeding
+one galaxy at high resolution. We thus plan to apply the techniques
+developed in this paper to the New-Horizon simulation (Park
+et al. 2019, Dubois et al, in prep), a cosmological zoom of the
+Horizon-AGN (Dubois et al. 2014) which will have tens of galaxies"
+"of a similar stellar mass to the one we studied in this paper, along
+with several more massive objects. New-Horizon also features
+AGN feedback and has reached 𝑧 = 0.25, which also allows to
+comprehensively extend the redshift range of the analysis. Such
+a simulation will thus permit the extraction of a large sample
+of filaments fromwhich to derive statisticallymeaningful quantities."
+ACKNOWLEDGEMENTS
+"We acknowledge useful discussions with Christophe Pichon and
+Harley Katz at various stages of this paper. This work used the
+DiRAC Data Centric system at Durham University, operated by
+the Institute for Computational Cosmology on behalf of the STFC
+DiRACHPCFacility (www.dirac.ac.uk. This equipmentwas funded
+by a BIS National E-infrastructure capital grant ST/K00042X/1,
+STFC capital grant ST/K00087X/1, DiRAC Operations grant
+ST/K003267/1 and Durham University. DiRAC is part of the Na-
+tional E-Infrastructure. JD andAS are supported byAdrian Beecroft
+and the STFC, and CL by a Beecroft Fellowship. We warmly thank
+S. Rouberol for running the horizon cluster on which part of the
+simulation was post-processed. We thank D. Munro for freely dis-
+tributing his Yorick programming language and opengl interface
+(available at http://yorick.sourceforge.net/)."
+DATA AVAILABILITY STATEMENT
+"The data underlying this article will be shared on reasonable request
+to the corresponding author."
+REFERENCES
+"Aragón-CalvoM. A., van deWeygaert R., Jones B. J. T., van der Hulst J. M.,
+2007, ApJ, 655, L5"
+"Aragón-Calvo M. A., van de Weygaert R., Jones B. J. T., 2010, MNRAS,
+408, 2163"
+"Berlok T., Pfrommer C., 2019, MNRAS, 485, 908
+Bigiel F., et al., 2011, ApJ, 730, L13
+Birnboim Y., Dekel A., 2003, MNRAS, 345, 349
+Bond J. R., Kofman L., Pogosyan D., 1996, Nature, 380, 603
+Cadiou C., Dubois Y., Pichon C., 2019, A&A, 621, A96
+Cautun M., van de Weygaert R., Jones B. J. T., Frenk C. S., 2014, MNRAS,
+441, 2923"
+"Chabrier G., 2003, PASP, 115, 763
+Chen Y.-C., Ho S., Blazek J., He S., Mandelbaum R., Melchior P., Singh S.,
+2019, MNRAS, 485, 2492"
+"Codis S., Pichon C., Devriendt J., Slyz A., Pogosyan D., Dubois Y., Sousbie
+T., 2012,Monthly Notices of the Royal Astronomical Society, 427, 3320"
+"Colberg J. M., Krughoff K. S., Connolly A. J., 2005, MNRAS, 359, 272
+Cornuault N., Lehnert M. D., Boulanger F., Guillard P., 2018, A&A, 610,
+A75"
+"Croton D. J., et al., 2006, MNRAS, 365, 11
+Danovich M., Dekel A., Hahn O., Teyssier R., 2012, MNRAS, 422, 1732
+Davé R., Anglés-Alcázar D., Narayanan D., Li Q., Rafieferantsoa M. H.,
+Appleby S., 2019, MNRAS, 486, 2827"
+"Davis M., Huchra J., Latham D. W., Tonry J., 1982, ApJ, 253, 423
+Dekel A., Birnboim Y., 2006, MNRAS, 368, 2
+Dekel A., et al., 2009, Nature, 457, 451
+Diemer B., Mansfield P., Kravtsov A. V., More S., 2017, ApJ, 843, 140
+Dĳkstra E. W., 1959, Numerische Mathematik, 1, 269
+Dolag K., Meneghetti M., Moscardini L., Rasia E., Bonaldi A., 2006, MN-
+RAS, 370, 656"
+"MNRAS 000, 1–17 (2019)"
+"http://yorick.sourceforge.net/
+http://dx.doi.org/10.1086/511633
+http://adsabs.harvard.edu/abs/2007ApJ...655L...5A
+http://dx.doi.org/10.1111/j.1365-2966.2010.17263.x
+http://adsabs.harvard.edu/abs/2010MNRAS.408.2163A
+http://dx.doi.org/10.1093/mnras/stz379
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.485..908B
+http://dx.doi.org/10.1088/2041-8205/730/2/L13
+http://adsabs.harvard.edu/abs/2011ApJ...730L..13B
+http://dx.doi.org/10.1046/j.1365-8711.2003.06955.x
+https://ui.adsabs.harvard.edu/#abs/2003MNRAS.345..349B
+http://dx.doi.org/10.1038/380603a0
+http://adsabs.harvard.edu/abs/1996Natur.380..603B
+http://dx.doi.org/10.1051/0004-6361/201834496
+https://ui.adsabs.harvard.edu/abs/2019A&A...621A..96C
+http://dx.doi.org/10.1093/mnras/stu768
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.441.2923C
+http://dx.doi.org/10.1086/376392
+https://ui.adsabs.harvard.edu/abs/2003PASP..115..763C
+http://dx.doi.org/10.1093/mnras/stz539
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.485.2492C
+http://dx.doi.org/10.1111/j.1365-2966.2012.21636.x
+http://dx.doi.org/10.1111/j.1365-2966.2005.08897.x
+https://ui.adsabs.harvard.edu/#abs/2005MNRAS.359..272C
+http://dx.doi.org/10.1051/0004-6361/201629229
+http://adsabs.harvard.edu/abs/2018A%26A...610A..75C
+http://adsabs.harvard.edu/abs/2018A%26A...610A..75C
+http://dx.doi.org/10.1111/j.1365-2966.2005.09675.x
+https://ui.adsabs.harvard.edu/abs/2006MNRAS.365...11C
+http://dx.doi.org/10.1111/j.1365-2966.2012.20751.x
+https://ui.adsabs.harvard.edu/#abs/2012MNRAS.422.1732D
+http://dx.doi.org/10.1093/mnras/stz937
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.486.2827D
+http://dx.doi.org/10.1086/159646
+http://adsabs.harvard.edu/abs/1982ApJ...253..423D
+http://dx.doi.org/10.1111/j.1365-2966.2006.10145.x
+http://adsabs.harvard.edu/abs/2006MNRAS.368....2D
+http://dx.doi.org/10.1038/nature07648
+https://ui.adsabs.harvard.edu/#abs/2009Natur.457..451D
+http://dx.doi.org/10.3847/1538-4357/aa79ab
+https://ui.adsabs.harvard.edu/abs/2017ApJ...843..140D
+http://dx.doi.org/10.1007/BF01386390
+http://dx.doi.org/10.1111/j.1365-2966.2006.10511.x
+http://dx.doi.org/10.1111/j.1365-2966.2006.10511.x
+https://ui.adsabs.harvard.edu/#abs/2006MNRAS.370..656D"
+"
+High Redshift Filaments 17"
+"Dubois Y., Teyssier R., 2008, A&A, 477, 79
+Dubois Y., Pichon C., Devriendt J., Silk J., Haehnelt M., Kimm T., Slyz A.,
+2013, MNRAS, 428, 2885"
+"Dubois Y., et al., 2014, MNRAS, 444, 1453
+Dunkley J., et al., 2009, ApJS, 180, 306
+Elias L. M., Genel S., Sternberg A., Devriendt J., Slyz A., Visbal E., Bouché
+N., 2020, MNRAS, 494, 5439"
+"Freundlich J., Jog C. J., Combes F., 2014, A&A, 564, A7
+Gallego S. G., et al., 2018, MNRAS, 475, 3854
+Galárraga-Espinosa D., Aghanim N., Langer M., Tanimura H., 2020, Prop-
+erties of gas phases around cosmic filaments at z=0 in the Illustris-TNG
+simulation (arXiv:2010.15139)"
+"Ganeshaiah Veena P., Cautun M., van de Weygaert R., Tempel E., Jones
+B. J. T., Rieder S., Frenk C. S., 2018, MNRAS, 481, 414"
+"Gao L., Theuns T., 2007, Science, 317, 1527
+Gardner J. P., et al., 2006, Space Sci. Rev., 123, 485
+Geller M. J., Huchra J. P., 1989, Science, 246, 897
+Gheller C., Vazza F., Favre J., Brüggen M., 2015, MNRAS, 453, 1164
+Gheller C., Vazza F., Brüggen M., Alpaslan M., Holwerda B. W., Hopkins
+A. M., Liske J., 2016, MNRAS, 462, 448"
+"Giavalisco M., et al., 2011, ApJ, 743, 95
+Grogin N. A., et al., 2011, ApJS, 197, 35
+Hartwig T., Bromm V., Loeb A., 2018, Monthly Notices of the Royal Astro-
+nomical Society, 479, 2202–2213"
+"Ho S. H., Martin C. L., 2019, arXiv e-prints, p. arXiv:1901.11182
+Japelj J., et al., 2019, A&A, 632, A94
+Jeans J. H., 1915, MNRAS, 76, 70
+Kacprzak G. G., Churchill C. W., Nielsen N. M., 2012, ApJ, 760, L7
+Katz N., 1992, ApJ, 391, 502
+Katz N., Keres D., Dave R., Weinberg D. H., Rosenberg J., Putman M.,
+2003, Astrophysics and Space Science Library, 281, 185"
+"Katz H., et al., 2019, arXiv e-prints, p. arXiv:1905.11414
+Kennicutt Robert C. J., 1998, ApJ, 498, 541
+Kereš D., Katz N., Weinberg D. H., Davé R., 2005, MNRAS, 363, 2
+Khandai N., Di Matteo T., Croft R., Wilkins S., Feng Y., Tucker E., DeGraf
+C., Liu M.-S., 2015, MNRAS, 450, 1349"
+"Kikuta S., et al., 2019, PASJ, 71, L2
+Kimm T., Devriendt J., Slyz A., Pichon C., Kassin S. A., Dubois Y., 2011,
+preprint, (arXiv:1106.0538)"
+"Kimm T., Cen R., Devriendt J., Dubois Y., Slyz A., 2015, MNRAS, 451,
+2900"
+"Kimm T., Haehnelt M., Blaizot J., Katz H., Michel-Dansac L., Garel T.,
+Rosdahl J., Teyssier R., 2018, MNRAS, 475, 4617"
+"Klar J. S., Mücket J. P., 2012, MNRAS, 423, 304
+Koekemoer A. M., et al., 2011, ApJS, 197, 36
+Kooistra R., Silva M. B., Zaroubi S., Verheĳen M. A. W., Tempel E., Hess
+K. M., 2019, Monthly Notices of the Royal Astronomical Society, 490,
+1415–1424"
+"Kraljic K., Dave R., Pichon C., 2019, arXiv e-prints, p. arXiv:1906.01623
+Krolewski A., Ho S., Chen Y.-C., Chan P. F., Tenneti A., Bizyaev D., Kraljic
+K., 2019, arXiv e-prints, p. arXiv:1902.09797"
+"Laigle C., et al., 2015, MNRAS, 446, 2744
+Latif M. A., Schleicher D. R. G., Spaans M., Zaroubi S., 2011, MNRAS,
+413, L33"
+"Lee K.-G., Hennawi J. F., White M., Croft R. A. C., Ozbek M., 2014, ApJ,
+788, 49"
+"Leroy A. K., et al., 2013, AJ, 146, 19
+Mandelker N., Padnos D., Dekel A., Birnboim Y., Burkert A., Krumholz
+M. R., Steinberg E., 2016, MNRAS, 463, 3921"
+"Mandelker N., vanDokkumP. G., Brodie J. P., van denBosch F. C., Ceverino
+D., 2018, ApJ, 861, 148"
+"Mandelker N., Nagai D., Aung H., Dekel A., Padnos D., Birnboim Y., 2019,
+MNRAS, 484, 1100"
+"Martin D., Matuszewski M., Morrissey P., Neill J., Moore A., Steidel C.,
+Trainor R., 2016, The Astrophysical Journal Letters, 824, L5"
+"Mocz P., et al., 2019, Phys. Rev. Lett., 123, 141301
+Muñoz-Cuartas J. C., Macciò A. V., Gottlöber S., Dutton A. A., 2011,
+MNRAS, 411, 584"
+"Nelson D., et al., 2018, arXiv e-prints, p. arXiv:1812.05609
+Nelson D., et al., 2019a, arXiv e-prints,
+Nelson D., et al., 2019b, Computational Astrophysics and Cosmology, 6, 2
+Ocvirk P., Pichon C., Teyssier R., 2008, MNRAS, 390, 1326
+Ocvirk P., et al., 2016, MNRAS, 463, 1462
+Ostriker J., 1964, ApJ, 140, 1056
+PadnosD.,MandelkerN., BirnboimY.,DekelA.,KrumholzM.R., Steinberg
+E., 2018, MNRAS, 477, 3293"
+"Pandya V., et al., 2019, MNRAS, 488, 5580
+Park M.-J., et al., 2019, arXiv e-prints, p. arXiv:1905.02216
+Pfrommer C., Pakmor R., Schaal K., Simpson C. M., Springel V., 2017,
+MNRAS, 465, 4500"
+"Pichon C., Bernardeau F., 1999, A&A, 343, 663
+Pichon C., Pogosyan D., Kimm T., Slyz A., Devriendt J., Dubois Y., 2011,
+MNRAS, 418, 2493–2507"
+"Pogosyan D., Bond J. R., Kofman L., Wadsley J., 1998, in Colombi S.,
+Mellier Y., Raban B., eds, Wide Field Surveys in Cosmology. p. 61
+(arXiv:astro-ph/9810072)"
+"Powell L. C., Slyz A., Devriendt J., 2011, MNRAS, 414, 3671
+Power C., Navarro J. F., Jenkins A., Frenk C. S., White S. D. M., Springel
+V., Stadel J., Quinn T., 2003, MNRAS, 338, 14"
+"Prescott M. K. M., Martin C. L., Dey A., 2015, ApJ, 799, 62
+Prunet S., Pichon C., Aubert D., Pogosyan D., Teyssier R., Gottloeber S.,
+2008, ApJS, 178, 179"
+"Rahman N., et al., 2012, The Astrophysical Journal, 745, 183
+Rasera Y., Teyssier R., 2006, A&A, 445, 1
+Ribaudo J., Lehner N., Howk J. C., Werk J. K., Tripp T. M., Prochaska J. X.,
+Meiring J. D., Tumlinson J., 2011, ApJ, 743, 207"
+"Rosdahl J., Blaizot J., 2012, MNRAS, 423, 344
+Rosen A., Bregman J. N., 1995, ApJ, 440, 634
+Schaap W. E., 2007, PhD thesis, Kapteyn Astronomical Institute
+<EMAIL>w_schaap@live.nl</EMAIL>"
+"Schaap W. E., van de Weygaert R., 2000, A&A, 363, L29
+Schaye J., et al., 2015, MNRAS, 446, 521
+Sousbie T., 2011, MNRAS, 414, 350
+Spitzer L., 1978, Physical Processes in the Interstellar Medium.
+New York, https://books.google.co.uk/books?id=
+ytK2swEACAAJ"
+"Stewart K. R., Brooks A. M., Bullock J. S., Maller A. H., Diemand J.,
+Wadsley J., Moustakas L. A., 2013, ApJ, 769, 74"
+"Stewart K. R., et al., 2017, ApJ, 843, 47
+Stodólkiewicz J. S., 1963, Acta Astron., 13, 30
+Sutherland R. S., Dopita M. A., 1993, ApJS, 88, 253
+Tempel E., Libeskind N. I., 2013, ApJ, 775, L42
+Teyssier R., 2002, A&A, 385, 337
+Tillson H., Devriendt J., Slyz A., Miller L., Pichon C., 2015, MNRAS, 449,
+4363"
+"Umehata H., et al., 2019, Science, 366, 97
+Vietri M., Ferrara A., Miniati F., 1997, ApJ, 483, 262
+Vogelsberger M., et al., 2014, MNRAS, 444, 1518
+Woods R. M., Wadsley J., Couchman H. M. P., Stinson H. M. P., Shen S.,
+2014, MNRAS, 442, 732"
+"Zabl J., et al., 2019, MNRAS, p. 388
+de Lapparent V., Geller M. J., Huchra J. P., 1986, ApJ, 302, L1
+van den Bergh S., 1962, AJ, 67, 486"
+This paper has been typeset from a TEX/LATEX file prepared by the author.
+APPENDIX A: DATA
+"In Table A1 (no feedback run) and Table A2 (feedback run) we present
+the redshift evolution of the filament radius, as fitted from the density,
+temperature and vorticity field."
+"MNRAS 000, 1–17 (2019)"
+"http://dx.doi.org/10.1051/0004-6361:20078326
+https://ui.adsabs.harvard.edu/abs/2008A&A...477...79D
+http://dx.doi.org/10.1093/mnras/sts224
+https://ui.adsabs.harvard.edu/#abs/2013MNRAS.428.2885D
+http://dx.doi.org/10.1093/mnras/stu1227
+http://adsabs.harvard.edu/abs/2014MNRAS.444.1453D
+http://dx.doi.org/10.1088/0067-0049/180/2/306
+http://adsabs.harvard.edu/abs/2009ApJS..180..306D
+http://dx.doi.org/10.1093/mnras/staa1059
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.494.5439E
+http://dx.doi.org/10.1051/0004-6361/201323325
+https://ui.adsabs.harvard.edu/abs/2014A&A...564A...7F
+http://dx.doi.org/10.1093/mnras/sty037
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.475.3854G
+http://arxiv.org/abs/2010.15139
+http://dx.doi.org/10.1093/mnras/sty2270
+http://adsabs.harvard.edu/abs/2018MNRAS.481..414G
+http://dx.doi.org/10.1126/science.1146676
+https://ui.adsabs.harvard.edu/abs/2007Sci...317.1527G
+http://dx.doi.org/10.1007/s11214-006-8315-7
+https://ui.adsabs.harvard.edu/abs/2006SSRv..123..485G
+http://dx.doi.org/10.1126/science.246.4932.897
+http://adsabs.harvard.edu/abs/1989Sci...246..897G
+http://dx.doi.org/10.1093/mnras/stv1646
+https://ui.adsabs.harvard.edu/abs/2015MNRAS.453.1164G
+http://dx.doi.org/10.1093/mnras/stw1595
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.462..448G
+http://dx.doi.org/10.1088/0004-637X/743/1/95
+http://adsabs.harvard.edu/abs/2011ApJ...743...95G
+http://dx.doi.org/10.1088/0067-0049/197/2/35
+https://ui.adsabs.harvard.edu/abs/2011ApJS..197...35G
+http://dx.doi.org/10.1093/mnras/sty1576
+http://dx.doi.org/10.1093/mnras/sty1576
+https://ui.adsabs.harvard.edu/#abs/2019arXiv190111182H
+http://dx.doi.org/10.1051/0004-6361/201936048
+https://ui.adsabs.harvard.edu/abs/2019A&A...632A..94J
+http://dx.doi.org/10.1093/mnras/76.2.70
+http://adsabs.harvard.edu/abs/1915MNRAS..76...70J
+http://dx.doi.org/10.1088/2041-8205/760/1/L7
+http://adsabs.harvard.edu/abs/2012ApJ...760L...7K
+http://dx.doi.org/10.1086/171366
+http://adsabs.harvard.edu/abs/1992ApJ...391..502K
+https://ui.adsabs.harvard.edu/abs/2019arXiv190511414K
+http://dx.doi.org/10.1086/305588
+https://ui.adsabs.harvard.edu/abs/1998ApJ...498..541K
+http://dx.doi.org/10.1111/j.1365-2966.2005.09451.x
+http://adsabs.harvard.edu/abs/2005MNRAS.363....2K
+http://dx.doi.org/10.1093/mnras/stv627
+https://ui.adsabs.harvard.edu/abs/2015MNRAS.450.1349K
+http://dx.doi.org/10.1093/pasj/psz055
+https://ui.adsabs.harvard.edu/abs/2019PASJ...71L...2K
+http://arxiv.org/abs/1106.0538
+http://dx.doi.org/10.1093/mnras/stv1211
+http://adsabs.harvard.edu/abs/2015MNRAS.451.2900K
+http://adsabs.harvard.edu/abs/2015MNRAS.451.2900K
+http://dx.doi.org/10.1093/mnras/sty126
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.475.4617K
+http://dx.doi.org/10.1111/j.1365-2966.2012.20877.x
+https://ui.adsabs.harvard.edu/#abs/2012MNRAS.423..304K
+http://dx.doi.org/10.1088/0067-0049/197/2/36
+https://ui.adsabs.harvard.edu/abs/2011ApJS..197...36K
+http://dx.doi.org/10.1093/mnras/stz2677
+https://ui.adsabs.harvard.edu/abs/2019arXiv190601623K
+https://ui.adsabs.harvard.edu/#abs/2019arXiv190209797K
+http://dx.doi.org/10.1111/j.1745-3933.2011.01026.x
+https://ui.adsabs.harvard.edu/abs/2011MNRAS.413L..33L
+http://dx.doi.org/10.1088/0004-637X/788/1/49
+https://ui.adsabs.harvard.edu/abs/2014ApJ...788...49L
+http://dx.doi.org/10.1088/0004-6256/146/2/19
+http://adsabs.harvard.edu/abs/2013AJ....146...19L
+http://dx.doi.org/10.1093/mnras/stw2267
+http://adsabs.harvard.edu/abs/2016MNRAS.463.3921M
+http://dx.doi.org/10.3847/1538-4357/aaca98
+https://ui.adsabs.harvard.edu/abs/2018ApJ...861..148M
+http://dx.doi.org/10.1093/mnras/stz012
+http://adsabs.harvard.edu/abs/2019MNRAS.484.1100M
+http://dx.doi.org/10.1103/PhysRevLett.123.141301
+https://ui.adsabs.harvard.edu/abs/2019PhRvL.123n1301M
+http://dx.doi.org/10.1111/j.1365-2966.2010.17704.x
+https://ui.adsabs.harvard.edu/abs/2011MNRAS.411..584M
+https://ui.adsabs.harvard.edu/#abs/2018arXiv181205609N
+http://dx.doi.org/10.1186/s40668-019-0028-x
+https://ui.adsabs.harvard.edu/abs/2019ComAC...6....2N
+http://dx.doi.org/10.1111/j.1365-2966.2008.13763.x
+http://adsabs.harvard.edu/abs/2008MNRAS.390.1326O
+http://dx.doi.org/10.1093/mnras/stw2036
+https://ui.adsabs.harvard.edu/#abs/2016MNRAS.463.1462O
+http://dx.doi.org/10.1086/148005
+http://adsabs.harvard.edu/abs/1964ApJ...140.1056O
+http://dx.doi.org/10.1093/mnras/sty789
+http://adsabs.harvard.edu/abs/2018MNRAS.477.3293P
+http://dx.doi.org/10.1093/mnras/stz2129
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.488.5580P
+https://ui.adsabs.harvard.edu/abs/2019arXiv190502216P
+http://dx.doi.org/10.1093/mnras/stw2941
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.465.4500P
+https://ui.adsabs.harvard.edu/abs/1999A&A...343..663P
+http://arxiv.org/abs/astro-ph/9810072
+http://dx.doi.org/10.1111/j.1365-2966.2011.18668.x
+http://adsabs.harvard.edu/abs/2011MNRAS.414.3671P
+http://dx.doi.org/10.1046/j.1365-8711.2003.05925.x
+https://ui.adsabs.harvard.edu/abs/2003MNRAS.338...14P
+http://dx.doi.org/10.1088/0004-637X/799/1/62
+http://adsabs.harvard.edu/abs/2015ApJ...799...62P
+http://dx.doi.org/10.1086/590370
+https://ui.adsabs.harvard.edu/abs/2008ApJS..178..179P
+http://dx.doi.org/10.1088/0004-637x/745/2/183
+http://dx.doi.org/10.1051/0004-6361:20053116
+https://ui.adsabs.harvard.edu/abs/2006A&A...445....1R
+http://dx.doi.org/10.1088/0004-637X/743/2/207
+http://adsabs.harvard.edu/abs/2011ApJ...743..207R
+http://dx.doi.org/10.1111/j.1365-2966.2012.20883.x
+https://ui.adsabs.harvard.edu/#abs/2012MNRAS.423..344R
+http://dx.doi.org/10.1086/175303
+http://adsabs.harvard.edu/abs/1995ApJ...440..634R
+http://adsabs.harvard.edu/abs/2000A%26A...363L..29S
+http://dx.doi.org/10.1093/mnras/stu2058
+https://ui.adsabs.harvard.edu/#abs/2015MNRAS.446..521S
+http://dx.doi.org/10.1111/j.1365-2966.2011.18394.x
+http://adsabs.harvard.edu/abs/2011MNRAS.414..350S
+https://books.google.co.uk/books?id=ytK2swEACAAJ
+https://books.google.co.uk/books?id=ytK2swEACAAJ
+http://dx.doi.org/10.1088/0004-637X/769/1/74
+http://adsabs.harvard.edu/abs/2013ApJ...769...74S
+http://dx.doi.org/10.3847/1538-4357/aa6dff
+http://adsabs.harvard.edu/abs/2017ApJ...843...47S
+http://adsabs.harvard.edu/abs/1963AcA....13...30S
+http://dx.doi.org/10.1086/191823
+http://adsabs.harvard.edu/abs/1993ApJS...88..253S
+http://dx.doi.org/10.1088/2041-8205/775/2/L42
+http://adsabs.harvard.edu/abs/2013ApJ...775L..42T
+http://dx.doi.org/10.1051/0004-6361:20011817
+http://adsabs.harvard.edu/abs/2002A%26A...385..337T
+http://dx.doi.org/10.1126/science.aaw5949
+https://ui.adsabs.harvard.edu/abs/2019Sci...366...97U
+http://dx.doi.org/10.1086/304202
+https://ui.adsabs.harvard.edu/abs/1997ApJ...483..262V
+http://dx.doi.org/10.1093/mnras/stu1536
+http://adsabs.harvard.edu/abs/2014MNRAS.444.1518V
+http://dx.doi.org/10.1093/mnras/stz392
+https://ui.adsabs.harvard.edu/#abs/2019MNRAS.tmp..388Z
+http://dx.doi.org/10.1086/184625
+http://adsabs.harvard.edu/abs/1986ApJ...302L...1D
+http://dx.doi.org/10.1086/108757
+http://adsabs.harvard.edu/abs/1962AJ.....67..486V"
+"
+18 Marius Ramsøy et al."
+"z DM gas
+𝑟0 (kpc) 𝑟𝑇 (kpc) 𝑟𝜔 (kpc) 𝑟0 (kpc) 𝑟𝑇 (kpc) 𝑟𝜔 (kpc)"
+"3.35 15.37 ± 6.66 32.94 ± 3.47 39.35 ± 8.38 9.29 ± 4.13 27.24 ± 6.07 23.02 ± 6.79
+3.44 10.54 ± 4.48 31.56 ± 3.94 33.91 ± 4.23 9.82 ± 3.92 26.27 ± 6.21 25.01 ± 10.41
+3.60 10.48 ± 4.22 33.82 ± 5.91 35.41 ± 6.45 7.66 ± 2.73 25.65 ± 5.04 17.65 ± 5.60
+3.65 11.20 ± 3.62 33.62 ± 5.44 32.90 ± 5.04 7.34 ± 2.70 27.63 ± 6.28 18.68 ± 5.01
+3.82 11.44 ± 4.59 28.83 ± 3.84 31.92 ± 4.66 6.18 ± 2.19 22.20 ± 6.36 16.29 ± 5.86
+3.94 8.64 ± 3.89 27.12 ± 5.14 29.77 ± 6.11 4.27 ± 1.38 20.44 ± 4.52 14.95 ± 4.81
+4.00 8.39 ± 3.82 28.57 ± 6.47 25.87 ± 4.48 5.04 ± 1.96 18.58 ± 3.96 21.70 ± 6.62
+4.13 7.88 ± 3.64 26.57 ± 7.79 24.43 ± 5.05 3.96 ± 1.53 17.70 ± 4.12 14.48 ± 4.63
+4.55 7.34 ± 3.50 20.28 ± 4.04 22.82 ± 5.57 4.45 ± 1.72 13.84 ± 2.64 13.33 ± 3.18
+5.06 3.95 ± 2.27 17.14 ± 3.05 19.84 ± 3.55 3.68 ± 0.85 10.04 ± 2.34 10.13 ± 3.03
+5.45 3.37 ± 1.53 14.75 ± 2.99 16.31 ± 3.37 2.96 ± 1.23 7.80 ± 2.13 6.89 ± 1.73
+5.66 2.74 ± 1.74 11.27 ± 2.52 15.32 ± 4.32 2.99 ± 1.39 7.48 ± 2.22 .23 ± 1.45
+7.00 1.75 ± 0.75 9.19 ± 2.58 10.33 ± 1.76 1.77 ± 0.79 3.79 ± 0.49 4.46 ± 0.66
+8.09 1.59 ± 1.00 6.28 ± 1.48 8.18 ± 1.82 1.58 ± 0.74 3.78 ± 0.56 3.96 ± 0.58"
+"Table A1. Redshift evolution of the filament core radius derived from density (𝑟0) and truncation radii derived from temperature (𝑟𝑇 ) and vorticity (𝑟𝜔) as
+fitted from the density, temperature and vorticity fields extracted from the no-feedback run. See Section 3.2 for details."
+"z DM gas
+𝑟0 (kpc) 𝑟𝑇 (kpc) 𝑟𝜔 (kpc) 𝑟0 (kpc) 𝑟𝑇 (kpc) 𝑟𝜔 (kpc)"
+"3.26 10.31 ± 4.41 36.90 ± 5.36 35.11 ± 8.25 7.92 ± 3.77 – –
+3.35 10.96 ± 4.81 33.82 ± 6.43 33.82 ± 8.34 12.14 ± 7.02 – –
+3.44 10.71 ± 4.77 34.33 ± 5.42 34.05 ± 7.36 8.64 ± 3.95 – –
+3.53 16.01 ± 10.50 34.80 ± 12.75 38.96 ± 17.90 7.22 ± 4.23 – –
+3.60 11.20 ± 5.17 36.80 ± 12.47 35.69 ± 14.22 8.02 ± 7.38 – –
+3.65 11.86 ± 4.88 30.58 ± 3.67 31.68 ± 5.53 8.04 ± 3.75 – –
+3.82 10.45 ± 4.37 28.99 ± 3.93 30.51 ± 7.28 5.89 ± 2.79 – –
+3.96 10.28 ± 4.59 27.86 ± 4.01 24.48 ± 7.15 5.10 ± 2.29 – –
+4.00 7.33 ± 4.43 27.23 ± 4.84 22.41 ± 6.05 5.13 ± 2.28 – –
+4.02 9.36 ± 4.30 26.48 ± 4.34 24.21 ± 7.01 4.94 ± 2.34 – –
+4.56 8.61 ± 5.60 23.13 ± 4.57 23.13 ± 5.06 4.21 ± 2.10 – –
+5.45 3.37 ± 1.96 14.37 ± 3.83 12.99 ± 3.13 2.70 ± 1.55 – –
+5.67 2.13 ± 1.33 11.59 ± 2.57 11.66 ± 2.60 2.78 ± 1.50 – –
+6.99 1.80 ± 1.13 9.20 ± 2.69 9.20 ± 2.58 2.79 ± 1.51 – –
+8.09 1.58 ± 1.00 7.08 ± 2.19 6.30 ± 1.91 2.43 ± 1.49 – –"
+"Table A2. Redshift evolution of the filament core radius derived from density (𝑟0) and truncation radii derived from temperature (𝑟𝑇 ) and vorticity (𝑟𝜔) as
+fitted from the density, temperature and vorticity fields extracted from the feedback run. See Section 3.2 for details. Note the absence of data for the radii
+derived from vorticity and temperature, due to the destructive impact of feedback on these fields."
+"z DM gas
+log10 (𝜌0/gcm−3) log10 (𝜌1/gcm−3) 𝑟1 (kpc) log10 (𝜌0/gcm−3) log10 (𝜌1/gcm−3) 𝑟1 (kpc)"
+"3.35 −26.08 ± 0.46 −26.50 ± 0.46 7.66 ± 3.15 −26.76 ± 0.34 −27.32 ± 0.36 12.36 ± 5.49
+3.44 −26.12 ± 0.39 −26.63 ± 0.40 9.30 ± 3.62 −26.64 ± 0.64 −27.19 ± 1.01 16.32 ± 7.66
+3.60 −26.05 ± 0.42 −26.43 ± 0.44 7.89 ± 3.20 −26.75 ± 1.15 −27.26 ± 0.38 8.69 ± 3.13
+3.65 −26.03 ± 0.42 −26.56 ± 0.43 8.13 ± 3.00 −26.66 ± 0.38 −27.30 ± 0.38 7.82 ± 2.65
+3.82 −26.04 ± 0.41 −26.37 ± 0.48 8.05 ± 3.00 −26.64 ± 0.41 −27.25 ± 0.37 8.82 ± 3.02
+3.94 −25.85 ± 0.47 −26.50 ± 0.41 7.95 ± 3.42 −26.18 ± 0.64 −26.95 ± 1.19 7.68 ± 2.81
+4.00 −25.83 ± 0.49 −26.45 ± 0.45 6.79 ± 2.80 −26.53 ± 0.45 −27.12 ± 0.39 7.70 ± 3.00
+4.13 −25.80 ± 0.44 −26.52 ± 1.10 6.89 ± 2.75 −25.81 ± 1.85 −27.05 ± 0.37 6.76 ± 2.78
+4.55 −25.81 ± 0.48 −26.34 ± 0.41 6.89 ± 2.97 −26.44 ± 0.45 −27.00 ± 0.36 7.17 ± 2.76
+5.06 −25.58 ± 0.45 −26.43 ± 1.20 6.06 ± 2.80 −25.75 ± 2.00 −26.88 ± 0.36 6.27 ± 2.39
+5.45 −25.66 ± 0.42 −26.06 ± 0.61 6.00 ± 2.55 −26.23 ± 0.42 −26.66 ± 1.30 5.92 ± 2.14
+5.66 −25.62 ± 0.43 −26.41 ± 1.25 9.00 ± 4.78 −26.11 ± 0.56 −26.92 ± 0.44 5.47 ± 2.06
+7.00 −25.42 ± 0.45 −26.20 ± 1.20 6.43 ± 4.50 −26.11 ± 0.53 −27.09 ± 0.07 6.39 ± 4.89
+8.09 −25.32 ± 0.46 −25.97 ± 1.22 6.07 ± 3.69 −25.98 ± 0.57 −26.66 ± 0.36 4.53 ± 1.72"
+Table A3. Redshift evolution of the model fitted density as extracted from the no-feedback run. See Section 3.2 for details.
+"MNRAS 000, 1–17 (2019)"
+High Redshift Filaments 19
+"z DM gas
+log10 (𝜌0/gcm−3) log10 (𝜌1/gcm−3) 𝑟1 (kpc) log10 (𝜌0/gcm−3) log10 (𝜌1/gcm−3) 𝑟1 (kpc)"
+"3.26 −2.26 ± 0.46 −2.83 ± 0.41 8.45 ± 3.67 −26.85 ± 0.42 −27.18 ± 0.47 13.82 ± 6.81
+3.35 −2.40 ± 0.46 −2.89 ± 0.46 9.08 ± 3.92 −26.98 ± 0.50 −27.32 ± 0.45 8.63 ± 3.50
+3.44 −2.36 ± 0.42 −2.70 ± 0.44 8.38 ± 3.16 −26.81 ± 0.45 −27.17 ± 1.20 9.18 ± 3.34
+3.53 −2.49 ± 0.59 −2.83 ± 0.51 8.16 ± 3.60 −26.94 ± 0.69 −27.26 ± 0.48 7.50 ± 2.78
+3.60 −2.38 ± 0.56 −2.81 ± 0.53 5.86 ± 2.65 −26.62 ± 0.86 −27.08 ± 0.56 9.09 ± 3.67
+3.65 −2.31 ± 0.43 −2.77 ± 0.55 8.80 ± 3.92 −26.79 ± 0.41 −27.33 ± 0.41 7.95 ± 3.16
+3.82 −2.26 ± 0.42 −2.64 ± 0.62 7.69 ± 2.97 −26.69 ± 0.39 −27.18 ± 0.42 8.13 ± 3.18
+3.96 −2.23 ± 0.41 −2.77 ± 0.42 9.47 ± 5.03 −26.64 ± 0.42 −27.02 ± 1.07 8.26 ± 2.98
+4.00 −2.19 ± 0.44 −2.57 ± 0.62 7.69 ± 4.16 −26.64 ± 0.43 −27.13 ± 0.44 10.04 ± 6.40
+4.02 −2.21 ± 0.41 −2.82 ± 1.03 7.88 ± 3.06 −26.61 ± 0.43 −26.97 ± 0.53 9.23 ± 3.70
+4.56 −2.04 ± 0.44 −2.77 ± 1.17 6.59 ± 2.84 −26.52 ± 0.41 −27.00 ± 0.42 7.48 ± 2.75
+5.45 −1.82 ± 0.40 −2.56 ± 1.17 6.53 ± 5.57 −26.27 ± 0.49 −26.95 ± 0.39 6.03 ± 2.49
+5.67 −1.84 ± 0.44 −2.62 ± 1.30 5.77 ± 2.38 −26.35 ± 0.50 −26.92 ± 0.37 6.18 ± 2.40
+6.99 −1.59 ± 0.49 −2.41 ± 1.23 3.74 ± 1.39 −26.15 ± 0.46 −26.81 ± 0.36 6.01 ± 2.38
+8.09 −1.49 ± 0.57 −2.10 ± 0.42 3.36 ± 1.49 −26.03 ± 0.57 −26.88 ± 0.26 4.20 ± 1.66"
+Table A4. Redshift evolution of the model fitted density as extracted from the feedback run. See Section 3.2 for details.
+"MNRAS 000, 1–17 (2019)"
+"
+	1 Introduction
+	2 Numerical methods
+	2.1 Simulations
+	2.2 Filament Identification
+	2.3 Cross-section measurements"
+"	3 Results: measuring the filament profiles
+	3.1 An analytic description of DM and gas filament profiles
+	3.2 Testing the simple model
+	3.3 Vorticity, temperature and the radial extent of filaments
+	3.4 Evolution of filament profiles over cosmic time and distance from central halo
+	3.5 The impact of stellar feedback on filaments"
+"	4 Conclusions
+	A Data"

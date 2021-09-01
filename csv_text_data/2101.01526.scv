@@ -1,0 +1,605 @@
+0
+"Draft version January 6, 2021
+Typeset using LATEX manuscript style in AASTeX61"
+HARMONIC ECME EXCITED BY ENERGETIC ELECTRONS TRAVELLING INSIDE A CORONAL
+"Mehdi Yousefzadeh,1, ∗ Hao Ning,1 and Yao Chen1"
+"1Institute of Space Sciences, Institute of Frontier and Interdisciplinary Science, Shandong University, Shandong, China."
+(Received ***; Revised ***; Accepted by APJ - 04-Jan-2021)
+ABSTRACT
+A complete understanding of solar radio bursts requires developing numerical techniques which can con-
+"nect large-scale activities with kinetic plasma processes. As a starting point, this study presents a numerical"
+scheme combining three different techniques: (1) extrapolation of magnetic field overlying a specific active
+"region in order to derive the background field, (2) guiding-center simulation of dynamics of millions of"
+particles within a selected loop to reveal the integral velocity distribution function (VDF) around certain
+"sections of the loop, and (3) particle-in-cell (PIC) simulation of kinetic instabilities driven by energetic"
+"electrons initiated by the obtained distributions. Scattering effects at various levels (weak, moderate, and"
+strong) due to wave\turbulence-particle interaction are considered using prescribed time scales of scatter-
+"ing. It was found that the obtained VDFs contain strip-like and loss-cone features with positive gradient, and"
+"both features are capable of driving electron cyclotron maser emission (ECME), which is a viable radiation"
+"mechanism for some solar radio bursts, in particular, solar radio spikes. The strip-like feature is important"
+"in driving the harmonic X mode, while the loss-cone feature can be important in driving the fundamental X"
+"mode. In the weak-scattering case, the rate of energy conversion from energetic electrons to X2 can reach"
+"up to ∼ 2.9 × 10−3Ek0 , where Ek0 is the initial kinetic energy of energetic electrons. The study demonstrates"
+"Corresponding author: Yao Chen
+yaochen@sdu.edu.cn"
+mailto: yaochen@sdu.edu.cn
+"
+2 Yousefzadeh et al."
+"a novel way of exciting X2 mode in the corona during solar flares, and provides new sight into how escaping"
+radiation can be generated within a coronal loop during solar flares.
+Keywords: Solar corona (1483); Solar activity (1475); Radio bursts (1339); Solar coronal
+radio emission (1993); Plasma astrophysics (1261)
+∗ E-mail: m.yousefzadeh6@gmail.com
+ECME Inside A Coronal Loop 3
+1. INTRODUCTION
+Solar radio bursts represent sudden enhancement of emission at radio wavelengths released from the solar
+atmosphere. Various types of bursts have been classified according to their manifestation on the dynamic
+"spectrum, such as bursts of type I to V, millisecond solar spikes, flare decimetric continuum, etc (Wild et al."
+"1963; McLean & Labrum 1985; see, e.g., Feng et al. 2012, Li et al. 2017, Chen et al. 2014, and Vasanth et"
+"al. 2019 for latest studies). Among them, solar spikes are radio bursts closely associated with the impulsive"
+"stage of solar flares. Spikes are characterized by their extremely high brightness temperature of up to 1015 K,"
+"the highest among all types of solar radio bursts. They appear in metric-decimetric wavelength, exhibiting"
+very narrow-band spectral width with rapidly-rising intensity profile and extremely short characteristic time
+scales (∼ a few to tens of ms for individual burst). Thousands of spikes can exist in an event. This leads
+"some authors to suggest that solar spikes represent elementary energy release events during solar flares (see,"
+"e.g., Benz 1986; Benz & Kane 1986; Fleishman & Mel’nikov 1998)."
+"In earlier studies, ECME is considered to be the emission mechanism of solar spikes (see, e.g., Holman et"
+al. 1980; Melrose & Dulk 1982; Robinson 1991). The ECME mechanism was initially proposed by Twiss
+"(1958), Gaponov (1959) and Schneider (1959). Wu & Lee (1979) realized the importance of relativistic"
+"effect in the resonance condition, and applied ECME to Decametric Radiation (DAM) of Jupiter. Later, the"
+"theory was used to explain solar radio bursts, such as solar spikes (Melrose & Dulk 1982; Sharma & Vlahos"
+1984; Aschwanden 1990) and type IIIs (Wu et al. 2005). According to Wu & Lee (1979) and follow-
+"up studies, ECME can be excited by energetic electrons with a positive gradient along the perpendicular"
+"direction in the velocity space, i.e., ∂ f /∂v⊥ > 0, in plasmas with ωpe/Ωce < 1. In addition, ECME favors"
+the growth of X mode. In plasmas with ωpe/Ωce > 1 the growth rates of X and O modes decline rapidly
+while Z (or the electrostatic upper hybrid mode at large wave number) and W become the dominant modes
+(Sharma & Vlahos 1984; Lee et al. 2009; Yi et al. 2013; Ni et al. 2020).
+Most earlier studies suggest the solar spikes are excited by ECME of energetic electrons with the loss-
+"cone distribution, i.e., via the loss-cone maser. Such distribution can form when electrons are trapped"
+"and bounced within a coronal loop. Nevertheless, unresolved issues exist that hinder us from a complete"
+understanding of the exact emission mechanism and how one can use radio data to infer coronal properties.
+4 Yousefzadeh et al.
+One major difficulty lies in the fact that any solar radio bursts are a consequence of multi-scale process. An
+"event would start from large-scale magnetic eruptive activities in the astronomical to MHD scale, followed"
+"by particle acceleration via magnetic reconnection or shocks in the particle kinetic scale, and excitation and"
+propagation of radiations. Present computational resources are far from enough to simulate such cross-scale
+physics.
+"Another difficulty is that the loss-cone maser for solar spikes mainly excite the fundamental X mode (X1),"
+and it is difficult for X1 to pass through the second harmonic absorption layer during its escape from the
+source (Melrose & Dulk 1982). This gives the escaping difficulty of ECME when being applied to solar
+"radio bursts. To resolve this, Melrose & Wheatland (2016) proposed that a low-density cavity exists in the"
+"source region, which can duct the X mode out. Existence of such low-density cavity in the corona has not"
+"been verified yet. Another option is to have direct excitation of X at higher harmonics such as X2 and X3,"
+since the absorption rates at the third or fourth harmonic layer are considerably less in comparison to that at
+"the second harmonic. Yet, direct and efficient excitation of X2 and X3 are rarely reported."
+"Most, if not all, existing studies on emission mechanism of solar radio bursts, including solar spikes,"
+started from analytically-prescribed distribution function of energetic electrons. Such function is not de-
+"termined by the particle dynamics in a self-consistent way. In this study, we present a preliminary effort"
+to connect macro-scale dynamics of energetic electrons with micro-scale kinetic instabilities energized by
+these electrons to explain the possible emission mechanisms behind solar spikes. This is done by combining
+three sets of numerical techniques working at different scales. It was found that the VDFs deduced from the
+simulations contain certain interesting features that are capable of exciting emission efficiently at the second
+"harmonic (X2) via ECME, thus providing a novel approach to resolve the escaping difficulty of ECME. The"
+"following section introduces numerical techniques used here, the third section presents analysis and major"
+"results, summary and discussion are given in the last section."
+2. NUMERICAL SCHEMES
+"To bridge the physics of different spatial scales and simplify the effort as much as possible, we com-"
+"bine three sets of numerical techniques, including (1) the nonlinear force-free field (NLFFF) extrapolation"
+method (Wiegelmann 2004 and Wiegelmann et al. 2006) to describe large-scale topology of corona mag-
+ECME Inside A Coronal Loop 5
+"netic field within which electrons are traveling and trapped, (2) the guiding-center (GC) simplification"
+"method (e.g., Northrop 1963; Gordovskyy et al. 2010) to simulate dynamical motions of a large-number"
+"of electrons so as to infer evolution of their VDF, and (3) the particle-in-cell (PIC) simulation fed by the"
+obtained VDFs to explore the excited kinetic instabilities and radiations. This represents a significantly-
+simplified approach for the proposed study.
+2.1. NLFFF Extrapolation of the Coronal Magnetic Field
+"To start the simulation, we selected one specific active region (NOAA AR11283), which released a group"
+"of eruptions including three big flares (M5.3, X2.1, and X1.8) on September 6 and 7, 2011. It has been"
+"investigated by several authors (e.g., Ruan et al. 2014; Liu et al. 2014; Romano et al. 2015). Here we start"
+from the magnetic condition before the X2.1 flare. The NLFFF extrapolation was based on the magnetogram
+data observed at 21:30 UT by the Helioseismic and Magnetic Imager (HMI; Schou et al. 2012).
+"The HMI data and the result of extrapolation are shown in Figure 1(a), from which we observe a clear"
+twisted flux rope structure whose eruption releases the X2.1 flare. Three representative field lines with
+"different amount of twist are plotted. The loop shown in panel (b) contains no significant twist, the field"
+"strengths at the two foot-points are close to 1800 G and 1200 G, respectively. The location with the"
+minimum field strength is close to the loop top. The loop in panel (c) presents the M-like topology with
+"significant twist, the field strengths at the two foot-points are nearly 300 G and 1800 G, respectively. The"
+location with the minimum field strength is located at the right foot-point. The field line in panel (d) has
+"more twists, the field strength at its left foot is 1400 G, decreasing to a local minimum at 800 G and then"
+"increasing to the maximum at nearly 1300 G around the top part, then decreasing to 400 G and further"
+increasing to 1200 G at the right foot.
+"As a starting point, we conduct simulation of particle dynamics within the simple untwisted loop config-"
+"uration, i.e., that shown in panel (b). Note that selection of the specific AR and the loop is just to provide a"
+realistic magnetic condition of the corona so as to initiate the simulation. The loop forms a simple magnetic
+trap (or mirror) and represents a typical field line in the background corona overlying the pre-eruption flux
+"rope structure. Using other twisted configuration would be interesting yet more complex, and the essential"
+6 Yousefzadeh et al.
+physics should be revealed by the study using the simple untwisted loop structure. From the extrapolation
+technique we can obtain three-dimensional distribution of field strength and direction along the whole loop.
+The information will be fed to the following GC simulation of particle dynamics as input. The time scale of
+"the bouncing motion can be estimated with the loop length and the average energy of electrons. Here, the"
+"height of the selected loop structure is about 100 arcsec, and the length is nearly 300 arcsec. Thus, it takes"
+∼ 3s for electrons with an energy of 15 keV to travel such distance.
+2.2. Guiding-center simulation of dynamics of energetic electrons
+VDF of energetic electrons accounting for radio emission remains unknown. It is related to the acceler-
+"ation and heating mechanism and further wave-particle interaction during solar flares. In any case, strong"
+"heating seems to be an intrinsic part of solar flares, therefore one may obtain heated electrons with high-"
+temperature Maxwellian-like distribution. The heated electrons will be injected into a loop which might be
+the post-reconnection loop or one of the loops directly connected to the reconnection region. If reconnec-
+"tion takes place high in the corona, as indicated by X-ray data of flares (Masuda et al. 1994; Sui & Holman"
+"2003; Chen et al. 2017), top of loops could be a probable place of injection. To simulate the following"
+"dynamic motion, we inject two million of electrons with a Maxwellian distribution around the loop top in"
+an impulsive way (labelled with “I” in Figure 1(b)). The length of the injection section is ∼ 5 arcsec. The
+VDF is expressed by
+"f0 =
+1"
+"(2π)3/2v30
+exp"
+where v0 = 0.24 c and c is the speed of light. The GC simplification is described with standard relativistic
+"equations (Northrop 1963; Gordovskyy et al. 2010). To apply this method, the characteristic time and"
+spatial scales of particle gyro-motion should be much less than those of the magnetic field variation. For
+"the simple untwisted large-scale loop structure, such conditions are well satisfied. The classical Bulirsch-"
+"Stoer approach is employed to solve the GC equations, which is characterized by a high level of accuracy"
+in energy conservation.
+Pre-existing waves and those excited after injection can scatter electrons and modify their VDFs. To sim-
+"ulate such effect, we introduce a parameter τs to represent the time scale of pitch-angle scattering: within"
+ECME Inside A Coronal Loop 7
+"each interval of τs, pitch angle of an electron will be changed to a random value in a range of [0, π]. A larger"
+τs represents weaker scattering and vice versa. We refer to Piana et al. (2007) and Chen & Petrosian (2013)
+"for characteristic values of τs during solar flares. For electrons of few tens of Kev, τs could be around 0.1s"
+"to 1s. Thus, we set τs to be 5s, 1s, and 0.5s, to represent weak (Case W), moderate (Case M), and strong"
+"(Case S) levels of scattering, respectively."
+2.3. VPIC simulation of ECME driven by energetic electrons
+We use the Vector-PIC (VPIC) open-source code released by the Los Alamos National Labs for PIC
+"simulation. The code employs a second-order, explicit, leapfrog algorithm to update particle positions"
+"and velocities, along with a second-order finite-difference time-domain solver for evolution of electric and"
+"magnetic fields which are described by the full Maxwell equations (Bowers et al. 2008a, 2008b, 2009)."
+"To initiate the PIC simulation, we adopt Maxwellian distribution for background plasmas consisting of"
+electrons and protons. The background magnetic field is set to be along ~ez (~B0 = B0~ez) and the wave vector
+"(~k) is within the xOz plane. VDFs of energetic electrons are taken from the above GC simulation, and only"
+those at the loop top are used. According to the NLFFF extrapolation the field strength around the loop top
+"is ∼400 G, the number density of background plasmas n0 is assumed to be 109 cm−3, thus the ratio of plasma"
+"oscillation frequency and electron gyro-frequency, i.e., ωpe/Ωce, is 0.25. This means that ECME should be"
+important. The density ratio of energetic and background electrons (ne/n0) is taken to be 0.05. The grid
+"spacing is ∆ = 2.7 λD where λD is the Debye length of background electrons and the grid number is [512,"
+"512]. The simulation time and domain are 2000 ω−1pe for Cases W and M, and 2500 ω
+−1
+pe for Case S, and"
+the simulation domain in space is given by Lx = Lz = 25 c/ωpe. The resolved ranges of wave number and
+"frequency are then [-16, 16] Ωce/c and [0, 3.2] Ωce, respectively. In each cell for each species, we employ"
+1000 macroparticles. The charge neutrality condition is maintained.
+"Note that VDFs of energetic electrons within the loop change with many factors, such as time, location,"
+"form of initial distribution, location of injection, scattering effect, etc. This results in lots of variations."
+"Keeping this in mind, the present study is taken as a starting point along the proposed line of research,"
+with two main aims: (1) how VDFs evolve along the loop structure while considering various levels of
+8 Yousefzadeh et al.
+"scattering, and (2) whether and how VDFs are capable of efficient excitation of harmonic X modes (X2,"
+as well as other wave modes) so as to partially address the escaping difficulty associated with ECME. In
+"the following, we first present evolution of VDFs within four different sections of the loop, then compare"
+outputs of PIC simulations that are initiated by three sets of VDF obtained at the same location (loop top)
+"and time (1s after injection) with different levels of scattering. Results with VDFs at other location and time,"
+as well as using different forms of initial distribution within a different loop structure will be examined in
+future.
+3. NUMERICAL RESULTS AND ANALYSIS
+3.1. VDFs given by the GC simulation
+"In our GC simulation, motions of two millions of electrons are resolved. To evaluate evolutions of VDFs"
+"along the loop, we select four sections, referred to as A, B, C, and D, respectively (see Figure 1b). Their"
+lengths are taken to be large enough (∼12 arcsec) so as to get sufficient number of electrons. The VDFs at
+certain moment are obtained by collecting the information of all electrons within the specific section at the
+moment of interest.
+Note that electrons with small initial pitch angles may get lost from the loop. Electrons that are bounced
+backwards give rise to the well-known loss-cone distribution. If electrons are also mirrored from the other
+"side of the loop, a double-sided loss-cone distribution is obtained. For the selected loop, the ratio of max-"
+"imum to minimum B, i.e., the mirror ratio, is ∼ 3, this gives a loss cone angle of ∼ 35◦. When scattering"
+"effect is included, all electrons will get lost eventually with stronger scattering leading to faster loss. These"
+deductions are verified by our GC simulations.
+Figure 2(a-d) present temporal evolution of the obtained VDFs at different loop sections (A-D) for Case
+W with τ = 5s. The double-sided loss cone appears as an overall morphology of VDFs within the first
+few seconds. Angle of the loss cone and timing of its development are consistent with the above estimate.
+"The loss-cone angle increases from Section A to Section D, as a result of the decrease of mirror ratio. As"
+"seen from the accompanying movie for section A (around the top), the initial VDF is Maxwellian since this"
+section partially overlaps with the injection region while lower sections include no electrons initially.
+ECME Inside A Coronal Loop 9
+"In addition to the loss-cone feature, there appear several strip-like features that exhibit positive gradient."
+"The lower strip feature appears shortly after the injection, corresponding to particles with relatively large"
+pitch angles and therefore small bouncing distance; the upper one appears with large v⊥ and large-positive
+"v‖, then mitigating to regions with smaller v⊥ and negative v‖. The strips appear earlier for sections closer"
+to the top. They are given by energetic electrons that have experienced bouncing by at least one time and
+arrive at the section window at the specific time. Similar multi-strip features have been demonstrated earlier
+by White et al. (1983) in their analytical evaluation of VDFs for a one-dimensional magnetic field line. We
+"have repeated their calculation and obtain similar results, confirming the validity of the simulation result"
+presented here. The features are of major interest here since they emerge along the whole structure with
+"significant positive gradients of VDFs, this makes them to be candidates of efficient driver of ECME."
+We also conducted GC simulations for cases with moderate (Case M) and strong (Case S) levels of scat-
+tering. The solutions within Section A at the same time after the injection (t = 1s) are presented in Figures
+2e and 2f (and the accompanying movie). They are basically similar to that for Case W. With stronger
+"scattering effect, electrons are lost from the loop at a faster pace, the strip feature becomes less sharp, more"
+"blurred, and number of observable strips may decrease. For example, only very weak signature of strips"
+remains in Case S (see Figure 2f).
+3.2. PIC simulations of ECME radiation
+The PIC simulations are initiated by the three sets of VDFs of energetic electrons that correspond to
+"different levels of scattering, referred to as Cases W, M, and S, respectively. The VDFs are obtained at 1s"
+"after injection and have been shown in Figures 2(a, e, f). The parameter setup of the PIC simulation has"
+"been presented above. In the following texts, we first introduce results for Case W, and then compare them"
+with other cases.
+3.2.1. PIC simulation for Case W
+We start from Case W which corresponds to weak level of scattering with τ = 5s. The PIC-evolved
+"distribution has been presented in Figure 3a (t ∼ 1000ω−1pe ) and the accompanying movie. After t ∼ 500ω
+−1
+pe ,"
+10 Yousefzadeh et al.
+"energetic electrons start to diffuse significantly and the strip-feature gets blurred, indicating strong wave-"
+particle interaction.
+In Figure 4a we present the ~k-space intensity distribution of the strongest wave mode at the corresponding
+"wave vector ~k, the ω-k dispersion analysis is presented in Figure 5a and the online animation. We see that"
+the strongest mode is the quasi-perpendicular (90◦ < θB < 110◦) Z mode with frequency slightly less than
+"Ωce, while the harmonic X mode (X2) is also at a high intensity along the quasi-perpendicular direction"
+(95◦ < θB < 105◦) with frequency slightly less than 2 Ωce. The X1 emission is very weak and mainly
+"around 30◦. Energy curves of these modes have been plotted in Figure 3d. From the energy curves, X2"
+and Z modes first grow linearly at basically the same growth rates which are fitted to be 0.033 and 0.026
+"ωpe, respectively (see Figure 3d for fitting lines); before t ∼ 500ω−1pe , the two modes reach the maximum"
+"intensities of ∼ 2.9 × 10−3 and ∼ 4.8 × 10−3 Ek0 , respectively, where Ek0 represents the total kinetic energy"
+of energetic electrons.
+"The VDFs exhibit two types of features with positive gradients, i.e., the loss-cone and the strip-like feature."
+"To figure out the driving agency of each mode, we have plotted resonance curves onto the corresponding"
+"VDF map as shown in Figure 2a. The curves are for the specific parameter set of (ω, k, θ) at which the"
+"strongest intensities for X2 and Z modes are achieved, while for X1 we select a representative propagation"
+"angle of 35◦. It is clear that the resonance curves of X2 and Z modes almost overlap with each other, and"
+both modes are excited by the same upper strip-like feature through the electron cyclotron maser instability
+"(Wu & Lee 1979). The lower strip-like feature passes through the background Maxwellian distribution,"
+"therefore unable to excite any wave mode. On the other hand, the resonance curve of X1 crosses the loss-"
+"cone feature, results in a weak excitation."
+"In summary, for Case W we get efficient excitation of Z and X2, yet without significant excitation of X1,"
+"both Z and X2 are associated with the upper strip-like feature of the VDF, while the loss-cone feature only"
+leads to weak excitation of X1.
+3.2.2. Comparison of PIC simulations with different levels of scattering
+"In this subsection, results of PIC simulations for Cases M (τ = 1s) and S (τ = 0.5s) are presented, and"
+differences of the three cases are highlighted. The initial and PIC-evolved VDFs have been presented in
+ECME Inside A Coronal Loop 11
+Figures 2(e-f) and 3(b-c). The corresponding ~k-space intensity distribution of waves within time range of
+"1500 − 2000ω−1pe for Cases S & M have been presented in Figure 4(b-c), results of ω-k dispersion analysis"
+"have been presented in Figure 5(b-c) and the online animation, and energy curves for various wave modes"
+have been presented in Figure 3(d-f).
+"In general, it takes longer time for modes to saturate in cases with stronger scattering. As seen from the"
+"energy curves (Figure 3), in Case M the duration of the linear stages of X2 and Z are both ∼ 800ω−1pe , longer"
+"than the corresponding duration of the two modes in Case W (∼ 500ω−1pe ), and shorter than the duration of"
+the linear growth of X1 in Case S which is ∼ 1800ω−1pe .
+"In Case M, intensities of both X2 (∼ 3.0 × 10−5 Ek0) and Z (∼ 3.3 × 10
+−4 Ek0) are much smaller than those"
+"of Case W, and X1 (∼ 2.1 × 10−5 Ek0) becomes considerably enhanced over the noise. Ranges of frequency"
+and wave number of X2 (∼ 1.92−1.95 Ωce) and Z (∼ 0.96−0.98 Ωce) modes are quite close to those of Case
+"W. In Case S, X1 becomes the strongest, reaching a maximum energy of ∼ 3.8× 10−4 Ek0 , while both Z and"
+X1 have energies of ∼ 2 × 10−7 Ek0) much weaker than those in other cases. X1 has a symmetric arc-like
+"emission pattern along quasi-parallel to oblique direction (0◦ < θB < 55◦), its intensity is close to the thermal"
+"noise level for larger θB. As read from the VDFs shown in Figures 2 and 3, densities of energetic electrons"
+along the edge of the loss cone in Case S are much higher that those in Case W. This is due to different level
+of scattering. With stronger scattering the loss cone feature is better-developed within shorter period and the
+"strip-like features are less significant, while for weaker scattering, a significant part of energetic electrons is"
+still bouncing and the VDF is characterized by strip-like features at the time of interest (1s after injection).
+It is apparent that the upper strip-like feature is more efficient (than the loss-cone feature) in converting
+electron energy into wave modes. This explains why the loss-cone feature in Case W and Case S plays very
+different role and why the duration of linear stage in weaker-scattering case lasts shorter.
+Resonance curves shown in Figures 2e and 2f are plotted with parameters provided in the figure caption.
+"Again, Z and X2 modes (if exist) are excited by the upper strip-feature in Cases M & W, and the very-strong"
+emission of X1 in Case S is driven by the loss-cone feature. The linear growth rate of X1 in Case S is much
+smaller than that of X2 and Z in Cases W and M. Note that similar emission pattern of X1 via the loss-cone
+"maser has been reported by earlier studies (see, e.g., Wagner et al. 1983, 1984; Yoon & Ziebell 1995)."
+12 Yousefzadeh et al.
+4. SUMMARY AND DISCUSSION
+As a starting point to bridge the large-scale dynamics and small-scale plasma kinetic maser instabilities
+"associated with solar radio bursts, in particular, solar spikes, we developed a numerical scheme combining"
+techniques including the magnetic field extrapolation to describe the magnetic configuration of a normal
+"loop, the guiding-center method to infer the temporal evolution of VDFs along various sections of the loop"
+"while taking the effect of pitch-angle scattering into account, and PIC simulations to further explore the"
+"kinetic instabilities driven by electrons with the obtained VDFs. Consistent with earlier studies, VDFs of"
+energetic electrons that are released from the loop top manifest interesting strip-like feature with signifi-
+"cant positive velocity gradient, together with the well-known loss-cone feature. According to further PIC"
+"simulations, the strip-like feature is essential for efficient excitation of ECME at harmonic X mode (in the"
+"weak-scattering case), while the loss-cone feature can be efficient in exciting the fundamental X mode (in"
+the strong-scattering case). Efficient amplification of X2 favors the escape of ECME radiation from the
+"corona, this effectively reduces the limitation of applying ECME to solar spikes. The study provides new"
+"insight into how escaping radiation, in particular, the harmonic X mode, can be generated within a coronal"
+"In most earlier studies relevant to ECME and solar radio spikes (e.g., see Aschwanden 1990), loss-cone"
+"distributions have been applied. This distribution may lead to efficient excitation of X1 mode, while being"
+"unable to drive efficient excitation of X2 or higher harmonics. During its outward escape, it is difficult for"
+the X1 mode to pass the second-harmonic absorption layer where the absorption coefficient is notoriously
+large. This gives rise to the escaping difficulty of fundamental emission from the corona. To resolve this
+"issue, efficient excitation of radio bursts at higher harmonics is required. Thus, the most significant point"
+of this study is the efficient excitation of X2 under certain conditions. Here we demonstrate that strip-like
+features of VDFs can form due to the initial bouncing motion of energetic electrons that are released at the
+loop top. These features are formed during the early stage of the VDF relaxation towards a well-developed
+"loss-cone distribution, and they are critical to efficient excitation of harmonic X mode."
+It should be pointed out that excitation of ECME radiation depends sensitively on many conditions. The
+effect of pitch-angle scattering on both VDFs and further excitation of wave modes has been demonstrated.
+ECME Inside A Coronal Loop 13
+"In addition, initial distribution of electrons, injection location and the way of injection (e.g., impulsively or"
+"continuously, see White et al. 1983), ratio of the characteristic frequencies (ωpe/Ωce), all these factors shall"
+affect the obtained form of VDFs and further excitation of various wave modes. Future study shall expand
+the parameter regime for a more-complete understanding of the multi-scale radiation processes.
+ACKNOWLEDGMENTS
+The present study is supported by the National Natural Science Foundation of China (11790303
+"(11790300), 11750110424, and 11873036). The authors acknowledge the open-source Vector Particle"
+"In Cell (VPIC) code provided by Los Alamos National Labs (LANL), Super Cloud Computing Center"
+"(BSCC, URL: http://www.blsc.cn/) for providing HPC resources, and Dr. Alexander William Degeling and"
+Xiangliang Kong (SDU) & Dr. Mahboub Hosseinpour (TU) for helpful discussion.
+14 Yousefzadeh et al.
+REFERENCES
+"Aschwanden, M. J., Benz, A. O., Schwartz, R. A., Lin,"
+"R., Pelling, R. M., & Stehling, W. 1990, SoPh, 130,"
+"Aschwanden, M. J. 1990, A&A, 237, 512"
+"Benz, A. O. 1986, SoPh, 104, 99"
+"Benz, A. O., & Kane, S. R. 1986, SoPh, 104, 179"
+"Bowers, K. J., Albright, B. J., Bergen, B., et al. 2008a,"
+"IEEE Press, 63, 11"
+"Bowers, K. J., Albright, B. J., Yin, L., et al. 2008b,"
+"Physics of Plasmas, 15, 055703"
+"Bowers, K. J., Albright, B. J., Yin, L., et al. 2009,"
+"Journal of Physics Conference Series, 012055"
+"Chen, Q., & Petrosian, V. 2013, ApJ, 777, 33"
+"Chen, Y., Du, G., Feng, L., et al. 2014, ApJ, 787, 59"
+"Chen Y., Wu Z., Liu W. et al. 2017, ApJ, 843, 8"
+"Feng, S. W., Chen, Y., Kong, X. L., et al. 2012, ApJ,"
+"753, 21"
+"Feng, S. W., Chen, Y., Kong, X. L., et al. 2013, ApJ,"
+"767, 29"
+"Fleishman G. D. & Mel’nikov V. F. 1998, PhyU, 41,"
+"Gaponov, A. V. 1959, Izv VUZ Radiofizika , 2,"
+450-462
+"Gordovskyy, M., Browning, P. K., & Vekstein, G. E."
+"2010a, A&A, 519,A21"
+"Holman, G. D., Eichler, D., & Kundu, M. R. 1980,"
+"IAU Symp. 86, Radio Physics of the Sun, ed. M. R."
+Kundu & T. E. Gergely (Cambridge: Cambridge
+"Univ. Press), 457"
+"Lee, K. H., Omura, Y., Lee, L. C., et al. 2009, PhRvL,"
+"103, 105101"
+"Li, C. Y., Chen, Y., Wang, B., et al. 2017, SoPh, 292,"
+"Liu, C., Deng, N., Lee, J., et al. 2014, ApJ, 795, 128"
+"Masuda, S., Kosugi, T., Hara, H., Tsuneta, S., &"
+"Ogawara, Y. 1994, Natur, 371, 495"
+"McLean, D. J. & Labrum, N. R. 1985, Solar"
+Radiophysics: Studies of Emission from the Sun at
+Metre Wavelengths
+"Melrose, D. B. & Dulk, G. A. 1982, ApJ, 259, 844"
+"Melrose, D. B., Dulk, G. A., Cairns, I. H. 1986, A&A,"
+"163, 229"
+"Melrose, D. B. & Wheatland, M. S. 2016, SoPh, 291,"
+"pp. 3637, 658"
+"Northrop, T. 1963, The Adiabatic Motion of Charged"
+Particles (New York: Interscience)
+"Ni, S., Chen, Y. et al. 2020, ApJLett., V891,1"
+"Piana, M., Massone, A. M., Hurford, G. J., et al. 2007,"
+"ApJ, 665, 846"
+"Robinson, P. A. 1991, SoPh, 134, 299"
+"Romano P., Zuccarello F., Guglielmino S. L., et al."
+"2015, A&A, 582, 55"
+"Ruan, G., Chen, Y., Wang, S., et al. 2014, ApJ, 784,"
+"Schneider, J. 1959, PhRvL, 2, 504"
+"Schou, J., et al. 2012, SoPh, 275, 229"
+"Sharma, R. R. & Vlahos, L. 1984, BAAS16, 536"
+"Sui, L., & Holman, G. D. 2003, ApJL, 596, L251"
+"Twiss, R. Q. 1958, Australian Journal of Physics, 11,"
+"Vasanth, V., Chen, Y., Lv, M., et al. 2019, ApJ, 870, 30"
+ECME Inside A Coronal Loop 15
+"Wagner, J. S., Lee, L. C., Wu, C. S., et al. 1983,"
+"J. Geophys. Res. Lett., V10(6), 483"
+"Wagner, J. S., Lee, L. C., Wu, C. S., et al. 1984, Radio"
+"Science, 19, 509"
+"Wheatland, M. S., Sturrock, P. A., & Roumeliotis, G."
+"2000, ApJ, 540, 1150"
+"White, S. M., Melrose, D. B., & Dulk, G. A., Proc."
+"Astron. Soc. Australia. 1983, 5 (2), 188"
+"Wild, J. P., Smerd, S. F., & Weiss, A. A. 1963,"
+"ARA&A, 1, 291"
+"Wiegelmann, T. 2004, SoPh, 219, 87"
+"Wiegelmann, T., Inhester, B., & Sakurai, T. 2006,"
+"SoPh, 233, 215"
+"Wu, C. S. & Lee, L. C. 1979, ApJ, 230, 621"
+"Wu, C. S., Wang, C. B., Zhou, G. C., Wang, S., &"
+"Yoon, P. H. 2005, ApJ, 621, 1129"
+"Yi, S., Lee, S.-Y., Kim, H.-E., et al. 2013,"
+"J. Geophys. Res., 118, 7584"
+"Yoon, P. H., & Ziebell L.F. 1995, Phys. Rev. E 51,"
+4908-4916
+16 Yousefzadeh et al.
+20 40 60 80 100
+X (arcsec)
+"70 70
+X (arcsec)Y (arcsec)"
+"50
+3030"
+"X (arcsec)
+70"
+"5050
+30 40"
+"tr
+e
+n
+g
+th"
+2011 Sep. 6  21:30 UT NOAA
+NLFF Field Lines
+"(c)
+(d)"
+"Figure 1. (a) The magnetogram of HMI for AR 11283 before the eruption of the major X2.1 flare on September 6,"
+"2011, over-plotted with field lines given by NLFFF extrapolation; (b-d) representative lines with different amount of"
+twist. The color in panels (b) represents the field strength of lines presented in (b-d). The letters “A-D” represent the
+"sections within which VDFs will be examined, and “I” represents the region of injection."
+ECME Inside A Coronal Loop 17
+"0.6
+v
+⟂
+(c
+)"
+VDF - Time(s) = 1.0 - N = 275882
+"X1
+X2
+Z"
+VDF - Time(s) = 1.0 - N = 117221
+"v
+⟂
+(c
+)"
+VDF - Time(s) = 1.0 - N = 82685 VDF - Time(s) = 1.0 - N = 67963
+"−0.50−0.25 0.00 0.25 0.50
+v ∥ (c)"
+"v
+⟂
+(c
+)"
+VDF∥- Time(s) = 1.0 - N = 269381
+"−0.50−0.25 0.00 0.25 0.50
+v ∥ (c)"
+"(f)∥Se )ion∥A,∥Ca(e∥S(e)∥Se )ion∥A,∥Ca(e∥M"
+"(d)∥Se )ion∥D,∥Ca(e∥W( )∥Se )ion∥C,∥Ca(e∥W"
+"(b)∥Se )ion∥B,∥Ca(e∥W(a)∥Se )ion∥A,∥Ca(e∥W"
+VDF∥- Time(s) = 1.0 - N = 275964
+"−2.0
+−1.5
+−1.0
+−0.5
+0.0
+0.5"
+"lo
+g 1"
+"−2.0
+−1.5
+−1.0
+−0.5
+0.0
+0.5"
+"lo
+g 1"
+"−2.0
+−1.5
+−1.0
+−0.5
+0.0
+0.5"
+"lo
+g 1"
+Figure 2. (a-d) The obtained VDFs at a specific time (1s after injection) within different loop sections (see Figure 1b)
+"for the case with weak level of scattering, i.e., Case W with τ = 5s. Numbers of particles (N) used to get the integral"
+"VDFs are written on top of each panel. (e-f) VDFs corresponding to moderate (M), and strong (S) levels of scattering"
+"for Section A, also obtained at 1s after injection. Resonance curves corresponding to the X2, X1, and Z modes are"
+"over-plotted. For X2, parameters used to plot these curves are (the wave frequency ω = 1.98 Ωce, the total wave"
+"number k = 1.92 Ωce/c, the propagation angle θ = 100◦, and the harmonic number n = 2); for X1 they are (1.08 Ωce,"
+"0.65 Ωce/c, 35◦, and 1), for Z they are (0.96 Ωce, 1.15 Ωce/c, 100◦, and 1). The animation of this figure (panels (a), (e)"
+"and (f)) for the main three cases (W, M and S) begins at t = 0s and advances 0.1s at a time up to t = 3s then continues"
+"with 2s interval till the end, at t ∼ 19s. The realtime duration of the video is 7s."
+(An animation of this figure is available).
+18 Yousefzadeh et al.
+"−0.4 −0.2 0.0 0.2 0.4
+vz (c)"
+"v
+⟂
+ (c"
+"(a) case W
+     t = 1000ω−1pe"
+"−0.4 −0.2 0.0 0.2 0.4
+vz (c)"
+"(b) case M
+     t = 1000ω−1pe"
+"−0.4 −0.2 0.0 0.2 0.4
+vz (c)"
+"(c) case S
+     t = 1000ω−1pe"
+"0 500 1000 1500 2000
+t (ω−1pe )"
+"10−7
+10−6
+10−5
+10−4
+10−3"
+"En
+er
+gy"
+" (E
+k0"
+"0 500 1000 1500 2000
+t (ω−1pe )"
+"(e)
+Z
+X2
+X1"
+"0 500 1000 1500 2000 2500
+t (ω−1pe )"
+"lo
+g 1"
+"Figure 3. Upper panels: VDFs at t = 1000ω−1pe obtained by the PIC simulation for Cases W, M, and S; lower panels:"
+"Temporal profiles of energies of various wave modes (X2, X1, and Z), normalized to the total energy of energetic"
+"electrons (Ek0). Dashed lines represent exponential fitting of linear growth rates, which are (0.033, 0.0016, 0.026) ω
+−1
+pe"
+"for X2, X1, and Z in Case W, and (0.01, 0.0031, 0.015) ω−1pe for X2, X1, and Z in Case M, and 0.0053 ω
+−1
+pe for X1 in"
+"Case S, respectively. Energy profiles are calculated within squares plotted in Figure 4b. The video begins at t = 0ω−1pe"
+"and advances 100ω−1pe at a time up to t = 2000ω
+−1
+pe . The realtime duration of the video is 4s."
+(An animation of the upper panel of this figure is available).
+ECME Inside A Coronal Loop 19
+"k
+⟂
+(Ω"
+"ce
+/c
+)"
+"�� ��
+�"
+"��
+�������
+��"
+"k
+⟂
+(Ω"
+"ce
+/c
+)"
+"��
+�������
+��"
+"−2 −1 0 1 2
+k ∥ (Ωce/c)"
+"k
+⟂
+(Ω"
+"ce
+/c
+)"
+"−2 −1 0 1 2
+k ∥ (Ωce/c)"
+"�	�����
+��"
+"−2 −1 0 1 2
+k ∥ (Ωce/c)"
+"20
+∥l
+og"
+"i/c
+B
+0)"
+"20
+∥l
+og"
+"i/c
+B
+0)"
+"20
+∥l
+og"
+"i/c
+B
+0)"
+Figure 4. Distribution of maximum intensity of electric field components in the k‖-k⊥ space as shown by the color-
+"map of 20 log10 [(Ex, Ey, Ez)/(cB0)] for (a) Case W, (b) Case M, and (c) Case S, with left panels for Ex, middle panels"
+"for Ey, and right panels for Ey. The time interval of analysis is 1500-2000 ω−1pe , “X2”, “X1”, and “Z” stand for the"
+"harmonic X, fundamental X, and Z mode, respectively. Squares in panel b represent the areas used to calculate energy"
+of respective wave modes. See Figure 3 for the obtained energy profiles.
+20 Yousefzadeh et al.
+"Figure 5. Wave dispersion diagrams for (a) Case W, (b) Case M, and (c) Case S at three propagation angles (θB ="
+"35◦, 95◦, and 100◦). The time interval of analysis is taken to be 1500 < ω−1pe < 2000, “X2”, “X1”, and “Z” stand for"
+"the harmonic X, fundamental X, and Z mode, respectively. The video begins at θkB = 0◦ and advances 5◦ at a time up"
+to θkB = 180◦. The realtime duration of the video is 7s.
+(An animation of this figure is available).

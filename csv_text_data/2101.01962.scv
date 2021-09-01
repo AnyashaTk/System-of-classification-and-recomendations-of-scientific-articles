@@ -1,0 +1,1491 @@
+0
+"Draft version January 7, 2021
+Typeset using LATEX twocolumn style in AASTeX63"
+A Model for the Coupled Eruption of a Pseudostreamer and Helmet Streamer
+"P. F. Wyper,1 S. K. Antiochos,2 C. R. DeVore,2 B. J. Lynch,3 J. T. Karpen,2 and P. Kumar2, 4"
+"1Department of Mathematical Sciences, Durham University, Durham, DH1 3LE, UK
+2Heliophysics Science Division, NASA Goddard Space Flight Center, 8800 Greenbelt Rd, Greenbelt, MD 20771, USA"
+"3Space Sciences Laboratory, University of California, Berkeley, CA 94720, USA
+4Department of Physics, American University, Washington, DC 20016, USA"
+ABSTRACT
+A highly important aspect of solar activity is the coupling between eruptions and the surrounding
+"coronal magnetic-field topology, which determines the trajectory and morphology of the event and can"
+"even lead to sympathetic eruptions from multiple sources. In this paper, we report on a numerical"
+"simulation of a new type of coupled eruption, in which a coronal jet initiated by a large pseudostreamer"
+filament eruption triggers a streamer-blowout coronal mass ejection (CME) from the neighboring hel-
+met streamer. Our configuration has a large opposite-polarity region positioned between the polar
+"coronal hole and a small equatorial coronal hole, forming a pseudostreamer flanked by the coronal"
+"holes and the helmet streamer. Further out, the pseudostreamer stalk takes the shape of an extended"
+arc in the heliosphere. We energize the system by applying photospheric shear along a section of
+the polarity inversion line within the pseudostreamer. The resulting sheared-arcade filament channel
+"develops a flux rope that eventually erupts as a classic coronal-hole-type jet. However, the enhanced"
+breakout reconnection above the channel as the jet is launched progresses into the neighboring hel-
+"met streamer, partially launching the jet along closed helmet streamer field lines and blowing out the"
+streamer top to produce a classic bubble-like CME. This CME is strongly deflected from the jet’s initial
+trajectory and contains a mixture of open and closed magnetic field lines. We present the detailed
+"dynamics of this new type of coupled eruption, its underlying mechanisms and the implications of this"
+work for the interpretation of in-situ and remote-sensing observations.
+Keywords: Sun: corona; Sun: magnetic fields; Sun; coronal mass ejections (CMEs); Sun: flares
+1. INTRODUCTION
+The solar corona hosts a tremendous amount of erup-
+tive activity and flare energy release that plays out
+peter.f.wyper@durham.ac.uk
+spiro.antiochos@nasa.gov
+c.richard.devore@nasa.gov
+blynch@ssl.berkeley.edu
+judith.t.karpen@nasa.gov
+pankaj.kumar@nasa.gov
+across a vast range of sizes and time scales. At the
+"largest scales, eruptive active-region flares produce sub-"
+stantial bubble-like coronal mass ejections (CMEs) that
+can strongly influence near-Earth space weather (e.g.
+Webb & Howard 2012). At the smallest end of the spec-
+"trum, tiny filament-channel eruptions form coronal jets"
+(e.g. Sterling et al. 2015). The ultimate unifying feature
+"of all these eruptions are filament channels, consisting of"
+strongly sheared magnetic field lines that follow polar-
+ity inversion lines (PILs) of the normal magnetic field
+component on the solar surface (Martin 1998). Fila-
+ment channels provide the free magnetic energy for the
+"eruption, but it is the interaction between the filament"
+channel and the surrounding magnetic field that dictates
+"mailto: peter.f.wyper@durham.ac.uk
+mailto: spiro.antiochos@nasa.gov
+mailto: c.richard.devore@nasa.gov
+mailto: blynch@ssl.berkeley.edu
+mailto: judith.t.karpen@nasa.gov
+mailto: pankaj.kumar@nasa.gov"
+Filament
+PROBA2/SWAP 2014-07-24 03:39
+"Figure 1. PROBA2/SWAP 174 Å processed image of a
+pseudostreamer. NP = apparent null point lying between
+two open field regions."
+how the eruption is triggered and its eventual morphol-
+A prime example of this variety is the array of erup-
+tion morphologies that result from filament channels
+formed within multipolar magnetic topologies. At the
+"largest scales, these eruptions can be triggered by the"
+systematic removal of strapping flux by reconnection at
+"a coronal null point, magnetic breakout (Antiochos et al."
+"1999). Such events ultimately lead to fast, large-scale,"
+"bubble-like CMEs (e.g., Lynch et al. 2008, 2009, 2016;"
+"Karpen et al. 2012; Masson et al. 2013, 2019; Chen et al."
+"2016; Dahlin et al. 2019). At much smaller scales, both"
+observations (e.g. Sterling et al. 2015; Moore et al. 2018;
+"Kumar et al. 2018, 2019) and simulations (e.g. Wyper"
+"et al. 2017, 2018, 2019) have shown that the same erup-"
+tion mechanism is at work in the mini-filament eruptions
+that form many coronal jets. The key difference deter-
+mining the eruption morphology is how the erupting flux
+rope that forms from the filament channel interacts with
+"the surrounding magnetic field. In jets, the flux rope re-"
+"connects at the null point low in the corona, transferring"
+magnetic twist and filament plasma to the surrounding
+open field and creating a narrow plasma ejection that
+adds no new open flux to the heliosphere. In eruptions
+"at active-region scales, on the other hand, the erupt-"
+ing flux rope remains connected to the surface at both
+"ends, opening new flux into the heliosphere as part of"
+the bubble-shaped CME. The local magnetic environ-
+ment around the filament channel clearly plays a crucial
+role in its eventual eruptive morphology.
+"Perhaps the most definitive, and certainly the most"
+"striking, example of the interaction between the filament"
+channel and its surrounding is the phenomenon of sym-
+pathetic eruptions. That flares can be sympathetic has
+"been known for many decades (e.g. Richardson 1951),"
+but sympathetic eruptions have attracted much atten-
+"tion recently due to the high-cadence, full-Sun coronal"
+"observations of STEREO and SDO (e.g., Schrijver &"
+Title 2011; Titov et al. 2012; Jin et al. 2016). By exam-
+ining a series of eruptions that included filament ejec-
+"tions, flares, and CMEs, and whose locations covered"
+"a large fraction of the solar surface, Schrijver & Title"
+(2011) presented compelling observational evidence that
+the sympathetic nature was due to the reconnection in
+"the corona of neighboring magnetic flux systems, as oc-"
+curs in the breakout model. Subsequent numerical mod-
+eling by Török et al. (2011) and Lynch & Edmondson
+(2013) demonstrated that null-point reconnection in the
+"corona, as in breakout, naturally couples different flux"
+systems and leads to the sympathetic eruptions. A key
+"feature of these and other studies, both observational"
+"and theoretical, is that each eruption has its own fila-"
+"ment channel. Consequently, each flux system is primed"
+to erupt and one simply destabilizes the next. Our new
+"work presented here, in contrast, shows that a coupled"
+eruption of multiple flux systems can be driven by a sin-
+"gle filament channel. Furthermore, it shows that break-"
+"out reconnection can energize, as well as destabilize, cou-"
+pled eruptions.
+The vast difference in scales and energies between
+"eruptions that produce large-scale, bubble-like CMEs"
+"versus small-scale, collimated coronal jets implies that"
+"there is a continuum of eruption scenarios in between,"
+unified by the role of breakout reconnection in dictating
+the eruption morphology. One scenario in this middle
+"ground is a filament eruption from a pseudostreamer. At
+first glance, pseudostreamers have the same topology as"
+"coronal jets, simply on a much larger scale. Figure 1"
+shows a SWAP image of a pseudostreamer harbouring
+"a small filament observed on the limb. In profile, the"
+pseudostreamer topology resembles that of a single null
+"point above two coronal arcades, which sit between coro-"
+nal holes of like polarity. The presence of this multipo-
+"lar topology assures that, like mini-filament coronal-hole"
+"jets, pseudostreamers can host filament eruptions that"
+occur via magnetic breakout.
+"In general, however, the large-scale nature of pseu-"
+dostreamers leads to a much richer variety of mag-
+netic structure than those that underlie jets. The clos-
+est to jets are small pseudostreamers associated with
+newly emerged active regions within low-latitude coro-
+nal holes. These pseudostreamers have a quasi-circular
+NP4 NP5
+(a) (b)
+(c) (d)
+"Figure 2. Overview of the topology and connectivity of the magnetic configuration hosting the eruption. (a) Field lines showing
+the five null points (NP1, ..., NP5) that define the pseudostreamer. Two open separators (OS1 and OS2) are shown in magenta.
+(b) A zoomed-out view showing that the fan plane of the central null (NP2) maps to an arc in the heliosphere. Isosurfaces show
+regions of high plasma β within the centre of the heliospheric current sheet. (c) log(Q) on the solar surface. PILs are shown
+with dashed lines. Open field regions are shaded yellow, showing the disconnected coronal hole. Circles show the spine-line
+footpoints of the nulls (coloured as in (a)). F2 and F4 are high-Q strips associated with NP2 and NP4, respectively. (d) log(Q)
+at 30Rs showing the S-Web arc around the open field of the disconnected coronal hole. Yellow regions show disconnected flux.
+The dashed red line shows the PIL of Br within the heliospheric current sheet."
+"base, anemone-like when view from above, with a sin-"
+gle magnetic null (Shibata et al. 1994; Asai et al. 2008;
+Kumar et al. 2021) in the “embedded bipole” topology
+(Antiochos 1990). More complex are the pseudostream-
+ers that form above the long tails of minority polar-
+"ity, stretched out by differential rotation and meridional"
+"flow, that are associated with decaying active regions."
+These often involve multiple nulls and/or bald patches
+"along the length of the pseudostreamer, and they are so"
+large that their proximity to the nearby helmet-streamer
+boundary also must be taken into account (Titov et al.
+"2011, 2012; Scott et al. 2018, 2019; Masson et al. 2019)."
+Large pseudostreamers are key contributors to the
+"complexity of the S-Web (Antiochos et al. 2011), in"
+which the outer spines and/or fan planes of the nulls sep-
+arating the magnetic flux of neighbouring coronal holes
+form broad arcs that extend far out into the heliosphere.
+Pseudostreamers bordering equatorial coronal holes and
+their associated S-Web arcs are common features of the
+corona throughout the sunspot cycle (Scott et al. 2019).
+"Yet to date, no simulation studies that we have seen"
+model a large-scale pseudostreamer eruption and exam-
+ine its effects on the global helmet streamer and the
+S-Web.
+"In this work, we present a simulation that addresses"
+"both of these interactions, along with the specifics of the"
+pseudostreamer eruption itself. We constructed a large
+pseudostreamer that has multiple null points and sepa-
+"rator lines (Fig. 2(a)), is bounded north and south by"
+"the polar and an equatorial coronal hole, and that par-"
+tially underlies the global helmet streamer that forms
+the polar coronal-hole boundary to the east and west of
+the pseudostreamer (Fig. 2(c)). The pseudostreamer is
+"rooted in a large, elliptical region of minority polarity"
+that represents a decayed active region. There are sev-
+eral important differences between this simulation and
+"our previous studies of jets and CMEs. First, the “over-"
+lying” coronal field consists of both open (coronal-hole)
+"and closed (helmet-streamer) flux. In earlier work, the"
+overlying field was either entirely open (jets) or entirely
+closed (CMEs). The separatrix dome of the minority
+polarity forms a section of the open/closed flux bound-
+ary and connects the polar and equatorial coronal holes.
+"In addition, the dome connects the pseudostreamer to"
+"the neighboring helmet streamer, so that reconnection"
+between the pseudostreamer and helmet-streamer fluxes
+"is possible. As we shall see, the breakout reconnection"
+indeed involves both the usual open/closed interchange
+reconnection of jets (Wyper et al. 2018) and the usual
+"closed/closed reconnection of CMEs (e.g., Masson et al."
+"2019; Dahlin et al. 2019). Second, the reconnection in"
+the corona can occur at multiple null points and along
+"the separator line. Consequently, it could be expected"
+to be much more efficient than single-null-point recon-
+"nection, but the effect this should have on the eruption"
+is not clear. Highly efficient breakout reconnection may
+limit the amount of free energy that can be built up in
+the filament channel; but it also may allow more of the
+"stored free energy to be released. Third, as will be shown"
+"below, the filament channel that we formed extends over"
+a rather small fraction (< 25%) of the PIL of the mi-
+"nority polarity. For a single null point, it is not obvious"
+that an explosive eruption could be obtained with such
+"a small filament channel. Highly efficient, multiple null-"
+point breakout reconnection could play a critical role in
+the vigor of an eruption from our pseudostreamer.
+The results presented below show that the low-coronal
+evolution of our pseudostreamer eruption is quite simi-
+"lar to that of a mini-filament jet, and that breakout re-"
+connection plays a similarly central role in dictating the
+"eruption morphology. However, rather than producing a"
+"collimated jet-like expulsion of mass in the outer corona,"
+our simulated eruption generates a bubble-like CME by
+blowing out the top of the adjacent helmet streamer.
+The ejected magnetic flux is comprised of a mixture of
+open and closed field lines that broadly follow the S-Web
+arc. This result has important implications for in-situ
+"observations, as we briefly discuss. In §2 we give the
+simulation details. §§3, 4, and 5 describe, respectively,
+the pre-eruptive changes to the magnetic field, the low-"
+"coronal evolution of the eruption, and the energy re-"
+"lease. §§6 and 7 examine the subsequent blowing out
+of the nearby helmet streamer. §§8 and 9 describe the
+CME and the potential associated impulsive solar ener-"
+"getic particle (SEP) signatures, respectively. We discuss"
+our findings and present our conclusions in §10.
+2. MODEL DESCRIPTION
+2.1. Equations and Initial Condition
+The simulation was performed using the Adaptively
+"Refined Magnetohydrodynamics Solver (ARMS), which"
+uses a Flux-Corrected Transport algorithm to capture
+shocks and minimize numerical diffusion (DeVore 1991).
+The following ideal MHD equations were solved in spher-
+ical coordinates:
+"∂t
++ ∇ · (ρu) = 0, (1)"
+"∂t
++ ∇ · (ρuu) ="
+"4π
+(∇×B)×B−∇P + ρg, (2)"
+"∂t
+−∇× (u×B) = 0, (3)"
+"where ρ is the plasma mass density, u the plasma ve-"
+"locity, B the magnetic field, P the plasma pressure, and"
+"g = −GM�r/r3 the gravitational acceleration. Mag-
+netic reconnection in the model occurs due to numer-"
+ical diffusion associated with the algorithm. We as-
+"sume a fully ionised hydrogen plasma, so that P ="
+2(ρ/mp)kBT . The temperature is further assumed to
+be constant and uniform throughout the volume with
+T = 1 MK.
+"The simulation volume is given by φ ∈ [−180◦, 180◦]
+in longitude, θ ∈ [−81◦,+81◦] in latitude, and r ∈
+[1Rs, 30Rs] in radius. The domain is periodic in φ."
+"At the inner radial boundary, mass is allowed to flow"
+"into, but not out of, the volume. The three radial guard"
+cells below the inner boundary are fixed at their initial
+"densities, with their velocity components set to zero."
+These cells act as a reservoir of mass sustaining the
+wind solution described below. The magnetic field at
+"the radial inner boundary is line-tied, with the tangen-"
+tial velocity components set to zero except where pre-
+scribed otherwise by the driving flow given below. At
+"the outer radial boundary, flow-through (zero-gradient"
+extrapolated) conditions are applied to the radial ve-
+locity component and half-slip (zero-value outside) con-
+ditions are applied to the tangential components. On
+"the θ boundaries, the normal velocity is reflecting and"
+the tangential components are free-slip (zero-gradient).
+"Altogether, these boundary conditions maintain a quasi-"
+"steady, isothermal solar wind throughout the open field"
+in the domain.
+The initial magnetic field is given by a potential-field
+"source-surface (PFSS) solution, with the source surface"
+at 3Rs. The magnetic field at the radial inner boundary
+is defined analytically by combining sub-surface mag-
+netic dipoles with a Sun-centered dipole that defines
+the global dipolar magnetic field. The global dipole
+"is chosen so that |Br| = 10 G at the poles. The sub-
+surface dipoles are placed so as to create a strip of neg-"
+"ative polarity in the northern hemisphere, bordering a"
+"strong equatorial bipolar active region, Fig. 3(a). The"
+equatorial active region acts to pull the helmet streamer
+southward whilst the strip of negative polarity cuts off
+"a section of northern polar coronal hole, forming a dis-"
+connected coronal hole separated from the north-pole
+hole by a pseudostreamer (Titov et al. 2011; Scott et al.
+"-40 -20 0 20 40 0 400100 200 300
+Br (G) v (km/s)"
+"Figure 3. Simulation grid (a) on the surface, with field lines from near the fan planes of null points NP1 and NP3 (see Fig.
+2) drawn for context, and (b) in a plane of constant longitude, showing how the adaptive refinement localises the grid to the
+heliospheric current sheet."
+2018) described further below. Such a strip of opposite-
+"polarity flux is a common feature in magnetograms, typ-"
+ically forming as active regions decay and their trailing
+polarity “rushes” to the pole due to meridional flow (e.g.
+Howard & Labonte 1981; Wang et al. 1989).
+The atmosphere was initialized by a 1D Parker (1958)
+wind solution of the form
+"c2s
+exp"
+")
+=
+r4s
+r4"
+"4− 4
+rs
+r"
+")
+. (4)"
+"Here v(r) is the radial velocity, cs = (2kBT0/mp)
+1
+2 is"
+"the isothermal sound speed, and rs = GM�mp/4kBT0
+is the radius of the sonic point. With T0 = 1 × 106 K,
+v = cs = 128 km/s at r = rs = 5.8R�. The plasma"
+number density at the base of the atmosphere is a free
+"parameter that we set to 7.2×109 cm−3. This value gives
+a minimum plasma β (ratio of thermal to magnetic pres-"
+"sure) in the vicinity of the pseudostreamer of about 10%,"
+so the dynamics is properly field-dominated. The den-
+sity and the resultant Alfvén speed are intended to be
+more typical of closed-field regions below pseudostream-
+"ers and helmet streamers, where our eruption occurs,"
+than of open-field regions in the neighboring coronal
+holes.
+The magnetic field defined by the PFSS solution and
+"the plasma wind solution are not initially in equilibrium,"
+so before the surface driving was applied the simula-
+tion was first run out through a long relaxation phase
+(> 1×106 s) until the plasma and magnetic field evolved
+to near pressure balance. Figure 3(b) shows the plasma
+velocity in a plane of constant longitude after the relax-
+"ation. Away from the heliospheric current sheet, the so-"
+"lar wind reaches ≈ 350 km/s at 30Rs. This wind speed,
+more typical of slow rather than fast wind, is due to the"
+low temperature T and our simplifying isothermal ap-
+"proximation. However, our main goals of tracking with"
+high fidelity the low-coronal evolution of the eruption
+and its interaction with the helmet streamer are not af-
+fected significantly by the asymptotic wind speed.
+The base grid is uniformly spaced in φ and θ and is
+stretched exponentially in radius. Four levels of grid re-
+finement were allowed in the simulation. A fixed region
+of maximal resolution was included that encompassed
+the pseudostreamer. Figure 3(a) shows the grid blocks
+on the surface in this region. Each grid block consists of
+"8×8×8 grid cells. The minimum angular grid spacing is
+≈ 0.28◦ in both φ and θ, corresponding to a maximum
+grid resolution (at the finest grid level) on the inner ra-"
+"dial boundary of ≈ 3.4 Mm. In the rest of the volume,
+the grid was adapted dynamically based on local gra-"
+dients in the magnetic field (see Karpen et al. (2012)
+for details of the method). The parameters were cho-
+sen to maximally resolve the heliospheric current sheet
+"(Fig. 3(b)), as well as the shocks and current sheets as-"
+sociated with the CME once underway. To make the
+calculation more tractable and reduce the overall grid
+"size, the maximal resolution on the back side of the Sun"
+"(φ ∈ [−180,−90] ∪ [+90,+180]) was limited to three,
+rather than four, levels of refinement."
+2.2. Topology of the Relaxed State
+The magnetic topology of the pseudostreamer after
+"the relaxation is shown in Figure 2(a). The surface Br
+distribution was chosen such that there were two local"
+"minima of Br within the negative-polarity strip, Fig-"
+ure 3(a). This naturally creates a system of at least
+"three nulls, one associated with each minimum (NP1"
+and NP3) and another that resides between them (NP2).
+Two separators connect the three nulls along the top of
+the separatrix surface dome. In the PFSS solution only
+"these three nulls were present. However, during the re-"
+laxation currents naturally developed around the nulls
+and along the separators. Combined with changes in the
+field around the pseudostreamer as the helmet streamer
+"relaxed, this led to a bifurcation of NP3 and the for-"
+"mation of two further nulls, labeled NP4 and NP5, con-"
+nected by an additional two separators. Due to where we
+"store the magnetic free energy in our simulation, these"
+additional nulls are not involved in the eruption.
+The key elements of the pseudostreamer topology can
+"be understood by considering NP1, NP2, and NP3 (with"
+NP4 and NP5 understood by extension). The fan planes
+of NP1 and NP3 form the main sections of the sepa-
+ratrix surface that divide the closed field beneath the
+pseudostreamer from the surrounding open (or distantly
+closing) field in the rest of the corona (blue and red field
+"lines, Fig. 2(a)). The inner spines of each null connect"
+to the strip of negative Br beneath the pseudostreamer;
+the outer spines connect to negative Br in the southern
+hemisphere. Both nulls therefore reside in the closed
+field beneath the helmet streamer.
+NP2 sits at the intersection of the fan planes of NP1
+and NP3. The spines and fan of NP2 are oppositely ori-
+"ented to those of NP1 and NP3, so that the spines of"
+NP2 sit on the separatrix surface of the pseudostreamer
+"and its fan plane is aligned radially (yellow field lines,"
+Fig. 2(a)). The spines of adjacent nulls actually bound
+"the fan plane of the other, so the radial partially open"
+fan plane of NP2 is bounded on either side by the closed
+"spines of NP1 and NP3. As a consequence, the fan of"
+NP2 must straddle the open-closed separatrix of the
+helmet streamer (note the closed yellow field lines ad-
+"jacent to NP1 and NP3, Fig. 2(a)). Therefore, there"
+must be two separators connecting the base of the helio-
+"spheric current sheet with NP2 (shown in magenta, Fig."
+2(a)). A similar alternation of null orientation occurs
+"for NP3, NP4, and NP5, although the fan plane of NP4"
+lies entirely within the closed field beneath the helmet
+streamer.
+The surface connectivity of the relaxed state is shown
+"in Figure 2(c). Yellow regions show open field, high-"
+lighting the triangular low-latitude corona hole cut off
+by the pseudostreamer. The logarithm of the squashing
+factor (Q; Titov 2007) is shown in gray scale. Strips
+of high Q show regions where the field-line connectiv-
+"ity varies rapidly between adjacent footpoints, and Q"
+is formally infinite at separatrix surfaces. The foot-
+"print of the global helmet streamer is evident, along"
+with a closed curve of high Q showing the footprint of
+the pseudostreamer separatrix dome. The footpoints of
+the spines of each null and the strips of high Q asso-
+ciated with fan planes of NP2 and NP4 are also high-
+"lighted (F2 and F4, respectively). The fan plane of NP2"
+"is truly global, in that it connects to the surface be-"
+"neath the pseudostreamer, to distant positions in the"
+"southern hemisphere, and also out into the solar wind,"
+where it forms an S-web arc (Antiochos et al. 2011) di-
+viding the open fluxes of the equatorial and northern
+polar coronal holes. Field lines within the arc and the
+associated high-Q arc at 30Rs are shown in Figure 2(b)
+"and (d). Given such global connectivity, one should ex-"
+"pect a global influence of the eruption, which indeed"
+is what we find. Figure 2(d) also shows several small
+regions of disconnected magnetic flux that are associ-
+ated with concave-up field lines (“U-loops”) that enter
+and leave the domain through the outer radial boundary
+and localised bundles of spiral field lines and compressed
+plasma (“plasmoids”) within the heliospheric current
+sheet. These features are formed and expelled period-
+ically as part of the dynamic quasi-steady state of the
+magnetic structure (Higginson et al. 2017; Titov et al.
+2017).
+2.3. Filament Channel Formation
+"In the classic 2D picture of a pseudostreamer, fil-"
+ament channels can form at the PILs beneath either
+or both of the two closed field regions associated with
+"the null point. In 3D, these two separate PILs join"
+"to form a closed loop. Theoretically, filament channels"
+"can form along any section of this PIL, but the most"
+energetic would be expected to form between strong
+concentrations of Br associated with stronger strapping
+"field. That is, these sections of PIL are able to sup-"
+port higher energy density (higher magnetic pressure)
+because of their increased strapping field. Due to the
+"distribution of Br on the solar surface, chosen so as to"
+"generate the pseudostreamer topology described above,"
+there are four sections of PIL bordered by local peaks in
+"|Br| as shown in green in Figure 4(a). These various lo-
+cations for energetic filament-channel formation would"
+be expected to stress different nulls and separators in
+"B
+r  (G"
+"|J| s
+ta"
+(d)(b)
+"Figure 4. (a) Log Q and coronal holes overlaid with contours of Br (between −40 G and 40 G); the four sections of PIL bordered
+by strong concentrations of Br are shown in green. (b) Arrows show the direction and strength of the shear driving; red/blue
+shading shows the magnitude of the vφ component. (c) Log Q at t = 15 hrs 50 min showing two J-shaped hooks characteristic
+of a sigmoidal field. (d) Field lines in the filament channel showing its sigmoidal shape. (e) Side view showing the inflation of
+the pseudostreamer and the opening of the outer spine of NP1."
+"the pseudostreamer topology, with associated differences"
+in the connectivity changes occurring during eruption.
+"Furthermore, combinations of filament channels in dif-"
+ferent locations can produce sympathetic eruptions (e.g.
+Török et al. 2011; Lynch & Edmondson 2013).
+We performed several simulations in which filament
+channels formed along each of the highlighted sections.
+"In this paper, we focus on the case where a filament"
+"channel is formed at PIL1, leaving the exploration of"
+eruption morphologies and coupling behaviour of fila-
+ment channels formed along the other sections to future
+"studies. To create the filament channel, a tangential ve-"
+locity field was imposed on the lower boundary. The
+"velocity profile, a generalisation of one used by Higgin-"
+"son et al. (2017), is an elliptical flow pattern, tilted with"
+"respect to the θ, φ coordinates, that preserves Br on the"
+surface throughout the evolution. It is shown in Figure
+4(b). In order to satisfy
+"∂Br
+∂t"
+"= −∇⊥ · (v⊥Br) = 0, (5)"
+"v⊥ is constructed from the curl of a radial vector,"
+"v⊥ =
+1"
+"Br
+∇⊥ × (ψ, 0, 0), (6)"
+"where ψ is a function of θ, φ, t, and Br in the form"
+"ψ(θ, φ, t) = V0f(t)g(ξ)h(η). (7)"
+"By construction, streamlines of the driving flow follow"
+the contours of ψ over a compact surface region where
+"ψ 6= 0. The function g(ξ) defines a simple tilted ellipse
+that depends upon the spatial coordinates (θ, φ); h(η)"
+depends solely upon Br and serves to keep the boundary
+"of the flow region slightly removed from the PIL, so the"
+latter is not distorted by the flow. We choose
+"g(ξ) =
+m+ `+ 1"
+"[
+1− ξ2(`+1)"
+"]
+−
+[
+1− ξ2(m+`+1)"
+"]
+, (8)"
+"h(η) = η, (9)"
+where we set m = ` = 1 and
+ξ2 = min
+"a2
++
+β2"
+"b2
+, 1"
+")
+, (10)"
+"η = max (min (Br, B2) , B1)−B2. (11)"
+We define the tilted orthogonal angle coordinates
+"α ≡ δ (θ − θ0) + � (φ− φ0) , (12)
+β ≡ δ (φ− φ0)− � (θ − θ0) , (13)"
+"whose direction cosines are δ and �, whose origin is posi-"
+"tioned at (θ0, φ0), and whose maximum extents are ±a
+and ±b, respectively. The direction cosines define the
+tilt angle arctan(δ/�) of the ellipse with respect to lines"
+of longitude; the ellipse’s semi-major and -minor axes
+"are a and b, respectively. Within the ellipse, the flow is"
+"further restricted to the region where Br < B2, whence"
+"h(η) 6= 0. We chose constants B1 = −50, B2 = −1,
+θ0 = +0.194π, φ0 = −0.056π, δ = +0.195, � = +0.981,
+and a = 0.333π, b = 0.055π. These choices centered the"
+"ellipse at 55◦ latitude and −11◦ longitude, and tilted it
+11◦ with respect to lines of longitude, as can be seen"
+"in the figure. We set the magnitude and sign of V0
+(= −2.5 × 1015) to quasi-statically create a filament"
+Closed
+External
+Strapping
+Dimming
+"Figure 5. (a) Pre-eruption magnetic field at t = 24 hrs
+10 min. BCS = breakout current sheet, FCS = flare current
+sheet. Field lines indicate the four flux regions separated by
+the BCS. The semi-transparent grey shading shows current
+density (statamp cm−2). (b) Synthetic EUV base-difference
+image (from t = 22 hrs 30 min) showing the density depletion
+above the BCS."
+"channel of dextral chirality, as is typically observed in"
+the northern hemisphere (e.g. Martin 1998).
+The driving speed peaks at about 30 km s−1 in a strip
+"along the PIL, but drops to ≈ 2 km s−1 in the return-
+flow region away from the PIL. The peak speed is highly"
+"sub-Alfvénic and subsonic, so free energy is injected"
+quasi-statically. The time profile for f(t) is chosen so
+that the driving is ramped up to its maximum speed
+"over 500 s, held constant for a time, and then is ramped"
+down to zero over another 500 s once the eruption is
+"underway. For convenience, henceforth we will define"
+t = 0 as corresponding to the start of the driving. Rela-
+"tive to this, the driving is stopped at t = 98, 000 s (27 hrs"
+13 min).
+Figure 4(d) and (e) show field lines in the filament
+channel 15 hrs 50 min into the driving. The magenta
+field lines in the filament channel form a classic sigmoid
+shape. Blue field lines show the approximate position of
+"the spines of NP1, the outer spine of which has opened"
+"by this time (see §7). It also shows the slightly inflated
+shape of the separatrix. At this time, NP1 sits at 1.29 Rs
+(203 Mm above the surface), although it rises further"
+as the filament channel continues to form. Figure 4(c)
+"shows that two hooked, J-shaped, high-Q lines form in"
+association with the sigmoidal field lines (e.g. Démoulin
+et al. 1996; Janvier et al. 2013). It also shows a slight
+"shift in the pseudostreamer separatrix dome footprint,"
+indicating that a small amount of strapping field has re-
+"connected, along with a retreat of the adjacent helmet-"
+"streamer boundary, which now has a snub-nosed rather"
+than tapered appearance. The snub-nosed shape is a sig-
+nature that the helmet streamer is no longer connected
+"to NP2 on this side. Moreover, an extremely thin cor-"
+ridor of open flux has formed to connect the equatorial
+and polar coronal holes: the widening of the thin cor-
+"ridor at its ends, where the open flux of the corridor"
+"meets the open flux of the coronal hole, is responsible"
+for the shape of the boundary. Corridor formation also
+is consistent with the observed shift of the outer spine of
+NP1 into the open field. A similar switch from tapered
+to snub-nosed shape can be seen in the helmet-streamer
+boundary footprint of Titov et al. (2011) (see their Fig-
+"ures 5 and 6), although not explicitly noted by them in"
+"text, when a singularly thin corridor formed during an"
+identical topological evolution.
+3. PRE-ERUPTION CHANGES
+"Throughout the slow driving phase prior to erup-
+tion initiation, the magnetic shear continually increases"
+within the filament channel. The strong gradient in the
+driving profile adjacent to the PIL forms a concentrated
+volumetric current distribution along the PIL within the
+filament channel. Slow tether-cutting (or slipping) re-
+connection (Moore et al. 2001; Aulanier et al. 2012) in-
+side this current distribution gradually converts some
+"of the sigmoid-shaped, sheared-arcade field lines into a"
+"small flux rope suspended above the PIL. For simplicity,"
+we refer to this current concentration as the flare cur-
+"rent sheet, although the flare reconnection begins much"
+"later in the evolution, during the explosive eruption and"
+occurs in the lower corona below the growing flux rope.
+"We emphasize that, at this early stage, the evolution is"
+quasi-static and the current concentration forms entirely
+due to the driving profile. The flux rope begins to form
+about 21 hrs into the driving.
+(c)(b) 30 hrs 17 min 31 hrs 57 min(a) 26 hrs 23 min
+(d) (e) (f)
+(g) (i)(h)
+"v
+r  k"
+"lo
+g
+(J)"
+"BCS BCS
+FCS"
+Arcade
+"Figure 6. Low-coronal eruption evolution. (a)-(c) Log of the current-density magnitude (statamp cm−2). (d)-(f) Radial
+velocity, vr. (g)-(i) Line-of-sight velocity, vφ. BCS = breakout current sheet, FCS = flare current sheet. An animation of panels
+(a) to (c) is available online showing the evolution. The animation duration is 6 s."
+Concurrent with the formation of the flux rope is
+the continued expansion of the strapping field above
+the filament channel. This expansion stresses the pseu-
+"dostreamer topology, lengthening the weak current sheet"
+already present around NP1 following the relaxation.
+"About t = 23 hrs 30 min into this gradual phase, sys-"
+tematic reconnection of the strapping field begins and
+feeds back upon the expansion of the filament chan-
+"nel, allowing the channel and embedded flux rope to"
+rise faster. We designate this time as the onset of the
+"breakout reconnection phase, and we denote the current"
+sheet around NP1 as the breakout current sheet from
+this point onward.
+Figure 5(a) shows relevant field lines within and
+around the filament channel and the two current sheets
+"at 24 hrs 10 min into the driving, shortly after break-"
+out reconnection begins. The open lobe and the exter-
+nal field lines reside in the polar and equatorial coronal
+"holes, respectively. The volumetric current distribution"
+within the filament channel shows that the formation of
+the flux rope has transformed the channel flux surfaces
+from semi-circular to inverse-teardrop shaped. Mean-
+"while, the strengthening of the overlying breakout cur-"
+rent sheet creates the characteristic cusp shape at the
+top of the closed-lobe region (e.g. Kumar et al. 2021;
+Wang & Hess 2018).
+"Recently, Kumar et al. (2021) identified observed EUV"
+dimmings above the breakout current sheet as a new di-
+agnostic signaling the onset of breakout reconnection.
+The dimming occurs due to depletion of plasma in the
+surrounding volume as external field sweeps into the
+"breakout sheet, reconnects, and flows out along the"
+sheet as reconnection exhaust. Figure 5(b) shows a syn-
+thetic EUV base-difference image of our simulation at
+"this time, revealing this dimming as well as the en-"
+hanced density in the reconnection outflow along the
+pseudostreamer spire. The subtracted base image is
+"taken from time t = 22 hrs 30 min, about an hour before"
+breakout-reconnection onset.
+The presence of the flux rope makes it difficult to be
+unambiguous about the precise mechanism that triggers
+the continued rise of the flux rope towards eruption from
+this time onward. Breakout reconnection certainly is key
+to maintaining the eruption once the flux rope is rising
+"rapidly. However, it is possible that an ideal rise of the"
+flux rope due to torus instability couples to the breakout
+"reconnection, to tip the evolution into a self-sustaining"
+feedback. A similar coupling associated with ideal kink
+instability recently was shown to occur in simulations of
+active-region periphery jets (Wyper et al. 2019). Com-
+parisons of our results with those from a perfectly ideal-
+MHD model (e.g. Pariat et al. 2009; Rachmeler et al.
+"2010), which is well beyond the scope of the current"
+"investigation, would be required to address this issue"
+"definitively. However, it is clear from the fast evolu-"
+tion following onset of reconnection of the flux rope and
+from the energy plots (both described in detail below)
+that ideal instability of the flux rope is not the dominant
+process once the eruption is underway.
+4. LOW-CORONAL EVOLUTION
+4.1. Eruption Kinematics
+"Initially, the pseudostreamer eruption closely follows"
+"the evolution of a mini-filament jet, but on a much larger"
+"scale. Once the breakout reconnection gets underway,"
+the strapping field above the flux rope begins to be re-
+"moved and the flux rope continues its rise, slowly at"
+first. Figure 6(a) shows the same field lines from Figure
+5 2 hrs 13 min later. The field lines are traced from fixed
+(un-driven) points on the surface. The closing down of
+the red external field lines and the opening up of the
+cyan strapping field lines show the progression of the
+breakout reconnection.
+"As the reconnection continues, the breakout current"
+sheet moves southward as the external field (red field
+lines) sequentially reconnects. This orients the current
+sheet radially and positions it directly above the now-
+expanded (with reconnected flux) south lobe of the pseu-
+(a) (b)
+(c) (d)30 hrs 43 min
+30 hrs 17 min 30 hrs 30 min
+30 hrs 56 min
+Flare 
+Arcades
+Flare 
+Reconnection
+"Figure 7. Reconnection of the flux rope. See text in §4.2
+for details."
+"dostreamer, Figure 6(b). As the last of the strapping"
+"flux is exhausted, the rising flux rope becomes bent to-"
+wards the breakout current sheet over the top of the
+"south lobe, Figure 6(b). This bending of the filament-"
+"channel field, with or without filament/prominence ma-"
+"terial, is a typical feature of pseudostreamer eruptions"
+"(e.g. Panasenco et al. 2011; Kumar et al. 2018, 2021)."
+"In addition to bending, the flux rope accumulates more"
+"flux, as the reconnection in the flare current sheet is en-"
+hanced by the stretching of the sheet as the flux rope
+rises.
+When the flux rope reaches the breakout current
+"sheet, the system departs from its previously quasi-2D"
+"evolution and enters a fully 3D phase, described below,"
+in which the flux rope reconnects and a large fraction
+of the twist within the flux rope is liberated. Exactly
+"analogous to mini-filament jets, this transfer of twist"
+launches an untwisting plasma jet characterised by a fast
+radial velocity component (Fig. 6(f)) and oppositely di-
+"rected line-of-sight velocity components on either side of,"
+"and extended along, the jet axis; see Figure 6(i). This"
+shows that the low-coronal evolution of our simulated
+eruption is essentially that of a large-scale coronal jet.
+4.2. Flux-Rope Reconnection
+The reconnection of the flux rope is inherently three-
+"dimensional, and cannot be described adequately by"
+two-dimensional models. Figure 7 shows field lines in the
+"flux rope before, during, and after the reconnection. Ma-"
+genta field lines are traced from positive-polarity foot-
+"Figure 8. Isosurface of current-density magnitude (J =
+2.6 statamp cm−2), shaded by the radial component of the
+current vector (Jr), at t = 30 hrs 30 min. BCS = breakout
+current sheet, FCS = flare current sheet. (a) Side view. (b)
+Top view. Green arrows show the direction of the current."
+"points, whilst silver field lines are traced from the con-"
+jugate footpoints in the negative polarity. As the flux
+"rope begins to reconnect, some of the magenta field lines"
+open up whilst their counterpart silver field lines be-
+"come part of the southern lobe of the pseudostreamer,"
+Figure 7(b). Figure 8 shows the current density mag-
+"nitude at this time, shaded by the radial component of"
+"the current density vector. At this crucial moment, the"
+breakout current sheet curving around the outer edge of
+the flux rope and the flare current sheet following be-
+"hind it combine, forming one long current sheet. The"
+direction of the current is indicated in Figure 8(b) by
+the green arrows. This marks the instant when the null
+point within the breakout layer (NP1) begins to slide
+around the separatrix dome into the flare current sheet
+"0 5 10 15 20 25 30 35 40
+t (hrs)"
+"E m
+ (e"
+"E k
+ (e"
+"breakout
+begins"
+"flux rope
+reconnection"
+relaxation
+"Figure 9. Energy plots showing Em (blue) and Ek (red)
+with the different eruption stages annotated."
+"behind the flux rope (§7). It is exactly the same topol-
+ogy change as occurs in our mini-filament jets (Wyper"
+et al. 2018).
+"Once the null has shifted to the flare current sheet,"
+the flare reconnection transitions from quasi-separatrix
+"layer reconnection to null-point reconnection, and the"
+positive-polarity footpoint of the flux rope opens com-
+"pletely, Figure 7(c). The breakout current sheet is car-"
+"ried upwards with the eruption, forming the interface"
+between the outwardly propagating twisted field and
+the untwisted ambient field surrounding it. The over-
+pressure of the magnetic flux built up in the southern
+lobe during the breakout phase drives fast flare recon-
+"nection at the null, opening flux from the southern lobe"
+"whilst closing new flux into the northern lobe, the flare"
+arcades. The flare reconnection acts to reverse much
+of the flux transfer that occurred during the breakout
+"phase, re-opening external field lines (red) and re-closing"
+strapping field lines (cyan); see Figure 7(d). Impor-
+"tantly for the connectivity of the CME, some of the field"
+lines (magenta) from the positive-polarity footpoint of
+the flux rope get swept into the flare current sheet and
+"also re-close, becoming part of the flare loops. That is,"
+they become disconnected from the CME (§6).
+5. ENERGETICS
+The evolution of the total kinetic and magnetic ener-
+gies of the system further confirm the jet-like nature of
+the eruption. We define the free magnetic and kinetic
+energies as
+"2
+ρu2 dV −"
+"(∫∫∫
+V"
+"2
+ρu2 dV"
+", (14)"
+"8π
+B2 dV −"
+"(∫∫∫
+V"
+"8π
+B2 dV"
+", (15)"
+where t = 0 corresponds to the start of the driving. Al-
+though some residual fluctuations occur in the relaxed
+(a) (b)
+t = 29 hrs 43 min t = 32 hrs 30 min 
+t = 36 hrs 57 min t = 41 hrs 57 min 
+"Figure 10. Blowout of the helmet streamer. An animation of this figure is available online showing the evolution. The
+animation duration is 6 s."
+"state, they are small compared to the energy stored and"
+"released by the eruption. Therefore, the above quan-"
+tities provide a reasonable approximation to the ac-
+tual magnetic energy stored and kinetic energy liber-
+ated by the eruption. Both curves are shown in Figure
+9. The timing of the different phases of the eruption
+are marked with dashed lines. The kink in Em shortly
+after t = 27 hrs coincides with the time the driving is
+stopped. Once the breakout reconnection is initiated
+"(t ≈ 23 hrs 30 min), there is a gradual rise in kinetic en-
+ergy, accompanied by a gradual reduction in the mag-"
+"netic energy after the driving ceases. However, the ma-"
+jor magnetic energy release occurs when the flux rope
+reaches the breakout current sheet and reconnects at
+"t ≈ 30 hrs 30 min, whereupon the kinetic energy rapidly
+increases as the eruption is launched. The rapid changes"
+in both energies are short-lived and slow down after
+"about an hour, thereafter entering a more gradual relax-"
+ation phase. We found an almost identical qualitative
+behaviour in our previous jet simulations (Wyper et al.
+"2017, 2018), although the kinetic energy continues to"
+rise once the CME is launched in the present case with
+solar wind.
+6. COUPLED HELMET-STREAMER BLOWOUT
+We have seen that the low-coronal behaviour of the
+pseudostreamer eruption resembles that of a large-scale
+"jet; however, the dynamics of the global topology results"
+"in a clear CME, which we now show is bubble-like. The"
+pseudostreamer is in sufficiently close proximity to the
+open-closed separatrix of the helmet streamer that the
+helmet streamer participates in the ejection of the flux
+"rope, as discussed further in §7. Consequently, rather
+than transferring twist entirely onto open field lines as"
+"in a simple coronal-hole jet, a significant portion is in-"
+jected into the closed field beneath the adjacent helmet
+streamer. This twist blows out the top of the streamer
+when it reaches the streamer apex.
+Figure 10(a) shows three representative sets of field
+lines prior to the eruption. The positive footpoint of
+"the erupting flux rope is shown in magenta, as in Fig-"
+ure 6. A bundle of cyan field lines that initially form
+"part of the strapping field, traced from positive foot-"
+points slightly north of the magenta field lines. Yellow
+field lines with footpoints in the southern hemisphere
+that form high-reaching arches that pass both near the
+top of the helmet streamer and close to the edge of the
+pseudostreamer. Figure 10(b) shows the twist gained
+"by the high-reaching yellow field lines, which are in the"
+process of lifting off from the top of the helmet streamer
+(see also the accompanying animation). The figure also
+shows that the CME has three footpoint regions. The
+"first, labeled FP1, is near the positive footpoint of the"
+"erupting flux rope. The second, labeled FP2, is south"
+of the pseudostreamer and forms when field lines within
+the CME connecting to FP1 are drawn into the flare
+current sheet. The resulting interchange-like flare recon-
+nection shifts these CME footpoints from FP1 to FP2.
+"The final footpoint region is FP3, consisting of the re-"
+mote footpoints of the flux blown out from the helmet
+streamer.
+Figure 10(c) shows the completely blown-out top of
+the helmet streamer several hours later. Several hours
+"later still, Figure 10(d) shows the reformation of the"
+helmet streamer. The helmet streamer reforms as a
+new section of heliospheric current sheet forms following
+the upward stretching of the blown-out helmet streamer
+flux. This is exactly analogous to the process by which
+"slow streamer-puff, or stealth, CMEs are thought to"
+form except that in this case the magnetic stress was
+injected into the helmet streamer flux completely in the
+corona rather than at the photosphere (e.g. Lynch et al.
+2016).
+7. SURFACE CONNECTIVITY AND NULL
+EVOLUTION
+A great deal of insight into this event can be gained by
+"studying the surface connectivity of the magnetic field,"
+which essentially maps the complex 3D evolution of the
+eruption onto a 2D plane. All the key changes of the
+global magnetic evolution are captured thereby. At the
+"same time, the connectivity maps are not always in-"
+"tuitive to work with and require some interpretation,"
+which we now provide.
+In Figure 11(a) we show the connectivity prior to
+"breakout initiation. As before, the open-field coronal"
+"holes are shown in yellow, magnetically closed regions"
+"in white, and log(Q) in grey scale. In addition to the"
+"connectivity, we also located the null points in the low"
+corona (below 3 Rs) using the tri-linear method (Haynes
+& Parnell 2007; Wyper & DeVore 2016). The positions
+of the nulls identified at each time are projected radially
+onto the surface and shown with diamonds.
+"As mentioned previously in §2.3, during the early
+driving phase NP1 migrates towards the center of the"
+"pseudostreamer (see the accompanying animation), evi-"
+dently due to the changing shape of the pseudostreamer
+separatrix as it expands. NP1 resides near NP2 and is in
+"the open field prior to the breakout phase, Figure 11(a)."
+This is confirmed by the snub-nosed shape of the nearby
+"helmet-streamer boundary, indicating that a very nar-"
+row corridor of flux is present between the two coronal
+"holes. In fact, NP1 and NP2 (or the localised clusters of"
+nulls that sometimes form from them) actually annihi-
+"late each other both before and after the eruption, then"
+"finally return via bifurcation. Nulls NP3, NP4, and NP5"
+are far removed from the filament channel (on the right)
+"and are not involved in the eruption, although they also"
+interact with each other over time. Four curves of high
+Q are highlighted (Q1 to Q4) that are associated with
+the fan separatrix footprint of NP1 (Q1 and Q3) and the
+"inner and outer fan of NP2 (Q2 and Q4, respectively)."
+Figure 11(b) shows the connectivity well into the
+"breakout phase. In 2D, the progression of breakout re-"
+connection is followed by the motion of the footpoints
+of separatrices on either side of the filament channel to-
+wards each other as strapping field is removed. Mean-
+"while, the footpoints outlining the lobe regions move"
+apart as strapping field is added (e.g. Lynch et al. 2008).
+The same progression is evident here in 3D: Q1 and Q2
+move towards one another as Q2 and Q3 move apart. At
+"this time, NP1 has migrated back towards the left flank"
+"of the pseudostreamer. This shift of the null, which is"
+a natural consequence of the round trip it makes as it
+moves from the breakout to flare current sheets and back
+"to the center of the pseudostreamer, is the crucial ingre-"
+dient that leads to the blowout of the helmet streamer.
+"As NP1 moves to the flank, the helmet streamer be-"
+t = 16 hrs 57 min t = 28 hrs 37 min
+t = 30 hrs 50min t = 38 hrs 3 min
+(a) (b)
+(c) (d)
+Opened Flux
+"Newly 
+Closed Flux"
+"FR Opening Mixed 
+Open/Closed"
+"CME 
+Footpoints"
+"Parallel
+Flare "
+Ribbons
+"HS
+Flux"
+"Snub 
+nosed
+HSB"
+"Tapered
+HSB"
+"Snub 
+nosed
+HSB"
+"Tapered
+HSB"
+FR foot point
+"Remote 
+Ribbon"
+"Semi-
+circular
+Ribbon"
+"Figure 11. Connectivity evolution of the coronal magnetic field. Grey shading shows log(Q); open and closed fields are shaded
+yellow and white, respectively; the dashed line shows the PIL; and projected positions of the null points are shown with purple
+diamonds. HSB = helmet streamer boundary, HS flux = helmet streamer flux, FR = flux rope, FP = CME footpoints. An
+animation of this figure is available showing the evolution. The animation duration is 12 s."
+comes draped over the pseudostreamer once more and
+connects to the middle null (NP2). This manifests in
+"the connectivity plot as a return to a tapered, rather"
+"than snub-nosed, end to the northern helmet-streamer"
+boundary. The twist liberated by the reconnection of
+the flux rope is now able to access closed field beneath
+the helmet streamer.
+Figure 11(c) shows the connectivity as the flux rope
+reconnects. The northern footpoint of the flux rope has
+now moved outside the pseudostreamer separatrix and
+connects to a mixture of open coronal-hole field and
+closed helmet-streamer flux that was draped over the
+"pseudostreamer. At the moment of flux-rope opening,"
+a burst of explosive reconnection is initiated at NP1.
+Bright local and remote ribbons would be expected to
+"form near the inner and outer spines at Q2 and Q4,"
+as well as along the semi-circular ribbon where the fan
+"plane meets the surface, highlighted in Figure 11(c)."
+The ribbon is semi-circular rather than a closed loop in
+this case due to the multiple nulls in the pseudostreamer
+topology. Similar ribbon structures have been observed
+"by, e.g., Kumar et al. (2021). Immediately after the"
+flux rope opens and fast flare reconnection is under-
+"way, Q1 and Q2 then outline the positions of the main"
+"parallel flare ribbons. Subsequently, Q1 and Q2 move"
+apart as NP1 moves back towards the center of the pseu-
+"dostreamer and into the open-field region, Figure 11(c)"
+and (d).
+The above description reveals that the two key in-
+gredients that lead to the sympathetic blowout of the
+helmet streamer are (1) the proximity of the edge of
+the helmet streamer to the edge of the pseudostreamer
+"0.6
+lo"
+(a) (b)
+(c) (d)
+"Figure 12. (a) Selected CME field lines at t = 36 hrs 23 min. (b) & (d) Log of current density (statamp cm−2) and plasma
+velocity in a plane across the CME flux rope. (c) Base difference (from t = 0) of scattered white light using the method employed
+by Lynch et al. (2016). An animation of panel (d) is available online showing the evolution. The animation duration is 6 s."
+and (2) the round-trip evolution of the null point as the
+flux rope reconnects. The shift of NP1 into and back
+out of the closed field under the helmet streamer seems
+"to be a consequence of both reconnection at the null,"
+"as described by Edmondson et al. (2009), and a shift"
+of the helmet streamer itself driven by interchange re-
+"connection along its flank, similar to that shown by e.g."
+Higginson et al. (2017).
+"Finally, the connectivity map also highlights the three"
+"CME footpoints, Figure 11(d). This makes it immedi-"
+ately clear that the southern footpoint FP3 forms next
+to the original footpoint of the outer spine of NP1. As
+was highlighted by the field-line evolution in Figs. 6
+"and 10, the northern footpoint of the flux rope discon-"
+nects from the CME as it is swept up by the flare re-
+"connection, to reside back in the closed field beneath"
+the pseudostreamer. As can be seen in the animation
+"accompanying Figure 11, FP2 forms when the northern"
+flare ribbon (Q1) sweeps over the positive footpoint of
+the pre-eruption flux rope. This is the surface signature
+"Figure 13. (a)-(c) Base-difference images (from t = 0) of scattered white light. (d) Height-time plot using running difference
+images. The dashed line in (a) shows the slit for the height-time plot. An animation of this figure is available online showing
+the evolution. The animation duration is 4 s."
+of the interchange-like flare reconnection that occurs
+"above, shifting some of the CME field-line footpoints"
+from FP1 to FP2. The remaining sheared strapping
+field adjacent to the pre-eruption flux rope also opens
+"but is not swept over by Q1, thereby forming FP1 at"
+"later times (see also Fig. 10, cyan field lines)."
+8. CORONAL MASS EJECTION
+The CME that results is a mixture of twisted/kinked
+open field lines from the coronal holes and closed field
+lines blown out from the helmet streamer. They are
+combined within two main propagating magnetic struc-
+tures that form the CME. The first is the blown-out
+"helmet-streamer flux, which has footpoints predomi-"
+nantly at FP1 and FP3. Figure 12(a) shows that field
+lines traced from FP3 (yellow) and FP1 (cyan) wrap
+around one another producing what normally would be
+identified as the CME flux rope; we will designate it as
+"such from now on. However, the analysis of the pre-"
+vious sections has shown that this flux rope is not the
+"same flux rope that originally erupted, but rather forms"
+later in the evolution. The original flux rope due to the
+filament channel was ejected as the pseudostreamer jet;
+this later flux rope forms from the coupling with the hel-
+met streamer field and erupts as a CME. When viewed
+"from the side, this CME flux rope appears circular de-"
+spite being composed of a mixture of open and closed
+"field lines, Figure 12(b). This circular feature is embed-"
+t = 16 hrs 57min t = 28 hrs 37min
+t = 31 hrs 23min t = 38 hrs 3min
+(c) (d)
+Opened Flux
+FR Opening
+"CME Flux Rope
+Open Field"
+Sheath
+"Figure 14. Connectivity evolution of the arc at 30Rs. Grey scale: log(Q). White: open coronal-hole field. Yellow: disconnected
+field lines. The dashed red line shows the reversal in Br within the heliospheric current sheet. FR = flux rope. An animation
+of this figure is available online showing the evolution. The animation duration is 12 s."
+ded within kinked/twisted field lines that form the rest
+"of the CME and have footpoints predominantly at FP2,"
+shown with red field lines in Figure 12(b). To more di-
+"rectly compare the structure to observations, a synthetic"
+white-light base-difference image produced at the same
+viewing angle as the simulation cut is shown in Figure
+12(c). A bubble-like circular feature is indeed embedded
+within the broader body of the CME; see also the movie
+accompanying Figure 13.
+Kumar et al. (2021) reported a series of observations
+"showing that, ahead of the CMEs produced by pseu-"
+"dostreamer eruptions, a small jet-like puff first appears,"
+associated with the opening of the strapping field by
+breakout reconnection shortly before the eruption. In
+Figure 13(a)-(c) we show a series of synthetic corona-
+"graph images from the same viewpoint, just prior to"
+the CME and as it propagates outward. As in the ob-
+"servations, a puff formed by the breakout reconnection"
+outflow and the opening of the strapping flux precedes
+the main CME.
+"Aside from the shock, the CME has a relatively nar-"
+"row angular extent of about 40◦. Additionally, the CME"
+is deflected towards the heliospheric current sheet as it
+"propagates outward, as shown by the curved shape of"
+the CME in Figure 13(b). Such a deflection is to be
+"expected, given that the jet straddles the open-closed"
+"helmet-streamer boundary and, therefore, is guided to-"
+wards its apex. We note that this deflection is not the re-
+sult of magnetic pressure gradients acting on the erupt-
+"ing structure in the low corona, as has been proposed"
+to account for CME deflections in some observed events
+(e.g. Shen et al. 2011; Kay et al. 2013). In that sce-
+nario the erupting magnetic structure is presumed to be
+a flux rope connected at both ends to the photosphere
+with an axis at its apex that is roughly perpendicular
+to the ambient field it encounters. Here the erupting
+structure propagates along field lines in the low corona.
+The circular feature in the synthetic white-light images
+appears only after the disturbance reaches the helmet
+streamer apex; when the CME flux rope forms and the
+helmet streamer blows out. Prior to this the evolution
+is more jet-like. Based on the location of the circular
+feature in Figure 13(c) compared with the initial radial
+"trajectory of the jet, we estimate an apparent deflection"
+of around 30◦.
+Figure 13(d) shows a time/distance plot (J-map) cre-
+ated from running different images evaluated along the
+line shown in Figure 13(a). We chose this non-radial
+line to capture both the puff and nose of the CME once
+it is deflected. The pre-eruption puff is simply advected
+by the ambient wind and follows a slowly accelerating
+"profile. The CME, once launched, quickly overtakes the"
+puff before stabilizing at a roughly constant speed of
+about 600 km s−1. Similar CME speeds and accelera-
+tion profiles have been measured for CMEs from pseu-
+dostreamers (e.g. Wang & Hess 2018).
+9. S-WEB CONNECTIVITY & IMPULSIVE SEPS
+The mixture of open and closed flux within the CME
+provides a natural avenue of escape for impulsive SEPs
+produced by the flare. Although a full investigation of
+the expected SEP signatures of this simulation is well
+"beyond the scope of this investigation, we can still make"
+some preliminary remarks based on the connectivity of
+the CME. There are two potential scenarios where we
+might expect SEPs to be impulsively accelerated and re-
+leased in this eruption. The first is the scenario explored
+"by Masson et al. (2013, 2019), whereby flare reconnec-"
+tion prior to reconnection of the filament channel flux
+rope stores high energy particles within the flux rope.
+These are then promptly released when the flux rope
+"is opened by reconnection with external field, in this"
+case when the flux rope reaches the breakout current
+layer. The second is that once the flux rope opens the
+flare reconnection transitions to interchange-like recon-
+"nection at NP1, directly accessing open field lines along"
+which SEPs could escape in a manner similar to a jet.
+These two scenarios overlap at the moment the flux rope
+"opens, but the latter would continue beyond the initial"
+flux rope reconnection making them potentially distin-
+guishable observationally.
+Figure 14 shows log(Q) at 30Rs at various stages
+throughout the eruption. The times are matched to
+those in Figure 11 for comparison. Regions of discon-
+nected flux within the heliospheric current layer are
+"shown in yellow. Broadly speaking, the open field af-"
+fected by the eruption is localised around the left half
+"of the S-Web arc, the section which resided above the"
+filament channel. This is a useful result in itself and
+provides a predictive tool for where impulsively accel-
+erated particles and subsequently the CME itself could
+be measured in-situ for CMEs originating from pseu-
+dostreamers.
+"More specifically, throughout the breakout phase the"
+affected section of S-Web arc moves steadily southward
+"as strapping field is opened, Figure 14(b). The opening"
+of the flux rope is shown in Figure 14(c) by the complex
+"region of high Q, which stretches almost to the middle"
+of the arc. Both SEP scenarios would be expected to
+launch SEPs into this region. This shows that impulsive
+SEPs could potentially reach far from the heliospheric
+"current sheet, in this case reaching around 30◦ from it in"
+"latitude and covering a range of around 70◦ in longitude,"
+due to the rapidly varying connectivity along the arc.
+Future work using for example test particles would be
+required to test this claim definitively.
+"Finally, for completeness Figure 14(d) shows the con-"
+nectivity once the helmet streamer has blown out and
+the CME is fully developed. The circular region corre-
+sponds to the open field lines that wrap into the CME
+"flux rope (cyan field lines, Fig. 12). This is bordered on"
+one side by disconnected field (yellow) within the helio-
+"spheric current sheet, and a semi-circular sheath of open"
+field corresponding to the rest of the kinked field lines
+"within the CME (red field lines, Fig. 12)."
+10. DISCUSSION AND CONCLUSIONS
+"In addition to observations of SEPs, our results"
+presented here on coupled pseudostreamer/helmet-
+streamer eruptions have clear implications for under-
+"standing solar eruptions. First, we emphasize that the"
+assumed magnetic configuration of a pseudostreamer
+"close to the helmet streamer, Figure 3, is quite com-"
+mon on the Sun. The coronal hole pattern of Figure
+2 in which a small coronal hole extension is separated
+from the main coronal hole by a large parasitic polar-
+ity region can be seen frequently in source surface maps
+and is reflected in S-Web maps (e.g. Antiochos et al.
+2011; Wang et al. 2012; Crooker et al. 2012; Titov et al.
+"2012). Furthermore, filament channels are very often"
+"observed to form over the PIL of the parasitic region,"
+"leading to a jet-like eruption (e.g. Filippov et al. 2013,"
+2015; Yang et al. 2015; Wang & Hess 2018; Kumar et al.
+"2021), so the scenario described in this paper should"
+be readily observed. We note that our scenario shares
+some general features with streamer blowouts driven by
+"eruptions beneath the streamer, but near its edge (e.g."
+Moore & Sterling 2007; Lugaz et al. 2011; Panesar et al.
+2016). The key difference is that in our scenario the
+pseudostreamer has a substantial presence outside the
+"streamer, within the coronal hole."
+Another key point is that our jet eruption is some-
+what special from a theoretical viewpoint in that it oc-
+curs in a 3D system with multiple nulls and separator
+lines. There have been many simulations of jets and
+"CMEs in the ubiquitous topology of a single null, but"
+"to our knowledge, this is the first simulation of a fila-"
+ment channel driven eruption in a multi-null/separator
+topology. This topology allows for more copious recon-
+"nection, because the breakout current sheet now corre-"
+sponds to a deformed line segment rather than a de-
+"formed point. As argued in Antiochos et al. (1999),"
+the breakout mechanism requires reconnection to oper-
+"ate, but the reconnection must not be too “easy” if the"
+system is to be explosive. Our simulation verifies that
+breakout can produce explosive eruption even in a gen-
+eral pseudostreamer topology.
+"The eruption from the actual pseudostreamer, how-"
+"ever, is clearly a jet rather than a CME. We do not see"
+closed pseudostreamer flux expanding outward into the
+heliosphere. This results holds even though the pseu-
+"dostreamer of Figure 2 is quite large and, as discussed"
+"above, the breakout reconnection is extended, more eas-"
+"ily allowing a flux rope to escape. Instead, the pseu-"
+dostreamer flux rope is completely destroyed by inter-
+change reconnection either with the open field or the
+"helmet streamer field. We conjecture that this, in fact,"
+is the general result for an eruption from a unipolar
+background as in a pseudostreamer or jet. The reasons
+"for this are that first, a plasmoid in a unipolar back-"
+ground must have its twist component anti-parallel to
+"the background field on one side or the other, so that"
+"reconnection is inevitable. Second, the amount of flux"
+in the pseudostreamer rope is limited by the flux of the
+"parasitic polarity, which is generally small compared to"
+"the background. However, if the flux rope can survive"
+"out to the Alfvén radius ∼ 10Rs, then any interchange
+beyond this point has no effect on the amount of escap-"
+"ing flux, because a closed field line will still not retract"
+back down to the corona. Depending on the balance
+"between gas dynamic pressure and magnetic tension,"
+"this result may hold even at somewhat lower radii, say"
+5Rs or so. These arguments imply that in order for a
+pseudostreamer eruption to produce a CME when the
+"pseudostreamer is deep within a coronal hole, the para-"
+sitic polarity must have an exceptionally large amount
+of flux and the eruption must develop a high speed early
+"on, which requires that the filament channel be highly"
+sheared. Further simulations are required in order to
+quantify the fluxes and speeds required for an isolated
+"pseudostreamer CME, if even possible, and observations"
+of pseudostreamer eruptions far from helmet streamers
+are needed to test the conclusions.
+The situation is very different for a helmet-streamer
+eruption. In this case the background field is bidirec-
+tional and parallel to the plasmoid on both sides. As
+"a result, interchange reconnection does not occur and a"
+plasmoid is free to propagate outward so that even small
+plasmoids can survive indefinitely in the heliospheric
+current sheet (Higginson & Lynch 2018). Evidence for
+this behavior can be gleaned from our simulation in Fig-
+"ures 10 and 12 and their associated animations, in which"
+"twisted, closed helmet-streamer field lines are swept up"
+in the CME and expand outwards within or adjacent
+to the field reversal that defines the heliospheric current
+sheet. A key conclusion from these figures and anima-
+tions is that not only does the field of the CME consist of
+"a mixture of closed and open flux, but the plasma as well"
+consists of a mixture of material that was in the large
+outer loops of the helmet streamer and the small inner
+loops of the parasitic polarity. This result has important
+consequences for in-situ measurements of plasma com-
+position. Even in the outer layers of a streamer-blowout
+"event, the plasma may have originated from the small"
+"closed loops of a decayed active region, with a differ-"
+ent FIP bias and freeze-in temperature from the helmet
+"streamer. Again, this result requires definitive testing"
+against data.
+This work also has important implications for under-
+standing S-web dynamics. The bulk of the S-Web con-
+sists of high-Q arcs that start and end on the helio-
+"spheric current sheet, as in Figure 14. All these arcs"
+are due to large parasitic polarity regions that produce
+narrow or singular connections between coronal holes
+(Antiochos et al. 2011; Titov et al. 2012; Scott et al.
+"2018, 2019). These polarity regions have PILs, which"
+"will invariably become sheared with time; consequently,"
+the type of eruption that we calculated above is bound
+to be a frequent driver of the S-Web. Our results show
+"that the S-web is intrinsically coupled, in that strong"
+dynamics at one location are likely to lead to dynam-
+ics elsewhere with the subsequent mixing of plasma and
+field lines. This conclusion may help explain the long-
+standing puzzle of flare SEPs with large longitudinal
+extent (e.g. Dresing et al. 2012; Richardson et al. 2014)
+although further work is required to confirm this.
+Perhaps the most important and far-reaching conclu-
+sions from this new type of coupled eruption are for un-
+derstanding the interplay between solar eruptions and
+the global coronal magnetic field. Taken alongside pre-
+"vious work, our results suggest that CMEs originating"
+"nearby the helmet streamer separatrix, be it beneath"
+"the helmet streamer or adjacent to it in a coronal hole,"
+"should be expected to be deflected, have a more com-"
+plex morphology and to involve a mixture of open and
+closed magnetic field lines. Whereas eruptions from deep
+within the closed field will form classic CMEs and if our
+conjecture is correct those from pseudostreamers deep
+within coronal holes will form jets. Accurate global field
+"modeling, supported by further simulation studies of the"
+"coupling between eruptions and the global coronal field,"
+is clearly then crucial to predicting and interpreting the
+in-situ and remote-sensing observations being made by
+current and future solar missions.
+ACKNOWLEDGMENTS
+It is a pleasure to thank Sophie Masson and
+Aleida Higginson for useful discussions regarding pseu-
+dostreamers and the solar wind. PFW was supported
+in this work by the award of an RAS fellowship and
+PROBA2 Guest Investigator grant. PFW thanks Mat
+West for supplying the SWAP image and Marilena
+"Mierla for support during his visit to ROB. BJL, PK,"
+"JTK, CRD and SKA were supported by NASA’s H-"
+"ISFM, H-LWS, and H-SR programs. Computer re-"
+sources for the numerical calculations were provided to
+CRD by NASA’s High-End Computing program at the
+NASA Center for Climate Simulation.
+REFERENCES
+"Antiochos, S. K. 1990, MemSAI, 61, 369"
+"Antiochos, S. K., DeVore, C. R., & Klimchuk, J. A. 1999,"
+"ApJ, 510, 485"
+"Antiochos, S. K., Mikić, Z., Titov, V. S., Lionello, R., &"
+"Linker, J. A. 2011, ApJ, 731, 112"
+"Asai, A., Shibata, K., Hara, H., & Nitta, N. V. 2008, ApJ,"
+"673, 1188"
+"Aulanier, G., Janvier, M., & Schmieder, B. 2012, A&A,"
+"543, A110"
+"Chen, Y., Du, G., Zhao, D., et al. 2016, ApJL, 820, L37"
+"Crooker, N. U., Antiochos, S. K., Zhao, X., & Neugebauer,"
+"M. 2012, JGRA, 117, A04104"
+"Dahlin, J. T., Antiochos, S. K., & DeVore, C. R. 2019, ApJ,"
+"879, 96"
+"Démoulin, P., Priest, E. R., & Lonie, D. P. 1996, JGRA,"
+"101, 7631"
+"DeVore, C. R. 1991, JCoPh, 92, 142"
+"Dresing, N., Gómez-Herrero, R., Klassen, A., et al. 2012,"
+"SoPh, 281, 281"
+"Edmondson, J. K., Lynch, B. J., Antiochos, S. K., De Vore,"
+"C. R., & Zurbuchen, T. H. 2009, ApJ, 707, 1427"
+"Filippov, B., Koutchmy, S., & Tavabi, E. 2013, SoPh, 286,"
+"Filippov, B., Srivastava, A. K., Dwivedi, B. N., et al. 2015,"
+"MNRAS, 451, 1117"
+"Haynes, A. L., & Parnell, C. E. 2007, PhPl, 14, 082107"
+"Higginson, A. K., Antiochos, S. K., DeVore, C. R., Wyper,"
+"P. F., & Zurbuchen, T. H. 2017, ApJ, 837, 113"
+"Higginson, A. K., & Lynch, B. J. 2018, ApJ, 859, 6"
+"Howard, R., & Labonte, B. J. 1981, SoPh, 74, 131"
+"Janvier, M., Aulanier, G., Pariat, E., & Démoulin, P. 2013,"
+"A&A, 555, A77"
+"Jin, M., Schrijver, C. J., Cheung, M. C. M., et al. 2016,"
+"ApJ, 820, 16"
+"Karpen, J. T., Antiochos, S. K., & DeVore, C. R. 2012,"
+"ApJ, 760, 81"
+"Kay, C., Opher, M., & Evans, R. M. 2013, ApJ, 775, 5"
+"Kumar, P., Karpen, J. T., Antiochos, S. K., et al. 2018,"
+"ApJ, 854, 155"
+"—. 2019, ApJ, 873, 93"
+"—. 2021, ApJ, in press"
+"Lugaz, N., Downs, C., Shibata, K., et al. 2011, ApJ, 738,"
+"Lynch, B. J., Antiochos, S. K., DeVore, C. R., Luhmann,"
+"J. G., & Zurbuchen, T. H. 2008, ApJ, 683, 1192"
+"Lynch, B. J., Antiochos, S. K., Li, Y., Luhmann, J. G., &"
+"DeVore, C. R. 2009, ApJ, 697, 1918"
+"Lynch, B. J., & Edmondson, J. K. 2013, ApJ, 764, 87"
+"Lynch, B. J., Masson, S., Li, Y., et al. 2016, JGRA, 121,"
+"Martin, S. F. 1998, SoPh, 182, 107"
+"Masson, S., Antiochos, S. K., & DeVore, C. R. 2013, ApJ,"
+"771, 82"
+"—. 2019, ApJ, 884, 143"
+"Moore, R. L., & Sterling, A. C. 2007, ApJ, 661, 543"
+"Moore, R. L., Sterling, A. C., Hudson, H. S., & Lemen,"
+"J. R. 2001, ApJ, 552, 833"
+"Moore, R. L., Sterling, A. C., & Panesar, N. K. 2018, ApJ,"
+"859, 3"
+"Panasenco, O., Martin, S., Joshi, A. D., & Srivastava, N."
+"2011, JASTP, 73, 1129"
+"Panesar, N. K., Sterling, A. C., Moore, R. L., &"
+"Chakrapani, P. 2016, ApJL, 832, L7"
+"Pariat, E., Antiochos, S. K., & DeVore, C. R. 2009, ApJ,"
+"691, 61"
+"Parker, E. N. 1958, ApJ, 128, 664"
+"Rachmeler, L. A., Pariat, E., DeForest, C. E., Antiochos,"
+"S., & Török, T. 2010, ApJ, 715, 1556"
+"Richardson, I. G., von Rosenvinge, T. T., Cane, H. V.,"
+"et al. 2014, SoPh, 289, 3059"
+"Richardson, R. S. 1951, ApJ, 114, 356"
+"Schrijver, C. J., & Title, A. M. 2011, JGRA, 116, A04108"
+"Scott, R. B., Pontin, D. I., & Wyper, P. F. 2019, ApJ, 882,"
+"Scott, R. B., Pontin, D. I., Yeates, A. R., Wyper, P. F., &"
+"Higginson, A. K. 2018, ApJ, 869, 60"
+"Shen, C., Wang, Y., Gui, B., Ye, P., & Wang, S. 2011,"
+"SoPh, 269, 389"
+"Shibata, K., Nitta, N., Strong, K. T., et al. 1994, ApJL,"
+"431, L51"
+"Sterling, A. C., Moore, R. L., Falconer, D. A., & Adams,"
+"M. 2015, Natur, 523, 437"
+"Titov, V. S. 2007, ApJ, 660, 863"
+"Titov, V. S., Mikić, Z., Linker, J. A., Lionello, R., &"
+"Antiochos, S. K. 2011, ApJ, 731, 111"
+"Titov, V. S., Mikic, Z., Török, T., Linker, J. A., &"
+"Panasenco, O. 2012, ApJ, 759, 70"
+"Titov, V. S., Mikić, Z., Török, T., Linker, J. A., &"
+"Panasenco, O. 2017, ApJ, 845, 141"
+"Török, T., Panasenco, O., Titov, V. S., et al. 2011, ApJL,"
+"739, L63"
+"Wang, Y. M., Grappin, R., Robbrecht, E., & Sheeley,"
+"N. R., J. 2012, ApJ, 749, 182"
+"Wang, Y. M., & Hess, P. 2018, ApJ, 853, 103"
+"Wang, Y. M., Nash, A. G., & Sheeley, N. R., J. 1989, ApJ,"
+"347, 529"
+"Webb, D. F., & Howard, T. A. 2012, LRSP, 9, 3"
+"Wyper, P. F., Antiochos, S. K., & DeVore, C. R. 2017,"
+"Natur, 544, 452"
+"Wyper, P. F., & DeVore, C. R. 2016, ApJ, 820, 77"
+"Wyper, P. F., DeVore, C. R., & Antiochos, S. K. 2018,"
+"ApJ, 852, 98"
+"—. 2019, MNRAS, 490, 3679"
+"Yang, J., Jiang, Y., Xu, Z., Bi, Y., & Hong, J. 2015, ApJ,"
+"803, 68"
+"
+	1 Introduction
+	2 Model Description
+	2.1 Equations and Initial Condition
+	2.2 Topology of the Relaxed State
+	2.3 Filament Channel Formation"
+"	3 Pre-eruption Changes
+	4 Low-Coronal Evolution
+	4.1 Eruption Kinematics
+	4.2 Flux-Rope Reconnection"
+"	5 Energetics
+	6 Coupled Helmet-Streamer Blowout
+	7 Surface Connectivity and Null Evolution
+	8 Coronal Mass Ejection
+	9 S-Web Connectivity & Impulsive SEPs
+	10 Discussion and Conclusions"

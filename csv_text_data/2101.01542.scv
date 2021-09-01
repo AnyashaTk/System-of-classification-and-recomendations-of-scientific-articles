@@ -1,0 +1,865 @@
+0
+"Astronomy & Astrophysics manuscript no. 39988 ©ESO 2021
+January 6, 2021"
+Letter to the Editor
+"Starlet `1-norm for weak lensing cosmology
+Virginia Ajani1, Jean-Luc Starck1, and Valeria Pettorino1"
+"AIM, CEA, CNRS, Université Paris-Saclay, Université de Paris, Sorbonne Paris Cité, F-91191 Gif-sur-Yvette, France
+e-mail: virginia.ajani@cea.fr"
+Received 25/11/2020; Accepted 22/12/2020
+ABSTRACT
+"We present a new summary statistic for weak lensing observables, higher than second order, suitable for extracting non-Gaussian
+cosmological information and inferring cosmological parameters. We name this statistic the ‘starlet `1-norm’ as it is computed via the
+sum of the absolute values of the starlet (wavelet) decomposition coefficients of a weak lensing map. In comparison to the state-of-
+the-art higher-order statistics – weak lensing peak counts and minimum counts, or the combination of the two – the `1-norm provides
+a fast multi-scale calculation of the full void and peak distribution, avoiding the problem of defining what a peak is and what a
+void is: The `1-norm carries the information encoded in all pixels of the map, not just the ones in local maxima and minima. We
+show its potential by applying it to the weak lensing convergence maps provided by the MassiveNus simulations to get constraints
+on the sum of neutrino masses, the matter density parameter, and the amplitude of the primordial power spectrum. We find that, in
+an ideal setting without further systematics, the starlet `1-norm remarkably outperforms commonly used summary statistics, such
+as the power spectrum or the combination of peak and void counts, in terms of constraining power, representing a promising new
+unified framework to simultaneously account for the information encoded in peak counts and voids. We find that the starlet `1-norm
+outperforms the power spectrum by 72% on Mν, 60% on Ωm, and 75% on As for the Euclid-like setting considered; it also improves
+upon the state-of-the-art combination of peaks and voids for a single smoothing scale by 24% on Mν, 50% on Ωm, and 24% on As."
+Key words. weak lensing – wavelets – cosmological constraints – higher order statistics – neutrinos
+1. Introduction
+"Weak gravitational lensing by the large-scale structure represents
+a powerful tool for estimating cosmological parameters. Past,
+present, and future cosmological surveys, such as the Canada-
+France-Hawaii Telescope Lensing Survey (CFHTLenS) (Hey-
+mans et al. 2012), the Kilo-Degree Survey (KiDS) (Heymans
+et al. 2020), the Dark Energy Survey (DES) (Abbott et al. 2019;
+To et al. 2020), Hyper SuprimeCam (HSC) (Mandelbaum & Hy-
+per Suprime-Cam (HSC) Collaboration 2017), Euclid (Laureijs
+et al. 2011), and the Rubin Observatory (LSST Science Col-
+laboration et al. 2009), consider it as one of the main physi-
+cal probes for investigating unsolved questions in current cos-
+mology, such as: what the properties of the dark components
+of the universe are, what the origin of its accelerated expan-
+sion is (Riess et al. 1998; Perlmutter et al. 1999), and what the
+sum of neutrino masses is (Lesgourgues & Pastor 2012). It is
+very well known that, in the context of weak lensing, second-
+order statistics as the two-point correlation function or its Fourier
+transform (the power spectrum) do not capture the non-Gaussian
+information encoded in the non-linear features of weak lensing
+data (Weinberg et al. 2013). This has motivated the introduc-
+tion of several higher-order statistics, such as Minkowski func-
+tionals (Kratochvil et al. 2012; Petri et al. 2015; Vicinanza et al.
+2019; Marques et al. 2019; Parroni et al. 2020), higher-order mo-
+ments (Petri et al. 2016; Vicinanza et al. 2018; Peel et al. 2018;
+Chang et al. 2018; Gatti et al. 2020), the bispectrum (Takada &
+Jain 2004; Chan & Blot 2017; Coulton et al. 2019), peak counts
+(Kruse & Schneider 1999; Kratochvil et al. 2010; Dietrich &
+Hartlap 2010; Maturi et al. 2011; Pires et al. 2012; Hamana et al.
+2012; Hilbert et al. 2012; Marian et al. 2012, 2013; Martinet"
+"et al. 2015; Lin & Kilbinger 2015; Giocoli et al. 2018; Mar-
+tinet et al. 2018; Peel et al. 2018; Li et al. 2019), the scattering
+transform (Cheng et al. 2020), wavelet phase harmonic statistics
+(Allys et al. 2020), and machine learning-based methods (Fluri
+et al. 2018a; Peel et al. 2019; Gupta et al. 2018; Rasmussen &
+Williams 2005; Ribli et al. 2019; Shirasaki et al. 2019), to ac-
+count for non-Gaussian information in cosmological analysis.
+Focusing on peak counts, it has been shown that this statistic is
+particularly powerful in breaking degeneracy between the stan-
+dard model and fifth forces in the dark sector (Peel et al. 2018)
+as well as in constraining cosmological parameters when em-
+ployed in a multi-scale setting (Liu et al. 2015; Lin et al. 2016;
+Fluri et al. 2018b; Ajani et al. 2020; Zürcher et al. 2020). In
+particular, Ajani et al. (2020) have shown that multi-scale peak
+counts significantly outperform the weak lensing power spec-
+trum, improving the constraints on the sum of neutrino masses∑"
+"mν ≡ Mν by 63% when using a starlet filter; multi-scale peak
+counts were also shown to be so constraining that the addition of
+the power spectrum does not further improve constraints. A very
+interesting feature of multi-scale peaks, when they are obtained
+using the starlet transform (Starck et al. 2007), is the behaviour
+of the covariance matrix that tends to encode all information in
+its diagonal elements."
+"Another weak lensing probe of large-scale structure is rep-
+resented by cosmic voids, namely under-dense regions of the
+large-scale matter field (Colberg et al. 2008; Pisani et al. 2019).
+Local minima of weak lensing convergence maps, namely pix-
+els with values smaller than their eight neighbouring pixels, have
+been proposed as tracers of the matter distribution voids to infer
+cosmological parameters, both in a mono-scale setting (Coul-
+ton et al. 2020; Martinet et al. 2020; Davies et al. 2020) and in a"
+"Article number, page 1 of 8"
+MassiveNus
+"
+A&A proofs: manuscript no. 39988"
+"multi-scale setting (Zürcher et al. 2020). More specifically, Coul-
+ton et al. (2020) found that lensing minima alone are slightly less
+constraining than the peaks alone and, in agreement with Mar-
+tinet et al. (2020) and Zürcher et al. (2020), that the combina-
+tion of the two statistics produces significantly tighter constraints
+than the power spectrum."
+"In this paper, we propose, for the first time, using the `1-
+norm of wavelet coefficients of weak lensing convergence maps.
+We show that it provides a unified framework for a joint multi-
+scale peak and void analysis and that it takes into account the
+information encoded in all pixels of the map."
+"This letter is structured as follows: In Sect. 2, we define
+the `1-norm. In Sect. 3, we specify the details for the analysis,
+defining the summary statistics employed and the correspond-
+ing choice of filters and binning. We show how we compute the
+covariance matrix, show how we build the likelihood, show the
+posterior distributions, and define the estimators used to quantify
+our results. In Sect. 4, we describe our results, and we draw our
+conclusions in Sect. 5. We dedicate Appendix A to background
+definitions in weak lensing and to the details of the simulations.
+In Appendix B, we discuss features of covariance matrices."
+2. Towards the starlet `1-norm
+2.1. Starlet peaks
+"Multi-scale peak counts can be derived using either a set of
+Gaussian kernels of different sizes or a wavelet decomposition,
+such as the starlet transform (Ajani et al. 2020). The starlet trans-
+form decomposes a convergence map κ of size N × N into a
+set W = {w1, ...,w jmax , cJ} of J = jmax + 1 bands of the same
+size, where jmax is the number of wavelet scales considered, cJ
+is the coarse scale, namely a very smoothed version of the orig-
+inal image κ, and w j are the wavelet bands at scale 2 j pixels. A
+complete description and derivation of the starlet transform al-
+gorithm can be found in Starck et al. (2007, 2016). It was also
+shown in Leonard et al. (2012) that the starlet transform can
+be interpreted as a fast multi-scale aperture mass decomposition
+where the aperture mass kernels have a compact support and are
+compensated functions (namely, the kernel integral is null). Star-
+let peaks are then derived by considering n bins with bin edges
+given by the minimum and maximum values of each band in
+W. An interesting advantage of such an approach is that each
+wavelet band covers a different frequency range, which leads to
+an almost diagonal peak count covariance matrix (Ajani et al.
+2020). This is not the case when a standard multi-scale Gaussian
+analysis is applied on the convergence map."
+2.2. Starlet extrema
+"As mentioned in the introduction, cosmic void analysis is an al-
+ternative to peak analysis for studying convergence maps, and
+the combination of the two improves the constraints on cosmo-
+logical parameters. It is interesting to notice how a starlet de-
+composition can naturally include a multi-scale void analysis.
+Instead of extracting maxima (peaks) in each band, we can also
+extract minima (pixels with values smaller than their eight neigh-
+bours), and a joint peak-void multi-scale is therefore obtained by
+extracting wavelet coefficient extrema (minima+maxima). The
+starlet decomposition therefore provides a very natural frame-
+work for a joint multi-scale peak and void analysis."
+2.3. Starlet `1-norm
+"A particularity of peak and void statistics is that only a few pixels
+are considered, while other high-order statistics, such as bispec-
+trum or Minkowski functionals, use all the pixels. In a starlet
+framework, we should emphasise that starlet peaks have mainly
+positive values and starlet voids negative values due to the prop-
+erty of the wavelet function. So instead of counting the number
+of peaks or voids in a given bin i defined by two values, Bi and
+Bi+1, we could take the sum of all wavelet coefficients with an
+amplitude between Bi and Bi+1. If Bi and Bi+1 are positive, this
+corresponds to the definition of the set of coefficients S j,i at scale
+j and in bin i such that S j,i = {w j,k/Bi < w j,k < Bi+1}, where k is
+the pixel index. We can then compute the sum"
+"∑#coe f (S j,i)
+u=1 S j,i[u]."
+This can be generalised to positive and negative bins using:
+"l j,i1 =
+#coe f (S j,i)∑"
+"| S j,i[u] |= ||S j,i||1, (1)"
+"where ||.||1 is the standard `1-norm (i.e. ||x||1 =
+∑"
+"k |xk |) and the
+index u runs from 1 to the number of pixels in a given bin i at
+scale j (i.e. #coe f (S j,i)). The quantity l"
+"j,i
+1 defined in Equation (1)"
+"is nothing more than the `1-norm of the binned pixel values of
+the starlet coefficients of the original image κ map. In the follow-
+ing, we will name S `1 , the starlet `1-norm, as the set S `1 of all l"
+"numbers obtained from the different scales j and bins i.
+This approach enables us to extract the information encoded"
+"in the absolute value of all pixels in the map instead of character-
+ising it only by selecting local minima or maxima. An interesting
+advantage is that it avoids the open issue of how to define a void
+(Colberg et al. 2008). It is interesting to notice that this S `1 statis-
+tic is also directly related to the density probability function of
+the starlet coefficients at different scales."
+3. Experiment
+3.1. Summary statistics
+"We provided constraints on the sum of neutrino masses Mν, on
+the matter density parameter Ωm, and on the power spectrum
+amplitude As by employing five different statistics applied to the
+MassiveNus1 simulations (Liu et al. 2018). Three of them are
+statistics that are used in weak lensing studies: the power spec-
+trum, combined mono-scale peak and void counts, and multi-
+scale peak count (using the starlet transform). The two others are
+the starlet extrema and the starlet `1-norm S `1 that we introduced
+in the previous section."
+"We computed the summary statistics on maps of the signal-
+to-noise field, where we define the signal to noise as the ratio be-
+tween the noisy convergence κ convolved with the filterW(θker)
+over the smoothed standard deviation of the noise for each real-
+isation per redshift:"
+"S/N ≡
+(W∗ κ)(θker)"
+"σfiltn
+, (2)"
+"whereW(θker) can be a single-Gaussian filter or a starlet fil-
+ter. Concerning σfiltn , its definition depends on the employed fil-
+ter. For a Gaussian kernel, it is given by the standard deviation
+of the smoothed noise maps, while for the starlet case we need
+to estimate the noise at each wavelet scale for each image per"
+1 Further details on the simulations are illustrated in Appendix A.
+"Article number, page 2 of 8"
+MassiveNus
+"
+Virginia Ajani et al.: Starlet `1-norm for weak lensing cosmology"
+"redshift. To estimate the noise level at each starlet scale, we fol-
+lowed Starck & Murtagh (1998) and used the fact that the stan-
+dard deviation of the noise at the scale j is given by σ j = σejσI ,
+where σI is the standard deviation of the noise of the image and
+σej are the coefficients obtained by taking the standard devia-
+tion of the starlet transform of a Gaussian distribution with stan-
+dard deviation one at each scale j. For the purposes of this study,
+we mimicked the shape noise expected for a survey such as Eu-
+clid2(Laureijs et al. 2011; Euclid Collaboration et al. 2020) as
+defined in Appendix A. We performed a tomographic analysis
+using four source redshifts, zs = {0.5, 1.0, 1.5, 2.0}, with corre-
+sponding values for the galaxy number density ngal per source
+redshift bin ngal = {11.02, 11.90, 5.45, 1.45}."
+"A: We computed the power spectrum as defined in Equa-
+tion (A.8) on noisy convergence maps filtered with a Gaussian
+kernel with smoothing size θker = 1 arcmin. We considered an-
+gular scales with 24 logarithmically spaced bins in the range
+` = [300, 5000]."
+"B: Regarding mono-scale peaks and voids, we computed
+peaks (as pixels with values larger than their eight neighbours)
+and voids (as pixels with values smaller than their eight neigh-
+bours) on noisy convergence maps. The maps were filtered with
+a single-Gaussian kernel with smoothing size θker = 2 arcmin,
+with 29 linearly spaced bins for peaks between the minimum
+and maximum of the map in S/N and 29 linearly spaced bins for
+voids between the negative maximum and positive minimum of
+the maps in S/N."
+"C: Starlet peak counts were computed as pixels with val-
+ues larger than their eight neighbours. They were computed on
+noisy convergence maps filtered with a starlet kernel with four
+scales corresponding to [1.6′, 3.2′, 6.4′, coarse], with 29 linearly
+spaced bins for each scale between the minimum and maximum
+values of each S/N map."
+"D: Starlet extrema were obtained by combining the peaks
+computed on maps with only S/N > 0 contribution with starlet
+voids computed on maps with only S/N < 0 contribution. We
+used a starlet as we did with (C), with 58 linearly spaced bins
+(29 for peaks and 29 for voids)."
+"E: The starlet `1-norm S `1 was computed following Equation
+(1) on noisy convergence maps filtered with a starlet kernel with
+four scales. We followed the same process as we did for (C) and
+(D)."
+"Statistics (D) and (E) are our new proposals. In all statis-
+tics where we employed the starlet decomposition, the finest
+frequency we considered was θker = 1.6 arcmin, corresponding
+to the maximum angular scale `max = 2149."
+3.2. Covariance matrices
+"The MassiveNus suite of simulations (described in more detail
+in Appendix A) also includes a cosmology with massless neu-
+trinos {Mν,Ωm, 109As}={0.0, 0.3, 2.1} obtained from initial con-
+ditions different from those of the massive neutrino simulations.
+We used this additional simulation set to compute the covari-
+ance matrix of the observable. The covariance matrix elements
+are computed as"
+"Ci j =
+N∑"
+"(xri − µi)(x
+r
+j − µ j)"
+"N − 1
+, (3)"
+2 https://www.Euclid-ec.org
+"where N is the number of observations (in this case, the 10000
+realisations), xri is the value of the considered observable in the
+ith bin for a given realisation r, and"
+"µi =
+1
+N"
+xri (4)
+"is the mean of the observable in a given bin over all the realisa-
+tions. Furthermore, we took into account the loss of information
+due to the finite number of bins and realisations by adopting the
+estimator introduced by Hartlap et al. (2007) for the inverse of
+the covariance matrix:"
+"C−1 =
+N − nbins − 2"
+"N − 1
+C−1∗ , (5)"
+"where N is the number of realisations, nbins the number of bins,
+and C∗ the covariance matrix computed for the power spectrum
+and peak counts, whose elements are given by Equation (3). For
+illustration, we scaled the covariance for a Euclid3 sky coverage
+by the factor fmap/ fsurvey, where fmap = 12.25 deg2 is the size of
+the convergence maps and fEuclid = 15000 deg2."
+3.3. Likelihood
+"To perform Bayesian inference and get the probability distribu-
+tions of the cosmological parameters, we used a Gaussian likeli-
+hood for a cosmology-independent covariance:"
+"logL(θ) =
+1
+2"
+"(d − µ(θ))T C−1(d − µ(θ)), (6)"
+"where d is the data array, C is the covariance matrix of the ob-
+servable, and µ is the expected theoretical prediction as a func-
+tion of the cosmological parameters θ. In our case, the data array
+is the mean over the (simulated) realisations of all the separate
+observables, or, of their different combinations, for our fiducial
+model. Cosmological parameters are the ones for which simula-
+tions are available, namely {Mν,Ωm, 109As}, but the same statis-
+tics can of course be applied to other parameters if simulations
+allow."
+"In order to predict the theoretical values of all observ-
+ables given a new set of values for the cosmological parame-
+ters {Mν,Ωm, 109As}, we employed an interpolation with Gaus-
+sian process regression (Rasmussen & Williams 2005) using the
+scikit-learn python package. The emulator used in this paper
+is the same as that employed in Li et al. (2019)."
+3.4. Result estimators
+"To quantify the constraining power of the different summary
+statistics, we employed the following estimators, which are
+based on Euclid Collaboration et al. (2020). To have an approx-
+imate quantification of the size of the parameter contours, we
+considered the following figure of merit (FoM):"
+"FoM =
+(
+det (F̃)"
+")1/n
+, (7)"
+"where F̃ is the marginalised Fisher sub-matrix that we estimated
+as the inverse of the covariance matrix among the set of cos-
+mological parameters under investigation and n is equal to the
+parameter space dimensionality. We show the values of the FoM
+for our observables in Table 1. To estimate the marginalised 1σ"
+3 https://www.euclid-ec.org/
+"Article number, page 3 of 8"
+"MassiveNus
+https://www.Euclid-ec.org
+scikit-learn
+https://www.euclid-ec.org/"
+"
+A&A proofs: manuscript no. 39988"
+Power spectrum
+Starlet `1-norm
+"0.3 0.6∑
+mν[eV ]"
+"0.285 0.300 0.315
+Ωm"
+"2.4 3.0
+As"
+"Peaks + voids mono-scale
+Starlet peaks
+Starlet extrema
+Starlet `1-norm"
+"0.2 0.4∑
+mν[eV ]"
+"0.300 0.315
+Ωm"
+"2.1 2.4
+As"
+"Fig. 1. 95% confidence contour tomography with source redshifts zs = [0.5, 1.0, 1.5, 2.0] and corresponding galaxy number densities ngal =
+[11.02, 11.90, 5.45, 1.45]. The dotted black line is the fiducial model: ["
+"∑
+mν,Ωm, 109As] = [0.1, 0.3, 2.1]. Left panel: Constraints from the power"
+"spectrum (light blue contours) computed on noisy maps smoothed with a Gaussian filter with θker =1 arcmin, compared to constraints from
+the starlet `1-norm (dark blue contours) computed on noisy maps filtered with a four-scale starlet kernel. Right panel: Constraints from the
+combination of peaks and voids (magenta contours) computed on noisy maps smoothed with a Gaussian filter with θker =2 arcmin compared to
+constraints from starlet peak counts (green contours), starlet extrema (orange contours), and the `1-norm (dark blue contours), computed on noisy
+maps filtered with a four-scale starlet kernel."
+"Table 1. Values of the figure of merit (FoM) as defined in Equation (7) for different parameter pairs for each observable employed in the likelihood
+analysis. In the last column, we provide the 3D FoM given as the inverse of the volume in (Mν, As,Ωm) space."
+"FoM (Mν, Ωm) (Mν, As) (Ωm, As) (Mν, Ωm, As)
+Power spectrum 1585 77 1079 2063
+Starlet Peaks 5904 331 4856 10147
+`1-norm 11408 619 9126 16688
+Starlet extrema 6967 442 5956 6740
+Peaks + voids monoscale 5321 307 4286 6114"
+"error on a single parameter θα (which means having included all
+the degeneracies with respect to other parameters), we used the
+quantity:"
+"σαα =
+√"
+"Cαα, (8)"
+"where Cαα are the diagonal elements of the parameter covariance
+matrix. We show the values of the σαα for our observables in
+Table 2."
+3.5. MCMC simulations and posterior distributions
+"We explored and constrained the parameter space with the
+emcee package, which is a python implementation of the affine
+invariant ensemble sampler for Markov chain Monte Carlo
+(MCMC) introduced by Foreman-Mackey et al. (2013). We as-
+sumed a flat prior, a Gaussian likelihood function as defined in
+Sect. 6, and a model-independent covariance matrix as discussed
+in Sect. 3.2. The walkers were initialised in a tiny Gaussian ball
+of radius 10−3 around the fiducial cosmology [Mν,Ωm, 109As] =
+[0.1, 0.3, 2.1], and we estimated the posterior using 120 walk-
+ers. Our chains are stable against the length of the chain, and we
+verified their convergence by employing Gelman Rubin diagnos-"
+"Table 2. Values of 1-σ marginalised errors as defined in Equation (8)
+for each cosmological parameter for the different observables."
+"σαα Mν Ωm As
+Power spectrum 0.147 0.005 0.204
+Starlet peaks 0.057 0.003 0.064
+`1-norm 0.041 0.002 0.051
+Starlet extrema 0.040 0.004 0.062
+Peaks + voids monoscale 0.054 0.004 0.067"
+"tics (Gelman & Rubin 1992). To plot the contours, we used the
+ChainConsumer python package (Hinton 2016)."
+4. Results
+"We now illustrate forecast results on the sum of neutrino masses
+Mν, on the matter density parameter Ωm, and on the power spec-
+trum amplitude As for a survey with Euclid-like noise in a tomo-
+graphic setting with four source redshifts, zs= [0.5,1.0,1.5,2.0].
+We compare results for the different observables defined in Sect.
+3.1 and investigate the impact of the choice of the filter on the
+covariance matrix."
+"Article number, page 4 of 8"
+"emcee
+ChainConsumer"
+"
+Virginia Ajani et al.: Starlet `1-norm for weak lensing cosmology"
+"0.2 0.4 0.6∑
+mν [eV]"
+"0.29 0.30 0.31
+Ωm"
+"2.00 2.25 2.50 2.75
+109As"
+Power spectrum
+Starlet peaks
+L1-norm
+Starlet extrema
+Peaks+voids
+"Fig. 2. Marginalised errors for the observables described in Sect. 3.1
+on each parameter, showing the 2.5 and 97.5 percentiles with re-
+spect to the fiducial model. They refer to a tomographic setting with
+z = [0.5, 1.0, 1.5, 2.0], with the fiducial model set to [Mν,Ωm, 109As] =
+[0.1, 0.3, 2.1]. The last observable refers to mono-scale peaks and voids,
+as described in the text."
+"In Fig. 1, we show the comparison between the constraints
+obtained using different summary statistics, as described in Sect.
+3.1. As expected, we see that all higher-order statistics are more
+constraining than the power spectrum. The new result of this
+letter is represented by the starlet `1-norm: The inclusion of all
+pixels enables us to retrieve tighter constraints than the combi-
+nation of local minima and maxima (voids+peaks). Specifically,
+for all parameter space planes, the `1-norm FoM values, illus-
+trated in Table 1, are about twice as large compared to those for
+the combined local minima and maxima (and more than seven
+times larger than the power spectrum FoM values)."
+"In this work, we have also introduced starlet extrema as a
+new summary statistic to constrain the parameters. Similarly to
+the `1-norm, starlet extrema are computed between the minimum
+and maximum S/N value of the map, but they are defined as the
+combination of local maxima computed on S/N > 0 and local
+minima computed on S/N < 0 (namely, they do not encode the
+information present in all pixels). We see that starlet extrema
+FoM values are larger than starlet peaks and peaks+voids mono-
+scales, suggesting that starlet extrema can be a good multi-scale
+higher-order statistic candidate. However, the `1-norm remains
+the statistic that performs the best in terms of constraining power
+with respect to all the summary statistics we have considered. In
+Fig. 2, we show the marginalised constraints on each cosmo-
+logical parameter corresponding to the different observables. To
+compare the improvement obtained by employing the different
+statistics, we computed the 1σ marginalised error for each pa-
+rameter, as summarised in Table 2. We find that the starlet `1-
+norm outperforms the power spectrum by 72% on Mν, 60% on
+Ωm, and 75% on As, and the state-of-the-art peaks+voids for a
+single smoothing scale by 24% on Mν, 50% on Ωm, and 24%
+on As. Starlet extrema outperform the power spectrum by 72%
+on Mν, 20% on Ωm, and 70% on As. We also quantify the im-
+provement provided by the `1-norm with respect to our previous
+study (Ajani et al. 2020), finding that the starlet `1-norm out-
+performs starlet peaks by 28% on Mν, 33% on Ωm, and 20% on
+As. In Appendix B, we also compare the covariance matrices ob-
+tained when using starlet extrema and the `1-norm, and we find
+that starlet extrema present a more diagonal covariance for the
+observable."
+5. Conclusions
+"In this letter, we have proposed using starlet `1-norm statistics on
+weak lensing converge maps to constrain cosmological parame-
+ters. The measure of multi-scale peak amplitudes can be seen as
+a measure of the `1-norm of a subset of positive wavelet coeffi-"
+"cients. Similarly, the measure of void amplitudes can be seen as
+a measure of the `1-norm of a subset of negative wavelet coeffi-
+cients. Wavelets therefore provide a great framework for a joint
+peak and void analysis, in which information from all wavelet
+coefficients is included. We therefore propose using a very sim-
+ple `1-norm statistic, defined as the sum of the `1-norm of all
+coefficients in a given S/N (pixel) bin for each wavelet scale, as
+defined in Equation (1). We investigate the impact of employ-
+ing the starlet `1-norm as summary statistics computed on weak
+lensing convergence maps to estimate cosmological parameters,
+and we find that the `1-norm outperforms the two state-of-the-art
+summary statistics, the power spectrum and the combination of
+mono-scale peaks and voids, by, respectively, 72% and 24% on
+Mν, 60% and 50% on Ωm, and 75% and 24% on As. We have
+furthered proposed starlet extrema and compared them to the `1-
+norm: In this case as well, the latter performs better in terms of
+constraining power, within the current ideal setting, while the
+former present the advantage of a more diagonal covariance ma-
+trix. We are aware that the statistical power alone is not sufficient
+to serve as a robust probe for precision cosmology; for their us-
+age, it will be important to test how these statistics react in a
+non-ideal setting and how their performance is impacted by sys-
+tematics in the signal. We will dedicate a future study to this
+aspect."
+"We conclude that the new statistic proposed here presents
+several advantages in the context of cosmological parameter in-
+ference: It provides a fast calculation of the full void and peak
+distribution; it does not rely on a specific definition of peaks and
+voids or some arbitrary threshold; it instead encodes information
+of the entire pixel distribution without excluding pixels that are
+not local minima or maxima; and it leads to tighter constraints,
+at least within an ideal setting. The starlet decomposition there-
+fore provides a very powerful framework for a joint multi-scale
+peak and void analysis.
+Acknowledgements. We thank Jia Liu and the Columbia Lensing group for mak-
+ing the MassiveNus (Liu et al. 2018) simulations available. Virginia Ajani ac-
+knowledges support by the Centre National d’Etudes Spatiales and the project
+Initiative d’Excellence (IdEx) of Université de Paris (ANR-18-IDEX-0001). We
+thank the Columbia Lensing group4 for making their simulations available. The
+creation of these simulations is supported through grants NSF AST-1210877,
+NSF AST-140041, and NASA ATP-80NSSC18K1093. We thank New Mexico
+State University (USA) and Instituto de Astrofisica de Andalucia CSIC (Spain)
+for hosting the Skies & Universes site for cosmological simulation product."
+"References
+Abbott, T. M. C., Abdalla, F. B., Avila, S., et al. 2019, Phys. Rev. D, 99, 123505
+Ajani, V., Peel, A., Pettorino, V., et al. 2020, Phys. Rev. D, 102, 103531
+Allys, E., Marchand, T., Cardoso, J.-F., et al. 2020, Phys. Rev. D, 102, 103506
+Chan, K. C. & Blot, L. 2017, Phys. Rev. D, 96, 023528
+Chang, C., Pujol, A., Mawdsley, B., et al. 2018, MNRAS, 475, 3165
+Cheng, S., Ting, Y.-S., Ménard, B., & Bruna, J. 2020, MNRAS
+Colberg, J. M., Pearce, F., Foster, C., et al. 2008, MNRAS, 387, 933
+Coulton, W. R., Liu, J., Madhavacheril, M. S., et al. 2019, J. Cosmology As-"
+"tropart. Phys., 2019, 043
+Coulton, W. R., Liu, J., McCarthy, I. G., et al. 2020, MNRAS, 495, 2531
+Davies, C. T., Cautun, M., Giblin, B., et al. 2020, arXiv e-prints,"
+"arXiv:2010.11954
+Dietrich, J. P. & Hartlap, J. 2010, MNRAS, 402, 1049
+Euclid Collaboration, Blanchard, A., Camera, S., et al. 2020, A&A, 642, A191
+Fluri, J., Kacprzak, T., Refregier, A., et al. 2018a, Phys. Rev. D, 98, 123518
+Fluri, J., Kacprzak, T., Sgier, R., et al. 2018b, J. Cosmology Astropart. Phys.,"
+"2018, 051
+Foreman-Mackey, D., Hogg, D. W., Lang, D., et al. 2013, PASP, 125, 306
+Gatti, M., Chang, C., Friedrich, O., et al. 2020, MNRAS, 498, 4060
+Gelman, A. & Rubin, D. B. 1992, Statistical Science, 7, 457"
+4 http://columbialensing.org
+"Article number, page 5 of 8"
+"MassiveNus
+http://columbialensing.org
+http://columbialensing.org"
+"
+A&A proofs: manuscript no. 39988"
+"Giocoli, C., Moscardini, L., Baldi, M., et al. 2018, MNRAS, 478, 5436
+Gupta, A., Matilla, J. M. Z., Hsu, D., et al. 2018, Phys. Rev. D, 97, 103515
+Hamana, T., Oguri, M., Shirasaki, M., & Sato, M. 2012, MNRAS, 425, 2287
+Hartlap, J., Simon, P., & Schneider, P. 2007, A&A, 464, 399
+Heymans, C., Tröster, T., Asgari, M., et al. 2020, A&A, Forthcoming article
+Heymans, C., Van Waerbeke, L., Miller, L., et al. 2012, Monthly Notices of the"
+"Royal Astronomical Society, 427, 146–166
+Hilbert, S., Marian, L., Smith, R. E., & Desjacques, V. 2012, MNRAS, 426, 2870
+Hinton, S. R. 2016, The Journal of Open Source Software, 1, 00045
+Kaiser, N. & Squires, G. 1993, ApJ, 404, 441
+Kilbinger, M. 2015, Reports on Progress in Physics, 78, 086901
+Kratochvil, J. M., Haiman, Z., & May, M. 2010, Phys. Rev. D, 81, 043519
+Kratochvil, J. M., Lim, E. A., Wang, S., et al. 2012, Phys. Rev. D, 85, 103513
+Kruse, G. & Schneider, P. 1999, MNRAS, 302, 821
+Laureijs, R., Amiaux, J., Arduini, S., et al. 2011, arXiv e-prints, arXiv:1110.3193
+Leonard, A., Pires, S., & Starck, J.-L. 2012, MNRAS, 423, 3405
+Lesgourgues, J. & Pastor, S. 2012, Advances in High Energy Physics, vol. 2012,"
+"34
+Li, Z., Liu, J., Zorrilla Matilla, J. M., et al. 2019, Phys. Rev. D, 99, 063527
+Lin, C.-A. & Kilbinger, M. 2015, A&A, 583, A70
+Lin, C.-A., Kilbinger, M., & Pires, S. 2016, A&A, 593, A88
+Liu, J., Bird, S., Zorrilla Matilla, J. M., et al. 2018, J. Cosmology Astropart."
+"Phys., 2018, 049
+Liu, J., Petri, A., Haiman, Z., et al. 2015, Phys. Rev. D, 91, 063507
+LSST Science Collaboration, Abell, P. A., Allison, J., et al. 2009, arXiv e-prints,"
+"arXiv:0912.0201
+Mandelbaum, R. & Hyper Suprime-Cam (HSC) Collaboration. 2017, in Ameri-"
+"can Astronomical Society Meeting Abstracts, Vol. 229, American Astronom-
+ical Society Meeting Abstracts #229, 226.02"
+"Marian, L., Smith, R. E., Hilbert, S., & Schneider, P. 2012, MNRAS, 423, 1711
+Marian, L., Smith, R. E., Hilbert, S., & Schneider, P. 2013, MNRAS, 432, 1338
+Marques, G. A., Liu, J., Zorrilla Matilla, J. M., et al. 2019, J. Cosmology As-"
+"tropart. Phys., 2019, 019
+Martinet, N., Bartlett, J. G., Kiessling, A., & Sartoris, B. 2015, A&A, 581, A101
+Martinet, N., Harnois-Déraps, J., Jullo, E., & Schneider, P. 2020, arXiv e-prints,"
+"arXiv:2010.07376
+Martinet, N., Schneider, P., Hildebrandt, H., et al. 2018, MNRAS, 474, 712
+Maturi, M., Fedeli, C., & Moscardini, L. 2011, MNRAS, 416, 2527
+Parroni, C., Cardone, V. F., Maoli, R., & Scaramella, R. 2020, A&A, 633, A71
+Peel, A., Lalande, F., Starck, J.-L., et al. 2019, Phys. Rev. D, 100, 023508
+Peel, A., Pettorino, V., Giocoli, C., et al. 2018, A&A, 619, A38
+Perlmutter, S., Aldering, G., Goldhaber, G., et al. 1999, ApJ, 517, 565
+Petri, A. 2016, Astronomy and Computing, 17, 73
+Petri, A., Liu, J., Haiman, Z., et al. 2015, Phys. Rev. D, 91, 103511
+Petri, A., May, M., & Haiman, Z. 2016, Phys. Rev. D, 94, 063534
+Pires, S., Leonard, A., & Starck, J.-L. 2012, MNRAS, 423, 983
+Pisani, A., Massara, E., Spergel, D. N., et al. 2019, BAAS, 51, 40
+Rasmussen, C. E. & Williams, C. K. I. 2005, Gaussian Processes for Machine"
+"Learning (Adaptive Computation and Machine Learning) (The MIT Press)
+Ribli, D., Pataki, B. Á., Zorrilla Matilla, J. M., et al. 2019, MNRAS, 490, 1843
+Riess, A. G., Filippenko, A. V., Challis, P., et al. 1998, AJ, 116, 1009
+Schneider, P., Ehlers, J., & Falco, E. E. 1992, Gravitational Lenses
+Shirasaki, M., Yoshida, N., Ikeda, S., Oogi, T., & Nishimichi, T. 2019, arXiv"
+"e-prints, arXiv:1911.12890
+Starck, J.-L., Fadili, J., & Murtagh, F. 2007, IEEE transactions on image pro-"
+"cessing : a publication of the IEEE Signal Processing Society, 16, 297
+Starck, J.-L. & Murtagh, F. 1998, PASP, 110, 193
+Starck, J.-L., Murtagh, F., & Fadili, J. 2016, Sparse Image and Signal Processing:"
+"Wavelets and Related Geometric Multiscale Analysis (Cambridge University
+Press)"
+"Takada, M. & Jain, B. 2004, MNRAS, 348, 897
+To, C., Krause, E., Rozo, E., et al. 2020, arXiv e-prints, arXiv:2010.01138
+Vicinanza, M., Cardone, V. F., Maoli, R., et al. 2019, Phys. Rev. D, 99, 043534
+Vicinanza, M., Cardone, V. F., Maoli, R., et al. 2018, Phys. Rev. D, 97, 023519
+Weinberg, D. H., Mortonson, M. J., Eisenstein, D. J., et al. 2013, Phys. Rep.,"
+"530, 87
+Zürcher, D., Fluri, J., Sgier, R., et al. 2020, arXiv e-prints, arXiv:2006.12506"
+"Article number, page 6 of 8"
+Virginia Ajani et al.: Starlet `1-norm for weak lensing cosmology
+Appendix A: Background
+Appendix A.1: Weak lensing
+"The effect of gravitational lensing at co-moving angular distance
+fK(χ) can be described by the lensing potential,"
+"ψ(θ, χ) ≡
+2
+c2"
+"dχ′
+fK(χ − χ′)"
+"fK(χ) fK(χ′)
+Φ( fK(χ"
+"′)θ, χ′) , (A.1)"
+"which defines how much the gravitational potential Φ arising
+from a mass distribution changes the direction of a light path.
+In this expression, K is the spatial curvature constant of the uni-
+verse, χ is the co-moving radial coordinate, θ is the angle of
+observation, and c is the speed of light. As we are working under
+the assumption of a Lambda cold dark matter (ΛCDM) model,
+the two Bardeen gravitational potentials are here assumed to be
+equal and the metric signature is defined as (+1,−1,−1,−1). In
+particular, under the Born approximation, the effect of the lens-
+ing potential on the shapes of background galaxies in the weak
+regime can be summarised by its variation with respect to θ. For-
+mally, this effect can be described by the elements of the lensing
+potential Jacobi matrix,"
+"Ai j = δi j − ∂i∂ jψ, (A.2)"
+which can be parametrised as
+"1 − κ − γ1 −γ2
+−γ2 1 − κ + γ1"
+")
+, (A.3)"
+"where (γ1, γ2) are the components of a spin-2 field γ called
+shear and κ is a scalar quantity called convergence. They de-
+scribe, respectively, the anisotropic stretching and the isotropic
+magnification of the galaxy shape when light passes through
+large-scale structure. Equations (A.2) and (A.3) define the shear
+and the convergence fields as second-order derivatives of the
+lensing potential:"
+"γ1 ≡
+1
+2"
+"(∂1∂1 − ∂2∂2)ψ γ2 ≡ ∂1∂2ψ, (A.4)"
+"κ ≡
+1
+2"
+"(∂1∂1 + ∂2∂2)ψ =
+1
+2
+∇"
+2ψ. (A.5)
+"The weak lensing field is a powerful tool for cosmological in-
+ference. The shear is more closely related to actual observables
+(galaxy shapes), while the convergence, as a scalar field, can be
+more directly understood in terms of the matter density distri-
+bution along the line of sight. This can be seen by inserting the
+lensing potential defined in Equation (A.1) inside Equation (A.5)
+and using the fact that the gravitational potential Φ is related to
+the matter density contrast δ = ∆ρ/ρ̄ through the Poisson equa-
+tion ∇2Φ = 4πGa2ρ̄δ. Expressing the mean matter density in
+terms of the critical density ρc,0 = 3H20/(8πG), the convergence
+field can be rewritten as"
+"κ(θ) =
+3H20Ωm"
+"∫ χlim
+0"
+"dχ
+a(χ)"
+"g(χ) fK(χ)δ( fK(χ)θ, χ), (A.6)"
+where H0 is the Hubble parameter at its present value and
+"g(χ) ≡
+∫ χlim
+χ"
+"dχ′n(χ′)
+fK(χ′ − χ)"
+"fK(χ′)
+(A.7)"
+"is the lensing efficiency. Equation (A.6) relates the convergence
+κ to the 3D matter over-density field δ( fK(χ)θ, χ), and it de-
+scribes how the lensing effect on the matter density distribu-
+tion is quantified by the lensing strength at a distance χ, which
+directly depends on the normalised source galaxy distribution
+n(z)dz = n(χ)dχ and on the geometry of the universe through
+fK(χ) along the line of sight. A complete derivation can be found
+in Kilbinger (2015) and Schneider et al. (1992)."
+Appendix A.1.1: Convergence power spectrum
+"To provide a statistical estimate of the distribution of the con-
+vergence field, the first non-zero order is given by its second
+moment, which is commonly described by the ‘two-point corre-
+lation function’ (2PCF) in real space 〈κ(θ)κ(θ′)〉, or by its coun-
+terpart in Fourier space, the ‘convergence power spectrum’:"
+"Cκ(`) =
+9Ω2mH"
+"∫ χlim
+0"
+"dχ
+g2(χ)
+a2(χ)"
+"fκ(χ)
+, χ"
+")
+, (A.8)"
+"where Pδ represents the 3D matter power spectrum, directly re-
+lated to the matter density distribution δ in Eq. (A.6), of the weak
+lensing convergence field. In this study, we computed the power
+spectrum of the noisy filtered convergence maps: For a given
+cosmology, we added Gaussian noise to each realisation of κ. To
+filter the maps, we employed a Gaussian kernel with smoothing
+size θker = 1 arcmin and considered angular scales with loga-
+rithmically spaced bins in the range ` = [300, 5000]. We com-
+puted the power spectra using LensTools for each of the 10000
+realisations per cosmology, and then we took the average over
+the realisations. We parallelised our code using joblib5 to ac-
+celerate processing due to the large number of realisations per
+cosmology."
+Appendix A.2: Simulations
+"In this paper, we used the Cosmological Massive Neutrino Sim-
+ulations (MassiveNus), a suite of publicly available N-body
+simulations released by the Columbia Lensing group6. It con-
+tains 101 different cosmological models obtained by varying
+the sum of neutrino masses Mν, the total matter density param-
+eter Ωm, and the primordial power spectrum amplitude As at
+the pivot scale k0 = 0.05 Mpc−1 in the ranges Mν = [0, 0.62]
+eV, Ωm = [0.18, 0.42], and As · 109 = [1.29, 2.91]. The re-
+duced Hubble constant h = 0.7, the spectral index ns = 0.97,
+the baryon density parameter Ωb = 0.046, and the dark en-
+ergy equation of state parameter w = −1 were kept fixed un-
+der the assumption of a flat universe. The fiducial model was set
+at"
+"{
+Mν,Ωm, 109As"
+"}
+={0.1, 0.3, 2.1}. The complete description of"
+"the implementation and the products is illustrated in Liu et al.
+(2018). We used simulated convergence maps as mock data
+for our analysis. When dealing with real data, the actual ob-
+servable was the shear field, which can be converted into the
+convergence field following Kaiser & Squires (1993). We by-
+passed this step from γ to κ and worked with the convergence
+maps that were directly provided as products from MassiveNus.
+The maps were generated using the public ray-tracing package
+LensTools (Petri 2016) for each of the 101 cosmological mod-
+els at five source redshifts, zs = {0.5, 1.0, 1.5, 2.0, 2.5}. Each red-
+shift has 10000 different map realisations obtained by rotating"
+"5 https://joblib.readthedocs.io/
+6 http://columbialensing.org"
+"Article number, page 7 of 8"
+"LensTools
+joblib
+MassiveNus
+MassiveNus
+LensTools
+https://joblib.readthedocs.io/
+http://columbialensing.org"
+"
+A&A proofs: manuscript no. 39988"
+Starlet extrema
+Starlet extrema diagonal
+"0.15 0.30∑
+mν[eV ]"
+"0.29 0.30 0.31
+Ωm"
+"2.00 2.25
+As"
+Starlet `1-norm
+Starlet `1-norm diagonal
+"0.2 0.4∑
+mν[eV ]"
+"0.29 0.30 0.31
+Ωm"
+"2.00 2.25
+As"
+"Fig. A.1. 95% confidence contour tomography with source redshifts zs = [0.5, 1.0, 1.5, 2.0] and corresponding galaxy number densities: ngal =
+[11.02, 11.90, 5.45, 1.45]. The dotted black line is the fiducial model: ["
+"∑
+mν,Ωm, 109As] = [0.1, 0.3, 2.1]. Left panel: Constraints from starlet"
+"extrema with the full covariance matrix (continuous contours) computed on noisy maps filtered with a four-scale starlet kernel against constraints
+from starlet extrema with the only diagonal elements of the covariance matrix (dashed contours). Right panel: Constraints from the `1-norm with
+the full covariance matrix (continuous contours) computed on noisy maps filtered with a four-scale starlet kernel against constraints from `1-norm
+with the only diagonal elements of the covariance matrix (dashed contours)."
+"and shifting the spatial planes. Each κ map has 5122 pixels, cor-
+responding to a 12.25 deg2 total angular size area in the range
+` ∈ [100, 37000] with a resolution of 0.4 arcmin. We mimicked
+Euclid-like shape noise at each source redshift assuming Gaus-
+sian noise with mean zero and variance:"
+"σ2n =
+〈σ2� 〉"
+"ngalApix
+, (A.9)"
+"where we set the dispersion of the ellipticity distribution to σ� =
+0.3 and the pixel area is given by Apix ' 0.16 arcmin2."
+Appendix B: Diagonal covariances
+"As recalled in the introduction, Ajani et al. (2020) found that
+starlet peak counts have the interesting feature that the corre-
+sponding covariance matrix is nearly diagonal. Motivated by
+this, we have tested in this work whether this feature is also
+maintained for starlet extrema and for the `1-norm. Interestingly,
+we find that starlet extrema keep this characteristic, while the `1-
+norm show more correlations in the off-diagonal term. This can
+be seen by looking at Fig. A.1: In the left panel, we show the
+constraints for the starlet extrema when using the full covariance
+matrix (continuous contours) and compare them with the starlet
+extrema when using only the diagonal elements of the covari-
+ance matrix (dashed contours). Analogously, we show the same
+comparison for the `1-norm in the right panel. When using star-
+let extrema as summary statistics, there is no loss of information
+on Mν, and a slight loss of information of 25% on Ωm and 22%
+As if we employ a covariance matrix with only its diagonal el-
+ements in the likelihood analysis. Concerning the `1-norm, it is
+sufficient to look at the contours to notice how the contours with
+only diagonal terms are considerably different with respect to the
+contours obtained with the full covariance matrix: They appear
+shifted and present a different degree of degeneracy for (Ωm, As)."
+"Hence, considering this result along with the result from Sect.
+4, we conclude that the `1-norm outperforms starlet extrema in
+terms of constraining power when considering the full covari-
+ance in the analysis, but presents a less diagonal matrix than
+starlet extrema. We conclude that, depending on the context, the
+`1-norm could be a convenient choice when the priority is the
+constraining power, while starlet extrema might be more useful
+when one is interested in speeding up the analysis or when the
+covariance matrix can be difficult to invert."
+"Article number, page 8 of 8"
+"
+	1 Introduction
+	2 Towards the starlet 1-norm 
+	2.1 Starlet peaks
+	2.2 Starlet extrema
+	2.3 Starlet 1-norm"
+"	3 Experiment
+	3.1 Summary statistics
+	3.2 Covariance matrices
+	3.3 Likelihood
+	3.4 Result estimators
+	3.5 MCMC simulations and posterior distributions"
+"	4 Results
+	5 Conclusions
+	A Background
+	A.1 Weak lensing
+	A.1.1 Convergence power spectrum"
+	A.2 Simulations
+	B Diagonal covariances

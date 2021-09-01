@@ -1,0 +1,1198 @@
+0
+"Draft version January 6, 2021
+Typeset using LATEX default style in AASTeX61"
+STARSHADE RENDEZVOUS:
+EXOPLANET ORBIT CONSTRAINTS FROM MULTI-EPOCH DIRECT IMAGING
+"Andrew Romero-Wolf,1 Geoffrey Bryden,1 Greg Agnes,1 Jonathan W. Arenberg,2 Samuel Case Bradford,1"
+"Simone D’Amico,3 John Debes,4 Matt Greenhouse,5 Renyu Hu,1 Steve Matousek,1 Jason Rhodes,1 and
+John Ziemer1"
+"1Jet Propulsion Laboratory, California Institute of Technology, Pasadena, CA 91109, USA
+2Northrop Grumman Aerospace Systems, Redondo Beach, CA 90278, USA
+3Stanford University, Stanford, CA 94305, USA
+4Space Telescope Science Institute, Baltimore, MD 21218, USA
+5NASA Goddard Space Flight Center, Greenbelt, MD 20771, USA"
+ABSTRACT
+The addition of an external starshade to the Nancy Grace Roman Space Telescope will enable the direct imaging of
+"Earth-radius planets orbiting at ∼1 AU. Classification of any detected planets as Earth-like requires both spectroscopy
+to characterize their atmospheres and multi-epoch imaging to trace their orbits. We consider here the ability of the"
+Starshade Rendezvous Probe to constrain the orbits of directly imaged Earth-like planets. The target list for this
+proposed mission consists of the 16 nearby stars best suited for direct imaging. The field of regard for a starshade
+"mission is constrained by solar exclusion angles, resulting in four observing windows during a two-year mission. We find"
+"that for habitable-zone planetary orbits that are detected at least three times during the four viewing opportunities,"
+"their semi-major axes are measured with a median precision of 7 mas, or a median fractional precision of 3%. Habitable-"
+"zone planets can be correctly identified as such 96.7% of the time, with a false positive rate of 2.8%. If a more"
+"conservative criteria is used for habitable-zone classification (95% probability), the false positive rate drops close to"
+"zero, but with only 81% of the truly Earth-like planets correctly classified as residing in the habitable zone."
+"Keywords: planets, imaging"
+1. INTRODUCTION
+The Starshade Rendezvous Probe (SRP) mission concept proposes adding a Starshade to the Nancy Grace Roman
+Space Telescope enabling the detection of habitable zone exoplanets and characterization of their atmospheres (Seager
+et al. 2019). Romero-Wolf et al. (2020) described in detail the technical basis for the SRP study report (Seager
+et al. 2019) along with the simulations used to estimate sensitivity of the observatory. The corresponding software is
+publicly available for reproduction of the results below and for comparison with similar simulations.1. The main result
+of these studies is that SRP is capable of discovering Earth-size planets in the habitable zones of nearby stars using
+the relatively moderate aperture of the Roman space telescope (Romero-Wolf et al. 2020) along with the Coronagraph
+Instrument (CGI).
+While the SRP science objectives include quantifying the amount of habitable zone dust around nearby stars and
+"measuring the metallicity of known gas giant planets, the primary driver is the detection and characterization of"
+"Earth-like planets. The overall strategy, described in more detail in Romero-Wolf et al. (2020), involves three main"
+"steps: 1) initial detection via direct imaging, 2) habitable zone determination via orbit tracing, and 3) atmosphere"
+characterization via spectroscopy. The integration times necessary to image and to take spectra of Earth-like planets
+"(steps 1 and 3) were taken into account with a model of the observatory. However, step 2 is more complicated since"
+"the observatory field of regard is constrained by solar exclusion angles, typically limiting the target observing windows"
+"to two ∼30 day blocks per year – a total of 4 observing opportunities during the assumed 2-year mission lifetime.
+Depending on the orientation and phase of a planet’s orbit, it may or may not be visible during each of these 4"
+"observing windows. In Romero-Wolf et al. (2020), we assumed that detecting the planet during at least 3 of the 4"
+"epochs would be sufficient to determine if a planet lies within its parent star’s habitable zone. In this paper, we"
+"consider this step in more detail, performing multi-epoch orbit fitting for the target list and expected signal-to-noise"
+given by the Romero-Wolf et al. (2020) observatory model.
+"Measurement of planetary orbits has been previously modeled for several types of observations – radial velocity,"
+"astrometric wobble, and coronagraphic direct imaging. Examples include: 1) Mawet et al. (2019) combining radial"
+"velocity measurements with direct imaging upper limits to improve the orbital fit for the planet eps Eri b, 2) Ford"
+"(2006) quantifying the robustness of planetary orbit determination via the stellar astrometric signal, concentrating on"
+"the difficulty posed by multi-planet systems, and 3) Guyon et al. (2013) considering simultaneous stellar astrometry and"
+"direct imaging, finding that Earth-like planets can be characterized in just a few observations. Among the studies that,"
+"like this paper, concentrate on direct imaging, Blunt et al. (2017) performed a detailed analysis of orbital constraints"
+based on the small fraction of an orbit that is traced by known long-period direct-imaged planets. For theoretical
+"cases where the observations span at least half an orbital period, Horning et al. (2019) find that three equally spaced"
+"observations with SNR ≥ 10 can measure the semi-major axis and eccentricity to 10%. Guimond & Cowan (2019)
+also consider direct imaging of shorter period planets, finding that a habitable zone planet’s semi-major axis can be"
+measured to within 5% if it is observed with precision 3.5 mas over three epochs each spaced by at least 90 days apart.
+Here we consider the results obtainable by a specific mission concept – the Starshade Rendezvous Probe. Unlike
+"previous work, this includes: 1) a realistic signal-to-noise calculation as a function of stellar illumination, rather than"
+"an assumed astrometric precision, 2) a starshade-specific inner working angle that obscures planet images close to the"
+"star, and 3) observing windows based on known target sky positions and observatory pointing constraints, not just"
+"arbitrarily spaced images. Furthermore we focus here not on general orbit fitting results, but on a specific science"
+question – whether or not we can determine if a planet lies in its parent star’s habitable zone.
+"In the following, we first summarize the observatory model from Romero-Wolf et al. (2020) used to calculate the"
+"signal-to-noise for each planet image §2. For many sets of simulated observations, we then extract orbital elements for
+each injected planets §3. We give the resulting precision for the orbital fits in §4 and summarize in §5."
+2. OBSERVING MODEL
+"We briefly summarize the models used for planet properties, orbit propagation, and the observatory. A detailed"
+presentation of these models can be found in Romero-Wolf et al. (2020).
+2.1. Targets
+1 https://github.com/afromero/Starshade_Rendezvous_Probe_sims
+https://github.com/afromero/Starshade_Rendezvous_Probe_sims
+Table 1. Planet and Dust Parameters
+Parameter Value (or [Range])
+Earth-like planet geometric albedoa 0.2
+"Earth-like planet radiusb [0.8a0.5p − 1.4] r⊕
+Habitable zone [0.95− 1.67]"
+Zodiacal dust brightness Leinert et al. (1998)
+Exozodi dust brightnessc 4.5 zodi
+"aFor the assumed isotropic scattering, this geometric albedo
+is equivalent to 0.3 spherical albedo.
+bThe semi-major axis ap is modified by a factor of"
+"√
+L? to"
+"account for stellar irradiance.
+cThe unit of 1 zodi is equivalent to 22 mag/arcsec2."
+"Planet sizes and orbital periods are drawn randomly from these defined ranges for Earth-like planets, based on the"
+distribution defined by SAG-13 (Belikov & et al. 2017) and modified by HabEx to include the dependence of the orbital
+semi-major axis on the lower limit of planet radii. The orbital period P defines the orbital radius ap by way of the
+"stellar mass M? using Kepler’s third law. For sampling of Earth-like exoplanets, the orbits are assumed to be circular,"
+"consistent with most previous studies, e.g. Stark et al. (2016). However, when fitting, we allow eccentricity to be a"
+"free parameter (see §3).
+The orbital radii are sampled over a range from inside the inner habitable zone (defined as 0.95"
+"√
+L?, where L? is the"
+"stellar luminosity relative to the Sun) to outside the outer habitable zone (defined as 1.67
+√
+L?; Kasting et al. 1993)."
+"The range of planet radii considered is bounded above at rpl ≤ 1.4 r⊕, based on evidence that suggests that planets
+with radius below are predominantly rocky (Rogers 2015). The lower bound on terrestrial planet radii depends on the"
+"planet’s ability to retain an appreciable atmosphere, which, in turn depends on their stellar illumination. This results"
+"in a dependence on the planet’s semi-minor axis ap, modified by the stellar luminosity to give rpl ≥ 0.8a
+1/2
+p /L"
+(Zahnle & Catling 2017).
+We model Earth-like exoplanets assuming the scatter light isotropically using a Lambertian illumination phase
+function with a geometric albedo of 0.2 (Robinson & Reinhard 2018). We model the star as a blackbody radiator
+"with the parameters provided in ExoCat (Turnbull et al. 2012). We include obscuring dust, both in the target system"
+(exozodiacal dust with a fiducial value of 4.5 zodi (Ertel et al. 2020)) and locally in the Solar System (zodiacal dust
+using the model of Leinert et al. (1998)). Assumed planet and dust characteristics are summarized in Table 1.
+"While the use of an occulting starshade does allow for detection of fainter and closer planets, it also puts constraints"
+on the allowed times of observation. The telescope-starshade system has a region of allowed Sun angles over which
+it can operate with the lower limit defined by the exclusion angle from the baffle of the telescope and the outer limit
+defined by reflection and scattering of sunlight off the starshade into the telescope baffle (Table 2).
+2.2. Observatory
+The integration times are based on the Starshade/Roman system parameters provided in Table 2. Roman has
+a telescope diameter of 2.4 m resulting in a point spread function of 65 mas at 750 nm wavelength. We assume
+"observations in the 615 – 800 nm band with an end-to-end efficiency, including optical throughput and detector"
+"efficiency, of 3.5% in imaging mode. The Starshade has an inner working angle (IWA) of 100 mas, below which planets"
+"are assumed to not be observable. The instrument contrast at the IWA and above is assumed to be 4 × 10−11, as
+calculated by Seager et al. (2019). Integration times vary between 1 – 6.3 days, depending on the target (explained"
+below).
+"Besides the sensitivity, determined by the parameters given above, the main constraints to orbit reconstruction are"
+the nominal mission lifetime of 2 years and the solar exclusion angles. The minimum solar exclusion angle of 54◦ is
+determined by the telescope baffle while the maximum solar exclusion angle of 83◦ is determined by scattering off the
+Table 2. Mission Parameters
+Parameter Assumed Performance
+Mission lifetime 2 years
+Telescope primary mirror 2.4 m
+Imaging resolution 65 mas at 750 nm
+Imaging bandpass 615 – 800 nm
+Imaging end-to-end efficiency 0.035
+Solar exclusion angle (min) 54◦
+Solar exclusion angle (max) 83◦
+Inner working angle (IWA) 100 mas
+Instrument contrast 4× 10−11
+Imaging integration time 1 – 6 days
+"edge of the Starshade. For Roman’s orbit around the L2 Sun-Earth Lagrange point, the calculated observing windows"
+"are shown in Figure 1. During the 2-year lifetime of the mission, there are generally 4 opportunities to observe each"
+"target. It is assumed that targets with Earth-like planet candidates, following the decision tree laid out in Romero-Wolf"
+"et al. (2020), will be visited once in each of the 4 observing windows available. While spectral characterization can"
+"be performed with only a single visit with favorable illumination phase, multiple epochs are needed to constrain the"
+"planet’s orbit, in particular its semi-major axis, which determines whether the planet is in the habitable zone. To best"
+"trace the orbit, the timing of the observations should be as evenly spaced as possible over the orbital period, given the"
+limited observing windows and mission lifetime.
+The properties of the target stars are shown in Table 3. In Romero-Wolf et al. (2020) we defined the single-
+visit completeness as the probability that an Earth-like planet would be detected during one target observation at a
+random time. The imaging integration time for each target is set by identifying what is required to reach a single-visit
+completeness of at least 50% with a minimum value of 1 day and a maximum value of 6.3 days (see Table 3). We also
+"defined the orbital completeness as the probability that a randomly selected orbit will be detectable (S/N ≥ 7) during
+at least 3 of its 4 observing epochs. For most of the targets about half of the planet orbits meets this criterion, but the"
+"orbital completeness can sometimes fall below 20% for systems where the planet signal is relatively weak (again, see"
+"Table 3). In the next section, we calculate whether 3 detections in 4 visits is sufficient to determine whether a planet"
+lies within its habitable zone.
+3. ORBIT RECONSTRUCTION
+"Having identified the best targets for detection of Earth-like planets with their observation availability windows, we"
+now describe our approach to orbit reconstruction. We assume the planet is observed at the beginning of each window
+"as shown in Figure 1, which provides 4 observing epochs per target in most cases. In cases where the star has a single"
+"long availability window per year, we have set the observing times to the beginning and middle of that window."
+"For each Monte Carlo sampled planet, we propagate its circular orbit to each of the observing epochs and calculate"
+"its illumination phase (see §2). We apply the observatory model to estimate the planet signal to noise ratio (SNR).
+Observations with SNR ≥ 7 are considered to be detections. Otherwise, the observation is rejected as a non-detection.
+The one-dimensional astrometric uncertainty is approximated according to δθ = (65 mas)/SNR. The median astro-"
+metric precision for each star ranges from 2.3 to 5.9 mas (see Table 3). The simulated data are created by taking the
+"true position of the planet and adding two-dimensional Gaussian scatter based on the astrometric precision, δθ."
+"For the orbit reconstruction, we implemented a forward modeling of Kepler’s laws, as described in Mede & Brandt"
+"(2017), into our own software package. We sample all six Keplerian parameters, also including uncertainties in the"
+"star’s mass and distance, treating them as nuisance parameters. Table 4 lists the parameters that we fit for each"
+"orbit, along with their assumed ranges and prior constraints. We use the emcee Markov chain Monte Carlo (MCMC)"
+"T
+a
+b
+le"
+"ic
+p
+re"
+"E
+a
+rt"
+"n
+e
+ts"
+"H
+a
+b
+it"
+"a
+b
+le"
+"Z
+o
+n
+e"
+"A
+s
+tr"
+"re
+c
+is"
+"io
+n
+e"
+"H
+a
+b
+it"
+"a
+b
+le"
+"Z
+o
+n
+e"
+"s
+s
+ifi"
+"c
+a
+ti"
+"P
+e
+ri"
+"te
+n
+e
+s
+s"
+"T
+h
+re"
+"s
+h
+o
+ld"
+"T
+h
+re"
+"s
+h
+o
+ld"
+"(p
+c
+)"
+"(m
+a
+g
+)"
+"(m
+a
+s
+)"
+"(y
+e
+a
+rs"
+"a
+y
+s
+)"
+"(m
+a
+s
+)"
+"(m
+a
+s
+)"
+"F
+a
+ls"
+"F
+a
+ls"
+"F
+a
+ls"
+"F
+a
+ls"
+"C
+e
+ti"
+"2
+0
+.8"
+"0
+1
+8
+7"
+"–
+3
+2
+9"
+"7
+0
+.5"
+"5
+3
+.2"
+"%
+2
+.0"
+"%
+0
+.0"
+"%
+1
+2
+.6"
+"c
+y
+o
+n
+a"
+"9
+7
+2
+2"
+"–
+1
+2
+7
+0"
+"–
+7
+.7"
+"5
+0
+.5"
+"4
+3
+.2"
+"2
+8
+.2"
+"%
+1
+.5"
+"%
+0
+.0"
+"%
+1
+4
+.1"
+"In
+d
+a
+c"
+"3
+0
+.6"
+"8
+1
+2
+4"
+"–
+2
+1
+9"
+"4
+2
+.5"
+"7
+0
+.5"
+"4
+2
+.3"
+"%
+0
+.5"
+"%
+0
+.0"
+"%
+7
+.7"
+"iu
+s
+a"
+"−
+1
+.4"
+"3
+0
+.5"
+"0
+1
+9
+9
+3"
+"–
+3
+5
+0
+3"
+"–
+1
+7
+.8"
+"8
+0
+.5"
+"3
+3
+.9"
+"7
+2
+.5"
+"%
+2
+.1"
+"%
+0
+.0"
+"%
+1
+6
+.9"
+"c
+5
+.0"
+"2
+0
+.8"
+"1
+1
+2
+4"
+"–
+2
+1
+8"
+"5
+0
+.5"
+"2
+2
+.5"
+"%
+1
+.5"
+"%
+0
+.2"
+"%
+9
+.1"
+"1
+0
+.7"
+"3
+6
+0
+5"
+"–
+1
+0
+6
+4"
+"–
+9
+.4"
+"8
+0
+.5"
+"1
+3
+.9"
+"3
+6
+.3"
+"%
+3
+.9"
+"%
+0
+.0"
+"%
+2
+4
+.3"
+"9
+1
+7
+9"
+"–
+3
+1
+5"
+"–
+2
+.7"
+"4
+0
+.5"
+"5
+3
+.5"
+"%
+2
+.2"
+"%
+0
+.0"
+"%
+1
+2
+.7"
+"c
+6
+.0"
+"9
+0
+.8"
+"5
+1
+3
+0"
+"–
+2
+2
+9"
+"0
+0
+.4"
+"0
+3
+.1"
+"%
+2
+.4"
+"%
+0
+.2"
+"%
+1
+1
+.1"
+"4
+0
+.8"
+"0
+1
+0
+9"
+"–
+1
+8
+1"
+"5
+0
+.4"
+"2
+3
+.1"
+"%
+1
+.1"
+"%
+0
+.0"
+"%
+7
+.2"
+"4
+2
+4
+5"
+"–
+4
+3
+0"
+"–
+5
+.4"
+"8
+0
+.4"
+"0
+3
+.8"
+"2
+0
+.9"
+"%
+5
+.2"
+"%
+0
+.2"
+"%
+3
+1
+.7"
+"3
+1
+2
+6"
+"–
+2
+2
+2"
+"–
+2
+.5"
+"3
+0
+.1"
+"4
+4
+.4"
+"%
+2
+.3"
+"%
+0
+.0"
+"%
+1
+0
+.5"
+"ri
+8
+.1"
+"4
+2
+0
+3"
+"–
+3
+5
+8"
+"–
+4
+.4"
+"0
+0
+.3"
+"1
+4
+.9"
+"%
+5
+.5"
+"%
+0
+.0"
+"%
+2
+1
+.6"
+"a
+u
+ta"
+"b
+7
+.7"
+"1
+6
+.5"
+"5
+5
+0
+0"
+"–
+8
+7
+9"
+"–
+1
+2
+.3"
+"6
+0
+.4"
+"4
+4
+.9"
+"5
+0
+.5"
+"%
+4
+.0"
+"%
+0
+.0"
+"%
+4
+0
+.7"
+"9
+1
+9
+3"
+"–
+3
+3
+9"
+"–
+4
+.9"
+"6
+0
+.2"
+"6
+5
+.3"
+"1
+1
+.6"
+"%
+6
+.0"
+"%
+0
+.2"
+"%
+3
+0
+.2"
+"7
+1
+6
+8"
+"–
+2
+9
+6"
+"–
+3
+.8"
+"4
+0
+.2"
+"1
+5
+.9"
+"%
+7
+.2"
+"%
+0
+.0"
+"%
+3
+0
+.1"
+"1
+1
+2
+7"
+"–
+2
+2
+4"
+"–
+2
+.7"
+"2
+0
+.1"
+"6
+5
+.4"
+"%
+5
+.4"
+"%
+0
+.0"
+"%
+2
+4
+.9"
+"in
+a
+ry"
+"n
+d
+e
+b
+ri"
+"s
+d
+is"
+"h
+a
+v
+e"
+"n
+e
+t("
+"te
+n
+e
+s
+s"
+"re
+q
+u
+ir"
+"3
+d
+e
+te"
+"h
+S
+/
+N
+≥"
+"ic
+p
+re"
+"io
+n
+s"
+"m
+e
+d
+ia"
+"m
+a
+n
+y"
+"d
+p
+la"
+"n
+e
+ta"
+"ry
+o
+rb"
+"0 30 60 90 12
+0"
+Days since 2029/1/1
+"Zeta Tucanae (16)
+Gamma Leporis (15)"
+"Delta Eridani (14)
+Fomalhaut (13)"
+"1 Ori (12)
+beta CVn (11)
+beta Hyi (10)"
+"sigma Draconis (9)
+82 Eridani (8)"
+"delta Pavonis (7)
+Altair (6)"
+"omicron 2 Eridani (5)
+Sirius A (4)"
+"epsilon Indi A (3)
+Procyon A (2)"
+tau Ceti (1)
+"Figure 1. Target star observing windows (reproduced from Romero-Wolf et al. (2020)) resulting from the telescope and
+starshade solar exclusion angles. Each target typically has two ∼30-day-long observing windows per year. Targets at high
+ecliptic latitude can have longer observing windows per year. The black dots mark the four desired observation start times in a
+two-year period. This is driven by the need to allow for sufficient time to spectrally characterize a planet if it is bright enough."
+Table 4. Orbit Fitting Parameters
+Parameter Description Bounds Prior Constraint
+a semi-major axis 0 – 10 AU linear
+e eccentricity 0 – 1 uniform
+ω argument of periastron 0 – 360◦ uniform
+i inclinationa 0 – 90◦ ∝ sin(i)
+Ω longitude of the ascending node 0 – 360◦ uniform
+"T0 periastron phase 0 – 360
+◦ uniform"
+M? stellar mass 0 – 5 M� observed value with 10% uncertainty
+d? distance 0 – 20 pc observed value with 1% uncertainty
+ai = 90◦ corresponds to edge-on.
+software package (Foreman-Mackey et al. 2013) to fit the orbit. The MCMC fitting procedure calculates the quality of
+"fit for a series of parameter values, not only converging toward the best set of values but also finding the full parameter"
+"ranges that are consistent with the data. Periodic orbital elements (ω, Ω, T0, and i) are modulated to stay within"
+their prescribed bounds (typical from 0 to 2π).
+"Three examples of the orbit reconstruction simulations are shown in Figure 2. The first panel shows Procyon, a"
+"relatively luminous star (7.1 L�), meaning that its habitable zone is relatively distant both in angular scale (0.7–1.3
+′′)"
+"and in physical space (2.5–4.5 AU). With a mass of ∼1.5 M�, planets in the habitable zone have relatively long
+periods. The randomly selected planet orbiting Procyon is detected in all four observations, but because of the long"
+"period, only a fraction of the orbit is traced. The second panel shows a planet orbiting tau Ceti that is only detected"
+"in three of the four observing epochs; during the first observation, the planet falls behind the starshade mask (the"
+"grey circle in the center of each panel), a common occurrence for planets on inclined orbits. In the third panel (sigma"
+"Dra), there are again only 3 successful observations, but in this case the planet is too faint to be detected during the"
+Table 5. Simulation Parameters
+Parameter Quantity
+Target stars 16
+Random orbits per star 1000
+MCMC iterations per orbit 5000
+MCMC walkers 100
+"first epoch due to unfavorable illumination phase. Also, because sigma Dra is near the ecliptic north pole, it has only"
+one observing window per year (see Figure 1) and its orbital phase coverage is limited (epoch pairs 1/2 and 3/4 are
+"within the same window). With only three closely-spaced epochs, the fit is relatively poorly constrained."
+"An example of the MCMC posterior distributions is shown in Figure 3. For this inclined orbit, the inclination (i)"
+and longitude of ascending node (Ω) are well determined and are accurately retrieved. The retrieved eccentricity (e)
+"is necessarily larger than the assumed circular orbit, but is still close to zero (0.03±0.02). Given the circular orbit, the
+true argument of periastron (ω) is undefined and the retrieved value is only loosely constrained. Most importantly, the"
+"semi-major axis (a) is well constrained by the observations, enabling us to determine that the planet lies well within"
+the habitable zone.
+"1000 0 1000
+RA (mas)"
+Procyon
+"200 0 200
+RA (mas)"
+tau Ceti
+"200 100 0 100 200
+RA (mas)"
+" 1
+ 2 3"
+sigma Dra
+"Figure 2. Example fits are shown for three different stars – Procyon, tau Ceti, and sigma Dra. In each case, the planet’s
+semi-major axis lies within the habitable zone (dashed lines). The true orbit is shown in orange, with true positions marked
+as orange circles and simulated observations shown with error bars shown in red only if detected. The numbers indicate the
+visit number for each of the four observations. Sample best-fit orbits are shown as thin black lines. The region masked by the
+starshade is shown as a grey circle."
+4. RESULTS
+For each of the 16 target stars listed in Table 3 we simulate 1000 random orbits and then extract orbital parameters
+as described above. Table 5 lists the number of orbital calculations for the full set of simulations (see Foreman-Mackey
+et al. (2013) for details on MCMC parameters).
+Our first objective is to accurately determine each planet’s semi-major axis. The ability to make this measurement
+"depends not only on the astrometric precision for individual observations (2.8 to 5.9 mas; Table 3), but also depends"
+"critically on the orbital sampling. If planets do not trace out their full orbit during the two-year observing window,"
+"the quality of the fit is reduced. This is particularly true for stars with high luminosity, which translates to a more"
+"distant habitable zone and hence longer orbital periods. Sirius, the most luminous star in our sample (30.5 L�), has"
+a (mas) = 269.30+4.853.86
+"0.0
+25"
+"0.0
+50"
+"0.0
+75"
+"0.1
+00"
+e = 0.03+0.020.02
+a (mas)
+"0.0
+25"
+"0.0
+50"
+"0.0
+75"
+"0.1
+00"
+i = 75.83+0.920.98
+"200 0 200
+RA (mas)"
+tau Ceti
+"Figure 3. Best-fit parameters for a random planet orbiting tau Ceti, showing the marginalized probability distributions for
+3 of the 8 model parameters (top histograms) and the correlations between pairs of parameters (central panels, with 1−, 2−,
+and 3 − σ contours). The retrieved parameters are consistent with the true values (blue lines), although the fit eccentricity is
+necessarily larger than the true circular orbit’s. For this example, the planet lies unambiguously inside the habitable zone; the
+distribution of semi-major axes falls entirely within tau Ceti’s 187–329 mas range."
+"the worst precision in its orbit fitting (72.5 mas), whereas eps Ind, the least luminous star (0.23 L�), has the best"
+determined orbit (3.5 mas). (Table 3 lists the median semi-major axis precision obtained for the other target stars.)
+Our ultimate objective is to determine whether a planet lies within its parent star’s habitable zone. The key metric
+"for this determination is not the absolute precision, but rather the fractional precision on a planet’s semi-major axis."
+"While the absolute precision varies between Sirius and eps Ind by a factor of 20, the fractional precision for the two is"
+"comparable (2.7% and 2.1%, respectively), since Sirius’ habitable zone is a factor of 16 larger than eps Ind’s. For the"
+"overall sample, the median fractional precision varies from 2.1% up to 7.6% for Fomalhaut."
+Figure 4 shows semi-major axis measurement precision versus true semi-major axis for each of the 1000 simulated
+"planets around three of our target stars. 82 Eri (left panel) has one of the best precisions (4.4 mas median), although"
+"the performance degrades significantly for more distant orbits, where the planets are relatively faint. Fomalhaut"
+"(central panel) has one of the worst precisions (50.5 mas median), primarily because the planets in its habitable zone"
+"around this A-type star have periods considerably longer than our 2-year mission lifetime (5–12 years), such that only"
+"a fraction of each orbit is traced. The effect of limited phase coverage can be seen in Figure 5, which plots semi-major"
+axis precision as a function of orbital period in the center of the habitable zone. Planets with periods less than our
+"2-year mission lifetime are well constrained, but those farther out have semi-major axis precision increasing roughly"
+linearly with the period.
+While the semi-major precisions for other target stars (shown in Figure 8 in the Appendix) follow a similar pattern
+"of smoothly decreasing precision with increasing ap, sigma Dra (right panel in Figure 4) has an unusual bump around"
+"ap '160 mas, corresponding to orbital periods of ∼1 year. The decrease in performance is due to the sampling being
+repeated on 1-year cycles, where observations taken during the second year of the mission have about the same orbital"
+anomaly as those taken in the first year of the mission (i.e. there is a 1-year aliasing). The resulting small range of
+orbital-anomaly coverage (see the right panel of Figure 2) makes it more difficult to fit the orbit.
+"100 150 200 250 300
+Semi-major axis (mas)"
+82 Eri
+"400 600 800 1000 1200
+Semi-major axis (mas)"
+Fomalhaut
+"100 150 200 250
+Semi-major axis (mas)"
+sigma Dra
+"Figure 4. For each star (three examples shown here – 82 Eri, Fomalhaut, and sigma Dra), the orbital parameters and their
+uncertainties are retrieved for 1000 random planet orbits, each of which is directly imaged at least three times. The precision
+for measuring the semi-major axis of each planet is shown here as a function of the true semi-major axis. The habitable zone
+is interior to the dashed lines. The starshade masks all orbits inside of 100 mas. Hash marks at the bottom of each panel
+correspond to orbital periods equal to the spacing between observing epochs, with a 1-year period highlighted in red."
+"100 101
+Period (years)"
+"a p
+ p"
+" / 
+si"
+"Figure 5. Our ability to pin down a planet’s semi-major axis depends on the fraction of its orbit that is traced by the
+observations. Periods less than the mission lifetime (2 years) are well sampled, while those with longer periods are only observed
+for a partial arc, resulting in lower precision in determining the orbit."
+"While the 1-year aliases just discussed is most pronounced for sigma Dra, several other systems exhibit a similar"
+"effect at orbital periods that match the phasing of the observations. For all of the precision plots (Figures 4 and 8), the"
+semi-major axis corresponding to a 1-year period is indicated by a red hash mark; the other black marks correspond
+"to other time differences between observing epochs (e.g. for 82 Eri, the first and second observations are separated by"
+"40 days, the second and third by 325 days, and the first and fourth by 405 days; see the observing windows in Figure"
+"1). While the 1-year aliasing generally causes the strongest effect, other orbital period/observing period alignments"
+can also degrade performance.
+Our MCMC fitting procedure calculates a (non-Gaussian) posterior distribution for each orbital parameter. From
+these distributions we derive the probability that each planet lies within its star’s habitable zone. Figure 6 shows the
+"Figure 6. As in Figure 4, orbital parameters are measured for 1000 random planetary orbits around each of three stars –
+82 Eri, Fomalhaut, and sigma Dra. The derived probability of each planet residing in its star’s habitable zone is is shown as a
+function of its true semi-major axis. The habitable zone is indicated by the dashed lines."
+"0.0 0.2 0.4 0.6 0.8 1.0
+HZ probability threshold"
+"25% 82 Eri
+false negative rate
+false positive rate
+1 F1 score"
+"0.0 0.2 0.4 0.6 0.8 1.0
+HZ probability threshold"
+"25% Fomalhaut
+false negative rate
+false positive rate
+1 F1 score"
+"0.0 0.2 0.4 0.6 0.8 1.0
+HZ probability threshold"
+"25% sigma Dra
+false negative rate
+false positive rate
+1 F1 score"
+"Figure 7. False positive and false negative rates for 82 Eri, Fomalhaut, and sigma Dra, shown as a function of the habitable-
+zone probability threshold. A more liberal threshold (lower probability) reduces the false negative rate, but increases the false
+positive rate. A very conservative threshold (to the right of each panel) can ensure that no false detections are made, but misses
+a significant number of true habitable-zone planets. A performance metric combining the two rates is given by the F1 score, the
+harmonic mean of the precision (the fraction of detected habitable zone planets that truly are located in the habitable zone)
+and recall (the fraction of habitable zone planets that are correctly classified as such)."
+"results for the same three target stars as in Figure 4. For 82 Eri (left panel), the orbit fitting is fairly deterministic –"
+"planets well inside the habitable zone are correctly identified as such with high probability (>99%), while those well"
+"outside are ruled out (probability <1%). As one would expect, there is some ambiguity near the edges of the habitable"
+"zone, but for the overall sample there is just a 2.4% chance of a habitable zone planet being falsely classified as falling"
+"outside the habitable zone, while 98.8% of the planets classified as residing in the habitable zone are truly habitable"
+zone planets (i.e. a false positive rate of 1.2%).
+"These rates are based on a nominal classification threshold, where planets with habitable zone probability >50%"
+"are categorized as habitable zone planets. If a more conservative approach is desired, less planets can be included"
+"as habitable zone. If a 95% threshold is used for classification, for example, then 82 Eri will have only 0.2% false"
+"detections. However, only 88.9% of the true habitable zone planets will be included (11.1% false negative rate)."
+"For Fomalhaut (middle panel of Figure 6), the worse orbital precision translates to much more scatter in the plotted"
+"probabilities and less certainty for determining whether a planet lies in its habitable zone. Still, there is only 4.0%"
+"probability of a habitable zone planet being misclassified, and only a 4.9% chance of a habitable-zone-classified planet"
+"not being truly in the habitable zone. For the conservative (95%) classification threshold, the false positive rate falls"
+"to zero, but at the expense of only 59% of the true habitable zone planets being included (i.e. a false negative rate of"
+"The false positive and false negative rates for 82 Eri, Fomalhaut, and sigma Dra are shown in Figure 7, as a function"
+"of the classification threshold. These plots also display an overall success metric – the F1 score, the harmonic mean of"
+(1 - false positive rate) and (1 - false negative rate). While a nominal threshold of 50% results in an optimal balance
+"between these two factors (i.e. it give maximum F1 score), an emphasis on avoiding false detections would warrant a"
+more conservative approach.
+The false positive/false negative rates for each star are listed in Table 3 for both the nominal classification threshold
+"(50%) and a conservative classification threshold (95%). For the nominal threshold, the average performance for the"
+"overall sample is a 2.8% false positive rate and a 3.3% false negative rate. For the conservative threshold, the average"
+"false positive rate is just 0.05%, but the average false negative rate goes up to 19%."
+5. CONCLUSIONS
+Based on a model for the Starshade Rendezvous Probe (SRP) mission concept with target-specific observing windows
+"and SNR calculations dependent on the planet illumination during each window, we have quantified the ability of SRP"
+to identify habitable zone planets. We find that detection of a planet in at least 3 out of the 4 observing epochs
+"will adequately measure the planet’s semi-major axis. For a 16 star sample observed with this strategy, we find"
+"that habitable zone planets are correctly identified as such 96.7% of the time, with 2.8% contamination by false"
+"classifications. Including the full range of planet masses, the mission is expected to detect ∼10 planets in the vicinity
+of the habitable zone (Romero-Wolf et al. 2020), such that a very small number of planets (less than 1) are expected"
+to be misclassified.
+"Acknowledgements: Part of this work was carried out at the Jet Propulsion Laboratory, California Institute of"
+"Technology, under a contract with the National Aeronautics and Space Administration. ©2020. All rights reserved.
+This research has made use of 1) the NASA Exoplanet Archive, which is operated by the California Institute of"
+"Technology, under contract with the National Aeronautics and Space Administration under the Exoplanet Exploration"
+"Program and 2) the SIMBAD database, operated at CDS, Strasbourg, France."
+REFERENCES
+"Belikov, R., & et al. 2017,"
+https://exoplanets.nasa.gov/exep/exopag/sag/#sag13
+"Blunt, S., Nielsen, E. L., De Rosa, R. J., et al. 2017, AJ,"
+"153, 229, doi: 10.3847/1538-3881/aa6930"
+"Ertel, S., Defrère, D., Hinz, P., et al. 2020, AJ, 159, 177,"
+doi: 10.3847/1538-3881/ab7817
+"Ford, E. B. 2006, PASP, 118, 364, doi: 10.1086/500813"
+"Foreman-Mackey, D., Hogg, D. W., Lang, D., & Goodman,"
+"J. 2013, PASP, 125, 306, doi: 10.1086/670067"
+"Guimond, C. M., & Cowan, N. B. 2019, AJ, 157, 188,"
+doi: 10.3847/1538-3881/ab0f2e
+"Guyon, O., Eisner, J. A., Angel, R., et al. 2013, ApJ, 767,"
+"11, doi: 10.1088/0004-637X/767/1/11"
+"Horning, A., Morgan, R., & Nielson, E. 2019, in Society of"
+Photo-Optical Instrumentation Engineers (SPIE)
+"Conference Series, Vol. 11117, Society of Photo-Optical"
+"Instrumentation Engineers (SPIE) Conference Series,"
+"111171C, doi: 10.1117/12.2529741"
+"Kasting, J. F., Whitmire, D. P., & Reynolds, R. T. 1993,"
+"Icarus, 101, 108, doi: 10.1006/icar.1993.1010"
+"Leinert, C., Bowyer, S., Haikala, L. K., et al. 1998, A&AS,"
+"127, 1, doi: 10.1051/aas:1998105"
+"Mawet, D., Hirsch, L., Lee, E. J., et al. 2019, AJ, 157, 33,"
+doi: 10.3847/1538-3881/aaef8a
+"Mede, K., & Brandt, T. D. 2017, AJ, 153, 135,"
+doi: 10.3847/1538-3881/aa5e4a
+"Robinson, T. D., & Reinhard, C. T. 2018, arXiv e-prints,"
+"1804, arXiv:1804.04138."
+https://arxiv.org/abs/1804.04138
+"Rogers, L. A. 2015, ApJ, 801, 41,"
+doi: 10.1088/0004-637X/801/1/41
+"Romero-Wolf, A., Bryden, G., Seager, S., et al. 2020"
+"Seager, S., Kasdan, J., Romero-Wolf, A., et al. 2019,"
+"Starshade Rendezvous Probe,"
+https://smd-prod.s3.amazonaws.com/science-red/s3fs-
+public/atoms/files/Starshade2.pdf
+"Stark, C. C., Shaklan, S., Lisman, D., et al. 2016, Journal"
+"of Astronomical Telescopes, Instruments, and Systems, 2,"
+"041204, doi: 10.1117/1.JATIS.2.4.041204"
+"http://doi.org/10.3847/1538-3881/aa6930
+http://doi.org/10.3847/1538-3881/ab7817
+http://doi.org/10.1086/500813
+http://doi.org/10.1086/670067
+http://doi.org/10.3847/1538-3881/ab0f2e
+http://doi.org/10.1088/0004-637X/767/1/11
+http://doi.org/10.1117/12.2529741
+http://doi.org/10.1006/icar.1993.1010
+http://doi.org/10.1051/aas:1998105
+http://doi.org/10.3847/1538-3881/aaef8a
+http://doi.org/10.3847/1538-3881/aa5e4a
+https://arxiv.org/abs/1804.04138
+http://doi.org/10.1088/0004-637X/801/1/41
+http://doi.org/10.1117/1.JATIS.2.4.041204"
+"Turnbull, M. C., Glassman, T., Roberge, A., et al. 2012,"
+"PASP, 124, 418, doi: 10.1086/666325"
+"Zahnle, K. J., & Catling, D. C. 2017, ApJ, 843, 122,"
+doi: 10.3847/1538-4357/aa7846
+"http://doi.org/10.1086/666325
+http://doi.org/10.3847/1538-4357/aa7846"
+APPENDIX
+A. ADDITIONAL FIGURES
+"200 300 400
+Semi-major axis (mas)"
+"100
+Pr"
+tau Ceti
+"750 1000 1250 1500 1750
+Semi-major axis (mas)"
+Procyon
+"100 150 200 250 300
+Semi-major axis (mas)"
+eps Ind
+"2000 3000 4000
+Semi-major axis (mas)"
+Sirius
+"100 150 200 250 300
+Semi-major axis (mas)"
+"100
+Pr"
+omi 2 Eri
+"600 800 1000 1200 1400
+Semi-major axis (mas)"
+Altair
+"200 300 400
+Semi-major axis (mas)"
+delta Pav
+"100 150 200 250 300
+Semi-major axis (mas)"
+82 Eri
+"100 150 200 250
+Semi-major axis (mas)"
+"100
+Pr"
+sigma Dra
+"200 300 400 500 600
+Semi-major axis (mas)"
+"100
+Pr"
+beta Hyi
+"100 150 200 250 300
+Semi-major axis (mas)"
+beta CVn
+"200 300 400 500
+Semi-major axis (mas)"
+"400 600 800 1000 1200
+Semi-major axis (mas)"
+Fomalhaut
+"200 300 400
+Semi-major axis (mas)"
+"100
+Pr"
+delta Eri
+"150 200 250 300 350 400
+Semi-major axis (mas)"
+gamma Lep
+"100 150 200 250 300
+Semi-major axis (mas)"
+zeta Tuc
+"Figure 8. For each of our 16 target stars, the orbital parameters are retrieved for 1000 random planet orbits, each of which
+is directly imaged at least three times. The precision for measuring each planet’s semi-major axis is shown here."
+"Figure 9. For each target star, orbital parameters and their uncertainties are measured for 1000 random planetary orbits.
+The probability of each planet residing in its star’s habitable zone is is shown as a function of its true semi-major axis."

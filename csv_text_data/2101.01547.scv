@@ -1,0 +1,1991 @@
+0
+Prepared for submission to JCAP
+"Implications of current nuclear
+cross sections on secondary cosmic
+rays with the upcoming DRAGON2 code"
+"P. De La Torre Luquea,b M. N. Mazziottaa F. Loparcoa,b
+F. Garganoa D. Serinia,b"
+"aIstituto Nazionale di Fisica Nucleare, Sezione di Bari, via Orabona 4, I-70126 Bari, Italy
+bDipartimento di Fisica “M. Merlin"" dell’Università e del Politecnico di Bari, via Amendola
+173, I-70126 Bari, Italy"
+"E-mail: pedro.delatorreluque@ba.infn.it, mazziotta@ba.infn.it"
+"Abstract. Current measurements of cosmic-ray fluxes have reached unprecedented accuracy
+thanks to the new generation of experiments, and in particular the AMS-02 mission. At the
+same time, significant progress has been made in the propagation models of galactic cosmic
+rays. These models include several propagation parameters, which are usually inferred from
+the ratios of secondary to primary cosmic rays, and which depend on the cross sections
+describing the collisions among the various species of cosmic-ray nuclei. At present, our
+knowledge of these cross sections in the energy range where cosmic-ray interactions occur is
+limited, and this is a source of uncertainties in the predicted fluxes of secondary cosmic-ray
+nuclei. In this work we study the impact of the cross section uncertainties on the fluxes of light
+secondary nuclei (Li, Be, B) using a preliminary version of the upcoming DRAGON2 code.
+We first present a detailed comparison of the secondary fluxes computed by implementing
+different parameterizations for the network of spallation cross sections. Then, we discuss the
+use of secondary-over-secondary cosmic-ray flux ratios as a tool to improve the consistency of
+cross sections parameterizations and give insight of the overall uncertainties coming from the
+cross sections parametrisations. We show that the uncertainties inferred from the cross section
+data are enough to explain the discrepancies in the Be and Li fluxes with respect to the AMS-
+02 data, with no need of a primary component in their spectra. In addition, we show that
+the fluxes of B, Be and Li can be simultaneously reproduced by rescaling their cross sections
+within the experimental uncertainty. Finally, we also revisit the diffusive estimation of the
+halo size, obtaining good agreement with previous works and a best fit value of 6.8± 1 kpc
+from the most updated cross sections parametrisations."
+"Keywords: Cosmic rays, diffusion, propagation, spallation, cross sections, magnetic halo"
+"mailto:pedro.delatorreluque@ba.infn.it
+mailto:mazziotta@ba.infn.it"
+"
+Contents"
+1 Introduction 1
+2 Propagation setup and cross section data sets 2
+"3 Fluxes of the secondary CRs B, Be and Li 5"
+"4 Cross section uncertainties assessment 10
+4.1 Uncertainty effects and cross sections evaluation from the secondary-over-"
+secondary ratios 11
+5 Implications of the cross sections on the halo size determination 15
+6 Conclusions 17
+A Cross sections for the main channels 22
+B Primary spectra 25
+C Theory on secondary-over-secondary flux ratios 26
+1 Introduction
+"Propagation of Galactic cosmic rays (CRs) is governed by the magnetic collisionless
+interactions they suffer with the interstellar plasma waves. These interactions make them
+wander inside the Galaxy following a random walk that can be studied as a diffusive
+motion [1, 2]. From the evaluation of the amount of matter traversed by CRs, we know
+that their diffusion is not limited to the disc of the Galaxy [3], but extends up to a few kpc
+in the so-called magnetic halo."
+"CRs are accelerated inside astrophysical sources (presumably supernova remnants) with
+an energy spectrum typically following a power law of the form Q(E) = KE−γ . Acceleration
+of CRs at sources is explained by the diffusive shock acceleration (DSA) model [4–7]. CRs
+produced at these sources are known as primary CRs and their spectra are usually called
+“injection spectra” [8]. Nevertheless, the spectra of CRs detected at Earth are modified due
+to their diffusive propagation, resulting in power laws of the form J(E) ∝ E−(γ+δ), where the
+diffusion parameter δ is related to the time spent by CRs in the Galaxy τprop(E) (propagation
+time)."
+"On the other hand, during their journey, galactic CRs can eventually interact with the
+interstellar gas (which consists mainly of hydrogen with about a 11% of helium and traces
+of heavier elements [9]) producing lighter nuclei (secondary CRs) that otherwise would be
+found in tiny proportions (mainly boron, beryllium, lithium and the so-called sub-Fe nuclei),
+since they are hardly produced in stellar fusion or other thermonuclear processes [10]. The
+spectra of secondary CRs produced from these interactions (spallation reactions) have the
+form: Jk(E) ∝ ρg"
+"∑
+i Ji(E)σi→k(E). Here ρg is the density of the interstellar medium"
+"(ISM) and σi→k(E) is the inclusive cross section of production of the CR species k from
+the interaction of the CR species i with the ISM."
+"The study of secondary CRs can therefore provide valuable information about the
+interactions that CRs suffer during their journey. The relevant quantity used to describe
+CR interactions is the “grammage” X(E) = ρgl(E) ∝ ρgτprop(E), related to the diffusion
+coefficient used to describe the CR diffusive motion (D ∝ τ−1prop). Here l(E) is the effective
+length traversed by CRs, which depends on the interaction cross sections and on the particle
+kinetic energy per nucleon E. Nonetheless, the current experimental data on inclusive cross
+sections are based on a few data points that hardly reach energies of tens of GeV/n. These
+cross sections are crucial, since the best way to constrain the propagation parameters (mainly
+the diffusion coefficient) is by means of the secondary-over-primary CR flux ratios [11, 12]."
+"In this work, we have implemented different publicly available cross sections data sets
+in the preliminary version of the DRAGON2 cosmic-ray propagation code [13, 14] to study how
+the choice of cross sections affects the predictions on the fluxes of the light secondary CRs
+boron, beryllium and lithium. In section 2 the set-up of the simulations is illustrated. The
+results of the simulations are presented in section 3, where the fluxes of these secondary
+species computed with different cross sections parametrisations are shown, and some relevant
+conclusions are drawn. The effects of variations on the cross sections are then tested in
+detail by studying secondary-over-secondary ratios in section 4. These ratios are extremely
+sensitive to the cross sections and, therefore, represent a useful tool to test the validity of
+the cross sections used in the propagation code. This allows us to evaluate the uncertainties
+in the predicted fluxes of B, Be and Li associated to their production cross sections. In this
+section we also perform a simultaneous fit of the high-energy part of the flux ratios among
+secondary B, Be and Li by adjusting their production cross sections within the experimental
+uncertainties. In addition, these secondary-over-secondary ratios will be used to look for
+possible imprints of any extra primary source producing them. Then, in section 5 the effect
+of the halo size on the ratios involving 10Be is explored with the different cross section models.
+In this section we also get a more robust estimate of the value of the halo size. Finally, the
+conclusions are drawn in section 6."
+2 Propagation setup and cross section data sets
+"Simulations of CR propagation are performed using the 2-dimensional model of the Galaxy
+offered by the DRAGON code [15] 1, where cylindrical symmetry is assumed. The Galaxy
+is described as a thin disc with radius R ∼ 20 kpc and height h ∼ 100 pc with the Sun on
+the Galactic plane at a distance of 8.3 kpc from the center. The disc is surrounded by the
+halo, which is a cylinder with the same radius as the disc and with height 2H of a few kpc
+(two-zone model). Gas and CR sources are distributed within the disc. An illustration of the
+model is shown in Fig. 1."
+"A diffusion-reacceleration model is used in the CR propagation, without implicit
+advection, since recent studies of the AMS-02 data with similar diffusion coefficient
+parameterizations as we use here demonstrate to be compatible with no or negligible
+convection [16, 17]. These models have successfully reproduced the shape of the ratios of
+secondaries over primaries fluxes at low energy, as for example in refs. [18–20]. The inclusion
+of stochastic reacceleration seems to be necessary to naturally explain the shapes of these
+ratios."
+1The software can be downloaded from https://github.com/cosmicrays/DRAGON
+https://github.com/cosmicrays/DRAGON
+"
+Figure 1. Scheme of the 2D model used for the Galaxy structure. Taken from the lecture
+https://w3.iihe.ac.be/~aguilar/PHYS-467/PA3.html"
+"The general formulae describing this propagation model are given by the following set
+of equations:"
+"~∇ · ( ~Ji − ~vωNi) +
+∂"
+"[
+p2Dpp"
+"(
+Ni
+p2"
+")]
+= Qi +"
+"[
+ṗNi −"
+"(
+~∇ · ~vωNi"
+")]
+−
+Ni"
+"Γsj→i(Nj)−
+Ni
+τ ri"
+"+
+∑ Nj"
+"τ rj→i
+."
+"In the previous equations ~Ji indicates the CR diffusive flux of the i-th species and
+Ni is the density per unit momentum. The term ~vω represents the advection speed, which
+we assume to be null. The second term in the left-hand side accounts for the diffusion in
+momentum space. The first term in the right-hand side, Qi, represents the distribution
+and energy spectra of particle sources (injection spectra); the second term describes the
+momentum losses; finally, the remaining four terms describe losses and gains due to decays and
+fragmentations. These equations are numerically solved with a new version of the DRAGON
+code 2. More information about the code can be found on refs. [13] and [14]."
+"The flux terms ~Ji are related to the densities Ni by Fick’s law, ~Ji = −
+~~D~∇Ni, where"
+"~~D is
+the spatial diffusion tensor [13]. In this study, we assume that the spatial diffusion coefficient
+parallel to the regular magnetic field lines vanishes because of the azimuthal symmetry
+adopted for the Galaxy structure [15] and we used a general form of the spatial diffusion
+coefficient perpendicular to the magnetic field lines, which is assumed to be homogeneous:"
+"D(R) = D0β
+η"
+")δ
+. (2.2)"
+"Here β = v/c, R is the rigidity of the particle, D0 is the constant diffusion coefficient at the
+reference rigidity R0 (it is set to 4 GV). The η parameter describes the complex physical
+effects that may play a major role at low energy, as the dissipation of Alfven waves [21]. In
+this work η will be treated as a free parameter, since also negative values are theoretically
+motivated [21]."
+2Now available in https://github.com/cosmicrays/DRAGON2-Beta_version
+"https://w3.iihe.ac.be/~aguilar/PHYS-467/PA3.html
+https://github.com/cosmicrays/DRAGON2-Beta_version"
+"
+Finally, the relation between the spatial diffusion coefficient D(R) and the diffusion
+coefficient in momentum space Dpp depends on the Alfven velocity vA and, following refs. [22]
+and [23], it is given by:"
+"Dpp =
+4"
+"δ(4− δ2)(4− δ)
+v2Ap"
+"D(R)
+. (2.3)"
+"Hereafter, when speaking of “diffusion parameters”, we will refer to the set of parameters in
+the spatial diffusion coefficient and to the Alfven velocity."
+"The injection spectra of primary nuclei are parametrized with a doubly broken power
+law:"
+"
+
+K1 ×"
+"(
+R
+R0"
+")γ1
+for R < R1"
+"K2 ×
+(
+R
+R0"
+")γ2
+for R1 < R < R2"
+"K3 ×
+(
+R
+R0"
+")γ3
+for R > R2"
+"where Q is the differential energy flux in units of m−2s−1sr−1GV−1, R1,2 are the rigidity
+breaks, γ1,2,3 are the logarithmic slopes below and above each break and the parameters Ki
+set the normalization of the flux. The low-energy break was set to R1 = 8 GV for all nuclei,
+while the high-energy break was set to R2 = 335 GV for protons and R2 = 200 GV for
+the heavier nuclei. In the present work we injected 1H, 4He, 12C, 14N, 16O, 20Ne, 24Mg and
+28Si as primary nuclei with the spatial distribution of sources following the model in ref.[24].
+The injection spectra are tuned such that these primary CRs reproduce the AMS-02 spectra
+(Figure 13)."
+"In the last years CR experiments have reached unprecedented precision in the flux
+measurements of CRs, making possible the study of several features unexplored in the past.
+The accuracy showed in the last experimental results of the AMS-02 collaboration is of the
+order of 1 − 5% (for the main nuclei involved in the creation of light secondary CRs, as C,
+N and O). However, the uncertainties on the cross sections reach levels of 20− 50% in some
+channels (see [25]), which makes clear the need of new cross sections data with better accuracy
+to improve the precision of the predictions on CR fluxes. Even the exact determination of
+the uncertainties is complicated for most of the channels, since sometimes data from different
+experiments are difficult to reconcile. In addition, there are many channels with no data or
+just with a few data at low energies (below 10 GeV/n), which makes the parametrisations at
+high energies not straightforward at all. Also the so-called ghost-nuclei (i.e. those unstable
+nuclei whose lifetime is so small that they are not propagated and their contribution is directly
+added up to their daughter nuclei) have a sizeable effect in the estimation of the production
+of secondary nuclei."
+"Currently there are several parametrisations of the nuclei cross sections publicly
+available. The first parametrisations came from the early measurements of B. Webber,
+published in a series of papers during the 80s (see [26] and references therein) that ultimately
+lead to the semi-empirical WNEW code [27] with a last update in 2003 [28]. Then, there
+were important efforts to expand the known experimental measurements to other channels,
+turning out in the semi-empirical parametrisations by Silberberg and Tsao [29–31] that
+converged in the YIELDX code [32, 33]. More recently, the GALPROP team3 developed a set
+of routines combining semi-empirical formulae [34–36]. Nevertheless, although these routines"
+3https://galprop.standford.edu
+https://galprop.standford.edu
+"
+have remained the state of the art, it is well known that with the current available cross
+section data they show serious shortcomings that limit the precision of CR studies [37]."
+"A couple of years ago, a new set of cross sections derived from a different parametrisation
+of data for all individual channels was presented as the default option for the incoming DRAGON2
+code [14, 38]. They have been successfully used in other studies as [39] and are fully available
+in the github repository of the new DRAGON version 2."
+"Due to uncertainties in cross section, the discrepancies found when comparing the
+predicted secondary CR fluxes to data might drive to misleading conclusions. It is therefore
+clear the need of comparing different cross section data sets and their performance in
+reproducing the measurements."
+"In the present simulation we are propagating nuclei up to Z = 14, which implies we can
+fully describe the generation of secondary nitrogen and boron (which is considered to be fully
+secondary, as Be and Li). Nevertheless, the missing iron (mainly 56Fe, but also its isotopes)
+and, in very low proportion, 32S make us underestimate the total amount of Li and Be in
+a 3.22% and 3.7% in average, respectively (see tables IV and V in [25]). In order to save
+computational time for the computations required for the rest of nuclei (up to Z = 14), we
+compensate for the missing source terms (primary Fe and S) by adding just this extra ∼ 3%
+to the Li and Be spectra."
+"Finally, another important parameter affecting the low-energy region of the CR spectra
+is the solar modulation, which is modeled using the Parker equations and the force-field
+approximation [40]. This parameter depends on the solar activity and, therefore, on the
+epoch in which the experimental data were taken."
+"The variable used to characterize the solar modulation is the Fisk potential φ. The flux
+of CRs reaching a detector at Earth is related to that in the Local Interstellar medium (LIS)
+by the following equation:"
+Φobs(Eobs) =
+"(
+2mEobs + E"
+"2mELIS + E
+2
+LIS"
+")
+ΦLIS(ELIS), (2.5)"
+"with ELIS = Eobs + eφ|Z|/A. In eq. 2.5, ELIS and Eobs are the kinetic energies per nucleon
+in the LIS and at Earth, respectively, while m indicates the proton mass."
+"In this work we have chosen for the solar modulation potential the value of 0.61 GV,
+consistent with the data from the NEWK 4 neutron monitor experiment (see [41, 42]), which
+allows us to reproduce the Voyager-1 [43, 44] and AMS-02 data in the period 2011-2016 and
+is similar to the value found in previous studies [19]."
+"3 Fluxes of the secondary CRs B, Be and Li"
+"In this section we show and discuss the predicted fluxes of B, Be and Li obtained in our
+analyses. These predictions are performed using the cross sections parameterizations5 from
+the upcoming DRAGON2 code, GALPROP and a combination of the WNEW03 code and YIELDX
+code (only for the Li production) called here Webber, and selecting the set of diffusion
+parameters that reproduce the boron-over-carbon data (see Fig. 14 in appendix B) of AMS-02
+[45] and using the optimal value for the halo size found from the procedure explained in Sec. 5."
+"4http://www01.nmdb.eu/station/newk/
+5The GALPROP cross sections are available as ASCII files at https://dmaurin.gitlab.io/USINE/input_"
+"xs_data.html#nuclei-xs-nuclei and the DRAGON2 and Webber cross sections at https://github.com/
+cosmicrays/DRAGON2-Beta_version/tree/master/data"
+"http://www01.nmdb.eu/station/newk/
+https://dmaurin.gitlab.io/USINE/input_xs_data.html#nuclei-xs-nuclei
+https://dmaurin.gitlab.io/USINE/input_xs_data.html#nuclei-xs-nuclei
+https://github.com/cosmicrays/DRAGON2-Beta_version/tree/master/data
+https://github.com/cosmicrays/DRAGON2-Beta_version/tree/master/data"
+"
+Webber GALPROP DRAGON2
+D0 (1028 cm2 s−1) 2.3 6.65 7.1
+vA (km/s) 29.9 25.5 27.7
+η -0.25 -0.55 -0.6
+δ 0.42 0.44 0.42
+H (kpc) 2.07 6.93 6.76"
+"Table 1. Diffusion parameters used in the CR propagation with the different cross section
+parameterizations. The values have been obtained from the fit of the B/C data from AMS-02 [45], [47]
+and of the 10Be/9Be data from various experiments (see sec. 8), assuming the different cross section
+models."
+"These parameters are in agreement with previous analyses [16, 46] and are summarized in
+Table 1. Here, we do not perform a dedicated best-fit study of the diffusion parameters, but
+a scan over these parameters to fit the B/C ratio which is terminated when the condition
+χ2/npoints < 1.05 is fulfilled, since this value corresponds to a p-value ∼ 50%. Additionally,
+we adjust the parameters of the source spectra in Eq. 2.4 to reproduce the fluxes of individual
+CR species measured by AMS-02 [47, 48]. As an example, Figure 13 in appendix B shows the
+observed spectra at Earth of the main primary CR nuclei (from carbon to silicon) compared
+with the predictions from our simulation with the DRAGON2 set of cross sections. We remark
+again that we are using the new released data of AMS-02 for the Mg, Si and Ne fluxes for
+testing the production of secondary CRs, since the collaboration reported fluxes on these CR
+species around 10−20% larger than previous experiments [48], which lead up to ∼ 2% changes
+in the flux of these secondary CRs. We then proceed to study the spectra of secondary CRs
+and compare their fluxes to the available experimental data. The employed cross sections
+parametrisations for the channels of production of B, Be and Li from C and O projectiles
+(the main channels for their production) are compared to the available data in appendix A
+(see ref. [25] for other rarer channels)."
+"Very few works have studied the spectra of Li and Be in order to determine the diffusion
+parameters (see [16] for a recent work), while nearly all authors just use boron and its ratios
+to a primary CR species (usually C) to develop their models [49]. This is due to the fact that,
+before AMS-02, the experimental data on Li and Be fluxes were poor and the uncertainty on
+the predicted fluxes from the cross sections parametrisations in the B channels is expected to
+be the smallest [50]. Typical uncertainties on the predicted Li and Be fluxes around 20−30%
+and 15− 25% respectively are usually quoted [50], while the uncertainties on the predicted B
+flux are around 10% [25]. The reason is that the production of B is mainly regulated by the C
+and O reaction channels, while other very poorly constrained cross sections channels (mainly
+those of Mg, Ne and Si) become important for the production of Li and Be, contributing to
+∼ 45% of their flux."
+"Figure 2 shows the spectra of B, Be and Li for the three cross section parametrisations
+adopted in the present work. However, in the very high-energy region, above 200 GeV/n, we
+see that the measured fluxes of Li, Be and B are slightly higher (harder) than the predicted
+ones for all the three cross section parametrisations. This feature suggests the need of
+introducing a break in the energy dependence of the diffusion coefficient (see, e.g., ref. [54])
+rather than in the CR injection spectra, but this does not affect the conclusions of this article
+because the flux ratios among secondary cosmic rays mitigate the effects of features in the"
+"2.
+7
+J
+(G"
+"m
+2
+sr"
+Webber cross sections
+"B modulated, = 0.61
+B unmodulated
+B AMS-02 2018
+B Voyager 1 2016"
+GALPROP cross sections
+"B modulated, = 0.61
+B unmodulated
+B AMS-02 2018
+B Voyager 1 2016"
+DRAGON2 cross sections
+"B modulated, = 0.61
+B unmodulated
+B AMS-02 2018
+B Voyager 1 2016"
+"7
+J
+(G"
+"m
+2
+sr"
+"Be modulated, = 0.61
+Be unmodulated
+Be AMS-02 2018
+Be Voyager 1 2016"
+"Be modulated, = 0.61
+Be unmodulated
+Be AMS-02 2018
+Be Voyager 1 2016"
+"Be modulated, = 0.61
+Be unmodulated
+Be AMS-02 2018
+Be Voyager 1 2016"
+10 1 100 101 102 103
+"7
+J
+(G"
+"m
+2
+sr"
+"Li modulated, = 0.61
+Li unmodulated
+Li AMS-02 2018
+Li Voyager 1 2016"
+10 1 100 101 102 103
+"Li modulated, = 0.61
+Li unmodulated
+Li AMS-02 2018
+Li Voyager 1 2016"
+10 1 100 101 102 103
+"Li modulated, = 0.61
+Li unmodulated
+Li AMS-02 2018
+Li Voyager 1 2016"
+10 1 100 101 102 103
+"0.2
+0.1
+0.0
+0.1
+0.2"
+10 1 100 101 102 103
+"0.2
+0.0
+0.2
+0.4"
+"10 1 100 101 102 103
+Energy (GeV/n)"
+"0.5
+0.3
+0.1
+0.1
+0.3
+0.5"
+10 1 100 101 102 103
+10 1 100 101 102 103
+"10 1 100 101 102 103
+Energy (GeV/n)"
+10 1 100 101 102 103
+10 1 100 101 102 103
+"10 1 100 101 102 103
+Energy (GeV/n)"
+"Figure 2. Spectra of the light secondary nuclei obtained with the diffusion parameters fitting the
+B/C spectrum using the Webber cross sections (left column), the GALPROP parametrisations (middle
+column) and the DRAGON2 model (right column). The residuals (defined as (model-data)/model
+throughout all the paper) are also shown to have an idea about how large discrepancies may
+be for different cross sections models. Experimental data from CR experiments were taken from
+//https://lpsc.in2p3.fr/crdb/ [51, 52] and https://tools.ssdc.asi.it/CosmicRays/ [53]."
+"diffusion coefficient, as discussed later.
+In the case of the Webber cross sections, the Li and Be fluxes follow a similar trend, being"
+"overestimated with respect to the AMS-02 data with residuals generally below 25%. In turn,
+for the GALPROP parametrisations, we see an opposite behaviour for Li, with the simulation
+underestimating the experimental data of about 25%, while in the case of Be the prediction
+is closer to the experimental data, with discrepancies less than 15% above 10 GeV/n. The
+shape of the residuals found for Be with the Webber and GALPROP parametrisations may also
+be related to the adjustment of the halo size value (since the flux of the unstable isotope
+10Be strongly depends on this parameter, as explained in sec.5). Finally, the DRAGON2 default
+cross sections seem to reproduce all the secondary CR fluxes at the same time within 10%
+discrepancies in the full energy range, with differences just in their normalization."
+"//https://lpsc.in2p3.fr/crdb/
+https://tools.ssdc.asi.it/CosmicRays/"
+"
+0.15
+0.25
+0.35
+0.45
+0.55
+0.65
+0.75"
+" fl
+ux"
+"io
+Webber cross sections"
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 2.07± 0.34 kpc
+Be/B AMS-02 data"
+"GALPROP cross sections
+H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 6.93± 0.98 kpc
+Be/B AMS-02 data"
+"DRAGON2 cross sections
+H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 6.76± 1.00 kpc
+Be/B AMS-02 data"
+"0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+1.2
+1.3"
+" fl
+ux"
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 2.07± 0.34 kpc
+Li/B AMS-02 data"
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 6.93± 0.98 kpc
+Li/B AMS-02 data"
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 6.76± 1.00 kpc
+Li/B AMS-02 data"
+100 101 102 103
+"1.2
+1.4
+1.6
+1.8
+2.0
+2.2
+2.4
+2.6"
+"e 
+flu"
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 2.07± 0.34 kpc
+Li/Be AMS-02 data"
+100 101 102 103
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 6.93± 0.98 kpc
+Li/Be AMS-02 data"
+100 101 102 103
+"H=2kpc
+H=4kpc
+H=8kpc"
+"H=16kpc
+fit: H= 6.76± 1.00 kpc
+Li/Be AMS-02 data"
+100 101 102 103
+"0.20
+0.05
+0.10
+0.25
+0.40"
+100 101 102 103
+"0.5
+0.3
+0.1
+0.1
+0.3"
+"100 101 102 103
+Energy (GeV/n)"
+"0.7
+0.5
+0.3
+0.1
+0.1"
+100 101 102 103
+100 101 102 103
+"100 101 102 103
+Energy (GeV/n)"
+100 101 102 103
+100 101 102 103
+"100 101 102 103
+Energy (GeV/n)"
+"Figure 3. Secondary-to-secondary ratios of the light secondary CRs for the Webber, GALPROP and
+DRAGON2 cross sections models. The residuals are also shown to better illustrate how large are the
+discrepancies between simulations and data. These plots include the simulated spectra for various
+halo sizes, since the presence of 10Be and its beta decay to 10B modify the shape of the spectra at
+low energies. The simulated spectrum for the halo size that best fits the flux ratios of Be isotopes, as
+explained in section 5, is also included. Data taken from //https://lpsc.in2p3.fr/crdb/ [51, 52]
+and https://tools.ssdc.asi.it/CosmicRays/ [53]."
+"Comparing the fluxes of Li, Be and B shown in the panels of Fig. 2, we see that the main
+difference arise in the predicted Li flux, which is the nucleus that suffers more from missing
+cross sections data and poorly known reaction channels. Nevertheless, the differences among
+the predictions obtained with the three cross section parametrisations are subject to the choice
+of diffusion coefficient used, limiting a direct study of their production cross sections. In fact,
+the discrepancies between cross sections sets for the predicted flux of a secondary CR, (i.e.
+comparing the figures in the same column of Fig. 2), would change if we had used the same
+diffusion parameters for the three cross sections parametrisations. This strong dependence
+on the diffusion parameters employed makes the fluxes of individual secondary CRs to be
+an insufficient tool for discriminating among cross section models. On the contrary, the flux"
+"//https://lpsc.in2p3.fr/crdb/
+https://tools.ssdc.asi.it/CosmicRays/"
+"
+ratios among secondary CRs are almost unaffected by the diffusion coefficient, making this
+observable much more sensitive to the spallation cross sections than the fluxes of individual
+species."
+"Figure 3 shows the Be/B, Li/B and Li/Be flux ratios predicted using the three cross
+section parametrisations, assuming the halo sizes reported in Table 1, compared to the
+experimental data in the energy range from 500 MeV/n up to 1 TeV/n. We see that the
+differences among the predictions obtained with the three parametrisations are very similar
+to those observed between the different individual fluxes in Fig. 2. However, the advantage is
+that these ratios are roughly unaffected by the parametrisation of the diffusion coefficient in
+the energy region above a few tens of GeV/n and mainly dependent on their production cross
+sections and on the spectra of primary CRs (set always to fit the AMS-02 data), as shown in
+appendix C."
+"A parameter which can significantly affect the fluxes of secondary CRs and their ratios,
+at low energy, is the size of the galactic halo. To show the effect of the halo size on these
+ratios, we have performed an additional set of simulations changing the halo size from 2 to
+16 kpc. From Figure 3 we see that, in the case of the Li/B and Li/Be ratios, variations
+of the halo size do not yield large changes at any energies (the variations of the ratios are
+less than 5%). On the other hand, in the case of the Be/B ratio, variations of the halo size
+yield variations in the spectra up to 10% in the low energy region. As mentioned above,
+different unstable CR species have different decay lengths and, depending on the path length
+they travel until reaching the Earth, different fractions of unstable nuclei can decay, thus
+influencing the secondary fluxes and their ratios. In particular, the Be/B ratio is highly
+sensitive to the halo size due to the presence of the radioactive isotope 10Be, which can decay
+into 10B (see [39], where the authors discuss the halo size repercussions on the Be/B ratio
+at low energy). This dependence is particularly evident below 10 GeV/n, given the short
+lifetime of this isotope at low energies. On top of this, we point out that, as the 10Be decay
+length at low energies is of the order of a few hundred pc, the Be flux at low energies can also
+depend on the local gas density distribution in the Galaxy [55, 56]. Changing this distribution
+could therefore change the predictions on the secondary flux ratios involving Be. However, a
+detailed study of this effect is beyond the goal of the present paper. Other uncertainties in
+the secondary CR fluxes are related to total inelastic cross sections and are expected to have
+negligible effects in comparison (O(2%) [12])."
+"From Figure 3, we can see that the largest residuals are usually found at low energies,
+as expected. The shape of the flux ratios at low energy is not well reproduced when using
+the Webber cross sections, with residuals up to ∼ 30%. On the other hand, the shapes of
+the flux ratios obtained from the GALPROP and DRAGON2 parametrisations are very similar,
+with different normalizations. The smaller residuals with respect to data are found with the
+DRAGON2 parametrisation and are less than 10% above 5 GeV/n."
+"In conclusion, we find that the secondary-over-secondary spectra are mainly related to
+their production cross sections, and above ∼ 10−20 GeV/n they have very little dependence
+on all the other discussed effects. Hence, these ratios represent an extremely useful tool to
+constrain the parametrisations of the inclusive cross sections used in CR propagation codes.
+In the next section we will use the flux ratios among B, Be and Li in order to evaluate the
+uncertainties associated to their production cross sections and achieve a simultaneous fit from
+a rescaling on their production cross sections within the experimental uncertainties."
+4 Cross section uncertainties assessment
+"Given the different predictions from the different parametrisations, each cross section model
+may lead to a different interpretation of the CR data. As an example, from Fig. 2 we see
+that the Webber cross section parametrisation yields a ∼ 20% excess in the Be and Li fluxes
+in comparison to the B flux. One could correct this discrepancy either by adding a primary
+component of boron (injecting boron from the source) and reducing the total grammage
+traversed by CRs (in order to fit the B/C ratio) or by rescaling the cross sections of boron
+production (which would have the same effect on the grammage necessary to fit the B/C
+ratio), such that the three fluxes will reproduce AMS-02 data at the same time. On the
+other hand, the GALPROP parametrisation yields a ∼ 25% deficit in the Li flux, which could
+be explained, for example, adding an additional component of Li generated at the source (see
+ref. [46]). Nevertheless, the GALPROP parametrisations could also be tuned to reproduce the
+flux ratios by a proper rescaling of the production cross sections (i.e. renormalizing some
+channels), within the experimental uncertainties."
+"To investigate the effects of the uncertainties on the cross section parametrisations we
+have defined two bracketing models from the GALPROP parametrisation, in which the spallation
+cross sections for each interaction channel with 12C and 16O as projectiles have been shifted
+up or down using a scaling factor corresponding to the average uncertainties on the cross
+sections experimental data at ±1σ. This is motivated by the fact that the energy dependence
+of the cross sections is supposed to be well known, while their normalization is not precisely
+determined (see ref. [57]). A couple of channels were differently rescaled, to better contain the
+cross sections data. In the case of the Li production channels from 16O and 12C, extra shifts
+of 12% and 7% respectively were applied to the upper model, since a few data points exhibit
+larger excursions with respect to the nominal model. In the channels of 16O producing 9Be
+and 10Be the shift was taken to be half of the experimental uncertainties."
+"The bracketing models are shown in figures 4, 5 and 6, where the shifts, typically
+corresponding to a ±20% variation from the cross sections normalization, are shown in the
+legends for each channel. We see that the Be channels are those with smaller uncertainties
+and more data points, while the Li channels are those with the higher uncertainties and less
+data points. We also see that the channels coming from the spallation of 16O exhibit larger
+experimental errors and less data points than those from the spallation of 12C. The original
+GALPROP cross sections are also shown to illustrate the relative changes. These figures also
+show the cross sections obtained from the fit of the secondary-over-secondary flux ratios above
+10 GeV/n, which will be discussed in Section 4.1 (see figure 7). These cross sections are scaled
+from the original GALPROP parametrisations and allow us to simultaneously reproduce the flux
+ratios involving Li, Be and B."
+"We point out here that we are not changing the cross sections from the spallation
+reactions of other nuclei than 12C and 16O (the main channels). Most of the channels
+with minor importance have no or very few data measurements, what originates most of the
+uncertainties on the total production cross sections of the isotopes we are studying. Although
+the individual contribution to the secondary CR fluxes from each of these channels is small,
+the sum of all their contributions is relevant (∼ 25% for B and > 50% for Li and Be). The
+next step here consists on the evaluation of the spectra of secondary CRs for these upper and
+lower (bracketing) models."
+– 10 –
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"b)
+GALPROP
+Upper model - shift: 27.7%
+Lower model - shift: 27.7%
+Ratios-derived
+Data compilation"
+Direct 16O + 1H 11B 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"5
+10
+15
+20
+25
+30
+35
+40"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 24.2%
+Lower model - shift: 24.2%
+Ratios-derived
+Data compilation"
+Direct 16O + 1H 10B 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 12.9%
+Lower model - shift: 12.9%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 11B 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 24.4%
+Lower model - shift: 24.4%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 10B 
+"Figure 4. Cross sections describing the production of 11B and 10B isotopes from 16O and 12C. The
+upper and lower bracketing cross sections are shown and the percentage of renormalization is indicated
+in the legends. The cross sections derived by the fit of the secondary-over-secondary flux ratios are
+also shown and compared with the GALPROP cross sections."
+"4.1 Uncertainty effects and cross sections evaluation from the secondary-over-
+secondary ratios"
+"To show the effects of the cross sections uncertainties on the secondary-over-secondary flux
+ratios, we have derived these ratios using the two bracketing models for the cross sections,
+demonstrating that the AMS-02 data lie between these two models. The results are shown
+in Figure 7, where the yellow bands represent the values of the flux ratios within the two
+limiting models. The upper bound of each band corresponds to the situations in which the
+numerator is taken from the upper bracketing model and the denominator from the lower
+bracketing model (thus maximizing the ratio) and vice versa for the lower bound of the band.
+Furthermore, the expected full uncertainty bands on the flux ratios are also represented by
+black dashed lines. These bands are evaluated taking into account that the contribution from
+the 12C and 16O channels are about 77% of the total B flux and around 55% and 60% of the
+flux of Be and Li, respectively, according to tables IV, V and VI of [25], which implies to
+scale the fluxes in the bracketing models accordingly to have a rough estimation of the full
+bands. From this figure, we see that the full uncertainty band for the Li/Be ratio is nearly
+twice larger than that evaluated taking into account the uncertainty associated to their main
+production channels (i.e. with the two bracketing models), while for the other ratios it is
+around 70% larger. In any case, we see that almost all the AMS-02 data lie within the bands
+obtained just varying the main production channels. These results confirms that primary"
+– 11 –
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"3.5
+Sp"
+"tio
+n "
+" (m
+b)"
+"GALPROP
+Upper model - shift: 23.4%
+Lower model - shift: 23.4%"
+"Ratios-derived
+Data compilation"
+Direct 16O + 1H 10Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 21.2%
+Lower model - shift: 21.2%
+Ratios-derived
+Data compilation"
+Direct 16O + 1H 9Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 24.8%
+Lower model - shift: 24.8%
+Ratios-derived
+Data compilation"
+Direct 16O + 1H 7Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"b)
+GALPROP
+Upper model - shift: 21.0%
+Lower model - shift: 21.0%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 10Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"1
+2
+3
+4
+5
+6
+7
+8"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 19.4%
+Lower model - shift: 19.4%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 9Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 15.6%
+Lower model - shift: 15.6%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 7Be 
+"Figure 5. As in Figure 4 but for the cross sections describing the production of the 10Be, 9Be and
+7Be isotope."
+"components of B, Be or Li are not needed to explain the experimental data (although they
+could still be present)."
+"Moreover, in this work, we have obtained a set of cross sections from a fit of the high
+energy part of the secondary-over-secondary flux ratios. In the analysis of the GALPROP model,
+from Figure 3, it is obvious that an increase of Li cross sections is needed; however, just a
+change of this cross sections does not account for the discrepancies in the Be/B and Li/B flux
+ratios. This means that making variations just in the Be and Li cross sections (or whichever
+pair of secondaries) independently will never reproduce the three ratios at the same time,
+implying that a simultaneous adjustment of all the three fluxes is needed. Nevertheless, the
+simultaneous adjustment of the studied ratios does not have an exact solution (there can be"
+– 12 –
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"17.5
+Sp"
+"tio
+n "
+" (m
+b)"
+"GALPROP
+Upper model - shift: 24.9%
+Lower model - shift: 19.9%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 7Li 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"5
+10
+15
+20
+25
+30
+35
+40"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 25.6%
+Lower model - shift: 20.6%
+Ratios-derived
+Data compilation"
+Direct 12C + 1H 6Li 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 34.6%
+Lower model - shift: 26.6%
+Ratios-derived
+Data compilation"
+Direct 16O + 1H 7Li 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"5
+10
+15
+20
+25
+30
+35
+40"
+"la
+tio"
+"n 
+ (m"
+"GALPROP
+Upper model - shift: 40.7%
+Lower model - shift: 32.7%
+Ratios-derived
+Data compilation"
+Direct 16O + 1H 6Li 
+"Figure 6. As in Figures 4 and 5 but for the cross sections describing the production of the 7Li and
+6Li isotopes."
+"degenerate solutions), so that finding the correct relation between the cross sections and the
+ratios is not straightforward. Therefore, we consider that the adjustment which implies a
+minimum rescaling from the original parametrisation should be favored."
+"The strategy followed here to simultaneously fit the high energy part of the secondary-
+over-secondary ratios consists of a progressive shift of the cross sections from the original
+parametrisation for each of the main channels, until we find a configuration that matches
+the three ratios at the same time, thus searching for the configuration with less variations
+from the original parametrisations. Indeed, in this case we see that the fit convergence is
+reached when Li and Be cross sections are very close to touch the bracketing limits (Upper
+model for Li and Lower for Be), which means that there is very narrow margin to find other
+degenerate solutions. The fit yielded a renormalization of the cross sections of ∼ 5% down
+for the B flux (constant for all the channels), of ∼ 18% down for the Be flux (∼ 16% in the
+12C channels and ∼ 20% in the 16O channels) and of 28% up for the Li flux (∼ 22% for 12C
+channels and ∼ 34% 16O channels). The uncertainties on the scaling factors obtained for this
+derived model are of 4% above 10 GeV/n, as discussed in appendix C. These scaling factors
+can be compared to the post-fit nuisance parameters found in the combined LiBeB analysis
+of ref. [16], for their QUAINT model, taking into account that the scaling factors we compute
+are only related to the 12C and 16O channels. They found that the scaling parameters were
+of ∼ 4% down, ∼ 6% down and ∼ 12% up for B, Be and Li respectively. These are consistent
+with the values we found in our analysis, since we expect that the B scaling factor should be
+very similar to the value obtained when scaling all the channels and the scaling factors for"
+– 13 –
+"101 102 103
+Energy (GeV/n)"
+"Ra
+tio"
+"Expected total uncert
+Derived model"
+"Main channels uncert
+Be/B AMS-02 data"
+"Be/B spectrum
+101"
+"m
+2
+sr"
+"Modulated spectrum, = 0.61
+Unmodulated spectrum
+B AMS-02 data
+Pamela(2006-2008)
+VOYAGER-1(2012-2015)"
+"10 1 100 101 102 103
+Energy (GeV/n)"
+"0.50
+0.25
+0.00
+0.25
+0.50"
+B spectrum - Derived cross sections
+"101 102 103
+Energy (GeV/n)"
+"Ra
+tio"
+" L
+i/B"
+"Expected total uncert
+Derived model"
+"Main channels uncert
+Li/Be AMS-02 data"
+Li/Be spectrum
+"m
+2
+sr"
+"Modulated spectrum, = 0.61
+Unmodulated spectrum
+Be AMS-02 data
+ACE-CRIS(1998/01-1999/01)
+VOYAGER-1"
+"10 1 100 101 102 103
+Energy (GeV/n)"
+"0.50
+0.25
+0.00
+0.25
+0.50"
+Be spectrum - Derived cross sections
+"101 102 103
+Energy (GeV/n)"
+"Ra
+tio"
+" L
+i/B"
+"Expected total uncert
+Derived model"
+"Main channels uncert
+Li/B AMS-02 data"
+Li/B spectrum
+"m
+2
+sr"
+"Modulated spectrum, = 0.61
+Unmodulated spectrum
+Li AMS-02 data
+ACE-CRIS(1998/01-1999/01)
+VOYAGER-1"
+"10 1 100 101 102 103
+Energy (GeV/n)"
+"0.50
+0.25
+0.00
+0.25
+0.50"
+Li spectrum - Derived cross sections
+"Figure 7. The secondary-over-secondary flux ratios involving Li, Be and B are shown in the left
+column. The yellow bands correspond to the uncertainties obtained using the bracketing cross section
+models for the main production channels. The bands between the black dashed lines correspond to
+the expected total uncertainties, obtained adding the contributions from all the minor production
+channels. The blue lines are obtained by simultaneously fitting the AMS-02 data, using the diffusion
+parameters obtained from the fit of the B/C ratio. In the right panels the B, Be and Li fluxes
+obtained with the cross sections derived from the fit procedure are compared with the AMS-02
+data. The residuals are also shown. Data taken from //https://lpsc.in2p3.fr/crdb/ [51, 52]
+and https://tools.ssdc.asi.it/CosmicRays/ [53]."
+"Be and Li should be around half the values we obtained when scaling all the channels. As
+expected, the scaling needed in the cross sections of the B channels with respect to the original
+GALPROP parametrisation is very small, while the Li and Be main channels need larger shifts,"
+– 14 –
+"//https://lpsc.in2p3.fr/crdb/
+https://tools.ssdc.asi.it/CosmicRays/"
+"
+in agreement with the uncertainties that one would expect, as the impact of a change of these
+minor channels (very poorly known) for B production is very small. In turn, the impact of the
+main channels for Li and Be fluxes is approximately the same as that of the rest of the minor
+channels, which means larger level of uncertainty. The use of these scaling factors obtained
+from the combination of flux ratios among secondary CRs can help improving the description
+of the spallation cross sections used in CR propagation codes and may also be considered
+as a strategy to take care of the deficiencies on the description of the minor channels. This
+strategy has been already used for improving the estimation of the production of antiprotons
+from CR interactions with the interstellar gas in [58], obtaining good agreement with the
+AMS-02 antiprotons data."
+"As a final remark, from the lower plots of Figure 7 we see that the predicted fluxes of
+these three light secondary CRs reproduce the AMS-02 data at the same time in a broad
+energy region. The common discrepancy at high energies is due to the choice of the diffusion
+parameters, as already mentioned, which can be also the reason for the discrepancy of the Li
+flux below 2 GeV/n (although it is also related to the cross sections parametrisation). The
+influence of the halo size value in the low-energy part of the Be spectrum may explain its
+deviation from experimental data as commented in ref. [45]."
+"In conclusion, we have demonstrated that we can reproduce the fluxes of B, Be and Li at
+the same time within the experimental cross sections uncertainties, with no need of including
+any primary extra source and that we can tune the spallation cross sections of production of
+secondary species to reproduce the secondary-over-secondary ratios and overcome the lack of
+knowledge we have in the normalization of the cross sections parametrisations. This is crucial
+in order to determine the diffusion parameters with better accuracy. In fact, with a correct
+balance of the secondary CRs, we could in principle also use Li and Be data in addition to B
+data to determine the diffusion parameters. This will be explored in a next paper."
+5 Implications of the cross sections on the halo size determination
+"The height of the galactic halo H plays a relevant role for the study of secondary-to-primary
+ratios involving leptons (the radiative energy loss rates are of the same order of magnitude as
+the reciprocal of the diffusion time), antiprotons and, as discussed above, unstable isotopes
+like 10Be. The usual way to constrain the halo size is by means of the study of the ratios of
+10Be to the total Be flux or to the 9Be flux [59, 60]. The spectrum of the isotope 10Be depends
+on an interplay between the diffusion time of the primary CRs (τ ∝ E−δ) and the decay time
+of this isotope (which is around 1.4 My, as determined in ref. [61]). Other methods have
+been used to set constraints on H from radio observations of lepton synchrotron emission [62],
+from X-ray and gamma-ray studies [63], from studies on CR leptons and other heavy nuclei
+[64]."
+"One of the obvious consequences of using secondary isotopes to determine any feature
+of the propagation is that the results will be highly influenced by the cross section model
+used. We have therefore decided to evaluate the halo size with four different cross section
+models: the DRAGON2, Webber and GALPROP parametrisations and the cross sections derived
+in section 4.1. For each model, we have implemented a fit of the halo size using the available
+data on the 10Be/9Be flux ratios, from the ACE [65], IMP [66, 67], ISEE [68], ISOMAX [69],
+Ulysses [59] and Voyager [70] experiments. We have simulated different halo sizes from 1 kpc
+to 16 kpc and, for each halo size, we have evaluated the 10Be/9Be flux ratios. As mentioned
+above, in each of simulation (i.e. for every halo size value) the diffusion parameters have been"
+– 15 –
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"ACE-CRIS(1997/08-1999/07)
+ACE-SIS(1997/08-1999/07)
+Balloon(1973/08)
+Balloon(1977/05)"
+"Balloon(1977/09)
+IMP7&8(1972/09-1975/09)
+IMP7&8(1974/01-1980/05)
+ISEE3-HKH(1978/08-1979/08)"
+"ISOMAX(1998/08)
+Ulysses-HET(1990/10-1997/12)
+Voyager1&2(1977/01-1991/12)
+Voyager1&2(1977/01-1998/12)"
+10Be/9Be spectrum - Webber
+"Simulated 10Be/9Be H=1 kpc
+Simulated 10Be/9Be H=4 kpc
+Simulated 10Be/9Be H=8 kpc
+Simulated 10Be/9Be H=16 kpc
+fit: H= 2.07 +/-  0.34 Kpc"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"ACE-CRIS(1997/08-1999/07)
+ACE-SIS(1997/08-1999/07)
+Balloon(1973/08)
+Balloon(1977/05)"
+"Balloon(1977/09)
+IMP7&8(1972/09-1975/09)
+IMP7&8(1974/01-1980/05)
+ISEE3-HKH(1978/08-1979/08)"
+"ISOMAX(1998/08)
+Ulysses-HET(1990/10-1997/12)
+Voyager1&2(1977/01-1991/12)
+Voyager1&2(1977/01-1998/12)"
+10Be/9Be spectrum - GALPROP
+"Simulated 10Be/9Be H=1 kpc
+Simulated 10Be/9Be H=4 kpc
+Simulated 10Be/9Be H=8 kpc
+Simulated 10Be/9Be H=16 kpc
+fit: H= 6.93 +/-  0.98 Kpc"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"ACE-CRIS(1997/08-1999/07)
+ACE-SIS(1997/08-1999/07)
+Balloon(1973/08)
+Balloon(1977/05)"
+"Balloon(1977/09)
+IMP7&8(1972/09-1975/09)
+IMP7&8(1974/01-1980/05)
+ISEE3-HKH(1978/08-1979/08)"
+"ISOMAX(1998/08)
+Ulysses-HET(1990/10-1997/12)
+Voyager1&2(1977/01-1991/12)
+Voyager1&2(1977/01-1998/12)"
+10Be/9Be spectrum - Derived
+"Simulated 10Be/9Be H=1 kpc
+Simulated 10Be/9Be H=4 kpc
+Simulated 10Be/9Be H=8 kpc
+Simulated 10Be/9Be H=16 kpc
+fit: H= 6.62 +/-  1.10 Kpc"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"ACE-CRIS(1997/08-1999/07)
+ACE-SIS(1997/08-1999/07)
+Balloon(1973/08)
+Balloon(1977/05)"
+"Balloon(1977/09)
+IMP7&8(1972/09-1975/09)
+IMP7&8(1974/01-1980/05)
+ISEE3-HKH(1978/08-1979/08)"
+"ISOMAX(1998/08)
+Ulysses-HET(1990/10-1997/12)
+Voyager1&2(1977/01-1991/12)
+Voyager1&2(1977/01-1998/12)"
+10Be/9Be spectrum - DRAGON2
+"Simulated 10Be/9Be H=1 kpc
+Simulated 10Be/9Be H=4 kpc
+Simulated 10Be/9Be H=8 kpc
+Simulated 10Be/9Be H=16 kpc
+fit: H= 6.76 +/-  1.00 Kpc"
+"Figure 8. 10Be/9Be predicted flux ratios compared to all experimental data available and for
+every cross section parametrisation studied here. For each parametrisation, various simulations with
+different halo sizes are shown, along with the simulation yielding the best fit value. Data taken from
+//https://lpsc.in2p3.fr/crdb/ [51, 52]."
+"chosen to fit the B/C spectrum of the AMS-02 experiment. The flux ratios with halo sizes
+different from the tabulated values have been evaluated using a 2D interpolation with the tool
+RegularGridInterpolator 6. The error introduced by the interpolation is smaller than 1% for
+every energy bin. The fit is performed with the curve_fit package from the scipy.optimize
+library."
+"Figure 8 shows the fit results for all the cross section models. For each cross section
+model the experimental data are compared with the predicted 10Be/9Be flux ratios obtained
+for different halo sizes. As expected, the differences among the various predictions are larger
+at low energies, while the curves tend converge above 10 GeV/n. The curve corresponding
+to the halo sizes which yields the best fit is also shown."
+"The value of the halo size that best fits the experimental data for each model is
+accompanied by the uncertainties coming from its determination (i.e. the 1σ statistical
+uncertainties related to this fit). The fit results are summarized in Figure 9 together with a
+line indicating the mean halo size value. The error bar associated to the halo size fitted with
+the Webber cross section model is smaller than those associated to the halo sizes fitted with"
+"6https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.
+RegularGridInterpolator.html"
+– 16 –
+"//https://lpsc.in2p3.fr/crdb/
+ https://docs.scipy.org/doc/scipy/reference/generated/ scipy.interpolate.RegularGridInterpolator.html
+ https://docs.scipy.org/doc/scipy/reference/generated/ scipy.interpolate.RegularGridInterpolator.html"
+"
+0 2 4 6 8 10 12 14
+Halo size (kpc)"
+DRAGON2
+GALPROP
+Webber
+Derived
+6.76 ± 1.0
+6.93 ± 0.98
+2.07 ± 0.34
+6.62 ± 1.1
+Halo sizes summary
+"Figure 9. Summary of the results obtained for the fits of halo sizes to the 10Be/9Be experimental data.
+Also the values obtained with the derived cross sections are shown for having a broader comparison.
+Error bars reflect only statistical uncertainties, as explained above. The dashed blue line represents
+the mean value of the halo best fit values and the red band the uncertainties of the mean (1σ),
+calculated as the mean of the halo best fit values ±σ."
+"the other cross section models. This is due to the fact that, as can be seen from the curves in
+Figure 8, a change in the value of H leads to changes in the flux ratios which become smaller
+as H increases. Therefore, the smaller error bar found."
+"We see that the derived cross sections cast a value of the halo size very similar to the
+DRAGON2 and GALPROP predictions, of around 6.6 kpc (very similar to the value found in
+refs. [39, 71], where the authors also employed the Be/B spectrum to make their predictions,
+getting a value of ∼ 6 kpc and 5+3−2 kpc, respectively). The small value found for the Webber
+parametrisations can be explained having a look to the cross sections around hundreds MeV.
+For this parametrisation, the most important channels generally show a good agreement with
+cross sections data, but in the case of the 12C→ 10Be channel, the discrepancy is considerable.
+Therefore, from this underestimation of the cross section, the halo size prediction is expected
+to be also underestimated (less 10Be production implies a lower halo size to reduce the fraction
+of decaying 10Be nuclei)."
+"In any case, the value obtained using the Webber parametrisations seems to be out of
+the standard picture of a halo size between 3 and 10 kpc height found in measurements of
+diffuse gamma-ray background [72] and with other radio observations [73–75]. The mean of
+the best fit values obtained using the various cross sections shown in Fig. 9 (including the
+determination of the halo size using the Webber parametrisation) is 5.6+0.86−0.85 kpc, and the
+value obtained using only the most updated cross sections is 6.8± 1 kpc."
+6 Conclusions
+"We are living in a very exciting time for CR physics thanks to the high quality data provided
+by the AMS-02 experiment, which allows making precise studies on the nature of CRs and
+their propagation throughout the Galaxy. However, while the astrophysical information seems
+to be accurate enough to face new physical challenges, the information about the spallation
+cross section, which is the other key element in the CR puzzle, is still largely incomplete.
+Since the study of secondary-over-primary CRs is the best tool to test the diffusion coefficient"
+– 17 –
+"parametrisations, we need to have high precision on the secondary CRs fluxes and in their
+production (inclusive) cross sections."
+"The amount of channels that matter in the spallation network and the difficulty to
+perform the measurements lead to parametrisations that extend the energy range of the
+actual measurements and expand to all important nuclei (even those for which experimental
+data are missing). While we have some insight in the shape of cross sections as a function of
+energy, the normalization is still somewhat uncertain."
+"In this paper we have discussed different cross sections parametrisations and we have
+investigated their direct impact in the fluxes of Li, Be and B. We have highlighted the
+immediate relation of the secondary-over-secondary ratios with the spallation cross sections
+used. We have shown that predictions from different cross sections models can differ in the
+amount of Be and Li fluxes at a level from 20% to more than 40%. We also emphasize that the
+uncertainties in the determination of secondary CR fluxes are in general quite large, although
+those on the B flux seem to be remarkably smaller, since its production is essentially due
+to the contribution of C and O channels for which more experimental data are available. In
+addition, we have demonstrated the good performance achieved in the simulations when using
+the default DRAGON2 cross sections model, being able to reproduce every observable within
+very small errors."
+"It has been shown that there is no need of invoking primary sources of secondary CRs,
+as the cross sections uncertainties can largely account for the discrepancies found with respect
+to data. To better show this, two models of cross sections have been considered as limiting
+cases. These bracketing models represent minimum and maximum credible renormalizations
+of the GALPROP model of cross sections, maintaining the same energy dependence. We
+have investigated how the secondary-over-secondary flux ratios would behave under the
+combination of the bracketing models to test whether, between these two limiting cases,
+there is a space of cross sections that can reproduce all secondary CRs above 10 GeV/n at
+the same time. A set of cross sections has been derived by matching these flux ratios at high
+energy, demonstrating that they are an excellent tool to constrain and even adjust the cross
+sections parametrisations. This derived cross sections model balances the deficiencies on the
+description of those channels which are very poorly known and gives some insight on how
+much our cross sections network is biased for every secondary species. We showed that, while
+the B production channels should not be renormalized by more than 5% to reproduce the
+ratios, the beryllium and lithium ones needed an overall renormalization of around 18% and
+28% (in average), respectively."
+"In this way we have been able to combine the information arising from secondary CRs
+to mitigate the systematic uncertainties related to spallation cross sections. We argue that
+this combined tuning of the normalization on a cross sections parametrisation to reproduce
+the secondary-over-secondary flux ratios serves to improve the determination of the diffusion
+coefficient parameters as well, and it is important to obtain predictions which are consistent
+with all the observables at the same time."
+"Finally, a study of the effects on the halo size on the secondary-over-secondary flux
+ratios for each cross section model has been performed. In particular, the ratio 10Be/9Be
+was studied for each of the models, as the 10Be isotope has a lifetime of the order of the
+diffusion time of CRs in the Galaxy. This allowed the discussion on the repercussion of the
+cross sections on the determination of the halo size too. The determination of the halo size
+from the most updated parametrisations gives a mean value around 6.8 ± 1.0 kpc, which is
+in agreement with most of the values obtained in other works."
+– 18 –
+"In a next work, the diffusion parameters will be studied in a combined analysis
+of the secondary-over-primary and secondary-over-secondary flux ratios of B, Be and Li
+including nuisance factors to allow adjustments on the normalization of the cross sections
+parametrisations studied."
+Acknowledgments
+"We remark the crucial help of Daniele Gaggero in the development of the paper and his
+examinations during the evolution of the ideas commented here and also in the implementation
+of the preliminary version of the DRAGON2 code. Special acknowledgements to Carmelo Evoli
+for his invaluable advice and comments during all the work process regarding the DRAGON2
+preliminary version used here and the manuscript elaboration. Many thanks to the instituto de
+física teórica (IFT) in Madrid for hosting Pedro De la Torre for a long stay there and specially
+to the DAMASCO (DArk MAtter AStroparticles and COsmology) group for their support
+and valuable conversations related to this work. This work has been carried out using the
+RECAS computing infrastructure in Bari (https://www.recas-bari.it/index.php/en/).
+A particular acknowledgment goes to G. Donvito and A. Italiano for their valuable support."
+References
+"[1] V. L. Ginzburg and S. I. Syrovatskii, Topics in Astrophysics and Space Physics, New York:
+Gordon and Breach, 1969 (Gordon & Breach Publishing Group, 1969)."
+"[2] V. Berezinskii, V. Dogiel, S. Bulanov, and V. L. Ginzburg, Astrophysics of cosmic rays, Vol.
+393 (North-Holland Amsterdam, 1990)."
+"[3] S. Stephens and R. Streitmatter, ApJ 505, 266 (1998)."
+"[4] G. Krymskii, in Akademiia Nauk SSSR Doklady, Vol. 234 (1977) pp. 1306–1308."
+"[5] A. Bell, Monthly Notices of the Royal Astronomical Society 182, 443 (1978)."
+"[6] W. Axford, E. Leer, and J. McKenzie, Astronomy and Astrophysics 111, 317 (1982)."
+"[7] R. D. Blandford and J. P. Ostriker, ApJ 221, L29 (1978)."
+"[8] P. Blasi, Astron. Astrophys. Rev. 21, 70 (2013), arXiv:1311.7346 [astro-ph.HE] ."
+"[9] M. Asplund, N. Grevesse, and J. Sauval, ASP Conf. Ser. 336, 25 (2005),
+arXiv:astro-ph/0410214 ."
+"[10] S. Biswas and C. E. Fichtel, Space Science Reviews 4, 709 (1965)."
+"[11] A. Reinert and M. W. Winkler, JCAP 01, 055 (2018), arXiv:1712.00002 [astro-ph.HE] ."
+"[12] L. Derome, D. Maurin, P. Salati, M. Boudaud, Y. Génolini, and P. Kunzé, PoS ICRC2019,
+054 (2020)."
+"[13] C. Evoli, D. Gaggero, A. Vittino, G. Di Bernardo, M. Di Mauro, A. Ligorini, P. Ullio, and
+D. Grasso, JCAP 02, 015 (2017), arXiv:1607.07886 [astro-ph.HE] ."
+"[14] C. Evoli, D. Gaggero, A. Vittino, M. Di Mauro, D. Grasso, and M. N. Mazziotta, JCAP 07,
+006 (2018), arXiv:1711.09616 [astro-ph.HE] ."
+"[15] C. Evoli, D. Gaggero, D. Grasso, and L. Maccione, JCAP 10, 018 (2008), [Erratum: JCAP 04,
+E01 (2016)], arXiv:0807.4730 [astro-ph] ."
+"[16] N. Weinrich, Y. Génolini, M. Boudaud, L. Derome, and D. Maurin, ApJ 639, A131 (2020),
+arXiv:2002.11406 [astro-ph.HE] ."
+– 19 –
+"https://www.recas-bari.it/index.php/en/
+http://dx.doi.org/10.1086/306142
+http://dx.doi.org/10.1093/mnras/182.3.443
+http://dx.doi.org/10.1016/0370-1573(87)90134-7
+http://dx.doi.org/10.1007/s00159-013-0070-7
+http://arxiv.org/abs/1311.7346
+http://dx.doi.org/10.1016/j.nuclphysa.2005.06.010
+http://arxiv.org/abs/astro-ph/0410214
+http://dx.doi.org/10.1088/1475-7516/2018/01/055
+http://arxiv.org/abs/1712.00002
+http://dx.doi.org/ 10.22323/1.358.0054
+http://dx.doi.org/ 10.22323/1.358.0054
+http://dx.doi.org/ 10.1088/1475-7516/2017/02/015
+http://arxiv.org/abs/1607.07886
+http://dx.doi.org/ 10.1088/1475-7516/2018/07/006
+http://dx.doi.org/ 10.1088/1475-7516/2018/07/006
+http://arxiv.org/abs/1711.09616
+http://dx.doi.org/ 10.1088/1475-7516/2008/10/018
+http://arxiv.org/abs/0807.4730
+http://dx.doi.org/10.1051/0004-6361/202037875
+http://arxiv.org/abs/2002.11406"
+"
+[17] J.-S. Niu and T. Li, Phys. Rev. D 97, 023015 (2018), arXiv:1705.11089 [astro-ph.HE] ."
+"[18] E. Jaupart, E. Parizot, and D. Allard, Astron. Astrophys. 619, A12 (2018), arXiv:1808.02322
+[astro-ph.HE] ."
+"[19] M. Mazziotta, F. Cerutti, A. Ferrari, D. Gaggero, F. Loparco, and P. Sala, Astropart. Phys.
+81, 21 (2016), arXiv:1510.04623 [astro-ph.HE] ."
+"[20] F. C. Jones, A. Lukasiak, V. Ptuskin, and W. Webber, ApJ 547, 264 (2001)."
+"[21] V. S. Ptuskin, I. V. Moskalenko, F. C. Jones, A. W. Strong, and V. N. Zirakashvili, ApJ 642,
+902 (2006)."
+"[22] J. Osborne and V. Ptuskin, in International Cosmic Ray Conference, Vol. 2 (1987) p. 218."
+"[23] E.-S. Seo and V. S. Ptuskin, ApJ 431, 705 (1994)."
+"[24] D. R. Lorimer et al., MNRAS 372, 777–800 (2006)."
+"[25] Y. Genolini, D. Maurin, I. V. Moskalenko, and M. Unger, Phys. Rev. C98, 034611 (2018),
+arXiv:1803.04686 [astro-ph.HE] ."
+"[26] W. Webber, J. Kish, and D. Schrier, Phys. Rev. C 41, 520 (1990)."
+"[27] W. Webber, J. Kish, and D. Schrier, Phys. Rev. C 41, 566 (1990)."
+"[28] W. Webber, A. Soutoul, J. Kish, and J. Rockstroh, ApJ Supplement Series 144, 153 (2003)."
+"[29] C. Tsao, R. Silberberg, A. Barghouty, L. Sihver, and T. Kanai, Phys. Rev. C 47, 1257 (1993)."
+"[30] R. Silberberg and C. H. Tsao, ApJ Supplement Series 25, 315 (1973)."
+"[31] R. Silberberg, C. Tsao, and J. R. Letaw, ApJ Supplement Series 58, 873 (1985)."
+"[32] C. Tsao, R. Silberberg, and A. Barghouty, ApJ 501, 920 (1998)."
+"[33] R. Silberberg, C. Tsao, and A. Barghouty, ApJ 501, 911 (1998)."
+"[34] I. V. Moskalenko, A. W. Strong, and S. G. Mashnik, AIP Conf. Proc. 769, 1612 (2005),
+arXiv:astro-ph/0411400 ."
+"[35] I. Moskalenko, S. Mashnik, and A. Strong, in 27th International Cosmic Ray Conference,
+Vol. 5 (2001) p. 1836, arXiv:astro-ph/0106502 ."
+"[36] A. W. Strong, I. V. Moskalenko, and V. S. Ptuskin, Annu. Rev. Nucl. Part. Sci. 57, 285 (2007)."
+"[37] N. Tomassetti, Phys. Rev. C 92, 045808 (2015), arXiv:1509.05776 [astro-ph.HE] ."
+"[38] C. Evoli, R. Aloisio, and P. Blasi, Phys. Rev. D 99, 103023 (2019), arXiv:1904.10220
+[astro-ph.HE] ."
+"[39] C. Evoli, G. Morlino, P. Blasi, and R. Aloisio, Phys. Rev. D 101, 023013 (2020),
+arXiv:1910.04113 [astro-ph.HE] ."
+"[40] L. J. Gleeson and I. H. Urch, Astrophysics and Space Science 25, 387 (1973)."
+"[41] A. Ghelfi, F. Barao, L. Derome, and D. Maurin, Astronomy & Astrophysics 591, A94 (2016),
+arXiv:1511.08650 [astro-ph.HE] ."
+"[42] A. Ghelfi, D. Maurin, A. Cheminet, L. Derome, G. Hubert, and F. Melot, Adv. Space Res. 60,
+833 (2017), arXiv:1607.01976 [astro-ph.HE] ."
+"[43] E. Stone et al., Science 341, 150 (2013)."
+"[44] A. Cummings et al., Astrophys. J. 831, 18 (2016)."
+"[45] M. Aguilar et al. (AMS Collaboration), Phys. Rev. Lett. 120, 021101 (2018)."
+"[46] M. J. Boschini et al., ApJ 889, 167 (2020)."
+"[47] M. Aguilar et al. (AMS Collaboration), Phys. Rev. Lett. 119, 251101 (2017)."
+– 20 –
+"http://dx.doi.org/10.1103/PhysRevD.97.023015
+http://arxiv.org/abs/1705.11089
+http://dx.doi.org/10.1051/0004-6361/201833683
+http://arxiv.org/abs/1808.02322
+http://arxiv.org/abs/1808.02322
+http://dx.doi.org/ 10.1016/j.astropartphys.2016.04.005
+http://dx.doi.org/ 10.1016/j.astropartphys.2016.04.005
+http://arxiv.org/abs/1510.04623
+http://dx.doi.org/ 10.1111/j.1365-2966.2006.10887.x
+http://dx.doi.org/10.1103/PhysRevC.98.034611
+http://arxiv.org/abs/1803.04686
+http://dx.doi.org/10.1063/1.1945315
+http://arxiv.org/abs/astro-ph/0411400
+http://arxiv.org/abs/astro-ph/0106502
+http://dx.doi.org/10.1103/PhysRevC.92.045808
+http://arxiv.org/abs/1509.05776
+http://dx.doi.org/10.1103/PhysRevD.99.103023
+http://arxiv.org/abs/1904.10220
+http://arxiv.org/abs/1904.10220
+http://dx.doi.org/ 10.1103/PhysRevD.101.023013
+http://arxiv.org/abs/1910.04113
+http://dx.doi.org/10.1007/BF00649180
+http://dx.doi.org/10.1051/0004-6361/201527852
+http://arxiv.org/abs/1511.08650
+http://dx.doi.org/ 10.1016/j.asr.2016.06.027
+http://dx.doi.org/ 10.1016/j.asr.2016.06.027
+http://arxiv.org/abs/1607.01976
+http://dx.doi.org/10.1126/science.1236408
+http://dx.doi.org/10.3847/0004-637X/831/1/18
+http://dx.doi.org/10.1103/PhysRevLett.120.021101
+http://dx.doi.org/10.3847/1538-4357/ab64f1
+http://dx.doi.org/10.1103/PhysRevLett.119.251101"
+"
+[48] M. Aguilar et al. (AMS Collaboration), Phys. Rev. Lett. 124, 211102 (2020)."
+"[49] M. Aguilar et al., apj 724, 329 (2010)."
+"[50] G. A. de Nolfo et al., Adv. Space Res. 38, 1558 (2006), arXiv:astro-ph/0611301 ."
+"[51] D. Maurin, F. Melot, and R. Taillet, ApJ 569, A32 (2014), arXiv:1302.5525 [astro-ph.HE] ."
+"[52] D. Maurin, H. P. Dembinski, J. Gonzalez, I. C. Maris, , and F. Melot, Universe 6, 102 (2020),
+arXiv:2005.14663 [astro-ph.HE] ."
+"[53] C. Pizzolotto et al., PoS ICRC2017, 227 (2017)."
+"[54] Y. Génolini et al., Phys. Rev. Lett. 119, 241101 (2017), arXiv:1706.09812 [astro-ph.HE] ."
+"[55] F. Donato, D. Maurin, and R. Taillet, Astron. Astrophys. 381, 539 (2002),
+arXiv:astro-ph/0108079 ."
+"[56] F. Donato, D. Maurin, and R. Taillet, in 28th International Cosmic Ray Conference (2003)
+pp. 1953–1956, arXiv:astro-ph/0306313 ."
+"[57] C. Evoli, R. Aloisio, and P. Blasi, Phys. Rev. D 99, 103023 (2019), arXiv:1904.10220
+[astro-ph.HE] ."
+"[58] P. D. la Torre Luque, F. Gargano, F. Loparco, M. N. Mazziotta, and D. Serini, Journal of
+Physics: Conference Series 1690, 012010 (2020)."
+"[59] J. Connell, ApJ Letters 501, L59 (1998)."
+"[60] A. Strong and I. Moskalenko, Advances in Space Research 27, 717 (2001)."
+"[61] J. Chmeleff and et al., Nuclear Instruments and Methods in Physics Research Section B: Beam
+Interactions with Materials and Atoms 268, 192 (2010)."
+"[62] T. Bringmann, F. Donato, and R. A. Lineros, JCAP 01, 049 (2012), arXiv:1106.4821
+[astro-ph.GA] ."
+"[63] S. Biswas and N. Gupta, JCAP 07, 063 (2018), arXiv:1802.03538 [astro-ph.HE] ."
+"[64] I. Moskalenko and A. Strong, Astrophys. Space Sci. 272, 247 (2000), arXiv:astro-ph/9908032 ."
+"[65] N. E. Yanasak et al., apj 563, 768 (2001)."
+"[66] M. Garcia-Munoz, G. M. Mason, and J. A. Simpson, apj 217, 859 (1977)."
+"[67] M. Garcia-Munoz, J. A. Simpson, and J. P. Wefel, in International Cosmic Ray Conference,
+International Cosmic Ray Conference, Vol. 2 (1981) p. 72."
+"[68] M. E. Wiedenbeck and D. E. Greiner, apjl 239, L139 (1980)."
+"[69] T. Hams et al., ApJ 611, 892 (2004)."
+"[70] W. Webber, A. Lukasiak, and F. Mcdonald, ApJ 568, 210 (2002)."
+"[71] N. Weinrich, M. Boudaud, L. Derome, Y. Génolini, J. Lavalle, D. Maurin, P. Salati, P. Serpico,
+and G. Weymann-Despres, ApJ 639, A74 (2020), arXiv:2004.00441 [astro-ph.HE] ."
+"[72] G. Zaharijas, J. Conrad, A. Cuoco, and Z. Yang (Fermi-LAT), Nucl. Phys. B Proc. Suppl.
+239-240, 88 (2013), arXiv:1212.6755 [astro-ph.HE] ."
+"[73] G. Di Bernardo, C. Evoli, D. Gaggero, D. Grasso, and L. Maccione, JCAP 03, 036 (2013),
+arXiv:1210.4546 [astro-ph.HE] ."
+"[74] K. Beuermann, G. Kanbach, and E. Berkhuijsen, Astronomy and Astrophysics 153, 17 (1985)."
+"[75] E. Orlando and A. Strong, MNRAS 436, 2127 (2013), arXiv:1309.2947 [astro-ph.GA] ."
+"[76] J.-S. Niu, T. Li, and H.-F. Xue, Astrophys. J. 873, 77 (2019), arXiv:1810.09301 [astro-ph.HE] ."
+– 21 –
+"http://dx.doi.org/10.1103/PhysRevLett.124.211102
+http://dx.doi.org/10.1088/0004-637X/724/1/329
+http://dx.doi.org/10.1016/j.asr.2006.09.008
+http://arxiv.org/abs/astro-ph/0611301
+http://dx.doi.org/10.1051/0004-6361/201321344
+http://arxiv.org/abs/1302.5525
+http://dx.doi.org/10.3390/universe6080102
+http://arxiv.org/abs/2005.14663
+http://dx.doi.org/10.22323/1.301.0227
+http://dx.doi.org/ 10.1103/PhysRevLett.119.241101
+http://arxiv.org/abs/1706.09812
+http://dx.doi.org/10.1051/0004-6361:20011447
+http://arxiv.org/abs/astro-ph/0108079
+http://arxiv.org/abs/astro-ph/0306313
+http://dx.doi.org/10.1103/PhysRevD.99.103023
+http://arxiv.org/abs/1904.10220
+http://arxiv.org/abs/1904.10220
+http://dx.doi.org/10.1088/1742-6596/1690/1/012010
+http://dx.doi.org/10.1088/1742-6596/1690/1/012010
+http://dx.doi.org/10.1086/311437
+http://dx.doi.org/10.1088/1475-7516/2012/01/049
+http://arxiv.org/abs/1106.4821
+http://arxiv.org/abs/1106.4821
+http://dx.doi.org/10.1088/1475-7516/2018/07/063
+http://arxiv.org/abs/1802.03538
+http://dx.doi.org/10.1023/A:1002604831398
+http://arxiv.org/abs/astro-ph/9908032
+http://dx.doi.org/10.1086/323842
+http://dx.doi.org/10.1086/155632
+http://dx.doi.org/10.1086/183310
+http://dx.doi.org/10.1086/422384
+http://dx.doi.org/ 10.1051/0004-6361/202038064
+http://arxiv.org/abs/2004.00441
+http://dx.doi.org/10.1016/j.nuclphysbps.2013.05.014
+http://dx.doi.org/10.1016/j.nuclphysbps.2013.05.014
+http://arxiv.org/abs/1212.6755
+http://dx.doi.org/ 10.1088/1475-7516/2013/03/036
+http://arxiv.org/abs/1210.4546
+http://dx.doi.org/10.1093/mnras/stt1718
+http://arxiv.org/abs/1309.2947
+http://dx.doi.org/10.3847/1538-4357/ab0420
+http://arxiv.org/abs/1810.09301"
+"
+A Cross sections for the main channels"
+"In this appendix we are showing a comparison between the different cross section models used
+in the study and the experimental data in the most important reaction channels for the light
+secondary CRs Li, B, Be. Experimental data are taken from various experiments and authors:
+some can be found in EXFOR (Experimental Nuclear Reaction Data)7 others in the GALPROP
+database of cross sections (isotope_cs.dat) and the rest come from various publications
+and experiments (Bodemann1993, Davids1970, Fontes1977, Korejwo1999, Korejwo2002,
+Moyle1979, Olson1983, Radin1979, Read1984, Roche1976, W90, W98a and Zeitlin2011). This
+data is available upon request. More information about the references used can be found in
+section 5 of ref. [14] and mainly in the appendix of ref. [57]."
+Production of B isotopes from 12C and 16O
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 12C + 1H 10B 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"tio
+n "
+" (m
+b)"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 16O + 1H 10B 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 12C + 1H 11B 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 16O + 1H 11B 
+"Figure 10. Cross sections compared to available experimental data for the production of 10B (top)
+and 11B (bottom) coming from 12C (left) and 16O (right)."
+7https://www-nds.iaea.org/exfor/exfor.dhtm
+– 22 –
+https://www-nds.iaea.org/exfor/exfor.dhtm
+"
+Production of Be isotopes from 12C and 16O"
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 12C + 1H 7Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 16O + 1H 7Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"1
+2
+3
+4
+5
+6
+7
+8"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 12C + 1H 9Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 16O + 1H 9Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 12C + 1H 10Be 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+3.5
+4.0"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+WNEW03
+GALPROP
+Data compilation"
+Direct 16O + 1H 10Be 
+"Figure 11. Cross sections compared to available experimental data for the production of 7Be (top),
+9Be (middle) and 10Be (bottom) coming from 12C (left) and 16O (right)."
+– 23 –
+Production of Li isotopes from 12C and 16O
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"5
+10
+15
+20
+25
+30
+35
+40"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+TS98
+GALPROP
+Data compilation"
+Direct 12C + 1H 6Li 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+TS98
+GALPROP
+Data compilation"
+Direct 12C + 1H 7Li 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"5
+10
+15
+20
+25
+30
+35
+40"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+TS98
+GALPROP
+Data compilation"
+Direct 16O + 1H 6Li 
+"10 1 100 101 102 103
+Projectile energy (GeV/n)"
+"la
+tio"
+"n 
+ (m"
+"DRAGON2
+TS98
+GALPROP
+Data compilation"
+Direct 16O + 1H 7Li 
+"Figure 12. Cross sections compared to available experimental data for the production of 6Li (top)
+and 7Li (bottom) coming from 12C (left) and 16O (right)."
+– 24 –
+B Primary spectra
+"In this section we show the spectra of the main primary CRs involved in the generation of
+the secondary CRs Li, Be and B."
+"10 4
+10 3
+10 2
+10 1
+100
+101
+102"
+".7
+J
+(G"
+"Modulated spectrum
+Unmodulated spectrum
+O AMS-02 (2011-2016)
+O Voyager 1 (2012-2015)"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"0.2
+0.0
+0.2
+0.4"
+"R
+e
+si"
+"d
+u
+a
+ls"
+Oxygen spectrum
+"10 4
+10 3
+10 2
+10 1
+100
+101
+102"
+".7
+J
+(G"
+"Modulated spectrum
+Unmodulated spectrum
+C AMS-02 (2011-2016)
+C Voyager 1 (2012-2015)"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"0.2
+0.0
+0.2
+0.4"
+"R
+e
+si"
+"d
+u
+a
+ls"
+Carbon spectrum
+"10 4
+10 3
+10 2
+10 1
+100
+101
+102"
+".7
+J
+(G"
+"Modulated spectrum
+Unmodulated spectrum
+N AMS-02 (2011-2016)
+N Voyager 1 (2012-2015)"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"0.2
+0.0
+0.2
+0.4"
+"R
+e
+si"
+"d
+u
+a
+ls"
+Nitrogen spectrum
+".7
+J
+(G"
+"Modulated spectrum
+Unmodulated spectrum
+Ne AMS-02 (2011-2018)
+Ne Voyager 1 (2012-2015)"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"0.2
+0.0
+0.2
+0.4"
+"R
+e
+si"
+"d
+u
+a
+ls"
+Neon spectrum
+".7
+J
+(G"
+"Modulated spectrum
+Unmodulated spectrum
+Mg AMS-02 (2011-2018)
+Mg Voyager 1 (2012-2015)"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"0.2
+0.0
+0.2"
+"R
+e
+si"
+"d
+u
+a
+ls"
+Magnesium spectrum
+".7
+J
+(G"
+"Modulated spectrum
+Unmodulated spectrum
+Si AMS-02 (2011-2018)
+Si Voyager 1 (2012-2015)"
+"10 2 10 1 100 101 102 103
+Energy (GeV/n)"
+"0.2
+0.0
+0.2"
+"R
+e
+si"
+"d
+u
+a
+ls"
+Silicon spectrum
+"Figure 13. Fits of the primary CR spectra used in the simulations, using the DRAGON2 cross sections.
+Data from the Voyager-1 mission and AMS-02 are plotted, including the very recent Ne, Mg and Si
+data from AMS-02. Voyager-1 is outside the heliosphere, which means no solar modulation effects,
+while the Fisk potential value used for to fit AMS-02 data is φ = 0.61 GV. Data taken from
+//https://lpsc.in2p3.fr/crdb/ [51, 52] and https://tools.ssdc.asi.it/CosmicRays/ [53]."
+– 25 –
+"//https://lpsc.in2p3.fr/crdb/
+https://tools.ssdc.asi.it/CosmicRays/"
+"
+In addition, the fits of the boron-over-carbon spectra with the three tested cross sections
+are shown in fig. 14, for the unmodulated and modulated predictions, in comparison to the
+experimental data of the Voyager-1, PAMELA and AMS-02 experiments."
+Webber GALPROP DRAGON2
+"Energy (GeV/n)
+2−10 1−10 1 10 210 310"
+"0.4
+VOYAGER 1 (2012-2015)"
+AMS-02 (2011-2016)
+PAMELA (2006-2008)
+"=0.61ΦWebber, "
+"Webber, unmodulated"
+"Energy (GeV/n)
+2−10 1−10 1 10 210 310"
+VOYAGER 1 (2012-2015)
+AMS-02 (2011-2016)
+PAMELA (2006-2008)
+"=0.61ΦGALPROP, "
+"GALPROP, unmodulated"
+"Energy (GeV/n)
+2−10 1−10 1 10 210 310"
+VOYAGER 1 (2012-2015)
+AMS-02 (2011-2016)
+PAMELA (2006-2008)
+"=0.61ΦDRAGON2, "
+"DRAGON2, unmodulated"
+"Figure 14. Fits of the boron-over-carbon ratios for the three compared cross sections models. These
+models are set to a Fisk potential of φ = 0.61 GV in the time period corresponding to the AMS-02
+data taking. A line with a solar modulation φ = 0.4 GV is added for completeness. Data taken from
+//https://lpsc.in2p3.fr/crdb/ [51, 52] and https://tools.ssdc.asi.it/CosmicRays/ [53]."
+C Theory on secondary-over-secondary flux ratios
+"In this appendix, the basic theory about the secondary-over-secondary flux ratios is illustrated.
+Here we demonstrate that they are mainly dependent on the cross sections of secondary CR
+production and on the injection spectra used to describe primary CRs. Roughly speaking,
+if one considers that the flux of a primary CR species at Earth is Jα ∝ qα × τprop(E) and
+τprop(E) = H"
+"2/D(E), it will take the form Jα ∼ CαE−γα−δ at high energies (more precisely,
+around few GeVs, when 1/σinelα (E)� ng"
+"h
+H
+cτprop(E)). The secondary CR fluxes take the form"
+"Ji ∝
+∑α"
+"Jαcngσα→i × τprop(E), whose ratio leaves the expression:"
+"(
+E
+)
+∝
+∑α→k"
+"Jα(E)σα→k(E)∑α→j
+Jα(E)σα→j(E)"
+"high energies
+−−−−→ ∼"
+"∑α→k
+CαE"
+"−γασα→k(E)∑α→j
+CαE−γασα→j(E)"
+"Notice that the term E−δ is common in the summation terms and therefore is common in
+numerator and denominator, cancelling out. With the equation C.1 one appreciates that these
+ratios have direct dependence on the local spectrum of primary nuclei (α) and on the overall
+spallation cross sections. Nonetheless, the local primary spectrum may have some dependence
+on the diffusion parameters at low energies and reacceleration can slightly contribute. The
+total repercussion of these parameters in the low energy region can be estimated to be at level
+of 10%. Then, due to the presence of the radioactive 10Be, the most important contributor
+to the low energy uncertainties is the halo size being able to introduce variations of more
+than 10%, respectively. At the end, these ratios are mainly dependent on the source term
+of CRs and on their spallation cross sections at high energies. The fact that these ratios do
+not hold exactly for different diffusion parameters is caused by multi-step reactions, which
+introduce more non-linearities difficult to predict. Despite this fact, as AMS-02 data for the"
+– 26 –
+"//https://lpsc.in2p3.fr/crdb/
+https://tools.ssdc.asi.it/CosmicRays/"
+"
+local spectrum of primary CRs are highly precise, the largest uncertainty at high energy lies
+on the spallation cross sections, and this is what makes them so suitable for adjusting the
+overall cross sections with high precision (AMS-02 precision). The next figure shows the effect
+of these changes on the Li/B ratio (since the importance of the halo size and gas profile is
+negligible):"
+100 101 102 103
+"io
+=0.05"
+"VA=18.5 (km/s)
+D0=7.65×1028 (cm2s 1)"
+"=0.40
+Best fit model
+Li/B AMS-02 data"
+"100 101 102 103
+Energy (GeV/n)"
+"0.04
+0.02
+0.00
+0.02
+0.04"
+"s
+Li/B spectrum"
+"Figure 15. Simulated ratios with same primary source term (except for the simulation with change
+in the diffusion spectral index, δ, in which the source term was changed to hold same α + δ value)
+and changing diffusion parameters. The best fit model has been shown in table 1 and the simulations
+change by ∆η ∼ 0.5, ∆VA ∼ 7 km/s, ∆D0 ∼ 1 × 1028 cm2/s, ∆δ ∼ 0.04, respectively, much higher
+than the usual uncertainties quoted in the best fits of these parameters [17, 46, 76]. The residuals are
+shown with respect to the best fit model (orange line)."
+"As we see, at 10 GeV/n the maximum difference between the predictions, when changing
+the diffusion parameters as described, is around 4%, while at 30 GeV/n it goes down to
+3% for variations of the diffusion parameters larger than the usual uncertainties related to
+their determination. Nonetheless, the differences at high energy are mainly due to multi-step
+reactions and the subtle differences in the primary fluxes because of the change in the amount
+of secondary C (roughly 1/5 of its flux is secondary at low energies) and N (∼ 73% of it is
+secondary at 10 GeV/n), which leads to sizeable changes in the secondary CRs."
+– 27 –
+"
+	1 Introduction
+	2 Propagation setup and cross section data sets
+	3 Fluxes of the secondary CRs B, Be and Li
+	4 Cross section uncertainties assessment
+	4.1 Uncertainty effects and cross sections evaluation from the secondary-over-secondary ratios"
+"	5 Implications of the cross sections on the halo size determination
+	6 Conclusions
+	A Cross sections for the main channels
+	B Primary spectra
+	C Theory on secondary-over-secondary flux ratios"

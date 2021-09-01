@@ -1,0 +1,519 @@
+0
+"Draft version March 15, 2021"
+Typeset using LATEX RNAAS style in AASTeX63
+Fisher Matrix Stability
+"Naren Bhandari,1, ∗ C. Danielle Leonard,2, † Markus Michael Rau,1, ‡ and Rachel Mandelbaum1, §"
+"1McWilliams Center for Cosmology, Department of Physics, Carnegie Mellon University,"
+"Pittsburgh, PA 15213, USA
+2School of Mathematics, Statistics and Physics, Newcastle University, Newcastle upon Tyne, NE1 7RU, UK"
+ABSTRACT
+Fisher forecasts are a common tool in cosmology with applications ranging from survey planning to the development
+"of new cosmological probes. While frequently adopted, they are subject to numerical instabilities that need to be"
+carefully investigated to ensure accurate and reproducible results. This research note discusses these challenges using
+the example of a weak lensing data vector and proposes procedures that can help in their solution.
+INTRODUCTION
+With the advent of ongoing large photometric surveys like the Dark Energy Survey (DES; The Dark Energy Survey
+"Collaboration 2005), the Kilo-Degree Survey (KiDS; de Jong et al. 2013), the Hyper Suprime-Cam survey (HSC; Aihara"
+et al. 2018) and upcoming surveys like the Vera C. Rubin Observatory Legacy Survey of Space and Time (LSST; Ivezić
+"et al. 2019) and Euclid (Laureijs et al. 2011), the need for computationally efficient forecasting for survey planning or"
+to investigate the impact of sources of systematic error increases. Fisher forecasts are a commonly used tool for this
+"purpose, that has been adopted early in many areas of astrophysics and cosmology (e.g. Bassett et al. 2011; Cutler"
+"& Flanagan 1994; Jungman et al. 1996a,b; Tegmark 1997; Tegmark et al. 1997; Hart & Chluba 2020) to forecast"
+parameter constraints without the barrier of the computational expense of e.g. Markov chain Monte Carlo methods.
+"However, in making use of them, there are issues of which we must be aware. We highlight the importance of rigorous"
+investigations of numerical stability in Fisher forecasts while using a weak lensing convergence power spectrum data
+vector. We discuss possible pitfalls in the application of Fisher forecasts and propose methodological tests to ensure
+"numerical accuracy. Our work builds on that of Yahia-Cherif et al. (2020), where this question was considered for the"
+complementary case of a data vector consisting of the galaxy power spectrum measured from a spectroscopic galaxy
+"survey (with a specific focus on Euclid), and on that of Blanchard et al. (2020), which performed an analytic estimation"
+of the relationship between the maximum fractional error on an element of the Fisher matrix and the error on the
+elements of the resulting forecast parameter covariance matrix.
+In the course of this investigation we will use two libraries that provide the capability to model weak lensing
+convergence power spectra: CCL v2.0.1 (Chisari et al. 2019) and CosmoSIS v1.6 (Zuntz et al. 2015). We note that the
+settings for CosmoSIS that we use in this work are optimized for MCMC sampling and not for high accuracy Fisher
+"matrix calculations. This is not a limitation of the code itself, since higher accuracy configurations are supported."
+"The purpose of this work is not to perform a code comparison, but rather to investigate the importance and impact of"
+"numerical derivative calculations on the reliability of Fisher forecasts, and to provide tests that can be used to avoid"
+numerical pitfalls. The CosmoSIS code package has been subject to significant scrutiny in terms of the accuracy of
+likelihood evaluations in e.g. Krause et al. (2017).
+"The structure of this research note is as follows. In the ‘Forecast Methodology’ section, we outline our fiducial"
+"assumptions and how we set up our Fisher forecast. In the ‘Results’ section, we detail our findings using both libraries"
+"and gauge their numerical stability in the context of Fisher forecasting. Finally, in the ‘Conclusions’, we summarize"
+and present our conclusions regarding these forecasts.
+"∗ nbhandar@andrew.cmu.edu
+† danielle.leonard@ncl.ac.uk
+‡ markusmichael.rau@gmail.com
+§ rmandelb@andrew.cmu.edu"
+"Figure 1. Redshift probability density function, p(z), as a function of redshift, z."
+FORECAST METHODOLOGY
+We perform a Fisher forecast for an LSST-like convergence power spectrum data vector assuming the fiducial
+"cosmology and survey setup summarized in Table 1. We use θ = (Ωc, w0, h, 10
+9As,Ωb, ns, wa) as our cosmological"
+parameter vector and we use a redshift distribution1 from the LSST Dark Energy Science Collaboration (DESC)
+"Science Requirements Document v1 (The LSST Dark Energy Science Collaboration et al. 2018a,b) which we bin into"
+five tophat tomographic bins that are equally spaced in redshift. Figure 1 shows the redshift probability density
+"function, p(z), i.e. the probability that a randomly selected galaxy has redshift z, along with the five tophat selections."
+"Furthermore, we take the fractional sky coverage, fsky, from Table 1.1 in LSST Science Collaboration et al. (2009),"
+"and choose the number density, ng, to be consistent with Table 1 in Chang et al. (2013)."
+Table 1. Fiducial Parameter Values and Survey Assumptions
+Cosmological/Survey Parameter Value
+Dark Matter Density Ωc 0.25
+Baryon Density Ωb 0.04
+"Dark Energy Equation of State w0 −0.90
+w(a) = w0 + wa(1 − a) wa 0.00"
+Reduced Hubble Constant h 0.72
+Primordial Power Spectrum Amplitude 109As 2.10
+Slope of Primordial Power Spectrum ns 0.96
+Shape Noise σ2� 0.23
+Fractional Sky Coverage fsky 0.48
+Number of Galaxies per Steradian ng 3.1 × 108
+"Convergence Power Spectrum Modelling —Using CCL and CosmoSIS, we calculate the shear-shear angular power spectra"
+which serve as our data vector. The convergence power spectrum Cκ(`) probes the spatial correlation of the lensing
+convergence signal (e.g. Blandford et al. 1991; Kaiser 1992; Bartelmann & Schneider 2001)
+"Cκ(`) =
+9"
+"4
+Ω2mH"
+"∫ χH
+0"
+"dχ
+q2(χ)"
+"a2(χ)
+Pδ"
+"fK(χ)
+, χ"
+")
+. (1)"
+1 We use the zdistri model z0=1.100000e-01 beta=6.800000e-01 Y10 source redshift distribution
+"Here, Ωm, H0 denote the matter density and Hubble constant respectively, χH is the comoving distance χ for which"
+"χ(a) → χH as the scale factor a → 0. Note that Ωm = Ωb + Ωc. From the structure of Eq. 1 we see that the matter
+power spectrum Pδ"
+"(
+k = `"
+"fK(χ)
+, χ
+)"
+"is projected along the line-of-sight using a geometrical factor, the ‘lensing weight’:"
+q(χ) =
+"∫ χH
+χ"
+"dχ
+′
+n(χ"
+"(
+fK(χ"
+"′
+− χ)"
+"fK(χ
+′
+)"
+")
+, (2)"
+where the function fK(χ) is a curvature-dependent factor in the FLRW metric. We see that this geometrical factor
+"critically depends on the redshift distribution n(χ
+′
+) that constitutes an important source of systematic uncertainty in"
+weak lensing measurements. For a more detailed treatment of the convergence power spectrum we refer the reader to
+"the aforementioned references. For the matter power spectrum Pδ, we use the Takahashi et al. (2012) version of the"
+nonlinear power spectrum from Halofit (Smith et al. 2003).
+"Covariance Matrix Modelling —As in Kirk et al. (2015), we use the convergence power spectrum to calculate the"
+covariance matrix. The Gaussian model for the covariance matrix of the data vector is given as
+"Σ
+(k,m)
+(i,j)"
+"(`) =
+1"
+(2`+ 1)fsky
+"(i,k)
+(`)C"
+"(j,m)
+(`) + C"
+"(i,m)
+(`)C"
+"(j,k)
+(`)
+)
+, (3)"
+"C
+(i,j)"
+"(`) = C(i,j)(`) + δi,j"
+")
+. (4)"
+"Here, nig denotes the number of galaxies per steradian and σ� is the shape noise expressed as a standard deviation."
+"Note that the indices denote samples selected in bins of increasing redshift, i.e. tomographic bins, whose redshift"
+"probability density functions are shown in Fig. 1. The index combinations (i, j) denote the respective auto- (i = j)"
+"and cross-correlations (i 6= j) obtained by correlating the samples in the tomographic selections i and j. For example,
+at fixed `, the correlation between the auto-correlation convergence power spectrum of the first bin with the cross-"
+"correlation convergence power spectrum of first and second tomographic redshift bin, would be Σ
+(k=1,m=1)
+(i=1,j=2)"
+. At each
+"`, the data-vector, denoted by C(`), is constructed from all convergence power spectra formed from the available"
+"tomographic redshift bins, i.e., by enumerating the possible combinations we can map the pair of indices (i, j) to a"
+"single index and make a vector. Similarly, at each `, the data-covariance matrix, denoted by Σ(`), is constructed such"
+that the rows and columns are indexed by the enumeration above.
+"Fisher Forecast —Suppose that the negative log-likelihood of our data vector is L(C(`); θ). Then the Fisher matrix is
+defined as the expectation value of the Hessian matrix of L with respect to the parameters θ:"
+∂θα∂θβ
+"Assuming a Gaussian likelihood and that Σ(`) is independent of θ, we can calculate the Fisher matrix as"
+"Fαβ =
+∑
+`"
+∂C(`)T
+"∂θα
+· Σ(`)−1 ·"
+"∂θβ
+(6)"
+where the derivatives are evaluated at the fiducial parameter values (Kirk et al. 2015). The sum is taken over `min = 76
+to `max = 999 — this range is motivated by accessible values to the aforementioned surveys and also to stay in the
+linear and quasi-linear regime. We refer the reader to Tegmark (1997); Tegmark et al. (1997); Bassett et al. (2011);
+Heavens et al. (2014) for more detailed treatments of the Fisher matrix formalism.
+Numerical Differentiation —We calculate the derivatives above numerically by using centered finite difference methods
+outlined in Fornberg (1988):
+"∣∣∣∣
+x=x0"
+"n∑
+j=−n"
+µjf(x+ j∆s) (7)
+"where f is some function that depends on the variable x, µj ’s are coefficients given by the aforementioned reference,"
+"∆s is the step-size, and n is an integer that determines the number of points surrounding the reference point where the"
+derivative needs to be approximated. The geometrical arrangement of these points is referred to as the ‘stencil’. The
+"number of points in the stencil, namely 2n + 1 for centered finite difference methods, determines how the numerical"
+"error of the stencil method scales with the step-size. For example, the five-point stencil approximation is given by"
+"∣∣∣∣
+x=x0"
+"12∆s
+f(x0 − 2∆s)−"
+"12∆s
+f(x0 −∆s) + 0f(x0) +"
+"12∆s
+f(x0 + ∆s)−"
+"12∆s
+f(x0 + 2∆s). (8)"
+"Note that all the centered finite differences we use have a zero coefficient on the central term. As such, while entering"
+"into the theoretical modelling of the covariance matrix, the central term does not enter the calculation of the numerical"
+"derivative. Thus, the order of accuracy is given by 2n, i.e., evaluating more points in our stencil will lead to more"
+"accurate derivatives at the cost of computational complexity (here, more calls to CCL or CosmoSIS). We will investigate"
+the numerical performance as a function of the number of points in the stencil and the step-size. We do so by calculating
+"derivatives using three-, five-, seven-, and nine-point stencils and seeing how some figure of merit changes in response"
+"to varying the step-size ∆s, looking for a region where it is stable — henceforth, we will refer to this process as tuning"
+the derivatives. In this context it is noteworthy that other derivative tuning methods have been employed by the
+"community. For example Camera et al. (2017), due the large number of observables and cosmological parameters in"
+"their work, use a linear interpolation constructed on a set of sampling points around the fiducial value for derivative"
+estimation. They then decrease the point spacing adaptively until the required numerical accuracy is met. In this
+work we will restrict our approach to a visual approach to gain understanding of the behaviour of different codes as
+"a function of step size. For the sake of comparisons, it will be convenient to work with a normalized step-size given"
+"by the nominal step-size divided by the absolute value of the fiducial parameter value instead. For the parameter, wa,"
+"which has a fiducial value of 0, we divide the nominal step size by the absolute value of the fiducial value of w0, which"
+is nonzero.
+"Performance Evaluation Metrics —In order to gauge how well the measurement we are forecasting constrains dark energy,"
+we use the Dark Energy Task Force’s Figure of Merit (DETF FoM) given by
+"DETF FoM =
+√"
+detFw0wa (9)
+"where Fw0wa is the reduced Fisher matrix, obtained by inverting the Fisher matrix F , marginalizing over parameters"
+"that are not w0 or wa, and inverting back (Albrecht et al. 2006). Note that we can also define similar quantities for"
+"other pairs of parameters, like Ωc and 10
+9As for example. To distinguish which pairs of parameters we are talking"
+"about, we refer explicitly to the w0 − wa FoM (as in Eq. 9) or Ωc − 109As FoM where necessary. Since the main
+purpose of this note is to study how numerical errors can bias Fisher matrix inference, we are not marginalizing over"
+intrinsic alignments or other sources of systematic uncertainty.
+RESULTS
+Both CCL and CosmoSIS are well-trusted and mature libraries that we would expect to produce theoretical predic-
+"tions and forecasts that are consistent, so we begin by checking this assumption. As a first test of consistency between"
+the data vectors produced by CCL and CosmoSIS we investigate the signal-to-noise ratio (SNR) given by:
+C(`) · Σ(`)−1 · C(`) (10)
+"These were calculated to be 342.58 and 342.44 for CCL and CosmoSIS, respectively — a relative difference of −0.04%,
+which we consider to be a good agreement. This first test is important to ensure that the data vector and the covariance"
+"calculation give reasonable results, before numerical differentiation introduces numerical sources of error that need to"
+be isolated.
+"In order to calculate the Fisher Matrices, we tune the derivatives as mentioned in the ‘Forecast Methodology’ Section."
+We select 0.01 as an initial guess for a starting normalized step-size for all parameters and calculate all the derivatives
+"using a five-point stencil and arrive at an initial DETF FoM estimate. To then tune the derivatives, we calculate"
+"them using the three-, five-, seven-, and nine-point stencils, varying the normalized step-size to look for regions where"
+"the DETF FoM does not vary much. In the CCL case, we were able to find clear regions of stability, wherein the"
+normalized step-sizes for all parameters was chosen to be 0.01 using a nine-point stencil — a few examples can be seen
+in Figure 2. This spacing is of the same order of magnitude as that determined to be optimal for each cosmological
+parameter in Yahia-Cherif et al. (2020) for the spectroscopic galaxy case; this makes sense as both observables rely on
+"underlying calculations of the power spectrum via Boltzmann codes. In the CosmoSIS case, we were unable find such a"
+"region of stability for the parameters Ωc and w0, seen in Figure 3. However, for the sake of further comparison, we can"
+pick values of the normalized step-sizes and the number of points in the stencil used (like 0.02 for the nine-point stencil
+"for Ωc) that bring the DETF FoM as close as possible to its CCL counterpart, as seen in the third column of Table 2."
+"(Despite this, we still see, in the next column, that the analogous FoM for Ωc and 10
+9As are quite different between"
+"CCL and CosmoSIS). While we were unable to successfully tune derivatives for CosmoSIS, there are other methods"
+of forecasting with the library. We note that our CosmoSIS setup is mainly optimized for MCMC techniques that
+may not require a high numerical precision in the calculation of angular power spectra. Both the internal Boltzmann
+solvers and the CosmoSIS modules that perform the integration over the window functions can be adjusted towards
+increased numerical accuracy and are subject to future accuracy improvements. We reiterate that we aren’t trying to
+"compare the numerical accuracy of the two libraries, but use them to investigate numerical issues that can arise in"
+Fisher forecasts.
+"Figure 2. Derivative tunings for CCL, focusing on parameters Ωc (left) and w0 (right), using various order stencils. Note that
+a normalized step-size of 0.01 appears stable."
+"Figure 3. Derivative tunings for CosmoSIS, focusing on parameters Ωc (left) and w0 (right) using various order stencils. Note
+that there does not seem to be a clear region of stability in either case. In the latter case, this is true even restricting the range
+of the plot to focus on the larger normalized step-sizes."
+"Continuing with the calculation of our Fisher forecast, we get Fisher matrices from CCL and CosmoSIS that have"
+"entry-wise relative differences that are no larger than 0.6% in magnitude as seen in Table 3. However, these Fisher"
+matrices have high condition numbers (see Table 2) that lead to large magnifications in the entry-wise relative differ-
+"ences when we invert the matrices and look at the corresponding covariance matrices as seen in Table 4. At worst, the"
+relative difference is almost a factor of 15. This highlights how small instabilities in the Fisher matrix can translate
+"to much larger deviations in the parameter covariance matrix. Note that we use the inversion method, linalg.inv,"
+implemented in the NumPy package (Oliphant 2006; Van Der Walt et al. 2011) that is based on LU decomposition.
+In the following paragraph we will describe the consistency tests we performed to ensure numerical accuracy in the
+inversion.
+"Given the high condition numbers, we gauge how accurate our calculated inverses are by one of two methods:"
+1. We multiply a Fisher matrix with its corresponding covariance matrix (its inverse) and check whether we get
+something that is numerically close to the identity matrix.
+"2. We follow Köhlinger et al. (2017), which uses a technique from Newman et al. (1974) to verify matrix inversions"
+in its forecasts. The latter gives upper and lower bounds on the matrix norm of the difference between the
+"calculated and actual inverse of a matrix. Let C be our calculated inverse to the Fisher matrix F , let F−1 be"
+"the actual inverse of F , let I be the Identity matrix, let R = I − FC and let N be a matrix norm (we use the
+Frobenius norm). Then"
+"1 +N(R)
+≤ N(F−1 − C) ≤"
+"1−N(R)
+(11)"
+"For CCL, the lower bound was calculated to be 1.88 × 10−12 and the upper bound differed by 1.70 × 10−22.
+For CosmoSIS, the respective lower bound was 3.09× 10−13 and the upper bound differed by 2.28× 10−23. By
+subtracting the lower bound from the upper bound, we get the size of the interval that contains the norm in"
+question. This ‘Inverse Norm Spread’ is shown again in the last column of Table 2. Since these spreads are very
+"small in all cases, we have another test suggesting that our calculated inverses are accurate."
+"We also test the sensitivity of our results with respect to a reparametrization wherein we use Ωch
+2 and Ωbh"
+2 instead
+"of Ωc and Ωb respectively, and repeat the above steps. The last row of Table 2 summarize the condition number, the"
+"DETF and Ωch
+2 − As FoM, and the Inverse Norm Spread for this case using CCL. While the condition number is"
+"still high, the DETF FoM is roughly the same as earlier and the small Inverse Norm Spread suggests our calculated"
+covariance matrix is numerically accurate.
+"In the field of numerical stability, it is well known that when inverting a matrix, it should be equilibrated, i.e., given"
+"a norm, its rows (and columns) should have similar lengths in that norm. This ensures that small perturbations in"
+"all rows (or columns) are of similar magnitude. For a more detailed treatment of the subject, we refer the reader to"
+"Croz & Higham (1992); Wilkinson (1961); Bunch (1971). In the context of Fisher forecasting, if one is using As as"
+"a parameter, equilibration can be used to lower the condition number. For example, we can scale As by 10
+9 and use"
+"109As as a parameter. While this does not affect the relative differences in the Fisher and covariance matrix, we found"
+"that it does make eigenvalue/eigenvector calculations more accurate. Since doing so comes at no computational cost,"
+we incorporated this into our fiducial ansatz. Note that log[1010As] has been used as well (Planck Collaboration et al.
+2016; Raveri et al. 2016; Ballardini et al. 2018).
+"Additionally, we also test how adding priors on Ωb and h affects our results. Using Monte Carlo Markov Chains"
+"provided in the 2015 release of data products2 by the Planck Collaboration et al. (2016), we create a covariance matrix"
+containing the parameters we are interested in. By taking the square root of the diagonal elements corresponding to
+"Ωb and h, we get the uncertainties σΩb = 0.00066 and σh = 0.0057. To add these priors to our Fisher matrices, we add"
+"σ−2h and σ
+−2
+Ωb"
+"to the corresponding diagonal values in the original matrices. We therefore neglect, for simplicity, the"
+"correlation between h and Ωb in the Planck prior. We note that our goal is not primarily to perform a realistic forecast,"
+but to study the impact of prior choices on the numerical stability of the Fisher analysis in a simple framework.
+While adding this prior reduces the largest entry-wise relative differences between the covariance matrices (for the
+"h−w0 and ns−w0 elements) from a factor of ∼ 15 to ∼ 0.5, it also increases other elements like the h−109As element"
+"2 We use the chains in the base plikHM TT lowTEB post BAO.txt files from the ‘Planck baseline model: TT low-ell temperature and LFI
+polarization (bflike, 2 <= ell <= 29)’ data available at https://pla.esac.esa.int/pla/aio/product-action?COSMOLOGY.FILE ID=COM
+CosmoParams base-plikHM-TT-lowTEB R2.00.tar.gz"
+"https://pla.esac.esa.int/pla/aio/product-action?COSMOLOGY.FILE_ID=COM_CosmoParams_base-plikHM-TT-lowTEB_R2.00.tar.gz
+https://pla.esac.esa.int/pla/aio/product-action?COSMOLOGY.FILE_ID=COM_CosmoParams_base-plikHM-TT-lowTEB_R2.00.tar.gz"
+"from a factor of ∼ 0.5 to ∼ 2. As such, we do not find that adding priors solves the problem of high entry-wise relative
+differences upon inversion of Fisher matrices."
+"Lastly, it is worth noting that the high condition numbers appear to stem from the size of our parameter space."
+"By only varying a subset of our original parameters, we can reduce the size of the parameter space and generate new"
+"Fisher matrices using CCL and CosmoSIS. After trying various combinations of parameters, we found that once the"
+"parameter space included at least four parameters, then entry-wise relative differences between the inverted Fisher"
+"matrices started to exceed 10%, despite much smaller entry-wise relative differences, of similar magnitude to those"
+"in Table 4, in the original Fisher matrices. This agrees with idea that increasing the dimensionality of a matrix to"
+"be inverted results in this inversion being more sensitive to small deviations in the original matrix, as discussed in a"
+Fisher forecasting in e.g. Blanchard et al. (2020).
+Table 2. Summary table for CCL and CosmoSIS forecasts.
+Forecast Condition Number w0 − wa FoM Ωc − 109As FoM Ωch2 − 109As FoM Inverse Norm Spread
+CCL 1.07 × 107 25.24 96.07 N/A 1.70 × 10−22
+CosmoSIS 8.08 × 106 29.50 221.5 N/A 2.28 × 10−23
+"CCL (Ωch
+2 & Ωbh"
+2) 3.33 × 107 26.84 N/A 70.89 1.55 × 10−21
+"Table 3. Magnitude of relative differences for CCL and CosmoSIS Fisher matrices.
+The largest differences are highlighted in bold."
+"Ωc w0 h 10
+9As Ωb ns wa"
+Ωc 4.68E-5 1.92E-3 3.26E-4 5.98E-4 1.49E-3 1.01E-4 1.93E-4
+w0 1.92E-3 3.84E-3 2.39E-3 1.53E-3 5.61E-4 1.36E-3 2.34E-3
+h 3.26E-4 2.39E-3 7.20E-4 1.77E-4 1.41E-3 4.82E-5 5.84E-4
+109As 5.98E-4 1.53E-3 1.77E-4 1.05E-3 2.47E-3 9.57E-4 4.11E-4
+Ωb 1.49E-3 5.61E-4 1.41E-3 2.47E-3 5.90E-3 1.84E-4 2.51E-3
+ns 1.01E-4 1.36E-3 4.82E-5 9.57E-4 1.84E-4 6.15E-4 6.83E-4
+wa 1.93E-4 2.34E-3 5.84E-4 4.11E-4 2.51E-3 6.83E-4 3.32E-5
+"Table 4. Magnitude of relative differences for CCL and CosmoSIS covariance matrices.
+The largest differences are highlighted in bold."
+"Ωc w0 h 10
+9As Ωb ns wa"
+Ωc 7.91E-1 1.14E+0 7.71E-1 7.36E-1 7.82E-1 6.20E-1 1.00E+0
+w0 1.14E+0 3.54E-1 1.15E+1 2.88E-2 7.35E-1 1.48E+1 3.60E-1
+h 7.71E-1 1.15E+1 6.73E-1 4.71E-1 6.82E-1 4.20E-1 1.31E+1
+109As 7.36E-1 2.88E-2 4.71E-1 2.00E-1 4.66E-1 3.17E-1 3.34E-2
+Ωb 7.82E-1 7.35E-1 6.82E-1 4.66E-1 6.51E-1 5.95E-1 5.55E-1
+ns 6.20E-1 1.48E+1 4.20E-1 3.17E-1 5.95E-1 3.15E-4 3.45E-1
+wa 1.00E+0 3.60E-1 1.31E+1 3.34E-2 5.55E-1 3.45E-1 2.99E-1
+CONCLUSIONS
+"In this note, we investigated numerical issues that may arise when Fisher forecasting LSST-like weak lensing probes"
+"to constrain dark energy, focusing on an angular power spectrum formalism whose performance was gauged by the"
+"DETF FoM. Using two numerical libraries, CCL and CosmoSIS, we generated data-vectors and data-covariances that"
+"were very close numerically, as seen by their signal-to-noise ratios having a relative difference of −0.04%. However,
+when trying to calculate the Fisher matrix, we found that numerical instability can arise when tuning the step-size for"
+"the derivatives that go into Equation 6, which consequently introduces numerical instability in the DETF FoM as seen"
+"in Figure 3. Furthermore, even with two Fisher matrices whose entry-wise relative differences were small (around 0.6%"
+"at most), we found that these small perturbations can be magnified greatly upon inversion (to order of magnitude"
+"differences) due to these Fisher matrices having high condition numbers — due, at least in part, to the number of"
+parameters chosen to investigate. Our work agrees with similar findings in Blanchard et al. (2020) and Yahia-Cherif
+"et al. (2020), with the former estimating that for the forecast parameter covariance matrix to be stable to 10%, the"
+maximum error on an element of the Fisher matrix permitted would be 0.01%. Ensuring all parameters have a similar
+"order of magnitude may help reduce the condition number; however, reparameterizing Ωc by Ωch
+2 and Ωb and Ωbh"
+or even applying priors on certain parameters does not necessarily yield significant benefits. While the large condition
+"numbers may not necessarily propagate into large differences for the DETF FoM, as in our case, it worth carrying"
+"out similar numerical stability tests in future work with Fisher forecasts, as it may impact other quantities whose"
+derivation involves inverting the Fisher matrix.
+ACKNOWLEDGMENTS
+We thank the CCL team for making their code available at https://github.com/LSSTDESC/CCL and the CosmoSIS
+"team for making their code available at https://bitbucket.org/joezuntz/cosmosis. We also thank Alain Blanchard,"
+"Stefano Camera, Luke Hart, Mark Kamionkowski, Eric Linder, Anz̆e Slosar and Joe Zuntz, for useful discussions that"
+improved the content of this paper.
+REFERENCES
+"Aihara, H., Arimoto, N., Armstrong, R., et al. 2018, PASJ,"
+"70, S4, doi: 10.1093/pasj/psx066"
+"Albrecht, A., Bernstein, G., Cahn, R., et al. 2006, Report of"
+the Dark Energy Task Force.
+https://arxiv.org/abs/astro-ph/0609591
+"Ballardini, M., Finelli, F., Maartens, R., & Moscardini, L."
+"2018, Journal of Cosmology and Astroparticle Physics,"
+"2018, 044, doi: 10.1088/1475-7516/2018/04/044"
+"Bartelmann, M., & Schneider, P. 2001, PhR, 340, 291,"
+doi: 10.1016/S0370-1573(00)00082-X
+"Bassett, B. A., Fantaye, Y., Hlozek, R., & Kotze, J. 2011,"
+"International Journal of Modern Physics D, 20,"
+"2559–2598, doi: 10.1142/s0218271811020548"
+"Blanchard, A., Camera, S., Carbone, C., et al. 2020,"
+"Astronomy & Astrophysics, 642, A191"
+"Blandford, R. D., Saust, A. B., Brainerd, T. G., &"
+"Villumsen, J. V. 1991, MNRAS, 251, 600,"
+doi: 10.1093/mnras/251.4.600
+"Bunch, J. R. 1971, J. ACM, 18, 566–572,"
+doi: 10.1145/321662.321670
+"Camera, S., Harrison, I., Bonaldi, A., & Brown, M. L. 2017,"
+"MNRAS, 464, 4747, doi: 10.1093/mnras/stw2688"
+"Chang, C., Jarvis, M., Jain, B., et al. 2013, MNRAS, 434,"
+"2121, doi: 10.1093/mnras/stt1156"
+"Chisari, N. E., Alonso, D., Krause, E., et al. 2019, The"
+"Astrophysical Journal Supplement Series, 242, 2,"
+doi: 10.3847/1538-4365/ab1658
+"Croz, J. J. D., & Higham, N. J. 1992, IMA Journal of"
+"Numerical Analysis, 12, 1, doi: 10.1093/imanum/12.1.1"
+"Cutler, C., & Flanagan, É. E. 1994, PhRvD, 49, 2658,"
+doi: 10.1103/PhysRevD.49.2658
+"de Jong, J. T. A., Verdoes Kleijn, G. A., Kuijken, K. H., &"
+"Valentijn, E. A. 2013, Experimental Astronomy, 35, 25,"
+doi: 10.1007/s10686-012-9306-1
+"Fornberg, B. 1988, Mathematics of computation, 51, 699"
+"Hart, L., & Chluba, J. 2020, MNRAS, 495, 4210,"
+doi: 10.1093/mnras/staa1426
+"Heavens, A. F., Seikel, M., Nord, B. D., et al. 2014,"
+"Monthly Notices of the Royal Astronomical Society, 445,"
+"1687–1693, doi: 10.1093/mnras/stu1866"
+"Ivezić, Ž., Kahn, S. M., Tyson, J. A., et al. 2019, ApJ, 873,"
+"111, doi: 10.3847/1538-4357/ab042c"
+"https://github.com/LSSTDESC/CCL
+https://bitbucket.org/joezuntz/cosmosis
+http://doi.org/10.1093/pasj/psx066
+https://arxiv.org/abs/astro-ph/0609591
+http://doi.org/10.1088/1475-7516/2018/04/044
+http://doi.org/10.1016/S0370-1573(00)00082-X
+http://doi.org/10.1142/s0218271811020548
+http://doi.org/10.1093/mnras/251.4.600
+http://doi.org/10.1145/321662.321670
+http://doi.org/10.1093/mnras/stw2688
+http://doi.org/10.1093/mnras/stt1156
+http://doi.org/10.3847/1538-4365/ab1658
+http://doi.org/10.1093/imanum/12.1.1
+http://doi.org/10.1103/PhysRevD.49.2658
+http://doi.org/10.1007/s10686-012-9306-1
+http://doi.org/10.1093/mnras/staa1426
+http://doi.org/10.1093/mnras/stu1866
+http://doi.org/10.3847/1538-4357/ab042c"
+"Jungman, G., Kamionkowski, M., Kosowsky, A., & Spergel,"
+"D. N. 1996a, PhRvD, 54, 1332,"
+doi: 10.1103/PhysRevD.54.1332
+"—. 1996b, PhRvL, 76, 1007,"
+doi: 10.1103/PhysRevLett.76.1007
+"Kaiser, N. 1992, ApJ, 388, 272, doi: 10.1086/171151"
+"Kirk, D., Lahav, O., Bridle, S., et al. 2015, MNRAS, 451,"
+"4424, doi: 10.1093/mnras/stv1268"
+"Krause, E., Eifler, T. F., Zuntz, J., et al. 2017, arXiv"
+"e-prints, arXiv:1706.09359."
+https://arxiv.org/abs/1706.09359
+"Köhlinger, F., Viola, M., Joachimi, B., et al. 2017, Monthly"
+"Notices of the Royal Astronomical Society, 471, 4412,"
+doi: 10.1093/mnras/stx1820
+"Laureijs, R., Amiaux, J., Arduini, S., et al. 2011, arXiv"
+preprint arXiv:1110.3193
+"LSST Science Collaboration, Abell, P. A., Allison, J., et al."
+"2009, arXiv e-prints, arXiv:0912.0201."
+https://arxiv.org/abs/0912.0201
+"Newman, M., et al. 1974, J. Res. Nat. Bur. Stand., 78, 65"
+"Oliphant, T. E. 2006, A guide to NumPy, Vol. 1 (Trelgol"
+Publishing USA)
+"Planck Collaboration, Adam, R., Ade, P. A. R., et al. 2016,"
+"A&A, 594, A1, doi: 10.1051/0004-6361/201527101"
+"Raveri, M., Martinelli, M., Zhao, G., & Wang, Y. 2016,"
+Information Gain in Cosmology: From the Discovery of
+Expansion to Future Surveys.
+https://arxiv.org/abs/1606.06273
+"Smith, R. E., Peacock, J. A., Jenkins, A., et al. 2003,"
+"Monthly Notices of the Royal Astronomical Society, 341,"
+"1311–1332, doi: 10.1046/j.1365-8711.2003.06503.x"
+"Takahashi, R., Sato, M., Nishimichi, T., Taruya, A., &"
+"Oguri, M. 2012, The Astrophysical Journal, 761, 152,"
+doi: 10.1088/0004-637x/761/2/152
+"Tegmark, M. 1997, Physical Review Letters, 79, 3806–3809,"
+doi: 10.1103/physrevlett.79.3806
+"Tegmark, M., Taylor, A. N., & Heavens, A. F. 1997, The"
+"Astrophysical Journal, 480, 22–35, doi: 10.1086/303939"
+"The Dark Energy Survey Collaboration. 2005, The Dark"
+Energy Survey. https://arxiv.org/abs/astro-ph/0510346
+"The LSST Dark Energy Science Collaboration,"
+"Mandelbaum, R., Eifler, T., et al. 2018a, The LSST Dark"
+Energy Science Collaboration (DESC) Science
+"Requirements Document v1 Released Data Products,"
+"1.0.1, Zenodo, doi: 10.5281/zenodo.2662127"
+"—. 2018b, arXiv e-prints, arXiv:1809.01669."
+https://arxiv.org/abs/1809.01669
+"Van Der Walt, S., Colbert, S. C., & Varoquaux, G. 2011,"
+"Computing in Science & Engineering, 13, 22"
+"Wilkinson, J. H. 1961, J. ACM, 8, 281–330,"
+doi: 10.1145/321075.321076
+"Yahia-Cherif, S., Blanchard, A., Camera, S., et al. 2020,"
+arXiv preprint arXiv:2007.01812
+"Zuntz, J., Paterno, M., Jennings, E., et al. 2015, Astronomy"
+"and Computing, 12, 45–59,"
+doi: 10.1016/j.ascom.2015.05.005
+"http://doi.org/10.1103/PhysRevD.54.1332
+http://doi.org/10.1103/PhysRevLett.76.1007
+http://doi.org/10.1086/171151
+http://doi.org/10.1093/mnras/stv1268
+https://arxiv.org/abs/1706.09359
+http://doi.org/10.1093/mnras/stx1820
+https://arxiv.org/abs/0912.0201
+http://doi.org/10.1051/0004-6361/201527101
+https://arxiv.org/abs/1606.06273
+http://doi.org/10.1046/j.1365-8711.2003.06503.x
+http://doi.org/10.1088/0004-637x/761/2/152
+http://doi.org/10.1103/physrevlett.79.3806
+http://doi.org/10.1086/303939
+https://arxiv.org/abs/astro-ph/0510346
+http://doi.org/10.5281/zenodo.2662127
+https://arxiv.org/abs/1809.01669
+http://doi.org/10.1145/321075.321076
+http://doi.org/10.1016/j.ascom.2015.05.005"
+"	1 Abstract
+	2 Introduction
+	3 Forecast Methodology
+	4 Results
+	5 Conclusions"

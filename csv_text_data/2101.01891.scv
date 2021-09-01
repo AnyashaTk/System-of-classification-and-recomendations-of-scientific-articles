@@ -1,0 +1,1410 @@
+0
+"Draft version February 1, 2021
+Typeset using LATEX twocolumn style in AASTeX63"
+Particle Dynamics in 3D Self-gravitating Disks II: Strong Gas Accretion and Thin Dust Disks
+Hans Baehr 1 and Zhaohuan Zhu 1
+"1Department of Physics and Astronomy, University of Nevada, Las Vegas, 4505 South Maryland Parkway, Las Vegas, NV 89154, USA"
+"(Received February 1, 2021; Revised February 1, 2021; Accepted February 1, 2021)"
+ABSTRACT
+"Observations suggest that protoplanetary disks have moderate accretion rates onto the central young
+star, especially at early stages (e.g. HL Tau), indicating moderate disk turbulence. However, recent
+ALMA observations suggest that dust is highly settled, implying weak turbulence. Motivated by such
+tension, we carry out 3D stratified local simulations of self-gravitating disks, focusing on settling of dust
+particles in actively accreting disks. We find that gravitationally unstable disks can have moderately
+high accretion rates while maintaining a relatively thin dust disk for two reasons. First, accretion stress
+from the self-gravitating spirals (self-gravity stress) can be stronger than the stress from turbulence
+(Reynolds stress) by a factor of 5-20. Second, the strong gravity from the gas to the dust decreases
+the dust scale height by another factor of ∼ 2. Furthermore, the turbulence is slightly anisotropic,
+producing a larger Reynolds stress than the vertical dust diffusion coefficient. Thus, gravitoturbulent
+disks have unusually high vertical Schmidt numbers (Scz) if we scale the total accretion stress with
+the vertical diffusion coefficient (e.g. Scz ∼ 10-100). The reduction of the dust scale height by the
+gas gravity, should also operate in gravitationally stable disks (Q >1). Gravitational forces between
+particles become more relevant for the concentration of intermediate dust sizes, forming dense clouds
+of dust. After comparing with HL Tau observations, our results suggest that self-gravity and gravity
+among different disk components could be crucial for solving the conflict between the protoplanetary
+disk accretion and dust settling, at least at the early stages."
+Keywords: protoplanetary disks — turbulence — hydrodynamics
+1. INTRODUCTION
+"Disks accrete significant amounts of material during
+their ∼ 1 Myr lifetime (Ribas et al. 2015), but the pro-
+cess which can ubiquitously transfer angular momentum
+in a disk remains elusive. Measurements of gas turbu-
+lence often cannot reveal the midplane properties, due
+to optically thick tracers. Normally only gas velocities
+in the upper disk atmosphere can be probed (Flaherty
+et al. 2015; Teague et al. 2016; Flaherty et al. 2017).
+Observing the dust layer allows for a different indicator
+of disk turbulence at the midplane (Pinte et al. 2016)."
+"Various fluid instabilities have been used to explain
+the turbulence which can drive disk accretion, including,
+but not limited to, the magneto-rotational instability
+(MRI) (Balbus & Hawley 1991), subcritical baroclinic
+instability (SBI) (Klahr & Bodenheimer 2003; Klahr
+& Hubbard 2014), and vertical shear instability (VSI)
+(Nelson et al. 2013). Each is promising but comes with"
+Corresponding author: Hans Baehr
+hans-paul.baehr@unlv.edu
+"important caveats. SBI requires low viscosities and pro-
+duces comparatively weak angular momentum transport
+(Malygin et al. 2017; Pfeil & Klahr 2019) while MRI
+appears less likely to operate in the midplane of proto-
+stellar disks due to low ionization and non-ideal MHD
+effects (Lesur et al. 2014; Bai 2015)."
+"VSI has become a focal point of research to explain
+disk turbulence due to its robustness and being capable
+of producing other disk features (e.g. vortices) (Stoll
+& Kley 2014; Manger & Klahr 2018). However, Flock
+et al. (2020) recently showed that for the level of tur-
+bulent stress that VSI produces, the measured dust dis-
+tribution is thicker than in observations. Pinte et al.
+(2016) has shown that the dust disk of HL Tau revealed
+by ALMA has a scale height less than 1 AU at 100 AU,
+which is equivalent to a turbulent level of α < 10−3. On
+the other hand, the detected accretion rate requires a
+turbulent level of α ∼ 10−2. Furthermore, recent edge-
+on ALMA observations of dust disks (Villenave et al.
+2020) and disk accretion rate constraints from spectral
+energy distribution studies (Ribas et al. 2020) add more
+evidence that dust layers are significantly thinner than
+theoretically anticipated. This suggests particles are sig-"
+"http://orcid.org/0000-0002-0880-8296
+http://orcid.org/0000-0003-3616-6822
+mailto: hans-paul.baehr@unlv.edu"
+"
+2 Baehr & Zhu"
+"nificantly settled even though there is still moderate ac-
+cretion to drive short disk lifetimes."
+"In this paper, we focus on the vertical dust distribu-
+tion in disks subject to gravitational instabilities (GI)
+which make it an alternative to hydrodynamic instabili-
+ties like VSI. We lay out the theoretical framework on GI
+and dust diffusion in Section 2. Section 3 describes our
+numerical setup. In section 4, we measure the particle
+scale heights and gas turbulent properties to determine
+the level of vertical dust settling and vertical diffusion.
+Finally, the implications on disk observations and the
+evolution of protoplanetary disks are discussed in Sec-
+tion 5 before we summarize our findings in Section 6."
+2. GRAVITOTURBULENCE
+"Turbulent transport in disks is described via the α
+model (Shakura & Sunyaev 1973), where the viscosity ν
+is scaled to the local isotropic pressure"
+"ν = αcsH , (1)"
+"such that α is a dimensionless constant describing the
+relative size and speed of turbulent motions in terms of
+the disk pressure scale height H = cs/Ω and the sound
+speed cs (Pringle 1981). Please note that we define"
+"cs =
+√
+γP/ρ, which has also been adopted for defining"
+"the Toomre Q parameter and disk α (Gammie 2001).
+In a thin disk approximation, the remaining component
+of the vertically-integrated stress tensor T can be ex-
+pressed in terms of α, pressure P , orbital radius R and
+orbital frequency Ω (Cossins et al. 2009)"
+"Trφ = −αP
+d ln Ω"
+"d lnR
+. (2)"
+"The stress tensor can be separated into two compo-
+nents, the gravitational stress G (e.g. due to spiral’s
+self-gravity) and the Reynolds stress R from the disk
+turbulence,"
+"R+G = −αP
+d ln Ω"
+"d lnR
+, (3)"
+"where d ln Ω/d lnR = −3/2 in a Keplerian disk. Thus,
+one can describe the total α stress"
+α = αR + αG. (4)
+as the sum of the Reynolds alpha
+"αR =
+2"
+"〈ρuxuy〉
+〈ρc2s 〉"
+and the gravitational alpha
+"αG =
+2"
+"〈gxgy〉
+4πG〈ρc2s 〉"
+"where gx and gy are the local gravitational accelerations
+in the x and y directions respectively and P = ρc2s is"
+"the locally isothermal pressure. In this paper, angled
+brackets are the average over the horizontal x− y plane
+for each vertical position."
+"Circumstellar disks are susceptible to non-
+axisymmetric density waves and gravitoturbulence as
+long as 1 < Q . 1.5 (Durisen et al. 2007) where"
+"Q =
+csΩ"
+"πGΣ
+, (7)"
+"is the Toomre stability parameter (Toomre 1964). Disks
+will fragment when the both the thermal relaxation time
+tc = βΩ"
+"−1 . 3 and when Q < 1 (Gammie 2001). To
+avoid fragmentation, we consider Ω = G = 1, cs,0 = π
+and the combined gas and dust surface density Σ0 =
+Σg,0 + Σp,0 such that Q(t = 0) is just slightly above
+unity."
+"Depending on the cooling efficiency β, gravitoturbu-
+lence can be quite strong, i.e. α ∼ 0.01 − 0.1 (Gam-
+mie 2001,but see Paardekooper 2012). However, without
+mass replenishment, the turbulence can die out quickly.
+The accretion led by the instability decreases the mass
+which in turn makes the disk stable against the instabil-
+ity, and only with enough accretion from the envelope
+onto the disk can gravitational instabilities persist (Zhu
+et al. 2012)."
+"Recent studies that have looked into the vertical struc-
+ture of gravitoturbulence find that turbulent stresses
+and turbulent velocities vary only by an order of mag-
+nitude from the midplane to a few scale heights despite
+much steeper decreases in gas density (Shi & Chiang
+2014; Riols et al. 2017). It is important to distinguish
+between the stress components R and G and their di-
+mensionless counterparts, αR and αG. In stratified sim-
+ulations, the vertical density profile and thus the vertical
+pressure profile will lead to separate structure for both
+components. The initial temperature profile is isother-
+mal and it remains vertically isothermal when in equilib-
+rium, so the density and pressure profiles scale the same
+with distance from the midplane. Reynolds stresses
+scale similar to the pressure, leading to a mostly flat
+profile of αR. Gravitational stresses G are stronger near
+the midplane but only drop off modestly with increas-
+ing height above the midplane, highlighting the range
+and strength of gravitational interactions (Shi & Chiang
+2014). Since the pressure drops off rapidly with height
+above the midplane compared to the gravitational stress,
+αG will increase significantly even though the gravita-
+tional stress is decreasing (Shi & Chiang 2014). Thus
+αG is comparable to αR near the midplane (∼ 10−2),
+but in some cases approaching order unity in the upper
+levels of the disk atmosphere. This is potentially rele-
+vant to observations, as only a fraction of disk accretion
+is due to the turbulence which can diffuse the dust."
+"More recently, Riols et al. (2020) investigated the ver-
+tical structure of both the gas and dust in gravitotur-
+bulent disks in order to ascertain how well turbulence
+models compare to well-coupled dust measured at and"
+Particles & Self-Gravity II: Accretion and Dust 3
+"100
+= 2 R"
+"u2z  [c2s ]
+g"
+"100
+= 5"
+"6 4 2 0 2 4 6
+z [H]"
+"100
+= 10"
+"100
+= 2 R"
+"u2z  [c2s ]
+g"
+"100
+= 5"
+"6 4 2 0 2 4 6
+z [H]"
+"100
+= 10"
+Figure 1. Time-averaged density and turbulent vertical profiles for each cooling timescale β. Left panel: medium-sized
+"simulations (Lx = Ly = 25H) Right panel: large-sized simulations (Lx = Ly = 51H). Solid lines indicate the gas density (blue),"
+"dust density (orange), vertical gas velocity squared (dark red), Reynolds stress (gold) and gravitational stress (green). The gray"
+dashed line is the total α from Equation (17).
+"around the midplane in observations. Whether the long
+range vertical effects of self-gravity in comparison to the
+local midplane turbulence can affect the settling of dust
+merits closer attention."
+"Besides the fact that the total α can be significantly
+larger than the turbulent αR which can lead to a thin
+dust disk, the vertical gravity from gas to dust can make
+the dust disk even thinner. We can derive the density
+structure of the dust disk by equating the settling flux
+with the diffusion flux. For small particles, the terminal
+velocity can be calculated by balancing the gravitational
+force with the gas drag force"
+"−(Fsg(z) + Ω2z) =
+uz
+ts
+, (8)"
+"where Fsg(z) is the vertical force due to disk self-gravity.
+If we assume that the disk structure is uniform in the
+radial and azimuthal directions at the scale of the disk
+scale height, we can use Gauss’ theorem to derive the
+self-gravity force, so that"
+"−(2πGΣ(z) + Ω2z) =
+uz
+ts
+, (9)"
+"where Σ(z) is the gas surface density, including both gas
+and dust, integrated from the midplane to the height of
+z. Then the flux balance is"
+"−(2πGΣ(z) + Ω2z)tsρd = Dd,zρg
+d(ρd/ρg)"
+"dz
+. (10)"
+"This is an integro-differential equation since Σ is the
+integral of ρd + ρg. If we assume that most mass is con-
+centrated at the midplane, we can replace Σ(z) with Σ
+of the disk. And if we assume that the gas stratification
+is much less than the dust stratification, ρg can be can-
+celed on the right side of the equation. Then, we can
+derive"
+"ρd
+ρd,mid"
+"= e
+− ts
+Dd,z"
+"(
+2πGΣz+ Ω"
+")
+. (11)"
+"When self-gravity is ignored, this returns to the known
+dust scale height of Hd,0 ="
+"√
+Dd,z/(Ω2ts). If we use"
+"Hd,0 in the equation we can derive"
+"ρd
+ρd,mid"
+"= e
+− 2Hz
+QH2"
+"2H2
+d,0 . (12)"
+"Thus, at z = Hd,0, the effect of self gravity (the first
+term in the exponential) is stronger than the gravity
+from the star (the second term in the exponential) by a
+factor of 4H/(QHd,0). Although, this factor can become
+quite large if H � Hd,0, our derivation only applies if
+most of the disk mass is at the midplane. Considering
+that the gas mass is far larger than the dust mass, it
+means that our derivation applies to dust that is not
+very settled (e.g. Hd,0 ∼ H)."
+"On the other hand, for highly settled dust, we can
+assume that the self-gravity from gas dominates and the"
+4 Baehr & Zhu
+"106
+= 2, L = 25H St = 0.01"
+"St = 0.1
+St = 1
+St = 10"
+"106
+= 5, L = 25H"
+"106
+= 10, L = 25H"
+"= 20, L = 25H"
+"= 30, L = 25H"
+"106
+= 2, L = 51H"
+"106
+= 5, L = 51H"
+"1.5 1.0 0.5 0.0 0.5 1.0 1.5
+z [H]"
+"106
+= 10, L = 51H"
+Figure 2. Cumulative number of particles in the time in-
+"terval t = 50 Ω−1 to t = 80 Ω−1. For each simulation, dust"
+particles have been separated into each species and binned to
+the nearest vertical grid cell. The initial distribution is plot-
+"ted as a gray dashed line in the top frame for comparison,"
+adjusted for the number of snapshots.
+"gas is almost uniform close to the disk midplane. Then,
+we can replace Σ(z) with ρmidz, and the vertical density
+structure is"
+"ρd
+ρd,mid"
+"= e
+− ts
+Dd,z"
+"(
+(Ω2+2πGρmid)z"
+")
+. (13)"
+"1.0 0.5 0.0 0.5 1.0 1.5 2.0
+Inverted particle size log(1/(ts ))"
+"t l
+og"
+"(H
+2 p
+/H"
+"Medium box, = 30
+Medium box, = 20
+Medium box, = 10
+Medium box, = 5
+Medium box, = 2
+Large box, = 10
+Large box, = 5
+Large box, = 2"
+Figure 3. Particle scale height H2p as a function of the
+"inverted particle size t−1s = ΩSt
+−1 for the medium boxes"
+"(smaller squares, fit with dotted lines) and large boxes (larger"
+"squares, fit with dashed lines). Fitting a straight line to the"
+"intermediate sized particles (St = 0.1, 1) results in a slope"
+"equal to the diffusion parameter Dd,z (Equation (18)), which"
+we estimate for both medium and large setups separately.
+"If we use ρmid ∼ Σ/(2H0), the equation becomes"
+"ρd
+ρd,mid"
+"= e
+− ts
+Dd,z"
+"(
+Ω2(1+1/Q)z2"
+")
+. (14)"
+"Thus, the dust scale height is"
+"Dd,z
+Ω2ts"
+. (15)
+"When Q ∼ 1, the dust scale height is 71% of the dust
+scale height without considering the disk self-gravity.
+Thus, the self-gravity of the gas alone could suppress
+vertical diffusion of small dust particles and increase set-
+tling."
+3. MODEL
+"As in the first paper (Baehr & Zhu 2021), we use 3D
+hydrodynamic shearing box simulations to study the dy-
+namics of self-gravitating disks with Lagrangian super-
+particles embedded in the Eulerian mesh using the Pen-
+cil code (Brandenburg 2003)."
+"We set our simulations to be marginally Toomre sta-
+ble, Q0 = 1.02. The simulation details are given in
+the model section and Table 1 of Baehr & Zhu (2021).
+We briefly summarize the simulations below. Simula-
+tions are designated by their cooling timescale and size."
+Particles & Self-Gravity II: Accretion and Dust 5
+Table 1. Turbulent properties for each simulation
+"Simulation Q α αR αG u2z [c
+2
+s ] u"
+"2
+z,ρ [c"
+"2
+s ] H0.1/Hg D"
+"′
+d,z Scz ScR,z"
+"S t2 B 1.2 4.9× 10−1 1.6× 10−2 4.7× 10−1 0.74 0.64 0.32 2.0× 10−3 245 8
+S t5 B 1.3 1.0× 10−1 1.0× 10−2 9.4× 10−2 0.56 0.51 0.28 1.5× 10−3 67 6.6
+S t10 B 1.3 3.9× 10−2 6.3× 10−3 3.2× 10−2 0.40 0.37 0.25 1.0× 10−3 39 6
+S t2 BB 1.5 5.6× 10−1 2.0× 10−2 5.4× 10−1 1.04 0.86 0.22 1.1× 10−2 43 1.8
+S t5 BB 1.5 2.1× 10−1 1.2× 10−2 2.0× 10−1 0.56 0.48 0.22 3.9× 10−3 53 3.1
+S t10 BB 1.7 6.7× 10−2 8.5× 10−3 5.9× 10−2 0.37 0.33 0.18 3.5× 10−3 19 2.4"
+"S t5 B lowpsg 1.2 9.3× 10−2 9.6× 10−3 8.3× 10−2 0.55 0.49 0.31 1.3× 10−3 71 7.4
+S t5 B nopsg 1.3 1.1× 10−1 9.4× 10−3 1.0× 10−1 0.54 0.46 0.30 5.3× 10−3 20 1.7
+S t5 B nogi - - - - 0.07 0.07 0.20 - - -"
+"S t20 B hires 1.3 2.2× 10−2 4.8× 10−3 1.7× 10−2 0.35 0.32 0.26 4× 10−4 55 12
+S t30 B hires 1.3 1.0× 10−2 2.4× 10−3 7.6× 10−3 0.24 0.22 0.24 2× 10−4 50 12"
+"Note—Diagnostics for the turbulent properties of each simulation, including Toomre stability parameter Q, turbulent"
+"α parameter with Reynolds and gravitational components αR and αG, vertical gas velocity squared, calculated both"
+"as a volume average u2z and a density-weighted average u
+2
+z,ρ, the ratio of particle scale height to gas scale height at"
+"St = 0.1 H0.1/Hg, dimensionless diffusion constant D
+′
+d,z, vertical Schmidt number with respect to the total stress Scz,"
+"and vertical Schmidt number with respect to the Reynolds stress only ScR,z. Quantities with a bar are averaged over"
+30 snapshots from t = 50 Ω−1 to t = 80 Ω−1 to cancel out some of the noise at individual snapshots.
+"For example, the simulation named S t2 B is the sim-
+ulation with cooling time β = 2 and a medium-sized
+domain Lx = Ly = (80/π)H, Lz = (40/π)H with
+5122 × 256 grid cells. The suffix BB refers to big box
+simulations with Lx = Ly = (160/π)H, Lz = (40/π)H
+with 5122 × 128 grid cells. We picked three cool-
+ing times β = 2, 5, and 10. All simulations include
+1.5×106 particles evenly distributed among the 6 species
+St = [0.01, 0.1, 1, 10, 100, 1000], and the initial dust-to-
+gas mass ratio is � = 0.01. Simulations with self-gravity
+of the gas and dust turned on or off are described below.
+Additional simulations were run at cooling timescales
+comparable to those in Riols et al. (2020), and at higher
+grid resolution."
+"Gas and dust are both initialized with Gaussian dis-
+tributions with the same vertical width Hg,0 = Hd,0 =
+0.63H and allowed to relax as turbulence and settling
+develop. Stellar gravity is included with a sinusoidal
+vertical profile to avoid a discontinuity of the vertical
+acceleration at the periodic upper and lower boundaries.
+Simulations are either resolved in each direction by 10
+grid cells per H for the large boxes or 20 grid cells per
+H for the medium boxes. We compare these resolutions
+with other studies in Section 5.4."
+"Self-gravity of the gas and dust is solved in Fourier
+space by transforming the density to find the potential
+at wavenumber k and transforming the solution back
+into real space. The solution to the Poisson equation in"
+"0 2 4 6 8 10 12
+Cooling timescale "
+"/ R, Medium box
+/ R, Large box"
+"Scz, Medium box
+Scz, Large box
+ScR, z, Medium box
+ScR, z, Large box"
+Figure 4. Turbulent diagnostics versus the cooling
+timescale β. While the Reynolds stress scales similar to the
+"vertical diffusion and ScR,z (red squares) is roughly constant,"
+α/αR (blue squares) and Scz (yellow squares) both decline
+as β increases and gravitoturbulence becomes weaker.
+"Fourier space at wavenumber k = (kx, ky, kz) is"
+"Φ(k, t) = −
+2πGρ(k, t)"
+"k2
+, (16)"
+6 Baehr & Zhu
+"0 20 40 60 80 100
+t [ 1]"
+"100
+Sc"
+"]
+= 2
+= 5
+= 10"
+"0 20 40 60 80 100
+t [ 1]"
+"= 2
+= 5
+= 10"
+"Figure 5. Evolution of measured dust (Hd, solid lines) and gas (Hg, dashed lines) scale heights over time in our medium (left)"
+and large (right) sized simulations. The dust scale height is measured from the distribution of all dust species combined.
+"where Φ = Φg + Φd and ρ = ρg + ρd are the poten-
+tial and density of the gas plus dust particles combined.
+This is the default setup for the first six simulations and
+we distinguish these six from the next three by the in-
+clusion of gas-particle and particle-particle gravitational
+interactions self-consistently. Among these three simu-
+lations, the simulation with ’low dust mass’ (simulation
+suffix lowpsg) indicates that the particle mass is so low
+that it does not contribute to the gravitational potential
+Φ = Φg and thus every particle does not feel the grav-
+ity of other particles while still feeling the gravitational
+acceleration from the gas potential. For the simulation
+indicated as ’no particle self-gravity’ (simluation suffix
+nopsg), the dust particles neither contribute to the po-
+tential nor feel the gas potential and thus the particles
+only feel the aerodynamic drag force, the shearing box
+inertial forces, and the gravitational force from the cen-
+tral star."
+4. RESULTS
+"We summarize the simulation results in Table 1 and
+describe the two main diagnostics for the radial viscous
+stress and vertical particle diffusion below."
+4.1. Turbulence
+"We measure two properties of the gas turbulence: the
+α stresses and the dispersion of the vertical gas velocities
+u2z, averaged in the x-y plane at different heights. They
+are presented in Table 1 and Figure 1. Figure 1 also
+shows the gas and dust vertical density profiles in blue
+and orange lines, respectively. Turbulence may have
+transient fluctuations which produce negative stresses,
+even while averaged in the x-y plane. To eliminate these
+fluctuations, quantities are averaged in time for 30 snap-
+shots between t = 50 Ω−1 and t = 80 Ω−1, when turbu-
+lence has settled, and thus they are denoted with bars,"
+"e.g. 〈u2z〉 or α. Even so, Reynolds stresses at the mid-
+plane are still lower than elsewhere and even negative as
+in the middle-right panel of Figure 1."
+"We compare the total stress of Equation (4), as a sim-
+ple volume average which can be compared with the
+analytic expression from Gammie (2001):"
+"γ(γ − 1)β
+. (17)"
+"In Figure 1, Equation (17) is indicated by the gray
+dashed line. Averaged over the vertical extent, the grav-
+itational stress (green line) is roughly an order of mag-
+nitude greater than the Reynolds stress. From the top
+to bottom panels, we can see that the ratio between αG
+and αR decreases (αG/αR from 30 to 5) with a longer
+cooling time (β from 2 to 10). Thus, gravitational stress
+is more important for a faster cooling GI disk."
+"The dark red lines in Figure 1 show the vertical profiles
+of the vertical gas velocities and are typically subsonic,
+but can reach transonic values in the upper disk atmo-
+spheres. The averaged gas velocities in Table 1 are cal-
+culated both as a simple volume average and a density-
+weighted volume average. The two differ by around
+∼ 15%, since the dense midplane generally has lower
+vertical velocities, and the density-weighted average will
+lean towards the lower velocities near the midplane."
+"The particle density distributions all show some set-
+tling as a narrower peak near the midplane. The fol-
+lowing section breaks down this particle distribution by
+size to determine how settling varies with each particle
+species."
+4.2. Vertical Particle Diffusion
+"In Figure 2, the vertical distribution of the four small-
+est dust species are shown. Particles are binned ac-
+cording to their nearest grid cell in Figure 1, and"
+Particles & Self-Gravity II: Accretion and Dust 7
+"100
+No gas or particle self-gravity R"
+"u2z [c2s ]
+g"
+"100
+Particles not considered for self-gravity"
+"6 4 2 0 2 4 6
+z [H]"
+"100
+Particles feel self-gravity from gas only"
+"0 20 40 60 80 100
+t [ 1]"
+" H
+d
+,H"
+"No gas or dust self-gravity
+Particles not considered for self-gravity
+Particles feel self-gravity from gas only"
+Figure 6. Comparison of three different implementations of particles. Left panel: vertical turbulence and density profiles as in
+Figure 1. Right panel: the evolution of the gas (dashed) and dust (solid) vertical scale heights. The oscillations in the particle
+"scale height are due to the overdamped settling of the large dust species St ≥ 10. The first case does not include gas or dust
+self-gravity as a reference case, the second considers that particles do not contribute to the potential, i.e. Φ = Φg, and do not"
+"feel the potential either. In the third case, the dust-to-gas ratio is smaller by a factor of 10−4, meaning they do not contribute"
+"significantly to the potential, but still feel the gas."
+"then summed over 30 snapshots. Particles with smaller
+Stokes numbers are more broadly distributed compared
+to larger particles, and will take tens of orbital periods
+to fully settle. Larger species St ≥ 10 settle as over-
+damped oscillations, overshooting the midplane many
+times in each direction before eventually settling. The
+especially large dust species with St ≥ 100 will do so for
+longer than the duration of the simulation and therefore
+are not included in the following analysis. Dust settling
+is balanced by the vertical diffusion from gravitoturbu-
+lence. Particles with St closer to 1 have faster settling
+which is harder for turbulent diffusion to balance, thus
+forming a narrower distribution."
+"Based on the distribution of particles at each size, we
+determine the scale height for each dust species. We fit
+Gaussian profiles to the entire vertical distribution (i.e.
+z = [−6H, 6H]) of each species binned to the nearest
+grid cell, using an initial guess with a width of z = H.
+In Figure 3, we plot these particle scale heights against
+the inverted particle size St−1 in order to estimate the
+vertical particle diffusion coefficient Dd,z,"
+"√
+Dd,z
+Ω St"
+. (18)
+"Equation (18) is most appropriate for particles that
+have significant settling. Thus, we only use the scale
+heights of St = 0.1 and 1 in Figure 3 to derive the dif-
+fusion coefficients. The dimensionless diffusion constant
+D"
+"d,z = Dd,z/csH is reported in Table 1. Alternatively,
+we can use a more general equation which applies to
+both small and big dust to estimate the diffusion coef-
+ficient with all the three smallest species. By doing so,
+we find very similar values (see Appendix Section A).
+From the diffusion constant and α stress we define the
+vertical Schmidt number (Dullemond & Dominik 2004),
+a measure of the relative strength of the radial angu-
+lar momentum transport compared to the vertical dust
+diffusion,"
+"Scz =
+α"
+"D
+′
+d,z"
+. (19)
+"Traditionally, values of Sc = 1 are indicative of isotropic
+turbulence while values greater than unity may sug-
+gest that the radial turbulent motion (more strictly
+speaking, the rφ component of the turbulent stress)
+is stronger than the vertical turbulent motion. How-
+ever, in GI disks, the turbulent stress αR can be much
+weaker than the gravitational stress αG due to disk self-
+gravity. Thus, we define Scz both in terms of the to-"
+8 Baehr & Zhu
+"6 4 2 0 2 4 6
+z [H]"
+"100
+= 2 R"
+"u2z  [c2s ]
+g"
+"6 4 2 0 2 4 6
+z [H]"
+"100
+= 10"
+Figure 7. Comparison of the β = 2 and β = 10 simulations near the end of the computation. Top two figures show a slice
+of the radial-vertical gas flow field using line integral convolution (Cabral & Leedom 1993) at t = 80 Ω−1. Bottom two figures
+show the averaged vertical profiles for only the last 5 snapshots before t = 80 Ω−1.
+"tal stress as above and in terms of the Reynolds stress
+ScR,z = αR/D"
+"d,z.
+Table 1 suggests that ScR,z of the large simula-"
+"tions calculated with the Reynolds stresses are close to
+unity, while ScR,z from the medium-sized simulations
+are around a factor of 4 greater. Due to the large ratio
+between α and αR in our GI simulations, the Schmidt
+number calculated with the total α stress is much larger,
+almost two orders of magnitude greater in some cases.
+This indicates a significant amount of settling of the
+intermediate-sized dust compared to the high radial ac-
+cretion."
+"We highlight an observed trend in the ratios α/αR
+and Scz as function of the cooling timescale in Figure
+4. With rapid cooling and strong radial transport, both
+α/αR and Scz are very high, but decrease as the gravi-
+toturbulence weakens and becomes more comparable in
+strength to the Reynolds stress. We expect that simula-
+tions with longer cooling times, i.e. β ∼ 20-30, and res-
+olution similar to or medium boxes could have Schmidt
+number that explain the turbulence levels and dust set-
+tling of disk observations."
+"In Figure 5 we show the evolution of the dust and gas
+scale heights over the duration of the simulation. The
+gas pressure scale height, indicated by the dashed lines,
+is less than Hg/H = 1 for two reasons. First, since we
+use an adiabatic equation of state, the gas scale height
+is Hg = H/"
+"√
+γ = 0.77H. Second, gas self-gravity has"
+"a small, but noticeable effect on the gas distribution,
+such that it is no longer Gaussian and slightly narrower
+within two scale heights of the midplane (Riols et al.
+2017). This discrepancy can be seen in the right panel
+of Figure 6, where the gas in a disk without self-gravity"
+"has settled to Hg/H ∼ 0.8 and the others with self-
+gravity are narrower, as indicated by the blue lines in
+the panels to the right."
+"The dust scale height including all particle species is
+indicated by the solid line in Figure 5. In both medium-
+sized and big box simulations, the dust scale heights
+with the most efficient cooling β = 2, increase consis-
+tently over a long time scale until it matches the gas
+scale height. This appears to correspond to some excess
+Reynolds stress just above the the disk midplane (see
+gold lines in top two panels of Figure 1), potentially an
+indicator of the parametric instabilities reported in Riols
+et al. (2017)."
+"A parametric instability in a self-gravitating disk
+would be the result of an axisymmetric mode interacting
+with inertial waves with half the frequency. We inves-
+tigate this further in Figure 7. Apparent in Figure 5
+is the gradual increase of the particle scale height with
+time in simulations as long as β = 2, perhaps indicating
+the presence of additional turbulence. Figure 7 shows a
+comparison of the gas flow patterns in the top row and
+the vertical properties closer to the end of the end of
+the simulations. When β = 10 the symmetric circula-
+tion patterns near the intersection with the high-density
+spiral arms is stronger compared to the case where β = 2
+and the pattern is disrupted by turbulence near the mid-
+plane (compare with Figure 9 of Riols & Latter (2018)).
+In the vertical profile of the latter, the vertical motions
+around the midplane u2z are suppressed."
+5. DISCUSSION
+"The properties of turbulence in our simulations are
+comparable with those of Shi & Chiang (2014), which"
+Particles & Self-Gravity II: Accretion and Dust 9
+"106
+No gas or dust self-gravity St = 0.01"
+"St = 0.1
+St = 1
+St = 10"
+"Particles not considered
+for self-gravity"
+"Particles feel self-gravity
+from gas only"
+"1.5 1.0 0.5 0.0 0.5 1.0 1.5
+z [H]"
+"106
+Full gas and dust self-gravity"
+"1.0 0.5 0.0 0.5 1.0 1.5 2.0
+Inverted particle size log(1/(ts ))"
+"t l
+og"
+"(H
+2 p
+/H"
+"Full gas and dust self-gravity
+Particles feel self-gravity from gas only
+Particles not considered for self-gravity"
+"Figure 8. Left panel: For the additional simulations which explore the role of self-gravity on particle settling, the vertical"
+"distribution of each of the four particle species as in Figure 2. Right panel: the particle scale height versus particle size, from"
+"which the vertical diffusion constant of the dust Dd,z is derived using Equation (18)."
+"100 101 102 103 104
+Particle number N"
+"be
+r o"
+"f c
+el"
+"ith
+ N"
+"tic
+le"
+"Full particle and gas self-gravity
+Particles not considered for self-gravity
+Particles feel self-gravity from gas only"
+Figure 9. Histogram of the number of cells with N particles
+in the three simulations which evaluate particle self-gravity.
+A lower dust-to-gas ratio � keeps dense filaments of dust
+"(N ∼ 102) from collapsing into clumps (N & 103). When
+particles feel no effects from self-gravity, concentrations are"
+greatly diminished.
+"also focus on 3D gravitoturbulence, but do not include
+particles. Similarly, we find that a simple volume aver-
+age of the α most closely matches the analytic results of
+Equation 17. The vertical gas velocities u2z are stronger"
+"at a few scale heights above the disk midplane from the
+subsonic to transonic regions, as with Riols et al. (2017)."
+"We emphasize the importance of the gas self-gravity
+acting upon particles in Figure 8. The left panel shows
+the vertical distribution of particles calculated based on
+30 snapshots from t = 50 Ω−1 to t = 80 Ω−1, but with
+different treatments for self-gravity. From these simula-
+tions we draw a number of key conclusions about how
+self-gravity affects the settling of dust and what it im-
+plies about the vertical diffusion."
+5.1. Particle Settling
+"The top panel in Figure 8 shows a settling test of the
+particles in the complete absence of any self-gravity from
+either the gas or the particles. Thus, particles settle
+in a static disk without turbulence. The settling time
+is inversely proportional to their sizes tsettle ∼ 1/St for
+St ≤ 1 particles (Youdin & Lithwick 2007) in the absence
+of any turbulent diffusion. The intermediate particles
+St = 0.1, 1, 10 settle rapidly and form a thin layer at the
+two grid cells on either side of z = 0. The simulation
+does not last long enough for St = 0.01 particles to
+completely settle."
+"The second panel from the top in Figure 8 shows how
+particles settle in a gravitoturbulent disk with only the
+gas component being considered for self-gravity. Parti-
+cles only feel the vertical gravity of the stellar potential
+and do not feel the gravity from the gas or dust mass
+concentrated at the disk midplane. Thus, without any
+self-gravity acting on the dust, each particle size has a
+thicker layer compared to the cases which include self-"
+10 Baehr & Zhu
+"10 2 10 1 100 101
+Particle velocity magnitude w [cs]"
+"104
+Nu"
+"r o
+f p"
+"ar
+tic"
+"oc
+ity"
+" w
+(a)"
+"St = 0.01
+St = 0.1
+St = 1
+St = 10
+St = 100
+St = 1000"
+"10 2 10 1 100 101
+Particle velocity magnitude w [cs]"
+"be
+r o"
+"f p
+ar"
+"tic
+le"
+"ith
+ v"
+"ity
+ w"
+"(b)
+St = 0.01
+St = 0.1
+St = 1
+St = 10
+St = 100
+St = 1000"
+Figure 10. Distribution of particle velocity magnitudes in terms of the gas sound speed cs for the two cases where particle
+"self-gravity is included, but with (a) more massive particles (� = 10−2) and (b) less massive particles (� = 10−6). When the"
+"self-gravity between particles is non-negligible, particles St = 1 can concentrate into clumps of up to a thousand with low relative"
+"velocities, indicated by the spikey features in (a)."
+"gravity. This test studies the dust diffusion by the grav-
+itoturbulence solely without including additional con-
+centration effects due to the gas and dust gravity. The
+two intermediate sized particle species (St =0.1, 1) are
+diffused by the gravitoturbulence of the gas while the
+largest and smallest particles are largely unchanged."
+"In the third panel from the top, the same simulation
+is run again, but particles do feel the gravitational accel-
+eration of the gas, but not of the other particles. Here
+we see noticeable settling of the intermediate dust and
+slight narrowing of the distribution for the smallest dust.
+The narrowing is roughly consistent with our expecta-
+tion (Equation 15). Finally in the bottom panel, the
+dust particles contribute to the self-gravity potential and
+is fully self-consistently included, but it has little effect
+on the overall settling of any dust species compared with
+the panel above."
+"The dust scale heights and the diffusion coefficients
+for these tests are shown in the right panel of Fig-
+ure 8 and Table 1. Comparing the S t5 B nopsg and
+S t5 B lowpsg cases, we see that the gas gravity re-
+duces the dust scale height by a factor of ∼ 1.8. The
+turbulence is quite isotropic (ScR,z = 1.7) when the gas
+gravity is neglected (the S t5 B lowpsg case). Strictly
+speaking, when we include the gravity from gas to dust,
+the turbulent properties are not changed so that we
+should use the same diffusion coefficient and Equation
+15 to derive the dust scale height. On the other hand, it
+is more convenient to factor theQ coefficient of Equation
+15 into the definition of dust diffusion coefficient and use
+Equation 18 to derive a new dust diffusion coefficient.
+This is also how previous observations constrain the dif-
+fusion coefficient (e.g. Pinte et al. 2016). Thus, the new
+dust diffusion coefficient defined in this way is reduced
+by a factor of ∼3, so that Scz and ScR,z is increased"
+"by a factor of ∼3 compared with the case without gas
+gravity."
+5.2. Vertical Schmidt Number
+"Such a high Schmidt number (20-200) is crucial for ex-
+plaining the moderate disk accretion (Ribas et al. 2020)
+but thin dust disk (Villenave et al. 2020). Pinte et al.
+(2016) estimate that Scz ≥ 10 is needed to explain HL
+Tau’s accretion rate and thin dust disk."
+"The Schmidt number has been studied for turbulence
+driven by several instabilities in protoplanetary disks,
+including the magneto-rotational instability (MRI) (Jo-
+hansen & Klahr 2005; Carballido et al. 2011; Zhu et al.
+2015; Riols & Lesur 2018) and the vertical shear insta-
+bility (VSI) (Stoll & Kley 2016). Simulations of the
+MRI show that the particle diffusion is comparable to
+the angular momentum transport, i.e. Schmidt numbers
+around unity. In some cases, especially for non-ideal
+MHD, the Schmidt number can be even smaller than 1
+(Zhu et al. 2015; Yang et al. 2018). In the case of VSI,
+Flock et al. (2020) find that Schmidt number of VSI is
+∼ 0.04 due to the thin vertical circulating motion. Thus,
+both MRI and VSI cannot explain observations. Other
+accretion mechanisms need to be explored, such as disk
+wind (Riols & Lesur 2018) or disk self-gravity."
+"Some previous works have explored how dust in self-
+gravitating disks can settle. Sengupta et al. (2019) use
+a Monte Carlo turbulent settling model and find that
+dust settling is enough to affect the local Toomre sta-
+bility of the disk. But it does not include the gravita-
+tional force from the gas disk to the dust. Riols et al.
+(2020) use much the same methods as here, but ar-
+rive at the conclusion that settling is not very signifi-
+cant. This may in part be due to the fluid description of
+solids which limits the range of included dust particles
+to St < 1. For St = 0.1 at β = 20 we find the ratio"
+Particles & Self-Gravity II: Accretion and Dust 11
+"of the dust-to-gas scale height Hd/Hg ∼ 0.23, similar
+to the value for St = 0.16 in Figure 3 of Riols et al.
+(2020). However, whereas their value for vertical dif-
+fusion Dz = 0.013 predicts the scale height ratio to be
+Hd/Hg ∼ 10−1 at St = 1, we find scale height ratios
+as low as Hd/Hg = 5 × 10−2. Thus, we infer a lower
+diffusion constant. This trend continues in our simula-
+tions at β = 20 and β = 30 and our Schmidt numbers
+remain high, suggesting more research is needed to quan-
+tify the strength of dust settling. Nevertheless, based on
+the diffusion and accretion coefficients provided in Ri-
+ols et al. (2020), Scz is ∼4 in their simulations, which is
+also larger than 1, in broad agreement that non-isotropic
+diffusion is operating in GI disks."
+"Our simulations suggest that gravitationally unstable
+disk can easily have Scz ≥10, consistent with HL Tau
+observations. Furthermore, due to the early evolution-
+ary stage of HL Tau, the disk is quite massive (Carrasco-
+González et al. 2019) and GI will naturally operate in
+such a disk. In Figure 11, we compare the dust set-
+tling which results from some of the diffusion parame-
+ters measured in Table 1 with the settling inferred from
+HL Tau observations (Pinte et al. 2016) and from global
+VSI simulations (Flock et al. 2020). All the GI cases
+shown have accretion α > 0.01. Observations indeed
+suggest significant accretion equivalent to α ≈ 0.01 at
+100 au (Beck et al. 2010; Pinte et al. 2016) which is not
+congruent with the angular momentum transport typi-
+cally associated with VSI, but may be consistent with
+MRI (Flock et al. 2017). Gravitoturbulence on the other
+hand, can provide both significant accretion along with
+a thin dust disk. Unexplained however is why the spirals
+characteristic of such a massive disk would be absent in
+ALMA dust continuum observations. This can be due
+to some other mechanisms which are producing gaps in
+HL Tau and concentrate dust in rings. In this case, the
+spirals may still be present in the gas. Or, the lack of
+observed spirals can be due to that the Q in the disk is
+not low enough to trigger the spirals."
+"We emphasize that even if Q > 1 and the disk is
+gravitationally stable, the additional settling due to gas
+gravity cannot be neglected (Equation 15). At a height
+z = H above the disk midplane, vertical acceleration
+due to stellar gravity is comparable to self-gravity when"
+Ω2H = 2πGΣ (20)
+"which corresponds to Q = 2. Thus, the effects of disk
+self-gravity are likely to be non-negligible for Q up to a
+few. Future simulations will need to focus on the inter-
+action between gas self-gravity and VSI, as even a Q = 2
+disk may be enough to reduce the dust scale height in a
+VSI disk significantly. HL Tau has a measured Toomre
+Q as low as 2 (Liu et al. 2017), which should be not
+expected to produce spiral features as long as Q & 1.7,
+consistent with the ring features of HL Tau. Overall,
+disk self-gravity may still promote dust settling even in"
+"0.15 0.10 0.05 0.00 0.05 0.10 0.15
+z [R]"
+"us
+t D"
+"Pinte et al. 2016
+Flock et al. 2020
+GI with = 5
+GI with = 10
+GI with = 20"
+Figure 11. Comparison of the VSI settling in (Flock et al.
+2020) (see their Figure 9) with the settling expected using
+"Equation (18) assuming St = 5×10−2 and using the diffusion
+values in Table 1 for the medium-sized boxes at β = 5, 10, 20."
+"a gravitationally stable disk that is turbulent by some
+other mechanisms, including VSI."
+5.3. Particle Self-Gravity
+"Gravitoturbulent disks have been suggested as a pos-
+sible location for planetesimal formation (Rice et al.
+2004; Gibbons et al. 2012) as long as relative veloc-
+ities between dust particles are low enough to avoid
+fragmentation events which prevent growth (Booth &
+Clarke 2016). While the gravitational acceleration be-
+tween particles (dust disk’s self-gravity) has little effect
+on vertical dust settling, it is only with particle-particle
+self-gravity that dense clouds of dust are formed. In
+Figure 9, we show the number of grid cells with N par-
+ticles for three comparable simulations, aside from the
+implementation of self-gravity. Only in the case where
+particles can feel the self-gravity of the other particles
+are there a considerable number of concentrations up to
+N = 104. When the dust does not feel any self-gravity at
+all (blue line), particles concentrate less in the interme-
+diate ranges N ∼ 10 − 100 compared to the simulation
+with gas self-gravity acting on the particles (green line)."
+"We plot the velocity distribution of each particle
+species in Figure 10 for the case where (a) particle-
+particle self gravity is included and (b) when dust mass
+is too low for it to matter. The sharp features of the
+St = 1 in (a) indicate that many of the dense clumps
+from Figure 9 are groups of intermediate-sized parti-
+cles with low relative velocities and potentially bound.
+Whether these particle clouds can become planetesimals
+depends on whether or not dust can grow to the interme-
+diate sizes fast enough and avoid encountering the frag-
+mentation and drift barriers of planetesitmals (Booth &
+Clarke 2016). The critical length scale to be resolved for
+collapsing to a planetesimal is (Klahr & Schreiber 2020)"
+12 Baehr & Zhu
+"lc =
+1"
+"St
+H , (21)"
+"which, for the diffusion constants we measure D
+′
+∼"
+"10−3, is too small (lc ∼ 10−2H) to be resolved in our
+simulations. Even if a simulation is unable to resolve
+free-fall collapse to planetesimals, dense dust clouds at
+or above Hill density"
+"ρHill =
+9"
+", (22)"
+"can be subject to diffusion-regulated collapse (Gerbig
+et al. 2020), given a stellar mass M∗ and an orbital ra-
+dius R. Several of our St = 1 dust clouds are above
+dust-to-gas ratio of unity and at Hill density. Whether
+these clouds have the sufficient conditions for further
+collapse in the presence of the large scale diffusion of
+gravitoturbulence and the smaller scales turbulence due
+to streaming instability will be studied in future work."
+"We note that particle feedback, the effect of solid ma-
+terial pushing a fluid as it passes through it, is not in-
+cluded in these models. When local dust-to-gas ratios
+approach � = 1 and greater, feedback will become im-
+portant and may lead to enhanced particle densities."
+5.4. Additional Considerations
+"We want to note that another explanation for well-
+settled dust disks comes from the launching of winds
+from the disk surface. A disk wind could remove angu-
+lar momentum and provide moderate accretion without
+adding any turbulence to the midplane, allowing dust
+to settle (Bai & Stone 2013). In tandem with a layered
+accretion, where disk surfaces are MRI active and the
+midplane is a dead zone due to non-ideal MHD effects
+(Gammie 1996), disk winds could work together to ex-
+plain the high accretion and settling (Hasegawa et al.
+2017). On the other hand, even if this is the case and
+the disk is gravitationally stable, the studied gravita-
+tionally effect to reduce dust scale height (e.g. Eq. 15)
+should still operate in such massive disks."
+"While the box size does not appear to be a decisive
+factor in the results of our simulations, medium boxes
+are slightly more consistent with analytic predictions of
+overall turbulent stress α. This is likely due to the better
+resolution, although the resolution of both domain sizes
+is within the converged ranges of similar studies. How-
+ever, the gas density profile is slightly broader in these
+larger domains, and the lack of resolution in the vertical
+direction may have a two-fold effect. Slightly stronger
+Reynolds stresses would broaden the gas density profile
+and as a result weaken the vertical self-gravity. This
+can be seen in the almost order of magnitude difference
+between ScR,z of each size in Figure 4. With higher
+resolution, the Reynolds stresses appear to become less
+isotropic. Booth & Clarke (2019) find that gravitotur-
+bulent diagnostics like α and the volume averaged Q"
+"are unaffected by resolution down to 8 grid cells per
+scale height H (see their Figure 1), for a simulation size
+slightly larger than the medium boxes used here. Our
+resolution is 10 grid cells per H for the big boxes, and 20
+cells per H for the smaller boxes. These smaller boxes
+are similar in size Lx = Ly = 25H and effective resolu-
+tion (20 grid cells per H) to the primary runs of Riols
+et al. (2020). They see a lower resolution by a factor 2,
+which is comparable in resolution to our big box runs,
+does not change the measured dust scale heights signif-
+icantly (their Figure 3). However, box size is still an
+important factor which determines which modes are in-
+corporated in disk stability, reflected in the overall larger
+Q values for larger boxes. (Booth & Clarke 2019). Ulti-
+mately, as an instability with long-range effects, we aim
+to model GI in global simulations, which will provide
+the most insight into dust settling in gravitoturbulent
+disks and compare with observations."
+6. CONCLUSION
+"Using 3D vertically stratified local hydrodynamic sim-
+ulations, we investigate the vertical settling of different
+sized dusts in gravitationally unstable disks. We sys-
+tematically explore how different cooling times, differ-
+ent box sizes, and treatments of gas/dust gravity affect
+the particle settling. We summarize our results in the
+following points:"
+"• Turbulent strength in our simulations is consis-
+tent with the analytical expectation. The gravita-
+tional stress is comparable to the Reynolds stress
+near the midplane, but as the latter falls off with
+height, the volume averaged gravitational stress is
+stronger than the turbulent Reynolds stress by a
+factor of 5− 30, increasing with a shorter cooling
+time."
+"• Dust settling is enhanced by the vertical gravi-
+tational attraction of the gas onto the particles.
+Even when a disk becomes less massive and the
+disk is gravitationally stable (e.g. Q > 1), the in-
+fluence of gas self-gravity on particles should be
+included when studying dust settling in disks with
+other turbulent driving mechanisms."
+"• The resulting high Schmidt numbers due to both
+strong gravitational stress and gas vertical gravity
+(Scz ∼ 20 − 200) suggest gravitationally unstable
+disks could have strong accretion accompanied by
+thin dust disks. The high amount of settling could
+possibly help explain the observations of young,
+thin, dust protoplanetary disks accreting at mod-
+erate rates (e.g. HL Tau)."
+"• While self-gravity of the gas onto the dust parti-
+cles causes the significant settling of intermediate-
+sized dust, self-gravity between dust particles of
+the same size produces several dense clouds with"
+Particles & Self-Gravity II: Accretion and Dust 13
+"high dust-to-gas ratios. These clouds have low rel-
+ative velocities and could continue to collapse to
+form planetesimals at a very early stage in the disk
+lifetime."
+"Ultimately, self-gravity of the dense gas midplane has
+a significant affect on the vertical settling of dust in grav-
+itoturbulent disks. Despite the strong turbulence and
+high radial diffusion typical of gravitoturbulent disks,
+the gravitational acceleration of the dense gas midplane
+causes significant settling of intermediate dust sizes.
+This could help to explain recent ALMA observations
+and also promote planetesimal formation."
+ACKNOWLEDGMENTS
+"The authors thank the anonymous referee for valuable
+feedback. HB thanks Henrik Latter, Chao-Chin Yang
+and Laith Mashni for valuable discussions. This research
+was supported by NASA TCAN award 80NSSC19K0639
+and discussions with associated collaborators. Simula-
+tions made use of the Isaac cluster at the Max-Planck
+Center for Data and Computing in Garching and the
+Texas Advanced Computing Center (TACC) at the Uni-
+versity of Texas at Austin through XSEDE grant TG-
+AST130002."
+"Software: Matplotlib (Hunter 2007), SciPy &
+NumPy (Virtanen et al. 2020; van der Walt et al. 2011),
+IPython (Pérez & Granger 2007)"
+REFERENCES
+"Baehr, H., & Zhu, Z. 2021, Particle Dynamics in 3D"
+Self-gravitating Disks I: Spirals.
+https://arxiv.org/abs/2101.01888
+"Bai, X. N. 2015, The Astrophysical Journal, 798, 84,"
+doi: 10.1088/0004-637X/798/2/84
+"Bai, X.-N., & Stone, J. M. 2013, The Astrophysical"
+"Journal, 769, 76, doi: 10.1088/0004-637X/769/1/76"
+"Balbus, S. A., & Hawley, J. F. 1991, The Astrophysical"
+"Journal, 376, 214"
+"Beck, T. L., Bary, J. S., & McGregor, P. J. 2010,"
+"Astrophysical Journal, 722, 1360,"
+doi: 10.1088/0004-637X/722/2/1360
+"Booth, R. A., & Clarke, C. J. 2016, Monthly Notices of the"
+"Royal Astronomical Society, 458, 2676,"
+doi: 10.1093/mnras/stw488
+"—. 2019, Monthly Notices of the Royal Astronomical"
+"Society, 483, 3718, doi: 10.1093/mnras/sty3340"
+"Brandenburg, A. 2003, in Advances in Non-linear Dynamos,"
+ed. A. Ferriz-Mas & M. Nunez (London: Taylor and
+"Francis), 269. https://arxiv.org/abs/0109497"
+"Cabral, B., & Leedom, L. C. 1993, Proceedings of the 20th"
+annual conference on Computer graphics and interactive
+"techniques - SIGGRAPH ’93, 263,"
+doi: 10.1145/166117.166151
+"Carballido, A., Bai, X.-N., & Cuzzi, J. N. 2011, Monthly"
+"Notices of the Royal Astronomical Society, 415, 93,"
+doi: 10.1111/j.1365-2966.2011.18661.x
+"Carrasco-González, C., Sierra, A., Flock, M., et al. 2019,"
+"The Astrophysical Journal, 883, 71,"
+doi: 10.3847/1538-4357/ab3d33
+"Cossins, P., Lodato, G., & Clarke, C. J. 2009, Monthly"
+"Notices of the Royal Astronomical Society, 393, 1157,"
+doi: 10.1111/j.1365-2966.2008.14275.x
+"Dubrulle, B., Morfill, G., & Sterzik, M. 1995, Icarus, 114,"
+237. http://www.sciencedirect.com/science/article/pii/
+S0019103585710585
+"Dullemond, C. P., & Dominik, C. 2004, Astronomy &"
+"Astrophysics, 421, 1075, doi: 10.1051/0004-6361:20040284"
+"Durisen, R. H., Boss, A. P., Mayer, L., et al. 2007, in"
+"Protostars and Planets V, ed. B. Reipurth, D. Jewitt, &"
+"K. Keil No. 1 (Tucson: University of Arizona Press), 607."
+https://arxiv.org/abs/0603179
+"Flaherty, K. M., Hughes, A. M., Rosenfeld, K. A., et al."
+"2015, The Astrophysical Journal, 813, 99,"
+doi: 10.1088/0004-637X/813/2/99
+"Flaherty, K. M., Hughes, A. M., Rose, S. C., et al. 2017,"
+"The Astrophysical Journal, 843, 150,"
+doi: 10.3847/1538-4357/aa79f9
+"Flock, M., Nelson, R. P., Turner, N. J., et al. 2017, The"
+"Astrophysical Journal, 850, 131,"
+doi: 10.3847/1538-4357/aa943f
+"Flock, M., Turner, N. J., Nelson, R. P., et al. 2020, The"
+"Astrophysical Journal, 897, 155,"
+doi: 10.3847/1538-4357/ab9641
+"Gammie, C. F. 1996, The Astrophysical Journal, 457, 355."
+http://adsabs.harvard.edu/full/1996ApJ...457..355G
+"—. 2001, The Astrophysical Journal, 553, 174."
+http://iopscience.iop.org/0004-637X/553/1/174
+"Gerbig, K., Murray-Clay, R. A., Klahr, H., & Baehr, H."
+"2020, The Astrophysical Journal, 895, 91,"
+doi: 10.3847/1538-4357/ab8d37
+"Gibbons, P. G., Rice, W. K. M., & Mamatsashvili, G. R."
+"2012, Monthly Notices of the Royal Astronomical"
+"Society, 426, 1444, doi: 10.1111/j.1365-2966.2012.21731.x"
+"Hasegawa, Y., Okuzumi, S., Flock, M., & Turner, N. J."
+"2017, The Astrophysical Journal, 845, 31,"
+doi: 10.3847/1538-4357/aa7d55
+"https://arxiv.org/abs/2101.01888
+http://doi.org/10.1088/0004-637X/798/2/84
+http://doi.org/10.1088/0004-637X/769/1/76
+http://doi.org/10.1088/0004-637X/722/2/1360
+http://doi.org/10.1093/mnras/stw488
+http://doi.org/10.1093/mnras/sty3340
+https://arxiv.org/abs/0109497
+http://doi.org/10.1145/166117.166151
+http://doi.org/10.1111/j.1365-2966.2011.18661.x
+http://doi.org/10.3847/1538-4357/ab3d33
+http://doi.org/10.1111/j.1365-2966.2008.14275.x
+http://www.sciencedirect.com/science/article/pii/S0019103585710585
+http://www.sciencedirect.com/science/article/pii/S0019103585710585
+http://doi.org/10.1051/0004-6361:20040284
+https://arxiv.org/abs/0603179
+http://doi.org/10.1088/0004-637X/813/2/99
+http://doi.org/10.3847/1538-4357/aa79f9
+http://doi.org/10.3847/1538-4357/aa943f
+http://doi.org/10.3847/1538-4357/ab9641
+http://adsabs.harvard.edu/full/1996ApJ...457..355G
+http://iopscience.iop.org/0004-637X/553/1/174
+http://doi.org/10.3847/1538-4357/ab8d37
+http://doi.org/10.1111/j.1365-2966.2012.21731.x
+http://doi.org/10.3847/1538-4357/aa7d55"
+"
+14 Baehr & Zhu"
+"Hunter, J. D. 2007, Computing in Science and Engineering,"
+"9, 90, doi: 10.1109/mcse.2007.55"
+"Johansen, A., & Klahr, H. 2005, The Astrophysical"
+"Journal, 634, 1353, doi: 10.1086/497118"
+"Klahr, H., & Bodenheimer, P. H. 2003, The Astrophysical"
+"Journal, 582, 869, doi: 10.1086/344743"
+"Klahr, H., & Hubbard, A. 2014, The Astrophysical Journal,"
+"788, 21, doi: 10.1088/0004-637X/788/1/21"
+"Klahr, H., & Schreiber, A. 2020, The Astrophysical"
+"Journal, 901, 54, doi: 10.3847/1538-4357/abac58"
+"Lesur, G., Kunz, M. W., & Fromang, S. 2014, Astronomy &"
+"Astrophysics, 566, A56,"
+doi: 10.1051/0004-6361/201423660
+"Liu, Y., Henning, T., Carrasco-González, C., et al. 2017,"
+"Astronomy & Astrophysics, 607, A74."
+https://arxiv.org/abs/1708.03238
+"Malygin, M. G., Klahr, H., Semenov, D., Henning, T., &"
+"Dullemond, C. P. 2017, Astronomy & Astrophysics, 605,"
+"A30, doi: 10.1051/0004-6361/201629933"
+"Manger, N., & Klahr, H. 2018, Monthly Notices of the"
+"Royal Astronomical Society, 480, 2125."
+https://arxiv.org/abs/arXiv:1807.06492v1
+"Nelson, R. P., Gressel, O., & Umurhan, O. M. 2013,"
+"Monthly Notices of the Royal Astronomical Society, 435,"
+"2610, doi: 10.1093/mnras/stt1475"
+"Paardekooper, S.-J. 2012, Monthly Notices of the Royal"
+"Astronomical Society, 421, 3286,"
+doi: 10.1111/j.1365-2966.2012.20553.x
+"Pérez, F., & Granger, B. E. 2007, Computing in Science"
+"and Engineering, 9, 21, doi: 10.1109/MCSE.2007.53"
+"Pfeil, T., & Klahr, H. 2019, The Astrophysical Journal,"
+"871, 150, doi: 10.3847/1538-4357/aaf962"
+"Pinte, C., Dent, W. R. F., Ménard, F., et al. 2016, The"
+"Astrophysical Journal, 816, 25,"
+doi: 10.3847/0004-637X/816/1/25
+"Pringle, J. E. 1981, Annual Review of Astronomy and"
+"Astrophysics, 19, 137. http:"
+"//adsabs.harvard.edu/full/1981ARA{%}26A..19..137P
+Ribas, Á., Bouy, H., & Meŕın, B. 2015, Astronomy and"
+"Astrophysics, 576, A52,"
+doi: 10.1051/0004-6361/201424846
+"Ribas, Á., Espaillat, C. C., Macias, E., & Sarro, L. 2020,"
+"arXiv preprint arXiv: 2009.03323,"
+doi: 10.1051/0004-6361/202038352
+"Rice, W. K. M., Lodato, G., Pringle, J. E., Armitage, P. J.,"
+"& Bonnell, I. A. 2004, Monthly Notices of the Royal"
+"Astronomical Society, 355, 543,"
+doi: 10.1111/j.1365-2966.2004.08339.x
+"Riols, A., & Latter, H. N. 2018, Monthly Notices of the"
+"Royal Astronomical Society, 476, 5115,"
+doi: 10.1093/mnras/sty460
+"Riols, A., Latter, H. N., & Paardekooper, S.-j. 2017,"
+"Monthly Notices of the Royal Astronomical Society, 471,"
+"317, doi: 10.1093/mnras/stx1548"
+"Riols, A., & Lesur, G. 2018, Astronomy and Astrophysics,"
+"617, A117, doi: 10.1051/0004-6361/201833212"
+"Riols, A., Roux, B., Latter, H. N., & Lesur, G. 2020,"
+"Monthly Notices of the Royal Astronomical Society, 493,"
+"4631, doi: 10.1093/mnras/staa567"
+"Sengupta, D., Dodson-Robinson, S. E., Hasegawa, Y., &"
+"Turner, N. J. 2019, The Astrophysical Journal, 874, 26."
+https://arxiv.org/abs/arXiv:1808.03016v1
+"Shakura, N. I., & Sunyaev, R. A. 1973, Astronomy &"
+"Astrophysics, 24, 337"
+"Shi, J.-M., & Chiang, E. I. 2014, The Astrophysical"
+"Journal, 789, 34, doi: 10.1088/0004-637X/789/1/34"
+"Stoll, M. H. R., & Kley, W. 2014, Astronomy &"
+"Astrophysics, 572, A77. http://www.aanda.org/articles/"
+"aa/full{ }html/2014/12/aa24114-14/aa24114-14.html
+—. 2016, Astronomy & Astrophysics, 594, A57,"
+doi: 10.1051/0004-6361/201527716
+"Teague, R., Guilloteau, S., Semenov, D., et al. 2016,"
+"Astronomy & Astrophysics, 592, A49,"
+doi: 10.1051/0004-6361/201628550
+"Toomre, A. 1964, The Astrophysical Journal, 139, 1217."
+http://adsabs.harvard.edu/full/1964ApJ...139.1217T7
+"van der Walt, S. J., Colbert, S. C., & Varoquaux, G. 2011,"
+"Computing in Science and Engineering, 13, 22,"
+doi: 10.1109/MCSE.2011.37
+"Villenave, M., Ménard, F., Dent, W. R. F., et al. 2020,"
+"Astronomy & Astrophysics, 642, A164,"
+doi: 10.1051/0004-6361/202038087
+"Virtanen, P., Gommers, R., Oliphant, T. E., et al. 2020,"
+"Nature Methods, 17, 261, doi: 10.1038/s41592-019-0686-2"
+"Yang, C.-C., Mac Low, M.-M., & Johansen, A. 2018, The"
+"Astrophysical Journal, 868, 27,"
+doi: 10.3847/1538-4357/aae7d4
+"Youdin, A. N., & Lithwick, Y. 2007, Icarus, 192, 588,"
+doi: 10.1016/j.icarus.2007.07.012
+"Zhu, Z., Dong, R., Stone, J. M., & Rafikov, R. R. 2015, The"
+"Astrophysical Journal, 813, 88."
+https://arxiv.org/abs/1507.03599
+"Zhu, Z., Hartmann, L. W., Nelson, R. P., & Gammie, C. F."
+"2012, The Astrophysical Journal, 746, 110,"
+doi: 10.1088/0004-637X/746/1/110
+"http://doi.org/10.1109/mcse.2007.55
+http://doi.org/10.1086/497118
+http://doi.org/10.1086/344743
+http://doi.org/10.1088/0004-637X/788/1/21
+http://doi.org/10.3847/1538-4357/abac58
+http://doi.org/10.1051/0004-6361/201423660
+https://arxiv.org/abs/1708.03238
+http://doi.org/10.1051/0004-6361/201629933
+https://arxiv.org/abs/arXiv:1807.06492v1
+http://doi.org/10.1093/mnras/stt1475
+http://doi.org/10.1111/j.1365-2966.2012.20553.x
+http://doi.org/10.1109/MCSE.2007.53
+http://doi.org/10.3847/1538-4357/aaf962
+http://doi.org/10.3847/0004-637X/816/1/25
+http://adsabs.harvard.edu/full/1981ARA{%}26A..19..137P
+http://adsabs.harvard.edu/full/1981ARA{%}26A..19..137P
+http://doi.org/10.1051/0004-6361/201424846
+http://doi.org/10.1051/0004-6361/202038352
+http://doi.org/10.1111/j.1365-2966.2004.08339.x
+http://doi.org/10.1093/mnras/sty460
+http://doi.org/10.1093/mnras/stx1548
+http://doi.org/10.1051/0004-6361/201833212
+http://doi.org/10.1093/mnras/staa567
+https://arxiv.org/abs/arXiv:1808.03016v1
+http://doi.org/10.1088/0004-637X/789/1/34
+http://www.aanda.org/articles/aa/full{_}html/2014/12/aa24114-14/aa24114-14.html
+http://www.aanda.org/articles/aa/full{_}html/2014/12/aa24114-14/aa24114-14.html
+http://doi.org/10.1051/0004-6361/201527716
+http://doi.org/10.1051/0004-6361/201628550
+http://adsabs.harvard.edu/full/1964ApJ...139.1217T7
+http://doi.org/10.1109/MCSE.2011.37
+http://doi.org/10.1051/0004-6361/202038087
+http://doi.org/10.1038/s41592-019-0686-2
+http://doi.org/10.3847/1538-4357/aae7d4
+http://doi.org/10.1016/j.icarus.2007.07.012
+https://arxiv.org/abs/1507.03599
+http://doi.org/10.1088/0004-637X/746/1/110"
+"
+Particles & Self-Gravity II: Accretion and Dust 15"
+"2.0 1.5 1.0 0.5 0.0 0.5 1.0
+Particle size log(ts )"
+"Medium box, = 10
+Medium box, = 5
+Medium box, = 2
+Large box, = 10
+Large box, = 5
+Large box, = 2"
+"2.0 1.5 1.0 0.5 0.0 0.5 1.0
+Particle size log(ts )"
+"Full gas and dust self-gravity
+Particles feel self-gravity from gas only
+Particles not considered for self-gravity"
+"Figure 12. Left: Approximating Dd,z for the six primary simulations of this paper, using Equation A2; compare with Figure
+3. Right: Dd,z for the simulations which investigate the self-gravity implementation as in the left panel of Figure 6."
+APPENDIX
+A. DIFFUSION CONSTANT
+"The diffusion constant derived in the text uses a simpler relation between particle scale height Hp and particle size ts
+based on an assumption of no vertical stratification. The simulations presented are clearly stratified, but the relation
+still holds well for the intermediate sizes and is easier to interpret from Figure 3. Nevertheless, we find it important
+to validate the result with a more rigorous relation and we provide an alternate derivation of the diffusion constant
+based on Dubrulle et al. (1995) which allows for a fit which includes St = 0.01"
+Hd = Hg
+"(tsΩ2H2g )/Dd,z + 1
+. (A1)"
+"We rewrite this equation as
+η = D−1d,zts , (A2)"
+"where η = H−2d − H
+−2
+g , to evaluate a dimensionless diffusion constant D"
+"−1
+d,z with a linear fit comparable to Figure"
+"3. The diffusion constants derived in this way are (in the same descending order as in Table 1) Dd,z = [1.9 × 10−3,
+1.6× 10−3, 1.0× 10−3, 8× 10−3, 3.0× 10−3, 2.9× 10−3, 1.3× 10−3, 4.2× 10−3]."
+"
+	1 Introduction
+	2 Gravitoturbulence
+	3 Model
+	4 Results
+	4.1 Turbulence
+	4.2 Vertical Particle Diffusion"
+"	5 Discussion
+	5.1 Particle Settling
+	5.2 Vertical Schmidt Number
+	5.3 Particle Self-Gravity
+	5.4 Additional Considerations"
+"	6 Conclusion
+	A Diffusion Constant"

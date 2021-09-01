@@ -1,0 +1,2247 @@
+0
+"Draft version March 1, 2021
+Typeset using LATEX twocolumn style in AASTeX63"
+"SITELLE Hα Imaging Spectroscopy of z∼0.25 Clusters:
+Emission Line Galaxy Detection and Ionized Gas Offset in Abell 2390 & Abell 2465"
+"Qing Liu,1, 2 H.K.C. Yee,1 Laurent Drissen,3, 4 Suresh Sivanandam,1, 2 Irene Pintos-Castro,5 Leo Y. Alcorn,6"
+"Bau-Ching Hsieh,7 Lihwai Lin,7 Yen-Ting Lin,7 Adam Muzzin,6 Allison Noble,8 and Lyndsay Old9"
+"1David A. Dunlap Department of Astronomy & Astrophysics, University of Toronto, 50 St. George St., Toronto, ON M5S 3H4, Canada
+2Dunlap Institute of Astronomy and Astrophysics, University of Toronto, 50 St. George St, Toronto, ON, Canada"
+"3Département de physique, de génie physique et d’optique, Université Laval, Québec, QC, G1V 0A6, Canada
+4Centre de Recherche en Astrophysique du Québec, Canada"
+"5Department of Astronomy & Astrophysics, University of Toronto, 50 St. George St., Toronto, ON M5S 3H4, Canada
+6Department of Physics and Astronomy, York University, 4700 Keele Street, Toronto, Ontario, ON MJ3 1P3, Canada
+7Institute of Astronomy and Astrophysics, Academia Sinica, No. 1, Section 4, Roosevelt Road, Taipei 10617, Taiwan"
+"8School of Earth and Space Exploration, Arizona State University, Tempe, AZ, 85287, USA
+9European Space Agency, European Space Astronomy Center, Villanueva de la Cañada, E-2691, Madrid, Spain"
+ABSTRACT
+Environmental effects are crucial to the understanding of the evolution of galaxies in dense environ-
+"ments, such as galaxy clusters. Using the large field-of-view of SITELLE, the unique imaging fourier"
+"transform spectrograph at CFHT, we are able to obtain 2D spectral information for a large and com-"
+plete sample of cluster galaxies out to the infall region. We describe a pipeline developed to identify
+emission line galaxies (ELGs) from the datacube using cross-correlation techniques. We present results
+based on the spatial offsets between the emission-line regions and stellar continua in ELGs from two
+"z∼0.25 galaxy clusters, Abell 2390 and Abell 2465. We find a preference in the offsets being pointed
+away from the cluster center. Combining the two clusters, there is a 3σ excess for high-velocity galax-"
+ies within the virial radius having the offsets to be pointed away from the cluster center. Assuming
+"the offset being a proxy for the velocity vector of a galaxy, as expected from ram pressure stripping,"
+this excess indicates that ram pressure stripping occurs most effectively during the first passage of an
+"infalling galaxy, leading to the quenching of its star formation. We also find that, outside the virial"
+"region, the continuum-normalized Hα line flux for infalling galaxies with large offsets are on average"
+"lower than those with small or no measurable offset, further supporting ram pressure as a dominant"
+quenching mechanism during the initial infall stages.
+Keywords: galaxies: evolution — galaxies: clusters: individual: Abell 2390 — galaxies: clusters:
+individual: Abell 2465 — galaxies: clusters: intracluster medium.
+1. INTRODUCTION
+It is an established consensus that the evolution of
+"galaxies is affected by their environment, especially in"
+"high density regions such as rich galaxy clusters (e.g.,"
+"Ellingson et al. 2001, Lewis et al. 2002, Kauffmann et al."
+"2004, Boselli & Gavazzi 2006, Poggianti et al. 2006,"
+"Weinmann et al. 2009, Sobral et al. 2011, Muzzin et al."
+"2012, Foltz et al. 2018, Pintos-Castro et al. 2019). In"
+galaxy clusters the interplay between galaxies and the
+host cluster is likely responsible for the quenching of star
+"qliu@astro.utoronto.ca, hyee@astro.utoronto.ca"
+"formation in galaxies, i.e., the suppression or cessation"
+"of star formation, aside from their internal secular evolu-"
+tions. Such external effects shape the observed correla-
+tion between the star formation rate (SFR) and the envi-
+"ronmental density (e.g., Balogh et al. 1998, Gómez et al."
+"2003, Peng et al. 2010, Kawinwanichakij et al. 2017),"
+which is closely related to the well-known morphology-
+"density relation (e.g., Dressler 1980, Goto et al. 2003,"
+Postman et al. 2005).
+One of the breakthroughs of present-day observational
+"techniques is 2D imaging spectroscopy, such as the In-"
+"tegral Field Unit (IFU) spectroscopy. Several recent, or"
+"ongoing, IFU surveys such as CALIFA (Sánchez et al."
+"http://orcid.org/0000-0002-7490-5991
+http://orcid.org/0000-0003-1278-2591
+http://orcid.org/0000-0002-0767-8135
+http://orcid.org/0000-0002-9133-4457
+http://orcid.org/0000-0002-2250-8687
+http://orcid.org/0000-0001-5615-4904
+http://orcid.org/0000-0001-7218-7407
+http://orcid.org/0000-0001-7146-4687
+http://orcid.org/0000-0002-9330-9108
+http://orcid.org/0000-0003-1832-4137
+http://orcid.org/0000-0003-1205-1318
+mailto: qliu@astro.utoronto.ca, hyee@astro.utoronto.ca"
+"
+2 Liu et al."
+"2012), MaNGA (Bundy et al. 2015) and SAMI (Green"
+"et al. 2018), have been transforming the field of extra-"
+"galactic studies. In particular, observations with 2D"
+imaging spectroscopy have unveiled novel and important
+insights about impacts of environments on galaxy evo-
+"lution in high density regions (e.g., Brough et al. 2013,"
+"Poggianti et al. 2017a, Schaefer et al. 2017, Coenda et al."
+"2019, Cortese et al. 2019, Graham et al. 2019, Schaefer"
+et al. 2019).
+A new prospect is revealed by the state-of-the-
+art imaging Fourier transform spectrograph (IFTS)
+SITELLE (Drissen et al. 2019) on the Canada-France-
+Hawaii Telescope (CFHT). Thanks to its incomparably
+"wide field-of-view (FOV) of 11′ × 11′, SITELLE pro-
+vides a unique opportunity to study environmental ef-"
+fects on star formation in galaxy clusters in more details.
+"Specifically, SITELLE allows us to simultaneously ac-"
+"quire spatially-resolved spectral information for a large,"
+complete and luminosity-limited sample of emission-line
+galaxies (ELGs). Its spatial coverage extends out to the
+"cluster infall region at z ∼ 0.25. This is unprecedented;
+existing spatially-resolved data on galaxy clusters are"
+limited in either field coverage or spectral resolution.
+"With abundant information, both spectral and spatial,"
+"encoded in emission lines, SITELLE offers an excellent"
+opportunity to gain a better understanding of star for-
+mation in galaxy clusters and investigate the mecha-
+nisms responsible for the quenching of star formation in
+high density environments.
+Many possible external quenching mechanisms have
+been investigated in the past two decades: gas strip-
+"ping, starvation, harassment, thermal evaporation, pre-"
+"processing, etc. (see Boselli & Gavazzi 2006 for a re-"
+"view). Among all the competing quenching mechanisms,"
+the dynamical interaction of the gas in the cluster galaxy
+"with the intracluster medium (ICM), typically in the"
+"form of ram pressure stripping (Gunn & Gott 1972), has"
+been considered to be one of the most efficient physi-
+cal mechanisms to quench star formation activities in
+star-forming galaxies (SFGs) through the removal of
+"cold gas. For example, Muzzin et al. (2014) concluded"
+that ram pressure stripping is the most plausible mecha-
+nism for satellite quenching by investigating the dynam-
+"ics and quenching timescales of z∼1 cluster galaxies in
+the GCLASS survey; Boselli et al. (2016) found rapid"
+quenching timescales accompanied with HI deficiencies
+"in the Virgo cluster by fitting photometric bands, which"
+indicates ram pressure as the main source of quench-
+ing in Virgo. Evidence of quenching by ram pressure
+has been widely found in many other observational and
+"simulation works (e.g., Abadi et al. 1999, Fujita & Na-"
+"gashima 1999, Mayer et al. 2006, Boselli et al. 2008,"
+"Bekki 2014, Bahé & McCarthy 2015, Jaffé et al. 2015,"
+"Boselli et al. 2016, Fillingham et al. 2016, Jaffé et al."
+"2016, Poggianti et al. 2017a, Yoon et al. 2017, Boselli"
+"et al. 2019, Lotz et al. 2019, Owers et al. 2019, Wang"
+et al. 2020).
+One prominent observational feature of the ram pres-
+sure effect is a disturbed gas morphology. The peculiar
+disturbance of the HI gas distribution in cluster galax-
+ies has been observed (Haynes et al. 1984; Chung et al.
+"2007, Jaffé et al. 2015, Yoon et al. 2017) as an indi-"
+cation of the action of ram pressure. Star formation
+could subsequently occur in the disturbed gas and in-
+"duce ionization, when it condenses or is compressed by"
+"shock waves, leading to disturbed or asymmetric ionized"
+gas distributions that are observable in UV/Hα/optical
+bands (Koopmann & Kennedy 1999; Yoshida et al. 2008;
+Smith et al. 2010; Jaffé et al. 2018). The most extreme
+"cases are known as “jellyfish galaxies” (e.g., Ebeling"
+"et al. 2014, Poggianti et al. 2017a, Jaffé et al. 2018),"
+which are nearby SFGs exhibiting conspicuous extended
+"ionized gas tails. Therefore, analyzing the properties of"
+gas in cluster galaxies is promising for shedding light
+on the mechanism of ram pressure stripping and placing
+constraints on numeric simulations of their evolutions
+"in dense environments. For example, many interesting"
+results have been revealed by the MUSE GASP survey
+(Poggianti et al. 2017a) about the properties of jellyfish
+galaxies and the implications on their evolution histo-
+This kind of analysis is well suited to 2D spectroscopic
+observations using SITELLE. An ongoing project using
+SITELLE targeting the Hα+[N ii] lines in clusters at
+"z∼0.25 is being implemented to characterize the prop-
+erties of ionized gas in cluster galaxies, including lumi-"
+"nosity, morphology, kinematics, ionization states, etc.,"
+and to study how these properties correlate with the lo-
+cal environment or the cluster. SITELLE data have the
+"capacity to perform a rich class of interesting science,"
+though in this paper we limit our investigation to the
+ionized gas morphologies. The goals of this paper are :
+1) to describe the methodology of detection and identifi-
+"cation of ELGs from the SITELLE datacubes, and 2) to"
+present initial results from a small sample of two clusters
+based on the spatial offset of ionized gas in search for
+the evidence of ram pressure stripping. Our conclusions
+"are tentative yet intriguing, but this work serves as a"
+pilot study demonstrating the prospect of SITELLE in
+studying ELGs in galaxy clusters. Although the spatial
+resolution is not as high as MUSE to resolve the gas into
+"filaments, we are able to study the ionized gas using a"
+large and comprehensive sample out to the infall region.
+SITELLE Cluster ELGs 3
+The paper is organized as follows: Section 2 describes
+the SITELLE observation and the cluster targets ob-
+"served, Abell 2390 and Abell 2465. Section 3 presents"
+our pipeline used to automatically detect and identify
+ELGs from the datacube. We describe the method of
+measuring the centroids of emission-line light and stel-
+lar continuum light and show the results based on these
+centroids in Section 4. Section 5 discusses the impli-
+cations of the results. We summarize our findings and
+"conclusions in Section 6. Throughout the paper, we as-"
+"sume a cosmology with H0 = 70 km s
+−1 Mpc−1, Ωm ="
+0.3 and ΩΛ = 0.7.
+2. OBSERVATIONS
+2.1. SITELLE
+"Our project uses SITELLE (Drissen et al. 2019), the"
+new imaging Fourier instrument at CFHT. With a broad
+"working wavelength range from 3500 Å to 9000 Å,"
+SITELLE is designed to focus on emission-line objects.
+Band-limiting filters are used to increase spectral reso-
+lution with finite scanning steps and to reduce the con-
+tamination from strong sky-lines. The equivalent spec-
+tral resolution R of IFTS is determined by the total
+number of mirror steps of the Michelson-type interfer-
+"ometer, which is chosen to resolve the Hα and [N ii] lines"
+and to provide spatially-resolved kinematic information.
+The primary science drivers for SITELLE include neb-
+"ulae and supernova remnants in the Milky Way, H ii and"
+"star-formation regions in nearby galaxies, and ELGs in"
+galaxy clusters. The uniqueness of SITELLE in study-
+"ing galaxy clusters is its unparalleled 11′ × 11′ FOV,
+allowing for IFU-like 2D spectroscopy of a large and"
+"complete, luminosity-limited ELG sample of a cluster."
+"The SITELLE data product is a spectral datacube,"
+"with an image at each wavelength step (“channel”), af-"
+"ter being corrected, transformed and calibrated by the"
+ORBS1 (Martin et al. 2015) pipeline. The pixel scale of
+"SITELLE is 0.322′′/pix, with 2048×2064 pixels in total.
+The optical-to-near-infrared night sky is densely oc-"
+"cupied by OH molecular lines, leading to the difficulty"
+of observing redshifted Hα lines. To reduce sky contam-
+"ination, a narrow window (796 nm – 826 nm) that is"
+less affected by sky-lines is selected for the design of the
+"SITELLE C4 filter, which corresponds to the redshift"
+"range of Hα-[N ii] lines at 0.21-0.25, allowing us to detect"
+ELGs in that redshift range. The window corresponds
+to the region where the observing efficiency of SITELLE
+"(CCD quantum efficiency, modulation efficiency and op-"
+tical transmission) is the highest (at around 800 nm).
+1 https://github.com/thomasorb/orbs
+Table 1. Properties of the clusters observed by SITELLE.
+Cluster Abell 2390 a Abell 2465 b
+Redshift (z) 0.228 0.245
+"R.A. (α2000) 21
+h53m35s 22h39m39s (NE)"
+22h39m25s (SW)
+"Decl. (δ2000) +17
+◦40′11′′ −5◦43′28′′ (NE)"
+"−5◦47′15′′ (SW)
+M200 (M�) ∼ 2× 1015 ∼ 4× 1014 each
+R200 (Mpc) 2.1 1.2"
+σv (km/s) 1100 763 (NE)
+722 (SW)
+"a M200, R200 and σv from Carlberg et al. (1997).
+b M200, R200 and σv from Wegner (2011). The values listed are
+for each subcluster."
+"Nevertheless, there exist some sky-lines that affect the"
+detectability and measurement of the lines. We present
+the subtraction of the sky in Sections 3.1 and 3.2.
+"Detailed information about SITELLE, including the"
+"instrumentation design, the advantages and drawbacks"
+"of IFTS, science capabilities and commission perfor-"
+"mance, can be found in Drissen et al. (2019)."
+2.2. Target Clusters
+The observations for the first two targets for the sur-
+vey were carried out on SITELLE in 2017 and 2018 on
+two well-studied galaxy clusters: Abell 2390 and Abell
+"2465 (hereafter, A2390 and A2465)."
+A2390 is a rich massive cool-core galaxy cluster
+"(M200 ≈ 2× 1015 M�) at redshift of 0.228. It has been
+widely studied in many previous studies for the under-"
+"standing of galaxy evolution in dense environment (e.g.,"
+"Yee et al. 1996, Abraham et al. 1996, Balogh & Morris"
+"2000, Fritz et al. 2005). For example, Abraham et al.
+(1996) found that the cluster is gradually formed by the"
+accretion of infalling galaxies with truncation in their
+star formation by investigating the properties (kinemat-
+"ics, colors, morphologies, etc.) of a large sample of clus-"
+ter galaxies using the CNOC data (Yee et al. 1996).
+"Different from A2390, A2465 consists of two merg-"
+"ing subclusters, a north-east (NE) clump A2465NE and"
+"a south-west (SW) clump A2465SW, at a redshift of"
+0.245 (Wegner 2011). Members of the subclusters have
+been identified based on kinematic energies for the mea-
+surements of properties for each subcluster in Wegner
+(2011). The two subclusters have roughly equal virial
+masses. A series of detailed multi-wavelength analyses
+on A2465 can be found in Wegner (2011) and Wegner
+"et al. (2015, 2017), where the authors found interesting"
+results revealing its collision history and the evolution
+"history of galaxies within it. The redshifts, positions,"
+4 Liu et al.
+21h54m30s 00s 53m30s 00s
+17◦55′
+RA (J2000)
+"Figure 1. Deep frames of the Abell 2390 central (C) / south-east (E) / north-west (W) fields observed by SITELLE, overlaid
+on the SDSS DR12 mosaic. The FOV of a single field is 11′ × 11′. The deep frames are constructed using the ORCS piepline
+(Martin et al. 2015). Emission-Line Galaxies (ELGs) identified in Section 3 are marked by green circles. The brightest central
+galaxy marked by a magenta polygon is also an ELG."
+Table 2. Observed information about the individual fields.
+Field A2390C A2390W A2390E A2465C
+"Nsteps
+a 124 150 150 207"
+"Exposure (s) 11,408 13,800 13,800 13,662"
+∆λ (Å) 5.2 4.3 4.3 3
+R 1080 1300 1300 1800
+Seeing(′′) 1.1 1.2 1.3 1.1
+"RA (α2000)
+b 21h53m34.56s 21h53m07s 21h53m59.3s 22h39m32.5s"
+"Dec (δ2000)
+b 17◦40′11′′ 17◦49′′24′′ 17◦32′15′′ −5◦45′22′′"
+"Number of mirror steps to reach the specified R.
+b"
+Central coordinates of the SITELLE fields.
+SITELLE Cluster ELGs 5
+22h39m50s 40s 30s 20s
+−5◦42′
+RA (J2000)
+"Figure 2. Deep frame of the central field of the double clus-
+ter Abell 2465 observed by SITELLE. Identified ELGs are
+marked by green circles. The two brightest central galaxies
+are marked as purple polygons which do not have detected
+emission. White contours show a rendering of the weak lens-
+ing mass contours in Figure 7 of Wegner et al. (2017)."
+and physical properties of the two target clusters ob-
+served by SITELLE are summarized in Table 1.
+There are three pointings for A2390 and one for
+A2465. The initial observational design was to use an
+"observation time of 4 hr per pointing, including overhead"
+"between steps, with ∼150 steps, producing a resolution
+R ∼1300, sufficient to resolve the Hα-[N ii] lines. How-
+ever, for A2390C, which was observed during a commis-"
+"sioning run for the science verification for the C4 filter,"
+"only a shorter exposure of 3 hours was obtained, re-"
+sulting in fewer steps and a lower R. The number of
+"steps was increased for the subsequent run for A2365C,"
+"and future targets, to achieve better spectral resolution."
+Observational information on the four fields including
+"the total number of mirror steps, the exposure time,"
+"the average wavelength interval, the average seeing, the"
+"approximate spectral resolution, and the coordinates of"
+field centers are listed in Table 2.
+3. EMISSION-LINE GALAXY IDENTIFICATION
+The IFTS spectral datacube is transformed from the
+original interferometric cube acquired by SITELLE at
+CFHT and calibrated with the data reduction software
+ORBS (Martin et al. 2015). This section introduces the
+procedures for detecting and identifying ELGs from the
+SITELLE spectral datacube.
+3.1. Sky-Line Subtraction
+While the C4 filter is designed to minimize the num-
+"ber of OH sky-lines in the spectral region, the sky con-"
+tinuum and a few sky-lines still dominate the spectral
+"range of the filter. Therefore, we first subtract the sky"
+background in each channel. The background is evalu-
+ated and subtracted in 2D using the photutils package.
+"The background is locally estimated within a 128× 128
+pix2 box using a mode estimator and then subtracted"
+from the data of each channel. The spectral axis of the
+datacube is clipped into 12100 – 12550 cm−1 and con-
+verted into wavelength corresponding to 7970 Å – 8265
+Å. The wavelength axis is then interpolated to be uni-
+formly spaced in logarithmic scale. A stacked image is
+also created by coadding of all the channels within this
+spectral range for the initial source detection described
+in Section 3.3.
+3.2. Fringe Reduction using Low-pass Filtering
+The interferometric nature of SITELLE and the pres-
+ence of strong sky-lines in the C4 filter induce fringes
+across the field in specific channels. The fringes are su-
+perimposed on the uneven large-scale background that
+has been subtracted in Section 3.1 . The level of con-
+tamination from these fringes depends on the channel
+"wavelength, the number of mirror steps, and the posi-"
+"tion in the field. In general, channels around stronger"
+sky-lines with fewer mirror steps (i.e. lower spectral res-
+olution) present brighter fringes away from the field cen-
+ter. The brightness and spatial pattern of these fringes
+"differ from channel to channel, which makes it challeng-"
+ing to model them from first principles. The brightness
+of fringes vary across the field and could be compara-
+"ble to/brighter than a large number of sources, affecting"
+"the source detection, ELG identification, and potentially"
+"their measurements. We adopt an empirical method to
+reduce the influence of fringes by applying low-pass fil-"
+tering (LPF) on each channel. Details of the LPF pro-
+cedure and a figure illustrating the fringes and cleaning
+are presented in Appendix A.
+3.3. Source Detection and Spectral Extraction
+Although the fringes have been alleviated by the LPF
+"procedure, small-scale fringe residuals from the sky oc-"
+casionally show up in some channels because of the finite
+kernel size used. We apply a moving average procedure
+to further mitigate fringe contamination (Appendix A)
+and construct a new datacube for source detection. We
+note that this smoothed datacube is used only for source
+detection but not for analysis. The new datacube is col-
+lapsed in the spectral axis into an image for the detection
+of ELGs (referred to below as the “detection image”)
+generated by using the maximum value in the spectral
+6 Liu et al.
+"axis at each spatial position, taking advantage of the"
+2D spectroscopy. Using the maxima in wavelength en-
+hances the possibility of detecting weak narrow peaks.
+We compare the output candidate list obtained from the
+detection image with the one from the mean image of
+all channels and it proves that the detection image con-
+structed in such way offers a more complete sample that
+includes line emitters with weak or zero continuum.
+The python software photutils is used to detect
+and deblend sources. We adopt a detection signal-to-
+"noise ratio (S/N) threshold of 2.5, a 5 pixel connec-"
+"tion, a multi-thresholding level number of 64, and a"
+local peak contrast of 0.01. The threshold is locally es-
+timate based on a 2D background estimate using the
+SExtractorBackground class as in Section 3.1. A seg-
+mentation map is created in this process. An integrated
+spectrum of each detected source is extracted from the
+low-pass-filtered datacube using the corresponding seg-
+mentation in the map. These spectra are used for source
+"identification and redshift measurement. In total, the"
+"detection algorithm locates ∼2000 sources in A2390C
+field, ∼1500 sources in A2390E/W fields, and ∼1200
+sources in A2465C field."
+3.4. Removal of Continuum
+For the purpose of automatically identifying ELGs us-
+"ing templates that only contain emission lines, the con-"
+tinua of sources must be subtracted to obtain the resid-
+ual emission lines. This is accomplished using Gaussian
+"Process (GP) regression, typically used for fitting curves"
+in a non-parametric manner. The advantage of using GP
+"regression is its flexibility, which allows for slight vari-"
+ations in the continuum such as a mild gradient and is
+able to smoothly tackle possible irregularity around the
+filter edges. We use the GaussianProcessRegressor
+realization in the python package scikit-learn. The
+kernel is chosen to be a combination of a radial basis
+function (RBF) kernel with a bandwidth of 100 Å (such
+that it is wider than the width of Hα-[N ii] lines) which
+"accounts for the continuum component, and a white ker-"
+nel accounting for the noise. Possible emission that is
+one σ above the median value of the spectrum is iter-
+atively replaced with the median. In the case of a few
+"bright sources, the sharp drops around the filter edges"
+make them poorly fitted by smooth GP kernels and are
+masked in the fitting. This procedure is applied on each
+of the integrated spectra extracted in Section 3.3.
+3.5. Construction of Line Template
+We use the cross-correlation technique to identify
+ELGs from detected sources. It is done by cross-
+correlating the normalized residual spectra with a li-
+brary of emission-line templates. While the obser-
+vation is designed to capture the Hα-[N ii] lines in
+"the galaxy cluster, emission lines other than Hα-[N ii]"
+"(e.g., [O iii]λ5007 at z∼0.64, [O ii]λ3727 at z∼1.2)
+from background sources may fall into the filter as"
+well. To construct a robust ELG sample for cluster
+"members, it is critical to distinguish these lines from"
+the target Hα+[N ii] lines. Below we describe three
+sets of emission-line templates used to perform cross-
+correlation.
+The primary set includes the Hα line and the
+"[N ii]λλ6548,6584 lines, with a fixed line ratio between"
+[N ii]λ6584 and [N ii]λ6548 of 3:1 (Acker et al. 1989).
+The line ratio between Hα and [N ii]λ6584 varies from
+1:1 to 8:1 uniformly in logarithmic scale. The second
+"set consists of the [O iii]λλ4959,5007 doublet, with the"
+line ratio of [O iii]λ5007 to [O iii]λ4959 varying from 2:1
+"to 4:1. The Hβ line is not included in the template set,"
+considering that in most cases it is located out of the
+filter or at the filter’s blue edge in the presence of the
+"[O iii] doublet. As a result, the inclusion of Hβ might re-"
+duce the optimal S/N of a spectrum with only the [O iii]
+"doublet in the cross-correlation process, and therefore"
+it is removed from the template. The third set con-
+"tains a single line, which represents several possible ori-"
+"gins including an [O ii]λ3727 line at z∼1.2, an isolated
+[O iii]λ5007 line with an undetected weak [O iii]λ4959"
+"or with [O iii]λ4959 outside of the blue band limit, a Hα"
+"line with undetected [N ii] (e.g., from metal-poor galax-"
+"ies, or with low S/N), an isolated Hβ at z∼0.66 with the
+[O iii]λ4959 outside of the red band limit, and possibly"
+"a bright Lyα emitter at z∼5.5.
+The template lines are broadened into Gaussian pro-"
+files by convolution:
+T (λ) =
+"δ(λ− λ0,i)
+]
+∗Gaussian(λ0,i, σline)"
+Ai exp
+"[
+− (λ− λ0,i)"
+2σ2line
+"]
+, (1)"
+"with the normalization Ai being the line ratios, λ0,i be-"
+"ing the line center for the i-th line component, and σline
+being the common line width. The line width ranges"
+"from σmin = ∆λ, which is the spectral resolution, to"
+"σmax =
+√
+σ2min + σ"
+"2
+gal, which corresponds to a galac-"
+tic velocity dispersion σgal =300 km/s. It is notewor-
+thy that the intrinsic line shape of SITELLE is a sinc-
+gaussian resulting from an instrumental sinc line shape
+with Gaussian broadening (Drissen et al. 2019). How-
+"ever, in practice, introducing sinc-gaussian in a template"
+adds another degree of freedom and sometimes uninten-
+tionally magnifies the noise. This is possibly due to
+SITELLE Cluster ELGs 7
+the lower S/N in the data as the observation was ob-
+tained in the verification run. In the C4 filter potential
+sky-line residuals also make it noisier than observations
+using bluer SITELLE filters. Consider the fact that us-
+ing Gaussian templates in cross-correlation would not
+practically reduce the efficiency of ELG identification
+"and narrow-band centroids in this study, we opt to use"
+"Gaussian line templates. Nevertheless, we caution the"
+readers that when carrying out line fitting procedures
+to obtain delicate information such as line kinematics
+"and their uncertainties, the use of sinc-gauss functions"
+is more ideal (see documents of ORCS2 and Martin et al.
+2015) for SITELLE.
+3.6. Cross-correlation with Template
+"Cross-correlation, also known as matched filtering, is a"
+technique widely used in signal processing that is applied
+for the optimization of the S/N by cross-correlating the
+observed signal with templates:
+CCF (v ↔ δλ) = [F ? T ] (δλ)
+"∫ λ2
+λ1"
+"F (λ)T (λ+ δλ) dλ ,
+(2)"
+where F (λ) is the input continuum-subtracted spectrum
+"within the filter range (λ1, λ2), and CCF is the cross-"
+"correlation function. By convention, CCF is in units of"
+"velocity v, which is converted from wavelength differ-"
+ence δλ. The residual spectra is normalized and linearly
+interpolated with twice as many points as the original
+spectra in log scale for a higher precision in peak match-
+"ing. In essence, the cross-correlation procedure accom-"
+"plishes two jobs: the detection of a potential signal, and"
+the localization of its position (redshift). This is run on
+all the extracted integrated spectra obtained above.
+"The S/N of the CCF, (S/N)cc, is calculated as follows:"
+"(S/N)cc =
+CCFmax
+σcc"
+where CCFmax is the peak of the CCF and σcc is the
+rms noise calculated in the region 5σline away from any
+of the line centers. A wider signal range (8σline) is used
+if the matched line ratio Hα/[N ii]λ6584 is lower than
+3:1 in high S/N cases ((S/N)cc > 50) in order to better
+match bright broad lines. Regions near the filter edges
+"(∼20Å) are clipped when calculating (S/N)cc. (S/N)cc
+gives an estimate of the credibility of emission, but it"
+does not place constraints on the line width and ratio.
+2 http://celeste.phy.ulaval.ca/orcs-doc
+We further use a significance parameter R defined as:
+"R = ξ · γ = CCFmax
+CCF"
+"(2)
+max"
+"· (S/N)cc
+(S/N)cc,max"
+"which multiplies the peak contrast ξ, defined as the ra-"
+tio of the highest peak to the second highest peak of the
+"CCF, by the credibility γ, defined as the ratio of the"
+computed (S/N)cc and the highest (S/N)cc among all
+templates. The best matched template is chosen as the
+one with maximum R. The parameter R is motivated
+by experiments suggesting that maxmizing R typically
+returns better estimates for the line ratio and the line
+"width σline than simply using (S/N)cc,max, while retain-"
+ing the accuracy of the matched redshift. Examples of
+CCF are shown in the right panels of Figure 3 with the
+corresponding residual spectra shown in the left panels.
+With the aid of visually inspecting a number of spectra
+"and their CCF, we apply the following S/N criteria to"
+select potential ELG candidates for detection:
+"• (S/N)cc,Hα > 5 or (S/N)cc,OIII > 5 ,"
+"• (S/N)cc,single > 3 ,"
+"where (S/N)cc,Hα, (S/N)cc,OIII and (S/N)cc,single are"
+the resultant (S/N)cc using the three template sets.
+"We then calculate quick estimates of Wem, the equiv-"
+alent width of the total emission using a 10 σline wide
+"window, for the purpose of reducing false detections."
+"An uncertainty of Wem, σ(Wem), is roughly obtained"
+by perturbing spectra 250 times with the continuum
+rms. We require the candidate to have Wem > 5Å and
+Wem > σ(Wem) to be considered as a detection. We
+further require the candidate to be located at least 20
+pixels away from the field edge and its matched peak at
+least 20 Å away from the filter edge.
+"Through all the steps above, we achieve a list"
+"of ELGs in each of the fields, with 88/80/72 from"
+the A2390C/A2390E/A2390W field and 111 from the
+A2465C field. Repeated detections in overlapping field
+coverage of A2390 are cross-matched and cleaned when
+"combining detections among fields. Finally, a visual"
+check is done on all the candidates to screen out du-
+bious detections and to confirm strong [O iii] emitters.
+"In total, 194 ELGs are found in A2390 and 110 ELGs"
+are found in A2465. ELGs identified in the A2390 and
+"A2465C are marked in Figure 1 and Figure 2, respec-"
+"tively, which includes line emitters in the background."
+"In A2390, the central field has the most ELGs, while"
+A2465C shows an excess close to the center of the
+south-west subcluster. The prevalence of ELGs found
+in A2465C suggest enhanced star formation occurring in
+"the merging clusters, as observed and discussed in Weg-"
+ner (2011) and Wegner et al. (2015). The average 5σ
+8 Liu et al.
+"8000 8050 8100 8150 8200 8250
+Wavelength (Å)"
+"[NII]6548
+H"
+"[NII]6584
+ID : 936D
+z = 0.247"
+"8000 6000 4000 2000 0 2000 4000
+Relative Velocity (km/s) to z0 = 0.245"
+"S/N : 44.6
+R : 2.7"
+"8000 8050 8100 8150 8200 8250
+Wavelength (Å)"
+"[NII]6548
+H"
+"[NII]6584ID : 1169D
+z = 0.251"
+"8000 6000 4000 2000 0 2000 4000
+Relative Velocity (km/s) to z0 = 0.245"
+"S/N : 6.3
+R : 2.2"
+"8000 8050 8100 8150 8200 8250
+Wavelength (Å)"
+"[OIII]4959
+[OIII]5007ID : 2203C"
+z = 0.64
+"4000 2000 0 2000 4000 6000 8000 10000 12000
+Relative Velocity (km/s) to z0 = 0.61"
+"S/N : 15.2
+R : 5.2"
+"8000 8050 8100 8150 8200 8250
+Wavelength (Å)"
+ID : 1451W
+"5000 0 5000 10000 15000
+Relative Velocity (km/s) to z0 = 1.16"
+S/N : 7.5
+"Figure 3. Examples of continua-removed integrated spectra (left column) and the corresponding cross-correlation results (right
+column). From top to bottom: high S/N Hα+[N ii], low S/N Hα+[N ii], [O iii]λλ4959,5007 doublets, and a likely isolated line
+(cross-correlated by [O ii]). In the left column, the continuum-subtracted spectra are shown in blue, whereas the green dashed
+lines indicate the matched templates; the redshift determined from cross-correlations are shown for the top three rows. In the
+right column, cross-correlation functions (CCF) are plotted versus velocity shifts with reference to the systematic redshift of the
+cluster. Shaded areas indicate the range used for computing the signal (light red) and noise (gray). The thick red line shows
+CCF of the best-matched template. The thin red lines show CCF from individual templates."
+"detection limit is FHα ∼ 3/2/4/2×10
+−16 ergs/s/cm2 in"
+"A2390C/A2390E/A2390W/A2465C, estimated by tak-"
+ing the median of the flux of S/N>5 objects rescaled to
+S/N=5 with the flux noise measured using Monte Carlo
+simulations (see Section 5.3). The average 5σ detection
+"limit is FHα ∼ 2×10
+−16 ergs/s/cm2. Adopting the con-"
+"version of Kennicutt & Evans (2012), this corresponds"
+"to SFR ∼ 0.2M�/yr, or ∼ 0.8M�/yr if 1 mag dust ex-
+tinction is applied."
+4. ANALYSIS OF SPATIAL OFFSET OF IONIZED
+"With the acquired ELG list, a simple yet interesting"
+analysis is to investigate the connection between the spa-
+tial offset of ionized gas from its parent galaxy and the
+cluster center in search for ram pressure stripping ef-
+fects. We present in this section some initial results
+based on the centroid offsets between emission-line re-
+gions and stellar continua in the two clusters observed
+by SITELLE.
+In Section 4.1 we introduce the methodology of mea-
+suring the centroids of ionized gas and stellar contin-
+uum. We then measure the centroid offset and the dif-
+ference angle between the emission-to-continuum vector
+and the cluster-centric vector following the analysis of
+Smith et al. (2010). We show the centroid analysis re-
+sults of A2390 and A2465 in Section 4.2.
+4.1. Centroid and Angle Measurements
+To construct an initial sample of cluster galaxies for
+"each cluster, we first remove objects with a velocity dif-"
+ference of more than 4σv (∆z & 0.015) from the sys-
+SITELLE Cluster ELGs 9
+"Figure 4. Example centroid measurements from the A2390C/W/E (top four rows) and A2465C fields (bottom two rows).
+For each row, the spectrum of the detected ELG is shown in the left panel with the channels used for the creations of the
+emission/continuum image shown in red/blue. The middle panel shows the Hα emission image and the right panel shows the
+continuum image, on which the centroid measurements are performed. The boundary of the distribution of ionized gas emission
+(IE) / the stellar continuum (IC) and the light-weighted centroid are plotted on each postage stamp in magenta (for emission)
+/ white (for continuum). The emission-line and continuum centroids are indicated as magenta and white dots with crosses,
+respectively. The 30%-60%-90% level of the Hα emission distribution is overlaid as blue contours on the continuum image after
+a mild smoothing by a 3x3 pix2 Gaussian kernel. The blue arrow indicates the emission-to-continuum offset vector d and the
+orange arrow indicates the direction to the cluster center. Measured ∆ d and θd are in units of kpc and degrees, respectively.
+Galaxies with θd > 1 kpc are used for analysis in Sec. 4.2. The image scale is in units of 10"
+−17erg/s/cm2/Å/pix2.
+10 Liu et al.
+"To Cluster 
+Center"
+"Ionized
+ Gas"
+"Stellar 
+Continuum"
+"(x̄E , ȳE)"
+"(x̄C , ȳC)"
+ICM Wind
+"Figure 5. Schematic illustrating the centroid analysis.
+The emission-line region emission (x̄E , ȳE) and the stellar-
+continuum centroids (x̄C , ȳC) are measured from the emis-
+sion image IE and continuum image IC . The centroid off-
+set ∆d and difference angle θd between the offset vector d
+and cluster-centric vector r are measured based on the cen-
+troid positions. The purple arrows illustrate the expected
+direction of the ICM wind arising from the movement of the
+galaxy in the ICM halo."
+tematic velocity of the cluster. We then measure the
+centroid of the ionized gas and the centroid of the stel-
+lar continuum for each cluster galaxy as follow:
+"For each galaxy, a thumbnail datacube centered on"
+"the object is created. The continuum image, IC(x, y), is"
+constructed by taking the mean value of channels in the
+"continuum range at each position (x, y) after an itera-"
+tive 3σ-clipping. The continuum range is defined as the
+"region further than 15× (1 + zcc) Å away from the [N ii]
+lines, but at least 20 Å away from the filter edges. The"
+"emission image, IE(x, y), is constructed in a narrow-"
+band likewise by taking the mean of the few channels
+"within ± 5× (1 + zcc) Å around the matched Hα peak.
+The continuum image is subtracted from it to obtain the"
+final emission image.
+"Another source detection is performed on IC(x, y) and"
+"IE(x, y) using a detection S/N threshold of 2.5, with"
+nearby sources masked using the segmentation map in
+Section 3.3. The detection of emission or continuum
+could fail for a portion of objects in the case of object
+being : (1) a faint target with low S/N; (2) a background
+source with weak or no detectable continuum; (3) a false
+positive peak composed of noise; and (4) close to con-
+taminants such as stars or diffraction spikes. For objects
+with successful detections in both emission and contin-
+"uum, we then measure the flux-weighted centroids (x̄, ȳ)"
+0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+Centroid Offset ∆ d [kpc]
+"Figure 6. The distributions of light-weighted centroid off-
+set ∆ d between the emission and the stellar continuum for
+ELGs identified in A2390 (left, combining three fields) and
+the central field of A2465 (right). The 1kpc threshold used
+is indicated by the black dashed line."
+for the ionized gas or the stellar continuum through
+"(x̄, ȳ) ="
+"(∑
+xi · I(xi, yi)∑
+I(xi, yi)"
+"∑
+yi · I(xi, yi)∑
+I(xi, yi)"
+")
+, (5)"
+where the sum is performed on all pixels within the seg-
+"mentation of the distribution {xi, yi} from the source
+detection for the emission image IE(x,y) or the contin-"
+"uum image IC(x,y). Example spectra, continuum im-"
+"ages, and emission images are presented in Figure 4."
+"With the emission and continuum centroids, we then"
+"measure the offset vector d, defined as the vector from"
+the emission-line centroid to the continuum centroid:
+"d = (x̄E − x̄C, ȳE − ȳC) . (6)"
+"We measure the centroid offset ∆d, using the flux-"
+weighted centroids:
+"∆d =
+√"
+"(x̄E − x̄C)2 + (ȳE − ȳC)2 , (7)"
+and the difference angle between d and the cluster-
+"centric vector r, a vector pointing from the galaxy to"
+the brightest central galaxy (BCG):
+"θd = ](d, r) , (8)"
+Given that the offset is much smaller than the dis-
+"tance to the BCG, the object center measured in the"
+primary source detection is adopted as the galaxy cen-
+ter. An illustration of the definitions of quantities in the
+measurements is shown in Figure 5. The uncertainty
+propagation is presented in Appendix B.1. To remove
+SITELLE Cluster ELGs 11
+"measurements with larger uncertainties, we require the"
+measured offset to have ∆ d > 3σ∆d and exclude objects
+near the field edges (distance < 100 pix). These criteria
+"reject ∼38% of the sample on average in the four fields.
+We obtain 117 ELGs in A2390 and 75 ELGs in A2465"
+after the rejection.
+Figure 6 shows the distributions of ∆d for A2390 and
+A2465. The centroid offsets are in general relatively
+small. An empirical assessment for the centroid mea-
+surements is presented in Appendix B.2 showing that
+these relatively small ∆d can be measured robustly. The
+"distributions of ∆d extend from 0 to ∼5 kpc. Their peak
+positions deviate from zero, suggesting the existence of"
+some impact on the spatial distribution of ionized gas
+"relative to the stellar continuum, which one would ex-"
+"pect from ram pressure stripping. However, as discussed"
+"in Section 5.1, the offset alone cannot be fully attributed"
+to the impact of ram pressure as it may also be caused
+by strong outflow or tidal force. It may also be affected
+by large star-forming clumps and dust geometry in the
+"disks. Therefore, in the next section we explore whether"
+"such an offset has a connection with the host cluster, i.e.,"
+it is caused by environmental factors. Internal mecha-
+nisms such as outflows are expected to be uncorrelated
+"with the cluster center. We note that, alternatively, one"
+can measure the morphological centroids of the regions
+without weighting by light. The measurements and re-
+"sults are presented in Appendix C, where the two meth-"
+ods produce similar results.
+4.2. Distribution of Difference Angles in A2390 and
+"In the search for evidence of ram pressure effects, it"
+is of great interest to further investigate the correlation
+between the emission spatial offset and the cluster cen-
+"ter, i.e. the distribution of the difference angles, because"
+the strength and direction of the ram pressure from the
+ICM on the galaxy are expected to be closely linked to
+the infalling galaxy’s orbit and position in the cluster.
+Because small spatial offsets are prone to be affected by
+"measurement uncertainties, we further limit our sample"
+to ELGs with a cutoff in the measured offset. We choose
+a physical length of 1 kpc that is higher than the peak
+"values of distributions of ∆d to be the sample threshold,"
+"which corresponds to ∼0.85 pix in A2390 and ∼0.8 pix
+in A2465. The results are qualitatively the same with a"
+slightly higher or lower threshold adopted. Examples of
+∆d measurements are shown in Figure 4 where the con-
+tours and centroids for Hα emission and continuum are
+displayed. It is interesting to note that the ELGs with
+∆d < 1kpc show Hα emission being largely symmetric
+"with the continuum, while those with larger ∆d display"
+a clear non-symmetry.
+"Finally, we obtain 55 ELGs from A2390 and 24 ELGs"
+"from A2465 out of the parent ELG samples. Hereafter,"
+these ELGs with relatively large emission-to-continuum
+offsets (∆d) are referred to as the selected ELGs.
+4.2.1. Abell 2390
+Figure 7 shows positions of the cluster ELGs in the
+A2390 fields and Figure 8 presents their locations on the
+phase space diagram. The phase space diagram plots
+the distribution of the projected positions and velocities
+"of galaxies, normalized by R200 and the cluster velocity"
+"dispersion, respectively. This is often used as an in-"
+dication of the cluster galaxy’s dynamical state in the
+"cluster (e.g., Noble et al. 2013, Muzzin et al. 2014, Jaffé"
+"et al. 2015, Rhee et al. 2017, Yoon et al. 2017). We"
+use the phase space diagram to identify cluster mem-
+"bers, i.e., galaxies bound to the gravitational field of the"
+"host cluster, by excluding ELGs falling above the escape"
+velocity boundary (black solid line in Figure 8).
+"In Figure 7, colored symbols mark the selected ELG"
+"sample (∆d > 1 kpc), where the blue solid circles indi-"
+"cate those with θd ≤ 90◦ and red solid circles indicate
+those with θd > 90"
+◦. The BCG itself is a strong ELG
+"(Hutchings & Balogh 2000), which has been excluded in"
+our analysis. The direction of the ionized gas offset rel-
+ative to the stellar continuum (opposite to d) measured
+with flux-weighted centroids is indicated by arrows. The
+rest of the cluster ELGs with small offset detected (∆d >
+1 kpc) are shown as gray solid circles. Non-cluster mem-
+"bers are marked as open symbols, with the same color"
+coding as the others. There are more cluster ELGs with
+ionized gas offsets pointing away from the cluster center
+than those pointing toward the cluster center in the NW
+"and SE fields, while they are comparable in the central"
+field. It is notable that there appears to be a small group
+of cluster ELGs in the north-west of the cluster center
+"having gas offset away from the cluster center. Indeed,"
+two galaxy groups have been identified in that region
+using the photometric redshift in Li et al. (2009).
+"In Figure 8, galaxies are color coded in the same man-"
+ner as Figure 7. To avoid visual bias on the actual den-
+"sities of galaxies, we plot the fractional field coverage in"
+the upper small panel: the cluster is fully covered out
+"to 0.4 R200 and it maintains a ∼25% spatial coverage
+until it drops to zero beyond ∼1.7 R200. We further
+divide the in-cluster region (below the escape velocity"
+boundary) on the phase space diagram into three sub-
+"regions, according to the typical path followed by an"
+infalling galaxy during its virialization (see Section 5.2):
+(I) galaxies outside the cluster virial radius; (II) high-
+12 Liu et al.
+"328.20328.25328.30328.35328.40328.45328.50328.55328.60
+RA (J2000)"
+Abell 2390
+"θd < 90
+◦, ∆d > 1kpc"
+"θd > 90
+◦, ∆d > 1kpc"
+∆d < 1kpc
+Members
+Non-members
+Members
+Non-members
+"Figure 7. Location of the selected ELGs (∆d > 1 kpc) in
+A2390. Blue symbols represent selected ELGs (∆d > 1 kpc)
+in the cluster with θd < 90"
+"◦, while red symbols represent
+selected ELGs in the cluster with θd > 90"
+"◦. For display pur-
+pose, colored arrows indicate the opposite directions of the
+difference vector d, i.e. from continuum to emission. ELGs
+with velocities above the escape curve (non-cluster members)
+are shown as open circles. ELGs with small ∆d (< 1kpc) are
+marked in gray (solid: cluster members; open: non-cluster
+members). The BCG is shown as the central orange polygon.
+ELGs with large centroid uncertainties or near field edges are
+not shown. The virial radius R200 is indicated by the black
+dashed circle. The yellow squares indicate the footprints of
+the SITELLE fields."
+velocities galaxies within the virial radius; (III) low-
+velocities galaxies within the virial radius. The distri-
+bution of the selected ELGs on the phase space diagram
+reveals that the ratio of those with offsets away from
+the cluster center (blue symbols) to those toward the
+center (red symbols) tends to increase from low to high
+velocity. This is most significant in region II – a simple
+"number count yields 6:2 in region II, compared with 6:4"
+in region I and 5:5 in region III. We will further discuss
+the physical interpretation in Section 5.2 below.
+The left histogram in Figure 9 presents the distri-
+butions of θd for the selected cluster member ELGs of
+"A2390. Several patterns can be revealed: first, the dis-"
+tributions of the difference angles show distinct devi-
+ations from uniformity. We perform the Kolmogorov-
+Smirnov (K-S) test to test the uniformity of the dis-
+"tributions of θd. Based on the p-values calculated, we"
+0.00 0.25 0.50 0.75 1.00 1.25 1.50 1.75
+R/R200
+"|v
+lo
+s
+−
+v"
+"0
+|/
+σ
+v"
+"θd < 90
+◦, ∆d > 1kpc"
+"θd > 90
+◦, ∆d > 1kpc"
+∆d < 1kpc
+"0.00 0.25 0.50 0.75 1.00 1.25 1.50 1.75
+R/R200"
+"0.0
+0.2
+0.4
+0.6
+0.8
+1.0"
+"er
+a
+g
+e"
+"Figure 8. The main panel shows the ELGs in Figure 7
+on the position-velocity phase space diagram of A2390, with
+the same markers and color coding. The distances to the
+cluster center and the velocities relative to the cluster veloc-
+ity of galaxies are normalized by R200 and σv. The black
+solid curve corresponds to |vlos/v200| ∼ 1.5|(R/R200)−1/2|,
+adopted as the escape velocity boundary. Cluster members
+that fall below the escape velocity curve are shown as solid
+markers. The cluster region is divided into three sub-regions:
+the outer non-virial region I, the inner non-virial region II
+containing galaxies near orbit pericenters, and the “virial-
+ized” region III (Jaffé et al. 2015). The upper subpanel shows
+the fractional field coverage for A2390."
+can reject the uniformity of θd at a 95% confidence level
+"(p = 0.03). As discussed below, alternative triggers of"
+ionized gas offset other than ram pressure are expected
+"to result in a more or less flat distribution. Second, the"
+"distribution of θd shows a clear peak at the 0
+◦ end. The"
+histogram suggests that the emission offset is found to
+be preferentially pointed away from the cluster center.
+This is expected from the effect of ram pressure strip-
+"ping, considering the infalling and quenching process of"
+cluster galaxies (see discussion in Section 5.2.1). Fi-
+"nally, There is a hint of another peak at the 180◦ end,"
+suggesting the emission offsets to be toward the cluster
+center. The possible peak mainly consists of objects in
+region III that suffer significantly from projection effect
+or might in the backsplash stage of their infall (see dis-
+SITELLE Cluster ELGs 13
+"0 30 60 90 120 150 180
+Diffence Angle θd"
+"0 30 60 90 120 150 180
+Diffence Angle θd"
+"Figure 9. Histogram of difference angles measured from
+light-weighted centroids (θd) for cluster member ELGs in
+A2390 (top) and A2465 (bottom) with ∆ d > 1 kpc. The
+cluster membership is determined from the phase space dia-
+gram (Figure 8). The bin width is chosen to be larger than
+σθd . Individual data points are shown as small sticks at the
+bottoms of the histograms."
+cussion in Section 5.2.2). Further observations with a
+larger cluster sample are needed to confirm its presence.
+"In general, the distribution of difference angles in"
+A2390 shows that the spatial offsets of ionized gas in
+cluster ELGs have a preference that is correlated to the
+"cluster center, indicating the impact of ram pressure"
+stripping from the ICM on galactic gas reservoirs.
+4.2.2. Abell 2465
+Figure 10 shows the position of ELGs identified in
+the double cluster A2465; while Figure 11 presents their
+locations in the phase space diagram. Symbols and
+their color coding follow the same as Figures 7 and 8.
+The membership discrimination between the two sub-
+clusters is simplified by using a straight line that divides
+339.80339.85339.90339.95340.00
+RA (J2000)
+Abell 2465
+"θd < 90
+◦, ∆d > 1kpc θd > 90"
+"◦, ∆d > 1kpc ∆d < 1kpc"
+"Figure 10. Locations of the selected ELGs (∆d > 1 kpc)
+in A2465. Markers are colored coded in the same manner
+as Figure 7. ELGs with large centroid uncertainties or near
+field edges are not shown. The black dashed circles indicate
+their virial radii. The dotted-dashed line marks the empirical
+boundary adopted for cluster member classification. The
+yellow frame indicates the field footprint."
+the double cluster 3 because the two components have
+comparable masses. It can be observed from Figure 10
+"that there are more ELGs in the south-west sub-cluster,"
+with the majority located at the border of the two sub-
+"clusters. However, a large fraction of ELGs at the colli-"
+sion border do not present significant systematic emis-
+"sion offset, possibly caused by the complex condition"
+of ICM imprinted by shocks and/or galaxy kinematics
+"there, while projection effects may also play a role."
+The right panel of Figure 9 presents the distribution of
+θd for cluster member ELGs in A2465 with ∆d > 1 kpc.
+"Similar to A2390, the distribution of θd shows deviation"
+"from a uniform angle distribution, with a major peak"
+at 0◦ and a hint of a weak peak at 180◦. The K-S test
+indicates the distribution is significantly different from
+the uniform distribution at the confidence level of 95%.
+The result in A2465 is consistent with the scenario
+where ionized gas spatial offset is induced by ram pres-
+sure during the infall of gas-rich galaxies into the cluster
+"(see further discussion in Section 5.2). However, it is not"
+"3 In specific, the linear division is trained based on sub-cluster
+membership presented in Wegner (2011) obtained from kinemat-
+ics using support vector machine."
+14 Liu et al.
+0.00 0.25 0.50 0.75 1.00 1.25 1.50 1.75
+R/R200
+"|v
+lo
+s
+−
+v"
+"0
+|/
+σ
+v"
+A2465 SW
+A2465 NE
+"θd < 90
+◦, ∆d > 1kpc"
+"θd > 90
+◦, ∆d > 1kpc"
+∆d < 1kpc
+"θd < 90
+◦, ∆d > 1kpc"
+"θd > 90
+◦, ∆d > 1kpc"
+∆d < 1kpc
+"Figure 11. ELGs in Figure 7 on the position-velocity phase
+space diagram of A2465. Markers are color coded in the
+same way as in Figure 7. The black solid curve corresponds
+to |vlos/v200| ∼ 1.5|(R/R200)−1/2|, adopted as the escape
+boundary. Cluster members below the escape velocity curve
+are shown as solid markers. The region division is the same
+as in Figure 8. To match with Figure 8, region I is shown
+although with no data coverage."
+clear whether such effect is enhanced or suppressed by
+the collision of the two clusters.
+5. DISCUSSION
+"In this section, we discuss the implications of the ob-"
+"served spatial offsets of ionized gas, specifically on the"
+non-uniform distribution of difference angles and the ex-
+cess in region II on the cluster phase space diagram. We
+then propose a scenario which qualitatively explains the
+observation.
+5.1. Ionized Gas Centroid Offset: Ram Pressure
+Stripping in the Act
+"It is natural to infer that under ram pressure, the gas"
+offset in a galaxy moving through the ICM generally
+follows the opposite direction to its velocity relative to
+"the ICM, given the pressure follows (Gunn & Gott 1972):"
+"Pram = ρICMv
+2
+gal , (9)"
+where ρICM is the local ICM density and vgal is the rel-
+"ative velocity. Due to the projection effect, it is hard to"
+determine velocities in 3D and connect them to the 2D
+"gas offsets. However, observations have revealed that"
+recent infall gas-rich galaxies in clusters affected by ram
+pressure are mostly on highly radial orbits (Chung et al.
+"2007, Smith et al. 2010, Vulcani et al. 2017, Jaffé et al."
+2018; see also Ebeling et al. 2014 where such effect is ob-
+served on galaxies with tangential infall orbits.). This
+suggests a connection between the projected offset of
+ionized gas emission in these galaxies and their direc-
+"tions to the cluster center. In fact, Smith et al. (2010)"
+observed that ionized gas tails of gas-stripping galaxies
+in the nearby Coma cluster predominantly point oppo-
+site to the cluster center using UV+Hα data. Vulcani
+et al. (2017) found that ram pressure stripped SFGs out
+to 0.5 virial radius in intermediate redshift clusters pref-
+erentially show radial Hα offsets away from the cluster
+"center. Using the IllustrisTNG simulations, Yun et al."
+(2019) investigated the directions of gas tails of jellyfish
+galaxies in galaxy clusters in 3D. They found a nearly
+flat distribution with slow drops in the 0◦ and 180◦ ends
+for the angle between gas tail and direction to the host
+"center. This is not unexpected, as, unlike in 2D, in"
+3D only galaxies with purely radial orbits would show
+gas tails aligned with the direction to the cluster center.
+"However, they did observe a tight correlation between"
+"the directions of gas tails and the 3D velocity vector,"
+"which should also hold in 2D projection, allowing us to"
+use the offset vector as a proxy for the galaxy’s 2D pro-
+jected velocity vector.
+"Besides ram pressure stripping, other physical pro-"
+cesses might serve as potential explanations for the ion-
+ized gas offset such as:
+(1) Outflows: strong outflows driven by active galac-
+tic nuclei (AGNs) or starbursts have been observed in
+"many active galaxies, which could also lead to signifi-"
+"cant gas offset (e.g., Comerford et al. 2017, Russell et al."
+2019). They are considered as an important source of
+ICM heating to explain the cooling problem in galaxy
+"clusters (e.g., Brüggen et al. 2005). Indeed, the high-"
+velocity Hα bump in the the north-west of the BCG
+of A2390 is likely to be driven by an AGN. Because we
+have included galaxies with nuclear activities in our ELG
+"sample, it cannot be ruled out that a portion of the spa-"
+tial offsets of ionized gas in our ELG sample are caused
+"by outflows. In fact, recent studies based on simulations"
+and observations found that galactic nuclear activities
+can be triggered by ram pressure stripping due to en-
+hanced accretion onto the central black hole (e.g. Pog-
+"gianti et al. 2017b, Ramos-Mart́ınez et al. 2018, Ricarte"
+"et al. 2020). However, there has been little evidence"
+of preference in outflow directions in galaxy clusters.
+Because outflow is an internal phenomenon controlled
+"by the central black hole in the nuclei region, its sub-"
+sequent interaction with the gas in the host galaxy is
+likely independent of the global environment. There-
+"fore, gas offsets induced by outflows are not expected to"
+have a correlation with the cluster center as observed.
+SITELLE Cluster ELGs 15
+Further analysis on the kinematics and ionization con-
+ditions can discriminate gas offsets caused by outflows
+and that from ram pressure.
+(2) Tidal disruption: tidal forces from nearby encoun-
+ters may contribute to the observed disturbance of the
+"gas. For some ELGs in our sample, we indeed observe"
+neighboring objects that are possibly interacting with
+"them. However, pure tidal stripping have similar grav-"
+"itational effects on gas and stars, leaving no offset be-"
+"tween them. On the other hand, results from simula-"
+"tions (e.g., Mayer et al. 2006; Kapferer et al. 2008; Vija-"
+yaraghavan & Ricker 2013) have demonstrated that ram
+pressure stripping is in fact more efficient in the presence
+of tidal interactions. This is because the gas pulled out
+of the galactic potential is more likely to be stripped
+away by the ICM wind and local density ρICM is in-
+creased by compression due to merger shocks. A larger
+sample is needed to construct a sample of mergers with
+reference to non-mergers to investigate the difference in
+their ionized gas distributions.
+Other systematics such as the presence of AGNs and
+dust cause dilution effects in our centroid measurements
+that decreases the large ∆d sample size and increases the
+"uncertainties, but are unlikely to change the observed"
+"patterns. Therefore, we conclude that the non-uniform"
+distribution of the spatial offset of the ionized gas with
+respect to the stellar disk in our observation is primarily
+"contributed by ram pressure stripping. In comparison,"
+the long-term interplay between a galaxy and the host
+"cluster, such as strangulation or thermal evaporation,"
+"would typically leave behind an undisturbed, symmetric"
+gas distribution.
+5.2. The Distributions of Ionized Gas Offset in Phase
+"As discussed above, we are able to use the offset vec-"
+tor d as a proxy for the projected velocity of an infalling
+"galaxy, in light of ram pressure stripping acting as the"
+main driver producing the non-uniformity that we ob-
+serve in distributions of θd. Combining with the infall
+history of a typical gas-rich cluster galaxy in the phase
+"space diagram, the distributions of ELGs with large ion-"
+ized gas offset in phase space offer evidence of ram pres-
+sure stripping as a quenching mechanism in the act.
+"5.2.1. Infall History of a Cluster Galaxy on the Phase
+Space Diagram"
+The trajectory of an infalling galaxy can be traced
+on the cluster phase space diagram. The dark dashed
+curve in Figure 12 illustrates the typical infall history of
+a cluster galaxy.
+"Generally, an incoming SFG is first found in region"
+I with a high gas fraction. During its first infall into
+0.00 0.25 0.50 0.75 1.00 1.25 1.50 1.75 2.00
+R/R200
+"|v
+lo
+s
+−
+v"
+"0
+|/
+σ
+v"
+Low High
+High Incl. Orbit
+Low Incl. Orbit
+Gas Fraction of Galaxy
+"Figure 12. Schematic of the trajectories of an infalling
+gas-rich cluster galaxy on the velocity-position phase space
+diagram. The dark dashed line shows the typical path in
+which it moves from region I to region II, undergoes a few
+turnarounds, and eventually being virialized in region III.
+The light dashed line shows the path of a similar galaxy but
+with a low inclination (nearly face-on) orbit. It spends most
+of the time in region III from its first passage due to pro-
+jection effect. The color coding illustrates the gas fraction
+of the galaxy, with the dark/light-green points indicating or-
+bit pericenters/apocenters. The black dashed line indicates
+R200. The figure is adapted from Figure 1 in Rhee et al.
+(2017) (note the original plot is in 3D)."
+"the potential well of the cluster, the orbit can be highly"
+"radial (e.g. Vulcani et al. 2017, Jaffé et al. 2018). It"
+will increase its velocity as it approaches the orbit peri-
+"center, moving toward the upper left of the phase space"
+diagram (region II). The local ICM density also increases
+as the galaxy penetrates into the cluster core. Conse-
+"quently, the ram pressure from head-on ICM winds in-"
+creases dramatically. It compresses and strips the cold
+"gas, while having little effect on the stellar components."
+The SFR may temporarily rise due to the compression
+"of gas (e.g., Fujita & Nagashima 1999, Poggianti et al."
+"2017a, Vulcani et al. 2018). As star formation proceeds,"
+"the neutral gas offset propagates to ionized gas, lead-"
+ing to the difference in the spatial distribution of emis-
+"sion and continuum. Post pericenter, it will then turn"
+around with decreasing velocity and move out of the cen-
+"tral region, referred to as the “backsplash” stage (e.g.,"
+"Gill et al. 2005, Muriel & Coenda 2014). As a result,"
+the backsplash region overlaps with the lower-velocity
+part of the first infall region. The galaxy then enters
+its subsequent infall but with a lower gas fraction. Such
+process may happen multiple times until the radial ve-
+16 Liu et al.
+"locity is dissipated as the galaxy spirals in. Eventually,"
+"the galaxy falls into the virialized region, with little or"
+no gas reservoir left to maintain its star formation.
+The fact that cluster galaxies follow typical paths in
+the course of their sinking into the cluster potential leads
+to their occupations of certain regions on the phase space
+"diagram. However, the condition becomes more com-"
+plex when orbit orientation and projection effects are
+taken into account. The light dashed line in Figure 12
+illustrates the path of an infalling galaxy with a low
+"inclination angle orbit, hence, with low line-of-sight ve-"
+locity. While it still takes a few turnarounds to achieve
+"the virialization of the orbit, the galaxy is not able to"
+move up to region II in the phase space diagram due
+"to the viewing angle of the orbit. As a consequence,"
+region III also contains galaxies in their first passage.
+Another concern is that an infalling galaxy physically
+outside the virial radius may be projected to be within
+"R200 on the phase space diagram. For an extreme case,"
+a galaxy following an orbit along the line of sight could
+have strong emission-lines detected if there is ongoing
+"star formation, but it would barely move in the radial"
+"axis. However, in this case the gas offset is also pro-"
+"jected, which makes it more likely to have a small ∆d"
+and thus be excluded from the selected sample.
+"5.2.2. Excess of Gas Offset Vectors toward the Cluster
+Center near Orbit Pericenters at First Infall"
+The number ratios of blue to red symbols in region
+"II (6:2 in A2390, and 8:1 in A2465 combining two sub-"
+clusters) suggest that first-infalling galaxies have a pref-
+erence for their ionized gas offsets to point away from
+the cluster center when they approach the orbit pericen-
+ters. The probability to have such ratios by coincidence
+"is 11% for A2390, 4% for A2465, and 1% combining the"
+"two, assuming an equal opportunity (i.e. a binomial"
+distribution with p=0.5) for the offset vector to point
+toward/away from the center.
+Such preference can be attributed to the impact of
+the radial component of the ram pressure on the clus-
+ter galaxy. The result is consistent with the other ob-
+servational evidence and simulations that suggest ram
+pressure stripping has substantial effects when gas-rich
+galaxies cross the cluster virial radius and is most effec-
+"tive in their first infall (e.g., Jaffé et al. 2016, 2018; Lotz"
+"et al. 2019). Because of the efficient removal of cold gas,"
+star formation has been mostly suppressed before the
+incoming galaxies turn around and start their second
+infalls. The typical quenching timescale for these galax-
+ies is thus suggested to be shorter than the ram pressure
+"stripping timescale (. 1.5 Gyr within the virial radius,
+Roediger et al. 2011) and the dynamic timescale of first"
+"infall (1∼2 Gyr, Jaffé et al. 2018). Indeed, using cosmo-"
+"logical hydrodynamical simulations, Lotz et al. (2019)"
+found most satellite galaxies are quenched within 1 Gyr
+during the first infall.
+Starvation/strangulation may also play an important
+"role in quenching cluster galaxies (e.g., Haines et al."
+"2013, Peng et al. 2015) in which a cutoff of gas supply"
+into the galaxy leads to the long-term exhaustion of gas
+and thus a drop in the SFR. Whether the effect is domi-
+nant for the evolution of cluster galaxies has not reached
+"a consensus (e.g., Boselli et al. 2014, Peng et al. 2015)."
+"However, such process operates on a longer timescale"
+"(>3 Gyr, Boselli et al. 2014) and does not leave sys-"
+tematic imprint on the gas spatial distribution. There-
+fore we conclude at least for cluster galaxies entering
+"region II (which have fallen into the cluster < 1∼2 Gyr
+ago), ram pressure stripping is the predominant quench-"
+"ing mechanism, although it is likely that halting the gas"
+supply also catalyzes the process. Combining with other
+"information such as the SFR, and gas fraction, and gas"
+"kinematics, etc., future analyses using large samples of"
+clusters would be promising in distinguishing the con-
+tributions of different quenching mechanisms.
+Roughly equal numbers of blue (offset away from the
+center) and red (offset toward the center) symbols are
+observed in the lower-velocity regions (regions I and III).
+If a galaxy showing an offset toward the center has al-
+ready entered and left region II and returned to region
+"I (Figure 12), ram pressure stripping is expected to re-"
+move most of the gas and lower the level of star forma-
+"tion. However, they may still have detectable emission"
+"lines, which indicates the existence of ionized gas. Sev-"
+eral origins may explain their detected line emission and
+"gas offsets: (1) they have low orbit inclinations, i.e., be-"
+ing more face-on (the light dashed trajectory in Figure
+"12), which leaves a larger projected gas offset, and thus"
+have higher chances to be included in the selected sample
+during the “backsplash” stage. (2) They could be low-
+velocity infalling galaxies with large impact parameters.
+The lower incoming velocities cause the ram pressure
+to be low near orbit pericenters. (3) They might con-
+tain face-on high-velocity fly-bys that spend less time
+"near the pericenters. For a fly-by, the gas is only par-"
+tially stripped by ram pressure after the passage close to
+"the cluster core, but the disturbance could be prominent"
+due to its high velocity. (4) They contain contamination
+"from outflows, which presumably do not have a direc-"
+tional correlation with the cluster. Projection effects
+make it challenging to disentangle the infalling histories
+of low-velocity cluster members as galaxies with differ-
+ent dynamics and initial conditions mix together. But
+"we note that for the first three cases, the galaxy never"
+"enters, or spends very little time, in the high-velocity"
+SITELLE Cluster ELGs 17
+"region on the 2D phase space diagram, and therefore"
+would not affect our conclusions in region II.
+"Finally, it is noteworthy that although the result of"
+"A2465 is consistent with A2390, the infalling history"
+discussed in Section 5.2.1 may not fully apply to A2465.
+This is because most interpretations on the phase space
+"diagram here assume a single, undisturbed, cluster,"
+which may not be fully applicable to merging clusters
+due to the possibly more complicated ICM condition
+"and galaxy dynamics. In addition, a selection effect ex-"
+"ists due to the filter bandwidth, which disables the sam-"
+pling of receding objects in A2465 with velocity higher
+than 1σv. Both may contribute the scarcity of ELGs
+with high velocity (>1.5 σv) in Figure 11. Our cur-
+"rent data of A2465 are also restricted within ∼1 Mpc.
+As pointed by Vulcani et al. (2017), detailed knowledge"
+about the dynamics of cluster mergers is needed for in-
+"depth analysis, which is beyond the range of this work."
+"Nevertheless, it is promising to gain more insightful and"
+definitive results with the aid of further data and com-
+parisons with simulations.
+5.3. Additional Support for Quenching by Ram
+Pressure Stripping
+To find additional evidence of ram pressure stripping
+"affecting the star formation in cluster galaxies, we in-"
+vestigate the line flux. Here we only look into A2390
+for two reasons:(1) our current A2465 data do not have
+"coverage in the outer region, and (2) A2390 is more of a"
+typical rich cluster compared with the merging double
+cluster A2465. The Hα emission-line flux FHα is ob-
+tained from the residual spectra yielded in Section 3.4
+"by a trapezoidal integral of ±5σline around the peak
+of the Hα line, where σline is the best-matched tem-"
+plate line width. To normalize the emission-line flux by
+"galaxy mass, we divide it by the mean continuum times"
+a fixed wavelength range of 250Å. The normalized line
+"flux FHα,n can be used as a proxy for the specific star"
+"formation rate (sSFR), defined as the SFR per stellar"
+"mass, under the circumstance where the ionization is"
+caused by star formation. For a composite ionization
+"of star formation and AGN, FHα,n should be treated"
+"as upper limits of star formation. FHα,n also has a de-"
+pendency on the mass-to-light ratio (and thus the star
+"formation history) of the galaxy, but the dependency is"
+"minor, and we use it here as a first-order estimate."
+The continuum-normalized line flux is plotted in Fig-
+ure 13 versus the distance to the cluster center. ELGs
+"with larger ∆ d are shown by solid colored symbols,"
+whereas those with smaller or undetected ∆ d are repre-
+"sented by gray-filled symbols. Blue, green, orange colors"
+represent ELGs in the low-velocity outer region (region
+0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5
+R (Mpc)
+"1
+0
+(F"
+"H
+α
+,n"
+I : ∆d > 1kpc
+I : ∆d < 1kpc
+III : ∆d > 1kpc
+III : ∆d < 1kpc
+II : ∆d > 1kpc
+II : ∆d < 1kpc
+Seyfert
+"Figure 13. Emission-line flux normalized by continuum vs
+distance to the cluster center for cluster member ELGs in
+A2390. ELGs with large/small (projected) ionized gas offset
+∆ d are shown as colored/gray-filled symbols. The face/edge-
+colors mark ELGs in different regions on the phase space dia-
+gram (Figure 8). The colored solid/dashed lines indicate the
+central locations of distributions of the colored/gray symbols
+with the corresponding color. The colored bands indicate
+the 1σ (16%-84%) uncertainty of the mean. Galaxy with
+Seyfert/LINER features are marked in diamonds/squares.
+The magenta dashed-dotted line shows the central location
+of the distribution of all markers. The vertical black dashed
+line marks R200."
+"I), the high-velocity inner region (region II), and the"
+"virialized region (region III), respectively, as indicated"
+in Figure 8. The 1σ error bars are calculated numer-
+"ically by Monte Carlo simulations, where the spectra"
+"are perturbed 250 times using the rms noise of the con-
+tinua. We use the biweighted location, which is a robust"
+statistic to represent the central location of a distribu-
+tion. The biweighted locations of solid/open symbols
+are shown as colored solid/dashed lines with the corre-
+sponding colors. The central location of all markers is
+shown as the magenta dashed-dotted line. The shaded
+bands indicate the 1σ uncertainties of the central lo-
+"cations, calculated by Monte Carlo simulations where"
+each data point is randomly perturbed based on its un-
+certainty. For the initial identification of galaxies with
+"AGN features, we adopt a classification based on the"
+WHAN diagram (Cid Fernandes et al. 2011) using line
+ratios obtained from cross-correlation. We label them
+"in Figure 13 but do not exclude them from the sample,"
+given that those with LINER features present simulta-
+neous ionization from star formation in the disk and
+18 Liu et al.
+Seyferts are rare. AGNs in our fields will be investi-
+gated in detail in future work.
+Several interesting patterns are revealed in Figure 13.
+"In the outer region (region I), ELGs with smaller ∆ d"
+"have higher FHα,n on average (∼0.2 dex) than those
+with larger ∆ d. The significance is above 3σ. This is"
+also true for samples in region II - larger ∆ d objects
+"have lower FHα,n, although the significance (at 1.9σ) is"
+not high considering the uncertainties. Region III ap-
+"pears to have statistically consistent average FHα,n for"
+"large and small ∆ d objects. Furthermore, comparing"
+"objects within R200 (region II & III, green & orange"
+"symbols) with objects outside R200 (region I, blue sym-"
+"bols), they have on average lower FHα,n (∼0.2/0.3 dex
+for large/small ∆ d objects), although a small fraction"
+of objects within R200 appear to show strong lines.
+The lower average line flux for large ∆ d objects in
+region I could be the result of them undergoing ram
+"pressure stripping, with the star formation being sup-"
+pressed due to gas removal. Some of these could have
+already passed through the pericenter of their infall or-
+"bit, moving out to the backsplash stage. Others may be"
+"in their first infall, where ram pressure stripping has just"
+"been turned on not long ago. On the other hand, ob-"
+jects with smaller ∆ d are likely incoming galaxies that
+"have not experienced significant, if any, ram pressure"
+stripping. They might be farther away from the clus-
+"ter but projected to be closer in 2D, or with smaller"
+impact parameters and thus less affected by the ICM
+"winds. Again, we note that galaxies with small ∆ d"
+"could also have suffered from ram pressure stripping,"
+but with their small ∆ d being the result of projection
+"effect. However, the lower emission line flux observed in"
+larger ∆ d ELGs clearly serves as additional evidence of
+ram pressure stripping being responsible for quenching.
+"As discussed, the large ∆ d objects in region II are"
+likely experiencing strong ram pressure stripping. This
+effect can consistently explain the difference in line flux
+"compared with small ∆ d objects. However, the com-"
+position of the small ∆ d objects is actually complex: it
+may contain galaxies (1) in their first passages where gas
+removal through ram pressure stripping is in progress;
+"(2) in the backsplash stage, having survived from the"
+dramatic gas removal; and (3) with prominent gas offset
+"in 3D, but projected to be small. This may explain the"
+"larger scatter in FHα,n for small ∆ d objects. In the first"
+"case, the galaxies have higher line fluxes as they are in"
+the beginning stage of having their star formation under-
+"going suppression, while in the latter two cases, the level"
+of star formation is expected to be comparable or lower.
+"In the last case, some galaxies that appear within R200
+might actually fall outside it in 3D due to projection"
+and thus would have a smaller amount of star formation
+suppression. It would be interesting to discriminate and
+study them using other tracers such as gas fractions.
+"In region III, large and small ∆ d objects have con-"
+sistent line fluxes. This suggests that either the offset
+is unassociated with ram pressure stripping (e.g. from
+"outflows), or the offsets have different origins but the"
+galaxies are projected to be there. Galaxies in region
+III suffer from all kinds of projection effects discussed
+"above, making them hard to interpret in the phase space"
+alone.
+The few objects inside R200 observed with exception-
+"ally high FHα,n suggest that a small fraction of cluster"
+galaxies suffered from ram pressure stripping could have
+"enhanced star formation, or nuclei activities, due to gas"
+compression by shocks. The enhancement is suggested
+to have short timescales because the fraction of such ob-
+jects is low. Such enhancement has been reported by
+"many previous studies (e.g. Fujita & Nagashima 1999,"
+"Kronberger et al. 2008, Bekki 2014). More recently,"
+Vulcani et al. (2018) found enhanced SFR in a statisti-
+cally significant sample of jellyfish galaxies from GASP.
+"However, there is a difference in sample construction"
+given the low occurrence of jellyfish galaxies per clus-
+"ter, whereas our sample mostly consists of mild cases of"
+galaxies undergoing ram pressure stripping.
+"Finally, the lower average line flux in regions inte-"
+rior to R200 serves as an indication of environmental
+"quenching, suggesting that the sSFR is dependent on"
+the cluster-centric radius. One of the most competi-
+"tive mechanisms is ram pressure stripping, as discussed"
+"above, while other quenching mechanisms (starvation,"
+"thermal evaporation, etc.) could take charge when ram"
+pressure stripping is not efficient enough.
+6. SUMMARY
+An ongoing survey using the IFTS SITELLE at CFHT
+"targeting the Hα-[N ii] lines in clusters at z∼0.25 is be-
+ing carried out to study properties of ELGs (morphol-"
+"ogy, kinematics, abundance, SFR, etc.) and quench-"
+ing mechanisms in dense environments. We have devel-
+oped a pipeline using the cross-correlation technique to
+detect and identify ELGs from the datacube acquired
+"by SITELLE. So far, we have obtained a list of ELG"
+"samples in two galaxy clusters, Abell 2390 and Abell"
+"2465, with 194 ELGs from three fields of A2390 and 110"
+ELGs from the central field of A2465. The spatially-
+resolved spectroscopy allows us to separate the emission-
+line distribution from the ionized gas and the continuum
+distribution from the stellar populations. We conduct
+a centroid analysis by comparing the centroids of the
+emission-line and continuum distributions for the ELGs.
+SITELLE Cluster ELGs 19
+We measure the centroid offset ∆ d and the difference
+angle θd between the emission-to-continuum offset vec-
+tor d and the cluster-centric vector to investigate the
+correlation between spatial offsets of ionized gas in clus-
+ter galaxies and their positions in the galaxy cluster.
+"Based on the distributions of ∆ d and θd, we find (1)"
+ELGs in A2390 and A2465 have ∆ d extending from 0
+to around 4 kpc with the peak of the offset distribution
+"deviating from zero, implying some systematic impact"
+causing the spatial offset of ionized gas. (2) Looking into
+ELGs with larger emission-line spatial offsets (∆ d > 1
+"kpc), the distributions of θd in A2390 and A2465 clearly"
+deviate from a uniform distribution. The peak of θd to-
+ward 0◦ in our result is consistent with previous work
+that ionized gas preferentially points away from the clus-
+"ter center (e.g. Smith et al. 2010, Vulcani et al. 2017),"
+although we also observe a hint of a minor peak in the
+"180◦, possibly caused by backsplash or projection ef-"
+fects. The p-values from KS tests reject the uniform
+hypothesis at 95% confidence. This serves as an evi-
+dence of ram pressure stripping playing an important
+role in shaping and removing the gas reservoirs of clus-
+"ter galaxies, because other mechanisms such as outflows"
+and tidal stripping are expected to have no directional
+relation to the cluster center while ram pressure strip-
+ping impacts radially in the course of the infall of cluster
+galaxies.
+We further investigate their distributions on the
+"position-velocity phase space diagram, using the offset"
+vector d as a proxy for the 2D projected velocity vector.
+We divide the phase space diagram into three regions
+according to the infall history of a cluster galaxy: (I)
+"the outskirts region outside the virial radius, (II) the"
+"high-velocity region inside the virial radius, and (III)"
+the low-velocity region inside the virial radius. We look
+"into the ratio of ELGs with large ∆ d having θd < 90
+◦"
+"and θd > 90
+◦ (i.e. with emission offset vectors point-"
+"ing away and toward the cluster center, respectively)."
+"Combining the statistics from both clusters, we find a"
+"3σ excess of galaxies in region II with θd < 90
+◦, i.e.,"
+galaxies approaching or close to the orbit pericenters in
+their first infalls. The preference suggests star formation
+in these galaxies is mostly suppressed before they turn
+around and start their second infalls. This is consis-
+tent with conclusions from some numerical studies and
+observations of individual gas-stripped cluster galaxies
+that galaxies are quenched at first infall under ram pres-
+sure stripping after they penetrate into the ICM halo.
+"In addition, we find that the continuum-normalized line"
+"flux of ELGs with large ∆ d in region I (and region II,"
+"but with a lower significance), where galaxies are at the"
+"beginning of their first infalls or undergoing backsplash,"
+is lower on average than those with small ∆ d. This sup-
+ports the scenario that ram pressure stripping is a dom-
+inant mechanism in the suppression of star formation.
+"No significant difference, however, is found in region III,"
+where projection effects may mix galaxies with different
+dynamic states together.
+Our study is the first analysis of such types of observa-
+tions and demonstrates the uniqueness and promise of
+"panoramic, wide-field 2D spectroscopy on galaxy clus-"
+ters using SITELLE. Data from a larger sample of clus-
+ters and further detailed analysis will shed more light on
+the environmental effects and star formation quenching
+mechanisms operating on cluster galaxies.
+ACKNOWLEDGEMENT
+We thank the referee for the useful review that helped
+improve this manuscript. Based on observations ob-
+tained at the Canada-France-Hawaii Telescope (CFHT)
+which is operated from the summit of Maunakea by
+"the National Research Council of Canada, the Institut"
+National des Sciences de l’Univers of the Centre Na-
+"tional de la Recherche Scientifique of France, and the"
+University of Hawaii. The observations at the Canada-
+France-Hawaii Telescope were performed with care and
+"respect from the summit of Maunakea, which is a sig-"
+nificant cultural and historic site. Based on observa-
+"tions obtained with SITELLE, a joint project between"
+"Université Laval, ABB-Bomem, Université de Montréal,"
+and the CFHT with funding support from the Canada
+"Foundation for Innovation (CFI), the National Sciences"
+"and Engineering Research Council of Canada (NSERC),"
+Fond de Recherche du Québec - Nature et Technolo-
+gies (FRQNT) and CFHT. Q.L. is supported by an On-
+tario Trillium Awards. HY’s research is supported by
+an NSERC Discovery Grant and grants from the Arts
+and Science Faculty at the University of Toronto. L.D.’s
+research is supported by an NSERC discovery grant.
+"Software: SExtractor (Bertin & Arnouts 1996), pho-
+tutils (Bradley et al. 2016), ORBS (Martin et al. 2015),"
+"ORCS (Martin et al. 2015), astropy (Astropy Collabo-"
+"ration et al. 2013, 2018), numpy (Harris et al. 2020),"
+"matplotlib (Hunter 2007), scikit-learn (Pedregosa et al."
+"2011), SAOImage DS9 (Joye & Mandel 2003)"
+REFERENCES
+"Abadi, M. G., Moore, B., & Bower, R. G. 1999, MNRAS,"
+"308, 947"
+"Abraham, R. G., Smecker-Hane, T. A., Hutchings, J. B.,"
+"et al. 1996, ApJ, 471, 694"
+20 Liu et al.
+"Acker, A., Köppen, J., Samland, M., & Stenholm, B. 1989,"
+"The Messenger, 58, 44"
+"Astropy Collaboration, Robitaille, T. P., Tollerud, E. J.,"
+"et al. 2013, A&A, 558, A33"
+"Astropy Collaboration, Price-Whelan, A. M., SipHocz,"
+"B. M., et al. 2018, aj, 156, 123"
+"Bahé, Y. M., & McCarthy, I. G. 2015, MNRAS, 447, 969"
+"Balogh, M. L., & Morris, S. L. 2000, MNRAS, 318, 703"
+"Balogh, M. L., Schade, D., Morris, S. L., et al. 1998, ApJL,"
+"504, L75"
+"Bekki, K. 2014, MNRAS, 438, 444"
+"Bertin, E., & Arnouts, S. 1996, A&AS, 117, 393"
+"Boselli, A., Boissier, S., Cortese, L., & Gavazzi, G. 2008,"
+"ApJ, 674, 742"
+"Boselli, A., Cortese, L., Boquien, M., et al. 2014, A&A,"
+"564, A67"
+"Boselli, A., & Gavazzi, G. 2006, PASP, 118, 517"
+"Boselli, A., Roehlly, Y., Fossati, M., et al. 2016, A&A, 596,"
+"Boselli, A., Epinat, B., Contini, T., et al. 2019, A&A, 631,"
+"Bradley, L., Sipocz, B., Robitaille, T., et al. 2016,"
+"Photutils: Photometry tools, , , ascl:1609.011"
+"Brough, S., Croom, S., Sharp, R., et al. 2013, MNRAS, 435,"
+"Brüggen, M., Ruszkowski, M., & Hallman, E. 2005, ApJ,"
+"630, 740"
+"Bundy, K., Bershady, M. A., Law, D. R., et al. 2015, ApJ,"
+"798, 7"
+"Carlberg, R. G., Yee, H. K. C., & Ellingson, E. 1997, ApJ,"
+"478, 462"
+"Chambers, K. C., Magnier, E. A., Metcalfe, N., et al. 2016,"
+"arXiv e-prints, arXiv:1612.05560"
+"Chung, A., van Gorkom, J. H., Kenney, J. D. P., &"
+"Vollmer, B. 2007, ApJL, 659, L115"
+"Cid Fernandes, R., Stasińska, G., Mateus, A., & Vale Asari,"
+"N. 2011, MNRAS, 413, 1687"
+"Coenda, V., Mast, D., Mart́ınez, H. J., Muriel, H., &"
+"Merchán, M. E. 2019, A&A, 621, A98"
+"Comerford, J. M., Barrows, R. S., Greene, J. E., & Pooley,"
+"D. 2017, ApJ, 847, 41"
+"Cortese, L., van de Sande, J., Lagos, C. P., et al. 2019,"
+"MNRAS, 485, 2656"
+"Dressler, A. 1980, ApJ, 236, 351"
+"Drissen, L., Martin, T., Rousseau-Nepton, L., et al. 2019,"
+"MNRAS, 485, 3930"
+"Ebeling, H., Stephenson, L. N., & Edge, A. C. 2014, ApJL,"
+"781, L40"
+"Ellingson, E., Lin, H., Yee, H. K. C., & Carlberg, R. G."
+"2001, ApJ, 547, 609"
+"Fillingham, S. P., Cooper, M. C., Pace, A. B., et al. 2016,"
+"MNRAS, 463, 1916"
+"Foltz, R., Wilson, G., Muzzin, A., et al. 2018, ApJ, 866, 136"
+"Fritz, A., Ziegler, B. L., Bower, R. G., Smail, I., & Davies,"
+"R. L. 2005, MNRAS, 358, 233"
+"Fujita, Y., & Nagashima, M. 1999, ApJ, 516, 619"
+"Gill, S. P. D., Knebe, A., & Gibson, B. K. 2005, MNRAS,"
+"356, 1327"
+"Gómez, P. L., Nichol, R. C., Miller, C. J., et al. 2003, ApJ,"
+"584, 210"
+"Goto, T., Yamauchi, C., Fujita, Y., et al. 2003, MNRAS,"
+"346, 601"
+"Graham, M. T., Cappellari, M., Bershady, M. A., & Drory,"
+"N. 2019, arXiv e-prints, arXiv:1910.05139"
+"Green, A. W., Croom, S. M., Scott, N., et al. 2018,"
+"MNRAS, 475, 716"
+"Gunn, J. E., & Gott, J. Richard, I. 1972, ApJ, 176, 1"
+"Haines, C. P., Pereira, M. J., Smith, G. P., et al. 2013, ApJ,"
+"775, 126"
+"Harris, C. R., Millman, K. J., van der Walt, S. J., et al."
+"2020, Nature, 585, 357."
+https://doi.org/10.1038/s41586-020-2649-2
+"Haynes, M. P., Giovanelli, R., & Chincarini, G. L. 1984,"
+"ARA&A, 22, 445"
+"Hunter, J. D. 2007, Computing in Science & Engineering, 9,"
+"Hutchings, J. B., & Balogh, M. L. 2000, AJ, 119, 1123"
+"Jaffé, Y. L., Smith, R., Candlish, G. N., et al. 2015,"
+"MNRAS, 448, 1715"
+"Jaffé, Y. L., Verheijen, M. A. W., Haines, C. P., et al. 2016,"
+"MNRAS, 461, 1202"
+"Jaffé, Y. L., Poggianti, B. M., Moretti, A., et al. 2018,"
+"MNRAS, 476, 4753"
+"Joye, W. A., & Mandel, E. 2003, in Astronomical Society of"
+"the Pacific Conference Series, Vol. 295, Astronomical"
+"Data Analysis Software and Systems XII, ed. H. E."
+"Payne, R. I. Jedrzejewski, & R. N. Hook, 489"
+"Kapferer, W., Kronberger, T., Ferrari, C., Riser, T., &"
+"Schindler, S. 2008, MNRAS, 389, 1405"
+"Kauffmann, G., White, S. D. M., Heckman, T. M., et al."
+"2004, MNRAS, 353, 713"
+"Kawinwanichakij, L., Papovich, C., Quadri, R. F., et al."
+"2017, ApJ, 847, 134"
+"Kennicutt, R. C., & Evans, N. J. 2012, ARA&A, 50, 531"
+"Koopmann, R., & Kennedy, J. D. P. 1999, News Letter of"
+"the Astronomical Society of New York, 5, 22"
+"Kronberger, T., Kapferer, W., Ferrari, C.,"
+"Unterguggenberger, S., & Schindler, S. 2008, A&A, 481,"
+https://doi.org/10.1038/s41586-020-2649-2
+"
+SITELLE Cluster ELGs 21"
+"Lewis, I., Balogh, M., De Propris, R., et al. 2002, MNRAS,"
+"334, 673"
+"Li, I. H., Yee, H. K. C., & Ellingson, E. 2009, ApJ, 698, 83"
+"Lotz, M., Remus, R.-S., Dolag, K., Biviano, A., & Burkert,"
+"A. 2019, MNRAS, 488, 5370"
+"Martin, T., Drissen, L., & Joncas, G. 2015, in Astronomical"
+"Society of the Pacific Conference Series, Vol. 495,"
+Astronomical Data Analysis Software an Systems XXIV
+"(ADASS XXIV), ed. A. R. Taylor & E. Rosolowsky, 327"
+"Mayer, L., Mastropietro, C., Wadsley, J., Stadel, J., &"
+"Moore, B. 2006, MNRAS, 369, 1021"
+"Muriel, H., & Coenda, V. 2014, A&A, 564, A85"
+"Muzzin, A., Wilson, G., Yee, H. K. C., et al. 2012, ApJ,"
+"746, 188"
+"Muzzin, A., van der Burg, R. F. J., McGee, S. L., et al."
+"2014, ApJ, 796, 65"
+"Noble, A. G., Webb, T. M. A., Muzzin, A., et al. 2013,"
+"ApJ, 768, 118"
+"Owers, M. S., Hudson, M. J., Oman, K. A., et al. 2019,"
+"ApJ, 873, 52"
+"Pedregosa, F., Varoquaux, G., Gramfort, A., et al. 2011,"
+"Journal of Machine Learning Research, 12, 2825"
+"Peng, Y., Maiolino, R., & Cochrane, R. 2015, Nature, 521,"
+"Peng, Y.-j., Lilly, S. J., Kovač, K., et al. 2010, ApJ, 721, 193"
+"Pintos-Castro, I., Yee, H. K. C., Muzzin, A., Old, L., &"
+"Wilson, G. 2019, ApJ, 876, 40"
+"Poggianti, B. M., von der Linden, A., De Lucia, G., et al."
+"2006, ApJ, 642, 188"
+"Poggianti, B. M., Moretti, A., Gullieuszik, M., et al. 2017a,"
+"ApJ, 844, 48"
+"Poggianti, B. M., Jaffé, Y. L., Moretti, A., et al. 2017b,"
+"Nature, 548, 304"
+"Postman, M., Franx, M., Cross, N. J. G., et al. 2005, ApJ,"
+"623, 721"
+"Ramos-Mart́ınez, M., Gómez, G. C., & Pérez-Villegas, Á."
+"2018, MNRAS, 476, 3781"
+"Rhee, J., Smith, R., Choi, H., et al. 2017, ApJ, 843, 128"
+"Ricarte, A., Tremmel, M., Natarajan, P., & Quinn, T. 2020,"
+"ApJL, 895, L8"
+"Roediger, E., Brüggen, M., Simionescu, A., et al. 2011,"
+"MNRAS, 413, 2057"
+"Russell, H. R., McNamara, B. R., Fabian, A. C., et al."
+"2019, MNRAS, 490, 3025"
+"Sánchez, S. F., Kennicutt, R. C., Gil de Paz, A., et al."
+"2012, A&A, 538, A8"
+"Schaefer, A. L., Croom, S. M., Allen, J. T., et al. 2017,"
+"MNRAS, 464, 121"
+"Schaefer, A. L., Tremonti, C., Pace, Z., et al. 2019, ApJ,"
+"884, 156"
+"Smith, R. J., Lucey, J. R., Hammer, D., et al. 2010,"
+"MNRAS, 408, 1417"
+"Sobral, D., Best, P. N., Smail, I., et al. 2011, MNRAS, 411,"
+"Vijayaraghavan, R., & Ricker, P. M. 2013, MNRAS, 435,"
+"Vulcani, B., Treu, T., Nipoti, C., et al. 2017, ApJ, 837, 126"
+"Vulcani, B., Poggianti, B. M., Gullieuszik, M., et al. 2018,"
+"ApJL, 866, L25"
+"Wang, J., Xu, W., Lee, B., et al. 2020, ApJ, 903, 103"
+"Wegner, G. A. 2011, MNRAS, 413, 1333"
+"Wegner, G. A., Chu, D. S., & Hwang, H. S. 2015, MNRAS,"
+"447, 1126"
+"Wegner, G. A., Umetsu, K., Molnar, S. M., et al. 2017,"
+"ApJ, 844, 67"
+"Weinmann, S. M., Kauffmann, G., van den Bosch, F. C.,"
+"et al. 2009, MNRAS, 394, 1213"
+"Yee, H. K. C., Ellingson, E., Abraham, R. G., et al. 1996,"
+"ApJS, 102, 289"
+"Yoon, H., Chung, A., Smith, R., & Jaffé, Y. L. 2017, ApJ,"
+"838, 81"
+"Yoshida, M., Yagi, M., Komiyama, Y., et al. 2008, ApJ,"
+"688, 918"
+"Yun, K., Pillepich, A., Zinger, E., et al. 2019, MNRAS, 483,"
+22 Liu et al.
+APPENDIX
+A. REDUCTION OF INTERFEROMETRIC
+FRINGES
+Below we describe the low-pass filtering (LPF) tech-
+nique used to remove fringes on the SITELLE datacube.
+A source detection with an S/N threshold of 3 is first
+run on the stack image using the python photometric
+package photutils to pick out possible sources. These
+sources are masked before the LPF procedure to avoid
+"them being over-subtracted. Next, LPF is performed on"
+each channel by convolving the image with an elliptical
+gaussian kernel elongated in the x-axis to construct a
+low-frequency components image and then subtracting
+it from the original image. The method is based on the
+fact that the fringes are high-frequency components that
+are relatively continuous along the x-axis but may radi-
+"cally change its brightness in the y-axis. In practice, we"
+adopt a kernel size with FWHM of 28 pix in the x-axis
+and 7 pix in the y-axis. The kernel size is determined
+by experimenting with different sizes to reach a trade-off
+between reducing the high-frequency fringes and avoid-
+ing over-subtraction of faint candidates that are possibly
+missed in the initial detection.
+"After iterating through all the channels, a source de-"
+"tection is run again on the low-pass-filtered datacube,"
+again with all of the detected sources masked. The
+convolve-subtract-detect-mask process is repeated until
+the change in the number of detected sources is smaller
+than 5% in order to capture as many faint sources as pos-
+sible. The efficacy of the LPF is clear by comparing the
+upper two panels of Figure 14 showing the same cutout
+of a channel that suffered from fringes before and af-
+"ter LPF, where contamination from fringes occurring in"
+the left panel has been mitigated as shown in the right
+panel. Two sample spectra extracted in the A2390E
+"field, which are ELGs identified using procedures in Sec-"
+"tion 3.6, are shown in Figure 15 to demonstrate the effect"
+of the LPF on the extracted spectra. The LPF process-
+ing can greatly reduce additional noise caused by fringes
+in channels between 7980 Å and 8030 Å where strong
+"sky-lines are located, thus facilitating the detection and"
+identification of faint emission-line candidates.
+"Because of the finite kernel size used, in some chan-"
+nels there exist fringe residuals whose spatial variation
+is smaller than the kernel. This can be observed in
+the upper-right panel of Figure 14. To further clean
+"the residuals and facilitate candidate detection, we ap-"
+ply a moving average processing to construct a new de-
+tection datacube: the low-pass-filtered datacube is con-
+17◦42′
+"One Channel
+(Before LPF)"
+"One Channel
+(After LPF)"
+21h53m44s 40s 36s 32s 28s
+17◦42′
+"Moving Averaged
+(Before LPF)"
+21h53m44s 40s 36s 32s 28s
+"Moving Averaged
+(After LPF)"
+RA (J2000)
+"Figure 14. Improvement by post-processing the spectral
+datacube in the presence of interferometric fringes. Upper
+left: image of a single channel showing fringes after subtract-
+ing the large-scale background. The brightness of the fringes
+does not follow a regular pattern. Upper right: image of the
+same channel processed with the LPF process. Fringes have
+been mitigated, although some residuals remain in the im-
+age. Lower left: image of the same channel but each pixel is
+manipulated by a moving average using a 3x3x5 box. Lower
+right: image of the same channel applying both LPF and
+moving average processing. The background residuals are
+largely suppressed. For direct visual comparison, the four
+panels share the same contrast. The image contrast is in
+arcsinh stretch to visually augment the small difference in
+the background."
+volved with a 3x3x5 averaging kernel (2D spatial + 1D
+"spectral), i.e., for a single spaxel its value is taking the"
+mean of contiguous pixels in 2D and in the adjacent
+four channels. This takes advantage of the feature of
+the fringe pattern that it moves across the field as the
+"scanning/wavelength proceeds/increases. As a result,"
+residuals in nearby channels are expected to be more
+or less cancel out. The moving average processing also
+reduces the sky noise. Note this new datacube is only
+"used for source detection, not for centroid measurement"
+in Section 4.1.
+SITELLE Cluster ELGs 23
+8000 8050 8100 8150 8200 8250
+Wavelength (Å)
+"(1
+0
+−"
+"er
+g
+/
+cm"
+"2
+/
+s/"
+Before LPF
+After LPF
+8000 8050 8100 8150 8200 8250
+Wavelength (Å)
+"er
+g
+/
+cm"
+"2
+/
+s/"
+Before LPF
+After LPF
+"Figure 15. Sample spectra of two ELGs demonstrat-
+ing the effectiveness of LPF in reducing additional noise
+caused by fringes (gray: before LPF; blue: after LPF)
+for channels around strong sky-lines (gray band). Upper:
+[N ii]λλ6548,6584 at z ∼ 0.225. Lower: a [O iii]λλ4959,5007
+doublet at z ∼ 0.634. The two spectra are identified and
+extracted from the A2390E field."
+B. UNCERTAINTIES IN CENTROID ANALYSIS
+B.1. Uncertainty Propagation from Centroids to
+Angles and Offsets
+"The uncertainties of flux-weighted centroids (x̄, ȳ) are"
+given by error propagation through
+"σ2x̄ =
+∑
+i"
+")2
+=
+∑
+i"
+"(∑
+j xjIj∑
+j Ij"
+"σ2Ii
+(
+∑
+j Ij)"
+"[
+−
+∑
+j xjIj∑
+j Ij"
+"∂(
+∑
+j Ij)"
+"∂Ii
++
+∂(
+∑
+j xjIj)"
+"2
+Ii
+· (xi − x̄)2"
+"(
+∑
+j Ij)"
+"2
+, (B1)"
+σ2ȳ =
+"2
+Ii
+· (yi − ȳ)2"
+"(
+∑
+j Ij)"
+"2
+. (B2)"
+"Let ∆x̄ = x̄E − x̄C and ∆ȳ = ȳE − ȳC , the uncertain-
+ties in the offset and difference angle are given by error"
+propagation through:
+"σ∆d = σ〈
+[
+(∆x̄)2 + (∆ȳ)2"
+"] 1
+2 〉"
+"
+
+["
+"∆x̄ · σ∆x̄√
+(∆x̄)2 + (∆ȳ)2"
+"[
+∆ȳ · σ∆ȳ√"
+(∆x̄)2 + (∆ȳ)2
+"]2
+"
+"((∆x̄ · σ∆x̄)2 + (∆ȳ · σ∆ȳ)2) /∆d , (B3)"
+σθd = σ〈atan(∆ȳ/∆x̄)〉
+"=
+σ〈∆ȳ/∆x̄〉"
+(∆ȳ/∆x̄)2 + 1
+"= (∆ȳ/∆x̄) ·
+√"
+(σ∆ȳ/∆ȳ)2 + (σ∆x̄/∆x̄)2
+(∆ȳ/∆x̄)2 + 1
+"(∆x̄ · σ∆ȳ)2 + (∆ȳ · σ∆x̄)2) /∆d2 , (B4)"
+"where σ∆x̄ =
+√
+σ2x̄E + σ"
+"and σ∆ȳ =
+√
+σ2ȳE + σ"
+B.2. An Empirical Assessment for Seeing-limited
+Centroid Measurements
+The measured centroid offsets in emission and contin-
+uum are in general small relative to the seeing and there-
+"fore suffer from smearing effects. However, it should be"
+noted that the centroid of an object can be measured to
+"a considerably higher precision than the seeing, depend-"
+ing on the S/N of the object. We perform several exper-
+iments with a control sample to demonstrate the robust-
+ness and effectiveness of the centroid measurements.
+The control sample is constructed using unsatu-
+rated stars cross-matched with PAN-STARRS (Cham-
+bers et al. 2016) and is matched with the ELG sample
+in terms of S/N as follows: we randomly draw a star
+from the crossmatch and choose a medium wide win-
+dow in its spectrum with channels in it to represent the
+pseudo-emission. The rest of the channels are used as
+the continuum. Edges and channels in the presence of
+strong sky-lines are excluded. The pseudo-emission and
+continuum images are constructed from these channels
+with which centroids are measured in the same approach
+as Section 4.1 except that the continuum is not sub-
+tracted from the emission. This process is repeated for
+500 times field by field to build a parent sample for each
+field. We then resample the measurements by their pho-
+tometric S/N for N = 100 times according to the dis-
+tribution of S/N of the ELGs on the emission image.
+The sample size N is chosen to match the average sam-
+ple size of ELGs detected in each field for the statistical
+tests below. We construct 10 different control samples
+to account for sample variation.
+"With the control samples, we test whether there is sys-"
+tematic bias in the centroid measurement and quantify
+the uncertainties from random noise. Because the mea-
+"surements are based on stars, the centroids should have"
+no intrinsic offset unless there is any systematic bias.
+We first perform a Hotelling’s T 2 test on the location
+"of the distribution of centroid difference x = (∆x, ∆y)"
+"with the null hypothesis H0: x = x0 = (0, 0). The t
+2"
+24 Liu et al.
+"0.0 0.2 0.4 0.6 0.8 1.0 1.2 1.4
+d2 (pix2)"
+"2( 20, 20)"
+0.01 0.05
+"1
+3
+5
+7"
+0.28 0.32
+0.94 0.97
+"Figure 16. Distributions of (∆d)2 measured from 10 control
+samples made up of stars in the A2390C field. Red curves
+show the best fits to χ2 distributions. Distributions of fitted
+centers, standard deviations, and fractions of measurements
+within the adopted threshold are displayed in small panels."
+statistic is given by
+t2 = n(x− x0)′Ŝ−1(x− x0) ∼ χ2p (B5)
+"with x representing the sample mean, Ŝ =
+1"
+"N−1
+∑N
+i=1 (xi − x) (xi − x)"
+"′
+to be the sample covariance"
+and p = 2 to be the degree of freedom. The last condi-
+tion in the equation above satisfies assuming the large
+sample approximation. If t2 is larger than the criti-
+"cal value, the upper 1-α quantile χ2p(α), H0 is then re-"
+jected at confidence level of α. With the computed t2
+"in each field, we cannot reject H0 at confidence level"
+of α = 0.01 in 9/8/9/9 out of 10 control samples for
+"A2390C/A2390E/A2390W/A2465C, that is, no signifi-"
+cant systematic bias is found for the centroid measure-
+ments.
+"The other test is motivated by the fact that (∆d)
+2"
+"(∆x)2 + (∆y)2 ∼ χ2p=2 under normality and indepen-
+dence assumptions for ∆x and ∆y. We then fit a"
+"χ2(µ20, σ
+2
+0) distribution for (∆d)"
+"2
+in each field with the"
+center µ0 and standard deviation σ0 indicating the over-
+all bias and degree of deviation. Figure 16 displays
+the distributions of (∆d)2 and their fits (red line) out
+of the 10 control samples for the A2390C field as an
+"example. µ0 are close to 0, which further proves the"
+"small systematic bias, and σ0 are at least two times"
+smaller than the adopted threshold. The contamina-
+tion level can also be revealed by the fraction of mea-
+surements of offset below the threshold (black dashed
+"line), f0, where on average ∼ 95% of measurements fall
+within the threshold. The average f0 is 93%/90%/93%"
+for A2390E/A2390W/A2465C.
+"0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+Centroid Offset ∆ dm [kpc]"
+A2390 Morph
+A2390 LW
+"0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+Centroid Offset ∆ dm [kpc]"
+16 A2465 Morph
+A2465 LW
+"Figure 17. Distribution of morphological centroid offset
+∆ dm between the emission and the stellar continuum for
+ELGs in A2390 (combining three fields, left) and A2465C
+(right). The distributions of ∆ d from light-weighted cen-
+troids are overplotted as green outlines. The 1kpc threshold
+used is marked as the black dashed line in each panel."
+"0 30 60 90 120 150 180
+Diffence Angle θd,m"
+"0 30 60 90 120 150 180
+Diffence Angle θd,m"
+"8
+A2465"
+"Figure 18. Histogram of difference angle measured from
+morphological centroids (θd,m) for cluster member ELGs in
+A2390 fields (left) and A2465C (right) with ∆ dm > 1 kpc.
+The bin number is slightly adjusted for A2390 to match the
+y scale. Individual data points are shown as small sticks at
+the bottoms of the histograms. The distributions of θd from
+light-weighted centroids are overplotted as green outlines."
+"In summary, we conclude that although our centroid"
+"measurements are seeing-limited, the systematic bias"
+and random uncertainties in the process of measurement
+are small and do not impact our conclusions.
+C. RESULTS USING MORPHOLOGICAL
+CENTROIDS
+"In the main text, the emission and continuum cen-"
+troids are measured in a light-weighted procedure. Al-
+"ternatively, we can measure the morphological centroids"
+of the output segmentation of emission and continuum
+by simply giving equal weights to all the pixels within
+the border:
+"(x̄m, ȳm) ="
+")
+, (C6)"
+where N is the number of summed pixels. This is moti-
+vated by attempting to give higher weights to the weaker
+"but more spatially distorted ionized gas, e.g. gas tails"
+SITELLE Cluster ELGs 25
+"at the outskirts of the ELG. We use σ2x̄m = σ
+2
+ȳm"
+"an empirical error. The propagation to ∆dm and θd,m is"
+the same as in Appendix B.1. Because the morphologi-
+cal centroids are sensitive to the way how segmentation
+"is performed and they do not have well-defined errors,"
+our preference is to use the light-weighted centroids for
+"our analysis; however, the morphological centroids pro-"
+duce essentially the same conclusions.
+We can measure the difference vector d using the mor-
+"phological centroids, and accordingly measure the cen-"
+"troid offset ∆dm and difference angle θd,m in the same"
+manner as in Section 4.1. We show the distributions
+of ∆dm in Figure 17. The distributions of centroid off-
+sets are similar but slightly more skewed to larger values
+in both clusters. This is as expected as morphological
+centroids put more stress on the faint outskirts.
+Another selected sample is generated following the
+same criteria in Section 4.1 except for requiring ∆ dm >
+"3σ∆dm , with 49 ELGs obtained for A2390 and 28 ELGs"
+"obtained for A2465. The distributions of θd,m are shown"
+"in Figure 18. Similar to the ones in Figure 9, they also"
+visually deviated strongly from a uniform distribution.
+The difference lies in that the major peak being shifted
+"to a higher value (30◦− 60◦) in A2390, which can be in-
+ferred as a result of more influence from the tangential"
+"component of the ram pressure. Furthermore, the minor"
+peak toward 180◦ in A2465 is no longer significant. The
+K-S test on A2465 rejects the uniformity at 1% confi-
+"dence level (p = 0.009), although it cannot reject the"
+"uniformity of θd,m in A2390 (p = 0.15). Finally we in-"
+spect their distribution in phase space diagram and their
+"continuum normalized emission-line flux, which are con-"
+sistent with the results using light-weighted centroids.
+"Overall, the results of morphological centroids also"
+support the scenario where ram pressure stripping takes
+effect during the infall of gas-rich cluster galaxies and
+shuts down their star formation through removal of gas.
+"
+	1 Introduction
+	2 Observations
+	2.1 SITELLE
+	2.2 Target Clusters"
+"	3 Emission-Line Galaxy Identification
+	3.1 Sky-Line Subtraction
+	3.2 Fringe Reduction using Low-pass Filtering
+	3.3 Source Detection and Spectral Extraction
+	3.4 Removal of Continuum
+	3.5 Construction of Line Template
+	3.6 Cross-correlation with Template"
+"	4 Analysis of Spatial Offset of Ionized Gas
+	4.1 Centroid and Angle Measurements
+	4.2 Distribution of Difference Angles in A2390 and A2465
+	4.2.1 Abell 2390
+	4.2.2 Abell 2465"
+"
+	5 Discussion
+	5.1 Ionized Gas Centroid Offset: Ram Pressure Stripping in the Act
+	5.2 The Distributions of Ionized Gas Offset in Phase Space
+	5.2.1 Infall History of a Cluster Galaxy on the Phase Space Diagram
+	5.2.2 Excess of Gas Offset Vectors toward the Cluster Center near Orbit Pericenters at First Infall"
+	5.3 Additional Support for Quenching by Ram Pressure Stripping
+"	6 Summary
+	A Reduction of Interferometric Fringes
+	B Uncertainties in Centroid Analysis
+	B.1 Uncertainty Propagation from Centroids to Angles and Offsets
+	B.2 An Empirical Assessment for Seeing-limited Centroid Measurements"
+	C Results Using Morphological Centroids

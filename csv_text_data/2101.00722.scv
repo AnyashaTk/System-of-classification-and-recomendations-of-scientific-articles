@@ -1,0 +1,2153 @@
+0
+"MNRAS 000, 1–17 (2021) Preprint 29 June 2021 Compiled using MNRAS LATEX style file v3.0"
+Dissipation in weakly collisional plasmas
+"O. Pezzi ID 1,2,3★, H. Liang ID 4, J. L. Juno ID 5, P. A. Cassak ID 6, C. L. Vásconez ID 7, L. Sorriso-Valvo ID 8,3,
+D. Perrone ID 9, S. Servidio ID 10, V. Roytershteyn ID 11, J. M. TenBarge ID 12 &W. H. Matthaeus ID 13"
+"1Gran Sasso Science Institute, Viale F. Crispi 7, I-67100 L’Aquila, Italy
+2INFN/Laboratori Nazionali del Gran Sasso, I-67100 Assergi (AQ), Italy
+3Istituto per la Scienza e Tecnologia dei Plasmi, Consiglio Nazionale delle Ricerche, Via Amendola 122/D, I-70126 Bari, Italy
+4Center for Space Plasma and Aeronomic Research, University of Alabama in Huntsville, Huntsville, AL 35899, USA
+5Department of Physics and Astronomy, University of Iowa, Iowa City, IA 54224, USA
+6Department of Physics and Astronomy and Center for KINETIC Plasma Physics, West Virginia University, WV 26506, USA
+7Departamento de Física, Escuela Politécnica Nacional, Ladrón de Guevara E11-253, 170525 Quito, Ecuador
+8Swedish Institute of Space Physics, Ångström Laboratory, Lägerhyddsvägen 1, SE-751 21 Uppsala, Sweden
+9ASI – Italian Space Agency, via del Politecnico snc, I-00133 Rome, Italy
+10Dipartimento di Fisica, Università della Calabria, I-87036 Rende (CS), Italy
+11Space Science Institute, Boulder, CO 80301, USA
+12Department of Astrophysical Sciences, Princeton University, Princeton, NJ 08544, USA
+13Bartol Research Institute and Department of Physics and Astronomy, University of Delaware, Newark, DE 19716, USA"
+Accepted 2021 May 21; Revised 2021 May 21; Received 2021 January 4
+"ABSTRACT
+The physical foundations of the dissipation of energy and the associated heating in weakly collisional plasmas are poorly
+understood. Here, we compare and contrast several measures that have been used to characterize energy dissipation and kinetic-
+scale conversion in plasmas by means of a suite of kinetic numerical simulations describing both magnetic reconnection and
+decaying plasma turbulence. We adopt three different numerical codes that can also include interparticle collisions: the fully
+kinetic particle-in-cell vpic, the fully kinetic continuum Gkeyll, and the Eulerian Hybrid Vlasov–Maxwell (HVM) code. We
+differentiate between (i) four energy-based parameters, whose definition is related to energy transfer in a fluid description of a
+plasma, and (ii) four distribution function-based parameters, requiring knowledge of the particle velocity distribution function.
+There is an overall agreement between the dissipation measures obtained in the PIC and continuum reconnection simulations,
+with slight differences due to the presence/absence of secondary islands in the two simulations. There are also many qualitative
+similarities between the signatures in the reconnection simulations and the self-consistent current sheets that form in turbulence,
+although the latter exhibits significant variations compared to the reconnection results. All the parameters confirm that dissipation
+occurs close to regions of intense magnetic stresses, thus exhibiting local correlation. The distribution function-based measures
+show a broader width compared to energy-based proxies, suggesting that energy transfer is co-localized at coherent structures,
+but can affect the particle distribution function in wider regions. The effect of interparticle collisions on these parameters is
+finally discussed."
+Key words: turbulence – magnetic reconnection – (Sun:) solar wind
+1 INTRODUCTION
+"Understanding energy dissipation and heating in weakly collisional
+plasmas is a key challenge in the study of space and astrophysical
+plasmas, such as the solar corona, solar wind, the outer magneto-
+spheres of planets, and compact astrophysical objects. At variance
+with neutral fluids and collisional plasmas (e.g. magnetofluids), in-
+terparticle collisions are typically weak in these systems and are of-
+ten neglected. One example is during magnetic reconnection, where
+magnetic fields with a reversing component effectively break and
+cross-connect at length-scales at and below the gyroradius of the"
+★ Email: oreste.pezzi@gssi.it
+"particles (kinetic scales), allowing the conversion of magnetic en-
+ergy to kinetic, thermal, and non-thermal energy (Yamada et al.
+2010). Another example is that weakly collisional plasmas are often
+observed to be in a strongly turbulent state (Federrath et al. 2010;
+Bruno & Carbone 2016; Narita 2018; Beresnyak 2019; Fraternale
+et al. 2019). Hence, they are characterized by the cross-scale transfer
+of fluctuation energy from large injection scales to smaller, kinetic
+scales, where energy dissipation is expected to occur (Schekochihin
+et al. 2009; Howes 2015b; Matthaeus et al. 2015; Vaivads et al. 2016;
+Verscharen et al. 2019). These features have, at least, two profound
+implications."
+"First, the dynamics ofweakly collisional plasmas involve thewhole
+phase-space, both in configuration and velocity space, as opposed to"
+© 2021 The Authors
+"  2
+6 "
+"https://orcid.org/0000-0002-7638-1706
+https://orcid.org/0000-0001-9581-4821
+https://orcid.org/0000-0001-6835-273X
+https://orcid.org/0000-0002-5938-1050
+https://orcid.org/0000-0002-4128-3524
+https://orcid.org/0000-0002-5981-7758
+https://orcid.org/0000-0003-1059-4853
+https://orcid.org/0000-0001-8184-2151
+https://orcid.org/0000-0003-1745-7587
+https://orcid.org/0000-0003-0143-951X
+https://orcid.org/0000-0001-7224-6024"
+"
+2 O. Pezzi et al."
+"collisional systems for which the proximity to local thermal equilib-
+rium restricts velocity distribution functions to be near-Maxwellians
+due to efficient collisional thermalization. Indeed, VDFs in weakly
+collisional plasmas frequently display non-equilibrium features, such
+as temperature anisotropy and agyrotropy, rings, beams of acceler-
+ated particles, etc. (Marsch 2006; Servidio et al. 2012, 2015; Lapenta
+et al. 2017; Perri et al. 2020). In turbulence, this interesting dynamics
+has been envisioned as a phase-space cascade (Tatsuno et al. 2009;
+Plunk & Tatsuno 2011; Kanekar et al. 2015; Parker et al. 2016;
+Schekochihin et al. 2016; Servidio et al. 2017), where the plasma
+exhibits a power-law scaling –typical of turbulence– in both phys-
+ical and velocity space. In this perspective, by expanding particle
+VDFs in velocity space using Hermite polynomials, a power-law
+Hermite spectrum was recently observed, reflecting the presence of
+fine velocity-space structures, in both in situ observations (Servidio
+et al. 2017) and numerical simulations (Cerri et al. 2018; Pezzi et al.
+2018). This clearly illustrates the necessity of using kinetic models
+to describe such plasmas. Moreover, non-Maxwellian structures in
+particle VDFs are observed to be significant in the vicinity of intense
+current sheets or other nearby coherent structures such as vortices,
+where MHD-like dissipation is thought to occur (Osman et al. 2011;
+Servidio et al. 2012; Matthaeus et al. 2015; Parashar & Matthaeus
+2016).
+Secondly, concepts about energy dissipation and conversion in"
+"neutral fluids and magnetofluids do not necessarily carry over to
+weakly collisional systems. The rate and parametric dependence of
+dissipation and kinetic-scale energy conversion for such plasmas is
+extremely challenging and is not thoroughly understood. One chal-
+lenge is that various physical mechanisms and processes can cause
+dissipation and kinetic scale energy conversion in various physi-
+cal circumstances. In weakly collisional plasmas in which kinetic
+effects play a crucial role in the dynamics, such as during turbu-
+lence and reconnection, it may be difficult to assess quantitatively
+the relative importance of the various dissipative mechanisms, and
+likewise the net effect of a given dynamical process may be unclear
+due to reversibility. To address these issues different mechanisms and
+concepts of dissipation have been proposed and, hence, several dis-
+sipation surrogates have been adopted (see e.g. Vaivads et al. 2016;
+Matthaeus et al. 2020, for recent reviews). However, a unified and
+general picture of when and where different views work better is still
+lacking.
+Another important question is the following: do the sites identified"
+"potential sites of dissipation correspond to regions where interpar-
+ticle collisions, although weak, dissipate energy in an irreversible
+way? Addressing this question has encouraged the examination of
+a different concept of dissipation associated with the growth of en-
+tropy due to collisions (TenBarge et al. 2013; Navarro et al. 2016;
+Pezzi et al. 2019c; Liang et al. 2019). Although collisions typically
+act on large characteristic times (Spitzer Jr. 1956; Vafin et al. 2019),
+their effects are enhanced where particle VDFs exhibit strong dis-
+tortions, since intense velocity-space gradients are dissipated very
+quickly by collisions (Landau 1936; Rosenbluth et al. 1957; Balescu
+1960; Schekochihin et al. 2009; Pezzi et al. 2016; Pezzi 2017). Non-
+Maxwellian VDFs make intraspecies collision operators non-zero,
+thus activating this dissipation channel.
+In the following, we classify eight different dissipation proxies into"
+"two general classes that we call “energy-based” and “VDF-based”.
+The energy-based definition describes dissipation as a transfer of
+energy within a fluid-like description. Often such transfer occurs
+from an ordered component (e.g. magnetic or bulk flow fluctuations)
+into a random (e.g., internal) component. On the other hand, VDF-
+based surrogates directly quantify the presence of non-equilibrium"
+"features in the particle VDF. The two classes of dissipation proxies
+are correlated, since the distortion of the particle VDF is often the
+consequence of a transfer of energy and vice versa. The dissipation
+proxies here adopted do not explicitly distinguish signatures asso-
+ciated with particular phenomena, e.g. Landau damping, cyclotron
+damping, or stochastic processes (Chandran et al. 2010; Numata &
+Loureiro 2015; Li et al. 2016; Chen et al. 2019). Future studies will
+analyze the connection between these dissipation measures –useful
+to detect potential sites of inhomogeneous dissipation in a turbulent
+environment– and the underlying plasma processes, e.g. highlighted
+through the field-particle correlation (Klein & Howes 2016; Klein
+et al. 2017; Chen et al. 2019; Klein et al. 2020)."
+"In this work, we investigate numerically the functionality of several
+dissipation proxies belonging to the two classes introduced above.
+We focus on two different types of numerical simulations: mag-
+netic reconnection in a single current sheet and the development
+of a turbulent cascade at kinetic scales. We exploit three different
+numerical Boltzmann–Maxwell algorithms, of both Lagrangian and
+Eulerian type, that can include inter-particle collisions. In partic-
+ular, we adopt the fully kinetic particle-in-cell vpic code (Bowers
+et al. 2008), and two Eulerian Vlasov–Maxwell codes. These latter
+codes are the fully kinetic continuum Vlasov–Maxwell solver imple-
+mented in the Gkeyll simulation framework (Juno et al. 2018) and
+the Hybrid Vlasov–Maxwell (HVM) code with kinetic protons and
+fluid electrons (Valentini et al. 2007). We find that the dissipation
+measures well characterize significant features of both magnetic re-
+connection and turbulence, such as the reconnection diffusion region
+and the intermittent current sheets surrounding turbulent vortices.
+The dissipation surrogates evaluated from the PIC and Gkeyll re-
+connection simulations agree to a wide extent. Slight differences
+between the two runs result from the presence of secondary islands
+in the Gkeyll simulation that are not present in the PIC simulation.
+A qualitative correspondence between the signatures in the recon-
+nection simulations and the self-consistent current sheets generated
+in turbulence is also found, despite larger variations observed in the
+turbulent case with respect to the magnetic reconnection one. The
+parameters show a regional correlation: their local peaks take place
+in similar spatial regions, but they are not necessarily point-to-point
+correlated (Yang et al. 2019; Matthaeus et al. 2020). When including
+interparticle collisions, peaks of the dissipation proxies are in general
+weaker than in the associated collisionless system, suggesting that the
+slow yet incessant effect of collisions locally reduce the transfer of
+energy and the presence of non-Maxwellian features. By considering
+the effect of both intraspecies and interspecies collisions, we confirm
+that the former mainly dissipate non-Maxwellian features in the par-
+ticle VDF, although they may have an indirect effect also on energy
+transfer through the pressure tensor isotropization (Del Sarto et al.
+2016). On the other hand, the latter also significantly affect energy-
+based parameters. Finally, by adopting a suite of different algorithms
+and numerical codes, the current work aims at providing a further
+contribution to the “turbulence dissipation challenge” (Parashar et al.
+2015), on which several recent efforts have been dedicated (e.g. Pezzi
+et al. 2017; Perrone et al. 2018; González et al. 2019)."
+"The paper is structured as follows. In Section 2, we define and
+discuss the dissipation measures investigated in the current work.
+In Section 3, numerical models and algorithms adopted for the cur-
+rent analysis are described. Sections 4 and 5 report numerical results
+obtained in the simulations of reconnection and the onset of kinetic
+turbulence, respectively. In Section 6, we show one-dimensional (1D)
+profiles of the dissipation proxies close to the reconnecting current
+sheet and a typical current sheet observed in the turbulence simu-"
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 3
+"lation. Finally, conclusions and discussions are presented in Section
+7."
+"2 DISSIPATION MEASURES IN WEAKLY COLLISIONAL
+PLASMAS"
+"In this section, we introduce the framework and summarize the dissi-
+pation proxies adopted in this work.We consider a weakly collisional
+plasma, composed of protons (𝑝) and electrons (𝑒). The Boltzmann–
+Maxwell equations, describing non-relativistic plasmas, in cgs units
+are:
+𝜕 𝑓𝛼"
+"𝜕𝑡
++ 𝒗 ·"
+")
+·
+𝜕 𝑓𝛼"
+"����
+coll"
+"∇ · 𝑬 = 4𝜋𝜌𝑐 (2)
+∇ · 𝑩 = 0 (3)"
+"∇ × 𝑬 = −
+1
+𝑐"
+"𝜕𝑡
+(4)"
+"∇ × 𝑩 =
+1
+𝑐"
+"𝜕𝑡
++
+4𝜋
+𝑐"
+"𝒋 , (5)"
+"where 𝑓𝛼 (𝒓, 𝒗, 𝑡) is the 𝛼-species VDF (𝛼 = 𝑝, 𝑒); 𝑬 (𝒓, 𝑡) and
+𝑩(𝒓, 𝑡) are the electric and magnetic fields; and 𝑞𝛼, 𝑚𝛼, and 𝑐
+are the 𝛼-species charge, mass and the light speed. The charge
+and electric current densities are, respectively, 𝜌𝑐 ="
+"∑
+𝛼 𝑞𝛼𝑛𝛼 and"
+"𝒋 =
+∑
+𝛼 𝑞𝛼𝑛𝛼𝒖𝛼, where 𝑛𝛼 ="
+"∫
+𝑑3𝑣 𝑓𝛼 is the 𝛼-species number"
+"density and 𝑛𝛼𝒖𝛼 =
+∫
+𝑑3𝑣𝒗 𝑓𝛼 is the 𝛼-species number flux den-"
+"sity. In the following subsections, we omit the collisional operator
+𝜕 𝑓𝛼/𝜕𝑡 |coll for simplicity."
+2.1 Energy-based dissipation measures
+"The energy-based dissipation proxies can be introduced from the
+energy equations:"
+"𝜕E 𝑓𝛼
+𝜕𝑡"
+"+ ∇ ·
+(
+𝒖𝛼E"
+"𝑓
+𝛼 + 𝒖𝛼 · 𝑷𝛼"
+")
+= (𝑷𝛼 · ∇) · 𝒖𝛼 + 𝑛𝛼𝑞𝛼𝒖𝛼 · 𝑬"
+"𝜕E𝑡ℎ𝛼
+𝜕𝑡"
+"+ ∇ ·
+(
+𝒖𝛼E𝑡ℎ𝛼 + 𝒉𝛼"
+")
+= − (𝑷𝛼 · ∇) · 𝒖𝛼 (7)"
+"𝜕E𝑚
+𝜕𝑡"
+"4𝜋
+∇ · (𝑬 × 𝑩) = − 𝒋 · 𝑬 (8)"
+"where E 𝑓𝛼 = 𝜌𝛼𝒖2𝛼/2 is the bulk flow energy density of the 𝛼-
+species, E𝑡ℎ𝛼 = 𝑚𝛼"
+"∫
+𝑑3𝑣 𝑓𝛼 (𝒗 − 𝒖𝛼)2 /2 is the thermal (internal)"
+"energy density of the 𝛼-species and E𝑚 = (𝑬2 + 𝑩2)/8𝜋 is the
+electromagnetic energy density. In the above equations,"
+"𝑷𝛼 =
+𝑚𝛼"
+"∫
+𝑑
+3
+𝑣(𝒗 − 𝒖𝛼) (𝒗 − 𝒖𝛼) 𝑓𝛼 (9)"
+"𝒉𝛼 =
+1
+2"
+"∫
+𝑑
+3
+𝑣(𝒗 − 𝒖𝛼)2 (𝒗 − 𝒖𝛼) 𝑓𝛼 (10)"
+"are the pressure tensor and vector heat flux, respectively.
+The left-hand sides of Eqs. (6)–(8) contain terms involving diver-"
+"gences of fluxes. These terms can be locally important and corre-
+spond physically to energy transport (Pezzi et al. 2019a). Assuming
+there is no flux across the domain boundaries (e.g., with periodic
+boundary conditions), they have no net effect on the global energy
+partition of the system. Energy transfer between bulk flow and mag-
+netic energy is described by the 𝒋 ·𝑬 term, while conversion of energy
+between bulk flow and thermal occurs through the pressure–strain"
+"interaction (𝑷𝛼 · ∇) · 𝒖𝛼. Including intraspecies collisional effects
+(e.g. proton–proton and electron–electron) would not introduce an
+extra term in Eqs. (6)–(8). However these collisions indirectly affect
+these equations by thermalizing the particle VDF, thus reducing the
+nongyrotropic terms in the pressure tensor and, in turn, having an
+impact on the pressure-strain interaction term (Del Sarto et al. 2016).
+On the other hand, interspecies collisions (electron–proton) insert an
+explicit interspecies energy transfer term in the energy equations.
+The first dissipation surrogate here considered is the Zenitani mea-"
+"sure (Zenitani et al. 2011), widely adopted to describe dissipation in
+magnetic reconnection (Zenitani et al. 2011; Phan et al. 2018) and
+plasma turbulence (Wan et al. 2015). It evaluates the rate of work
+per unit volume done by the electric field on particles, 𝒋 · 𝑬, in the
+reference frame co-moving with the considered species, in contrast
+with 𝒋 · 𝑬 in the simulation frame, which gives the total rate of en-
+ergy conversion between the electromagnetic fields and the plasma.
+It directly measures the non-ideal energy conversion (Zenitani et al.
+2011) and is related to the production of entropy density in the MHD
+framework (Birn & Hesse 2005). It reads as:"
+"𝐷𝛼 = 𝒋
+′ · 𝑬 ′ = 𝒋 ·"
+"× 𝑩
+)
+− 𝜌𝑐 (𝒖𝛼 · 𝑬) , (11)"
+"where 𝒋 ′ and 𝑬 ′ are the current density and the electric field in
+the reference frame co-moving with the species 𝛼, respectively. As
+shown in Zenitani et al. (2011), 𝑛𝑒𝐷𝑒 = 𝑛𝑝𝐷 𝑝 and, in a singly ion-
+ized quasi-neutral system such as the ones considered in the present
+work, 𝐷𝑒 ' 𝐷 𝑝 . 𝐷𝛼 contains both reversible and irreversible con-
+tributions since the electric field 𝑬 has contributions from both re-
+versible (e.g. wave–particle interactions etc.) and irreversible (e.g.
+collisional resistive) processes. We note that the probability distribu-
+tion function (PDF) of 𝐷𝛼 and other dissipation measures are almost
+symmetric between negative and positive values (see Fig. 4 of Wan
+et al. (2015)). Net dissipation, which is ultimately an integral over
+space and time, arises from slight asymmetry (skewness) in the tails
+of the PDF.
+More recently, the pressure–strain interaction (𝑷𝛼 · ∇) · 𝒖𝛼 has"
+"been analysed to understand dissipative mechanisms in weakly colli-
+sional plasmas (Yang et al. 2017a,b; Yang et al. 2019; Chasapis et al.
+2018a; Sitnov et al. 2018; Pezzi et al. 2019a; Matthaeus et al. 2020).
+This term is commonly decomposed as"
+"− (𝑷𝛼 · ∇) · 𝒖𝛼 = −𝑃𝛼\𝛼 −𝚷𝛼 :D𝛼 , (12)
+where 𝑃𝛼,𝑖 𝑗 = 𝑃𝛼𝛿𝑖 𝑗 + Π𝛼,𝑖 𝑗 ; 𝑃𝛼 = 𝑃𝛼,𝑖𝑖/3; \𝛼 = ∇ · 𝒖𝛼;
+D𝛼,𝑖 𝑗 ="
+"(
+𝜕 𝑗𝑢𝛼,𝑖 + 𝜕𝑖𝑢𝛼, 𝑗"
+")
+/2 − \𝛼𝛿𝑖 𝑗/3; and 𝛿𝑖 𝑗 and 𝜕𝑖 denote"
+"the Kronecker delta and a partial derivative with respect to the 𝑖–
+th spatial coordinate, respectively. The first term on the right-hand
+side of Eq. (12), called P-\𝛼, is associated with plasma expansion
+and compression. The last term, called Pi-D𝛼, is associated with the
+trace-less (anisotropic and off-diagonal) parts of the pressure tensor
+and the symmetric part of the velocity strain and describes the rate of
+work per unit volume done by flow shear. The spatial integral of the
+Pi-D𝛼 term measures the thermal energy gain (Pezzi et al. 2019a).
+Here, we use the convention that Pi-D𝛼 and P-\𝛼 include the minus
+signs in Eq. (12), so that positive values tend to locally increase the
+thermal energy. The Pi-D𝛼 term has been adopted to provide insights
+on themechanisms that transfer energy towards smaller scales, where
+it is dissipated (Yang et al. 2019). The motivation for this term be-
+ing associated with dissipation arises from the MHD framework, in
+which traceless pressure–tensor terms are related to viscous dissi-
+pation (Braginskii 1965). Hence, it is interesting to explore whether
+this connection remains valid in a weakly collisional system.
+Another dissipation proxy is associated with the cross-scale con-"
+version of energy in its non-linear transfer during the turbulent cas-
+"MNRAS 000, 1–17 (2021)"
+4 O. Pezzi et al.
+"cade (Frisch 1995). A proxy of the scale-dependent local energy
+transfer rate (LET) in a weakly collisional plasma at proton inertial
+scales may be estimated through the combined velocity, magnetic
+field and current fluctuations as (Sorriso-Valvo et al. 2018a,b, 2019)"
+"𝜖𝑝,ℓ ="
+"(
+|Δ𝒖𝑝 |2 + |Δ𝒃 |2"
+") Δ𝑢𝑝,ℓ
+ℓ"
+"− 2(Δ𝒖𝑝 · Δ𝒃)
+Δ𝑏ℓ"
+"2
+|Δ𝒃 |2"
+"ℓ
++ 𝑑𝑝 (Δ𝒃 · Δ 𝒋)"
+"where 𝑑𝑝 is the proton skin depth. The magnetic field is in ve-
+locity units 𝒃 ≡ 𝑩/"
+"√︁
+4𝜋𝜌, where 𝜌 is the proton mass density."
+"Δ𝒈 ≡ 𝒈(𝒓+ℓ)− 𝒈(𝒓) is the increment of a field 𝒈 between two spatial
+points separated by a distance ℓ and is used to describe structures or
+fluctuations of that size. The subscript ℓ indicates longitudinal incre-
+ment, i.e. the projection along the increment vector ℓ. In this work,
+LET values are associated with the starting point of the increment
+vector and, for all simulations, the LET parameter 𝜖𝑝,ℓ is computed
+with ℓ = 𝑑𝑝 and by averaging the increments taken in the positive
+horizontal and vertical directions. Since the LET parameter 𝜖𝑝,ℓ is
+introduced within a fluid framework, we do not compute it with ℓ
+below proton scales, where electron kinetic effects become impor-
+tant. The definition of LET is motivated by the isotropic form of
+the Politano–Pouquet scaling law for the mixed third-order fluctua-
+tions in turbulent incompressibleMHD plasmas (Politano & Pouquet
+1998; Sorriso-Valvo et al. 2002, 2007), in this case also including the
+Hall–MHD terms (Galtier 2008; Ferrand et al. 2019; Bandyopad-
+hyay et al. 2020; Vásconez et al. 2021). Under the assumption of
+stationarity, homogeneity and large Reynolds’ number, the associ-
+ated scaling coefficient 〈𝜖𝑝〉 (〈...〉 indicating the ensemble average)
+is the constant mean energy transfer (or, in the stationary steady
+state, the dissipation) rate of the turbulent cascade (Kolmogorov
+1941). In 3D fluid, fully developed turbulence, the sign of the av-
+eraged third-order moment has to be negative, corresponding to an
+ensemble-averaged global net transfer towards the small scales (the
+non-linear turbulent energy cascade). Other terms locally contribut-
+ing to the energy transfer vanish and are disregarded here. These
+represent the different fluid contributions to the turbulent transfer of
+energy: kinetic and magnetic turbulent energy transported by veloc-
+ity fluctuations, coupled magnetic and velocity Alfvénic fluctuations
+transported by magnetic structures, and two associated Hall terms. In
+weakly collisional plasmas, the LET may be unable to describe the
+contribution of compressibility, as well as the role of possible non-
+thermal features. The latter might enter in the energy budget via the
+pressure–tensor contributions. However, it can provide information
+on the local transfer of ordered energy towards small scales, where
+it is made available for conversion through various possible mecha-
+nisms, including dissipation. In particular, according to the definition
+used in this work, negative LET terms can be thought of as locally
+contributing to the non-linear energy transfer towards small scales,
+and positive LET terms describe a contribution to energy transfer to
+large scales. In non-turbulent systems aswell as in systems displaying
+a large-scale structure (e.g. a single reconnecting current sheet), the
+interpretation of the LET sign is more difficult, since the assumption
+of homogeneity is not satisfied. However, for this analysis, peaks of
+LET indicate the local concentration of cross-scale energy transfer
+that can be made available for dissipation, regardless of the sign."
+2.2 VDF-based dissipation measures
+"The first parameter belonging to the class of VDF-based dissipation
+measures is the pressure agyrotropy (Scudder & Daughton 2008).
+Agyrotropy is a measure of differences in the plasma temperatures in"
+"the two perpendicular directions to a given axis (Scudder&Daughton
+2008; Aunai et al. 2013; Swisdak 2016). Standard axis orientations
+for computing agyrotropy are along the local magnetic field or the
+meanmagnetic field. Other coordinate systems, such as theminimum
+variance frames of the particle VDF, have been also adopted (Ser-
+vidio et al. 2015; Pezzi et al. 2017). We consider here the agyrotropy
+parameter"
+"√
+𝑄𝛼 proposed by Swisdak (2016), evaluated relative to"
+"the local magnetic field. Writing the pressure tensor 𝑷𝛼 in the coor-
+dinate system where the local magnetic field is parallel to the 𝑧-axis
+as"
+"𝑷𝛼 =
+©­«
+𝑃𝛼,⊥ 𝑃𝛼,12 𝑃𝛼,13
+𝑃𝛼,12 𝑃𝛼,⊥ 𝑃𝛼,23
+𝑃𝛼,13 𝑃𝛼,23 𝑃𝛼, ‖"
+"ª®¬ , (14)
+the agyrotropy parameter is defined as"
+"𝑄𝛼 =
+𝑃2
+𝛼,12 + 𝑃"
+"2
+𝛼,13 + 𝑃"
+"2
+𝛼,23"
+"𝑃2𝛼,⊥ + 2𝑃𝛼,⊥𝑃𝛼, ‖
+. (15)"
+"𝑄𝛼 can be computed in an arbitrary coordinate system, as explained
+in appendix A of Swisdak (2016).
+The variety of non-Maxwellian structures observed during mag-"
+"netic reconnection or in a turbulent plasma is much richer than just
+pressure agyrotropies.Another proxy, usually named 𝜖 but here called
+b since 𝜖 is already used to indicate the LET proxy, was proposed
+by Greco et al. (2012). Here we propose a slightly different, non-
+dimensional definition (the original definition had dimensions of
+𝑣−3/2):"
+"b𝛼 (𝒓, 𝑡) =
+𝑣
+3/2
+𝑡ℎ,𝛼"
+"(𝒓, 𝑡)
+𝑛𝛼 (𝒓, 𝑡)"
+"√︄∫
+𝑑3𝑣 [ 𝑓𝛼 (𝒓, 𝒗, 𝑡) − 𝑔𝛼 (𝒓, 𝒗, 𝑡)]2 . (16)"
+"Here, 𝑔𝛼 is the equivalent Maxwellian distribution function associ-
+ated with 𝑓𝛼, i.e. constructed using the local values of the density
+𝑛𝛼, bulk speed 𝒖𝛼 and total temperature 𝑇𝛼 of the 𝛼-species; while
+𝑣𝑡ℎ,𝛼 ="
+"√︁
+𝑘𝐵𝑇𝛼/𝑚𝛼 is the (local) thermal speed."
+"Similar measures to identify non-Maxwellian VDFs were con-
+structed using kinetic entropy. The kinetic entropy density 𝑠𝛼 is"
+"𝑠𝛼 (𝒓, 𝑡) = −𝑘𝐵
+∫"
+"𝑑
+3
+𝑣 𝑓𝛼 (𝒓, 𝒗, 𝑡) log 𝑓𝛼 (𝒓, 𝒗, 𝑡) . (17)"
+"Note the total entropy 𝑆𝛼 =
+∫
+𝑠𝛼𝑑"
+"3𝑟 of a collisional system is non-
+decreasing from the Boltzmann H-theorem, but the entropy density
+may locally increase or decrease (Pezzi et al. 2019c). It is possible
+to define a velocity–space entropy density 𝑠vel𝛼 retaining only the
+spatially local contribution to entropy from permutations of particles
+in velocity space (Liang et al. 2019) as"
+"𝑠
+vel
+𝛼 (𝒓, 𝑡) = 𝑠𝛼 (𝒓, 𝑡) + 𝑘𝐵𝑛𝛼 (𝒓, 𝑡) log"
+"(
+𝑛𝛼 (𝒓, 𝑡)
+Δ𝑣3"
+")
+(18)"
+"where Δ3𝑣 is the volume of the cell in velocity space. Using these
+definitions, two dimensionless non-Maxwellianity parameters have
+been introduced:"
+"�̄�KP,𝛼 (𝒓, 𝑡) =
+𝑠M,𝛼 (𝒓, 𝑡) − 𝑠𝛼 (𝒓, 𝑡)
+(3/2)𝑘𝐵𝑛𝛼 (𝒓, 𝑡)"
+"=
+𝑠velM,𝛼 (𝒓, 𝑡) − 𝑠"
+"vel
+𝛼 (𝒓, 𝑡)"
+"(3/2)𝑘𝐵𝑛𝛼 (𝒓, 𝑡)
+,"
+"proposed by Kaufmann & Paterson (2009), and"
+"�̄�𝛼 (𝒓, 𝑡) =
+�̄�KP,𝛼 (𝒓, 𝑡)"
+"1 + log
+(
+2𝜋𝑘𝐵𝑇𝛼"
+"𝑚𝛼 (Δ3𝑣)2/3
+) , (20)"
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 5
+"proposed by Liang et al. (2020). Here, 𝑠M,𝛼 (𝒓, 𝑡) is the entropy den-
+sity evaluated using the equivalent Maxwellian distribution function
+𝑔𝛼 (𝒓, 𝒗, 𝑡) associated with the VDF 𝑓𝛼 (𝒓, 𝒗, 𝑡), given by"
+"𝑠M,𝛼 =
+3
+2
+𝑘𝐵𝑛𝛼"
+"[
+1 + log"
+"2𝜋𝑘𝐵𝑇𝛼
+𝑚𝛼𝑛"
+"]
+. (21)"
+"and 𝑠velM,𝛼 (𝒓, 𝑡) is computed according to Eq. (18).
+In a system with a fixed number of particles and total energy, the"
+"Maxwellian distribution has the maximum entropy. Hence, �̄�KP and
+�̄� (along with b) are positive definite. These parameters measure all
+higher order VDF disturbances from the local Maxwellian beyond
+its second-order moment. This retains information about dissipation,
+since high-order variations from the Maxwellian coincide with the
+presence of fine velocity–space structures that, in turn, are dissipated
+by collisional effects (Pezzi et al. 2016)."
+3 NUMERICAL MODELS AND SIMULATIONS SETUP
+"The parameters introduced in the previous section are computed
+using the results of kinetic numerical simulations performed with
+different codes. All simulations in this work are 2.5D in space (quan-
+tities depend on two dimensions, but vectors have three components)
+and 3D in velocity space. For all codes, quantities are presented us-
+ing a normalization based on an arbitrary magnetic field strength
+𝐵0 and density 𝑛0. Spatial and temporal scales are normalized to
+the proton inertial length 𝑑𝑝 = 𝑐/𝜔𝑝𝑝 and the proton cyclotron
+time Ω−1𝑐𝑝 , respectively, where 𝜔𝑝𝑝 ="
+"√︃
+4𝜋𝑛0𝑒2/𝑚𝑝 is the proton"
+"plasma frequency based on 𝑛0 and Ω𝑐𝑝 = 𝑒𝐵0/𝑚𝑝𝑐 is the proton
+cyclotron frequency based on 𝐵0. Thus, velocities are normalized to
+the Alfvén velocity 𝑐𝐴 = 𝑑𝑝Ω𝑐𝑝 ; electric fields are normalized to
+𝑐𝐴𝐵0/𝑐; pressures and temperatures are normalized to 𝐵20/4𝜋 and
+𝑚𝑝𝑐"
+"2
+𝐴
+/𝑘𝐵 , respectively; and entropy is normalized to Boltzmann’s"
+"constant 𝑘𝐵 [see Liang et al. (2019) for a detailed discussion of the
+units of the continuous Boltzmann entropy]. Derived units of the
+dissipation measures are therefore as follows: 𝐷𝛼, Pi-D𝛼, and P-\𝛼
+are Ω𝑐𝑝𝐵20/4𝜋, 𝜖𝑝 is 𝑐"
+"2
+𝐴
+Ω𝑐𝑝 , while 𝑄𝛼, b𝛼, �̄�𝐾𝑃,𝛼, and �̄�𝛼 are"
+dimensionless.
+3.1 Numerical algorithms
+"For the present analysis, we adopt the particle-in-cell vpic code
+and two different Eulerian Vlasov–Maxwell codes: the fully kinetic
+Gkeyll code and the hybrid-kinetic HVM code.
+vpic utilizes a 3D, relativistic, fully kinetic explicit algorithm"
+"(Bowers et al. 2008). vpic has beenwidely adopted for both collision-
+less andweakly collisional plasma simulations, including simulations
+ofmagnetic reconnection and plasma turbulence (e.g. Daughton et al.
+2009; Daughton et al. 2011; Karimabadi et al. 2013; Roytershteyn
+et al. 2013; Wan et al. 2015; Roytershteyn et al. 2015). The code
+includes several models of binary collisions, including the particle-
+pairing Coulomb collision algorithm of Takizuka & Abe (1977) ca-
+pable of accurately reproducing the Landau collisional integral over
+a wide range of parameters. The latter model is used in this study.
+Gkeyll is a highly extensible code framework that contains solvers"
+"for a number of systems of equations of relevance to plasma physics,
+including multimoment multifluid (Wang et al. 2015), continuum
+gyrokinetics (Shi et al. 2019; Mandell et al. 2020), and continuum
+Vlasov–Maxwell (Juno et al. 2018; Hakim & Juno 2020). Gkeyll’s
+Vlasov-Maxwell solver utilizes the discontinuous Galerkin finite el-
+ement method for phase-space discretization and a strong-stability"
+"preserving Runge–Kutta method for the integration in time. The
+conservative, discontinuous Galerkin implementation of the non-
+linear Dougherty operator (Dougherty 1964) is adopted to include
+intraspecies collisions (Hakim et al. 2020) (see Juno 2020, for further
+details).
+HVM integrates the Vlasov–Maxwell system within the hybrid"
+"framework, assuming quasi-neutrality and neglecting the displace-
+ment current density (Mangeney et al. 2002; Valentini et al. 2007).
+The proton Vlasov equation is discretized on a phase-space grid and
+integrated numerically, while electrons are assumed to be a massless
+isothermal fluid. A generalized Ohm’s law for evaluating the electric
+field in Faraday’s law is coupled to the Vlasov equation. Proton–
+proton collisions have been recently included through the non-linear
+Dougherty operator (Pezzi et al. 2015; Pezzi et al. 2019b,c)."
+3.2 Simulations setup
+"Wediscuss the two classes of numerical simulations in this work. The
+first class employs both collisionless and weakly collisional vpic and
+Gkeyll simulations of a single current sheet that undergoes sym-
+metric antiparallel magnetic reconnection. In the collisionless case,
+we find that vpic and a separate PIC code P3D (Zeiler et al. 2002),
+adopted in Liang et al. (2020), provide consistent and qualitatively
+similar results. Although the vpic and Gkeyll simulations are very
+similar in their choice of parameters, there are small differences we
+make note of in the subsequent discussion. We first describe the vpic
+simulations.
+The vpic reconnection simulations use a domain size of 𝐿𝑥 ×"
+"𝐿𝑧 = 25 × 25, with periodic boundary conditions in 𝑥 and perfectly
+conducting boundaries on 𝑧. A single-current-sheet initial condition
+is used, with magnetic field given by 𝐵𝑥 (𝑧) = tanh[(𝑧 − 𝐿𝑧/2)/𝑤0],
+where 𝑤0 = 0.5 is the initial half-thickness of the current sheet.
+The initial VDFs are drifting Maxwellians with temperatures 𝑇𝑒 =
+1/12 and 𝑇𝑝 = 5/12 for electrons and protons, respectively; both
+temperatures are initially uniformover thewhole domain. The density
+is set to balance plasma pressure in the fluid sense, with 𝑛(𝑧) =
+sech2 [(𝑧−𝐿𝑧/2)/𝑤0] +𝑛𝑏 , where 𝑛𝑏 = 0.2 is the background (lobe)
+density. Therefore, the total upstream plasma 𝛽 for this simulation is
+𝑛𝑏𝑘𝐵 (𝑇𝑒 +𝑇𝑝)/(𝐵20/8𝜋) = 0.2. The proton-to-electron mass ratio is
+𝑚𝑝/𝑚𝑒 = 25 and the speed of light 𝑐 = 15. These choices enforce
+that the plasma is non-relativistic (the thermal and Alfvén speeds
+are much less than the light speed), which is appropriate for the
+non-relativistic treatment of kinetic entropy. We employ a time-step
+of Δ𝑡 ≈ 5.8 × 10−4. The smallest electron Debye length for this
+simulation (based on the maximum density of 1 + 𝑛𝑏) is _𝐷𝑒 =
+0.018. The spatial grid scale is Δ𝑥 = Δ𝑧 = 0.0125 ≈ 0.6944 _𝐷𝑒
+(𝑁𝑥 = 𝑁𝑧 = 2000). The reference number of particles per cell per
+particle species is 104 for a density equal to one. We simulate three
+different electron–ion collision frequencies: a = 0, a = 0.01 Ω𝑐𝑒 =
+0.25 Ω𝑐𝑝 and a = 0.05 Ω𝑐𝑒 = 1.25 Ω𝑐𝑝 . All types of collisions
+(electron–electron, electron–ion, and ion–ion) are taken into account.
+For each type of collision, the variance of the scattering angle in
+the Takizuka–Abe algorithm is chosen to yield correct ratio of the
+respective collision frequencies (see Takizuka &Abe 1977, for more
+details).
+In addition to the parameters for the PIC simulation, the kinetic"
+"entropy diagnostic requires other parameters, discussed in detail in
+appendix B of Liang et al. (2019). For the PIC simulation, we use
+a velocity space grid scale of Δ𝑣 ≈ 0.6 𝑣𝑡ℎ,𝑒 for electrons and
+Δ𝑣 ≈ 0.5𝑣𝑡ℎ,𝑖 for ions. We use a velocity range for binning the
+particles from −𝑐 to 𝑐 in each dimension for electrons and from
+−0.4𝑐 to 0.4𝑐 for ions."
+"MNRAS 000, 1–17 (2021)"
+6 O. Pezzi et al.
+"The Gkeyll reconnection simulation also uses a single current
+sheet initial condition, in a domain of size, 𝐿𝑥 × 𝐿𝑧 = 8𝜋 × 4𝜋,
+which compared to the PIC simulation is a similar size in 𝑥 but
+about half the size in 𝑧. The boundary conditions are periodic in
+𝑥, a reflecting wall boundary condition in 𝑧. The initial magnetic
+fields and plasma parameters are the same as the vpic simulations:
+𝑤0 = 0.5, 𝑚𝑝/𝑚𝑒 = 25, 𝑇𝑝 = 5/12, 𝑇𝑒 = 1/12, and 𝑛𝑏 = 0.2. Like-
+wise, there is only one Maxwellian component in the current sheet,
+but 𝑐 = 50. Since the continuum Vlasov method in Gkeyll avoids
+aliasing errors associated with under-resolving the Debye length in
+PIC methods while still conserving energy, we choose a coarser con-
+figuration space grid resolution to save on the computational cost of
+a continuum method while still resolving the reconnection dynam-
+ics. Our grid resolution is Δ𝑥 = Δ𝑧 ≈ 0.4 ≈ 40 _𝐷𝑒 (𝑁𝑥 = 64,
+𝑁𝑧 = 32) with piecewise quadratic Serendipity polynomials within
+a grid cell (Arnold & Awanou 2011). The velocity space range is
+from −6 𝑣𝑡ℎ,𝛼 to 6 𝑣𝑡ℎ,𝛼 with a velocity space grid of Δ𝑣𝛼 = 𝑣𝑡ℎ,𝛼
+along with piecewise quadratic Serendipity polynomials in velocity
+space. Zero-flux boundary conditions are employed in velocity space
+to ensure energy conservation. We choose a constant collisionality
+of a𝑒𝑒 = 0.01 for electron–electron collisions and a𝑝𝑝 = 0.002
+for proton–proton collisions for the Dougherty collision operator.
+Reconnection is initiated using a magnetic perturbation with a spec-
+trum of random wave modes in the first 20 modes of the system with
+r.m.s. amplitude 𝛿𝐵/𝐵0 = 2 × 10−3. These random perturbations
+break the symmetry of the continuum kinetic initial condition and
+allow for the study of the standard 𝑚 = 1 tearing mode that arises
+from noise in PIC simulations.
+The HVM turbulence simulations have 512 grid-points in each di-"
+"rection and a size 𝐿𝑥 = 𝐿𝑦 = 𝐿 = 2𝜋×20. Periodic boundary condi-
+tions are imposed for the spatial domain. Velocity space is discretized
+with 71 grid-points in the range 𝑣 𝑗 ="
+"[
+−5𝑣𝑡ℎ, 𝑝 , 5𝑣𝑡ℎ, 𝑝"
+"]
+( 𝑗 ="
+"𝑥, 𝑦, 𝑧), with the boundary condition 𝑓 (𝑣 𝑗 > 5𝑣𝑡ℎ, 𝑝) = 0. The ini-
+tial equilibrium is characterized by spatial homogeneity, Maxwellian
+proton VDFs, and a background uniform out-of-plane magnetic field
+𝑩0 = 𝒆𝑧 with 𝛽𝑝 = 2. This equilibrium is perturbed at 𝑡 = 0
+by imposing magnetic 𝜹𝑩 and bulk speed 𝜹𝒖 = ±𝜹𝒃 fluctuations
+(𝜹𝒃 in Alfvén speed units). Energy is injected at large scales, i.e.
+𝑘 ∈ [2, 6]𝑘0 (𝑘0 = 2𝜋/𝐿), with a flat energy spectrum and random
+phases. The r.m.s. amplitude of the fluctuations is 𝛿𝐵/𝐵0 = 1/2.
+No density perturbations nor parallel perturbations are introduced at
+𝑡 = 0. Electron inertia effects are neglected in Ohm’s law, while elec-
+tron temperature is set equal to the initial ion temperature. A small
+resistivity ([ ' 10−3) is introduced to suppress numerical instabili-
+ties and does not play a significant role in the plasma dynamics. The
+adopted numerical resolution captures two decades of perpendicular
+wavenumbers: one above and one below the proton skin depth 𝑑𝑝 .We
+consider two simulations, characterized by a different proton–proton
+collisional frequency a, namely collisionless (a = 0) and weakly
+collisional (a = 10−3) (see Pezzi et al. 2019c, for further details)."
+"4 NUMERICAL RESULTS: DISSIPATION MEASURES IN
+MAGNETIC RECONNECTION"
+4.1 Proton dissipation proxies for collisionless reconnection
+"Figure 1 displays the set of implemented proxies for protons in the
+vpic simulations. The left column collects the results for the col-
+lisionless simulation, i.e. with a = 0. We initially focus on these
+results, and discuss the effects of collisions in Section 4.3. The data
+are taken at time 𝑡 ' 22 Ω−1𝑐𝑝 , after the peak of the reconnection"
+"rate. To compute energy-based parameters involving spatial deriva-
+tives, Gaussian smoothing is used to filter the noise (e.g. Birdsall &
+Langdon 2004).
+The Zenitani parameter 𝐷 𝑝 shows signatures consistent with pre-"
+"vious studies (Zenitani et al. 2011; Swisdak 2016), being peaked
+with a positive value in the diffusion region. In the exhausts, there
+is oscillatory behavior especially on small scales in the primary is-
+land. This is likely due to time-domain structures (Mozer et al. 2015)
+such as electron holes, which formDebye-scale bi-directional electric
+fields. Such structures are at small scales and produce local energy
+conversion between the particles and fields.
+The LET parameter 𝜖𝑝,ℓ shows a large-scale pattern peaked inside"
+"the magnetic island that is only weakly modulated in the horizontal
+direction, as well as a weaker signal approximately coincident with
+the electron diffusion region (EDR). As pointed out in Section 2.1,
+extracting information about LET is challenging in this reconnection
+simulation, where the background field is inhomogeneous and the
+fields are not in a steady state of fully developed turbulence. The
+signs of LET are opposite on either side of the magnetic reversal
+because LET is calculated with an increment with a component in
+the positive 𝑧 direction. The contribution of various terms to the
+local 𝜖𝑝,ℓ (not shown) reveals that the Hall terms (in particular
+the current-helicity term, i.e., the last term in Eq. 13) dominate
+the non-linear energy transfer. This is related to the presence of
+Hall-scale electric currents and to the magnetic configuration of
+the reconnection region, which thus are the main drivers of the non-
+linear interactions. Furthermore, the prevalent positive sign observed
+for theMHD cross-helicity term (not shown) suggests that non-linear
+interactions are inhibited by the strong presence of coupled velocity-
+magnetic field (Alfvénic) fluctuations, which reduce the effective
+transfer of energy and possibly the onset of turbulence.
+The Pi-D𝑝 plot shows that the pressure–strain term is positive"
+"yet small near the X point on a length-scale in the inflow direction
+beyond the EDR. Protons undergo meandering orbits in this region,
+producing non-gyrotropic VDFs, while the reconnection inflow and
+outflow are associated with bulk velocity shear: this produces a non-
+zero Pi-D𝑝 . Inside the islands, a bipolar (positive/negative) signal is
+found. The strong negative region suggests energy is locally being
+converted from thermal energy to bulk kinetic energy, perhaps in
+a region where counterstreaming beams including reflected ions at
+the dipolarization front where the denser current sheet population
+is being pushed downstream by the reconnected magnetic field are
+converted into bulk flow. In contrast, P-\𝑝 , which has a peak value
+about a factor of 2 larger than Pi-D𝑝 , tends to be quite structured and
+positive in most of the island, is negative in the EDR, and is small in
+the ion diffusion region (IDR). These results make sense physically:
+the plasma in the island is undergoing compression due to the bulk
+flows, so that P-\𝑝 is positive. In the diffusion region, when upstream
+magnetic flux tubes enter the region of weaker magnetic field, they
+expand, leading to negative \𝑝 = ∇ · 𝒖𝑝 .
+Moving to VDF-based parameters, the proton agyrotropy"
+"parameter indicates a proton gyro-scale region of non-gyrotropy sur-
+rounding the diffusion region and the whole island at this stage of the
+evolution, owing to the complicated distribution functions that ap-
+pear where protons undergo meandering orbits. Local"
+"√︁
+𝑄𝑝 maxima"
+"occur in the inner shell of the magnetic island, where both the LET
+and Pi-D𝑝 are locally peaked. Turning to the non-Maxwellianity pa-
+rameters, the b𝑝 parameter similarly shows structure at proton scales
+in both the diffusion region and the islands. The structure of �̄�KP,p
+and �̄�𝑝 are qualitatively quite similar to b𝑝 , as expected. In each
+case, the protons are most strongly non-Maxwellian in the EDR, with
+non-zero values also in the IDR and in the island. Themain difference"
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 7
+PLACE HOLDER
+"0 
+) /"
+"0.5
+0.4
+0.3
+0.2
+0.1
+0.0"
+"0 
+) /"
+"0 
+) /"
+"-5                0                5
+(x-x0 ) / dp"
+"0 
+) /"
+"0.10
+0.07
+0.03
+0.00
+-0.03
+-0.07
+-0.10"
+"0 
+) /"
+"0 
+) /"
+"0 
+) /"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"M
+KP, p"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"-2(z
+-z"
+"0 
+) /"
+PLACE HOLDER
+"0 
+) /"
+"0.5
+0.4
+0.3
+0.2
+0.1
+0.0"
+"-z
+0 
+) /"
+"0 
+) /"
+"-5                0                5
+(x-x0 ) / dp"
+"0 
+) /"
+"0.10
+0.07
+0.03
+0.00
+-0.03
+-0.07
+-0.10"
+"0 
+) /"
+"0 
+) /"
+"0 
+) /"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"M
+KP, p"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"-2(z
+-z"
+"0 
+) /"
+ν=0.25
+PLACE HOLDER
+"0 
+) /"
+"0.5
+0.4
+0.3
+0.2
+0.1
+0.0"
+"0 
+) /"
+"0 
+) /"
+"-5                0                5
+(x-x0 ) / dp"
+"0 
+) /"
+"0.10
+0.07
+0.03
+0.00
+-0.03
+-0.07
+-0.10"
+"0 
+) /"
+"0 
+) /"
+"0 
+) /"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"M
+KP, p"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"-2(z
+-z"
+"0 
+) /"
+ν=1.25
+"-4 -4 -4
+0.03
+0.02
+0.01
+0.00
+-0.01
+-0.02
+-0.03"
+"Figure 1. Comparison of various dissipation proxies for protons, from the vpic simulations with a = 0 (left column), a = 0.25 (centre) and a = 1.25 (right).
+The proxies are computed at 𝑡 = 22 for the collisionless run and 𝑡 = 26 for the weakly collisional runs. From top to bottom: the Zenitani parameter 𝐷𝑝 ; the
+LET parameter 𝜖𝑝,ℓ with ℓ ' 𝑑𝑝 ; the pressure–strain interaction Pi-D𝑝 ; the pressure dilatation P-\𝑝 ; the agyrotropy"
+"√
+𝑄𝑝 ; the non-Maxwellian indicators b𝑝 ;"
+"�̄�KP, 𝑝 ; and �̄�𝑝 . Solid lines indicate separatrices."
+"MNRAS 000, 1–17 (2021)"
+8 O. Pezzi et al.
+"between these last measures, namely the quadratic non-Maxwellian
+parameter b𝑝 and the entropy-based non-Maxwellianity parameters,
+is that the latter appear more localized than the former, suggest-
+ing that the entropy-based proxies require relatively more strongly
+non-Maxwellian structures to attain appreciable values relative to
+b𝑝 , owing to the natural log VDF dependence in their definition
+compared to the quadratic dependence of b𝑝 .
+Summarizing the collisionless simulation results for protons, all"
+"eight dissipation measures in question show structure in and around
+the current sheet and magnetic island. For the parameters in this
+simulation, the quantities that are most strongly peaked in the EDR
+are 𝐷 𝑝 , b𝑝 , �̄�𝐾𝑃,𝑝 , and �̄�𝑝 . The strongest measure for the IDR is√
+𝑄𝑝 , with Pi-D𝑝 , b𝑝 , �̄�𝐾𝑃,𝑝 , and �̄�𝑝 also displaying structure. In
+the island, 𝜖𝑝 , Pi-D𝑝 and P-\𝑝 are significant, with 𝐷 𝑝 revealing
+significant electron-scale variations."
+4.2 Electron dissipation proxies for collisionless reconnection
+"In analogy with protons, electron dissipation proxies are displayed in
+Fig. 2. One exception is that the LET parameter is not computed for
+electrons, as discussed in Section 2.1. As expected, 𝐷𝑒 ' 𝐷 𝑝 due to
+quasi-neutrality. Again, we first focus on the collisionless case in the
+left column.
+The other energy-based parameters, the electron pressure–strain"
+"interaction terms Pi-D𝑒 and P-\𝑒, have highly structured patterns
+at much smaller scales than their proton counterparts, as expected.
+In the current sheet, Pi-D𝑒 and P-\𝑒 are both confined to the EDR,
+with almost no signal in the IDR. Pi-D𝑒 is positively peaked in
+the magnetic island close to the X-point. There are strong bands of
+Pi-D𝑒 near the upstream edges of the EDR, where velocity shear
+due to electron meandering orbits is significant. In the island, both
+Pi-D𝑒 and P-\𝑒 have strong variations in the small-scale structures
+discussed in the previous subsection. The intense electric fields are
+expanding and compressing the electron fluid as seen in P-\𝑒, and
+these fluctuations in the local velocity shear give a non-zero Pi-D𝑒.
+There is also coherent structure of Pi-D𝑒 as the electrons leave the
+EDR and develop a velocity shear as they move around the pre-
+existing magnetic island.
+For the VDF-based proxies, all four proxies"
+"√
+𝑄𝑒, b𝑒, �̄�KP,e and"
+"�̄�𝑒 are peaked in the EDR where the strong signature of 𝐷𝑒 is
+present. For"
+"√
+𝑄𝑒, it is peaked at the upstream edges of the EDR"
+"where the meandering orbits meet the upstream electrons, and is
+relatively smaller near the magnetic field reversal where distributions
+have a characteristic wedge shape (Ng et al. 2011). Interestingly,
+the agyrotropy"
+"√
+𝑄𝑒 is only non-zero in the EDR, while the non-"
+"Maxwellianities b𝑒, �̄�KP,e and �̄�𝑒 are non-zero in both the EDR
+and IDR. The reason for this is that the electrons upstream in the
+IDR are trapped (Egedal et al. 2005), and it has been shown that they
+produce gyrotropic distributions elongated in the parallel direction
+(Egedal et al. 2008, 2013). Consequently, the agyrotropy in the IDR
+is zero, while the non-Maxwellianity is non-zero, as is seen in the
+simulation results.
+All four VDF-based proxies also show strong signatures close to"
+"the separatrices, where complicated distributions at the boundaries
+between upstream plasma and the magnetic island occur. This is a
+key distinction between these proxies and the energy-based proxies,
+which are not peaked near the separatrices. This signature suggests
+that the energy conversion in the island and exhaust is not taking
+place near the edges of the islands, but more towards the core as
+the bent field lines straighten. The VDF-based proxies also display
+non-zero signals at the small-scale structures in the exhaust."
+4.3 Collisional effects on proton and electron dissipation proxies
+"We now turn to the effect of interspecies and intraspecies collisions
+on the dissipation measures for both protons and electrons. To put the
+numerical collisionality in perspective, we compare it to two known
+critical collision frequencies for reconnection. Collisionless (Hall)
+reconnection transitions to collisional (Sweet–Parker) reconnection
+at a critical resistivity [𝑐 (Cassak et al. 2005). The initial current
+sheet thickness 𝑤0 = 0.5 is about four times smaller than 𝑑𝑝 , so
+it is expected that collisionless reconnection will occur for small
+enough resistivity. From Fig. 3 of Cassak et al. (2005), the critical
+resistivity is [𝑐𝑐2/4𝜋𝑐𝐴𝑑𝑝 ' 0.2, which in normalized units for
+this study is [𝑐 ' 1. Then, the critical collision frequency is a𝑐 =
+[𝑐𝑛𝑒𝑒"
+"2/𝑚𝑒 ' 5. Therefore, for a = 0.25 and 1.25, as is used here in
+the vpic simulations, reconnection is expected to remain Hall-like.
+The time-scale for magnetic diffusion in the electron current sheet
+is 4𝜋𝑑2𝑒/[𝑐2 = 1/a, so the diffusion time-scales are 4 and 0.8 for
+a = 0.25 and 1.25, respectively. In comparison, the electron Alfvén
+transit time through the EDR is 2𝑑𝑒/(0.1𝑐𝐴𝑒) ' 2, where 𝑐𝐴𝑒 is the
+electron Alfvén speed. Consequently, collisions are expected to have
+a noticeable effect in the EDR in the vpic simulations for a = 0.25,
+and a significant effect for a = 1.25. A second critical collision
+frequency is that at which collisions affect electron trapping upstream
+of the EDR, which is approximately a = 0.1 (Le et al. 2015). Thus,
+the trapping of electrons will be minorly affected for a = 0.25 and
+significantly affected for a = 1.25. In contrast, the collisionality for
+the Gkeyll simulation is very low, below both thresholds, so the
+evolution is essentially collisionless.
+Figure 1 displays the proton dissipation proxies for the a = 0.25"
+"(centre) and a = 1.25 (right) vpic simulations. Data are from 𝑡 ' 26
+for both a = 0.25 and 1.25, when the magnetic energy of these
+simulations is nearly the same as the collisionless case at 𝑡 = 22. The
+a = 0.25 case is just after the peak in reconnection rate, as for the
+a = 0 case. The a = 1.25 case is just before the peak in reconnection
+rate, which explains why the island is somewhat smaller for this case.
+The energy-based parameters should be affected by the presence"
+"of inter-species collisions due to the exchange of energy between
+species. For a = 0.25, collisions affect the small-scale structures that
+were present in the collisionless case, especially in 𝐷 𝑝 and P-\𝑝 .
+However, as expected, the large-scale structure of these parameters
+is not greatly altered for this collisionality. For a = 1.25, however,
+collisions significantly alter the dissipation proxies. The signals in
+the magnetic islands are severely weakened, as are the signals in the
+EDR and IDR. Despite being weaker, the large-scale structure of the
+measures is largely unchanged.
+In a similar way, VDF-based parameters are qualitatively unaf-"
+"fected by collisional effects for a = 0.25, with only weak quantitative
+differences. On the other hand, for a = 1.25, VDF-based parame-
+ters are strongly quantitatively affected. As collisions drive distribu-
+tions towardMaxwellianity, especially those with fine velocity–space
+structures, i.e. the non-Maxwellianity measures b𝑝 , �̄�KP,p, and �̄�𝑝 ,
+are strongly decreased. The agyrotropy"
+"√
+𝑄𝑝 is also reduced by strong"
+"collisions, but not as drastically as the non-Maxwellianity measures,
+as it is less sensitive to sharp peaks in velocity space. This result again
+confirms that collisional dissipation acts on different characteristic
+time-scales depending on the scale of the velocity–space distortion in
+the particle VDF: finer velocity space structures produce shorter dis-
+sipation time-scales (Landau 1936; Rosenbluth et al. 1957; Balescu
+1960; Pezzi et al. 2016).
+We analyze now the effect of collisions on electron dissipation"
+"proxies for the vpic simulations, which bears many similarities to
+the effect on proton dissipation proxies. The small-scale structures in"
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 9
+"0 
+) /"
+"0.5
+0.4
+0.3
+0.2
+0.1
+0.0"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"0 
+) /"
+"0 
+) /"
+"-5                0                5
+(x-x0 ) / dp"
+"0 
+) /"
+"0.10
+0.07
+0.03
+0.00
+-0.03
+-0.07
+-0.10"
+"0 
+) /"
+"0 
+) /"
+"0 
+) /"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"M
+KP, e"
+"0 
+) /"
+"0.5
+0.4
+0.3
+0.2
+0.1
+0.0"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"0 
+) /"
+"0 
+) /"
+"-5                0                5
+(x-x0 ) / dp"
+"0 
+) /"
+"0.10
+0.07
+0.03
+0.00
+-0.03
+-0.07
+-0.10"
+"-z
+0 
+) /"
+"0 
+) /"
+"0 
+) /"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"M
+KP, e"
+ν=0.25
+"0 
+) /"
+"0.5
+0.4
+0.3
+0.2
+0.1
+0.0"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"0 
+) /"
+"0 
+) /"
+"-5                0                5
+(x-x0 ) / dp"
+"0 
+) /"
+"0.10
+0.07
+0.03
+0.00
+-0.03
+-0.07
+-0.10"
+"0 
+) /"
+"0 
+) /"
+"0 
+) /"
+"0.20
+0.13
+0.07
+0.00
+-0.07
+-0.13
+-0.20"
+"M
+KP, e"
+ν=1.25
+"Figure 2. Same as figure 1, but for electrons instead of protons."
+"the island largely disappear even for the weaker collisionality of a =
+0.25. However, at variance with the protons, P-\𝑒 shows persistent
+small-scale structure even at large collisionality a = 1.25. The non-
+Maxwellianity proxies for electrons are very small for a = 1.25. This
+is consistentwith collisions being dynamically important on the time-
+scale of the electron transit through the EDR; they Maxwellianize
+almost fully. In contrast, the EDR remains clearly visible in the
+non-Maxwellianity measures for a = 0.25. The agyrotropy is non-
+zero at the edges of the EDR for all three simulations, suggesting
+that the meandering orbits are sufficient to produce this signal even
+for the highest collisionality considered here. The trapped electrons"
+"upstream of the EDR are weaker for a = 0.25 and nearly non-existent
+for a = 1.25, consistent with the predictions from Le et al. (2015)."
+"We finally describe the weakly collisional continuum Gkeyll
+simulation. The Gkeyll simulation includes only the effects of in-
+traspecies collisions."
+"Figure 3 shows the proton dissipation proxies, plotted at a slightly
+earlier time 𝑡 ' 18, but this time is after the peak of the reconnection
+rate which takes place at an earlier time with respect to the vpic case
+owing to the smaller system size. The plots reveal that theX-line is not
+located exactly in the center of the domain and there is a significant
+left–right asymmetry. This is because the random perturbation to the"
+"MNRAS 000, 1–17 (2021)"
+10 O. Pezzi et al.
+"Figure 3. Same dissipation proxies as plotted in Figure 1, but for the protons
+in the Gkeyll reconnection simulation."
+"initial condition seeding reconnection breaks the symmetry in the 𝑥
+direction.
+Three of the energy-based measures, 𝐷 𝑝 , Pi-D𝑝 , and P-\𝑝 , show"
+"broad agreement with the vpic results in Figure 1. The Gkeyll
+simulation has a more structured Pi-D𝑝 near the X-line due to a
+secondary island near 𝑧 = 𝑧0 and 𝑥 − 𝑥0 ' [1, 2], which develops
+shortly after the peak of the reconnection rate. The secondary island
+has a bipolar structure in Pi-D𝑝 analogous to the bipolar structure
+downstream in a dipolarization front in the vpic simulation, visible
+at 𝑧 = 𝑧0 and 𝑥 − 𝑥0 ' [−9,−4] in Figure 1. The strongest difference
+between the two data sets is observed in the LET diagnostic 𝜖𝑝 ,
+which displays broader features in the Gkeyll simulation. This is
+likely due to the coarser configuration-space resolution.
+For the VDF-based diagnostics, the Gkeyll simulation gives qual-"
+"itatively and quantitatively similar results in the exhaust, especially
+the inner shell of the magnetic island. However, small differences
+arise in these diagnostics due to the secondary island in the Gkeyll
+simulation. Indeed, this structure generates intense deviations from
+the thermal equilibrium due to the mixing and rapid rotation of pro-
+tons trying to align with the local magnetic field. Inside the proton
+scale island, we observe strong deformation of the proton VDFwhich
+manifests as an intense agyrotropy"
+"√︁
+Q𝑝 and non-Maxwellianity b𝑝 ,"
+"M̄𝐾𝑃,𝑝 and M̄𝑝 .
+Turning to electron dissipation proxies, displayed in Figure 4,"
+"the Gkeyll simulation results display a good agreement with the
+vpic data. In fact, the overall structure in energy-based diagnostics
+such as 𝐷𝑒 and Pi-D𝑒 and distribution function-based diagnostics
+such as"
+"√︁
+Q𝑒 and b𝑒, agrees better for electrons than for protons."
+"For example, 𝐷𝑒 and Pi-D𝑒 are positive in the electron diffusion
+region, and we observe enhancement of all the distribution function-
+based diagnostics near the separatrices. This better agreement can be
+linked to the secondary island not having as dramatic an impact on
+the electron dynamics in the magnetic island."
+"Figure 4. Same dissipation proxies as plotted in Figure 2, but for the electrons
+in the Gkeyll reconnection simulation."
+"The comparison of this wide array of diagnostics from these two
+different codes in different regimes, from collisionless vpic to weakly
+collisional Gkeyll to collisional vpic, reveals the diversity of infor-
+mation content each diagnostic contains. In many cases, we observe
+little qualitative difference between the energy-based diagnostics
+from different simulations while VDF-based diagnostics are more
+sensitive both qualitatively and quantitatively to the strength of col-
+lisions and subtle differences in the underlying kinetic evolution of
+the reconnection process, such as the secondary island which forms
+in the Gkeyll simulation."
+"5 NUMERICAL RESULTS: DISSIPATION MEASURES IN
+TURBULENT PLASMAS"
+"We here describe the structure of dissipation proxies in plasma turbu-
+lence at kinetic scales. Since the HVM code using the hybrid model
+neglects electrons, we only treat proton parameters. In these simu-
+lations, energy injected at large scales generates a cascade towards
+smaller scales. The time corresponding to the most intense turbulent
+activity is 𝑡 = 𝑡∗ = 30, in which a turbulent state characterized by
+an intermittent pattern of current sheets that border magnetic islands
+and vortices (Servidio et al. 2015; Wan et al. 2015) is reached. We
+show simulation results at 𝑡 = 𝑡∗ in Fig. 5, with the output of the
+collisionless (left) and collisional (right) simulation. Panels from (a)
+to (h) display 𝐷 𝑝 , 𝜖𝑝,ℓ with ℓ ' 𝑑𝑝 , Pi-D𝑝 , P-\𝑝 ,"
+"√︁
+𝑄𝑝 , 𝜖𝑝 , �̄�KP,p,"
+"and �̄�𝑝 , respectively.
+We begin by analysing the energy-based parameters. 𝐷 𝑝 , LET"
+"𝜖𝑝,ℓ , and the Pi-D𝑝 term are all peaked close to the most intense
+current sheets. This confirms that current sheets are the sites with
+the most intense local energy conversion and dissipation. 𝐷 𝑝 has a
+preferred sign, being positive in most of the regions of highest energy
+conversion. This implies there is a net conversion of energy from"
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 11
+"Figure 5. Various dissipation surrogates evaluated at the time of maximum turbulent activity in HVM simulations, 𝑡 = 𝑡∗. The two columns at left refer to the
+collisionless case, and the two at the right are for the weakly collisional case. Panels from (a) to (h) display 𝐷𝑝 , 𝜖𝑝,ℓ with ℓ ' 𝑑𝑝 , Pi-D𝑝 , P-\𝑝 ,"
+"√︁
+𝑄𝑝 , b𝑝 ,"
+"�̄�KP,p, and �̄�𝑝 , respectively."
+"the electromagnetic fields to protons. Similarly, the predominantly
+negative LET supports the standard picture of a direct global energy
+cascade towards small scales. The regions of larger energy transfer
+are generally located near the current sheets, and some complexity
+in the fine local details of the transfer can be observed. A detailed
+analysis of each term of the right-hand side of Eq. (13) reveals that
+the total energy (kinetic plus magnetic) available to be transported by
+the longitudinal componentΔ𝑢𝑝,ℓ is the main contributor to the LET
+parameter in this HVM simulation. In this case, it is also confirmed
+(not shown) that the global (Yaglom–Hall) law shows a linear scaling
+in the interval roughly corresponding to the MHD-turbulence range
+(2𝑑𝑝 . ℓ . 10𝑑𝑝), as also recently reported in similar simulation
+setups by Sorriso-Valvo et al. (2018a) and Vásconez et al. (2021).
+As displayed in previous HVM (Pezzi et al. 2019a) and in PIC"
+"simulations (Yang et al. 2019), Pi-D𝑝 is highly structured, having
+both positive and negative regions close to intense current sheets.
+Conversely, P-\𝑝 is larger than its Pi-D𝑝 counterpart and has signif-"
+"icant contributions both at the current sheets and in magnetic islands
+since it is related to large-scale plasma compression (red) and rarefac-
+tion (blue). The most intense regions of P−\𝑝 are at current sheets,
+reflecting the rapid collision or separation of large-scale magnetic
+islands.
+The four VDF-based proxies bear many similarities. They are"
+"highly structured, with local peaks close to current sheets. As with
+the reconnection simulations, there are also differences between these
+measures. It is more common to get appreciable values of"
+"√
+𝑄𝑝 than"
+"other VDF-based measures, especially �̄�𝐾𝑃,𝑝 and �̄�𝑝 . This indi-
+cates that the agyrotropy provides an overall picture of the presence
+of large-scale kinetic effects in the VDFs (namely the 2nd order VDF
+moment), while fine-scale structures in the VDF are larger contribu-
+tors to non-Maxwellianity measures.
+The collisionless and weakly collisional simulations do not reveal"
+"significant differences in the energy-based parameters for the col-
+lision frequency in use. The inclusion of proton–proton collisional"
+"MNRAS 000, 1–17 (2021)"
+12 O. Pezzi et al.
+"Figure 6. 1D cuts vertically through the 𝑥-line showing the various dissipation surrogates in the reconnecting current sheet for the vpic collisionless reconnection
+simulation. The top row refers to proton proxies, displaying energy-based parameters (left, with 𝜖𝑝,ℓ scaled by a factor of 10 to make it more visible) and
+VDF-based parameters (right). In the right-hand panel, the Zenitani measure 𝐷𝑝 is showed as a reference. The bottom row is analogous for the electron proxies."
+"effects does not affect the statistical characteristics of turbulence at
+the proton scale. This can be explained since, at variance with inter-
+species collisional effects, intraspecies collisions do not generate a
+resistivity-like termwhich directly affects the electric field and hence
+fluid quantities. On the other hand, VDF-based parameters are dissi-
+pated by collisions, signature of the collisional thermalization. Since
+these parameters are sensitive to the presence of out-of-equilibrium
+structure in the proton VDF, they are affected by intraspecies colli-
+sional effects. The effect of collisions is less visible in"
+"√︁
+𝑄𝑝 since col-"
+"lisions preferentially dissipate fine velocity–space structures (Pezzi
+et al. 2016), which contribute less to"
+"√︁
+𝑄𝑝 . The effect of collisions"
+"is visible in b𝑝 and in the entropy density-based non-Maxwellianity
+proxies. The maximum values of these three parameters are smaller
+by about 10% in the weakly collisional simulation than the colli-
+sionless simulation. Similarly, average values are reduced by about
+20% for b𝑝 and 30% for �̄�KP,p and �̄�𝑝 when including collisions.
+The effect of collisions becomes more significant at later times (not
+shown here, see Fig. 4 of Pezzi et al. 2019c). Indeed, at the final time
+of the simulation, maxima of b𝑝 and of the entropy density-based
+proxies are, respectively, about 20 and 30% smaller when collisional
+effects are considered, while their average values are reduced by 40
+and 60%, respectively. The different dissipation (in terms of both
+maximum and averaged values) of b𝑝 and the entropy density-based
+proxies suggests that the latter react more to collisional effects than
+b𝑝 since entropy-based proxies are dissipated more efficiently via
+collisions."
+"6 ONE-DIMENSIONAL PROFILES OF DISSIPATION
+PROXIES"
+"We conclude by presenting 1D cuts of the dissipation surrogates
+adopted in this work across a typical current structure. We include"
+"both the reconnecting current sheet and a typical current sheet ob-
+served in the turbulent HVM simulation. We focus on the collision-
+less simulation, since our aim is mainly discussing how these pa-
+rameters look when crossing a particular structure. Moreover, for the
+magnetic reconnection simulations, we show cuts for only the vpic
+runs, since Gkeyll and vpic provide similar results. These plots
+help reveal comparative proxy structure near to the current sheets,
+and may also be useful for future comparison with in situ spacecraft
+observations, e.g., for the Pi-D measure (Chasapis et al. 2018b). For
+applications of these results to observations or laboratory experi-
+ments, it is important to emphasize that the results are undoubtedly
+sensitive to the plasma parameters and to the reduced 2D physical-
+space dimensionality (Howes 2015a; Li et al. 2016). Note also that
+multispacecraft observations are necessary to compute the spatial
+derivatives needed to calculate some of these diagnostics (e.g. Pi-D
+measure)."
+"Figure 6 shows the dissipation proxies along a cut in the recon-
+nection simulation through the X-point in 𝑧. The vertical dotted and
+dashed lines mark the upstream edges of the EDR and IDR, respec-
+tively. These edges are defined by the location at which the electron
+and ion out-of-plane currents are 20% of their maximum (Shay et al.
+2001). The upper panels show the results for the protons, and the
+lower panels are for electrons, with energy-based measures in the left
+plots and VDF-based measures on the right. For the energy-based
+measures, 𝐷𝑒 ' 𝐷 𝑝 shows a clear peak in the EDR. The LET param-
+eter 𝜖𝑝,ℓ , scaled by a factor of 10 to make it easier to see, displays the
+negative-positive double-peaked structure in the EDR seen in Figure
+1, and is negligible elsewhere. The sign of 𝜖𝑝,ℓ is the same sign as
+𝐵𝑥 for this current sheet. The electron and ion Pi-D and P-\ show
+moderately intensified signals within the EDR with tails extending
+into the IDR. Compared to the Zenitani measure, both P-\ and Pi-D"
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 13
+"Figure 7. Same as figure 6, but at 𝑥 − 𝑥0 = 5𝑑𝑝 ."
+"display rapidly fluctuating patterns but only Pi-D is positive definite
+within the IDR, i.e. the same sign of 𝐷 𝑝 .
+For the VDF-based measures, the agyrotropies"
+"√
+𝑄𝑒 and"
+"reveal a double-peak structure the diffusion region of each species
+correlated with the size of its diffusion region. As discussed in Sec-
+tion 4.2, this shape is caused by the meandering motions of the parti-
+cles traversing their diffusion regions at their gyroscale and is there-
+fore a characteristic shape of"
+"√
+𝑄 in the diffusion region of antiparal-"
+"lel reconnection. For both electrons and ions, the non-Maxwellianity
+proxies b, �̄�𝐾𝑃 , and �̄� , show intensified signals over the IDR with
+relatively strong peaks in the EDR. As discussed in Section 4, the
+electron non-Maxwellianities not only show the peaks in the EDR
+but also broad intensified signals over the IDR. As analysed in Liang
+et al. (2020), the broad intensified signals are due to the gyrotropic
+distributions created by trapped electrons (Egedal et al. 2005). This
+non-zero signal is coincident with negligible signal in the electron
+energy-based proxies 𝐷𝑒, Pi-D𝑒 and P-\𝑒.
+Figure 7 similarly displays the dissipation proxies along a vertical"
+"cut through the reconnection simulation at 𝑥 − 𝑥0 = 5, i.e. through
+the reconnection exhaust. The format is the same as Figure 6. For
+this cut, the exhaust is between the separatrices at 𝑧 − 𝑧0 ' ±1.5. For
+both electrons and ions, all energy-based diagnostics, 𝐷𝑒 = 𝐷 𝑝 , 𝜖𝑝 ,
+Pi-D and P-\ show intensified, yet noisy, signals. The signals include
+positive and negative values due to complex flows in this region,
+although for this cut the Pi-D𝑝 measure has a sizeable negative value.
+The VDF-based proxies for both electrons and ions are intensified in
+the exhaust, as well. The electronVDF-based proxies have peaks near
+the separatrices, due to the counter-streaming electron flows (Hesse
+et al. 2018; Liang et al. 2020). The VDF-based proxies are slightly
+broader than the exhaust, which results from the finite Larmor radius
+(FLR) effects near the separatrices as shown by the non-gyrotropy√︁
+𝑄𝑝 . Although FLR effects are not seen much in the energy-based
+diagnostics, they are picked up by the VDF-based diagnostics b𝑝 ,
+�̄�𝐾𝑃,𝑝 and �̄�𝑝 ."
+"Finally, we show in Fig. 8 the dissipation proxies for the collision-
+less HVM turbulence simulation along a 1D cut close to the current
+sheet near (𝑥, 𝑦) = (69, 36). Similar results are obtained in the col-
+lisional simulation. All the energy-based parameters (top panel of
+Fig. 8) are peaked within the same region, i.e. 𝑦 ' 36. The VDF-
+based proxies (bottom panel of Fig. 8) also reveal clear maxima near
+the current structure. However, the maxima are somewhat broader in
+width (∼ 2 − 5) than the energy-based parameters (∼ 1). Moreover,
+the agyrotropy parameter"
+"√︁
+𝑄𝑝 shows large-scale fluctuations quite"
+"far from the current structure. The broader distribution observed for
+the VDF-based parameters suggests that energy transfer is localized
+close to the coherent structures, but can affect the particle distribution
+function in a larger region around these structures."
+"The 1D cuts of the dissipation proxies for both the reconnection
+and turbulence simulations support the idea that peaks of dissipation
+measures in a reconnecting current sheet or a turbulent environment
+characteristically occur in coincident spatial regions, but not nec-
+essarily at the same exact spatial position. This is consistent with
+the notion of regional correlations, suggested by Yang et al. (2019);
+Matthaeus et al. (2020). The selected structure has more of a resem-
+blance to the 1D cut of the reconnection simulation at the X-point
+than at the reconnection exhaust. However, there are qualitative and
+quantitative differences. The Zenitani measure and the diagnostics
+based on the pressure–strain interaction (Pi-D and P-\) have the same
+dimensions (see Sect. 3), hence it is reasonable to compare their mag-
+nitude. In this respect, we notice that the Zenitani measure is most
+prominent in the reconnection simulation, while a positive P-\ is the
+strongest in the turbulence simulation. This suggests that, when sim-
+ulating a single reconnecting current sheet, compressible effects are
+less significant. On the other hand, when reconnection occurs in a
+turbulent environment, where magnetic islands can merge with each
+other, compression is much more significant. The LET parameter,
+which has different dimensions than the other three energy-based
+surrogates, oscillates in the reconnection simulation, but is strongly"
+"MNRAS 000, 1–17 (2021)"
+14 O. Pezzi et al.
+"Figure 8. (Color online) Same as figure 6, but for the HVM collisionless
+turbulence simulation. The cut is taken at 𝑥 = 68.7 𝑑𝑝 ."
+"negative in the turbulence one. Qualitative agreement between the
+structures is found for the VDF-based surrogates, that are all adimen-
+sional, although some features in the reconnection simulation (e.g.
+double peaks in the agyrotropy) are not present in the turbulence
+simulation perhaps because of the different numerical resolution.
+Furthermore, for the cut through the current sheet in turbulence,
+the parameters depend on time due to the turbulent interaction of
+larger scale magnetic eddies, so wide variation in parameters across
+different current sheets and at different times is expected."
+7 DISCUSSION AND CONCLUSIONS
+"As a result of the weak collisionality of many space and astrophysical
+plasmas, several physical processes can locally contribute to the dis-
+sipation of energy and the heating of the plasma. During magnetic
+reconnection, magnetic energy is efficiently converted to directed
+plasma flows, thermal energy, and energetic particles (Burch et al.
+2016; Torbert et al. 2018). During turbulence in amagnetized plasma,
+the cascade provides the global amount of energy needed for fluc-
+tuations to be dissipated at small scales (Marino et al. 2008). How-
+ever, which dissipative mechanisms are dominant and under which
+conditions is still not sufficiently understood (Vaivads et al. 2016).
+Therefore, a multiplicity of dissipation surrogates have been adopted
+in the literature to identify potential sites of dissipation. Owing to
+the strongly non-linear dynamics and the importance of physics at
+kinetic scales in such systems, numerical simulations of the Vlasov–
+Maxwell system (or, including collisions, the Boltzmann–Maxwell
+system) are the decisive tool to address the long-standing issue of
+plasma heating and energy dissipation in magnetized plasmas, e.g.
+Parashar et al. (2009). For example, the “turbulence dissipation chal-
+lenge” (Parashar et al. 2015) motivated numerical work to compare
+different algorithms on the solution of similar problems to assess the"
+"nature of the dissipation in magnetized turbulence (e.g. Pezzi et al.
+(2017); Perrone et al. (2018); González et al. (2019)).
+In the same spirit, we have conducted a survey of a number of dis-"
+"sipation surrogates with three different kinetic plasma codes — the
+fully kinetic particle-in-cell vpic, the fully kinetic Eulerian Vlasov–
+Maxwell Gkeyll, and the Eulerian Hybrid Vlasov–Maxwell codes
+— to perform numerical simulations of two important physical phe-
+nomena in plasma physics. The first class investigates reconnection in
+an isolated current sheet, and the second concerns plasma turbulence
+at kinetic scales. We have calculated and compared eight distinct
+dissipation proxies, delineated in Section 2. For the sake of clarity,
+we have categorized them in terms of (i) energy-based parameters,
+whose definition describes energy transfer and conversion; and (ii)
+VDF-based parameters, that are directly related to kinetic signatures
+in the particle VDF. Energy-based parameters considered here are the
+power density by electromagnetic fields on charged particles (Zeni-
+tani et al. 2011), the pressure–strain interaction (Yang et al. 2017a),
+and a local proxy of the turbulent energy transfer (Sorriso-Valvo et al.
+2018a). The VDF-based parameters are the local pressure agyrotropy
+(Swisdak 2016) and three measures describing how different a lo-
+cal distribution function is from being Maxwellian (Kaufmann &
+Paterson 2009; Greco et al. 2012; Liang et al. 2019).
+Our findings are that each of the studied measures is non-zero"
+"in key settings in reconnection and turbulence, including the recon-
+nection diffusion region and magnetic islands, and the intermittent
+magnetic shear regions bordering magnetic eddies in a turbulent sys-
+tem. The region that each proxy is strongest highlights a potentially
+different aspect of the physics taking place, as is described in detail
+in Sections 4 and 5. It is intended that the discussion therein will
+contribute to the assessment of dissipation and energy conversion in
+satellite and plasma laboratory experiment measurements. We here
+remark on the importance of the VDF-based diagnostics, which re-
+veal further details about the underlying dynamics of the plasma
+compared to the energy-based diagnostics. Indeed, the energy-based
+diagnostics give similar results for similar simulations in the mag-
+netic reconnection setup (i.e. vpic and Gkeyll runs), as we expect
+since these simulations which show little difference in many of the
+measures of the plasma response tomagnetic reconnection. However,
+the additional level of detail provided by VDF-based diagnostics al-
+lows us to more carefully ascertain the kinetic response of the plasma
+from small differences which arise naturally between two different
+simulation codes, and the added robustness of these diagnostics is
+likely to be especially useful when analysing more general simu-
+lations and observations of real plasma systems such as the solar
+wind. In contrast, the energy-based diagnostics are directly related to
+the turbulence cascade process that connects the energy containing
+scales to the kinetic range of scales where the velocity space structure
+becomes increasingly important. Therefore both type of diagnostics
+are helpful to form a complete picture of the dynamics leading to
+dissipation.
+The spatial locations where each proxy has a local maximum can"
+"be different between the different proxies. For example, in the mag-
+netic reconnection simulations, the Zenitani measure is peaked at
+the X-point while the pressure–strain interaction terms are peaked
+inside the magnetic islands. This confirms a suggestion that both
+energy-based and VDF-based parameters display a regional correla-
+tion: structures identified by these parameters often occur in similar
+regions, although not necessarily exhibiting a point-to-point corre-
+lation. This underscores a key conclusion of this work: that no one
+single measure is universally the best measure for dissipation. Rather,
+employing a number of proxies is likely best for assessing the dissi-
+pation and energy conversion in a plasma system."
+"MNRAS 000, 1–17 (2021)"
+Dissipation measures in weakly collisional plasmas 15
+"We also consider the role of collisions by including their dy-
+namical effect ab initio in the numerical simulations for both re-
+connection and turbulence. When including only weak intraspecies
+(proton–proton) collisions in the turbulence simulations, the VDF-
+based proxies decreased while the energy-based proxies were largely
+unchanged. This behavior is expected since such collisions drive par-
+ticle VDFs towards Maxwellian distributions, but they do not pro-
+duce a net energy transfer between different species although they
+indirectly modify the energy equations by isotropizing the pressure
+tensor (Del Sarto et al. 2016). On the other hand, both energy- and
+VDF-based proxies are influenced by interspecies and intraspecies
+(electron–proton) collisions in simulations ofmagnetic reconnection.
+In particular, small-scale structures are dissipated by collisions, and
+the distributions in the diffusion region are less non-Maxwellian and
+thermalize more rapidly than in the collisionless case.
+Interestingly, we find the peaks of dissipation proxies in the sys-"
+"tems with collisions are generally weaker than in the collisionless
+system. VDF-based dissipation proxies show this behavior for all the
+simulations reported in the manuscript. These surrogates are local
+in position space and provide only a local measure of the complex-
+ity of the distribution function. Energy-based measures also become
+weaker in the collisional runs of magnetic reconnection, which in-
+clude interspecies collisional effects. This behavior is an effect of the
+work of collisions that, since the beginning of the numerical simula-
+tion, have produced dissipation. In particular, intraspecies collisions
+dissipate VDF complexity, while interspecies collisions affect both
+the VDF and the energy. Therefore, by looking at these parameters at
+a fixed time snapshot, their peaks are weaker in the collisional runs
+with respect to the collisionless case. Further, it also clearly illustrates
+that the energy-based measures contain information about both col-
+lisional and collisionless processes, implying that they are not yet
+capable of distinguishing reversible from irreversible processes.
+Although defining the concept of dissipation in a collisionless"
+"plasma is rather complicated, analysing dissipation surrogates in col-
+lisionless simulations and comparing the evolution of these proxies in
+collisionless and collisional runs, as done in this study, is meaningful.
+Such a comparison indeed addresses the key question: are collisions
+preferentially active in regions where the dissipation surrogates eval-
+uated in absence of collisions are intense, i.e. where other dynami-
+cal characteristics (e.g. pressure–strain interactions, non-Maxwellian
+structures) are significant?Our analysismay indirectly suggest a posi-
+tive answer to this question. The regional correlation of energy-based
+and VDF-based diagnostics indicate that non-Maxwellian structures
+in the particle VDF are expected close to regions where energy-
+based dissipation surrogates are also strong. Moreover, as shown
+in previous studies (Landau 1936; Rosenbluth et al. 1957; Balescu
+1960; Schekochihin et al. 2009; Pezzi et al. 2016, 2019c), collisions
+rapidly dissipate strong velocity–space disturbances in the particle
+VDF. Hence, we suggest that regions identified by dissipation sur-
+rogates in the collisionless simulations are regions where collisions,
+if present, preferentially smooth out non-Maxwellian features in the
+particle VDF, thus producing irreversible dissipation.
+The present study is not intended to be the final word on this"
+"topic, as there are many avenues for future work. The diagnostics
+considered here do not discriminate the underlying process which
+may lead to energy dissipation or conversion, e.g. Landau damping,
+cyclotron damping, phase-mixing, and stochastic heating (Chandran
+et al. 2010; Li et al. 2016). In this perspective, a different approach,
+based on the field-particle correlation, has been recently adopted to
+identify the presence of particular signatures in the particle VDF
+(Klein & Howes 2016; Klein et al. 2017; Chen et al. 2019; Klein
+et al. 2020). This method has the advantage of diagnosing energiza-"
+"tion directly in velocity space while the others here adopted involve
+an integration over the full velocity space. The field-particle corre-
+lation is also local in physical space and does not require spatial
+gradients, which would require multiple spacecraft for in situ ob-
+servations. Incorporating the field–particle correlation gives a visual
+way to identify energy transfer between particles and fields, and
+would be interesting to compare with the other proxies. Indeed, the
+diagnostics considered in this work are extremely useful to char-
+acterize potential sites of intermittent dissipation, e.g. in structures
+close to intense current sheets. On the other hand, methods such as
+the field–particle correlation identifies basic plasma processes, e.g.
+Landau damping. Connecting these two points of view would also
+contribute to addressing the fundamental question whether dissipa-
+tion in plasmas is uniform or intermittent (Vaivads et al. 2016) and
+deserves a dedicated, future study. Moreover, kinetic plasma turbu-
+lence excites in a very complex way an entire ensemble of genuinely
+kinetic degrees of freedom, i.e. those related to velocity–space struc-
+tures in the particle VDF (Servidio et al. 2017; Pezzi et al. 2018),
+thus driving free energy towards finer and finer scales in velocity
+space where it is dissipated through interparticle collisions (Pezzi
+et al. 2019c). The relation of the dissipation surrogates considered
+here with the enstrophy phase-space cascade will be the subject of a
+future work.
+Finally, there are many necessary extensions to the current study."
+"The present simulations varied collisionality, but for a particular set
+of field and plasma initial conditions, so the parametric dependence
+of the conclusions attained herein should be the subject of future
+work. Both the reconnection and turbulence simulations were 2D,
+and therefore 3D effects are not captured. The reconnection sim-
+ulations studied here employed a small system size in which the
+protons do not fully couple back to the large-scale systems, so it is
+important to revisit the proton dissipation measures in larger sys-
+tem sizes. The effect of proton–electron collisions on energy-based
+parameters in turbulence should be addressed in future work. The tur-
+bulence simulations considered here addressed decaying turbulence,
+and comparisons to driven turbulence would be interesting."
+ACKNOWLEDGEMENTS
+"This manuscript stemmed from discussions at Vlasovia 2019: The
+Sixth International Workshop on the Theory and Applications of
+the Vlasov Equation; we acknowledge many helpful conversations at
+the workshop. The authors thank an anonymous referee for her/his
+suggestions, which significantly improved the quality of the paper.
+Simulations here described have been partially performed on the
+Marconi cluster at CINECA (Italy), within the projects IsC53_RoC-
+SWT and IsC63_RoC-SWTB, on the Newton cluster at the Univer-
+sity of Calabria (Italy). This research partially used resources of the
+National Energy Research Scientific Computing Center (NERSC),
+under Contract no. DE-AC02-05CH11231. This work used the Ex-
+treme Science and Engineering Discovery Environment (XSEDE),
+which is supported by National Science Foundation grant number
+ACI-1548562. Resources supporting this work were also provided
+by the NASA High-End Computing (HEC) Program through the
+NASAAdvancedSupercomputing (NAS)Division atAmesResearch
+Center. HL acknowledges support from NSF EPSCoR RII-Track-1
+Cooperative Agreement OIA-1655280 and an NSF/DOE Partner-
+ship in Basic Plasma Science and Engineering via NSF grant PHY-
+1707247. JJ was supported by aNSFAtmospheric andGeospace Sci-
+ence Postdoctoral Fellowship (Grant No. AGS-2019828). PAC grate-
+fully acknowledges support from NSF Grant PHY-1804428, NASA"
+"MNRAS 000, 1–17 (2021)"
+16 O. Pezzi et al.
+"Grants NNX16AG76G and 80NSSC19M0146, and DOE Grant DE-
+SC0020294. CLV was partially supported by EPN projects: PIM-19-
+01, PII-DFIS-2019-01 and PII-DFIS-2019-04. LSV was funded by
+the Swedish Contingency Agency, grant 2016-2102, and by SNSA
+grant 86/20. SS acknowledges funding from the European Union
+Horizon2020 research and innovation programme under grant agree-
+ment No. 776262 (AIDA, www.aida-space.eu). VR is supported by
+US DOE grant DE-SC0019315. JMT acknowledges support from
+NSF Grant AGS-1842638. WHM is partially supported by the MMS
+Theory and Modeling team under NASA grant 80NSSC19K0565."
+DATA AVAILABILITY
+"The data underlying this article will be shared on reasonable request
+to the corresponding author."
+REFERENCES
+"Arnold D. N., Awanou G., 2011, Foundation of Computational Mathematics,
+11, 337"
+"Aunai N., Hesse M., Kuznetsova M., 2013, Physics of Plasmas, 20, 092903
+Balescu R., 1960, The Physics of Fluids, 3, 52
+Bandyopadhyay R., et al., 2020, Physical Review Letters, 124, 225101
+Beresnyak A., 2019, Living Reviews in Computational Astrophysics, 5, 2
+Birdsall C. K., LangdonA. B., 2004, Plasma physics via computer simulation.
+CRC press"
+"Birn J., Hesse M., 2005, Annales Geophysicae, 23, 3365
+Bowers K. J., Albright B. J., Yin L., Bergen B., Kwan T. J. T., 2008, Physics
+of Plasmas, 15, 055703"
+"Braginskii S., 1965, Reviews of plasma physics, 1
+Bruno R., Carbone V., 2016, Turbulence in the solar wind. Springer,
+doi:10.1007/978-3-319-43440-7"
+"Burch J. L., et al., 2016, Science, 352
+Cassak P. A., Shay M. A., Drake J. F., 2005, Physical Review Letters, 95,
+235002"
+"Cerri S. S., KunzM.W., Califano F., 2018, The Astrophysical Journal Letters,
+856, L13"
+"Chandran B. D. G., Li B., Rogers B. N., Quataert E., Germaschewski K.,
+2010, The Astrophysical Journal, 720, 503"
+"Chasapis A., et al., 2018a, The Astrophysical Journal, 856, L19
+Chasapis A., et al., 2018b, The Astrophysical Journal, 862, 32
+Chen C., Klein K., Howes G., 2019, Nature communications, 10, 740
+DaughtonW., Roytershteyn V., Albright B. J., Karimabadi H., Yin L., Bowers
+K. J., 2009, Phys. Rev. Lett., 103, 65004"
+"DaughtonW., Roytershteyn V., Karimabadi H., Yin L., Albright B. J., Bergen
+B., Bowers K. J., 2011, Nature Physics, 7, 539"
+"Del Sarto D., Pegoraro F., Califano F., 2016, Physical Review E, 93, 053203
+Dougherty J. P., 1964, The Physics of Fluids, 7, 1788
+Egedal J., Øieroset M., Fox W., Lin R. P., 2005, Physical Review Letters, 94,
+025006"
+"Egedal J., Fox W., Katz N., Porkolab M., Øieroset M., Lin R. P., Daughton
+W., Drake J. F., 2008, Journal of Geophysical Research: Space Physics,
+113"
+"Egedal J., Le A., Daughton W., 2013, Physics of Plasmas, 20, 061201
+Federrath C., Roman-Duval J., Klessen R. S., Schmidt W., Mac Low M. M.,
+2010, Astronomy and Astrophysics, 512, A81"
+"Ferrand R., Galtier S., Sahraoui F.,Meyrand R., Andrés N., Banerjee S., 2019,
+The Astrophysical Journal, 881, 50"
+"Fraternale F., Pogorelov N. V., Richardson J. D., Tordella D., 2019, The
+Astrophysical Journal, 872, 40"
+"Frisch U., 1995, Turbulence: the legacy of AN Kolmogorov. Cambridge uni-
+versity press"
+"Galtier S., 2008, Physical Review E, 77, 015302
+González C. A., Parashar T. N., Gomez D., Matthaeus W. H., Dmitruk P.,
+2019, Physics of Plasmas, 26, 012306"
+"Greco A., Valentini F., Servidio S., Matthaeus W., 2012, Physical Review E,
+86, 066405"
+"Hakim A., Juno J., 2020, Supercomputing (accepted)
+Hakim A., Francisquez M., Juno J., Hammett G. W., 2020, Journal of Plasma
+Physics, 86, 905860403"
+"Hesse M., et al., 2018, Physics of Plasmas, 25, 122902
+Howes G. G., 2015a, Journal of Plasma Physics, 81, 3203
+Howes G. G., 2015b, Philosophical Transactions of the Royal Society of
+London Series A, 373, 20140145"
+"Juno J., 2020, PhD thesis, University of Maryland, College Park
+Juno J., Hakim A., TenBarge J., Shi E., Dorland W., 2018, Journal of Com-
+putational Physics, 353, 110"
+"Kanekar A., Schekochihin A. A., Dorland W., Loureiro N. F., 2015, Journal
+of Plasma Physics, 81, 305810104"
+"Karimabadi H., et al., 2013, Physics of Plasmas, 20, 012303
+Kaufmann R. L., Paterson W. R., 2009, J. Geophys. Res., 114, A00D04
+Klein K. G., Howes G. G., 2016, The Astrophysical Journal Letters, 826, L30
+Klein K. G., Howes G. G., TenBarge J. M., 2017, Journal of Plasma Physics,
+83, 535830401"
+"Klein K. G., Howes G. G., TenBarge J. M., Valentini F., 2020, Journal of
+Plasma Physics, 86, 905860402"
+"Kolmogorov A., 1941, Akademiia Nauk SSSR Doklady, 30, 301
+Landau L., 1936, Collected papers of LD Landau, pp 163–170
+Lapenta G., et al., 2017, Journal of Geophysical Research (Space Physics),
+122, 2024"
+"Le A., Egedal J., Daughton W., Roytershteyn V., Karimabadi H., Forest C.,
+2015, Journal of Plasma Physics, 81, 305810108"
+"Li T. C., Howes G. G., Klein K. G., TenBarge J. M., 2016, The Astrophysical
+Journal Letters, 832, L24"
+"Liang H., et al., 2019, Physics of Plasmas, 26, 082903
+Liang H., Barbhuiya M. H., Cassak P. A., Pezzi O., Servidio S., Valentini F.,
+Zank G. P., 2020, Journal of Plasma Physics, 86, 825860502"
+"Mandell N. R., Hakim A., Hammett G. W., Francisquez M., 2020, Journal of
+Plasma Physics, 86, 905860109"
+"Mangeney A., Califano F., Cavazzoni C., Trávníček P., 2002, Journal of
+Computational Physics, 179, 495"
+"Marino R., Sorriso-Valvo L., Carbone V., Noullez A., Bruno R., Bavassano
+B., 2008, The Astrophysical Journal Letters, 677, L71"
+"Marsch E., 2006, Living Reviews in Solar Physics, 3, 1
+Matthaeus W. H., Wan M., Servidio S., Greco A., Osman K. T., Oughton
+S., Dmitruk P., 2015, Philosophical Transactions of the Royal Society of
+London Series A, 373, 20140154"
+"Matthaeus W. H., Yang Y., Wan M., Parashar T. N., Bandyopadhyay R.,
+Chasapis A., Pezzi O., Valentini F., 2020, The Astrophysical Journal,
+891, 101"
+"Mozer F. S., Agapitov O. V., Artemyev A., Drake J. F., Krasnoselskikh V.,
+Lejosne S., Vasko I., 2015, Geophysical Research Letters, 42, 3627"
+"Narita Y., 2018, Living Reviews in Solar Physics, 15, 2
+Navarro A. B. n., Teaca B., Told D., Groselj D., Crandall P., Jenko F., 2016,
+Phys. Rev. Lett., 117, 245101"
+"Ng J., Egedal J., Le A., Daughton W., Chen L.-J., 2011, Phys. Rev. Lett., 106,
+065002"
+"Numata R., Loureiro N. F., 2015, Journal of Plasma Physics, 81, 3001
+Osman K. T., Matthaeus W. H., Greco A., Servidio S., 2011, The Astrophys-
+ical Journal Letters, 727, L11"
+"Parashar T. N., Matthaeus W. H., 2016, The Astrophysical Journal, 832, 57
+Parashar T. N., Shay M. A., Cassak P. A., Matthaeus W. H., 2009, Physics of
+Plasmas, 16, 032310"
+"Parashar T. N., Salem C., Wicks R. T., Karimabadi H., Gary S. P., Matthaeus
+W. H., 2015, Journal of Plasma Physics, 81, 905810513"
+"Parker J. T., Highcock E. G., Schekochihin A. A., Dellar P. J., 2016, Physics
+of Plasmas, 23, 070703"
+"Perri S., et al., 2020, Journal of Plasma Physics, 86, 905860108
+Perrone D., Passot T., Laveder D., Valentini F., Sulem P. L., Zouganelis I.,
+Veltri P., Servidio S., 2018, Physics of Plasmas, 25, 052302"
+"Pezzi O., 2017, Journal of Plasma Physics, 83, 555830301
+Pezzi O., Valentini F., Veltri P., 2015, Journal of Plasma Physics, 81,
+305810107"
+"MNRAS 000, 1–17 (2021)"
+"http://dx.doi.org/10.1007/s10208-011-9087-3
+http://dx.doi.org/10.1063/1.4820953
+http://dx.doi.org/10.1063/1.1706002
+http://dx.doi.org/10.1103/PhysRevLett.124.225101
+https://ui.adsabs.harvard.edu/abs/2020PhRvL.124v5101B
+http://dx.doi.org/10.1007/s41115-019-0005-8
+https://ui.adsabs.harvard.edu/abs/2019LRCA....5....2B
+http://dx.doi.org/10.5194/angeo-23-3365-2005
+https://ui.adsabs.harvard.edu/abs/2005AnGeo..23.3365B
+http://dx.doi.org/10.1063/1.2840133
+http://dx.doi.org/10.1063/1.2840133
+http://dx.doi.org/10.1007/978-3-319-43440-7
+http://dx.doi.org/10.1126/science.aaf2939
+http://dx.doi.org/10.1103/PhysRevLett.95.235002
+https://ui.adsabs.harvard.edu/abs/2005PhRvL..95w5002C
+https://ui.adsabs.harvard.edu/abs/2005PhRvL..95w5002C
+http://dx.doi.org/10.3847/2041-8213/aab557
+http://dx.doi.org/10.1088/0004-637X/720/1/503
+http://adsabs.harvard.edu/abs/2010ApJ...720..503C
+http://dx.doi.org/10.3847/2041-8213/aaadf8
+http://dx.doi.org/10.3847/1538-4357/aac775
+http://dx.doi.org/10.1038/s41467-019-08435-3
+http://dx.doi.org/10.1103/PhysRevLett.103.065004
+http://dx.doi.org/10.1038/nphys1965
+http://adsabs.harvard.edu/abs/2011NatPh...7..539D
+http://dx.doi.org/10.1103/PhysRevE.93.053203
+http://adsabs.harvard.edu/abs/2016PhRvE..93e3203D
+http://dx.doi.org/10.1063/1.2746779
+http://dx.doi.org/10.1103/PhysRevLett.94.025006
+https://ui.adsabs.harvard.edu/abs/2005PhRvL..94b5006E
+https://ui.adsabs.harvard.edu/abs/2005PhRvL..94b5006E
+http://dx.doi.org/https://doi.org/10.1029/2008JA013520
+http://dx.doi.org/10.1063/1.4811092
+http://dx.doi.org/10.1051/0004-6361/200912437
+https://ui.adsabs.harvard.edu/abs/2010A&A...512A..81F
+http://dx.doi.org/10.3847/1538-4357/ab2be9
+https://ui.adsabs.harvard.edu/abs/2019ApJ...881...50F
+http://dx.doi.org/10.3847/1538-4357/aafd30
+http://dx.doi.org/10.3847/1538-4357/aafd30
+https://ui.adsabs.harvard.edu/abs/2019ApJ...872...40F
+http://dx.doi.org/10.1103/PhysRevE.77.015302
+https://ui.adsabs.harvard.edu/abs/2008PhRvE..77a5302G
+http://dx.doi.org/10.1063/1.5054110
+https://ui.adsabs.harvard.edu/abs/2019PhPl...26a2306G
+http://dx.doi.org/10.1103/PhysRevE.86.066405
+http://dx.doi.org/10.1017/S0022377820000586
+http://dx.doi.org/10.1017/S0022377820000586
+http://dx.doi.org/10.1063/1.5054100
+http://dx.doi.org/10.1017/S0022377814001056
+http://dx.doi.org/10.1098/rsta.2014.0145
+http://dx.doi.org/10.1098/rsta.2014.0145
+https://ui.adsabs.harvard.edu/abs/2015RSPTA.37340145H
+http://dx.doi.org/https://doi.org/10.1016/j.jcp.2017.10.009
+http://dx.doi.org/https://doi.org/10.1016/j.jcp.2017.10.009
+http://dx.doi.org/10.1017/S0022377814000622
+http://dx.doi.org/10.1017/S0022377814000622
+http://adsabs.harvard.edu/abs/2015JPlPh..81a3004K
+http://dx.doi.org/10.1063/1.4773205
+http://adsabs.harvard.edu/abs/2013PhPl...20a2303K
+http://dx.doi.org/10.1029/2008JA014030
+http://dx.doi.org/10.3847/2041-8205/826/2/L30
+https://ui.adsabs.harvard.edu/abs/2016ApJ...826L..30K
+http://dx.doi.org/10.1017/S0022377817000563
+http://adsabs.harvard.edu/abs/2017JPlPh..83d5301K
+http://dx.doi.org/10.1017/S0022377820000689
+http://dx.doi.org/10.1017/S0022377820000689
+https://ui.adsabs.harvard.edu/abs/2020JPlPh..86d9002K
+http://adsabs.harvard.edu/abs/1941DoSSR..30..301K
+http://dx.doi.org/10.1002/2016JA023290
+https://ui.adsabs.harvard.edu/abs/2017JGRA..122.2024L
+http://dx.doi.org/10.1017/S0022377814000907
+http://dx.doi.org/10.3847/2041-8205/832/2/L24
+http://dx.doi.org/10.3847/2041-8205/832/2/L24
+http://dx.doi.org/10.1063/1.5098888
+https://ui.adsabs.harvard.edu/abs/2019PhPl...26h2903L
+http://dx.doi.org/10.1017/S0022377820001270
+https://ui.adsabs.harvard.edu/abs/2020JPlPh..86e8202L
+http://dx.doi.org/10.1017/S0022377820000070
+http://dx.doi.org/10.1017/S0022377820000070
+http://dx.doi.org/10.1006/jcph.2002.7071
+http://dx.doi.org/10.1006/jcph.2002.7071
+http://dx.doi.org/10.1086/587957
+https://ui.adsabs.harvard.edu/abs/2008ApJ...677L..71M
+http://dx.doi.org/10.12942/lrsp-2006-1
+http://dx.doi.org/10.1098/rsta.2014.0154
+http://dx.doi.org/10.1098/rsta.2014.0154
+https://ui.adsabs.harvard.edu/abs/2015RSPTA.37340154M
+http://dx.doi.org/10.3847/1538-4357/ab6d6a
+https://ui.adsabs.harvard.edu/abs/2020ApJ...891..101M
+http://dx.doi.org/https://doi.org/10.1002/2015GL063946
+http://dx.doi.org/10.1007/s41116-017-0010-0
+https://ui.adsabs.harvard.edu/abs/2018LRSP...15....2N
+http://dx.doi.org/10.1103/PhysRevLett.117.245101
+http://dx.doi.org/10.1103/PhysRevLett.106.065002
+http://dx.doi.org/10.1017/S002237781400107X
+http://dx.doi.org/10.1088/2041-8205/727/1/L11
+http://dx.doi.org/10.1088/2041-8205/727/1/L11
+http://adsabs.harvard.edu/abs/2011ApJ...727L..11O
+http://dx.doi.org/10.3847/0004-637x/832/1/57
+http://dx.doi.org/10.1063/1.3094062
+http://dx.doi.org/10.1063/1.3094062
+http://dx.doi.org/10.1017/S0022377815000860
+https://ui.adsabs.harvard.edu/abs/2015JPlPh..81e9013P
+http://dx.doi.org/10.1063/1.4958954
+http://dx.doi.org/10.1063/1.4958954
+http://dx.doi.org/10.1017/S0022377820000021
+https://ui.adsabs.harvard.edu/abs/2020JPlPh..86a9008P
+http://dx.doi.org/10.1063/1.5026656
+http://dx.doi.org/10.1017/S0022377817000368
+https://ui.adsabs.harvard.edu/abs/2017JPlPh..83c5501P
+http://dx.doi.org/10.1017/S0022377814000877"
+"
+Dissipation measures in weakly collisional plasmas 17"
+"Pezzi O., Valentini F., Veltri P., 2016, Physical Review Letters, 116, 145001
+Pezzi O., et al., 2017, Journal of Plasma Physics, 83, 705830108
+Pezzi O., Servidio S., Perrone D., Valentini F., Sorriso-Valvo L., Greco A.,
+Matthaeus W. H., Veltri P., 2018, Physics of Plasmas, 25, 060704"
+"Pezzi O., Yang Y., Valentini F., Servidio S., Chasapis A., Matthaeus W. H.,
+Veltri P., 2019a, Physics of Plasmas, 26, 072301"
+"Pezzi O., Valentini F., Servidio S., Camporeale E., Veltri P., 2019b, Plasma
+Physics and Controlled Fusion, 61, 054005"
+"Pezzi O., Perrone D., Servidio S., Valentini F., Sorriso-Valvo L., Veltri P.,
+2019c, The Astrophysical Journal, 887, 208"
+"Phan T. D., et al., 2018, Nature, 557, 202
+Plunk G. G., Tatsuno T., 2011, Physical Review Letters, 106, 165003
+Politano H., Pouquet A., 1998, Geophysical Research Letters, 25, 273
+Rosenbluth M. N., MacDonald W. M., Judd D. L., 1957, Phys. Rev., 107, 1
+Roytershteyn V., Dorfman S., Daughton W., Ji H., Yamada M., Karimabadi
+H., 2013, Physics of Plasmas, 20, 061212"
+"Roytershteyn V., Karimabadi H., Roberts A., 2015, Philosophical Transac-
+tions of the Royal Society A: Mathematical, Physical and Engineering
+Sciences, 373, 20140151"
+"Schekochihin A., Cowley S., Dorland W., Hammett G., Howes G., Quataert
+E., Tatsuno T., 2009, The Astrophysical Journal Supplement Series, 182,
+310"
+"Schekochihin A. A., Parker J. T., Highcock E. G., Dellar P. J., Dorland W.,
+Hammett G. W., 2016, Journal of Plasma Physics, 82, 905820212"
+"Scudder J., Daughton W., 2008, Journal of Geophysical Research: Space
+Physics, 113"
+"Servidio S., Valentini F., Califano F., Veltri P., 2012, Physical Review Letters,
+108, 045001"
+"Servidio S., Valentini F., Perrone D., Greco A., Califano F., Matthaeus W. H.,
+Veltri P., 2015, Journal of Plasma Physics, 81, 325810107"
+"Servidio S., et al., 2017, Phys. Rev. Lett., 119, 205101
+Shay M. A., Drake J. F., Rogers B. N., Denton R. E., 2001, Journal of
+Geophysical Research: Space Physics, 106, 3759"
+"Shi E. L., Hammett G. W., Stoltzfus-Dueck T., Hakim A., 2019, Physics of
+Plasmas, 26, 012307"
+"Sitnov M. I., Merkin V. G., Roytershteyn V., Swisdak M., 2018, Geophysical
+Research Letters, 45, 4639"
+"Sorriso-Valvo L., Carbone V., Noullez A., Politano H., Pouquet A., Veltri P.,
+2002, Physics of Plasmas, 9, 89"
+"Sorriso-Valvo L., et al., 2007, Physical Review Letters, 99, 115001
+Sorriso-Valvo L., Perrone D., Pezzi O., Valentini F., Servidio S., Zouganelis
+I., Veltri P., 2018a, Journal of Plasma Physics, 84, 725840201"
+"Sorriso-Valvo L., Carbone F., Perri S., Greco A., Marino R., Bruno R., 2018b,
+Solar Physics, 293, 10"
+"Sorriso-Valvo L., et al., 2019, Phys. Rev. Lett., 122, 035102
+Spitzer Jr. L., 1956, Physics of Fully Ionized Gases. Interscience Publishers
+Swisdak M., 2016, Geophys. Res. Lett., 43, 43
+Takizuka T., Abe H., 1977, Journal of Computational Physics, 25, 205
+Tatsuno T., DorlandW., Schekochihin A. A., Plunk G. G., Barnes M., Cowley
+S. C., Howes G. G., 2009, Physical Review Letters, 103, 015003"
+"TenBarge J. M., Howes G. G., Dorland W., 2013, The Astrophysical Journal,
+774, 139"
+"Torbert R. B., et al., 2018, Science, 362, 1391
+Vafin S., Riazantseva M., Pohl M., 2019, The Astrophysical Journal, 871,
+L11"
+"Vaivads A., et al., 2016, Journal of Plasma Physics, 82, 905820501
+Valentini F., Trávníček P., Califano F., Hellinger P., Mangeney A., 2007,
+Journal of Computational Physics, 225, 753"
+"Vásconez C. L., Perrone D., Marino R., Laveder D., Valentini F., Servidio
+S., Mininni P., Sorriso-Valvo L., 2021, Journal of Plasma Physics, 87,
+825870101"
+"Verscharen D., Klein K. G., Maruca B. A., 2019, Living Reviews in Solar
+Physics, 16, 5"
+"Wan M., Matthaeus W. H., Roytershteyn V., Karimabadi H., Parashar T., Wu
+P., Shay M., 2015, Physical Review Letters, 114, 175002"
+"Wang L., Hakim A. H., Bhattacharjee A., Germaschewski K., 2015, Physics
+of Plasmas, 22, 012108"
+"Yamada M., Kulsrud R., Ji H., 2010, Reviews of Modern Physics, 82, 603"
+"Yang Y., et al., 2017a, Physics of Plasmas, 24, 072306
+Yang Y., et al., 2017b, Phys. Rev. E, 95, 061201
+Yang Y., Wan M., Matthaeus W. H., Sorriso-Valvo L., Parashar T. N., Lu
+Q., Shi Y., Chen S., 2019, Monthly Notices of the Royal Astronomical
+Society, 482, 4933"
+"Zeiler A., Biskamp D., Drake J. F., Rogers B. N., Shay M. A., Scholer M.,
+2002, Journal of Geophysical Research: Space Physics, 107, SMP 6"
+"Zenitani S., Hesse M., Klimas A., Kuznetsova M., 2011, Physical review
+letters, 106, 195003"
+This paper has been typeset from a TEX/LATEX file prepared by the author.
+"MNRAS 000, 1–17 (2021)"
+"http://dx.doi.org/10.1103/PhysRevLett.116.145001
+http://adsabs.harvard.edu/abs/2016PhRvL.116n5001P
+http://dx.doi.org/10.1017/S0022377817000113
+http://dx.doi.org/10.1063/1.5027685
+http://dx.doi.org/10.1063/1.5100125
+https://ui.adsabs.harvard.edu/abs/2019PhPl...26g2301P
+http://dx.doi.org/10.1088/1361-6587/ab04d5
+http://dx.doi.org/10.1088/1361-6587/ab04d5
+https://ui.adsabs.harvard.edu/abs/2019PPCF...61e4005P
+http://dx.doi.org/10.3847/1538-4357/ab5285
+https://ui.adsabs.harvard.edu/abs/2019ApJ...887..208P
+http://dx.doi.org/10.1038/s41586-018-0091-5
+https://ui.adsabs.harvard.edu/abs/2018Natur.557..202P
+http://dx.doi.org/10.1103/PhysRevLett.106.165003
+http://dx.doi.org/10.1029/97GL03642
+https://ui.adsabs.harvard.edu/abs/1998GeoRL..25..273P
+http://dx.doi.org/10.1103/PhysRev.107.1
+http://dx.doi.org/10.1063/1.4811371
+http://dx.doi.org/10.1098/rsta.2014.0151
+http://dx.doi.org/10.1098/rsta.2014.0151
+http://dx.doi.org/10.1098/rsta.2014.0151
+http://dx.doi.org/10.1088/0067-0049/182/1/310
+http://dx.doi.org/10.1017/S0022377816000374
+http://adsabs.harvard.edu/abs/2016JPlPh..82b9012S
+http://dx.doi.org/10.1029/2008JA013035
+http://dx.doi.org/10.1029/2008JA013035
+http://dx.doi.org/10.1103/PhysRevLett.108.045001
+http://adsabs.harvard.edu/abs/2012PhRvL.108d5001S
+http://dx.doi.org/10.1017/S0022377814000841
+http://adsabs.harvard.edu/abs/2015JPlPh..81a3207S
+http://dx.doi.org/10.1103/PhysRevLett.119.205101
+http://dx.doi.org/10.1029/1999JA001007
+http://dx.doi.org/10.1029/1999JA001007
+http://dx.doi.org/10.1063/1.5074179
+http://dx.doi.org/10.1063/1.5074179
+http://dx.doi.org/10.1029/2018GL077874
+http://dx.doi.org/10.1029/2018GL077874
+https://ui.adsabs.harvard.edu/abs/2018GeoRL..45.4639S
+http://dx.doi.org/10.1063/1.1420738
+https://ui.adsabs.harvard.edu/abs/2002PhPl....9...89S
+http://dx.doi.org/10.1103/PhysRevLett.99.115001
+https://ui.adsabs.harvard.edu/abs/2007PhRvL..99k5001S
+http://dx.doi.org/10.1017/S0022377818000302
+http://dx.doi.org/10.1007/s11207-017-1229-6
+http://dx.doi.org/10.1103/PhysRevLett.122.035102
+http://dx.doi.org/10.1002/2015GL066980
+https://ui.adsabs.harvard.edu/abs/2016GeoRL..43...43S
+http://dx.doi.org/https://doi.org/10.1016/0021-9991(77)90099-7
+http://dx.doi.org/10.1103/PhysRevLett.103.015003
+http://adsabs.harvard.edu/abs/2009PhRvL.103a5003T
+http://dx.doi.org/10.1088/0004-637X/774/2/139
+https://ui.adsabs.harvard.edu/abs/2013ApJ...774..139T
+http://dx.doi.org/10.1126/science.aat2998
+http://dx.doi.org/10.3847/2041-8213/aafb11
+http://dx.doi.org/10.1017/S0022377816000775
+http://dx.doi.org/10.1016/j.jcp.2007.01.001
+http://dx.doi.org/10.1017/S0022377820001567
+http://dx.doi.org/10.1007/s41116-019-0021-0
+http://dx.doi.org/10.1007/s41116-019-0021-0
+http://dx.doi.org/10.1103/PhysRevLett.114.175002
+http://adsabs.harvard.edu/abs/2015PhRvL.114q5002W
+http://dx.doi.org/10.1063/1.4906063
+http://dx.doi.org/10.1063/1.4906063
+http://adsabs.harvard.edu/abs/2015PhPl...22a2108W
+http://dx.doi.org/10.1103/RevModPhys.82.603
+http://adsabs.harvard.edu/abs/2010RvMP...82..603Y
+http://dx.doi.org/10.1063/1.4990421
+http://dx.doi.org/10.1103/PhysRevE.95.061201
+http://dx.doi.org/10.1093/mnras/sty2977
+http://dx.doi.org/10.1093/mnras/sty2977
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.482.4933Y
+http://dx.doi.org/10.1029/2001JA000287
+http://dx.doi.org/10.1103/PhysRevLett.106.195003
+http://dx.doi.org/10.1103/PhysRevLett.106.195003"
+"	1 Introduction
+	2 Dissipation measures in weakly collisional plasmas
+	2.1 Energy-based dissipation measures
+	2.2 VDF-based dissipation measures"
+"	3 Numerical models and simulations setup
+	3.1 Numerical algorithms
+	3.2 Simulations setup"
+"	4 Numerical results: Dissipation measures in magnetic reconnection
+	4.1 Proton dissipation proxies for collisionless reconnection
+	4.2 Electron dissipation proxies for collisionless reconnection
+	4.3 Collisional effects on proton and electron dissipation proxies"
+"	5 Numerical results: Dissipation measures in turbulent plasmas
+	6 One-dimensional profiles of dissipation proxies
+	7 Discussion and conclusions"

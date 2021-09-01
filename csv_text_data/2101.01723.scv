@@ -1,0 +1,1909 @@
+0
+"MNRAS 000, 1–18 () Preprint 18 March 2021 Compiled using MNRAS LATEX style file v3.0"
+"Completeness of the Gaia-verse IV: The Astrometry Spread
+Function of Gaia DR2"
+"Andrew Everall1★, Douglas Boubert2, Sergey E. Koposov3,1,4, Leigh Smith1 and Berry Holl5,6
+1Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK
+2Magdalen College, University of Oxford, High Street, Oxford OX1 4AU, UK
+3Institute for Astronomy, University of Edinburgh, Royal Observatory, Blackford Hill, Edinburgh EH9 3HJ, UK
+4McWilliams Center for Cosmology, Carnegie Mellon University, 5000 Forbes Ave, 15213
+5 Department of Astronomy, University of Geneva, Ch. des Maillettes 51, CH-1290 Versoix, Switzerland
+6 Department of Astronomy, University of Geneva, Ch. d’Ecogia 16, CH-1290 Versoix, Switzerland"
+Accepted XXX. Received YYY; in original form ZZZ
+"ABSTRACT
+Gaia DR2 published positions, parallaxes and proper motions for an unprecedented
+1,331,909,727 sources, revolutionising the field of Galactic dynamics. We complement this
+data with the Astrometry Spread Function (ASF), the expected uncertainty in the measured
+positions, proper motions and parallax for a non-accelerating point source. The ASF is a Gaus-
+sian function for which we construct the 5D astrometric covariance matrix as a function of
+position on the sky and apparent magnitude using theGaiaDR2 scanning law and demonstrate
+excellent agreement with the observed data. This can be used to answer the question ‘What
+astrometric covariance would Gaia have published if my star was a non-accelerating point
+source?’.
+The ASF will enable characterisation of binary systems, exoplanet orbits, astrometric"
+"microlensing events and extended sourceswhich add an excess astrometric noise to the expected
+astrometry uncertainty. By using the ASF to estimate the unit weight error (UWE) of Gaia
+DR2 sources, we demonstrate that the ASF indeed provides a direct probe of the excess source
+noise.
+We use the ASF to estimate the contribution to the selection function of the Gaia as-"
+"trometric sample from a cut on astrometric_sigma5d_max showing high completeness for
+𝐺 < 20 dropping to < 1% in underscanned regions of the sky for 𝐺 = 21.
+We have added anASFmodule to thePython package scanninglaw (https://github."
+com/gaiaverse/scanninglaw) through which users can access the ASF.
+"Key words: stars: statistics, Galaxy: kinematics and dynamics, Galaxy: stellar content, meth-
+ods: data analysis, methods: statistical"
+1 INTRODUCTION
+"Gaia has initiated an era of large scale Milky Way dynamical mod-
+elling by providing 5D astrometry (position, proper motion and
+parallax) for more than 1.3 billion stars (Gaia Collaboration et al.
+2016, 2018; Lindegren et al. 2018). The Gaia satellite measures
+source positions at multiple epochs over the mission lifetime. These
+epoch astrometry measurements are the inputs of the Astrometric
+Global Iterative Solution (AGIS Lindegren et al. 2012) which itera-
+tively solves for the spacecraft attitude, geometric calibration of the
+instrument, global parameters, and 5D astrometry of each source:
+the right ascension and declination (𝛼0, 𝛿0), the proper motions
+(`𝛼, `𝛿) and the parallax (𝜛). Alongside the source astrometry,"
+★ E-mail: asfe2@cam.ac.uk
+"Gaia also publishes the 5D astrometricmeasurement covariance and
+various statistics of the astrometric solution for all sources which
+meet the quality cuts. The 5-parameter astrometric model of AGIS
+assumes sources are point-like with apparent non-accelerating uni-
+form motion relative to the solar system barycenter which we will
+refer to as ‘simple point sources’."
+"Both resolved and unresolved binary stars accelerate due to
+their orbits around the common center of mass which shifts the
+centroid off a uniform motion trajectory. For example, given the full
+epoch astrometry, it is expected thatGaia can characterise the orbits
+of stars with brown dwarf companions out to 10 pc and black hole
+companions out to more than 1 kpc when considering tight con-
+straints of the uncertainty on the mass function 𝑀32𝑀"
+"−2
+tot (Andrews"
+"et al. 2019). When one is interested in (the less constraining) orbital
+parameter recovery with∼ 10%precision,Gaiamight detect a stag-"
+© The Authors
+"https://github.com/gaiaverse/scanninglaw
+https://github.com/gaiaverse/scanninglaw"
+"
+2 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+"gering 20 k brown dwarfs around FGK-stars out to many tens up
+to a few hundreds of pc for the longer period objects (100-3000 d),
+which could reach even 50 k out to several hundred pc when one is
+only interested in the detection of BD candidates (e.g. for follow-
+up studies) (Holl et al. subm), with black hole companions being
+detectable out to several kpc."
+"Similarly exoplanet orbits pull their host stars away from uni-
+form motion although with a much smaller amplitude due to the
+lower companion mass. From simulations it is expected that Gaia
+is capable of detecting 21,000 long-period, 1-15 Jupiter mass plan-
+ets during the 5 year mission (Perryman et al. 2014), more than
+4 times the number of currently known exoplanets. Ranalli et al.
+(2018) have further demonstrated that the 5 year Gaia mission will
+be able to find Jupiter-mass planets on 3 au orbits around 1𝑀� stars
+out to 39 pc and Neptune-mass planets out to 1.9 pc. Not only will
+the presence of planets be detectable but it is expected that ∼ 500
+planets around M-dwarfs will receive mass constraints purely from
+Gaia astrometry (Casertano et al. 2008; Sozzetti et al. 2014)."
+"Microlensing occurs when the light from a background source
+is gravitationally lensed by a foreground lensing star causing a shift
+in the apparent position of the source, detectable by high precision
+astrometric surveys (Miralda-Escude 1996). The deflection can be
+used as a direct measurement of the lens mass as demonstrated by
+Kains et al. (2017) using HST observations. A signficant amount
+of work has gone towards predicting microlensing events in using
+Gaia proper motions (Klüter et al. 2018; Bramich 2018; McGill
+et al. 2019) with 528 events expected in the extended Gaia mission
+∼ 39% of which pass astrometry quality cuts (McGill et al. 2020).
+For a small number of these events Gaia will be able to determine
+the lens mass to < 30% uncertainty (Klüter et al. 2020)."
+"Extended sources such as galaxies will have a reduced astro-
+metric precision from each Gaia observation due to the increased
+spread of flux.Gaia scans a source in many different directions over
+the mission lifetime from which the source shape can be recon-
+structed (Harrison 2011). With the Gaia epoch astrometry for the
+5 year mission, Gaia will be able to distinguish between elliptical
+and spiral/irregular galaxies with ∼ 83% accuracy (Krone-Martins
+et al. 2013). These classifications would be incredibly valuable for
+galaxy morphology studies."
+"The Gaia epoch astrometry will be first released in DR4, sev-
+eral years from now. However, a (very) condensed form of this large
+amount of information is stored in the summary statistics of the
+astrometric solution currently published in Gaia DR2 and updated
+in EDR3. Binary stars, exoplanet hosts, microlensing events and
+extended sources will induce an excess noise in the astrometric
+solution as they are not well described by simple point sources.
+This excess noise has been modelled for binaries (Wielen 1997;
+Penoyre et al. 2020) and already Belokurov et al. (2020) has found
+many binaries inGaiaDR2 using the renormalised unit weight error
+statistic, RUWE, that is the re-normalised square root of the reduced
+𝜒2 statistic of the astrometric solution."
+"RUWE is a 1D summary statistic of the residuals of the 5-
+parameter astrometric solution of a source relative to the Gaia
+inertial rest frame. But we can glean even more information on
+the excess noise from the 5D uncertainty of the astrometric solu-
+tion. The uncertainty in the 5D astrometric solution for a source
+in Gaia can be expressed as the convolution of Gaia’s astrometric
+measurement uncertainty expected for a simple point source and
+excess noise. We term Gaia’s expected astrometric measurement
+uncertainty the Astrometry Spread Function (ASF) defined as the
+probability of measuring a simple point source to have astrometry
+r′ ∈ R5 given the true source astrometry r ∈ R5 and apparent"
+magnitude 𝐺
+"ASF(r′) = P(r′ | r, 𝐺). (1)"
+"The excess noise will be driven by un-modelled source character-
+istics such as binary motion, exoplanet host motion, microlensing
+or extended source flux as well as any calibration noise which is
+not accounted for in the ASF. In this work, we’ll assume that all
+significant calibration effects are included in the ASF such that the
+excess noise is dominated by un-modelled source characteristics.
+However this assumption breaks down in some regimes, particu-
+larly for bright sources in crowded regions where CCD saturation
+becomes a significant issue. Possible un-accounted calibration ef-
+fects should be considered when using Gaia astrometry to search
+for excess noise due to genuine un-modelled source characteristics."
+"Since the astrometric solution is evaluated using least squares
+regression, the ASF will be Gaussian distributed"
+"ASF(r′) = N(r′ ; r,Σ(𝑙, 𝑏, 𝐺)) (2)"
+"where Σ(𝑙, 𝑏, 𝐺) ∈ R5×5 is the expected covariance for a sim-
+ple point source with position 𝑙, 𝑏 and apparent magnitude 𝐺 as
+measured by Gaia. The astrometric calibration is also a function
+of source colour which was either estimated from 𝐺BP − 𝐺RP or
+added as a sixth parameter of the astrometric solution, astromet-
+ric_pseudo_colour. As colours are only published for a subset
+of the Gaia catalogue and the astrometric correlation coefficients
+for pseudo-colour are not published in DR2, we neglect colour de-
+pendence of the astrometric solution in this work. For EDR3, all
+pseudo-colour correlation coefficients are published and it will be
+worth considering how this impacts the ASF."
+"Given the ASF and published astrometric 5-parameter model
+uncertainties we can reconstruct the 5D excess noise and use it to
+characterise binary systems, exoplanet orbits, microlensing events
+and extended sources in Gaia without requiring the epoch astrom-
+etry. The focus of this paper is to construct the ASF for Gaia DR2."
+"This builds on analysis of the scanning law from Boubert et al.
+(2020a) and Boubert et al. (2020b) and will be used, in conjunction
+with the results of Boubert & Everall (2020) to determine the se-
+lection function for the subsample of Gaia DR2 with published 5D
+astrometry."
+"In Section 2 we provide a whistle-stop tour of the Gaia space-
+craft, scanning law and how this translates to constraints on the
+position, proper motion and parallax of sources. This paper is fo-
+cused on Gaia DR2 for which we estimate the ASF, although we
+note that the method will be directly applicable to Gaia EDR3. The
+method for constructing the ASF of Gaia is derived in Section 3
+and the results compared with the astrometry sample are shown in
+Section 4. We will also use the ASF for an alternative derivation of
+the UnitWeight Error demonstrating the applicability of the method
+in Section 5."
+"As a secondary motivation, theGaiaDR2 5D astrometry sam-
+ple is selected from the full catalogue with a cut on the parameter
+astrometric_sigma5d_max which is a function of the astromet-
+ric covariance matrix. In predicting the astrometric covariance for
+simple point sources, we can also estimate the contribution from
+this cut to the astrometric selection function which we will present
+in Section 6."
+"Finally we will discuss applications of the ASF in Section 7
+and provide instructions for accessing the data in Section 8 before
+concluding."
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 3
+"(a) Regions which received more scans in DR2 (light yellow) produce tighter
+constraints on the astrometry whereas poorly scanned regions, including the
+Galactic bulge will have weaker inference."
+"1 2
+a
+rg"
+"[ 〈e
+x
+p"
+"(b) Gaia produces stronger measurements in the AL direction therefore the
+astrometry will be better constrained in the mean scan direction. Areas with
+more Equatorial polar scans (black) will constrain declination whilst lateral
+scans (white) constrain right ascension."
+"|〈e
+x
+p"
+"(c) The significance in the difference in directional constraints is reflected by the
+clustering of scan directions. Heavily clustered scan directions (light yellow)
+will produce a much stronger constraint in the mean scan direction than the
+perpendicular direction."
+"0.5
+0.6
+0.7"
+"(d) The spread of scan times, shown here by the standard deviation of times
+at which a position on the sky was observed, determines how well the proper
+motion can be estimated. A small spread in observation times (dark blue) will
+provide weaker proper motion constraints."
+"|〈e
+x
+p"
+"(i
+2
+π
+t)
+〉|"
+"(e) Measuring parallax requires position measurements throughout the year.
+Scans clustered at one time of year (light yellow) will produce a weaker parallax
+measurement than a spread of scans through the year (dark purple)."
+"Figure 1. The precision with whichGaiameasures 5D astrometry is heavily
+dependent on the number of FoV transits, scan times and directions, obtained
+from the scanning law. The plots provide some central summary statistics of
+the scanning law as a function of position on the sky in Galactic coordinates
+on HEALPix level 7."
+2 ASTROMETRY WITH GAIA
+2.1 The Scanning Law
+"The Gaia spacecraft is in orbit around the Lagrange point 2 (L2),
+orbiting the Sun in phase with the Earth. The spacecraft spins with
+a 6 hour period around a central axis which precesses with an aspect
+angle of 45 deg around the pointing connecting the satellite and the
+Sun, with a 63 day period. This is similar to a spinning top which
+has been left long enough to wobble. The orbit of the spacecraft
+around the sun adds a third axis of rotation."
+"Perpendicular to the spin axis, two fields of view (FoV) observe
+in directions separated by 106.5 deg. The direction in which each
+FoV is pointing at any point in time throughout Gaia’s observing
+period is the scanning law."
+"TheGaiaDR2 observing period runs from July 25 2014 (10:30
+UTC) until May 23 2016 (11:35 UTC). The scanning law for DR2 is
+published by DPAC and refined by Boubert et al. (2020a) and Bou-
+bert et al. (2020b, hereafter Paper III). Whilst this tells us where
+Gaia was pointing, it doesn’t tell us whether Gaia was obtaining
+useful scientific measurements that contributed to the published
+data products. Many time periods in the DR2 window did not re-
+sult in measurements which contributed to the Gaia astrometry as
+discussed in Paper III."
+"In this paper we only include the scanning law in the OBMT1
+interval 1192.13–3750.56 rev (Lindegren et al. 2018, hereafter L18)
+which removes the Ecliptic Polar Scanning Law, an initial calibra-
+tion phase of Gaia which contributed to the published photometry
+but not astrometry. DPAC have published a series of additional
+gaps in astrometry data taking2. We remove any time spans of the
+scanning law for which the gap is flagged as ‘persistent’. Using the
+published Epoch Photometry for 550,737 variable sources (Riello
+et al. 2018; Evans et al. 2018; Holl et al. 2018), Paper III con-
+strained additional gaps which are persistent across all data prod-
+ucts of Gaia DR2 which we also remove from the scanning law.
+Finally, Paper III determines the probability of an observation be-
+ing recorded and used in Gaia DR2 in 19 magnitude bins. These
+observation probabilities will be used to weight observations in the
+ASF in Section 3.2."
+2.2 Taking Observations
+"Both FoVs project source images onto a single panel of CCDs
+called the focal plane. On the focal plane there are 9 columns and
+7 rows of CCDs, referred to as the astrometric field (AF), which
+measure the position of a source although the middle row only has
+8CCDs (because one of the 9CCDpositions is taken by awave front
+sensor). As the spacecraft spins, stars track across the CCD panel in
+the along-scan direction and are observed with up to 9 astrometric
+CCDs during a single FoV transit (see e.g. Fig. 1 of Lindegren
+et al. 2016). Individual CCD measurements will be referred to as
+observations whilst a full track across the CCD panel is a scan
+(also referred to as a FoV transit). Before the AF, sources pass over
+the ‘Sky Mapper’ (SM) CCD which triggers the initial detection
+and needs to be confirmed by the first AF CCD in order for any
+observations within the scan to successfully provide ameasurement.
+Each observation records the position and apparent brightness of"
+"1 Onboard Mission Time (OBMT) is the timing system used in Gaia and is
+normalised such that OBMT is 0 in October 2013 and increments by 1 for
+every revolution of the Gaia satellite which corresponds to 6 hours
+2 https://www.cosmos.esa.int/web/gaia/dr2-data-gaps"
+"MNRAS 000, 1–18 ()"
+https://www.cosmos.esa.int/web/gaia/dr2-data-gaps
+"
+4 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+"the source. If the source is recorded with 𝐺 < 13 by the SM, a 2D
+observation window is assigned measuring position in the along-
+scan (AL) direction and orthogonal across-scan (AC) direction. For
+fainter stars with 𝐺 > 13, only the AL position is recorded."
+"Observations are saved on-board Gaia in ‘Star Packets’
+grouped by apparent magnitude in 19 bins(Table 1.10, Section 1.3.3
+de Bruĳne et al. 2018). The majority of data is uploaded to Earth,
+however some can be lost or deleted (see Section 3.3 Gaia Collab-
+oration et al. 2016) changing the scanning law sampling for stars in
+different Star Packet magnitude bins."
+"After a first process of CCD signal level, background, and PS-
+F/LSF calibration, the data is input to the AGIS pipeline (Lindegren
+et al. 2012) which uses an iterative linear regression algorithm to
+simultaneously fit the attitude of the spacecraft, a large number of
+calibration parameters, and the position, proper motion and parallax
+of all sources in Gaia DR2. We here provide a general description
+of how position, proper motion and parallax can be understood to
+depend on the nature of the observations a source receives, though
+inGaia they are simultaneously solved from the offsets of all source
+observations with respect to its (iteratively improved) internal ref-
+erence system."
+"The precision with which position, proper motion and parallax
+of a source can be measured is heavily dependent on magnitude
+(beyond 𝐺 > 13 the uncertainties will monotonically increase with
+magnitude), the number of observations taken, the scan directions of
+these observations and their distribution in time. More observations
+will produce a greater precision therefore sources in regions of the
+sky with the most scans as shown in Fig. 1a will have the best
+constrained astrometry. Notably, the Galactic center in the middle
+of the plot has received only ∼ 10scans whilst the best observed
+regions of the sky are scanned over 100 times."
+"For the vast majority of sources, Gaia only measures position
+in the AL direction and even for 2D observations, the AL position
+constraint is much tighter than the AC measurement (Lindegren
+et al. 2012). Therefore North-South scans in equatorial coordinates
+will constrain declination, 𝛿 whilst East-West scans constrain right
+ascension, 𝛼. Fig. 1b gives the mean direction of Gaia DR2 scans
+modulo 𝜋 such that a North-South and South-North scan appear
+the same with 〈𝜙〉 = 0. The mean direction is estimated from the
+argument of the mean vector"
+"〈𝜙〉 =
+1
+2
+arg [〈exp(2𝑖𝜙)〉] . (3)"
+"This statistic is published for sources in Gaia EDR3 as
+scan_direction_mean_k2. Darker areas will have stronger 𝛿 con-
+straints whilst lighter areas constrain 𝛼 more tightly. The difference
+in accuracy in right ascension and declination depends on the clus-
+tering of scan directions. The absolute value of themean scan vector,
+|〈exp(2𝑖𝜙)〉| which will be ∼ 1 for heavily clustered scans and ∼ 0
+for a spread of scan directions. This is shown in Fig. 1c where light
+areas will strongly constrain position in the mean scan direction but
+only provide a weak constraint in the perpendicular direction whilst
+dark regions have a spread of scan directions and therefore won’t
+show a strong direction preference. This statistic is also published
+in Gaia EDR3 as scan_direction_strength_k2."
+"Constraints on the source proper motion come frommeasuring
+the position of a source at multiple different epochs and estimating
+the rate of change. A larger spread of observation times will pro-
+duce a tighter proper motion constraint. Fig. 1d shows the standard
+deviation of observation times with light regions producing tighter
+proper motion constraints whilst dark regions produce a weaker
+constraint."
+"Finally, source parallax is estimated from the apparent motion
+of a source relative to the background of distant sources due to
+Gaia’s motion around the sun on a one year period. A larger spread
+of observations throughout the year will produce a tighter constraint
+on the source parallax. The position of an observation in the yearly
+solar orbit is described by the complex vector exp(2𝜋𝑖𝑡). As with
+the scan direction, the clustering of observations in the year is
+estimated from the absolute value of the mean vector |〈exp(2𝜋𝑖𝑡)〉|.
+If observations are heavily clustered at one time of year the absolute
+mean will be close to 1, shown by lighter areas of Fig. 1e, and only a
+weak constraint on parallax will be achieved. Values close to 0 have
+well spread observations throughout the year and therefore provide
+a stronger constraint on parallax."
+2.3 Data
+"The previous sections have provided a qualitative prediction of
+Gaia’s expected performance as a function of position on the sky. In
+the following sections we’ll produce a quantitative estimate of the
+predicted precision with whichGaia canmeasure source astrometry
+as a function of position on the sky and apparent magnitude."
+"Gaia DR2 (Gaia Collaboration et al. 2016, 2018) provides 5D
+astrometry for 1,331,909,727 of the 1,692,919,135 source in the full
+DR2 catalogue. To test our predictions, we’ll use the full Gaia DR2
+source catalogue and 5D astrometry sample."
+3 METHOD
+"As input AGIS takes the 1D measurement of the position of each
+source in the AL and, for bright sources, also AC direction. For
+bright sources, Gaia produces a 2D observation however AGIS as-
+sumes the constraints in the AL and AC directions are uncorrelated
+treating them as independent 1D observations. We make the same
+assumption in this work. This is a gross simplification of all the
+steps which AGIS takes – for instance, calibrating the satellite at-
+titude noise – however it allows for a very appealing and tractable
+derivation of the ASF from the available data."
+We will proceed with four key assumptions:
+"• The 1D position measurement uncertainty is Gaussian.
+• Individualmeasurements, includingAL andACmeasurements"
+"from the same observation, are independent and uncorrelated. As
+the AGIS pipeline uses the same assumption, this will not produce
+any discrepancy between our predictions and the published Gaia
+astrometry."
+"• The position measurement uncertainty is a function of source
+apparentmagnitude at the time of observation only. Any dependence
+of the observation precision of the satellite as a function of time
+for a given apparent magnitude is neglected which we justify in
+Appendix A. This also assumes that the measurement uncertainty
+is colour independent."
+"• Astrometric parameters of different sources are assumed to be
+independent. In reality measurements of different sources can be
+considered independent, however due to the joint estimation of the
+attitude and geometric calibration from the same set of observations,
+the posterior astrometric parameters will be correlated. Pre-launch
+estimates by Holl et al. (2010) predicted correlations of only a
+fraction of a percent for sources separated by less than one degree
+(in a fully calibrated AGIS solution dominated by photon noise).
+DR1 (see Sec. D.3 of Lindegren et al. 2016) seems to be well above
+that with correlation as high as perhaps 0.25 at separations up to"
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 5
+"x R𝑁 True AL position of source at observation time.
+x′ R𝑁 Measured AL position of source at observation time.
+r R5 Source astrometry.
+𝑀 R𝑁×5 Design matrix of astrometric solution.
+𝐾 R𝑁×𝑁 Expected measurement covariance.
+𝐶 R5×5 Published astrometry covariance.
+Σ R5×5 Expected astrometry covariance (Σ = 𝜌Φ).
+𝜌 R Magnitude dependence of ASF.
+Φ R5×5 Spatial dependence of ASF from scanning law."
+Table 1. Notation followed in linear regression.
+"∼ 1 deg, though much smaller on longer scales. Studies on the
+quasar sample in DR2 (see Sect. 5.4 of Lindegren et al. 2018) show
+still very large covariances as small spatial scales (< 0.125 deg)
+and milder effects over larger spatial scales. With each successive
+data release it is expected that these spatial correlations will shrink,
+though they will never be zero, especially at small scales."
+"Throughout this paper we also only consider sources with constant
+magnitude to keep the results simple and tractable however the for-
+malism is easily generalisable to variable sources. Over this section
+we derive the ASF of Gaia DR2. As many different variables are
+introduced, we refer the reader to Table 1 to clarify our notation."
+3.1 Astrometry from linear regression
+"Gaia’s goal for each source in the astrometry catalogue is to mea-
+sure the five parameter astrometric solution, r ∈ R5, consisting of
+the positions, proper motions and parallax. The AGIS pipeline es-
+timates the astrometry of sources through linear regression on all
+observations of a single source in a step called source update (see
+Sect. 5.1 of Lindegren et al. 2012). We will use the same technique
+to determine the expected precision for a simple point source as a
+function of apparent magnitude and position on the sky."
+"Take 𝑁 observations of a source at times 𝑡𝑖 with the scan
+direction 𝜙𝑖 where 𝑖 ∈ {1, . . . , 𝑁}. The on-sky positions of the
+source at times 𝑡𝑖 in ICRS coordinates are (𝛼𝑖 , 𝛿𝑖). The source
+position relative to the solar systembarycenter at the reference epoch
+(J2015.5 for Gaia DR2 L18) is 𝛼0, 𝛿0. The position at time 𝑡𝑖 will
+be a linear combination of the position at a reference epoch with
+the proper motion and parallax motion. The offset due to parallax
+motion is given by"
+"Δ𝛼𝑖 cos 𝛿𝑖 = −𝜛 (−𝑋𝑖 sin𝛼0 + 𝑌𝑖 cos𝛼0) = 𝜛Π𝛼𝑖 (4)
+Δ𝛿𝑖 = −𝜛 (−𝑋𝑖 cos𝛼0 sin 𝛿0 − 𝑌𝑖 sin𝛼0 sin 𝛿0 + 𝑍𝑖 cos 𝛿0) = 𝜛Π𝛿𝑖"
+"where 𝑋𝑖 , 𝑌𝑖 , 𝑍𝑖 are the barycentric coordinates of Gaia at time 𝑡𝑖
+and 𝜛 is the parallax of the source. We have assumed the parallax
+and proper motion are small enough such that the parallax ellipse is
+only dependent on the source reference epoch position which keeps
+the system of equations linear."
+Therefore the position of the source at time 𝑡𝑖 will be given by
+"𝛼
+∗
+𝑖
+= 𝛼"
+"∗
+0 + `𝛼∗ 𝑡𝑖 +𝜛Π𝛼𝑖 (6)"
+𝛿𝑖 = 𝛿0 + `𝛿 𝑡𝑖 +𝜛Π𝛿𝑖 (7)
+"where `𝛼, `𝛿 is the source proper motion, 𝑡𝑖 is the time relative
+to the reference epoch and we use the notation 𝛼∗ = 𝛼 cos(𝛿) and
+`𝛼∗ = `𝛼 cos(𝛿)."
+Writing this set of linear equations out in matrix notation:
+"𝛼∗1
+𝛿1
+.
+.
+."
+"
+="
+
+"1 0 Π𝛼1 𝑡1 0
+0 1 Π𝛿1 0 𝑡1"
+"1 0 Π𝛼𝑁 𝑡𝑁 0
+0 1 Π𝛿𝑁 0 𝑡𝑁"
+
+"
+𝛼∗0
+𝛿0
+𝜛"
+"
+. (8)"
+"Our measurables are 1D positions in either the AL or
+AC direction of the Gaia focal plane. This is given by
+𝑥𝑖 = 𝛼"
+"∗
+𝑖
+sin 𝜙𝑖 + 𝛿𝑖 cos 𝜙𝑖 where the scan position angle, 𝜙𝑖 is the"
+"scan direction of Gaia at the observation time for AL observations
+(shifted by 𝜋/2 for AC observations) and is defined such that 𝜙 = 0◦
+in the direction of local Equatorial North, and 𝜙 = 90◦ towards local
+East3."
+"Substituting 𝑥𝑖 into Eq. 8:
+𝑥1
+𝑥2
+.
+.
+."
+"
+="
+"
+𝑠1 𝑐1 Π𝛼1 𝑠1 + Π𝛿1𝑐1 𝑡1𝑠1 𝑡1𝑐1
+𝑠2 𝑐2 Π𝛼2 𝑠2 + Π𝛿2𝑐2 𝑡2𝑠2 𝑡2𝑐2"
+𝑠𝑁 𝑐𝑁 Π𝛼𝑁 𝑠𝑁 + Π𝛿𝑁 𝑐𝑁 𝑡𝑁 𝑠𝑁 𝑡𝑁 𝑐𝑁
+"
+
+𝛼∗0
+𝛿0
+𝜛"
+"
+= Mr (9)"
+"where 𝑐𝑖 = cos 𝜙𝑖 and 𝑠𝑖 = sin 𝜙𝑖 ,M ∈ R𝑁×5 is the design matrix
+for the linear equations and r ∈ R5 is the vector of astrometric
+parameters."
+"Assuming Gaussian measurement uncertainty for both AL and
+AC measurements and assuming all observations are independent,
+the observed source positions are distributed x′ ∼ N (x,K) where
+the covariance matrix K = diag"
+"[
+𝜎21 , . . . , 𝜎"
+"]
+. This measurement"
+"covariance implicitly assumes all observations are independent and
+uncorrelated, one of our key assumptions also adopted in AGIS."
+"Following standard linear least squares regression (Hogg et al.
+2010), the astrometric uncertainty covariance matrix of the inferred
+r is given by"
+= MTK−1M. (10)
+"Expanding this out in terms of all scan angles, the full inverse
+covariance matrix is given by"
+"𝑁∑︁
+𝑖=1"
+"1
+𝜎2
+𝑖"
+A𝑖 (11)
+"
+𝑠2
+𝑖"
+"𝑠𝑖𝑐𝑖 𝑠𝑖Π𝑖 𝑠
+2
+𝑖
+𝑡𝑖 𝑠𝑖𝑐𝑖 𝑡𝑖"
+"𝑠𝑖𝑐𝑖 𝑐
+2
+𝑖"
+"𝑐𝑖Π𝑖 𝑐𝑖𝑠𝑖 𝑡𝑖 𝑐
+2
+𝑖
+𝑡𝑖"
+"𝑠𝑖Π𝑖 𝑐𝑖Π𝑖 Π
+2
+𝑖"
+𝑠𝑖 𝑡𝑖Π𝑖 𝑐𝑖 𝑡𝑖Π𝑖
+"𝑠2
+𝑖
+𝑡𝑖 𝑠𝑖𝑐𝑖 𝑡𝑖 𝑠𝑖 𝑡𝑖Π𝑖 𝑠"
+"2
+𝑖
+𝑡2
+𝑖"
+"𝑠𝑖𝑐𝑖 𝑡
+2
+𝑖"
+"𝑠𝑖𝑐𝑖 𝑡𝑖 𝑐
+2
+𝑖
+𝑡𝑖 𝑐𝑖 𝑡𝑖Π𝑖 𝑠𝑖𝑐𝑖 𝑡"
+"𝑐2
+𝑖
+𝑡2
+𝑖"
+"
+(12)"
+"where Π𝑖 = Π𝛼𝑖 𝑠𝑖 + Π𝛿𝑖 𝑐𝑖 .
+Eq. 11 assumes that every scan of a source will produce a"
+"detection which contributes to the astrometric solution. Even after
+removing gaps in the scanning law, there are periods of time and
+magnitudes which are less likely to result in good astrometric obser-
+vations. We need to account for the efficiency ofGaia observations."
+"3 https://www.cosmos.esa.int/web/gaia/
+scanning-law-pointings"
+"MNRAS 000, 1–18 ()"
+"https://www.cosmos.esa.int/web/gaia/scanning-law-pointings
+https://www.cosmos.esa.int/web/gaia/scanning-law-pointings"
+"
+6 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+3.2 Scan Weights
+"As Gaia scans a source, up to 9 observations are taken with the
+9 astrometric-field CCD columns. There are two ways in which
+observations may not be propagated to the astrometric solution. If a
+source is not detected and confirmed by the SM and first AF CCDs
+and allocated a window, none of the CCDs in the scan will produce
+a successful detection. Secondly, an individual CCD observation
+may either not be taken or the measurement may be down-weighted
+in the astrometric solution. There are many reasons why this might
+happen such as stray background light, attitude calibration or the
+source simply passing through the small gaps between CCD rows.
+Accounting for these processes, the astrometric precision matrix
+may be approximated as"
+"𝑁∑︁
+𝑖=1"
+A𝑖 (13)
+"where 𝑦𝑖 ∼ Bernoulli(b𝑖) ×Binomial(9, \𝑖) where b𝑖 is the fraction
+of scans used in the astrometric solution and \𝑖 is the probability of a
+CCD producing a successful observation. The binomial distribution
+assumes that a CCD observation is either successful or not therefore
+only allowing a full weight or zero weight. The weight formula in
+the AGIS pipeline (Eq. 66, Lindegren et al. 2012) does allow for
+non-discrete weights however we anticipate that this will have a
+small effect on our results. Assuming that the event of a successful
+scan or observation are independent events, the expected value of
+the weights is given by"
+"𝑤𝑖 = E [𝑦𝑖] = E [Bernoulli(b𝑖)] × E [Binomial(9, \𝑖)]
+= b𝑖 × 9\𝑖 . (14)"
+Therefore the expected astrometric precision is given by
+"E
+[
+Σ
+−1
+]
+="
+"𝑁∑︁
+𝑖=1"
+A𝑖 . (15)
+"For sources with 𝐺 > 13, Gaia only measures a 1D position
+in the AL direction however for bright sources, 𝐺 < 13 and AC
+measurement is also taken. Following the method in Lindegren
+et al. (2012), we treat the AL and AC observations as independent
+1D measurements such that Eq. 15 expands out to"
+"E
+[
+Σ
+−1
+]
+="
+"𝑁AL∑︁
+𝑖=1"
+"𝜎2AL,𝑖
+A𝑖 +"
+"𝑁AC∑︁
+𝑖=1"
+"𝜎2AC,𝑖
+A𝑖 . (16)"
+"In Boubert et al. (2020b) the fraction of scans, 𝑓 (𝑡𝑖) which
+contribute to the Gaia photometry is estimated in Star Packet mag-
+nitude bins as a function of time in DR2. Due to their separate
+pipelines, the probability of an observation contributing to the as-
+trometric solution will differ from the photometry. To determine
+the astrometry weights, we renormalise the photometry scan frac-
+tion using the published number of astrometric detections used,
+astrometric_n_good_obs_al"
+"𝑤
+AL
+𝑖"
+"= 9 ×
+62
+63"
+"𝑓 (𝑡𝑖)
+〈
+astrometric_n_good_obs_al"
+"9 × 6263
+∑𝑁scan
+𝑖=1 𝑓 (𝑡𝑖)"
+= 𝜐 𝑓 (𝑡𝑖) 𝑓good (𝐺). (17)
+"where 𝑤AL
+𝑖
+is the weight for AL source observations since we have"
+"renormalised by the number of good AL observations used in the
+astrometry. The multiplication of the scan fraction by 𝜐 = 9 × 6263
+converts the scan fraction to average number of observations. There
+are 9 columns and 7 rows of CCDs in the astrometric field of Gaia"
+5D covariance
+Lindegren 2018
+"f
+g
+o
+o
+d"
+"2.5 5.0 7.5 10.0 12.5 15.0 17.5 20.0
+G"
+"Figure 2. The magnitude dependence of the ASF is a function of the AL
+astrometric uncertainty 𝜎AL (top), the fraction of photometric observations
+which generate good astrometric observation used in theAGIS pipeline 𝑓good
+(middle) and the ratio of AC to AL observations 𝑅 (bottom). In all cases the
+median and 16th to 84th percentiles of the Gaia DR2 astrometry sample are
+given by the red sold line and shaded area respectively. The distribution of
+𝜎AL (black histograms, log normalised) extends high above the median due
+to source excess noise."
+"however one CCD is replaced by a wave front sensor hence only
+62 are left. 𝑓good (𝐺), shown in the middle panel of Fig. 2, is above
+90% across the most magnitudes and only significantly deviates
+from 100% at the bright end."
+"For a given source, the number of AL and AC observa-
+tions is published in Gaia DR2 as astrometric_n_obs_al and
+astrometric_n_obs_ac. These statistics do not account for down-
+weighting of observations in the astrometry pipeline, however, as-
+suming the AL and AC measurements of the same observations are
+equally likely to be down-weighted, the ratio between the numbers
+will be unaffected. 𝑅 = astrometric_n_obs_acastrometric_n_obs_al gives the fraction of
+observations which produce an ACmeasurement. The bottom panel
+of Fig. 2 shows that observations with 𝐺 < 13 produce AC mea-
+surements whilst 𝐺 > 13 do not. We use this fraction to relate the
+observation weights 𝑤AC"
+"𝑖
+= 𝑅(𝐺)𝑤AL"
+"𝑖
+. In truth, the scan fraction,"
+"𝑅, may be a weak function of position on the sky at bright magni-
+tudes due to crowding causing problems with window assignment.
+However, as we’ll see in the following section, the contribution from
+AC observations to the astrometric precision is ∼ 3% compared to
+the AL contribution and so any weak uncertainty in 𝑅 will have a
+small impact on the estimated precision."
+3.3 Centroid error
+"The centroid error in the AL and AC directions, 𝜎AL
+𝑖"
+", 𝜎AC
+𝑖
+is a"
+"function of the spacecraft instrumentation and apparent brightness
+of the source due to photon shot noise. For the remainder of this
+section, we assume that all CCDs in the astrometric field of the"
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 7
+"Figure 3. Top: Observed from L2, any source on the sky follows a curved
+track given by the combination of source proper motion and apparent par-
+allax ellipse as represented here by the black-dashed line for a source with
+`∗𝛼 = 20mas/y, `𝛿 = 20mas/y and 𝜛 = 10mas located near the galactic
+bulge with 𝑙 = 30 deg, 𝑏 = 10 deg. Gaia scans this position on the sky 15
+times in the DR2 time frame shown by blue and red arrows for FoV1 and
+FoV2 respectively. Bottom: Each scan, marked by the vertical red and blue
+dashed lines, contributes to the 5D astrometry constraints. The expected un-
+certainty on each astrometry parameter is shown for a source with 𝐺 = 16
+and therefore 𝜎AL = 0.37mas and reduce with each subsequent scan.When
+fewer than 6 visibility periods are observed, only 𝛼∗0 (green solid) and 𝛿0
+(purple solid) are shown with priors placed on all parameters. With at least
+6 visibility periods, uncertainties are also given for `∗𝛼 (green dashed), `𝛿
+(purple dashed) and 𝜛 (red dotted)."
+"CCD panel have similar noise properties. We also assume that this
+performance is time independent and does not depend on the po-
+sition of the source on the plane. Changes to the spacecraft such
+as mirror condensation and micrometeoroid impacts mean that the
+performance of the space craft is not perfectly time independent
+however we demonstrate in Appendix A that the dependence is
+small compared to the scatter of individual measurements using the
+epoch photometry."
+"Thereforewe assume that allALobservations of a single source
+have the same precision and likewise for all AC observations such
+that Eq. 16 becomes"
+"E
+[
+Σ
+−1
+]
+="
+"1
+𝜎AL (𝐺)2"
+"𝑁AL∑︁
+𝑖=1"
+"𝑤
+AL
+𝑖"
+"A𝑖 +
+1"
+"𝜎AC (𝐺)2
+𝑁AC∑︁
+𝑖=1"
+"𝑅(𝐺)𝑤AL
+𝑖"
+"Lindegren et al. (2012, Table 1) gives the ratio of AC to
+AL error for bright sources as typically 𝜓 = 520/92 such that
+𝜎AC = 𝜓𝜎AL, although we note that this was only a pre-launch"
+"estimate and the true calibrated uncertainty is likely marginally
+different. Substituting into the expected precision"
+"E
+[
+Σ
+−1
+]
+="
+"1
+𝜎AL (𝐺)2"
+"𝑅(𝐺)
+𝜓2"
+") 𝑁AL∑︁
+𝑖=1"
+"𝑤
+AL
+𝑖"
+A𝑖 . (19)
+"The final unknown in Eq. 22 is 𝜎AL, the astrometric centroid
+error of AL observations. 𝜎AL was estimated from the Gaia pub-
+lished astrometry by Belokurov et al. (2020) using the formula
+0.53"
+"√
+𝑁𝜎𝜛 where 𝑁 was the number of AL observations used for"
+"the source astrometry published as astrometric_n_good_obs_al.
+0.53was used as this empiricallymatched the published distribution
+in Fig.9 of L18. However"
+"√
+𝑁𝜎𝜛 is a strong function of position"
+"on the sky depending on scan directions and spread of observations
+throughout the year. This means that the running median as a func-
+tion of magnitude will be heavily affected by where the given stars
+lie on the sky."
+"For this work, we find a more mathematically motivated route
+to the scan variance. By summing up the first two diagonal terms of
+the inverse covariance matrix from Eq. 12, the dependence on the
+scan angle 𝜙𝑖 disappears."
+"E
+[
+Σ
+−1
+]
+𝛼,𝛼"
+"+ E
+[
+Σ
+−1
+]
+𝛿, 𝛿"
+𝜎𝐴𝐿 (𝐺)2
+"𝑅(𝐺)
+𝜓2"
+") 𝑁∑︁
+𝑖=1"
+"𝑤
+AL
+𝑖"
+"(𝑠2
+𝑖
++ 𝑐2"
+𝜎𝐴𝐿 (𝐺)2
+"𝑅(𝐺)
+𝜓2"
+") 𝑁∑︁
+𝑖=1"
+"𝑤
+AL
+𝑖
+(20)"
+"Therefore the AL astrometric error can be determined independent
+of position on the sky by substituting Σ for the published covariance
+𝐶 and rearranging in terms of 𝜎AL."
+"𝜎
+2
+𝐴𝐿"
+"(𝐺) =
+(
+1 +"
+"𝑅(𝐺)
+𝜓2"
+") 〈
+astrometric_n_good_obs_al"
+(C−1)𝛼𝛼 + (C−1)𝛿 𝛿
+"where
+∑𝑁
+𝑖=1 𝑤"
+"= astrometric_n_good_obs_al. As we will
+discuss in more detail in Section 6, the selection of the Gaia 5D
+astrometry sample included a cut on astrometric_sigma5d_max.
+Sources with large astrometric uncertainty would not receive 5D
+astrometry and therefore, particularly at the dim end, 𝜎AL would
+be biased low. To mitigate this, we calculate 𝜎AL (𝐺) using all
+stars in Gaia DR2 with at least 6 visibility_periods_used. For
+sources without 5D astrometry we use the inverse of the published
+2D astrometry covariance matrix as a proxy. This is a rough approx-
+imation and therefore we suggest that our results are only trusted out
+to𝐺 . 20.5 at which point the cut on astrometric_sigma5d_max
+becomes significant (see Section 6)."
+"The distribution of 𝜎AL is shown in the top panel of Fig. 2
+demonstrating a relatively flat behaviour for 𝐺 < 13 where 2D
+observations are taken and time windows are truncated to avoid
+saturation. For 𝐺 > 18 the variance grows with magnitude due to
+photon shot noise. The red line gives themedian value in 0.1mag and
+we linearly interpolate this as a function of magnitude to estimate
+𝜎AL (𝐺). For reference, the grey-scale histograms are the 𝜎AL for
+5D astrometry sources where the truncation for 𝜎AL ∼ 10 mas
+is caused by the astrometric_sigma5d_max cut. The blue line
+in the top panel of Fig. 2 is the blue line from L18. Across most
+of the magnitude range, our estimate is lower than L18 by ∼ 10%.
+This is expected because we’re actually calculating slightly different
+statistics. L18 used the residuals of all AL observations relative to
+the best fit astrometric solution. In calculating the source astrometry,
+observations are assigned weights as a function of their residuals
+which disfavoured observationswith large residuals frombeing used
+in the astrometric solution. Therefore the value of 𝜎AL inferred by"
+"MNRAS 000, 1–18 ()"
+"8 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+α∗ δ $ µα∗ µδ
+10−2 10−1 100
+"σ2 (mas2)
+10−2 10−1 100"
+"σ2$ (mas
+2)"
+10−2 10−1 100
+"σ2µ (mas
+2 / y2)"
+"Figure 4. The predicted variance in each component of the astrometry for the 𝐺 ∈ [18.1, 19.0] magnitude bin (bottom row) matches the median variances
+for observed Gaia astrometry sources in the same magnitude range (top row) in HEALPix level 7 bins shown in Galactic coordinates. In all plots, the lighter
+shades near the ecliptic plane show increased variance due to lack of scans in Gaia DR2. The top row is similar to L18, Fig. B3 where instead of showing
+individual components, they instead show the position and proper motion semi-major axes."
+ObservedPredicted
+α∗ δ $ µα∗ µδ
+"−1.00 −0.75 −0.50 −0.25 0.00 0.25 0.50 0.75 1.00
+correlation coefficient"
+"Figure 5. The predicted correlation coefficients for 𝐺 ∈ [18.1, 19.0] (lower triangle) match up well to the correlation coefficients of the median covariances
+from the Gaia astrometry (upper triangle) in HEALPix level 7 bins shown in Galactic coordinates. The detailed and complex structure in the correlation
+coefficients is driven by the directions and time separations between subsequent scans of the same position on the sky. The 𝜛 − `∗𝛼, 𝜛 − `𝛿 and `∗𝛼 − `𝛿 in
+the upper triangle correspond to L18, Fig. B5 although at a different magnitude."
+"L18 will be higher than ours which has implicitly ignored large
+outliers. As our task in this paper is to predict the published 5D
+astrometry uncertainties, our formula for 𝜎AL is the appropriate
+one to use."
+"Finally, we can substitute in 𝑤AL
+𝑖
+from Section 3.2."
+"E
+[
+Σ
+−1
+]
+="
+"1
+𝜎AL (𝐺)2"
+"𝑅(𝐺)
+𝜓2"
+")
+𝑓good (𝐺)"
+"𝑁AL∑︁
+𝑖=1"
+𝜐 𝑓 (𝑡𝑖)𝐴𝑖
+"=𝜌(𝐺)Φ(𝑙, 𝑏) (22)"
+where we have defined
+"𝜌(𝐺) ≡
+1"
+𝜎AL (𝐺)2
+"𝑅(𝐺)
+𝜓2"
+")
+𝑓good (𝐺) (23)"
+"as the magnitude dependent normalisation and
+Φ(𝑙, 𝑏) ≡"
+"∑𝑁AL
+𝑖=1 𝜐 𝑓 (𝑡𝑖)A𝑖 as the scanning law dependent"
+"matrix. Φ has a weak magnitude dependence as the fractions 𝑓 (𝑡𝑖)
+change between the magnitude bins in which Gaia downloads data
+however, within any download bin, it is independent of magnitude."
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 9
+α∗ δ $ µα∗ µδ
+"0.5 1.0 2.0
+σ2pred/σ"
+"−0.4 −0.2 0.0 0.2 0.4
+∆ correlation coefficient"
+"Figure 6. The ratio of predicted to median observed variance for𝐺 ∈ [18.1, 19.0] (diagonal) in HEALPix level 7 bins shows structure in the bulge where the
+prediction has underestimated the observed variance driven by crowding of sources and lack of observations in Gaia DR2. The difference between predicted
+and median observed correlation coefficients (lower triangle) shows no strong structural bias in correlation. All projections are in Galactic coordinates."
+"G ∈ [16.30, 17.00] G ∈ [18.10, 19.00] G ∈ [20.00, 20.30]"
+"0.80 1.00 1.25
+〈σAL〉G,l,b/σAL(〈G〉l,b)"
+"Figure 7. The ratio of the median 𝜎AL in HEALPix level 7 bins to the value of 𝜎AL evaluated at the median magnitude of stars in the HEALPix bins highlights
+any dependence of 𝜎AL on sky position in Galactic coordinates. Particularly in the highest source density regions of the Galactic plane and bulge at brighter
+magnitudes, sources have significantly higher astrometric measurement uncertainty than the average across the sky."
+3.4 Astrometry Spread Function
+"In the previous sections we have derived the expected precision,
+E
+[
+Σ−1"
+"]
+for simple point sources as observed byGaia. TheDR2 data"
+"has been used to estimate 𝜎AL (𝐺), 𝑅(𝐺) and 𝑓good (𝐺) as running
+medians as a function of magnitude. Φ(𝑙, 𝑏) ="
+"∑𝑁AL
+𝑖=1 𝑓 (𝑡𝑖)A𝑖 is a"
+"function of the scanning lawonly and has no dependence on theGaia
+astrometry data. For the remainder of this paper, we will simplify
+the notation taking Σ = E"
+"]−1
+as the expected 5D astrometry"
+"covariance for a simple point source in Gaia.
+For a point source moving without acceleration with true astro-"
+"metric coordinates r observed in Gaia DR2, the expected measured
+astrometric coordinates will be drawn from a multivariate normal
+distribution with covariance Σ,"
+"r′ ∼ N(r,Σ(𝐺, 𝑙, 𝑏)). (24)"
+"This normal distribution is the Astrometry Spread Function where
+𝐺, 𝑙, 𝑏 are the apparent magnitude and position of the source on the
+sky."
+"To demonstrate how the astrometry is fit in practice, we show
+the expected observations and astrometric uncertainty for a hypo-
+thetical source at 𝑙 = 30 deg, 𝑏 = 10 deg with apparent magnitude"
+"MNRAS 000, 1–18 ()"
+"10 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+"0 1 2 3 4 5
+Fraction Before First Decontamination (%)"
+"Figure 8.The fraction of scans of any position on the skywhich occurred be-
+fore the first decontamination event, shown here as a percentage in HEALPix
+7 bins in Galactic coordinates, corresponds to regions of the sky with en-
+hanced measurement uncertainty."
+"𝐺 = 16 in Fig. 3. The source is given propermotion `∗𝛼 = 20mas/y,
+`𝛿 = 20mas/y which produces a trajectory from South East to
+North West. Adding the parallax ellipse for 𝜛 = 12 mas generates
+a spiralling apparent position observed by Gaia throughout DR2
+given by the black-dashed line in the top panel of Fig. 3."
+"Gaia scans this region of the sky 15 times in DR2 given by the
+blue and red arrows for scans from FoV1 and FoV2 respectively.
+Each scan improves the constraint on each of the five astrometry
+parameters the uncertainties for which are given in the bottom panel
+of Fig. 3.Gaia selects sources for the 5D astrometry cataloguewhich
+have at least 6 visibility_periods_used where a visibility period
+is a group of observations separated by less than four days. Where
+fewer than 6 visibility periods have been observed theAGIS pipeline
+places priors on the astrometry derived in Michalik et al. (2015)
+and only the 2D position constraints are published. We replicate
+this using the same priors and only providing uncertainties for the
+𝛼∗0 (green solid) and 𝛿0 (purple solid) parameters before the sixth
+visibility period (9th scan)."
+"After the sixth visibility period, the priors were dropped and
+the uncertainties on `∗𝛼 (green dashed), `𝛿 (purple dashed) and 𝜛
+(red dotted) parameters are also shown. For simplicity, this demon-
+stration assumes all observations were successful and equally likely
+to contribute to the astrometry however as discussed in Section 3.2,
+this is not always the case and this is corrected for by weighting
+observations."
+4 RESULTS
+"To test that our method is producing reasonable covariance matri-
+ces, we compare our predictions with the published 5D astrometry
+covariances. From the Gaia DR2 astrometry sample we determine
+themedian published covariance on a level 7 HEALPix grid (Górski
+et al. 2005) in the magnitude range 𝐺 ∈ [18.1, 19.0] which repre-
+sents a single Star Packet bin in which the scan fractions, 𝑓 are
+unchanged."
+"We estimate the predicted covariance using the formula in
+Eq. 22 where 𝐺 is taken as the median apparent magnitude of stars
+in the given magnitude bin and HEALPix pixel. The scan angles
+and times are inferred at the central coordinates of the HEALPix
+pixel. All figures are shown in Galactic coordinates."
+The diagonal elements of both the median observed and pre-
+"dicted covariance matrices are shown in Fig. 4 demonstrating ex-
+cellent agreement down to degree scales in all components. In all
+coordinates the variance is significantly enhanced in regions which
+have been scanned less in DR2, most notably around the Galactic
+bulge. Thin streaks of boosted variance on the sky correspond to
+time periods in Gaia DR2 where data was not taken due to mirror
+decontamination or other disruptive processes."
+"In Fig. 5 we compare the correlation coefficients evaluated by
+dividing the off-diagonal covariance elements by the square root of
+the products of their respective variances. Correlation coefficients
+are less dependent on the number of observations, which has largely
+been divided out, and more on the scan directions and time variance
+leading to a more complex and varied structure on the sky. Again,
+the observed correlation (upper right triangle) and predicted cor-
+relation (lower left) show excellent agreement down to small scale
+variations."
+"Fig. 6 provides amore direct comparison between the predicted
+and observed covariances. Diagonal elements give the ratio of pre-
+dicted to observed variance. Across the vast majority of the sky,
+there is strong agreement with noise dominating in underscanned
+regions. Two features stand out in the variance ratios where the
+model has not fully captured the system. A streak of scans in the
+South East and NorthWest show underestimated uncertainties from
+the model. The scans in Gaia responsible for this are constrained
+and discussed in Section 6. Secondly, the Galactic bulge also shows
+a significant systematic underestimate against the observed vari-
+ance. This is not unexpected as high source crowding can cause
+single windows to be allocated to multiple sources generating spu-
+rious centroid positions. The third panel of L18, Fig. B.4 shows
+the same issue but manifested in the astrometric_excess_noise
+of the source fits."
+"We demonstrate this issue in Fig. 7 where we show the median
+𝜎AL (𝐺, 𝑙, 𝑏) evaluated using Eq. 21 with the median taken in ev-
+ery 0.1 mag magnitude bin and HEALPix level 7 pixel divided by
+𝜎AL (𝐺) evaluated at themedianmagnitude of stars in the HEALPix
+pixel. From Section 3.3, we expect 𝜎AL to be independent of posi-
+tion on the sky which is a key assumption in our model. Across the
+sky 𝜎AL shows only weak dependence on the scanning law at less
+than∼ 10%. However, particularly for brighter magnitude bins,𝜎AL
+is not uniform over the sky as expected and is significantly higher in
+regions of the disk and bulge with the highest source density. This
+issue is further exacerbated for the bulge as it happens to reside in
+a region of the sky which has been scanned very few times by Gaia
+whereas the LMC and SMC which have been scanned more heavily
+show no clear signal. In futureGaia data releases, the Galactic bulge
+will likely receive significantly more scans reducing this issue."
+"Fig. 7 also shows residual scanning law structurewhich is likely
+caused by the∼ 20% variation in the instrument precision discussed
+in Appendix A. For example, the green strips in the North East and
+Southwhere𝜎AL is systematically higher correspond to areaswhich
+received many observations before the first decontamination when
+the satellite measurement precision was at its worst as shown in
+Fig. A2. Fig. 8 shows the percentage of observations which took
+place before the first decontamination event in DR2 for which the
+highest regions match exactly with regions of the sky in Fig. 7 with
+enhanced 𝜎AL. The diagonal elements of Fig. 6 show that these
+features are comparable to the background noise level and so are
+not of significant concern."
+"The off-diagonal elements of Fig. 6 show the difference be-
+tween predicted and observed correlation coefficients. The struc-
+ture of the scanning law can be seen in white as the regions which
+are most heavily scanned will have the lowest uncertainty. There is"
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 11
+"Figure 9. The reduced 𝜒2 of the astrometric solution, UWE is estimated
+from the published covariances using the predicted covariance for simple
+point sources producing a distribution with median ∼ 1 (red solid). The
+distribution of source (black histogram, log normalised) extends out to high
+values of UWE due to sources with high excess noise."
+"some marginal bias in the 𝛼∗ and 𝛿 components but this is small
+compared with the overall signal seen in Fig. 5."
+"From these results, we demonstrate that the ASF is accurate
+across the majority of the sky across all magnitudes at the 10%
+level. However for bright sources (𝐺 . 18) close in crowded re-
+gions (|𝑏 | . 5 deg) un-corrected calibration effects become signif-
+icant inflating the systematic uncertainties. When using Gaia DR2
+astrometry to search for excess noise from genuine source character-
+istics, these systematic uncertainties should be taken into account."
+5 UNIT WEIGHT ERROR
+"Unit Weight Error (UWE) is the reduced chi-squared statistic of the
+astrometric fit to observations."
+"UWE =
+√︂
+1
+a
+(x′ − x)TK−1 (x′ − x) (25)"
+"where x′ and x are the measured and expected position measure-
+ments of a source, K = diag[𝜎21 , 𝜎"
+"2
+2 ...𝜎"
+"2
+𝑁
+] is the measurement"
+"covariance and a = 𝑁 − 5 is the number of degrees of freedom.
+For simple point sources UWE will be drawn from a Gamma"
+"distribution, UWE ∼ Γ [a/2, a/2] such that the expected value
+is 1 and the variance is inversely proportional to the degrees of
+freedom. However any excess stellar motion or an extended flux
+distribution will introduce an excess UWE above 1 as happens for
+binary systems (Penoyre et al. 2020) or astrometric microlensing
+events (McGill et al. 2020). Gaia publishes 𝜒2 and the degrees
+of freedom a = 𝑁 − 5 for all stars with 5D astrometry in DR2
+from which UWE can be calculated. However, the published 𝜒2 is
+plagued by the DoF bug (L18) which makes values unreliable to
+use for estimating the excess noise."
+"This can be remedied by renormalising the published UWE
+as a function of colour and apparent magnitude to produce a new
+statistic, RUWE4. RUWE is normalised such that the 41st percentile
+is 1 as this was found to represent well behaved sources where the
+median showed significant contamination from sources with excess
+error. This works well at face value and produces a usable statistic"
+4 http://www.rssd.esa.int/doc_fetch.php?id=3757412
+"however there are two limitations. Firstly RUWE does not follow
+a well defined 𝜒2 distribution as would be expected from UWE,
+therefore estimating the significance of excess noise is challenging.
+Secondly, in cases where excess noise is not equally likely in all
+colours and apparentmagnitudes, the renormalisation can hide some
+of the expected excess. Thiswould be problematicwhen establishing
+the binary fraction as a function of colour and absolute magnitude
+which is expected to vary considerably between stellar populations
+(Price-Whelan et al. 2020; Belokurov et al. 2020)."
+"An alternative of UWE for a source with measured 5D astrom-
+etry is given by"
+"UWE =
+√︂
+1
+𝑛
+E[𝜹TΣ−1𝜹] (26)"
+"where 𝑛 = 5 is the dimensionality of the astrometry. Given 𝜹 =
+(r′ − r) ∼ N (0,C)"
+"E[𝜹TΣ−1𝜹] =
+∫"
+"1
+(2𝜋)𝑛/2"
+"√︁
+| |C| |"
+"(𝜹TΣ−1𝜹) exp
+(
+−
+1
+2
+(𝜹TC−1𝜹)"
+"(2𝜋)𝑛/2
+(yT"
+"√
+C
+T
+Σ
+−1√Cy) exp"
+"(
+−
+1
+2
+(yTy)"
+"where y =
+√︁
+C−1𝜹 and dyd𝜹 ="
+"√︁
+| |C| |. Letting𝑊 ="
+"√
+C
+T
+Σ−1"
+"E[𝜹TΣ−1𝜹] =
+∫"
+"1
+(2𝜋)𝑛/2"
+"(yTWy) exp
+(
+−
+1
+2
+(yTy)"
+")
+dy. (28)"
+"All off-diagonal elements ofW produce antisymmetric integrands
+in y leaving only the diagonal elements"
+"E[𝜹TΣ−1𝜹] =
+𝑛∑︁
+𝑖=1"
+"(2𝜋)𝑛/2
+W𝑖,𝑖y2𝑖 exp"
+"(
+−
+1
+2"
+"𝑛∑︁
+𝑖=1"
+"W𝑖,𝑖 . (29)"
+"SubstitutingΣ back into this we have UWE in terms of the published
+covariance 𝐶"
+"UWE =
+√︂
+1
+5
+Tr("
+"√
+CΣ−1"
+"√︂
+1
+5
+Tr(CΣ−1). (30)"
+"Using this formula, we estimate UWE for all stars with 5D
+astrometry in Gaia DR2. The distribution of UWE as a function
+of magnitude, shown in the Fig. 9, is uniform with the median
+〈UWE〉 & 1. The fact that the median UWE sits slightly higher than
+1 is due to the contribution from sources with excess noise. The
+spread of UWE which is greatest at 𝐺 ∼ 13 and narrows to fainter
+magnitude is a clear signature of excess error which is resolvable at
+brighter magnitude but becomes increasingly dominated by photon
+count noise for fainter sources."
+"Our estimate is compared with the published UWE for sources
+with 𝐺 ∈ [18.1, 19.0] in Fig. 10. At these dim magnitudes, the
+impact of the DoF bug is small. Across the sky, our estimate of
+UWE is in excellent agreement with the published value producing
+no systematic residual signal in the right hand panel down to 10%
+uncertainty."
+"In Gaia EDR3, the DoF bug is be fixed and our estimate of
+UWE will be superseded by the published value. However, the fact
+that ourmeasurement is in good agreement with the publishedUWE
+is indicative that the published covariance alongside our prediction"
+"MNRAS 000, 1–18 ()"
+http://www.rssd.esa.int/doc_fetch.php?id=3757412
+"
+12 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+Predicted Observed Predicted/Observed
+"0.5 1.0 2.0
+UWE"
+"0.67 1.0 1.5
+ratio"
+"Figure 10. Predicted UWE for sources with 𝐺 ∈ [18.1, 19.0] in Galactic coordinates (left) show little structure on the sky as expected. The median observed
+UWE in HEALPix level 7 bins (middle) has some limited structure relating to problematic individual scans in Gaia DR2. The ratio between predicted and
+observed UWE shows strong agreement down to the 10% level at which point the DoF bug will introduce a bias to the published values for 𝐺 ∼ 18."
+"Figure 11. Predicted 𝜎5Dmax after correcting for the DoF bug (red solid) as
+a function of magnitude for all sources in the Gaia DR2 astrometry shows
+strong agreement with the published values (median - blue solid, 16th −84th
+percentiles - blue shaded). The model before correcting for the DoF bug
+(red dashed) shifts at 𝐺 ∼ 13 the magnitude at Gaia switches from 2D to
+1D observations. The systematic underestimate of the prediction against the
+median published astrometry is expected to be due to remaining calibration
+uncertainties which we have not fully accounted for."
+"of the ASF contains all of the information contained in UWE and
+more. Whilst UWE can be used to determine the probability and
+amplitude of any excess variance, the ASF has the potential to
+decode the orientation and time variation of excess noise."
+6 ASTROMETRIC SELECTION
+"In order to construct unbiased dynamical models of the Milky Way,
+it is critically important that we have a strong understanding of the
+completeness of our sample. Boubert & Everall (2020) produced
+the selection function for the full Gaia DR2 catalogue however the
+subset of DR2 with 5D astrometry constitutes a biased subsample
+and therefore an astrometry selection function is required for studies
+which rely on parallax or proper motion data. The Gaia DR2 5D
+astrometry sample is the subset of the full sample that satisfies the
+cuts (L18, Section 4.3):"
+"• 𝐺 < 21
+• visibility_periods_used > 5
+• astrometric_sigma5d_max > 1.2 × 𝛾(𝐺)"
+"where 𝛾(𝐺) = max
+[
+1, 100.2(𝐺−18)"
+"To construct the selection function for the 5D astrometry sam-
+ple we can combine the effect of these cuts with the full sample
+selection function"
+P(S5Dast) = P(S5Dast |SDR2)P(SDR2) (31)
+"where S5Dast is the event that a source is published with 5D astrom-
+etry and SDR2 is the event that a source is included in DR2 with
+or without 5D astrometry. P(SDR2) is the full Gaia DR2 selection
+function estimated in Boubert & Everall (2020). The probability of
+a star in DR2 receiving 5D astrometry, P(S5Dast |SDR2), is governed
+by the three cuts outlined above."
+"The second cut on visibility_periods_used (𝑘VP) is a com-
+plex function of the scanning law and detection probability and
+will be the subject of a future work. Here we will focus on the
+astrometric_sigma5d_max (𝜎5Dmax) cut."
+"𝜎25Dmax is the maximum eigenvalue of the scaled astrometric
+covariance matrix"
+"𝜎
+2
+5Dmax = _max [𝑆 𝐶 𝑆] (32)"
+"where 𝐶 ∈ R5×5 is the published 5D covariance matrix and
+𝑆 = diag[1, 1, sin (b), 𝑇/2, 𝑇/2] where b = 45 deg is the solar as-
+pect angle of the Gaia satellite and 𝑇 = 1.75115 yr is the time
+window of observations used in Gaia DR2."
+"Our aim here is to estimate the contribution to the selection
+function solely from the cut on 𝜎5Dmax,"
+"P(𝜎5Dmax < 1.2𝛾 | 𝑘VP > 5, 𝐺, 𝑙, 𝑏). (33)"
+"𝜎5Dmax and 𝑘VP are published for all sources in Gaia DR2 so this
+could be easily achieved by taking the ratio of number of sources
+with 𝜎5Dmax < 1.2𝛾(𝐺) and 𝑘VP > 5 to only those with 𝑘VP > 5
+as a function of apparent magnitude and position on the sky"
+"P(𝜎5Dmax < 1.2𝛾 | 𝑘VP > 5, 𝐺, 𝑙, 𝑏)"
+"=
+𝑁 (𝜎5Dmax < 1.2𝛾, 𝑘VP > 5, 𝐺, 𝑙, 𝑏)"
+"𝑁 (𝑘VP > 5, 𝐺, 𝑙, 𝑏)
+. (34)"
+"This approach is limited by Poisson count noise. To resolve scan-
+ning law variations, one would need to resolve the sky to at least
+HEALPix level 7. Using 200 magnitude bins, this results in an aver-
+age of∼ 30 stars with astrometry per binwhichwill be dominated by
+the Milky Way disk. At high latitudes the inference will be entirely
+dominated by Poisson noise."
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 13
+Predicted Observed Predicted/Observed
+10−2 10−1 100
+"astrometric sigma5d max (mas)
+0.67 1.0 1.5"
+"Figure 12. The predicted 𝜎5Dmax (left) for 𝐺 ∈ [18.1, 19.0] agrees well with the HEALPix level 7 binned median published values (middle) across the sky
+in Galactic coordinates. The ratio between the predicted and observed shows some weak residuals in the Galactic bulge and a bad scan which impacts areas of
+sky which haven’t been significantly observed in Gaia DR2."
+"Figure 13. 𝜌 encodes themagnitude dependence of the predicted astrometric
+precision of Gaia DR2. 5D astrometric covariance is only published for the
+subset of DR2 with 5D astrometry however 𝜎5Dmax is published for all
+sources in DR2. We estimate 𝜌 for all sources in DR2 with 𝑘VP > 5 using
+Eq. 37 shown here as a function of magnitude."
+"Instead, we can use Gaia’s predicted covariance as a function
+of position on the sky given in Section 3. This enables us to reach
+unlimited resolution on the sky without HEALPix binning the data.
+We can predict 𝜎5Dmax for any source in Gaia as a function of
+magnitude and position on the sky"
+"𝜎5Dmax =
+√︁
+_max [𝑆Σ𝑆] (35)"
+"=
+1√︁
+𝜌(𝐺)"
+"√︃
+_max"
+"[
+𝑆Φ−1𝑆"
+"]
+. (36)"
+"where we have used the substitution Σ−1 = 𝜌(𝐺)Φ from Eq. 22
+and 𝜌(𝐺) is defined in Eq. 23. A comparison of the running me-
+dian of the predicted 𝜎5Dmax (red dashed) and observed astromet-
+ric_sigma5d_max (blue solid) in Fig. 11 shows that the prediction
+overestimates for 𝐺 < 13 and underestimates for 13 < 𝐺 < 16.
+The cause of this is the ‘DoF’ bug detailed in L18, Appendix A.
+Our predicted 𝜎5Dmax has been corrected for the DoF bug whilst
+the published values, on which the astrometry was selected, had not
+been corrected. The DoF bug is de-corrected from our prediction
+dividing through by a factor 𝐹 from Eq. B1 to produce the red solid
+line, in good agreement with the published 𝜎5Dmax as a function
+of magnitude. The predicted value marginally systematically un-
+derestimates 𝜎5Dmax across all magnitudes by ∼ 10% which we
+conjecture may be linked to time dependence of 𝜎AL which pro-"
+"Table 2. Time periods producing un-modelled scan features in astromet-
+ric_sigma5d_max. All times are given in OBMT (rev)."
+Start End Magnitudes
+"1447 1449 19.05 - 19.95
+1453 1457 20.00 - 21.00
+1556 1560 18.10 - 21.00
+1730 1732 20.00 - 21.00"
+"duces systematic uncertainties at the same level however the exact
+cause of this discrepancy for 𝜎5Dmax is unclear."
+"The predicted and observed distribution of 𝜎5Dmax on the sky
+are shown in Fig. 12 with the right panel showing strong agreement
+across the majority of the sky. Some residual streaks still persist in
+the South East and NorthWest regions of the sky which match those
+seen in Section 4 when comparing the predicted and observed as-
+trometry variances. These correspond to broken scans in Gaia DR2
+which haven’t previously been diagnosed. We use the HEALPix
+time extractor tool (Holl prep) to constrain the times at which these
+scans happened in DR2. The clearest time ranges are given in Ta-
+ble 2 where the time range OBMT= 1556 − 1560rev is the direct
+cause of the residual streaks discussed above."
+"𝜎5Dmax is published for all sources in Gaia DR2 whether or
+not they have published 5D astrometry. We can therefore use the
+published 𝜎5Dmax to estimate 𝜌 for all stars in DR2"
+"𝜌 =
+_max"
+"[
+𝑆Φ−1𝑆"
+"]
+𝜎25Dmax"
+. (37)
+"The distribution of 𝜌 as a function of magnitude is shown in Fig. 13
+where the distribution is largely flat at brighter magnitudes whilst
+declining for 𝐺 > 13 due to low photon count noise. The spread
+to lower values is driven by excess noise due to binaries and other
+accelerating or extended sources."
+"In every 0.1 mag bin we fit a two component Gamma mixture
+model (ΓMM) to model the distribution of 𝜌,"
+"P(𝜌) = 𝜋1Γ(𝜌;𝛼1, 𝛽1) + 𝜋2Γ(𝜌;𝛼2, 𝛽2). (38)"
+"One component of the mixture model fits the peak of the distri-
+bution which is dominated by well behaved simple point sources
+whilst the second component has an extended tail to low 𝜌 which
+accounts for sources with significant excess noise. Examples of
+these fits in four magnitude bins are shown in Fig. 14 demonstrating
+reasonable agreement at dim magnitudes whilst somewhat cutting
+through the low 𝜌 tail at bright magnitudes. At dim magnitudes,"
+"MNRAS 000, 1–18 ()"
+"14 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+"Figure 14. The distribution of 𝜌 in 0.1mag bins for Gaia DR2 sources with 𝑘VP > 5 (blue histograms) consists of a sharp peak of well behaved inertial point
+sources with a long wing to low 𝜌 from sources with high excess error. This is fit with a two component Gamma Mixture Model (ΓMM) with one component
+fitting the peak and the second accounting for the low-𝜌 wing (red solid line). Red-dashed lines show the individual Γ components."
+"Figure 15. The five parameters of the two component ΓMMare fit with with
+a single GP as a function ofmagnitudewith a square exponential covariance
+kernel for matching parameters using the posterior MCMC samples from
+each magnitude bin. Small volumes of data at the bright end mean that the
+GP is dominated by the prior with mean 0 and variance 𝑠 = 2.578."
+"there is also a small excess of sources at large 𝜌. The precise cause
+of this tail is unclear but since any cuts on 𝜎5Dmax will be on the
+low 𝜌 end, the fact that we haven’t correctly modelled the high 𝜌
+tail will only generate a < 1% systematic uncertainty in the inferred
+selection function. Priors used for each of the parameters in the
+ΓMM are given in Table 3. The parameters are fit using expecta-
+tionmaximisation and posterior distributions produced using emcee
+(Foreman-Mackey et al. 2013)."
+"The behaviour of the ΓMM parameters as a function of mag-
+nitude is modelled with a single Gaussian Process. For values of
+the same parameter at different magnitudes, the GP uses a square
+exponential kernel with variance 𝑠 and scale length 𝑙. For different
+parameters, we assume no intrinsic correlation, however, correla-
+tions will be introduced between different parameters of the same
+magnitude bin through the covariance ofMCMC samples. Applying
+𝑘-fold cross validation with 𝑘 = 5 we infer hyperparameter values
+of 𝑙 = 0.224, 𝑠 = 2.578. The posterior GP is shown in Fig. 15
+where the blue solid and red dashed lines are the two components
+for each parameter. Due to a lack of bright sources in Gaia DR2
+astrometry, the GP at the bright end is dominated by the prior from
+the kernel. Since a negligible proportion of stars will be influenced
+by the 𝜎5Dmax cut at these magnitudes, this is not a significant issue
+for the model."
+"Using the ΓMM as a function of magnitude, the selection
+function probability is given by"
+P(𝜎5Dmax < 1.2𝛾(𝐺) |𝑘VP > 5)
+"∫ ∞
+𝜌min"
+"2∑︁
+𝑗=1"
+"𝜋 𝑗 (𝐺)Γ
+[
+𝜌;𝛼 𝑗 (𝐺), 𝛽 𝑗 (𝐺)"
+"where 𝜌min =
+_max [𝑆Φ𝑆 ]
+(1.2𝛾 (𝐺))2 from substituting 𝜎5Dmax = 1.2𝛾(𝐺) into"
+"Eq. 37.
+The selection probability is given at threemagnitudes in Fig. 16"
+"demonstrating that the cut only has a significant effect for 𝐺 > 20.
+At the faintest magnitudes, regions of the sky which have been only
+sparsely scanned in Gaia DR2 are most likely to be removed due to
+the cut on 𝜎5Dmax. In the most extreme cases such as in the Milky
+Way bulge, this can result in < 1% completeness in the Gaia DR2
+astrometry sample."
+"Due to the simplicity of our 2 component ΓMM, the fits to the
+distribution of stars can produce significant offsets from the true
+distribution of data at the low 𝜌 tail as is seen in the fourth panel
+of Fig. 14. The overestimate of the number of sources at low 𝜌 in
+this case will lead to a significant overestimate of the number of"
+"MNRAS 000, 1–18 ()"
+The Gaia Astrometry Spread Function. 15
+"Figure 16. The selection probability of passing the 𝜎5Dmax cut is estimated from the ΓMM fits as a function of magnitude and position on the sky in HEALPix
+level 7 bins presented in Galactic coordinates. For 𝐺 ∼ 20 (left), a negligible portion of stars are removed by the cut however at 𝐺 ∼ 21 (right), the faintest
+magnitude for Gaia astrometry, the vast majority of sources in low scanned regions of the sky are removed from the sample."
+"log(𝛼) U[−∞,∞]
+log(𝛽) U[−∞,∞]
+𝜋 Dirichlet(𝑎 = [2, 2])"
+Table 3. Priors used for ΓMM fit to 𝜌 distribution.
+"stars with high 𝜎5Dmax which will subsequently get cut from the 5D
+astrometry sample. For this work we consider the method a proof
+of principle for applying the ASF in order to derive the selection
+function and will refine the fits to 𝜌 as a function of magnitude when
+producing the full Gaia DR2 5D astrometry selection function."
+7 DISCUSSION
+7.1 Excess Covariance
+"In this work we have derived and discussed the importance of the
+ASF for analysing simple point sources in Gaia DR2. However
+we haven’t established how to use the ASF to estimate the excess
+covariance or precisely how this can be interpreted."
+"Consider a source with true 5D astrometry, 𝑟. However the
+source is not a simple point source such that the apparent position
+as a function of time is not well modelled by the 5D astrometric
+solution. If the excess noise may be parameterised by a 5D covari-
+ance, E, the probability of measuring the apparent 5D astrometry
+as r𝐸 will be given by"
+"P(r𝐸 ) = N(r𝐸 ; r,E). (40)"
+"If one attempts to measure this source, the uncertainty with which
+the 5D astrometry is measured is given by the ASF"
+"P(r′) = N(r′ ; r𝐸 ,Σ). (41)"
+"Bymultiplying the two distributions together andmarginalising over
+r𝐸 , we can determine the probability distribution of the measured
+5D astrometry"
+"P(r′) =
+∫
+d5r𝐸 N(r′ ; r𝐸 ,Σ) N (r𝐸 ; r,E) (42)"
+"= N
+(
+r′ ; r,"
+"(
+Σ
+−1 + E−1"
+")−1)
+= N(r′ ; r,C)."
+"Therefore, in this vastly oversimplified situation, the final mea-
+surement uncertainty for the 5D astrometry is given by the convo-
+lution of the excess noise and the ASF (providing the contribution
+from the observation measurement uncertainty)."
+"There are two significant issues with this interpretation when
+considering the astrometry published by Gaia. Firstly, the AGIS
+pipeline does not formally infer the measurement uncertainty in-
+duced by excess noise. Residuals beyond simple point source as-
+trometry are absorbed into a 1D excess noise parameter for each
+source as well as impacting the weights used for the given ob-
+servations. The second problem is that source excess noise can
+disguise itself as a shift in the simple point source astrometry. As
+shown in Penoyre et al. (2020), excess binary motion can have
+complex effects on the posterior astrometry from Gaia including
+a phenomenon called the proper motion anomaly (Kervella et al.
+2019). Interpretation of the excess covariance will require simulat-
+ing stellar populations and emulating the AGIS pipeline in order to
+forward model how the intrinsic properties of the source relate to
+the posterior excess."
+7.2 Mock observations
+"Whilst we have entirely focused on the implications of the ASF for
+constraining excess source noise, it is also directly applicable to
+simulations in order to generate mock Gaia catalogues for Milky
+Way analogues."
+"Recent simulations such as Auriga (Grand et al. 2017) and
+VINTERGATAN (Agertz et al. 2020) have demonstrated the abil-
+ity of the latest generation of cosmological simulations to produce
+Milky Way analogues which are excellent tools for studying the
+physical processes which govern the evolution of our galaxy. Per-
+forming a direct comparison with Gaia observations requires the
+Gaia selection functions and measurement uncertainty. The ASF
+provides the expected uncertainty of 5D astrometry for a simple
+point source. Given a simulated star with astrometry r as observed
+from the sun, the astrometry that would be measured by Gaia, r′
+can be inferred by sampling from the ASF"
+"r′ ∼ N(r,Σ(𝐺, 𝑙, 𝑏)). (43)"
+8 ACCESSING THE ASF
+"The ASF is a useful tool for inferring excess astrometric covariance
+of Gaia 5D astrometry sources. To make this accessible, we’ve"
+"MNRAS 000, 1–18 ()"
+"16 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+"added a module to the Python package scanninglaw (https://
+github.com/gaiaverse/scanninglaw) (Boubert et al. 2020b).
+The user can ask the question ‘What astrometric covariance would
+Gaia have published if my star was a simple point source?’."
+"As always, this is demonstrated by determining the ASF co-
+variance of the fastest main-sequence star in the Galaxy (S5-HVS1,
+Koposov et al. 2020) for Gaia DR2. The diagonal elements of the
+output covariance give the variance in 𝛼∗0, 𝛿0, 𝜛 (mas"
+"2), `∗𝛼, `
+∗
+𝛿"
+(mas2/y2).
+1 import scanninglaw.asf as asf
+2 from scanninglaw.source import Source
+"4 dr2_sl = asf.dr2_asf(version= ' cog ' )
+5 s5_hvs1 = Source( ' 22 h54m51 .68s ' ,
+6 ' -51d11m44 .19s ' ,
+7 photometry ={ ' gaia_g ' :16.02} ,
+8 frame= ' icrs ' )
+9 Sigma = dr2_sl(s5_hvs1)"
+"11 print( ' ASF Covariance: \n ' , Sigma)
+12"
+13 >> ASF Covariance Position:
+"14 [[ 0.0005 , 0.0004 , -0.0005, 0.0003 , 0.0006] ,"
+"15 [ 0.0004 , 0.0029 , -0.0023, 0.0016 , 0.0013] ,"
+"16 [-0.0005, -0.0023, 0.0057 , -0.0026, -0.0034],"
+"17 [ 0.0003 , 0.0016 , -0.0026, 0.0038 , 0.0017] ,"
+"18 [ 0.0006 , 0.0013 , -0.0034, 0.0017 , 0.0096]]"
+9 CONCLUSION
+"The Astrometry Spread Function is the astrometric uncertainty dis-
+tribution which would be expected for a point source with linear
+motion relative to the solar system barycenter (simple point source)
+given the source apparent magnitude and position on the sky.Gaia’s
+DPAC estimate the astrometric solution using an iterative linear re-
+gression algorithm.Given the uncertainty of individual observations
+and the scanning law, we have been able to reconstruct the astro-
+metric covariance that would be expected for a simple point source
+observed by Gaia DR2. The ASF is a 5D multivariate Gaussian
+distribution with mean 0 and covariance Σ ∈ R5×5 where we have
+formally derived Σ(𝐺, 𝑙, 𝑏)."
+"Assuming the bulk of stars in the Gaia DR2 5D astrometry
+sample are simple point sources down to Gaia’s detection limit,
+we compare our result with the published covariances and find ex-
+tremely good agreement down to sub-degree scales on the sky. The
+only region with marginal disagreement is the highest source den-
+sity regions of the bulge where the combination of source crowding
+and few scans in Gaia DR2 invalidate our assumptions. Therefore
+we caution the use of the ASF in highly crowded regions with low
+scan counts."
+"We used the ASF in combination with the published covari-
+ance to infer unit weight error for Gaia DR2 sources. The strong
+agreement with the published UWE demonstrates that the ASF can
+be used to find the excess error inGaia observations due to physical
+source characteristics. The ASF will be a valuable tool for exploit-
+ing Gaia data to model binary stars, astrometric microlens events
+and extended sources."
+"Finally we applied the ASF to predict the selection function
+contribution from the cut on astrometric_sigma5d_max used to
+generate the Gaia DR2 5D astrometry sample. This will be a key
+component of the full astrometry selection function which is a vital"
+"tool for unbiased modelling of Milky Way kinematics from Gaia’s
+5D astrometry."
+ACKNOWLEDGEMENTS
+"AE thanks the Science and Technology Facilities Council of the
+UnitedKingdom for financial support. DB thanksMagdalenCollege
+for his fellowship and the Rudolf Peierls Centre for Theoretical
+Physics for providing office space and travel funds. This work has
+made use of data from the European Space Agency (ESA) mission
+Gaia (https://www.cosmos.esa.int/gaia), processed by the
+GaiaData Processing and Analysis Consortium (DPAC, https://
+www.cosmos.esa.int/web/gaia/dpac/consortium). Funding
+for theDPAChas been provided by national institutions, in particular
+the institutions participating in the GaiaMultilateral Agreement."
+DATA AVAILABILITY
+"The data underlying this article are publicly available from the Eu-
+ropean Space Agency’s Gaia archive (https://gea.esac.esa.
+int/archive/). The ASF covariance matrix derived in Section 3
+is publicly available on the Harvard Dataverse (https://doi.
+org/10.7910/DVN/FURYBN) and accessible through the GitHub
+repository scanninglaw (https://github.com/gaiaverse/
+scanninglaw)."
+REFERENCES
+"Agertz O., et al., 2020, arXiv e-prints, p. arXiv:2006.06008
+Andrews J. J., Breivik K., Chatterjee S., 2019, ApJ, 886, 68
+Belokurov V., et al., 2020, Monthly Notices of the Royal Astronomical
+Society, 496, 1922"
+"Boubert D., Everall A., 2020, MNRAS,
+Boubert D., Everall A., Holl B., 2020a, MNRAS,
+Boubert D., Everall A., Fraser J., Gration A., Holl B., 2020b, MNRAS,
+Bramich D. M., 2018, A&A, 618, A44
+Casertano S., et al., 2008, A&A, 482, 699
+Evans D. W., et al., 2018, A&A, 616, A4
+Foreman-Mackey D., Hogg D. W., Lang D., Goodman J., 2013, PASP, 125,
+306"
+"Gaia Collaboration et al., 2016, A&A, 595, A1
+Gaia Collaboration et al., 2018, A&A, 616, A1
+Górski K. M., Hivon E., Banday A. J., Wand elt B. D., Hansen F. K.,
+Reinecke M., Bartelmann M., 2005, ApJ, 622, 759"
+"Grand R. J. J., et al., 2017, MNRAS, 467, 179
+Harrison D. L., 2011, Experimental Astronomy, 31, 157
+Hogg D. W., Bovy J., Lang D., 2010, arXiv e-prints, p. arXiv:1008.4686
+Holl inprep.
+Holl B., Hobbs D., Lindegren L., 2010, in Klioner S. A., Seidelmann
+P. K., Soffel M. H., eds, Vol. 261, Relativity in Fundamental Astron-
+omy: Dynamics, Reference Frames, and Data Analysis. pp 320–324,
+doi:10.1017/S1743921309990573"
+"Holl B., et al., 2018, A&A, 618, A30
+Holl B., Perryman M., Lindegren L., Segransan D., Raimbault M., subm.
+Kains N., et al., 2017, ApJ, 843, 145
+Kervella P., Arenou F., Mignard F., Thévenin F., 2019, A&A, 623, A72
+Klüter J., Bastian U., Demleitner M., Wambsganss J., 2018, A&A, 620,
+A175"
+"Klüter J., Bastian U., Wambsganss J., 2020, A&A, 640, A83
+Koposov S. E., et al., 2020, MNRAS, 491, 2465
+Krone-Martins A., et al., 2013, A&A, 556, A102
+Lindegren L., Lammers U., HobbsD., O’MullaneW., BastianU., Hernández
+J., 2012, A&A, 538, A78"
+"MNRAS 000, 1–18 ()"
+"https://github.com/gaiaverse/scanninglaw
+https://github.com/gaiaverse/scanninglaw
+https://www.cosmos.esa.int/gaia
+https://www.cosmos.esa.int/web/gaia/dpac/consortium
+https://www.cosmos.esa.int/web/gaia/dpac/consortium
+https://gea.esac.esa.int/archive/
+https://gea.esac.esa.int/archive/
+https://doi.org/10.7910/DVN/FURYBN
+https://doi.org/10.7910/DVN/FURYBN
+https://github.com/gaiaverse/scanninglaw
+https://github.com/gaiaverse/scanninglaw
+https://ui.adsabs.harvard.edu/abs/2020arXiv200606008A
+http://dx.doi.org/10.3847/1538-4357/ab441f
+https://ui.adsabs.harvard.edu/abs/2019ApJ...886...68A
+http://dx.doi.org/10.1093/mnras/staa1522
+http://dx.doi.org/10.1093/mnras/staa1522
+http://dx.doi.org/10.1093/mnras/staa2305
+http://dx.doi.org/10.1093/mnras/staa2050
+http://dx.doi.org/10.1093/mnras/staa3791
+http://dx.doi.org/10.1051/0004-6361/201833505
+https://ui.adsabs.harvard.edu/abs/2018A&A...618A..44B
+http://dx.doi.org/10.1051/0004-6361:20078997
+https://ui.adsabs.harvard.edu/abs/2008A&A...482..699C
+http://dx.doi.org/10.1051/0004-6361/201832756
+https://ui.adsabs.harvard.edu/abs/2018A&A...616A...4E
+http://dx.doi.org/10.1086/670067
+https://ui.adsabs.harvard.edu/abs/2013PASP..125..306F
+https://ui.adsabs.harvard.edu/abs/2013PASP..125..306F
+http://dx.doi.org/10.1051/0004-6361/201629272
+https://ui.adsabs.harvard.edu/abs/2016A&A...595A...1G
+http://dx.doi.org/10.1051/0004-6361/201833051
+https://ui.adsabs.harvard.edu/abs/2018A&A...616A...1G
+http://dx.doi.org/10.1086/427976
+https://ui.adsabs.harvard.edu/abs/2005ApJ...622..759G
+http://dx.doi.org/10.1093/mnras/stx071
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.467..179G
+http://dx.doi.org/10.1007/s10686-011-9240-7
+https://ui.adsabs.harvard.edu/abs/2011ExA....31..157H
+https://ui.adsabs.harvard.edu/abs/2010arXiv1008.4686H
+http://dx.doi.org/10.1017/S1743921309990573
+http://dx.doi.org/10.1051/0004-6361/201832892
+https://ui.adsabs.harvard.edu/abs/2018A&A...618A..30H
+http://dx.doi.org/10.3847/1538-4357/aa78eb
+https://ui.adsabs.harvard.edu/abs/2017ApJ...843..145K
+http://dx.doi.org/10.1051/0004-6361/201834371
+https://ui.adsabs.harvard.edu/abs/2019A&A...623A..72K
+http://dx.doi.org/10.1051/0004-6361/201833978
+https://ui.adsabs.harvard.edu/abs/2018A&A...620A.175K
+https://ui.adsabs.harvard.edu/abs/2018A&A...620A.175K
+http://dx.doi.org/10.1051/0004-6361/201937061
+https://ui.adsabs.harvard.edu/abs/2020A&A...640A..83K
+http://dx.doi.org/10.1093/mnras/stz3081
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.491.2465K
+http://dx.doi.org/10.1051/0004-6361/201219697
+https://ui.adsabs.harvard.edu/abs/2013A&A...556A.102K
+http://dx.doi.org/10.1051/0004-6361/201117905
+https://ui.adsabs.harvard.edu/abs/2012A&A...538A..78L"
+"
+The Gaia Astrometry Spread Function. 17"
+"Figure A1. The relative flux error as a function of magnitude for all obser-
+vations in the Gaia epoch photometry(Riello et al. 2018; Evans et al. 2018;
+Holl et al. 2018) (black histograms, log normalised) shows complex struc-
+ture due to changes in window class configurations(Riello et al. 2018). The
+running median (blue solid line) shows similar structure to 𝜎AL in Fig. 2
+with both dominated by photon count noise."
+"Lindegren L., et al., 2016, A&A, 595, A4
+Lindegren L., et al., 2018, A&A, 616, A2
+McGill P., Smith L. C., Evans N. W., Belokurov V., Lucas P. W., 2019,
+MNRAS, 487, L7"
+"McGill P., Everall A., Boubert D., Smith L. C., 2020, MNRAS, 498, L6
+Michalik D., Lindegren L., Hobbs D., Butkevich A. G., 2015, A&A, 583,
+A68"
+"Miralda-Escude J., 1996, ApJ, 470, L113
+Penoyre Z., Belokurov V., Wyn Evans N., Everall A., Koposov S. E., 2020,
+Monthly Notices of the Royal Astronomical Society, 495, 321"
+"Perryman M., Hartman J., Bakos G. Á., Lindegren L., 2014, ApJ, 797, 14
+Price-Whelan A. M., et al., 2020, ApJ, 895, 2
+Ranalli P., Hobbs D., Lindegren L., 2018, A&A, 614, A30
+Riello M., et al., 2018, A&A, 616, A3
+Sozzetti A., Giacobbe P., Lattanzi M. G., Micela G., Morbidelli R., Tinetti
+G., 2014, MNRAS, 437, 497"
+"Wielen R., 1997, A&A, 325, 367
+de Bruĳne J. H. J., et al., 2018, Gaia DR2 documentation Chapter 1: Intro-
+duction, Gaia DR2 documentation"
+APPENDIX A: TIME DEPENDENCE
+"To estimate the Gaia astrometric precision, we have assumed that
+all observations at the same apparent magnitude have the same
+precision. This assumption will break down if the precision ofGaia
+is time dependent."
+"Without any epoch astrometry, it is challenging to assess
+the scale of the impact of this time dependence on the poste-
+rior precision. We are however provided epoch photometry for
+550,737 sources. The astrometric uncertainty should scale with
+𝜎AL ∼ 𝜎 𝑓 / 𝑓 where 𝑓 is the observed flux of the source as both are
+dominated by photon count noise. The centroid is actually mainly
+sensitive to the slope of the wings of the LSF/PSF while the flux
+measurement to the core (as there is the most signal), but to first
+degree this relation should hold to understand how the centroid
+uncertainty depends on magnitude and time."
+"We take all 17,712,391 observations in the epoch photometry
+and find the median 𝜎 𝑓 / 𝑓 in 0.2mag bins shown in Fig. A1. We
+subtract the median off all data leaving the residuals. The distribu-
+tion of residual errors against observation time is given in Fig. A2"
+"Figure A2. The relative flux error, recentered and renormalised by the
+median as a function of magnitude from Fig. A1, varies as a function of
+time throughout Gaia DR2 due to mirror contamination, micro-meteoroid
+impacts and variations in background flux. Data taken during the Ecliptic
+Polar Scanning Law (green) and decontamination events (pink) we not used
+in the Gaia DR2 astrometry. The running median (blue solid) of the ob-
+servations does not vary significantly from zero relative to the variance in
+individual measurements. This justifies the assumption that the astrometric
+measurement uncertainty is not a strong function of time."
+"for eachGaia field-of-view (FoV). AsGaia operates, material from
+the satellite condenses and accumulates on the mirrors scattering
+light and reducing the precision of observations. To mitigate this,
+the spacecraft was heated up to evaporate the condensation and
+clean the mirrors (see Section 4.2.1 Gaia Collaboration et al. 2016).
+These decontamination events (pink shaded regions) have taken
+place twice in Gaia DR2 (L18). The impact of the first decontami-
+nation event on the flux error is significant however at later times,
+the measurement precision does not degrade appreciably. In fact,
+any longer term trends are insignificant compared to the short term
+fluctuations on short (∼ 10 revolution) timescales."
+"The epoch flux supports the conjecture that the measurement
+precision of Gaia does not significantly change with time."
+APPENDIX B: DOF BUG
+"During the calibration of excess noise in Gaia DR2, the degrees
+of freedom parameter was erroneously used as the total number
+of AL and AC observations rather than only AL observations as
+intended. For a full explanation we refer the interested reader to
+L18, Appendix A."
+"The result of this bugwas that sources brighter than𝐺 = 13, for
+which 2D observations were used, received overestimated measure-
+ment uncertainties. Through the attitude calibration, this indirectly"
+"MNRAS 000, 1–18 ()"
+"http://dx.doi.org/10.1051/0004-6361/201628714
+https://ui.adsabs.harvard.edu/abs/2016A&A...595A...4L
+http://dx.doi.org/10.1051/0004-6361/201832727
+https://ui.adsabs.harvard.edu/abs/2018A&A...616A...2L
+http://dx.doi.org/10.1093/mnrasl/slz073
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.487L...7M
+http://dx.doi.org/10.1093/mnrasl/slaa118
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.498L...6M
+http://dx.doi.org/10.1051/0004-6361/201526936
+https://ui.adsabs.harvard.edu/abs/2015A&A...583A..68M
+https://ui.adsabs.harvard.edu/abs/2015A&A...583A..68M
+http://dx.doi.org/10.1086/310308
+https://ui.adsabs.harvard.edu/abs/1996ApJ...470L.113M
+http://dx.doi.org/10.1093/mnras/staa1148
+http://dx.doi.org/10.1088/0004-637X/797/1/14
+https://ui.adsabs.harvard.edu/abs/2014ApJ...797...14P
+http://dx.doi.org/10.3847/1538-4357/ab8acc
+https://ui.adsabs.harvard.edu/abs/2020ApJ...895....2P
+http://dx.doi.org/10.1051/0004-6361/201730921
+https://ui.adsabs.harvard.edu/abs/2018A&A...614A..30R
+http://dx.doi.org/10.1051/0004-6361/201832712
+https://ui.adsabs.harvard.edu/abs/2018A&A...616A...3R
+http://dx.doi.org/10.1093/mnras/stt1899
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.437..497S
+https://ui.adsabs.harvard.edu/abs/1997A&A...325..367W"
+"
+18 A. Everall, D. Boubert, S. E. Koposov, L. Smith and B. Holl"
+"impacted sources with𝐺 > 13 although the increased photon count
+noise at dimmer magnitudes dampens the effect for dim stars."
+"To correct for this, the astrometric covariance was multiplied
+by a correction factor"
+"𝐹 = (1 + 0.8𝑅)
+√√√√√ 2
+1 +"
+"√︂
+1 + 4(1 + 0.8𝑅)2"
+"(
+0.025mas
+𝜎𝜛"
+") (B1)
+taken from L18, Equation A.6. The published 𝜒2 and astromet-
+ric_sigma5d_max didn’t receive this correction, the latter being
+because the selection of the DR2 astrometry sample was performed
+before the bug was corrected."
+"As a result, when estimating astrometric_sigma5d_max in
+Section 6, in order to obtain a good agreement with the data, we
+must decorrect for theDoFbug by dividing through by the correction
+factor, 𝐹."
+This paper has been typeset from a TEX/LATEX file prepared by the author.
+"MNRAS 000, 1–18 ()"
+"
+	1 Introduction
+	2 Astrometry with Gaia
+	2.1 The Scanning Law
+	2.2 Taking Observations
+	2.3 Data"
+"	3 Method
+	3.1 Astrometry from linear regression
+	3.2 Scan Weights
+	3.3 Centroid error
+	3.4 Astrometry Spread Function"
+"	4 Results
+	5 Unit Weight Error
+	6 Astrometric Selection
+	7 Discussion
+	7.1 Excess Covariance
+	7.2 Mock observations"
+"	8 Accessing the ASF
+	9 Conclusion
+	A Time dependence
+	B DoF Bug"

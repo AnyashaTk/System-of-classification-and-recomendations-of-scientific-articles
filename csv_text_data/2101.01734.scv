@@ -1,0 +1,1510 @@
+0
+"MNRAS 000, 1–13 (2019) Preprint 7 January 2021 Compiled using MNRAS LATEX style file v3.0"
+"The Three Hundred Project: The gas disruption of infalling objects
+in cluster environments"
+"Robert Mostoghiu1,3,4★, Jake Arthur4, Frazer R. Pearce4, Meghan Gray4, Alexander
+Knebe1,2,3,Weiguang Cui5, Charlotte Welker6,7, Sofía A. Cora8,9, Giuseppe Murante10,
+Klaus Dolag11,12, Gustavo Yepes1,2
+1Departamento de Física Teórica, Módulo 15, Facultad de Ciencias, Universidad Autónoma de Madrid, E-28049 Madrid, Spain
+2Centro de Investigación Avanzada en Física Fundamental (CIAFF), Facultad de Ciencias, Universidad Autónoma de Madrid, 28049 Madrid, Spain
+3International Center for Radio Astronomy Research, University of Western Australia, 35 Stirling Highway, Crawley, Western Australia 6009, Australia
+4School of Physics & Astronomy, University of Nottingham, Nottingham NG7 2RD, UK
+5Institute for Astronomy, University of Edinburgh, Royal Observatory, Edinburgh EH9 3HJ, United Kingdom
+6Department of Physics and Astronomy, Zanvyl Krieger School for Arts & Sciences, The Johns Hopkins University, Baltimore, MD 21218, USA
+7Department of Physics and Astronomy, McMaster University, Hamilton, Ontario, Canada
+8Instituto de Astrofísica de La Plata (CCT La Plata, CONICET,UNLP), Observatorio Astronómico, Paseo del Bosque, B1900FWA, La Plata, Argentina
+9Facultad de Ciencias Astronómicas y Geofísicas, Universidad Nacional de La Plata (UNLP), Observatorio Astronómico, Paseo del Bosque, B1900FWA La
+Plata, Argentina
+10I.N.A.F. Trieste Observatory, Via Tiepolo 11, 34143 Trieste, Italy
+11University Observatory Munich, Scheinerstraße 1, D-81679 Munich, Germany
+12Max-Planck-Institut fur Astrophysik (MPA), Karl-Schwarzschild Straße 1, D-85748 Garching bei München, Germany"
+Accepted XXX. Received YYY; in original form ZZZ
+"ABSTRACT
+We analyse the gas content evolution of infalling haloes in cluster environments from The
+Three Hundred project, a collection of 324 numerically modelled galaxy clusters. The haloes
+in our sample were selected within 5𝑅200 of the main cluster halo at 𝑧 = 0 and have total halo
+mass 𝑀200 ≥ 1011ℎ−1M�. We track their main progenitors and study their gas evolution since
+their crossing into the infall region, which we define as 1 − 4𝑅200. Studying the radial trends
+of our populations using both the full phase space information and a line-of-sight projection,
+we confirm the Arthur et al. (2019) result and identify a characteristic radius around 1.7𝑅200
+in 3D and at 𝑅200 in projection at which infalling haloes lose nearly all of the gas prior their
+infall. Splitting the trends by subhalo status we show that subhaloes residing in group-mass
+and low-mass host haloes in the infall region follow similar radial gas-loss trends as their hosts,
+whereas subhaloes of cluster-mass host haloes are stripped of their gas much further out. Our
+results show that infalling objects suffer significant gaseous disruption that correlates with
+time-since-infall, cluster-centric distance and host mass, and that the gaseous disruption they
+experience is a combination of subhalo pre-processing and object gas depletion at a radius
+which behaves like an accretion shock.
+Key words: methods: numerical – clusters: general – galaxies: evolution – galaxies: interac-
+tions"
+1 INTRODUCTION
+"Our current understanding of structure formation, the ΛCDM
+paradigm, describes the growth of structures via continuous merg-
+ing of lower mass systems into more massive, denser haloes (White
+& Rees 1978). As galaxies fall into these objects, they are affected
+by several mechanisms due to their local environment (e.g. Boselli
+& Gavazzi 2006, and references therein). Studies have shown that
+correlations between galaxy properties and environment become"
+★ robert.mostoghiu@uam.es
+"stronger in more extreme environments, such as within the virial ra-
+dius of galaxy clusters. For instance, compared to the field, in high
+density environments early-type morphologies are more abundant
+(Dressler 1980), galaxies are redder (Baldry et al. 2006), and star
+formation is suppressed (Gómez et al. 2003)."
+"Determining the extent of galaxy disruption in “sub-dominant”
+environments, such as filaments and group-sized haloes, before an
+in-falling galaxy passes beyond the virial radius of a galaxy cluster,
+also known as pre-processing (Fujita 2004), is likewise important.
+Pre-processing has been suggested as a possible cause for recent
+observational results that find suppressed star formation (Lu et al."
+© 2019 The Authors
+2 Mostoghiu et. al
+"2012; Cybulski et al. 2014; Haines et al. 2015), lower disc fractions
+(Roberts & Parker 2017) and higher red fractions (Just et al. 2019)
+in infalling galaxies at high cluster-centric radii compared with the
+field. More specifically, observations have shown that subhaloes,
+containing satellite galaxies, show signs of pre-processing (Hou
+et al. 2014) at high cluster-centric radii. In fact, it has been suggested
+that the quenching of satellite star formation is responsible for the
+majority of all quiescent (red-sequence) galaxies at𝑀star < 1010M�
+by 𝑧 = 0 and pre-processing by groups dominates this quenching
+(Wetzel et al. 2013)."
+"Using SDSS data, Wetzel et al. (2012) andWetzel et al. (2013)
+showed that on first infall into a host, satellites are unaffected by
+the host environment and are able to actively form stars for 2 − 4
+Gyr after their infall. Results from Wetzel et al. (2013) also imply
+that the satellite quenching time does not depend on the mass of
+the host, but rather the mass of the satellite. In contrast, Roberts
+& Parker (2017) showed that the largest degree of pre-processing
+was found in the smallest satellite galaxies and the largest hosts.
+Theoretical work by Bahé & McCarthy (2015) agrees with Wetzel
+et al. (2013) in that there is a delay in quenching satellites, once
+accreted onto a host. However, they also go on to corroborate the
+results of Roberts & Parker (2017), by showing that quenching
+timescales do depend on host mass. Further theoretical studies have
+also tried to assess how prevalent pre-processing is. Using semi-
+analytic models, McGee et al. (2009) and De Lucia et al. (2012)
+found that up to ∼ 40 per cent of galaxies residing in clusters at z
+= 0 had previously spent a significant time in group environments.
+However, using a similar technique, Berrier et al. (2009) found
+that pre-processing was a secondary process in galaxy evolution.
+Using a semi-analytic model, Cora et al. (2019) found quenching
+times consistent with the ones presented in Wetzel et al. (2013),
+and a star formation quenching of low-mass satellites (i.e. 𝑀star
+∼ 1010 M�) that supports the Wetzel et al. (2013) ‘delay-then-
+rapid’ scenario. However, they showed that this scenario does not
+accurately describe the quenching experienced by the 𝑧 = 0 passive
+satellites with higher stellar mass, as the duration of both phases is
+of the same order of magnitude. Thus, they suggest a ‘delay-then-
+fade’ quenching scenario that accounts for quenching processes in
+which both phases have comparable time-scales."
+"The missing ingredient from these studies is an extensive ex-
+amination of the gas in pre-processed objects. Bahé et al. (2013)
+made some attempt to quantify the gas stripping beyond the cluster
+virial radius by using the instantaneous gas fractions of infalling
+objects around clusters. Their main finding showed that radial gas
+fractions decrease with decreasing cluster-centric distance, and con-
+tamination from backsplash and pre-processed galaxies (which will
+also increase with decreasing cluster-centric distance) brings the
+distribution down. This is in disagreement with Lotz et al. (2019)
+and Arthur et al. (2019), who find that the instantaneous gas frac-
+tion does decline radially, but the gas in (sub)haloes is lost on first
+passage, rather than contamination being the cause for the radial
+decline. In fact, in Arthur et al. (2019) it was postulated that the
+majority of gas in infalling objects is stripped by some sort of ac-
+cretion shock at 1.5− 2𝑅200, where 𝑅200 is the radius of the halo at
+200 times the critical density of the universe at that redshift. How-
+ever, whilst galaxy star formation quenching has been well studied,
+a full examination of the gas in infalling objects is needed in order
+to possibly alleviate tension in the literature and learn more about
+pre-processing."
+"In this work we use the The Three Hundred dataset 1, a
+sample of over 300 galaxy clusters simulated with full-physics hy-
+drodynamics out to > 5𝑅200 of each galaxy cluster (Cui et al. 2018),
+to assess the level of gaseous disruption of haloes and subhaloes be-
+yond 𝑅200. We extend the 𝑧 = 0 analysis done in Arthur et al.
+(2019) by using the orbital histories of > 105 infalling (sub)haloes
+in a range of environments to quantify gas-loss since infall, which
+we arbitrarily define as 4𝑅200. Using these tools we address what
+cluster-centric distance objects lose their gas, how long it takes
+since crossing 4𝑅200 for objects to lose their gas, how host mass is
+linked to subhalo pre-processing, and whether some hosts are more
+efficient at stripping subhaloes."
+"This paper is organised as follows. Section 2 contains the nu-
+merical methodology used in this chapter. In Section 2.1 we give
+brief reminder of the The Three Hundred dataset and how it was
+created. Section 2.2 describes how the objects in our sample and
+their orbital histories were selected. In Section 2.3 we present the
+definitons and methodologies used in the analysis. Our results and
+discussion is presented in Section 3. Lastly, in Section 4we conclude
+with a summary of our main findings."
+2 NUMERICAL METHODS
+2.1 ‘The Three Hundred’ Dataset
+"The Simulations The Three Hundred dataset consists of simu-
+lated clusters created by extracting 324 spherical regions of 15ℎ−1
+Mpc radius centred on each of the most massive clusters identified
+at 𝑧 = 0 from the dark-matter-only MDPL2, MultiDark simulation
+(Klypin et al. 2016)2. MDPL2 was simulated with a Planck 2015
+cosmology (Planck Collaboration et al. 2016), with ΩM = 0.307,
+Ωb = 0.048, ΩΛ = 0.693, ℎ = 0.678, 𝜎8 = 0.823, and 𝑛𝑠 = 0.96;
+and it contains 38403 darkmatter particles each ofmass 1.5×109ℎ−1
+M� residing within a box of 1ℎ−1 Gpc side-length. To model the
+relevant baryonic physics, the 15ℎ−1Mpc regions extracted from
+the MDPL2 simulation were traced back to their initial conditions
+and populated with gas particles according to the Planck 15 cos-
+mological baryonic fraction Ωb/ΩM ∼ 0.16. Consequently, the
+resulting particles in the spherical region have a dark matter and
+gas particle mass resolution of 𝑚DM = 1.27 × 109ℎ−1M� and
+𝑚gas = 2.36 × 108ℎ−1M� , respectively. Outside the re-simulated
+region, to reduce the computational cost of the original MDPL2
+simulation, dark matter particles are degraded with lower mass
+resolution particles to maintain the same large scale tidal field.
+The new initial conditions were simulated forward in time from
+𝑧 = 16.98 to 𝑧 = 0 (in 129 saved snapshots) using GADGET-X (Beck
+et al. 2016), using a Plummer equivalent softening of 6.5ℎ−1kpc
+for both the dark matter and baryonic component. GADGET-X is a
+modified version of GADGET3 (an updated version of GADGET2 by
+Springel 2005), with a modern Smooth Particle Hydrodynamics
+(SPH) scheme which improves the treatment of gas particles in the
+presence of dynamical instabilities and mixing processes, alleviates
+clumpiness instabilities, and reduces the viscosity away from shock
+regions (Beck et al. 2016; Sembolini et al. 2016b). Results of simu-
+lations of galaxy clusters based on GADGET-X have been presented
+in several previous papers (e.g. Rasia et al. 2015; Planelles et al."
+"1 https://the300-project.org
+2 The MultiDark simulations are publicly available at https://www.
+cosmosim.org"
+"MNRAS 000, 1–13 (2019)"
+"https://the300-project.org
+https://www.cosmosim.org
+https://www.cosmosim.org"
+"
+The gas disruption of infalling objects 3"
+"2017) and in the nIFTy cluster comparison project (Sembolini et al.
+2016a; Elahi et al. 2016; Cui et al. 2016; Arthur et al. 2017)."
+"The Halo Finding The halo analysis was done using the AHF3
+halo finder (Gill et al. 2004a; Knollmann & Knebe 2009). AHF lo-
+cates local overdensities in an adaptively smoothed density field
+as potential halo centres. Thus, it automatically creates a hierar-
+chical structure between haloes and substructure, i.e. subhaloes,
+subsubhaloes, etc. The radius of a halo 𝑅200 (and its corresponding
+enclosed mass 𝑀200) are calculated as the radius 𝑅 at which the
+density 𝜌(𝑅) = 𝑀 (< 𝑅)/(4𝜋𝑅3/3) drops below 200𝜌crit, where
+𝜌crit is the critical density of the Universe at a given redshift 𝑧."
+"We maintain the definitions used in Arthur et al. (2019). We
+use the term halo to refer to an object comprised of a collection of
+dark matter and baryonic particles, as classified by AHF, which does
+not reside within 𝑅200 of another halo. Conversely, subhalo refers
+to an object that does reside within 𝑅200 of another object, be it
+another subhalo or halo. In each of the 324 cluster regions available
+in the dataset we identify a main galaxy cluster halo, defined here
+as the most massive object at 𝑧 = 0."
+"The Merger Trees The progenitors of haloes and subhaloes are fol-
+lowed across the snapshots with MergerTree. Objects identified at
+redshift 𝑧 = 0 are tracked backwards in time and assigned main pro-
+genitors at some previous redshift. A main progenitors is defined as
+the object that maximises the merit functionM = 𝑁2"
+"𝐴∩𝐵/(𝑁𝐴𝑁𝐵),
+where 𝑁𝐴 and 𝑁𝐵 are the number of particles in haloes𝐻𝐴 and𝐻𝐵 ,
+respectively, and 𝑁𝐴∩𝐵 is the number of particles that are in both
+𝐻𝐴 and 𝐻𝐵 . The merger trees used in the analysis allow snapshot
+skipping, i.e. progenitors of (sub)haloes that are not found in the
+previous snapshot are still searched for in earlier snapshots, recov-
+ering an otherwise truncated branch of the merger tree (see Wang
+et al. 2016)."
+2.2 Sample selection
+"To build the sample, from each of the cluster regions we selected
+at 𝑧 = 0 all objects within 5𝑅200 from their respective main galaxy
+cluster halo, and with total halo mass 𝑀200 ≥ 1011ℎ−1M� . This
+corresponds to a median of ∼ 160 dark matter particles."
+"In this work we extend upon the analysis presented in Arthur
+et al. (2019) by using the orbital histories of the 𝑧 = 0 sample up to
+𝑧 = 1, which corresponds to a look-back time of ∼ 8 Gyr. For this
+analysis, we only make use of the main progenitor branch of each
+object in our sample. Any past objects that have merged into our
+sample of objects as a progenitor, and not a main progenitor, will
+be discarded."
+"As previously mentioned, each cluster region contains a main
+cluster halo located in the centre of the region, and like the rest
+of objects in the sample, a main cluster halo is tracked back by
+following its main progenitor branch. If an object in the sample is
+beyond the radial cut or falls below the mass threshold at a certain
+time in its orbital history, that part of its history is ignored in the
+analysis. For objects that do pass these criteria, at each snapshot
+we describe their positions and velocities relative to the position
+and velocity of the main progenitor of the main cluster halo of the
+region at that time. Major mergers during the formation of cluster
+haloes pose a challenge to this (Behroozi et al. 2015), therefore,
+following the discussion in Haggar et al. (2020), we identified and"
+3 http://popia.ft.uam.es/AHF
+"removed cluster haloes whose main progenitor’s position changes
+by more than half their radius 𝑅200 (𝑧) between two consecutive
+snapshots [𝑧, 𝑧 + Δ𝑧]. As our analysis extends up to 𝑧 = 1, this re-
+duces the number of resimulated regions considered in the analysis
+from 324 to 253. We obtain 132 427 haloes and subhaloes, with
+mean total mass 𝑀200 = 1.2 × 1012ℎ−1M� and mean gas mass
+𝑀gas = 8.4 × 1010ℎ−1M� , satisfying these constraints and con-
+stituting our analysis sample. Note that, as our analysis primarily
+concerns the infall region of each main galaxy cluster, defined here
+as their 1− 4𝑅200 region, not every object can be assigned an infall
+redshift, i.e. the time at which an object crossed 4𝑅200. For analysis
+where properties at infall are required, we instead use 85 497 haloes
+and subhaloes with a designated infall redshift."
+2.3 Phase space analysis
+"We follow the same definitions of phase space coordinates as in
+Arthur et al. (2019), which in turn follows the definitions presented
+in Oman et al. (2013). Here we briefly describe the procedure, we
+refer to Arthur et al. (2019) for further details."
+"For every object in our sample we construct their phase-space
+coordinates in 3D and in projection along line-of-sight (PROJ),
+where the latter is designed to mimic observational studies4. Across
+our analysis, we normalise relative distances by the 𝑅200 radius of
+the main progenitor of the main cluster halo at the corresponding
+redshift value 𝑧snap, i.e. 𝑅200 (𝑧 = 𝑧snap); and relative velocities
+by the cluster velocity dispersion, 𝜎, at the corresponding redshift
+value."
+"The 3D coordinates are defined by using all phase-space di-
+mensions, i.e. their 3D position r and velocity v, of the object (𝑥h,
+𝑦h, 𝑧h, 𝑣x,h, 𝑣y,h, 𝑣z,h) with respect to the same dimensions of the
+cluster halo (𝑥c, 𝑦c, 𝑧c, 𝑣x,c, 𝑣y,c, 𝑣z,c). In particular, we define the
+3D velocity of an object, 𝑣3D, as"
+"𝑣3D = sgn (r · v) |v| , (1)"
+"where r and v are the (relative) position and velocity vectors between
+the cluster and the object, respectively. Note that the sign of 𝑣3D
+allows us to disentangle which objects are infalling into or outgoing
+from the cluster. Finally, to estimate the corresponding 3D velocity
+dispersion 𝜎3D of an object, we take the root mean square of the
+𝑣3D distribution of subhaloes of the main cluster halo, i.e. objects
+within 𝑅200 of the main cluster halo, defined by the halo finder5."
+"The projected coordinates are defined by arbitrarily projecting
+down one axis of the simulation box, in our case along the third (z-)
+axis of the simulation box. We note that our results are not sensitive
+to the choice of the projected axis. We use the two remaining spatial
+coordinates, i.e (𝑥, 𝑦), to calculate the distance from the cluster,"
+𝑅PROJ =
+"√︃
+(𝑥h − 𝑥c)2 + (𝑦h − 𝑦c)2 , (2)"
+"A more in-depth study of the projected phase space of the sample
+(at 𝑧 = 0) is presented in Arthur et al. (2019)."
+"4 Although we use the same definitions as the ones presented in Arthur
+et al. (2019), for clarity we changed the naming convention. Our 3D and
+line-of-sight projection (PROJ) phase-space coordinates correspond to the
+‘6D’ and ‘LOS’ coordinates in Arthur et al. (2019), respectively.
+5 We use the velocity dispersion of subhaloes in the main cluster halo as
+it is closer to what is measured in observations. The deviation between this
+estimator and the velocity dispersion of the main cluster halo is less than 10
+per cent (e.g Gill et al. 2004b; Munari et al. 2013)."
+"MNRAS 000, 1–13 (2019)"
+http://popia.ft.uam.es/AHF
+"
+4 Mostoghiu et. al"
+3 RESULTS
+"The analysis is split into several parts. In the first section we exam-
+ine cluster build up in and beyond 𝑅200. We then stack the orbital
+histories from our sample in order to construct gas-loss relations
+with respect to cluster-centric distance and time-since-infall. Lastly,
+we examine how subhalo gas disruption is linked to their host en-
+vironment. Note that, to determine the gas evolution of our sample,
+we simply use the mass of all the gas particles within 𝑅200 of an
+object."
+3.1 Cluster and infall region build up
+"In Fig. 1 we show the halo and subhalo spatial distribution and
+phase-space information at three different snapshots in time around
+the same cluster. The top, middle and bottom panels depict the
+cluster at 𝑧 = 1.0, 𝑧 = 0.5 and 𝑧 = 0, respectively. In each panel
+in the left column we represent the projected distribution of haloes
+with blue circles and subhaloes (be it the main galaxy cluster halo
+or any other halo) with red circles. The size of the circles represents
+the relative mass of the objects and the black circle shows the 𝑅200
+radius of the cluster halo. In the right column we present the phase-
+space information at each redshift coloured by their mass 𝑀200 and
+their gas fraction 𝑓g, defined as the mass of all the gas particles
+within 𝑅200 of an object over its total mass. The vertical dotted
+line separates the objects inside the cluster halo (‘in’) from the ones
+outside it (‘out’), and the horizontal dotted line differentiates the
+backsplash population (‘bsplsh’) from the infalling one (‘inf’)."
+"From the snapshots it is apparent that the cluster accretes more
+objects as time progresses. At 𝑧 = 1.0, the infall region is sparsely
+populated and the cluster halo itself does not containmuch substruc-
+ture.However, by 𝑧 = 0.5, the infall region has accreted considerably
+more substructure, with some objects apparently coalesced into fil-
+amentary structures. Alongside this, the infall region contains more
+host environments at 𝑧 = 0.5 than at 𝑧 = 1.0, potentially leading
+to more pre-processing at this epoch. At 𝑧 = 0, the cluster halo
+still contains a considerable amount of substructure, but the infall
+region looks comparatively different to previous epochs. Overall,
+we observe that there are many more haloes and subhaloes more
+isotropically distributed around 𝑅200."
+"By examining the phase-space planes in the right-hand pan-
+els at each epoch, we can extract more information about how the
+infalling objects are accreting onto the cluster. At 𝑧 = 1.0, the in-
+falling population has a substantial amount of scatter in velocity.
+This might be due to the lack of virialisation of the cluster, or due
+to the influence of the host environment at ∼ 2𝑅200. By 𝑧 = 0.5,
+the phase-space plane shows that the infall region contains a tight
+infalling branch, with little scatter in velocity. We identify a few
+objects that are scattered off the main branch, probably dynamic
+subhaloes falling into host environments. These objects are particu-
+larly good candidates to look for signs of pre-processing, especially
+considering they are also gas-poor. As previously seen from the gas
+fractions in Arthur et al. (2019), infalling objects are substantially
+more gas-poor at < 1.5𝑅200. At 𝑧 = 0.5 the cluster contains many
+more subhaloes than at the earlier epoch; some of these objects are
+on their first infall, whilst others have already passed their pericentre
+passage, but have not travelled beyond 𝑅200 to form the backsplash
+population. However, by 𝑧 = 0 there is a distinct backsplash pop-
+ulation that extends out to ∼ 2.5𝑅200. Interestingly, in this cluster
+one can see a clear group of objects that are on their second infall,
+located between ∼ 1 − 2.5𝑅200. The extent of the backsplash and"
+"4 2 0 2 4
+X [R200]"
+M200 = 5.2 × 1014 [h 1 M ]
+z = 1.0
+"0 1 2 3 4
+R3D/R200"
+in out
+"4 2 0 2 4
+X [R200]"
+M200 = 1.8 × 1015 [h 1 M ]
+z = 0.5
+"0 1 2 3 4
+R3D/R200"
+in out
+"4 2 0 2 4
+X [R200]"
+M200 = 2.2 × 1015 [h 1 M ]
+z = 0.0
+"0 1 2 3 4
+R3D/R200"
+in out
+"Figure 1. One galaxy cluster resimulation from the sample shown at three
+different epochs. The top, middle and bottom panels depict the cluster at
+𝑧 = 1.0, 𝑧 = 0.5 and 𝑧 = 0, respectively. The halo (blue circles) and subhalo
+(red circles) projected distribution is shown in the left-hand panels at each
+epoch, and the phase-space distribution of these objects is shown in the right-
+hand panels. The black circle in the left-hand panels shows where 𝑅200 of
+the cluster halo is. The two phase-space planes at each epoch are coloured
+by object mass, 𝑀200, and object gas fraction, 𝑓g. The vertical dotted line
+separates the objects inside the cluster halo (‘in’) from the ones outside it
+(‘out’), while the horizontal one differentiates the backsplash population
+(‘bsplsh’) from the infalling one (‘inf’)."
+"second infalling population explains the numbers of objects seen
+just outside 𝑅200 in the left-hand panel at 𝑧 = 0."
+"To support the snapshot-only picture provided in Fig. 1, we
+show the orbital histories of infalling objects around four example
+clusters in Fig. 2. For clarity, we show only the histories of a small
+random subsample of 150 objects in each resimulation. To under-
+stand in more detail how each cluster and infall region has been built
+up, the left-hand column contains the projected orbital histories of
+the infalling objects coloured by their time since accretion onto
+4𝑅200, i.e. since their crossing of 4𝑅200. On the other hand, to find
+how the gas in each infalling object behaves as they infall, we colour
+the halo orbital histories by the gas fraction they have in that posi-
+tion. We have also coloured the orbital histories in the right-hand
+column by their subhalo status at the corresponding point in time,
+i.e. if the object resides within another halo or not at the given time."
+"MNRAS 000, 1–13 (2019)"
+The gas disruption of infalling objects 5
+"Halo
+Subhalo"
+"4 2 0 2 4
+X [R200]"
+"4 2 0 2 4
+X [R200]"
+"4 2 0 2 4
+X [R200]"
+0 2 4 6 8
+"Time since accretion
+onto 4R200 [Gyr]"
+"0 10 2 10 1
+fg"
+"Figure 2. The orbital histories of infalling objects around four example
+clusters are shown. Each row contains a different cluster, whilst each column
+colours the orbital history differently depending on a certain property. The
+left-hand column colours thewhole orbital history by the time since an object
+crossed 4𝑅200. The middle and right-hand columns contain orbital histories
+that have coloured sections based on the gas fraction and their subhalo
+status at that position, respectively. Infalling objects at 𝑧 = 0 are marked
+with circle markers, backsplash objects with triangle markers. For clarity,
+only a subsample of 150 infalling objects are shown in each resimulation."
+"Additionally, we mark infalling objects at 𝑧 = 0 with circle markers
+and backsplash ones with triangle markers. Cross-correlating this
+information allows us to examine in detail how our example clusters
+are built, and how the gaseous properties of our infalling objects are
+affected by their local environment or subhalo status."
+"In all four example cluster regions, we identify a population
+of objects that have accreted early that either become part of the
+backsplash or virialised populations at 𝑧 = 0. As our sample only
+contains objects that survive to 𝑧 = 0, no mergers can be seen in
+the orbital histories. These early accreting objects are nearly always
+gas-poor as soon as they enter the cluster halo, and we can see how
+the backsplash objects can contaminate infall region observations
+designed for identifying pre-processing. However, as stated in De
+Lucia et al. (2012), as these objects have accreted early, they are
+older and therefore might had more time to be quenched by secular
+processes. From these left-hand panels, we can see the build up of
+each cluster is fairly diverse. The top-middle cluster presents a more
+in-situ build up, where many of the early accreting objects have not
+come in from a large distance or as part of a merger. Contrary to
+this, the top cluster appears to have been more built up by many"
+"objects that have traversed the whole infall region. However, we do
+note that our analysis is limited between 𝑧 = 0 and 𝑧 = 1. Some
+of these clusters may have undergone drastic transitions very early,
+which we have no knowledge about in this analysis. Nevertheless, a
+lookback time of ∼ 8 Gyr should be satisfactory to build up a good
+picture of each cluster’s accretion history."
+"The infall region is also structured differently in each resimu-
+lation. The bottom-middle cluster appears to be funnelling in mate-
+rial through what appears to be filamentary structures in projection,
+whilst most of the material in the bottom row is being brought in as
+part of a large object on the top left-hand side of the panels. Despite
+the diversity observed in these regions, they all display signs of
+filamentary structure."
+"Whereas the objects that have travelled into the cluster halo are
+nearly always gas-poor, the objects in the infalling regions are not,
+although there are some caveats and these exceptions are possible
+pre-processing candidates. For instance, there are objects in the top
+three rows that become gas-poor in the infall region, before they
+entered the main cluster halo, and this gas disruption corresponds
+well with them being a subhalo of some other infalling object.
+Therefore, it is quite possible that these objects are being stripped
+as they fall into host environments at large cluster-centric radii.
+However, there are some haloes which become gas-poor in the
+infall region, which may be because of some local filamentary gas
+environment or some secular process. The bottom cluster shows the
+most obvious case of pre-processing. Many gas-poor objects on the
+left-hand side of the panels are clearly orbiting some large host halo,
+which is stripping their gas before reaching the main cluster halo."
+"It’s clear from Fig. 2 that the accretion histories of galaxy clus-
+ters are extremely diverse, and difficult to generalise and describe
+by only one or two metrics. It is also evident that within our res-
+imulations, there is some evidence for object gas disruption within
+both the cluster halo and the infall region. Whereas Fig. 2 contains
+a substantial amount of detail about this, we next go on to stack all
+object orbital histories from each resimulation, in order to extract
+robust general trends and to learn more about the extent of gaseous
+disruption since objects crossed 4𝑅200."
+3.2 How gas-loss since infall relates to cluster-centric distance
+"In this section we stack orbital histories to assess whether, on av-
+erage, there is a characteristic radius at which infalling haloes and
+subhaloes lose their gas since infall. This section directly follows up
+on the work done in Arthur et al. (2019), where it was found that the
+instantaneous gas fractions of infalling objects dropped to approxi-
+mately zero at∼ 1.5𝑅200 and 𝑅200 in the 3D and PROJ perspectives,
+respectively. In this case, the temporal study actually allows us to
+answer whether the gas is lost at these points in space. In Fig. 3 we
+present these radial relations, where the left-hand panel contains the
+median fractional gas-loss as a function of cluster-centric distance
+in both 3D and PROJ. For every object, their gas mass is recorded at
+infall (𝑅inf = 4𝑅200), and this is then used to calculate the fractional
+gas-loss at each snapshot for every orbital history. As remarked in
+Section 2.2, to determine properties at infall we only use haloes
+and subhaloes with an assigned infall time. The radial trends are
+found by stacking in radial bins and then extracting median gas-loss
+fractions in each bin with corresponding 40 and 60 percentiles."
+"From the 3D distribution in the left-hand panel, infalling ob-
+jects start to lose their gas gradually, beginning at ∼ 3𝑅200 until
+∼ 2𝑅200, where objects have lost ∼ 30 per cent of their gas on
+average. At this point, there is a dramatic upturn in object gas-loss,
+and between ∼ 2𝑅200 and ∼ 1.7𝑅200, infalling (sub)haloes appear"
+"MNRAS 000, 1–13 (2019)"
+6 Mostoghiu et. al
+"0 1 2 3 4
+R/R200"
+"3D
+PROJ"
+"0 1 2 3 4
+R/R200"
+3D only
+"Combined
+Infalling
+Outgoing
+Outgoing 
+Contam."
+"Figure 3. Fractional gas-loss as a function of cluster-centric distance. See
+text for details about the calculation. The left-hand panel contains themedian
+fractional gas-loss radial distribution for both the 3D and PROJ perspective
+in blue and red respectively, where both perspectives are constructed as in
+Arthur et al. (2019). The right-hand panel contains the 3D fractional gas-loss
+trend (solid-blue) again for comparison. The trends have been decomposed
+into two: one containing only infalling (dashed-blue) objects and another
+containing only outgoing (dotted-blue) objects. See text for details about
+disentangling these populations. The solid black line represents the outgoing
+contamination in the combined trend."
+"to lose all of their gas. Our results here corroborate and further the
+results presented in Arthur et al. (2019), as it is now clear infalling
+objects start losing the majority of their gas close to ∼ 2𝑅200.
+Previous studies (e.g. Behroozi et al. 2014; Niemiec et al. 2019)
+found that infalling dark matter haloes start losing their dark matter
+around similar cluster-centric distances, i.e. ∼ 1.5 − 1.8𝑅200. This
+characteristic radius seems to be present also for less massive haloes
+(Buck et al. 2019). As suggested in Behroozi et al. (2014), galaxy
+quenching might correlate with such mass-loss processes. In the
+PROJ projection, the gradual loss of gas starts at ∼ 2𝑅200, and 100
+per cent gas-loss is recorded at 𝑅200. In fact, our PROJ perspec-
+tive trend agrees well with Wetzel et al. (2013), who showed that
+haloes containing central galaxies, are not quenched by either local
+environments or the cluster, until they reach ∼ 2𝑅200."
+"Like our trends, Bahé et al. (2013) also found that their in-
+stantaneous radial gas fraction trends decreased with decreasing
+cluster-centric distance. However, they postulated that the main rea-
+son for this decline was due to contamination from backsplash
+objects, which as seen in Fig. 3, are definitively gas-poor. We in-
+vestigate this further in the right-hand panel of Fig. 3, which shows
+the radial 3D fractional gas-loss trend from the left panel, but here
+we have split this trend by outgoing and infalling objects. This split
+corresponds to a cut at v3D/𝜎3D = 0, where anything above and
+below this cut are outgoing and infalling objects, respectively. The
+fractional gas-loss of outgoing objects is nearly always 100 per cent,
+except at ∼ 4𝑅200 , which consists of extremely dynamic, gas-rich
+subhaloes falling into host environments. The contamination of our
+trends by outgoing objects is calculated by taking the negative ab-
+solute difference between the combined and infalling trends."
+"Most of the difference between these trends is seen at ∼
+1.5𝑅200, where infalling objects appear to lose their gas ∼ 0.3𝑅200
+closer to the cluster. However, infalling objects still lose all of their
+gas by the characteristic ∼ 1.5𝑅200 radius. Note that using this ve-
+locity cut does not account for second, or even third, infalling objects
+that have already traversed the cluster halo and been stripped. The
+only way to disentangle previous backsplash and ≥ 2nd infalling
+objects from the first infalling population is to tag each orbital his-
+tory as it passes within the cluster halo. Using a similar sample,
+Haggar et al. (2020) showed that, depending on the dynamical state"
+"0 1 2 3 4
+R/R200"
+"Haloes
+All Subh.
+Mhost < 1014"
+"0 1 2 3 4
+R/R200"
+"Figure 4. Fractional gas-loss since infall as a function of cluster-centric
+distance. As in the left-hand panel from Fig. 3, but here the radial trends
+have been split by subhalo status at each radius into haloes, (all) subhaloes,
+and subhaloes residing in hosts with total halo mass 𝑀host < 1014ℎ−1M� ,
+as indicated by the legend. Here, the left- and right-hand panels show the
+radial trends in the 3D and PROJ perspective respectively."
+"of the galaxy cluster, the median fraction of backsplash objects is
+∼ 40 per cent at 2𝑅200 for relaxed galaxy clusters, and ∼ 1 per cent
+for unrelaxed galaxy clusters. By 2.5𝑅200, backsplash objects are
+only found around relaxed galaxy clusters. Our results show that, at
+similar radii, half of the gas of the infalling objects is already gone.
+As we do not make a distinction between relaxed and unrelaxed
+galaxy clusters, we expect that the contamination by these popula-
+tions does not alter our trends by a substantial amount and therefore
+we conclude that most fractional gas-loss from infalling objects is
+lost on first infall (see Lotz et al. 2019) at a characteristic radius."
+"In Fig. 4 we split the fractional gas-loss radial trends, seen
+in the left-hand panel in Fig. 3, by the subhalo status of the ob-
+jects at that radius. From the 3D projection (left-hand panel), we
+see that subhaloes lose their gas much quicker than haloes since
+crossing 4𝑅200. The halo trend still follows the combined trend
+in Fig. 3 very well, as the majority of the objects in the infall
+region will be haloes, which also explains why there is more scat-
+ter in the subhalo-only trend. However, even with the percentiles
+taken into account, subhaloes have already lost 60 per cent of their
+gas by ∼ 3𝑅200, on average, whereas haloes reach the same frac-
+tional gas-loss at ∼ 1.7𝑅200. While this is compelling evidence for
+pre-processing of subhaloes by host environments, we further sep-
+arate the subhaloes in the sample by their host halo mass. We note
+that the radial cut used to determine the sample region at 𝑧 = 0,
+i.e. 5𝑅200 from the most massive object, contains a diverse range
+of haloes and subhaloes masses, including objects with total mass
+𝑀200 > 1014ℎ−1M� . In order to differentiate galaxy disruption due
+to sub-dominant environments (i.e. pre-processing) from disruption
+exerted by cluster-mass hosts infalling onto the main galaxy cluster
+(i.e. cluster quenching), we remove from the subhalo sample the
+subhaloes residing in cluster-mass host haloes. The fractional gas-
+loss of the subhaloes in group-mass and low-mass hosts is shown as
+a dashed violet line.We can clearly see that the fractional gas-loss of
+these subhaloes follows essentially the same radial disruption trend
+observed in the halo population in 3D. For the PROJ projection,
+haloes, and subhaloes in group-mass and low-mass hosts follow a
+similar trend up to 𝑅200, from which the subhaloes have ∼ 20 per
+cent less gas than haloes, albeit with more scatter. From these re-
+lations we conclude that subhaloes that reside within cluster-mass
+host haloes during their infall onto the main cluster halo, i.e. sub-
+haloes of cluster-mass host haloes found in the infall region of the
+main cluster halo, are quickly depleted of their gas and dominate"
+"MNRAS 000, 1–13 (2019)"
+The gas disruption of infalling objects 7
+"the radial gas-loss trend if we consider all subhaloes regardless of
+the mass of their host haloes."
+"Some recent studies (van den Bosch & Ogiya 2018; van den
+Bosch et al. 2018) have found that subhaloes in hydrodynamic sim-
+ulations are prone to enhanced artificial tidal stripping due to inad-
+equate mass or spatial resolution, even at a nominal ‘resolved’ mass
+cut (e.g. 1011ℎ−1M� , which is used in this analysis). For example,
+if the intrahalo medium is not well resolved gas particles become
+easily unbound. As a consequence, the gas-loss (or gain) trend found
+for infalling objects simply translates the motion towards higher or
+lower density regions. In light of these issues, we consider the char-
+acteristic radius 1.7𝑅200 (1.5𝑅200 when removing contamination
+from outgoing objects) below which infalling objects lose their gas
+as an upper-bound of the accretion shock radius. Nevertheless, it is
+most probable that the fractional gas-loss trends are a combination
+of environmental stripping by host environments, secular processes,
+and enhanced numerical stripping. The interesting question here is
+how dominant the environmental effect is, and will be an area of
+future work."
+"We note here that our trends line up well with those seen in
+Wetzel et al. (2013), but this time we have identified that the halo
+population, which contain central galaxies, seem to be affected by
+the cluster at ∼ 2𝑅200. This is especially true in the PROJ per-
+spective, whereas in the 3D perspective, haloes seem to be affected
+somewhat further out. We note that any differences in gas-loss as
+a function of cluster-centric distance between the halo and subhalo
+populations are somewhat washed out by projection effects intrinsic
+to the PROJ perspective."
+3.3 How gas-loss relates to time-since-infall
+"In this section we use the orbital histories of our sample to investi-
+gate how gas-loss since crossing 4𝑅200 relates to time since crossing
+that radius. Bahé & McCarthy (2015) first used the GIMIC simula-
+tions to characterise how satellites were quenched as a function of
+time since passing 𝑅200. We extend their analysis by examining, on
+average, how the infall region builds up as a function of time-since-
+infall and how an object’s gaseous properties are also affected. In
+order to acquire a clear picture of how The Three Hundred clus-
+ters generally build up, we repeat the analysis done in Oman et al.
+(2013), which is presented in Fig. 5. In the top-left panel we show
+the stacked 3D phase-space plane from all the objects in our sample
+at 𝑧 = 0, which extend the analysis done in Arthur et al. (2019).
+We use the orbital histories to split the objects in this plane by their
+time-since-infall into the following eight panels. In each panel we
+show the number of objects in each bin."
+"The top-left panel contains a distinct infalling branch, a back-
+splash population and a virialised population. Unsurprisingly, the
+objects that have recently undergone infall (i.e. < 2 Gyr) are mostly
+located on the infalling branch at high cluster-centric radii. There
+are a small number of objects that already reside within the cluster
+in these panels, which are suspected to be spurious effects resulting
+from MergerTreemislabelling the cluster main progenitor branch.
+In the next three panels, that show objects that underwent infall 2-5
+Gyr ago, we see that the infalling branch is well established. By 2-3
+Gyr, objects are starting to accrete onto 𝑅200 of the cluster and by
+4-5 Gyr, the backsplash population is well defined. In the final three
+panels, the infalling branch starts to diminish at high cluster-centric
+radii. By 6-7 Gyr, it seems as though nearly all objects have made
+their first passage, and any objects infalling at this stage are on their
+second, or above, re-entry. The virialised parts of these planes are
+well established. For the most part, our results are consistent with"
+"those in Oman et al. (2013). However, we do note that the infalling
+branch around the clusters in the sample takes longer to disappear;
+the branch in Oman et al. (2013) is gone by 4-5 Gyr, but for our
+objects it becomes indistinct at 6-7 Gyr. Alongside this, we see
+backsplash objects reach much higher cluster-centric distances than
+those in Oman et al. (2013) (a detailed analysis of the backsplash
+population of a similar sample to the one used here can be found
+in Haggar et al. 2020). We note that the host masses in Oman et al.
+(2013) have a mass > 1014ℎ−1M� , which are comparable to our
+sample. However, the analysis done in Oman et al. (2013) uses a
+different definition of halo radius, namely 𝑅360𝑏 , the radius at which
+the density drops below 360𝜌bg, where 𝜌bg = ΩM𝜌crit is the back-
+ground matter density of the Universe at a given redshift 𝑧, and ΩM
+the matter density parameter. This difference in the volume defini-
+tion (i.e. 𝑅200c ∼ 0.8𝑅360b) might explain the difference between
+the lifetime of the infalling branch of our sample compared to the
+one found in Oman et al. (2013)."
+"To study how an object’s gas-loss since infall is related to the
+time-since-infall, we present in Fig. 6 the same distribution as in
+Fig. 5, but now coloured by the median fractional gas-loss in each
+bin. Fig. 6 shows that objects, on average, lose nearly all of their gas
+at ∼ 1.5𝑅200 (marked with a vertical pink dash-dotted line), which
+agrees with the instantaneous gas fractions presented in Arthur et al.
+(2019). In this case though, as we now have the orbital histories of
+each object at our disposal, we can confirm that nearly all infalling
+objects, by the time they reach ∼ 1.5 since they entered the infall
+region, lose all their gas."
+"In the top-middle and top-right panels, recent infalling objects
+have lost little gas at high cluster-centric radii, with the exception
+of the very dynamic pre-processing candidates. In the following
+three panels though, where the infalling and backsplash branches
+are more distinct, objects seem to have lost more of their gas. As
+soon as 2−4Gyr since infall, objects have reached the characteristic
+radius where the majority of gas-loss is encountered: ∼ 1.5−2𝑅200.
+In these panels the backsplash population starts to become more
+distinct, but one can see that the objects forming this region have
+lost all of their gas. In the final three panels, which shows the objects
+with the latest infall, nearly all objects have lost all of their gas, with
+the exception of a small sample of objects that are still on their first
+infall. We also identify a correlation between the velocity of the
+objects and their gas-loss fraction: as best seen in the phase-space
+distribution of the objects with a time-since-infall within 3 Gyrs
+(top-middle, top-right, and middle-left panels), the faster they infall
+towards the main cluster halo, the higher their gas-loss fraction,
+likely due to the higher ram-pressure these objects experience as
+their infall velocity increases."
+"From Fig. 6 we find that objects within the ∼ 1.5𝑅200 region
+have always lost ∼ 100 per cent of their gas, on average, regard-
+less of their time-since-infall. This suggests that gaseous disruption
+in this region is mostly environmental and not driven by secular
+processes. Moreover, we also find that an object’s gas-loss in the
+infall region is driven by its time-since-infall; the longer an object
+spends in the infall region, the more fractional gas-loss it will un-
+dergo. One plausible explanation for this is that more intermediary
+environments, such as groups and filaments, need longer to strip an
+object’s gas and therefore a trend with time is more easily seen in the
+infall region. However, a higher time-since-infall will presumably
+correspond to an older object, which is more likely to be affected
+by secular processes in that region."
+"To examine how haloes and subhaloes lose their gas differently
+since crossing 4𝑅200, we use the fractional gas-loss information for
+the population of objects at 𝑧 = 0 to construct separate probability"
+"MNRAS 000, 1–13 (2019)"
+8 Mostoghiu et. al
+"2 0-8 Gyr
+N = 85497"
+"0-1 Gyr
+N = 8767"
+"1-2 Gyr
+N = 9805"
+"2 2-3 Gyr
+N = 9847"
+"3-4 Gyr
+N = 12662"
+"4-5 Gyr
+N = 12146"
+"0 1 2 3 4
+2"
+"2 5-6 Gyr
+N = 10751"
+0 1 2 3 4
+"6-7 Gyr
+N = 10343"
+0 1 2 3 4
+"7-8 Gyr
+N = 7509"
+"N
+haloes+"
+subhaloes
+R3D/R200
+"v 3
+D
+/"
+"Figure 5. The stacked phase-space plane at 𝑧 = 0 in the 3D perspective, as a function of time-since-infall. The following panels are found by splitting the
+top-left panel in time-since-infall, as indicated in the top-right part of each panel. Each panel is coloured by the number of objects in each bin, which is given
+by the colour bar."
+"2 0-8 Gyr
+N = 85497"
+"0-1 Gyr
+N = 8767"
+"1-2 Gyr
+N = 9805"
+"2 2-3 Gyr
+N = 9847"
+"3-4 Gyr
+N = 12662"
+"4-5 Gyr
+N = 12146"
+"0 1 2 3 4
+2"
+"2 5-6 Gyr
+N = 10751"
+0 1 2 3 4
+"6-7 Gyr
+N = 10343"
+0 1 2 3 4
+"7-8 Gyr
+N = 7509"
+"gas
+) /M"
+"inf
+gas"
+R3D/R200
+"v 3
+D
+/"
+"Figure 6. As in Fig. 5, but each bin is coloured by the median fraction gas-loss since infall. The vertical pink dash-dotted line marks the 1.5𝑅200 radius."
+"densities of fractional gas-loss as a function of time-since-infall.
+This is shown in Fig. 7."
+"As in Fig. 6, the top-left panel in Fig. 7 contains the fractional
+gas-loss information for the whole population at 𝑧 = 0. Following
+the discussion for Fig. 4, we also show the contribution of the sub-
+halo population residing in group-mass and low-mass host haloes
+to the whole subhalo sample distribution (thin violet lines)6. In this
+panel, the distributions are bimodal. On average subhaloes are more
+likely to lose their gas than haloes, although there is a population of"
+"6 We note that this distribution is technically not a probability density as
+its integral over the fractional gas-loss is the fraction of the whole subhalo
+sample that resides in hosts with 𝑀host < 1014ℎ−1M� ."
+"subhaloes which have retained their gas in this panel. The gas-poor
+subhaloes are, for the most part, subhaloes of the main cluster halo,
+though some may be objects at high cluster-centric radii that have
+already been pre-processed or stripped of their gas by cluster-mass
+host haloes. Comparing the distribution of all subhaloes with the
+one from sub-dominant environments we see that most subhaloes in
+cluster-mass hosts lost between 60 and 90 per cent of their gas since
+they crossed 4𝑅200. On average, haloes retain their gas much more
+successfully than subhaloes. However, there is a significant popula-
+tion of gas-poor haloes, which potentially consist of a combination
+of backsplash objects or objects that have been pre-processed by
+some local gas environment, such as an accretion shock between
+∼ 1.5 − 2𝑅200. When we split the top-left panel by the time-since-
+infall, the differences between the halo and subhalo distributions"
+"MNRAS 000, 1–13 (2019)"
+The gas disruption of infalling objects 9
+"100 0-8 Gyr
+N = 85497"
+"0-1 Gyr
+N = 8767"
+"1-2 Gyr
+N = 9805"
+"10 1
+2-3 Gyr
+N = 9847"
+"3-4 Gyr
+N = 12662"
+"4-5 Gyr
+N = 12146"
+"1.0 0.8 0.6 0.4 0.2
+10 3"
+"10 1
+5-6 Gyr
+N = 10751"
+1.0 0.8 0.6 0.4 0.2
+"6-7 Gyr
+N = 10343"
+1.0 0.8 0.6 0.4 0.2 0.0
+"7-8 Gyr
+N = 7509"
+"Haloes
+All Subh.
+Mhost < 1014"
+(Mz = 0gas Mz = zinfgas ) /Mz = zinfgas
+"ab
+ili"
+"Figure 7. Fractional gas-loss probability densities for all objects at 𝑧 = 0, split by haloes (green solid lines), subhaloes (magenta solid lines), and subhaloes
+residing in hosts with total halo mass 𝑀host < 1014ℎ−1M� (violet thin lines). As in Fig. 5, the top-left panel, which contains the whole population, is split by
+time-since-infall into the following panels."
+"become even starker. Haloes that have spent 0−1Gyr within the in-
+fall region are generally gas-rich and have retainedmost of their gas;
+many have lost less than ∼ 20 per cent of their initial gas at infall. In
+contrast, the subhalo distributions are much more gas-depleted in
+this panel, even when considering subhaloes in sub-dominant envi-
+ronments. From Fig. 7 and Fig. 4, if we consider all the subhaloes in
+the sample, they lose their gas faster and further out from the cluster
+than haloes. Otherwise, they follow similar radial gas-loss trends.
+Interestingly, in the following panels, which show the objects with
+earlier infall times (i.e. that spent more time in the infall region),
+subhaloes lose their gas as a function of time-since-infall, but they
+are not fully depleted until 6 − 7 Gyr, which is almost as long as
+the halo population. In fact, by 7 − 8 Gyr, nearly all haloes and the
+whole subhalo population have lost all of their gas."
+"3.4 How subhalo gas-loss relates to both cluster-centric
+distance and time spent in the host environment"
+"Subhaloes generally lose more gas further from the cluster and
+sooner than haloes would. As seen in Fig. 4, their radial trend is
+dominated by subhaloes in cluster-mass host haloes. Once separated
+from the full population, subhaloes in sub-dominant environments
+(e.g. group-mass haloes or filaments) follow similar radial gas-loss
+relations as haloes. Barring any artificial effects, this suggests that
+subhaloes are being stripped off their gas before they reach 𝑅200. In
+this section we examine this closely by investigating how subhalo
+fractional baryonic mass is lost as a function of time spent in differ-
+ent host haloes. By analysing the orbital histories of our objects and
+only considering the times atwhich they became subhaloes of haloes
+in the infall region, we can classify those parts of their histories by
+the mass of their host haloes, their cluster-centric radius at the time,"
+"and the time they spent in the host environment7. This is first pre-
+sented in Fig. 8, which shows how subhalo gas-loss correlates with
+the aforementioned properties. In order to construct these trends, we
+use the orbital histories of the objects in the sample to record when
+an object accretes onto another object in the infall region to become
+a subhalo, and its initial gas mass at that time. The evolution of the
+subhalo gas content is tracked from that point onwards to construct
+temporal trends. Due to the fact that host haloes will accumulate
+mass over time, we use the mean host halo mass during the tracking
+time window. Likewise, this is done for cluster-centric distance8.
+In order to control for subhalo mass, subhaloes are only tracked in
+host halo environments if they have an initial mass at the time they
+became subhaloes that is 1011ℎ−1M� ≤ 𝑀200 ≤ 1012ℎ−1M� . The
+shaded regions show the 1𝜎 errors on the median in each time bin,
+calculated by boostrap re-sampling."
+"Analysing each radial bin, we find that subhaloes lose their gas
+more quickly within higher mass host haloes. In the highest cluster-
+centric distance bin (bottom-right), subhaloes in group-mass host
+haloes (green) essentially lose all of their gas by ∼ 1 Gyr, but for
+subhaloes residing in the lowest host mass bin (blue) it takes ∼ 4
+Gyr to lose half their initial gas. Although we only examine the
+gas here, this is consistent with work done in Wetzel et al. (2012);
+Bahé & McCarthy (2015); Roberts & Parker (2017) and Cora et al."
+"7 Note that the time spent in a host halo environment differs from the time-
+since-infall of an object, which exclusively refers to the crossing of the 4𝑅200
+radius of the main cluster halo.
+8 It is worth mentioning that using averaged quantities might introduce a
+bias in the analysis. For instance, subhaloes assigned to a radial bin might
+spend half of their time within their host environment in one radial bin, and
+half in the neighbouring one. We analysed this potential issue and found
+that the vast majority of subhaloes remain within their assigned radial bins
+for each point of the trends, with a dispersion from the mean normalised
+cluster-centric distance of ∼ 0.2 − 0.3."
+"MNRAS 000, 1–13 (2019)"
+10 Mostoghiu et. al
+"0.0
+1.00 < R3D/ R200 < 1.75"
+"1012 <  Mhost < 1013
+1013 <  Mhost < 1014
+1014 <  Mhost < 1016"
+1.75 < R3D/ R200 < 2.50
+"0 1 2 3 4
+1.0"
+"0.2
+2.50 < R3D/ R200 < 3.25"
+0 1 2 3 4
+3.25 < R3D/ R200 < 4.00
+t [Gyr]
+"t=
+t a"
+"t a
+cc"
+"Figure 8. Subhalo fractional gas-loss as a function of time spent in host
+environment. The trends have been divided by mean host mass over that
+time, as indicated by the legend, and further subdivided by mean cluster-
+centric distance over that time, as indicated by each panel. Error bars are 1𝜎
+errors on the median in each time bin, calculated by bootstrap resampling."
+"(2018), who suggest that quenching and pre-processing of satellites
+ismore dominant in highermass hosts. This result is also compatible
+with the results presented in Cora et al. (2019), who showed that
+quenching mechanisms are less efficient in galaxies accreted by
+lower mass haloes, both prior and after their first infall, due to the
+combined effect of the milder environmental disruption exerted by
+low-mass host haloes, and the reduced secular quenching in low-
+mass subhaloes that naturally accrete onto low-mass host haloes.
+However, in contrast, when we consider where subhaloes lose 50
+per cent of their gas in the first radial bin, the trends only differ
+by less than a Gyr. This latter point is more consistent with Wetzel
+et al. (2013), who suggest that host mass does not influence the
+quenching time-scales of satellite galaxies, although their analysis
+was constrained to the virial radius of the clusters. Both Wetzel
+et al. (2013) and Cora et al. (2019) observed a delay in satellite
+quenching after accretion onto a host, and it is possible that this
+delay is consistent with our subhaloes in lower mass hosts retaining
+some cold interstellar medium component of their gas. As for trends
+with host mass, looking at the lowest mass hosts (blue) of Fig. 8 we
+see a clear radial trend. Subhaloes lose their gas quicker in these
+hosts the closer they are to the main cluster halo. Subhaloes in these
+hosts in the furthest bin lose 40 per cent of their gas by ∼ 4 Gyr,
+but in the closest bin they lose all of their gas by ∼ 1.5 Gyr. These
+radial differences are mainly seen in the last 80 per cent of gas, as
+across all bins subhaloes in the lowest mass hosts reach ∼ 20 per
+cent gas-loss by ∼ 1 Gyr. These results suggest that whilst the low
+mass hosts are efficient in stripping the first ∼ 20 per cent of gas,
+being in closer proximity of the main cluster halo is enough for the
+main cluster environment to take over and strip the remaining ∼ 80
+per cent. Interestingly, no radial trends are found for group-mass or
+cluster-mass hosts; they are just as efficient at removing all gas from
+subhaloes at any cluster-centric radii. This is good evidence for gas
+disruption of subhaloes by group environments (green-line) at high
+cluster-centric distances."
+"0.2
+1.00 < R3D/ R200 < 1.75"
+"1012 <  Mhost < 1013
+1013 <  Mhost < 1014
+1014 <  Mhost < 1016"
+1.75 < R3D/ R200 < 2.50
+0 1 2 3 4
+"0.2
+2.50 < R3D/ R200 < 3.25"
+0 1 2 3 4
+3.25 < R3D/ R200 < 4.00
+"t [Gyr]
+(M"
+"t a
+cc"
+"t=
+t a"
+"Figure 9. As in Fig. 8, but shows the fractional stellar loss of subhaloes as
+a function of time spent in a host environment."
+"By only examining the fractional gas-loss of subhaloes, it is
+difficult to disentangle whether any lost gas is being stripped (exter-
+nal processes), ejected (internal processes), or whether it is being
+turned into stars over time. In light of this we next present Fig. 9,
+which depicts the same information as in Fig. 8, but instead shows
+the fractional stellar loss of subhaloes as they fall into hosts haloes."
+"Firstly, we identify a radial trend in the stellar mass loss of
+subhaloes within low-mass hosts (blue): the stellar mass loss in-
+creases as we move closer to the main cluster halo. For the other
+two subhalo populations, i.e. subhaloes of group-mass (green) and
+of cluster-mass (red) hosts, the stellar mass loss radial trends are
+fairly similar, with the exception of the innermost radial bin (top-
+left panel), in which all three subhalo populations show a light
+correlation between their stellar mass loss and the time spent in
+their respective host environments, regardless of the mass of their
+host halo. On the other hand, subhaloes residing in low-mass and
+group-mass hosts display a gain of stellar mass outside the inner-
+most radial bin. In the highest radial bin (bottom-right panel), there
+is a ∼ 10 per cent difference in the stellar mass change between
+the subhalo population of the lowest and highest host masses after
+4 Gyrs inside the host environment. Nevertheless, for high-mass
+hosts (red), the trends in each radial bin show no increase in stel-
+lar material, and in the stacked data it seems as though the stellar
+material only decreases as a function of time spent in the host envi-
+ronment. These results are in partial disagreement withWetzel et al.
+(2012) and Wetzel et al. (2013), who suggest that satellites are still
+allowed to form stars and grow in mass before a delayed, but rapid
+quenching. In our results we do not find star formation for subhaloes
+residing in cluster-mass hosts. For massive galaxies, however, Cora
+et al. (2019) showed that the duration of the phase following the
+delay might, in fact, be of the same order of magnitude as the delay
+phase."
+"It is possible that the star-loss found in such subhaloes, as
+opposed to the stellar gain observed in the other populations, is not
+solely a consequence of a lack of star formation. Such subhaloes
+might indeed form stars but stripping or ejection of stellar material
+from environmental or secular processes might outweigh the star"
+"MNRAS 000, 1–13 (2019)"
+The gas disruption of infalling objects 11
+"0.0
+1.00 < R3D/ R200 < 1.75"
+"1011.0 <  Msub < 1011.5
+1011.5 <  Msub < 1012.0
+1012.0 <  Msub < 1012.5"
+1.75 < R3D/ R200 < 2.50
+"0 1 2 3 4
+1.0"
+"0.2
+2.50 < R3D/ R200 < 3.25"
+0 1 2 3 4
+3.25 < R3D/ R200 < 4.00
+t [Gyr]
+"t=
+t a"
+"t a
+cc"
+"Figure 10.As in Fig. 8, but the different lines refer to the mass each subhalo
+had on accretion into the host environment, as indicated by the line colour
+and legend."
+"formation taking place in the subhaloes, resulting in a net loss of both
+gas and stellar material.We concede that the number of star particles
+is less than statistically significant for some subhaloes in the sample.
+As a first approximation, taking into account the cosmic baryon
+fraction of our simulations, a population of subhaloes with mass
+1011ℎ−1M� ≤ 𝑀200 ≤ 1012ℎ−1M� will contain between∼ 70 to∼
+700 star particles. For subhaloeswith only few star particles, one star
+particle being stripped from a subhalo could equate to asmuch as a∼
+10 fractional star-loss, but this is presumably smoothed out by using
+the stacked median in temporal bins. However, even considering
+this, we do find that, on average, the stellar mass of subhaloes in
+massive hosts is not increasing as a function of time spent in the
+host. Therefore, we may statistically infer that subhalo gas is really
+being lost by either stripping or ejection in such subhaloes, while for
+subhaloes residing in group and low-mass hosts, gas-loss is boosted
+by the star mass gain identified in Fig. 9. In order to differentiate
+between these processes and estimate their relative importance, a
+thorough tracking analysis is needed that examines the history of
+each and every gas and star particle situated in infalling subhaloes."
+"While we suggest that it is compelling that gas disruption
+by host environments, either by sub-dominant environments or by
+cluster-mass hosts, is the main cause for enhanced subhalo gas-loss
+during their infall onto the main galaxy cluster, it is most likely a
+mixture of actual gas disruption, secular processes and enhanced
+numerical stripping of subhaloes due to inadequate resolution (van
+den Bosch & Ogiya 2018; van den Bosch et al. 2018). To conclude
+our analysis, we finish by investigating how subhalo gas-loss is
+related to number of particles in our subhaloes. In Fig. 10 we present
+the fractional gas-loss of subhaloes, as in Fig. 8, but here the trends
+are split by the initial mass each subhalo has when it accretes onto
+the host."
+"We note that for this part of the analysis we do not make the
+same initial subhalo mass cuts that we used in Fig. 8 and Fig. 9.
+What is striking on first glance is that we find that group and low-
+mass subhaloes retain their gas for longer in all radial bins, with
+the exception of the first radial bin (top-left) in which there is no"
+"apparent difference between the populations. Analysing the host
+mass of these subhalo populations we confirm that larger mass
+subhaloes reside in larger mass host haloes, which as seen from
+Fig. 8, are more efficient environments for subhaloes to lose their
+gas in. For the innermost radial bin, similar to what we found Fig. 8,
+they all lose their gas at similar times. In light of this result, we
+now are able to better understand the radial correlation seen in the
+stellar mass change in subhaloes of group and low-mass hosts and
+their cluster-centric distance in Fig. 9. One possible scenario is that,
+as subhaloes within more massive hosts would accrete with larger
+velocities in the high density environment of their host, the ram
+pressure theywould experiencewould be greater than in comparable
+subhaloes in lower mass hosts. As discussed in Cora et al. (2019),
+secular processes (e.g. feedback from active galactic nuclei) play a
+major role in the decline of the star formation for high-mass galaxies
+both before and after their infall time, which they defined as the time
+at which a galaxy becomes a satellite for the first time. As subhaloes
+in group and low-mass hosts tend to be on the lower end of the
+subhalo mass distribution, they are able to form stars even after 4
+Gyrs since they entered their host halo environment."
+"These trends lend support for these subhaloes losing gas by
+physical processes, rather than any artificially enhanced stripping
+due to the number of particles used to describe such subhaloes, as
+otherwise one would expect these artificial effects to lead to en-
+hanced stripping in the lower mass subhaloes (as we discussed in
+Section 3.2). Presumably the host environment dominates this nu-
+merical effect, thus more massive subhaloes lose their gas quicker,
+and lower mass subhaloes retain their gas for longer, despite hav-
+ing less dark matter particles. Although these trends diminish the
+numerically enhanced stripping argument, they do not allow us to
+differentiate on whether subhaloes are losing their gas via stripping
+or secular processes, as in larger mass subhaloes one would ex-
+pect more extreme feedback schemes to be implemented in order to
+control stellar production."
+4 CONCLUSIONS
+"We used haloes from The Three Hundred project, a suite of 324
+zoomed galaxy cluster simulations that extend > 5𝑅200 of the main
+cluster halo, to investigate the level of gaseous disruption of infalling
+objects and examine the extent of pre-processing in our simulations.
+In particular, we use the orbital histories of 132 427 (sub)haloes to
+identify where, when and how these objects lose their gas since
+crossing into the infall region, which we define as 1 − 4𝑅200. Our
+main conclusions are as follows:"
+"• On average, infalling objects lose nearly all of their gas around
+1.7𝑅200 in the 3D perspective and ∼ 𝑅200 in the PROJ perspective.
+By constructing stacked fractional gas-loss trends as a function of
+cluster-centric distance, we show that in a 3D perspective objects
+lose ∼ 30 per cent of their gas at ∼ 2𝑅200 , where there is then
+a dramatic increase in gas-loss until ∼ 1.7𝑅200. In the PROJ per-
+spective, these trends are translated ∼ 0.7𝑅200 closer to the cluster.
+Our results agree with and extend the work done in Arthur et al.
+(2019), by showing that, on average, objects actually lose their gas
+at a characteristic radius in the infall region. The increase of frac-
+tional gas-loss with decreasing cluster-centric distance is not due to
+contamination from outgoing objects, which agrees with Lotz et al.
+(2019)."
+"• By splitting the radial trends by subhalo status, we show that
+subhaloes lose their gas much further out than haloes. ∼ 60 per
+cent of gas is depleted from subhaloes by ∼ 3𝑅200 , whereas haloes"
+"MNRAS 000, 1–13 (2019)"
+12 Mostoghiu et. al
+"only reach this level of disruption by∼ 1.7𝑅200. However, removing
+subhaloes residing in cluster-mass hosts in the infall region from the
+radial trends, we find that subhaloes in group-mass and low-mass
+hosts follow essentially the same radial gas-loss trends as haloes,
+suggesting that cluster-mass hosts environments are responsible for
+removingmost of the gas observed for the whole subhalo sample. At
+present, the relative importance of gas disruption (either by to sub-
+dominant or cluster-mass hosts environments), secular processes
+or numerically enhanced stripping of subhaloes on these results is
+unclear."
+"• The phase-space analysis of the objects in the sample shows
+that the infalling branch is established within ∼ 1 − 3 Gyr since
+the objects entered the infall region. After this time, a character-
+istic gas-loss cluster-centric radius can be identified at ∼ 1.5𝑅200.
+Around 4−5Gyr, the backsplash population branch becomes appar-
+ent. Independent of their time since they entered the infall region,
+any object within ∼ 1.5𝑅200 has lost nearly all of its gas. On the
+other hand, for objects that remain outside this region, their gas-loss
+fraction is dependent on the time they spent in the infall region."
+"• Subhaloes lose their gas much quicker than haloes after en-
+tering the infall region of the main cluster halo. Within 1 Gyr, the
+subhalo population shows significant depletion of its gas. Generally
+haloes retain their gas for much longer, but there is a population of
+these objects that lose their gas within the first few Gyrs after infall
+as well. These are either backsplash haloes or haloes that have en-
+tered the characteristic radius at∼ 1.5𝑅200, but are not yet classified
+as a subhalo of the cluster."
+"• Subhaloes lose their gas more quickly within higher mass host
+halo environments. In group-mass host haloes, the gas of subhaloes
+is typically depleted by ∼ 1.5 Gyr since they became subhaloes,
+whilst in Milky Way like hosts, it is typically depleted by ∼ 4 Gyr.
+Our results agree with those found in Bahé & McCarthy (2015);
+Roberts & Parker (2017), and Cora et al. (2019) who suggest that
+higher mass hosts quench satellites quicker than low mass hosts.
+However, when one only considers the first ∼ 20 per cent of subhalo
+gas-loss, all host environments are nearly equally as efficient."
+"• Subhaloes in group and low-mass host haloes appear to gain
+stellar mass at high cluster-centric radii even after spending 4 Gyrs
+within host halo environments. On the other hand, on average, sub-
+haloes of cluster-mass haloes do not form stars. In fact, we find that
+their stellar material slightly declines as a function of time spent
+within the host. We note that this decline might not be solely the re-
+sult of a lack of stellar production: it is possible that these objects are
+indeed using their gas to form stars, but due to stripping or ejection
+processes, stellar material can be lost in subhaloes, outweighing star
+formation. This would result in a net stellar loss, despite the sub-
+haloes actually forming stars. Disentangling the relative relevance
+of these processes would be a primary aim for future analysis. On
+the other hand, as the stellar component is significantly more bound
+than the gas in a halo, we find this scenario unlikely. Our results are
+in partial disagreement with Wetzel et al. (2013), who found that
+there is a delay in satellite quenching once they accrete onto their
+host, whereby all satellites are still allowed to form stars, and not
+only the ones in group and low-mass hosts. This mass-dependent
+stellar-loss trend, however, is compatible with the analysis presented
+in Cora et al. (2019), who pointed that secular processes play a ma-
+jor role on the decline of the star formation of high-mass galaxies,
+potentially allowing galaxies with lower mass to keep forming stars."
+"• Lower mass subhaloes retain their gas for longer once they
+have accreted onto a host than higher mass subhaloes. This is easily
+explained by the fact that massive subhaloes are in more massive
+hosts, which as seen, deplete subhalo gas more efficiently, e.g. sub-"
+"haloes in more massive hosts would accrete with larger velocities in
+the high density environment of their host, which increases the ram
+pressure they experience. These results suggest that gas depletion
+in our subhalo population is driven predominately by host mass
+rather than artificially enhanced numerical stripping found in recent
+studies (van den Bosch & Ogiya 2018; van den Bosch et al. 2018)."
+"In summary, we conclude that in the infall region, infalling
+objects suffer significant gaseous disruption that correlates with
+their time-since-infall and cluster-centric distance. Subhaloes suffer
+more disruption further out from the main cluster halo and quicker
+than the halo population, and we find that the gas-loss radial trend
+is dominated by subhaloes residing in cluster-mass hosts in the
+infall region. Considering only the subhaloes in group-mass and
+low-mass host halo environments, we find a similar radial trend to
+the halo population. We have shown that this is not solely driven
+by artificially enhanced stripping due to particle number resolution.
+However, as the spatial resolution of the simulation might induce an
+enhanced stripping of gas particles on our objects if their intrahalo
+medium is not fully resolved, we understand the characteristic radius
+found in our radial gas-loss trends as an upper bound of the accretion
+shock radius, rather than its actual value."
+"Our results suggest that gaseous disruption in the infall region
+is a combination of pre-processing and cluster quenching (for sub-
+haloes within cluster-mass host haloes), and object gas depletion at
+a characteristic radius that behaves as an accretion shock. However,
+some questions remain and could be the subject of a future study.
+For instance, a prime concern would be to investigate how environ-
+mental effects alone contribute to the gas-loss of infalling objects,
+by examining how (particle and mass) resolution and different sub-
+grid physics affect our trends. Fortunately, The Three Hundred
+has been run with multiple codes, each containing different subgrid
+physics with different calibrations. Alongside this, there are 2 − 5
+clusters within the sample that have been re-run with eight times
+better mass resolution. By using this data, a follow-up study could
+relatively easily target the question of how dominant environment
+is. In addition to this, by disentangling the gaseous components
+in subhaloes into the cold inter stellar medium and the hot halo,
+a future study could pin down what kind of host environments are
+necessary in order to exclusively strip the hot component, essentially
+starving the satellite within the subhalo, and which environments
+are necessary in order to disturb the cold inter stellar medium."
+ACKNOWLEDGEMENTS
+"This work has been made possible by the ‘The Three Hundred’
+collaboration.9 The project has received financial support from
+the European Union’s Horizon 2020 Research and Innovation pro-
+grammeunder theMarie Sklodowskaw-Curie grant agreement num-
+ber 734374, i.e. the LACEGAL project."
+"The authors would like to thank The Red Española de Super-
+computación for granting us computing time at the MareNostrum
+Supercomputer of the BSC-CNS where most of the cluster simula-
+tions have been performed. Part of the computations with GADGET-X
+have also been performed at the ‘Leibniz-Rechenzentrum’withCPU
+time assigned to the Project ‘pr83li’. We also thank the anonymous
+referee for their helpful comments, which improved the quality of
+the manuscript."
+"RM, AK and GY are supported by theMICIU/FEDER through"
+9 https://www.the300-project.org
+"MNRAS 000, 1–13 (2019)"
+https://www.the300-project.org
+"
+The gas disruption of infalling objects 13"
+"grant number PGC2018-094975-C21. AK further acknowledges
+support from the Spanish Red Consolider MultiDark FPA2017-
+90566-REDC and thanks Metallica for ride the lightning. SAC
+acknowledges funding from Consejo Nacional de Investigaciones
+Científicas y Técnicas (CONICET, PIP-0387), andUniversidad Na-
+cional de La Plata (G11-150), Argentina. KD acknowledges support
+by the Deutsche Forschungsgemeinschaft (DFG, German Research
+Foundation) under Germany’s Excellence Strategy - EXC-2094 -
+390783311."
+"The authors contributed to this paper in the following ways:
+RM, JA, FRP, MG and AK formed the core team. RM and JA
+analysed the data, produced the plots and wrote the paper along
+with FRP, MG, AK,WC, CW, and SAC. GM, KD, and GY supplied
+the simulation data. All authors had the opportunity to provide
+comments on this work."
+"This work was created by making use of the following soft-
+ware: Python, Matplotlib (Hunter 2007), Numpy (van der Walt
+et al. 2011), scipy (Virtanen et al. 2019), and astropy (Astropy
+Collaboration et al. 2013, 2018)."
+DATA AVAILABILITY
+"Data available on request to The Three Hundred collaboration, at
+https://www.the300-project.org."
+REFERENCES
+"Arthur J., et al., 2017, MNRAS, 464, 2027
+Arthur J., et al., 2019, MNRAS, 484, 3968
+Astropy Collaboration et al., 2013, A&A, 558, A33
+Astropy Collaboration et al., 2018, AJ, 156, 123
+Bahé Y. M., McCarthy I. G., 2015, MNRAS, 447, 969
+Bahé Y. M., McCarthy I. G., Balogh M. L., Font A. S., 2013, MNRAS, 430,
+3017"
+"Baldry I. K., Balogh M. L., Bower R. G., Glazebrook K., Nichol R. C.,
+Bamford S. P., Budavari T., 2006, MNRAS, 373, 469"
+"Beck A. M., et al., 2016, MNRAS, 455, 2110
+Behroozi P. S., Wechsler R. H., Lu Y., Hahn O., Busha M. T., Klypin A.,
+Primack J. R., 2014, ApJ, 787, 156"
+"Behroozi P., et al., 2015, MNRAS, 454, 3020
+Berrier J. C., Stewart K. R., Bullock J. S., Purcell C. W., Barton E. J.,
+Wechsler R. H., 2009, ApJ, 690, 1292"
+"Boselli A., Gavazzi G., 2006, PASP, 118, 517
+Buck T., Macciò A. V., Dutton A. A., Obreja A., Frings J., 2019, MNRAS,
+483, 1314"
+"Cora S. A., et al., 2018, MNRAS, 479, 2
+Cora S. A., Hough T., Vega-Martínez C. A., Orsi Á. A., 2019, MNRAS,
+483, 1686"
+"Cui W., et al., 2016, MNRAS, 458, 4052
+Cui W., et al., 2018, MNRAS, 480, 2898
+Cybulski R., YunM. S., Fazio G. G., Gutermuth R. A., 2014, MNRAS, 439,
+3564"
+"DeLuciaG.,Weinmann S., Poggianti B.M., Aragón-SalamancaA., Zaritsky
+D., 2012, MNRAS, 423, 1277"
+"Dressler A., 1980, ApJ, 236, 351
+Elahi P. J., et al., 2016, MNRAS, 458, 1096
+Fujita Y., 2004, PASJ, 56, 29
+Gill S. P. D., Knebe A., Gibson B. K., 2004a, MNRAS, 351, 399
+Gill S. P. D., Knebe A., Gibson B. K., Dopita M. A., 2004b, MNRAS, 351,
+410"
+"Gómez P. L., et al., 2003, ApJ, 584, 210
+Haggar R., Grey E.M., Pearce R. F., Knebe A., CuiW., Mostoghiu R., Yepes
+G., 2020, MNRAS"
+"Haines C. P., et al., 2015, ApJ, 806, 101"
+"Hou A., Parker L. C., Harris W. E., 2014, MNRAS, 442, 406
+Hunter J. D., 2007, Computing in Science & Engineering, 9, 90
+Just D. W., et al., 2019, ApJ, 885, 6
+Klypin A., Yepes G., Gottlöber S., Prada F., Heß S., 2016, MNRAS, 457,
+4340"
+"Knollmann S. R., Knebe A., 2009, ApJS, 182, 608
+Lotz M., Remus R.-S., Dolag K., Biviano A., Burkert A., 2019, MNRAS,
+488, 5370"
+"Lu T., Gilbank D. G., McGee S. L., Balogh M. L., Gallagher S., 2012,
+MNRAS, 420, 126"
+"McGee S. L., Balogh M. L., Bower R. G., Font A. S., McCarthy I. G., 2009,
+MNRAS, 400, 937"
+"Munari E., Biviano A., Borgani S., Murante G., Fabjan D., 2013, MNRAS,
+430, 2638"
+"Niemiec A., Jullo E., Giocoli C., Limousin M., Jauzac M., 2019, MNRAS,
+487, 653"
+"Oman K. A., Hudson M. J., Behroozi P. S., 2013, MNRAS, 431, 2307
+Planck Collaboration et al., 2016, A&A, 594, A13
+Planelles S., et al., 2017, MNRAS, 467, 3827
+Rasia E., et al., 2015, ApJ, 813, L17
+Roberts I. D., Parker L. C., 2017, MNRAS, 467, 3268
+Sembolini F., et al., 2016a, MNRAS, 457, 4063
+Sembolini F., et al., 2016b, MNRAS, 459, 2973
+Springel V., 2005, MNRAS, 364, 1105
+Virtanen P., et al., 2019, arXiv e-prints, p. arXiv:1907.10121
+Wang Y., et al., 2016, MNRAS, 459, 1554
+Wetzel A. R., Tinker J. L., Conroy C., 2012, MNRAS, 424, 232
+Wetzel A. R., Tinker J. L., Conroy C., van den Bosch F. C., 2013, MNRAS,
+432, 336"
+"White S. D. M., Rees M. J., 1978, MNRAS, 183, 341
+van den Bosch F. C., Ogiya G., 2018, MNRAS, 475, 4066
+van den Bosch F. C., Ogiya G., Hahn O., Burkert A., 2018, MNRAS, 474,
+3043"
+"van der Walt S., Colbert S. C., Varoquaux G., 2011, Computing in Science
+Engineering, 13, 22"
+This paper has been typeset from a TEX/LATEX file prepared by the author.
+"MNRAS 000, 1–13 (2019)"
+"https://www.the300-project.org
+http://dx.doi.org/10.1093/mnras/stw2424
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.464.2027A
+http://dx.doi.org/10.1093/mnras/stz212
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.484.3968A
+http://dx.doi.org/10.1051/0004-6361/201322068
+https://ui.adsabs.harvard.edu/abs/2013A&A...558A..33A
+http://dx.doi.org/10.3847/1538-3881/aabc4f
+https://ui.adsabs.harvard.edu/abs/2018AJ....156..123A
+http://dx.doi.org/10.1093/mnras/stu2293
+https://ui.adsabs.harvard.edu/abs/2015MNRAS.447..969B
+http://dx.doi.org/10.1093/mnras/stt109
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.430.3017B
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.430.3017B
+http://dx.doi.org/10.1111/j.1365-2966.2006.11081.x
+https://ui.adsabs.harvard.edu/abs/2006MNRAS.373..469B
+http://dx.doi.org/10.1093/mnras/stv2443
+http://ukads.nottingham.ac.uk/abs/2016MNRAS.455.2110B
+http://dx.doi.org/10.1088/0004-637X/787/2/156
+https://ui.adsabs.harvard.edu/abs/2014ApJ...787..156B
+http://dx.doi.org/10.1093/mnras/stv2046
+http://adsabs.harvard.edu/abs/2015MNRAS.454.3020B
+http://dx.doi.org/10.1088/0004-637X/690/2/1292
+https://ui.adsabs.harvard.edu/abs/2009ApJ...690.1292B
+http://dx.doi.org/10.1086/500691
+http://adsabs.harvard.edu/abs/2006PASP..118..517B
+http://dx.doi.org/10.1093/mnras/sty2913
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.1314B
+http://dx.doi.org/10.1093/mnras/sty1131
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.479....2C
+http://dx.doi.org/10.1093/mnras/sty3214
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.1686C
+http://dx.doi.org/10.1093/mnras/stw603
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.458.4052C
+http://dx.doi.org/10.1093/mnras/sty2111
+http://ukads.nottingham.ac.uk/abs/2018MNRAS.480.2898C
+http://dx.doi.org/10.1093/mnras/stu200
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.439.3564C
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.439.3564C
+http://dx.doi.org/10.1111/j.1365-2966.2012.20983.x
+https://ui.adsabs.harvard.edu/abs/2012MNRAS.423.1277D
+http://dx.doi.org/10.1086/157753
+https://ui.adsabs.harvard.edu/abs/1980ApJ...236..351D
+http://dx.doi.org/10.1093/mnras/stw338
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.458.1096E
+http://dx.doi.org/10.1093/pasj/56.1.29
+http://ukads.nottingham.ac.uk/abs/2004PASJ...56...29F
+http://dx.doi.org/10.1111/j.1365-2966.2004.07786.x
+http://adsabs.harvard.edu/abs/2004MNRAS.351..399G
+http://dx.doi.org/10.1111/j.1365-2966.2004.07913.x
+http://adsabs.harvard.edu/abs/2004MNRAS.351..410G
+http://adsabs.harvard.edu/abs/2004MNRAS.351..410G
+http://dx.doi.org/10.1086/345593
+https://ui.adsabs.harvard.edu/abs/2003ApJ...584..210G
+http://dx.doi.org/10.1088/0004-637X/806/1/101
+https://ui.adsabs.harvard.edu/abs/2015ApJ...806..101H
+http://dx.doi.org/10.1093/mnras/stu829
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.442..406H
+http://dx.doi.org/10.1109/MCSE.2007.55
+http://dx.doi.org/10.3847/1538-4357/ab44a0
+https://ui.adsabs.harvard.edu/abs/2019ApJ...885....6J
+http://dx.doi.org/10.1093/mnras/stw248
+http://adsabs.harvard.edu/abs/2016MNRAS.457.4340K
+http://adsabs.harvard.edu/abs/2016MNRAS.457.4340K
+http://dx.doi.org/10.1088/0067-0049/182/2/608
+http://adsabs.harvard.edu/abs/2009ApJS..182..608K
+http://dx.doi.org/10.1093/mnras/stz2070
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.488.5370L
+http://dx.doi.org/10.1111/j.1365-2966.2011.20008.x
+https://ui.adsabs.harvard.edu/abs/2012MNRAS.420..126L
+http://dx.doi.org/10.1111/j.1365-2966.2009.15507.x
+https://ui.adsabs.harvard.edu/abs/2009MNRAS.400..937M
+http://dx.doi.org/10.1093/mnras/stt049
+http://adsabs.harvard.edu/abs/2013MNRAS.430.2638M
+http://dx.doi.org/10.1093/mnras/stz1318
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.487..653N
+http://dx.doi.org/10.1093/mnras/stt328
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.431.2307O
+http://dx.doi.org/10.1051/0004-6361/201525830
+https://ui.adsabs.harvard.edu/abs/2016A&A...594A..13P
+http://dx.doi.org/10.1093/mnras/stx318
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.467.3827P
+http://dx.doi.org/10.1088/2041-8205/813/1/L17
+https://ui.adsabs.harvard.edu/abs/2015ApJ...813L..17R
+http://dx.doi.org/10.1093/mnras/stx317
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.467.3268R
+http://dx.doi.org/10.1093/mnras/stw250
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.457.4063S
+http://dx.doi.org/10.1093/mnras/stw800
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.459.2973S
+http://dx.doi.org/10.1111/j.1365-2966.2005.09655.x
+http://adsabs.harvard.edu/abs/2005MNRAS.364.1105S
+https://ui.adsabs.harvard.edu/abs/2019arXiv190710121V
+http://dx.doi.org/10.1093/mnras/stw726
+http://adsabs.harvard.edu/abs/2016MNRAS.459.1554W
+http://dx.doi.org/10.1111/j.1365-2966.2012.21188.x
+https://ui.adsabs.harvard.edu/abs/2012MNRAS.424..232W
+http://dx.doi.org/10.1093/mnras/stt469
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.432..336W
+http://adsabs.harvard.edu/abs/1978MNRAS.183..341W
+http://dx.doi.org/10.1093/mnras/sty084
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.475.4066V
+http://dx.doi.org/10.1093/mnras/stx2956
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.3043V
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.3043V
+http://dx.doi.org/10.1109/MCSE.2011.37
+http://dx.doi.org/10.1109/MCSE.2011.37"
+"	1 Introduction
+	2 Numerical methods
+	2.1 `The Three Hundred' Dataset
+	2.2 Sample selection
+	2.3 Phase space analysis"
+"	3 Results
+	3.1 Cluster and infall region build up
+	3.2 How gas-loss since infall relates to cluster-centric distance
+	3.3 How gas-loss relates to time-since-infall
+	3.4 How subhalo gas-loss relates to both cluster-centric distance and time spent in the host environment"
+	4 Conclusions

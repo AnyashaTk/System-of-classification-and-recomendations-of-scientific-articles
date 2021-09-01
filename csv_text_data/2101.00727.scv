@@ -1,0 +1,2088 @@
+0
+"MNRAS 000, 1–20 (2021) Preprint 5 January 2021 Compiled using MNRAS LATEX style file v3.0"
+"IGM Transmission Bias for 𝑧 ≥ 2.9 Lyman Continuum Detected
+Galaxies"
+"R. Bassett1,2★, E. V. Ryan-Weber1,2, J. Cooke1,2, U. Meštrić1,2, K. Kakiichi3,4,
+L. Prichard5, M. Rafelski5,6,
+1Centre for Astrophysics and Supercomputing, Swinburne University of Technology, PO Box 218, Hawthorn VIC 3122, Australia
+2ARC Centre of Excellence for All Sky Astrophysics in 3 Dimensions (ASTRO 3D), Australia
+3Department of Physics, University of California, Santa Barbara, CA 93106, USA
+4Department of Physics and Astronomy, University College London, London, WC1E 6BT, UK
+5Space Telescope Science Institute, 3700 San Martin Drive, Baltimore MD 21218, USA
+6Department of Physics & Astronomy, John Hopkins University, Baltimore, MD 21218, USA"
+Accepted XXX. Received YYY; in original form ZZZ
+"ABSTRACT
+Understanding the relationship between the underlying escape fraction of Lyman continuum
+(LyC) photons ( 𝑓esc) emitted by galaxies and measuring the distribution of observed 𝑓esc
+values at high redshift is fundamental to the interpretation of the reionization process. In
+this paper we perform a statistical exploration of the attenuation of LyC photons by neutral
+hydrogen in the intergalactic medium using ensembles of simulated transmission functions.
+We show that LyC detected galaxies are more likely to be found in sightlines with higher-
+than-average transmission of LyC photons. This means that adopting a mean transmission
+at a given redshift leads to an overestimate of the true 𝑓esc for LyC detected galaxies. We
+note, however, that mean values are appropriate for 𝑓esc estimates of larger parent samples that
+include LyC non-detected galaxies.We quantify this IGM transmission bias for LyC detections
+in photometric and spectroscopic surveys in the literature and show that the bias is stronger for
+both shallower observations and for fainter parent samples (i.e. Lyman𝛼 emitters versus Lyman
+break galaxies). We also explore the effects of varying the underlying probability distribution
+function (PDF) of 𝑓esc on recovered values, showing that the underlying 𝑓esc PDF may depend
+on sample selection by comparing with observational surveys. This work represents a first step
+in improved interpretation of LyC detections in the context of understanding 𝑓esc from high
+redshift galaxies."
+"Key words: intergalactic medium – galaxies: ISM – dark ages, reionization, first stars"
+1 INTRODUCTION
+"Understanding the details of cosmic reionization, the epoch at
+𝑧 ' 6 − 10 during which the hydrogen content of the intergalac-
+tic medium (IGM) transitioned from neutral to mostly ionized (e.g.
+Fan et al. 2006; Planck Collaboration et al. 2016; Greig &Mesinger
+2017; Mason et al. 2018), is a major goal of the international as-
+tronomical community. The general consensus currently favours
+a picture in which ionizing, or Lyman continuum (LyC), photons
+originating from young, massive stars and/or X-ray binaries and
+Wolf-Rayet stars in star-forming galaxies are the primary driver.
+This picture is supported by extensive theoretical (e.g. Wise & Cen
+2009; Yajima et al. 2011; Paardekooper et al. 2015) and observa-
+tional (e.g. Inoue et al. 2006; Ouchi et al. 2009; Robertson et al.
+2015) efforts. Active galactic nuclei (AGN), though pridigious pro-
+ducers of LyC emission, are expected to play only a minor role due"
+★ E-mail: rbassett@swin.edu.au (RB)
+"to their low number density at 𝑧 > 6 (e.g. Hopkins et al. 2007; Parsa
+et al. 2018; Kakiichi et al. 2018)."
+"Detailed modelling of the reionization process critically re-
+quires an accurate census of the fraction of LyC photons (with
+respect to ultraviolet, UV, continuum photons) produced in galaxies
+that manage to escape into the IGM, typically referred to as the LyC
+escape fraction ( 𝑓esc). The first major challenge in using 𝑓esc to un-
+derstand reionization is the fact that no LyC photons from galaxies
+during the Epoch of Reionization (EoR) will ever reach a telescope
+due to absorption from intervening hydrogen. The second is the
+inherent faintness of LyC emission from galaxies (as demonstrated
+by pioneering works of Giallongo et al. 2002; Fernández-Soto et al.
+2003; Inoue et al. 2005),which is driven largely by two key factors."
+"The first factor driving the faintness of LyC emission is that 𝑓esc
+is typically found to be very low (or zero) as inferred from the lack
+of LyC detections in (e.g. Boutsia et al. 2011; Japelj et al. 2017; Bian
+& Fan 2020). This may, in part, be due to the fact that observations
+of galaxies, and thus, their LyC emission, at high redshift (𝑧 ≥ 2.9)"
+© 2021 The Authors
+2 R. Bassett et al.
+"are limited to relatively high stellar mass (𝑀∗ ≥ 109𝑀�) galaxies
+that are likely to contain significant quantities of neutral hydrogen
+(consistent with their high star-formation rates, SFRs, e.g. Steidel
+et al. 2001; Iwata et al. 2009; Nestor et al. 2011; Grazian et al.
+2016) that absorbs ionizing radiation before it can enter the IGM
+and drive reionization. Indeed, for the small sample of such known
+LyC emitting galaxies at 𝑧 & 2.8, the observed LyC flux is relatively
+faint (e.g. Shapley et al. 2006; Micheva et al. 2017; Vanzella et al.
+2018). Even if 𝑓esc is larger in lower mass galaxies, such galaxies
+are inherently faint and their LyC emission will likely be at least
+as difficult to detect as their higher mass counterparts (apart from
+the rare cases of strong gravitational lensing, Bian et al. 2017;
+Rivera-Thorsen et al. 2019). The most straightforward way past
+this problem is to perform larger and deeper surveys targeting LyC
+emission across a range of redshifts. A variety such surveys are
+currently in progress."
+"The second issue resulting in faint LyC emission is that the
+IGM itself contains large fractions of neutral hydrogen above 𝑧 ' 3
+(e.g. Inoue et al. 2014). This means that after LyC escapes from a
+galaxy it is largely absorbed in the IGM before reaching Earth. For
+any individual LyC detection, there is currently no reliable method
+for inferring the IGM transmission (𝑇IGM) of LyC photons for that
+particular sightline. This is troubling as observationally 𝑇IGM and
+𝑓esc are degenerate meaning that, in order to estimate 𝑓esc, a value
+of 𝑇IGM must be assumed that may or may not be appropriate for a
+given IGM sightline. There is, however, hope of away forward as the
+differential column density distribution of HI absorption systems is
+well constrained (e.g. Meiksin 2006; Becker et al. 2013; Rudie et al.
+2013), providing a statistical description of the probability that LyC
+photons escaping galaxies will be absorbed by hydrogen in the IGM
+at a given redshift."
+"Such a statistical approach to estimate 𝑇IGM in a theoretical
+context has been explored using Monte Carlo (MC) simulations for
+around three decades (e.g. Møller & Jakobsen 1990; Bershady et al.
+1999; Inoue et al. 2014). Similarly, the application of such MC sim-
+ulations of𝑇IGM to detections (and non-detections) of LyC radiation
+has a long history (e.g. Shapley et al. 2006; Siana et al. 2007; Steidel
+et al. 2018, S18 hereafter) In general, the most probable value of
+𝑇IGM at 𝑧 > 3 is zero, though individual sightlines with 𝑇IGM >
+0.8 can exist (see Section 2.1. The typical probability distribution
+of 𝑇IGM (around _𝑟𝑒𝑠𝑡 ∼ 910 Å) at 𝑧 = 2.9-4.0 can be described
+as bimodal with a sharp peak at 𝑇IGM = 0.0 and a broader, less
+prominent peak at higher values. Both the location and prominence
+of this secondary peak decrease with redshift until 𝑧 ∼5-6, at which
+point the presence of high 𝑇IGM sightlines is negligible. The result
+is that LyC is unlikely to be observed from galaxies during the EoR."
+"Using knowledge of the probability distribution of 𝑇IGM at
+a given redshift, astronomers can put forward an estimate of 𝑓esc
+for LyC detected galaxies. One method is to apply the full suite
+of 𝑇IGM models to a given observation (or set of observations),
+however this typically results in largely unconstrained 𝑓esc values
+including a large number with the unphysical case of 𝑓esc > 1.0
+(Shapley et al. 2016; Vanzella et al. 2016). Another method is
+to assume the mean value of 𝑇IGM, 〈𝑇IGM〉, among all simulated
+sightlines thus providing a single 𝑓esc value (S18, Bassett et al.
+2019; Fletcher et al. 2019; Meštrić et al. 2020, hereafter F19 and
+M20). The problem with this second method is that a single statistic
+belies to complexities of the underlying 𝑇IGM distribution. Indeed,
+the mean of a bimodal distribution will be found to lie between
+the two peaks, and will not fall among the most likely values. This
+issue has been highlighted in the context of Ly𝛼 transmission by
+Byrohl & Gronke (2020) who find that assuming a median or mean"
+"transmission curve “is misleading and should be interpreted with
+caution”."
+"There exist, however, important observational priors that can
+provide more realistic constraints on the most likely value of 𝑇IGM
+for LyC detected galaxies. First and foremost, the fact that a galaxy
+has been detected at LyC wavelengths means that 𝑇IGM for that
+galaxy cannot be zero. This fact automatically reduces the under-
+lying bimodal 𝑇IGM distribution for all sightlines to a unimodal
+distribution for sightlines with LyC detections. In this case, stan-
+dard statistics such as the mean and median of 𝑇IGM may be more
+applicable. Secondly, while the probability distribution function
+(PDF) of 𝑇IGM is routinely considered, the underlying PDF of 𝑓esc
+itself, which so far has been left out, may also be important. As
+we have stated, low or zero 𝑓esc values seem to be preferred, which
+is not reflected in current 𝑓esc calculations. It is possible that the
+broad behaviour of the 𝑓esc PDF may be inferred through consid-
+eration of the detection rates in LyC surveys (this intriguing idea is
+explored further in Section 4.3). It is likely that a full understanding
+of the underlying 𝑓esc PDF of galaxies will require a theoretical
+underpinning through the careful analysis of high-resolution, hy-
+drodynamical simulations employing radiative transfer of ionizing
+photons (e.g. Trebitsch et al. 2017; Rosdahl et al. 2018; Ma et al.
+2020)."
+"In this paper, we explore in detail the probability distributions
+of both 𝑇IGM and 𝑓esc in the context of known LyC surveys at
+high redshift. Our goal is to provide a statistically sound framework
+withinwhich astronomers can calculatemeaningful estimates of 𝑓esc
+for both individual LyC detections as well as stacked samples. In
+particular, we show that both the assumption of themean𝑇IGM value
+and (to a lesser extent) a lack of consideration of the underlying 𝑓esc
+PDF result in an overestimate of 𝑓esc for LyC detected galaxies. Here
+we quantify the IGM transmission bias, 𝑇bias, as 〈𝑇det〉 − 〈𝑇IGM〉
+where 〈𝑇det〉 is the average IGM transmission for LyC detected
+galaxies for a given observational detection limit. We note that,
+although a transmission value is not inherently an additive quantity,
+our definition leads to a roughly redshift independent correction
+to 〈𝑇IGM〉 as opposed to an alternative definition such as 𝑇bias =
+〈𝑇det〉/〈𝑇IGM〉 (see Section 3 for further discussion)."
+"This paper is organised as follows: in Section 2 we describe
+our method of generating simulated IGM sightlines and spectra of
+mock LyC emitting galaxies, in Section 3 we describe the results
+of our various models, in Section 4 we explore the implications of
+our results in the context of past and on-going LyC surveys, and in
+Section 5 we provide a brief summary of our findings."
+2 SIMULATING LYC LEAKING GALAXIES
+"In this Section we describe our method of producing mock obser-
+vations of LyC flux from high redshift galaxies. There are three
+primary ingredients in creating an individual high redshift galaxy
+observation for our simulation: an IGM transmission function, 𝑓esc,
+and the input SED model. Our method for producing an IGM trans-
+mission function is described in Section 2.1. Although the underly-
+ing PDF of 𝑓esc for galaxies is largely unknown, we test two models
+described in Section 2.2. Finally, we take our input SEDmodel from
+BPASSv2.1 (Eldridge et al. 2017, described further in Section 2.3),
+matching the assumed LyC to non-ionizing UV flux ratio from pre-
+vious studies. In particular we compare with results from the Keck
+Lyman Continuum Survey (KLCS, S18), the LymAn Continuum
+Escape Survey (LACES, F19), and the ground based photometric
+work of M20 based on deep 𝑢-band photometry from the Canada"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 3
+"Figure 1. Left: Example IGM transmission function for a galaxy at 𝑧 = 3.1. In gold and cyan are single transmission functions with highest and lowest 𝑇IGM at
+880 < _ < 910 Å (range indicated by vertical, cyan, dotted lines) among our ensemble of 10,000 transmission functions at 𝑧 = 3.1. The black curve shows the
+average transmission for the entire ensemble. Right: The mean transmission of Ly𝛼 (1210 < _ < 1215 Å, cyan) and LyC emission (880 < _ < 910 Å, gold) as
+a function of redshift for our simulated IGM transmission functions. Error bars indicate the range containing 68.1% of all values about the median in each bin.
+We note that mean and median values differ given the complex, bimodal underlying distribution. Here we also compare to theoretical and observational work
+in the literature from Becker et al. (2013), Meiksin (2006), Inoue et al. (2014), and S18."
+"Figure 2. A full statistical description of our 10,000 IGM transmission
+functions at 𝑧 = 3.1. The shading represents the probability of a given𝑇IGM
+value at each wavelength with probability increasing from black to gold
+(note the colour scaling is logarithmic). Blueward of the Lyman limit (911.8
+Å, white dotted line) 𝑇IGM is strongly peaked at 𝑇IGM = 0. The behaviour at
+fixed _ shifts from unimodal at the shortest wavelengths to bimodal redward
+of ∼880 Å. For illustration we show the median and mean 𝑇IGM functions
+in black and cyan."
+"France Hawaii Telescope (CFHT) Large Area U-band Deep Survey
+(CLAUDS, Sawicki et al. 2019)."
+2.1 IGM Transmission Functions
+"𝑇IGM functions are produced following the method outlined in S18,
+Appendix B 1. We perform a Poisson sampling of the number of HI
+absorbers in redshift intervals,Δ𝑧, from 𝑧 = 0 to a specified redshift,"
+"1 All code for producing IGM transmission curves is open source and
+available at https://github.com/robbassett/TAOIST_M C."
+"𝑧𝑒𝑚. Following Inoue et al. (2014)we select a value ofΔ𝑧 = 5×10−5,
+noting however that deviations from this value would not affect our
+results. The value of 𝑧𝑒𝑚 for a given analysis is determined by the
+redshift of the galaxy, or sample of galaxies, being considered. In
+this work we create suites of 10,000 IGM transmission functions at
+10 discrete 𝑧𝑒𝑚 values in the range 2.9-3.9 with Δ𝑧𝑒𝑚 = 0.1 (we
+also explore IGM transmission bias at 𝑧 = 2.4 and 𝑧 = 4.4 for HST
+F275W and F435W observations, respectively, in Section 4.5)."
+"To generate a single 𝑇IGM function at a given 𝑧𝑒𝑚 we must
+first produce a random sampling of hydrogen absorption systems in
+redshift bins of Δ𝑧 = 5 × 10−5 from 𝑧 = 0 to 𝑧𝑒𝑚. This is achieved
+assuming a differential HI column density distribution, 𝑓 (𝑁HI, 𝑋),
+following the prescriptions outlined for the “IGM+CGM” model in
+S18 Appendix B. In each redshift interval we derive the expected
+number of absorption systems in each bin of 𝑙𝑜𝑔(𝑁HI) (sampled
+from 𝑙𝑜𝑔(𝑁𝐻𝐼 ) = 12.0 − 21.0 with Δ𝑙𝑜𝑔(𝑁HI) = 0.1) as:"
+𝑁abs =
+"∫ 𝑁HI,max
+𝑁HI,min"
+"∫ 𝑧+Δ𝑧
+𝑧"
+"𝑁
+−𝛽
+HI 𝐴(1 + 𝑧)"
+"𝛾
+𝑑𝑁HI𝑑𝑧 (1)"
+"Where 𝑁HI,min and 𝑁HI,max are the lower and upper bounds, 𝛽 is
+the slope of 𝑓 (𝑁HI, 𝑋), 𝐴 is a constant chosen to match observed
+𝑁abs, and 𝛾 describes the redshift evolution of 𝑁abs. Values for 𝛽,
+𝐴, and 𝛾 are taken directly from Table B1 of S18. We assume the
+presence of absorption systems is a Poissonian process, thus for
+each sightline the number of absorption systems at a given 𝑧 and
+𝑁HI is calculated using numpy.random.poissonwith _ set to 𝑁abs."
+"For each individual absorber in a given observed sightline, we
+then apply the transmission function for LyC photons at _rest ≤
+911.8Å and a transmission for Lyman series forest for photons with
+_rest ≥ 911.8 Å, noting that in this case we are considering the rest
+wavelength at the redshift of the absorption system and not the LyC
+emitting galaxy. For LyC photons we apply the functional form:"
+HI (arest) = 𝑁HI𝜎HI (arest) (2)
+"where arest is the photon frequency at the rest frame of a
+given absorbtion system and 𝜎HI (arest) is the frequency depen-
+dent interaction cross section of HI to ionising photons given by
+𝜎𝐿 (arest/a911.8)−3. Here𝜎𝐿 is a constantwith a value of 6.3×10−18
+cm2 (Osterbrock 1989). For Lyman series lines we use the following"
+"MNRAS 000, 1–20 (2021)"
+4 R. Bassett et al.
+"for each Lyman transition, 𝑖 (e.g. Inoue & Iwata 2008):"
+"𝜏𝑖 (arest) = 𝑁HI
+√
+𝜋𝑒2 𝑓𝑖"
+"𝑚𝑒𝑐a𝐷
+𝜙𝑖 (arest) (3)"
+"where 𝑚𝑒 and 𝑒 are the electron mass and charge, respectively, and
+𝑐 is the speed of light. The parameter 𝑓𝑖 is the oscillator strength
+of Lyman transition 𝑖, which we take from tables provided with the
+VPFIT package (Carswell & Webb 2014). In our calculation we
+include the first 32 Lyman series transitions. a𝐷 = a𝑖 (𝑏/𝑐) is the
+Doppler broadening of the Lyman line at frequency a𝑖 where 𝑏,
+the Doppler parameter, is randomly sampled from (Hui & Rutledge
+1999):"
+"ℎ(𝑏) =
+4𝑏4𝜎
+𝑏5"
+"𝑒
+−𝑏4𝜎/𝑏4 (4)"
+"with 𝑏𝜎 = 23 km s−1 (e.g. Janknecht et al. 2006). Finally, 𝜙𝑖 (a),
+the absorption profile, is taken as the analytic approximation of
+the Voigt profile given by Tepper-García (2006). Here, as with 𝑓𝑖 ,
+we also sample Γ𝑖 , the damping constant for transition 𝑖, from the
+VPFIT values. The total optical depth of an individual absorber is
+then taken as 𝜏(a) = 𝜏𝐿𝑦𝐶HI (arest) +Σ𝜏𝑖 (arest), where a refers to the
+observed frame frequency, a = arest/(1 + 𝑧). The total 𝜏(a) for a
+given sightline is the sum of the ensemble of 𝜏(a) for all absorbers
+in that sightline."
+"It is worth mentioning that our transmission curves are pro-
+duced as a function of wavelength, rather than frequency, and we
+employ a fixed resolution of Δ_ = 2.2 Å per pixel in the observed
+frame. This choice is motivated by the fact that we compare ex-
+tensively with LRIS spectroscopy of S18, who quote a spectral
+resolution of 2.18 Å per pixel for their observations. Inoue & Iwata
+(2008) note that spectral resolution can have a significant impact
+on the resultant IGM transmission, we have tested the effect of
+increasing the spectral resolution to 0.4 Å per pixel, finding no sta-
+tistically significant difference compared to our standard 2.2 Å per
+pixel transmission curves."
+"Throughout this paper we consider values in terms of IGM
+transmission, 𝑇IGM = 𝑒−𝜏 , rather than considering 𝜏 computed as
+described above. The reasons being first that the value of 𝑇IGM is
+typically included in calculations of 𝑓esc and second that 𝑇IGM has
+a dynamic range between 0 and 1, which provides more intuitive
+comparisons. We note that throughout this paper the symbol 𝑇IGM
+may refer to a wavelength dependent transmission function or a
+single value at some specified wavelength. We avoid introducing an
+explicitly wavelength dependent symbol, i.e. 𝑇IGM (_), as the usage
+here is consistent with the conventions in the literature (e.g. Inoue
+& Iwata 2008)."
+"Example IGM transmission functions at 𝑧 = 3.1 are shown in
+Figure 1. In the left panel in black we show the mean transmission
+curve of all 10,000 simulated sight lines at 𝑧 = 3.1 while gold and
+cyan curves show two individual sight lines having the highest and
+lowest _rest = 910 Å transmission, respectively. At a given redshift
+the transmission of LyC in the IGM may vary from 0.0 to nearly
+1.0. In the right panel we show the redshift evolution of the mean
+Ly𝛼 and LyC transmission predicted byTAOIST-MC in comparison
+with observational and theoretical estimates from the literature. In
+all cases, our model agrees, within errors, with previously reported
+results."
+"We note that our measurements are systematically lower than
+some previous results, which can be attributed to the inclusion of
+the circumgalactic medium component introduced in S18. Further-
+more, a single statistic (such as the mean) belies the complexity of
+the underlying 𝑇IGM distribution as shown in Figure 2. Thus, we"
+"Figure 3. A comparison of the two 𝑓esc PDFs used in this work. The “Flat”
+distribution represents the case of no assumed prior when calculating 𝑓esc
+and is representative ofmost studies in the literature. The alternative explored
+here is an exponentially declining models of the form PDF ∝ 𝑒−1/[ , here
+shown with [ = 0.50."
+"do not place a large emphasis on differences between the average
+values of𝑇IGM between different studies. For theoretical𝑇IGM func-
+tions this behaviour may be, in part, attributed to the exact form of
+the differential 𝑁HI distribution assumed and the details of the im-
+plementation. For example, Inoue & Iwata (2008) and S18 assume
+different behaviours for the exponent 𝛽 of 𝑓 (𝑁HI, 𝑋) producing
+different relative numbers of low and high 𝑁HI systems. These dif-
+ferences will affect the 𝑇IGM of LyC and Ly𝛼 differently and will
+appear as complex systematic offsets between the mean 𝑇IGM at a
+given redshift between the two implementations. It should also be
+mentioned that, to our knowledge, no study employing MC simula-
+tions of IGM transmission curves have accounted for the effects of
+HI clustering, which may further alter the mean 𝑇IGM curve (see,
+however, Kakiichi & Dĳkstra 2018, who demonstrate Ly𝛼 may be
+more attenuated from galaxies in high density environments)."
+"Differences in the behaviour between theoretical 𝑇IGM imple-
+mentations are only apparent from the mean transmission curves
+while individual IGM transmission curves are likely indistinguish-
+able. The implications regarding the statistical behaviour of IGM
+sightline ensembles, however, is precisely the topic of this paper. As
+we will repeat, the absolute values of quantities calculated through-
+out will be imprinted with the assumptions regarding our 𝑁HI dis-
+tribution sampling and may change slightly if different implemen-
+tations are used. Thus, it is key to keep in mind that the absolute
+results are for our implementation only. Qualitatively, however our
+results are independent of the various input parameters."
+2.2 𝑓esc Distribution Functions
+"One of the key unknowns in this study is the distribution func-
+tion of 𝑓esc for galaxies at 𝑧 ≥ 2.9. While quantifying 𝑓esc from
+galaxies has been a long standing goal in the astrophysics of reion-
+ization, this parameter remains elusive. In a broad sense, a number
+of studies have estimated the average 𝑓esc required for all galax-
+ies in order to match the constraints on the timing of reionization,"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 5
+"Figure 4. Input 1500 Å absolute magnitude distributions for LBG (cyan)
+and LAE (gold) samples. Open histograms represent LRIS 1500 Å fluxes
+from S18 and UV magnitudes from ground-based imaging reported in F19
+for LBGs and LAEs, respectively. Filled histograms represent one realisa-
+tion of 10,000 sampled values for our mock galaxy spectra produced using
+cdf_sampler.py (see footnote 2) with the open histograms as inputs. Values
+on the left y-axis refer to observed samples (open histograms) and on the
+right y-axis refer to mock samples (closed histograms), noting in the latter
+case these values are based on an arbitrarily selected “parent sample” size."
+"finding values in the range 0.05 < 〈 𝑓esc〉 < 0.20 (e.g. Bouwens
+et al. 2015; Robertson et al. 2015; Finkelstein et al. 2019). From
+hydrodynamical simulations of individual galaxies employing full
+radiative transfer, however, the likelihood that all galaxies will have
+a constant and/or single valued 𝑓esc over their lifetime seems van-
+ishingly small (Kimm & Cen 2014; Paardekooper et al. 2015, see
+also Section 4.6 for a brief discussion of the 3D versus line-of-sight
+𝑓esc values).
+Given the lack of strong constraints on 𝑓esc from the literature,"
+"for the fiducial model of our analysis, presented in Section 3.1,
+we simply uniformly apply values of 𝑓esc between 0.0 and 1.0 to
+our mock spectra. This allows for mock spectra with the highest
+possible LyC flux for a given IGM sightline, representing the most
+likely galaxies to be detected in a LyC survey. As such, the results
+of our fiducial model should be interpreted as the minimum level of
+𝑇IGM bias expected for LyC detected galaxies."
+"It seems most likely that allowing extremely high 𝑓esc is un-
+realistic for the vast majority of real galaxies (e.g. Vanzella et al.
+2010; Siana et al. 2015; Japelj et al. 2017). In Section 3.2 we test
+the effects on our measured 𝑇IGM bias of applying an additional,
+more realistic 𝑓esc distribution, to our simulations. For this test, we
+assume an exponentially declining 𝑓esc PDF, i.e. 𝑃( 𝑓esc) ∝ 𝑒−1/[ ,
+resulting in a model with the most probable value of 𝑓esc being
+zero. For our exponentially declining 𝑓esc PDF we choose a value
+of [ = 0.5, which is motivated by the observed detection rates of
+KLCS (S18, see Section 4.3). We illustrate the relative PDF shapes
+of our fiducial and exponentially declining models in Figure 3 for
+clarity."
+2.3 Producing Mock Galaxy Spectra
+"As mentioned above, the process of producing mock galaxy spectra
+for our simulations requires three inputs: an underlying SEDmodel,
+an IGM attenuation function, and a value for 𝑓esc (𝐿𝑦𝐶). We note
+that in much of this work we ignore the effects of dust attenuation
+(see, however, Section 4.4, simply noting that most LyC detections
+appear to originate from relatively dust free galaxies (e.g. S18)."
+"Similar to S18 we construct our SEDs from the BPASSv2.1 (El-
+dridge et al. 2017) models with 𝑍∗ = 0.001, IMF slope 𝛼 = −2.35,
+and stellar mass limit of 300𝑀� . We employ a model with an expo-
+nentially declining SFR with an 𝑒-folding time of 0.1 Gyr sampled
+at an age of ∼200 Myr. This provides an input spectrum with an
+intrinsic LyC to UV flux ratio, (𝐿900/𝐿1500)𝑖𝑛𝑡 , of 0.18 (e.g. S18).
+Our SEDmodel corresponds to a LyC photon production efficiency,
+b𝑖𝑜𝑛, of log10 (b𝑖𝑜𝑛) = 25.61 Hz erg−1, consistent with estimates
+for high redshift star-forming galaxies (e.g. Bouwens et al. 2016).
+We explore the effect of altering (𝐿900/𝐿1500)𝑖𝑛𝑡 on our results in
+Section 3.3."
+"Each mock spectrum is scaled such that the non-ionizing UV
+flux matches a randomly sampled value characteristic of high red-
+shift, highly star-forming galaxies. The sampling of UV fluxes is
+one key factor in our analysis as this ultimately determines the in-
+trinsic level of LyC flux from galaxies in our mock samples. In this
+work we test samples taken two different UV flux distributions: one
+based on the full sample of galaxies observed by the KLCS, which
+is composed of a representative subsample of bright Lyman Break
+Galaxies (LBGs) at 2.9 < 𝑧 < 3.2 from the flux-limited sample
+of Reddy et al. (2012), and a second based on 𝑧 ∼ 3.1, narrow-
+band selected Lyman 𝛼 emitters (LAEs) characteristic of galaxies
+targeted by LACES (F19). For our LBG comparison UV values
+used in our work are sampled from measurements of LRIS spectra
+at _rest = 1500Å taken directly from reported values of S18. For
+the comparison with LAEs, UV values are sampled based on the
+histograms presented in F19, Figure 15, based on ground based
+photometry. We compare the absolute magnitude distributions of
+the two distributions in Figure 4, showing LAEs to be significantly
+fainter than LBGs2. We note, however, that some LBGs have been
+shown to also exhibit Ly𝛼 emission (e.g. Shapley et al. 2003), thus
+LBG and LAE classifications are based on selection methodology.
+Here, the important distinction is the relative non-ionizing UV flux
+with LBGs being significantly brighter."
+"The sample of S18 covers a redshift range of 𝑧 ' 2.8-3.5 and the
+sample of F19 is at a roughly fixed redshift of 3.1. Themock galaxies
+in our analysis, however, are produced at 10 discrete redshift values
+with Δ𝑧 = 0.1 from 𝑧 = 2.9 to 𝑧 = 3.9. Thus, we must include
+a method to account for cosmological dimming of each of these
+samples when considering higher redshifts. In each case, we begin
+with the absolute magnitude distributions shown in Figure 4 and
+assume that this distribution is roughly representative of a similarly
+selected sample in each Δ𝑧 = 0.1 redshift bin. We then sample
+magnitudes from the above distributions then convert each value to
+an observed 1500 Å flux at a given redshift. We note that this is
+equivalent to a slight increase in depth with redshift, however we
+expect this to have a negligible effect on our results as we are most
+sensitive to the brightest galaxies at any redshift."
+"For each of the 10,000 IGM sightlines in a given redshift bin
+we produce 100 mock spectra for both the LBG and LAE compari-
+son samples. For each trial we randomly sample a 1500 Å flux (as
+described above) and a value of 𝑓esc, the latter following Section
+2.2. The current 𝑇IGM function is applied to the input BPASSv2.1
+spectrum, then at all wavelengths shortward of 911.8 Å it is scaled
+uniformly by the randomly selected 𝑓esc value. The resulting spec-
+trum is then scaled to match the randomly selected 1500 Å flux."
+"2 In both cases sampling of UV fluxes is achieved using
+the histogram_oversampler class of the code cdf_sampler.py
+(https://github.com/robbassett/cdf_sampler) with spline fitting enabled to
+remove sharp edges of the histogram bins"
+"MNRAS 000, 1–20 (2021)"
+6 R. Bassett et al.
+"Figure 5. Top: Example BPASSv2.1 spectra used in this study. In black is shown the input spectrum and in gold and cyan we show the output spectra with the
+high and low IGM transmission curves shown in Figure 1. In this panel, both spectra are shown for the 𝑓esc = 1.0 case. Bottom: The effect of our flat treatment
+of 𝑓esc on the output spectra for the high IGM transmission spectrum shown in the top panel with 𝑓esc varying from 0.0 to 1.0. For all spectra in both panels,
+we show the flux in 𝐹a normalised to the flux at a rest wavelength of 1500 Å."
+"Thus, in each redshift bin we produce one million galaxy spec-
+tra ensuring that the 1500 Å flux and 𝑓esc distributions are well
+sampled. Example spectra can be seen in Figure 5."
+"We can summarise the construction of each individual mock
+spectrum with the following equation:"
+"𝐹
+𝑖, 𝑗
+a (_, 𝑧) = 𝐹a,𝑚𝑜𝑑 (_)"
+"𝐹𝑖1500,𝑜𝑏𝑠
+𝐹1500,𝑚𝑜𝑑"
+"IGM (_) 𝑓
+𝑖
+esc (_) (5)"
+"where 𝐹a,𝑚𝑜𝑑 (_, 𝑧) is the input BPASS spectrum, 𝐹𝑖1500,𝑜𝑏𝑠 is the
+𝑖th randomly sampled 1500 Å flux (noting again that here we have
+included cosmological dimming), 𝐹1500,𝑚𝑜𝑑 is the 1500 Å flux of
+the BPASS model (taken as the mean value at 1450 < _ < 1550 Å),
+𝑇
+𝑗"
+"IGM is the current IGM transmission curve (we use the superscript
+𝑗 to indicate that the same IGM transmission curve will be used 100
+times, thus it is not unique to mock spectrum 𝑖), and 𝑓 𝑖esc (_) is a
+step function representation of the 𝑖th randomly sampled 𝑓esc value
+given as:"
+"𝑓
+𝑖
+esc (_) ="
+"{
+𝑓 𝑖esc if_ < 911.8
+1 if_ ≥ 911.8"
+3 RESULTS
+"The primary results of this paper concern quantifying the obser-
+vational bias in IGM transmission for samples of LyC detected
+galaxies. We reiterate that the initial results are based on tests per-
+formed on a fiducial dust-free, exponentially declining SFR SED
+models at fixed metallicity, IMF slope, and age (see Section 2.3
+for a full description). We have selected our fiducial model to have
+(𝐿900/𝐿1500)𝑖𝑛𝑡∼0.18 (comparable to other studies in the literature,
+e.g. S18, F19), which is expected to be representative of young, star-
+forming galaxies responsible for driving reionization."
+"Additionally, as described in Section 2.2, our fiducial model
+assumes the unrealistic case of a flat probability distribution for 𝑓esc"
+"between 0 and 1.0. High 𝑓esc will correspond to a bright LyC flux,
+thus, we expect a preference towards detections at high 𝑓esc in our
+fiducial model. 𝑓esc for real galaxies will be, on average, lower than
+the average of our fiducial model given the typically low value for
+observed LyC emitters (e.g. S18). This means that the level of bias
+in 𝑇IGM for detections seen in our fiducial model can be seen as a
+lower limit to the true bias for observed galaxy samples."
+"We explore the quantitative effects of both altering the input
+PDF of 𝑓esc and changing the value of (𝐿900/𝐿1500)𝑖𝑛𝑡 in Sections
+3.2 and 3.3, respectively. In the case of SED variations we test SEDs
+with b𝑖𝑜𝑛 values covering the range for exponentially declining SFR
+models using BPASSv2.1 spectra over available range of stellar
+population ages provided."
+3.1 Fiducial IGM Bias
+"Here we quantify the bias in𝑇IGM affecting samples of LyC detected
+galaxies when compared with the average𝑇IGM of all random sight-
+lines. Formally, we define this bias as:"
+𝑇bias = 〈𝑇det〉 − 〈𝑇IGM〉 (7)
+"where 〈𝑇det〉 is the average 𝑇IGM for galaxies with LyC detected
+above a specified detection limit and 〈𝑇IGM〉 is the average 𝑇IGM
+for all sightlines. It is worth noting that transmission values are not
+inherently additive quantities and it could be argued that the def-
+inition 𝑇bias = 〈𝑇det〉/〈𝑇IGM〉 is more sensible, and possibly more
+physically motivated as it relates directly to a difference in optical
+depth/HI column density. Our choice of definition is motivated by
+the fact that the resulting 𝑇bias values are roughly redshift indepen-
+dent at fixed observational detection limit (see, e.g., Section 3.1.3),
+providing a simplified framework for applying 𝑇bias to a given set of
+observations. We also point out that, by definition, such a correction
+will never result in an unphysical transmission value for LyC detec-
+tions > 1.0. Furthermore, any evolution in 𝑇bias with redshift when
+assuming a fractional definition is primarily reflective of the red-
+shift evolution of 〈𝑇IGM〉 as one is dividing by a value increasingly"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 7
+"close to zero. Regardless, either 𝑇bias definition mentioned here
+will provide an equivalent correction, thus the choice is somewhat
+arbitrary."
+"In this work, the calculation of𝑇bias is performed at 11 discrete
+redshifts in the range 2.9 ≤ 𝑧 ≤ 3.9 with Δ𝑧 = 0.1. We also note
+that, similar to 𝑇IGM and 〈𝑇IGM〉, 𝑇bias can refer to a wavelength
+dependent function, a single value at a specified wavelength, or an
+average value across a specified wavelength range. Due to tech-
+nical differences between LyC searches employing spectroscopy
+(e.g. S18) and photometry (F19, M20), we present the two cases
+separately: spectroscopic biases are presented in Section 3.1.1 and
+photometric biases are presented in Section 3.1.2. In all cases, we
+have performed this experiment twice: once for an LBG-like sample
+and once for a fainter, LAE-like sample (see Figure 4). Due to the in-
+herent faintness, our mock LAE samples are typically only detected
+deep HST F336W observations, which compare to F19 (particu-
+larly in our higher redshift bins) who achieve a depth of 30.24 mag.
+Thus, in most cases we only provide 𝑇bias measurements for this
+comparison (as opposed to spectroscopy or CFHT 𝑢 photometry).
+We provide a summary of our fiducial model in Section 3.1.3."
+3.1.1 Spectroscopic Detections
+"Spectroscopic detection of LyC radiation provides a key advantage
+over photometric detections in terms of interpretation in the context
+of estimating 𝑓esc. The reason being that spectroscopy allows one to
+probe the same rest frame wavelengths just shortward of the Lyman
+limit, typically probed between 880-910 Å, independent of redshift
+in theory. In practice, of course, the redshift range in which LyC can
+be probed by a given set of spectroscopic observations is defined by
+the wavelength coverage of the instrument used. Furthermore, the
+detection limits of a given instrument will be wavelength dependent
+due to response variations of the detector. Thus, the experiment
+presented here should be considered as a simulation of an idealised
+spectroscopic instrument with uniform sensitivity to LyC radiation
+at 880-910 Å across the entire redshift interval from 2.9 < 𝑧 < 3.9.
+The black 〈𝑇IGM〉 functions in Figure 6 show that this wavelength
+range exhibits the largest 〈𝑇IGM〉 values at _rest < 911.8Åmeaning
+that at all redshifts spectroscopic observations probe LyC emission
+at the highest 〈𝑇IGM〉 and, thus, the highest probability of detection
+(at fixed depth). This is simply due to the fact that the redshift
+interval of LyC absorption systems that affect a given wavelength
+increases with decreasing wavelength. This means that at lower
+wavelengths the probability of encountering a high column density
+system in any individual sightline is higher."
+"As we discuss later, this is not the case for photometric obser-
+vations which instead probe a fixed _obs range, thus a decreasing
+_rest with increasing redshift. Another important and related point
+is that ionizing radiation escaping from galaxies will be completely
+absorbed by intervening, high HI column density systems, result-
+ing in rapid drops in flux based on the redshift of that intervening
+system (e.g. the drop at ∼810 Å in Figure 1). This means that es-
+caping ionizing radiation from high redshift galaxies may only be
+visible in a very small wavelength range and this behaviour will
+be difficult to capture and interpret from photometric observations,
+but will be seen clearly in spectroscopy. As a caveat, however, we
+note that, without ancillary, high spatial resolution, space-based
+photometric data, it can be difficult to rule out the possibility of
+low redshift contamination from ground-based spectroscopic LyC
+detections (Vanzella et al. 2010, 2012)."
+"The fact that spectroscopy probes the most transparent portion
+of the emitted spectrum from high redshift galaxies also suggests"
+"Figure 6. Left column: 〈𝑇IGM 〉 for spectroscopically detected LyC emission.
+Shown are results at 𝑧 = 3.1, similar to the average redshift of S18 of ∼3.05.
+The Lyman limit is indicated with a vertical dotted line, and in all cases
+the detection limit is fixed at 0.025 `Jy (∼27.9 mag), equivalent to a 1-5𝜎
+detection, dependent on individual targets, in the sample of S18. The mean
+and median 〈𝑇IGM 〉 functions for detected LBG-like galaxies are shown
+with cyan and gold lines with the gold shaded area enclosing 68% of 𝑇IGM
+values for detected galaxies at a given wavelength. Thus, the lower bound of
+the gold shaded region is not representative of the transmission curve shape
+for any individual sightline. 〈𝑇IGM 〉 for LyC detected, LAE-like galaxies is
+shown in green, significantly higher than for the LBG-like sample due to
+their relative faintness. The increased dispersion seen for LAE samples is a
+result of a smaller number of detections for such galaxies. Themean𝑇IGM for
+all sightlines is shown in black for comparison. Right column: Normalised
+histograms of 𝑇IGM for all sightlines (black), detected, LBG-like galaxies
+(cyan), and detected, LAE-like galaxies (green). The mean for all galaxies
+and detections are shown with corresponding vertical, dotted lines (matched
+to corresponding open histograms), and the median for LBG-like detections
+is shown with a gold dotted line, noting that this line corresponds to the gold
+line of the left panel and has no matching histogram in the right panel."
+"that spectroscopic detections of LyC may suffer from relatively
+low 𝑇bias at fixed detection limits (noting however that photometric
+detections are significantly deeper for the same exposure time). We
+show this in Figure 6wherewe show 〈𝑇IGM〉 for all 10,000 sightlines
+in black and 〈𝑇IGM〉 for those where galaxies are detected with a flux
+above 0.025 `Jy, equivalent to ∼27.9 mag, at 𝑧 = 3.1, with coloured
+lines. It should be clarified here that this detection limit is chosen
+to be roughly matched to the faintest LyC detection reported in S18
+for the galaxy Westphal-MM37 (0.026 `Jy). Considering the full
+parent sample of S18, 0.025 `Jy corresponds to a 1-5𝜎 detection as
+the observational limits and noise characteristics exhibit complex
+dependencies on factors such as observational depth and source
+redshift (i.e. the observed wavelength of emitted LyC radiation).
+Thus, we reiterate that our results are representative of an idealised
+version of the S18 survey as we have not attempted to simulate the
+full complexity of their spectroscopic observations."
+"Returning to Figure 6, the cyan and gold lines indicate the
+mean and median 𝑇IGM curves for LyC detected, LBG-like galaxies
+(comparable to the S18 sample) while the green line shows the
+mean 𝑇IGM curve for LAE-like detections (comparable to the F19
+sample). Here we measure 〈𝑇IGM〉 in the rest frame wavelength
+range 880 ≤ _rest ≤ 910 Å (indicated in Figure 6), also following
+S18. We note that LAE-like galaxies are not representative of the
+S18 sample and are only detected at these spectroscopic limits in our
+lowest redshift bins. In fact, overall detection rates at all redshifts
+is lower for the more faint sample of LAEs, which accounts for
+the increased dispersion seen in the 〈𝑇det〉 curve for LyC detected"
+"MNRAS 000, 1–20 (2021)"
+8 R. Bassett et al.
+"LAEs. Given this comparison is to S18 who focus on LBGs, we do
+not place a large emphasis on this mock sample for spectroscopic
+observations."
+"Also shown in Figure 6 is the median and 68 percentile range
+for LyC detected LBGs in gold for comparison. The median value
+of 𝑇IGM for detections is seen to be larger in the Ly𝛼 forest and
+lower beyond the Lyman limit, with a cross-over value around 880
+Å. The significant differences between the mean and median IGM
+transmission functions for detected galaxies is a reflection of the
+non-Gaussian nature of the underlying𝑇IGM distribution (see Figure
+2). Regardless, the median and mean values of 𝑇IGM for detected
+galaxies are similar and throughout the remainder of this work we
+focus on the mean value."
+"In the right column of Figure 6 we compare the histograms
+of 𝑇IGM at 880-910 Å between all sightlines (black) and those
+associated with LBG-like galaxies detected above 0.025 `Jy (cyan).
+We can see that the underlying distribution is bimodal with the
+most probable value of 𝑇IGM being ∼0 while the distribution for
+detections is unimodal with the most probably value being close to
+the upper mode of the underlying distribution (the distribution for
+fainter, LAE-like samples, shown in green, is skewed towards even
+higher values). This is not surprising as for galaxy to be detected at
+LyC wavelengths the value of 𝑇IGM must not be zero. It is clear that
+the mean value of 𝑇IGM for all sightlines falls between the peaks of
+the underlying 𝑇IGM distributions and is thus not among the most
+probably values for detected galaxies."
+"The fact that LyC detections can not occur at 𝑇IGM = 0 may
+occasionally be overlooked in calculations of 𝑓esc for LyC detected
+galaxies, and is key to the narrative of this work. Careful con-
+sideration of 𝑇IGM variation in the estimate of 𝑓esc for individual
+detections is common practice (e.g. Shapley et al. 2006; Inoue et al.
+2011; Vanzella et al. 2016). Ultimately, the goal of this paper is to
+provide a clear quantification of this effect. A primary application
+of our results will be for estimating 〈 𝑓esc〉 for larger samples of LyC
+detected galaxies that may be returned by future, extremely deep
+surveys (see 5). It should also be mentioned that, when estimat-
+ing upper limits in 𝑓esc for samples including LyC non-detections,
+〈𝑇IGM〉 considering all simulated sightlines is appropriate (i.e. in-
+clusion of 𝑇bias is unnecessary)."
+"The level of 𝑇bias for LyC detections will also be sensitive
+to the detection limits, 𝐹𝑙𝑖𝑚, of a given set of observations. We
+explore the dependence between 𝑇bias and spectroscopic detection
+limits in Figure 7. In the top panel of Figure 7 we show the value of
+〈𝑇IGM〉 for galaxies with spectroscopically detected LyC emission
+as a function of detection limit at redshifts in the range 2.9 ≤ 𝑧 ≤ 3.9.
+For each redshift, we also show the corresponding 〈𝑇IGM〉 for all
+sightlines with a dotted line of the same colour. The detection limit
+assumed in Figure 7 of 0.025 `Jy is shown with a green, vertical,
+dotted line. We find that at low detection limits the dependence
+between 〈𝑇IGM〉 and 𝐹𝑙𝑖𝑚 is similar in all redshift bins apart from
+the expected vertical offsets due to the drop in 〈𝑇IGM〉 with redshift
+(reiterating, however, that the definition 𝑇bias = 〈𝑇det〉/〈𝑇IGM〉 will
+result in a clear redshift dependence). At each redshift the curve can
+be well fit by a power law of the form 𝑇IGM ∝ 𝐹"
+"𝑙𝑖𝑚
+with 𝛽 in the"
+"range ∼0.26-0.35. These fits for each redshift are shown in Figure 7
+with corresponding dashed lines, noting that these relationships will
+change for inputs that vary from our fiducial model (e.g. different
+values of (𝐿900/𝐿1500)𝑖𝑛𝑡 or a different input distribution of 1500 Å
+fluxes). It is also worth reiterating that sensitivity variations across
+real spectroscopic detectors will result in detection limit variation
+with redshift at fixed exposure time."
+In the bottom panel of Figure 7 we show 𝑇bias as a function
+"Figure 7. The dependence of 𝑇bias on the detection limit of spectroscopic
+observations (𝐹𝑙𝑖𝑚) for LBG-like detections. Top: 〈𝑇IGM 〉 as a function
+of 𝐹𝑙𝑖𝑚 at redshifts between 2.9 and 3.9 (see lower panel for legend).
+Horizontal dotted lines show 〈𝑇IGM 〉 of all sightlines at a given redshift, and
+the vertical dotted line shows the 𝐹𝑙𝑖𝑚 assumed in Figure 6. At each redshift
+we fit the curve of 〈𝑇IGM 〉 for detected galaxies with a power law of the form
+〈𝑇IGM 〉 (𝐹𝑙𝑖𝑚) = 𝑎𝐹 𝑘𝑙𝑖𝑚 + 𝜖 . Bottom: 𝑇bias as a function of 𝐹𝑙𝑖𝑚 for the
+same redshift interval. We show a power-law fit, 𝑇bias (𝐹𝑙𝑖𝑚) = 𝑎𝐹 𝑘𝑙𝑖𝑚 + 𝜖 ,
+to the combined data for all redshifts as a black dashed line."
+"of 𝐹𝑙𝑖𝑚 at the same discrete 𝑧 values between 2.9 and 3.9 with
+Δ𝑧 = 0.1. Overall we find a very small scatter in 𝑇bias with the
+difference between the maximum and minimum 𝑇bias at fixed 𝐹𝑙𝑖𝑚
+less that 0.01 at all redshifts in the range considered. Given the
+smooth curves seen in Figure 7, it is tempting to provide the power
+law fits (of the form 〈𝑇IGM〉(𝐹𝑙𝑖𝑚) = 𝑎𝐹𝑘𝑙𝑖𝑚 + 𝜖 , dashed lines in
+Figure 7, top panel) at each redshift giving an analytical function for
+estimating𝑇bias as a function of 𝑧 and 𝐹𝑙𝑖𝑚, however we refrain from
+doing so as we would consider any application of such a function as
+an overinterpretation of Figure 7, which results from our particular
+implementation for producing 𝑇IGM functions as well as the various
+inputs of our fiducial model (e.g. here we have only shown results
+for LBG-like samples). For illustrative purposes we have fit a power
+law to the combined 𝑇bias vs 𝐹𝑙𝑖𝑚 curves 𝑇𝑏𝑖𝑎𝑠 ∝ 𝐹0.29𝑙𝑖𝑚 . This fit is
+shown in the bottompanel of Figure 7with a black dashed line. Here,
+the choice of a power law is ad hoc, and no specific significance is
+assigned to the fit parameters."
+"It is useful here take a step back and recall two important
+points: first there is significant variation in 𝑇IGM for individual
+sightlines at any redshift (see, e.g., Figure 1) and second the fact
+that we allow high 𝑓escvalues (up to 1.0) in our fiducial model
+meaning𝑇bias observed in our fiducial model represents the absolute
+minimum 𝑇bias for a given detection limit. Thus, we caution the
+reader from applying values of𝑇bias calculated using a similarmodel"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 9
+"Figure 8.𝑇bias for photometrically detectedLyCemission in theHSTF336W
+and CFHT 𝑢 filters. Results are shown at 𝑧 = 3.2 and 𝑧 = 3.6. F336W and
+CFHT 𝑢 transmission curves are shown as dashed gold and cyan lines, re-
+spectively. Detection limits are fixed at 30.24 and 27.82 mag for F336W
+and CFHT 𝑢, respectively (matched to F19 and M20). 〈𝑇IGM 〉 for F336W
+and CFHT 𝑢 detected LBG-like galaxies are shown in gold and cyan, re-
+spectively, and 〈𝑇IGM 〉 for all sightlines is shown in black. The green line
+indicates 〈𝑇IGM 〉 for LAE-like galaxies detected with the F336Wfilter, more
+similar to the sample of F19. The increased dispersion of the green line rel-
+ative to the gold line is driven by a decrease in the total number of detected
+galaxies. The Lyman limit is indicated in each panel by a vertical dotted
+line."
+"to observations of individual galaxies when estimating 𝑓esc without
+including these caveats."
+3.1.2 Photometric Detections
+"While spectroscopic detection of LyC radiation from galaxies pro-
+vides distinct advantages in terms of 〈𝑇IGM〉, achieving this for
+large samples of galaxies is inefficient. Photometric surveys have
+the potential for detecting large samples of LyC emitting galaxies
+simultaneously. Another important benefit of photometric surveys
+when compared to spectroscopy is that photometry is significantly
+more sensitive (i.e. deeper) for the same exposure time. Further-
+more, in the case of space-based LyC detections, ancillary data is
+not necessary to rule out the possibility of low redshift contamina-
+tion. Photometric LyC surveys must be performed in well studied
+fields in which targeted galaxies already have accurate photometric
+redshift estimates (e.g. ZFOURGE fields Straatman et al. 2016) or,
+ideally, secure spectroscopic redshifts (e.g. 3DHST, DEIMOS10K,
+VANDELS, MUSE-wide, Momcheva et al. 2016; Hasinger et al.
+2018; Pentericci et al. 2018; Urrutia et al. 2019). In fields such as
+these, specific redshift windows can be targeted using photomet-
+ric bands probing LyC emission such as HST F336W at 𝑧 ∼ 3.0
+or CFHT 𝑢 at 𝑧 ∼ 3.4 (e.g. F19, M20). There are two key draw-
+backs in the case of photometric LyC surveys when compared to
+spectroscopy, however (see also S18, Section 7.2)."
+"The first drawback in photometric searches for LyC emission
+when compared to spectroscopic studies is that the ionizing radia-
+tion may only be observable in a narrow wavelength range just short
+of 912 Å as shown in Figure 5. This is due to intervening, high HI
+column density systems at redshifts corresponding to the Lyman
+limit occuring at the wavelength of the drop in flux of our simulated
+spectra. The fact that such a drop may occur in the middle of the
+wavelength sensitivity of a given filter will result in an underesti-
+mation of the flux level of the emergent LyC radiation. This results
+from the fact that calculation of the reported photometric flux in-"
+"herently assumes a flat flux density across the filter. Of course, the
+interpretation of the photometric flux can include more complex
+spectral behaviour, e.g. extreme [OIII]+H𝛽 emitters presented in
+Forrest et al. (2017)."
+"The second drawback is that the observed wavelengths of pho-
+tometric bands are fixed. This means that the ideal redshift for such
+surveys is at the point where the red cutoff of the filter in question
+falls just below the Lyman limit (thus filter dependent). LyC radia-
+tion can be detected to higher redshifts (more likely for extremely
+deep observations), however at high redshift the filter moves to
+bluer rest wavelengths where 〈𝑇IGM〉 is significantly lower. This
+fact causes significant complications when making comparisons of
+LyC escape from photometric detections at different redshifts. We
+also mention briefly here that some photometric filters suffer from
+so-called “red leak” with a small amount of radiation at wavelengths
+longer than the optimal cutoff of the filter being transmitted (though
+this is minimized for the new CFHT 𝑢 filter used in M20, Sawicki
+et al. 2019). As such features will be included in the filter curves
+used in our analysis, this effect is implicitly accounted for."
+"With these two drawbacks in mind we present the simulated
+𝑇bias for LyC detected galaxies for HST F336W and CFHT 𝑢 de-
+tected galaxies in Figure 8. Here we use fixed detection limits of
+30.24 and 27.82mag for F336WandCFHT 𝑢, respectively (matched
+to the limits of F19 and M20). The two panels in Figure 8 show
+the mean 𝑇IGM for all sightlines (black), for F336W LBG-like de-
+tections (gold), CFHT 𝑢 LBG-like detections (cyan), and F336W
+LAE-like detections (green) at redshifts of 3.2 and 3.6 (LAE-like
+detections for CFHT 𝑢 are not shown as such detections are ex-
+tremely rare due to the relative shallowness of M20 photometry).
+We find that 𝑇bias for LBG-like galaxies is significantly lower for
+F336W detections, however this is simply reflective of the greater
+depth of our F336W comparison rather than any intrinsic advantage
+of HST observations over ground-based for LyC detections. Com-
+paring F336W LAE-like versus LBG-like detections, we find that
+𝑇bias for the former is ∼0.1 larger owing to the relative faintness of
+LAEs compared to LBGs (see Figure 4)."
+"In Figure 8, F336W and CFHT 𝑢 filters are shown with dashed
+gold and cyan lines, highlighting the fact that the F336W and 𝑢
+filters exclusively probe LyC radiation at 𝑧 > 3.1 and 𝑧 > 3.4,
+respectively. This explains why we see a significantly lower 𝑇bias
+for the CFHT 𝑢 filter at 𝑧 = 3.2 as the transmission of this filter
+peaks redward of the Lyman limit, meaning that it is more sensitive
+to non-ionizing radiation at this redshift. In such a case where a
+filter straddles the Lyman limit the interpretation of any observed
+flux in the context of 𝑓esc is significantly complicated (e.g. Bassett
+et al. 2019) and such cases should be avoided where possible."
+"𝑇bias for photometry is also sensitive to observational detection
+limits. The variation in 𝑇bias with detection limit (in magnitudes,
+𝑚𝑙𝑖𝑚) is demonstrated in Figure 9 for the HST F336W filter. Solid
+lines show results for LBG-like detections and dashed lines for
+LAE-like detections. Similar to spectroscopic results presented in
+Figure 7, we find that, at fixed 𝑧, 𝑇bias decreases linearly with an
+increasing magnitude limit. When compared to the spectroscopic
+results of Figure 7, with Δ𝑇𝑏𝑖𝑎𝑠 . 0.01 for all redshifts, we find
+more variation with redshift. This is due to the changing rest-frame
+wavelengths probed by the F336W filter with redshift. Again, a
+more significant redshift evolution will be observed assuming the
+definition 𝑇bias = 〈𝑇det〉/〈𝑇IGM〉. For LAE-like detections, the fact
+that very few LyC fluxes reach magnitudes brighter than 28.5 (and
+only in the lowest redshift bins) means that detections occur in only
+those sightlines with the highest 𝑇IGM(F336W). Thus the trends
+shown for LAE samples in Figure 9 exhibit more scatter due to an"
+"MNRAS 000, 1–20 (2021)"
+10 R. Bassett et al.
+"Figure 9. The dependence of 𝑇bias on the detection limit of F336W obser-
+vations (𝑚𝑙𝑖𝑚) at 3.2 ≤ 𝑧 ≤ 3.9 (where F336W probes LyC exclusively).
+Above 𝑧 = 3.2 the level of 𝑇bias is relatively constant at fixed 𝑚𝑙𝑖𝑚. The
+larger redshift variation when compared to Figure 7 and the divergent be-
+haviour for shallow observations at high redshift reflect the shifting rest
+wavelengths probed by the F336W with increasing redshift."
+"increased sensitivity to the stochasticity of our IGM transmission
+functions. The dashed lines in Figure 9 also demonstrate why we
+find so few LyC detected LAEs for our mock spectroscopic and
+CFHT 𝑢 observations given the depth of these two comparisons are
+fixed at ∼27.9 and 27.82 mag, respectively."
+3.1.3 Fiducial Model Summary
+"The results of our fiducial model for fixed detection limits of 0.025
+`Jy (∼27.9 mag), 30.24 mag, and 27.82 mag for spectroscopy,
+F336W, and CFHT 𝑢, respectively, are summarised in Figure 10
+for mock observations of galaxies with 1500 Å flux distributions
+characteristic of LBGs (F336Wresults for fainter, LAE-like galaxies
+are also shownwith dotted lines). As described in Sections 3.1.1 and
+3.1.2, spectroscopic detections at this depth (targeting a fixed rest
+wavelength window at 880 < _rest < 910 Å) experience a roughly
+constant 𝑇bias of ∼0.15-0.17 (∼0.32 for fainter, LAE-like samples).
+We find a slight redshift dependence on 𝑇bias, which increases from
+0.157 at 𝑧 = 2.9 to 0.173 at 𝑧 = 3.7 then decreases slightly to 0.169
+at 𝑧 = 3.9. This change in 𝑇bias of less than 2% is significantly
+smaller than the variance seen at any given redshift and is driven
+entirely by our cosmological dimming (see Equation 6). Thus, we
+conclude that 𝑇bias is effectively constant at 3.0 < 𝑧 < 3.9 for our
+chosen definition."
+"The fact that 𝑇bias is found to be constant with redshift is
+somewhat counterintuitive. Instead, one may expect a monotonic
+increase in 𝑇bias with redshift due to the fixed detection limit and
+linear decrease in 〈𝑇IGM〉. For our additive definition of 𝑇bias, the
+constant 𝑇bias observed can be explained by a decrease in detection
+rate with redshift where only the brightest galaxies contribute to
+𝑇bias at the high 𝑧 end. This is illustrated in Figure 10 with the
+detection percentages for spectroscopy at each redshift indicated in
+black."
+"Condsidering photometric detections, 𝑇bias is seen to increase
+while the Lyman limit passes through the filter in question. At red-"
+"Figure 10. A summary of 𝑇bias for our fiducial model. Top: 〈𝑇IGM 〉 as
+a function of redshift for all sightlines are shown with solid lines while
+dashed lines show 〈𝑇IGM 〉 for detected galaxies. Results for spectroscopy,
+F336W, and CFHT 𝑢 are shown in black, gold, and cyan, respectively. For
+our fiducial model we assume detection limits of 0.025 `Jy (∼27.9 mag),
+30.24 mag, and 27.82 mag for spectroscopy, F336W, and CFHT 𝑢. Bottom:
+𝑇bias as a function of redshift for each detection method. Error bars show the
+68 percentile range at each redshift. Values are calculated at fixed redshifts
+between 3.0 and 3.9 with Δ𝑧 = 0.1, slight offsets between methods are for
+clarity only.We also show the detection percentage for spectroscopy in black,
+which decreases significantly with redshift, across the top of the bottom
+panel. In both panels, open symbols for photometric observations indicate
+redshifts at which a given filter probes (parially or entirely) wavelengths
+redward of the Lyman limit (i.e. non-ionizing photons)."
+"shifts where a given filter has passed fully blueward of the Lyman
+limit, the level of 𝑇bias is seen to level off (within errors) at a value
+dependent on the photometric depth. For our fiducial depths, this
+plateau level is ∼0.11-0.14 and ∼0.22-0.31 for the F336W (magni-
+tude limit = 30.24) and CFHT 𝑢 filters (magnitude limit = 27.82),
+respectively. In the case of LAE-like 1500 Å flux distributions, we
+show results only for F336W as this comparison has significantly
+deeper flux limits compared with spectroscopy and CFHT 𝑢 (where
+detections of LAE-like samples are vanishingly rare). In the case
+of LAEs, we find that 𝑇bias is roughly 0.1 higher than for LBGs
+at fixed redshift, with values in the range ∼0.21-0.24 across the
+redshift range sampled."
+"We also observe a slight dip in 𝑇bias for photometric detections
+at the highest redshifts in the bottom panel of Figure 10. Unlike
+spectroscopic detections, by 𝑧 ∼ 3.8 our photometric filters are
+probing very blue _rest where 〈𝑇IGM〉 is near zero. Furthermore, as
+seen in Figure 2, the 𝑇IGM distribution at these wavelengths is a
+skewed, unimodal distribution peaked at 𝑇IGM = 0. This means that
+the probability of finding a sightline with 𝑇IGM much higher than
+zero is very low. This could explain why 𝑇bias for photometry dips
+at high 𝑧, as even those small number of detected galaxies will be
+found in sightlines approaching zero transmission at wavelengths
+probed by a given filter. This means that the level of 𝑇bias seen at
+lower redshifts simply can not be maintained given the underlying"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 11
+"𝑇IGM distribution for thewavelengths probed.At higher redshifts the
+𝑇IGM distribution becomes so strongly peaked at 𝑇IGM = 0.0 that no
+detections are expected, thus we do not expect the results presented
+here for 2.9 < 𝑧 < 3.9 to be generalizable towards higher redshifts.
+This is not necessarily the case for spectroscopic detections as the
+𝑇IGM distribution at 880 < _rest < 910 Å remains bimodal even at
+high redshift, thus no obvious dip in 𝑇bias is seen. Regardless, in all
+cases 〈𝑇IGM〉 is decreasing with redshift, thus detections become
+rarer. This manifests as a decreasing 68 percentile range for 𝑇bias,
+a reflection of the drop in the numbers of detected galaxies with
+redshift."
+"Finally, as mentioned at the start of Section 3.1, the definition
+𝑇bias = 〈𝑇det〉/〈𝑇IGM〉 is equally valid to the definition adopted in
+this work. Under this alternative definition, a very clear trend be-
+tween 𝑇bias and redshift is apparent increasing from ∼1.3 to ∼1.8
+for spectroscopic observations and from ∼3 to ∼35 for F336W ob-
+servations for LAE samples. We reiterate that, although a fractional
+definition may be more physical (in the sense that it relates directly
+to a ratio of HI column densities), the redshift evolution of 𝑇bias in
+this case reflects primarily the fact that 〈𝑇IGM〉 moves increasingly
+close to zero with redshift while the actual difference in the mean
+IGM transmission between detections and all sightlines is roughly
+constant, as our chosen definition illustrates. Thus, our definition
+provides a simplified correction when calculating 𝑓esc for LyC de-
+tected samples from an observational point of view."
+3.2 An Alternative 𝑓esc Distribution
+"It is expected that if LyC emission is detected from a given galaxy, it
+must have a high 𝑓esc and/or a high𝑇IGM. From current observations
+of LyC emitters (particularly considering the large number of non-
+detections), it seems that 𝑓esc values, i.e. 0.0-0.2, are most common
+(e.g. Boutsia et al. 2011; Grazian et al. 2016; Smith et al. 2018).
+The results presented for our fiducial model in Section 3.1, however,
+allow for 𝑓esc values from 0.0 to 1.0 with no preference. This means
+that a large number of detections from our fiducial model exhibit a
+large 𝑓esc and are detected in sightlines with relatively low 𝑇IGM. If
+we instead choose an underlying 𝑓esc distribution skewed towards
+low 𝑓esc, we might expect that the average 𝑇IGM for detections will
+increase, thus increasing 𝑇bias."
+"In this Section, we explore how altering the PDF of selected
+𝑓esc values affects the level of 𝑇bias and the distributions of 𝑓esc for
+LyC detections. For comparison, the fiducial model can be treated
+as a flat PDF between 0 and 1. Here we test an alternative 𝑓esc PDF
+model designed to give more weight to lower 𝑓esc values. In this
+cases we choose an exponentially declining 𝑓esc PDF of the form:"
+𝑃𝐷𝐹 ( 𝑓esc) ∝ 𝑒− 𝑓esc/[ (8)
+"where [ represents an exponential cut off in 𝑓esc. Here we test the
+value [ = 0.50 (see Figure 3) motivated by LyC detection rates
+from S18 (see Section 4.3). For brevity our fiducial model will be
+described as “flat” and our alternative model will be referred to as
+[ = 0.50. As with our fiducial model, for our [ = 0.50 model we
+recreate 100 mock spectra for each of our 10,000 IGM transmission
+functions at each discrete redshift value as described in Section 2.3."
+"We show example 〈𝑇IGM〉 curves at 𝑧 = 3.1 for detected LBG-
+like galaxies in each of our two models in Figure 11. Though not
+shown here, results for LAE-like galaxies are qualitatively similar.
+Here we see that the flat 𝑓esc PDF exhibits a lower 𝑇bias than the [ =
+0.50 as expected. The increases in 𝑇bias for both spectroscopic and
+photometric detections are found to be only 0.01 and 0.02, respec-
+tively. These increases in𝑇bias are essentially negligible considering"
+"Figure 11.𝑇IGM curves for galaxies detected with F336W (top) and spectro-
+scopically, (bottom). Both panels show the results at 𝑧 = 3.1 with detection
+limits of 30.24 mag for F336W and 0.025 `Jy (∼27.9 mag) for spectroscopy.
+In both cases, the [ = 0.30 model exhibits only slightly higher 𝑇IGM than
+the fiducial model. Spectroscopic (F336W) values of𝑇bias increase modestly
+from 0.16 (0.10) for the fiducial model to 0.17 (0.13) for the [ = 0.50 model."
+"the spread in 〈𝑇IGM〉 for LyC detections seen in Figure 10. Thus, in
+the case of our [ = 0.5 model, we find no significant difference in
+𝑇bias when compared to the fiducial, flat 𝑓esc PDF and note that this
+behaviour is the same in all redshift bins. In cases where the un-
+derlying 𝑓esc is more strongly skewed towards 𝑓esc = 0 (i.e. smaller
+values of [), the difference in 𝑇bias when compared to a flat PDF
+is certain to increase. Such a low [ model (or any other similarly
+skewed 𝑓esc PDF) may be appropriate for galaxy samples with se-
+lection biases different from the LBG and LAE samples considered
+here if 〈 𝑓esc〉 does indeed vary with galaxy properties (see Section
+4.3 for more discussion)."
+"The fact that 𝑇bias for our [ = 0.5 model is only negligibly
+larger than our flat 𝑓esc PDF does not mean the two models are
+interchangeable in regards to estimates of 𝑓esc from observed sam-
+ples. To illustrate this, we show in Figure 12 the histograms of 𝑓esc
+for detections only vs all trials at 𝑧 = 3.1 for spectroscopy (left)
+and F336W (right). Filled histograms show the underlying 𝑓esc dis-
+tributions and open histograms show the 𝑓esc distribution for LyC
+detections. We find that the 𝑓esc distributions of LyC detections (i.e.
+the posterior) for both observational methods is skewed towards 𝑓esc"
+"MNRAS 000, 1–20 (2021)"
+12 R. Bassett et al.
+"Figure 12.Histograms of 𝑓esc for our two 𝑓esc PDFmodels: flat in the top row
+and [ = 0.50 on the bottom. The left column shows results for spectroscopy
+and the right for F336W. In each panel the underlying 𝑓esc distribution is
+shownwith a filled histogram, the 𝑓esc distribution of detectionswith an open
+histogram, and the mean value for detections is shown with a vertical dotted
+line and indicated in the top left of each panel. Note that each histogram has
+been normalised by the maximum value for ease of comparison."
+"= 1.0, inconsistent with the low values typically seen in observa-
+tions. The posterior for the [ = 0.5 model, on the other hand peaks
+at lower values, more consistent with estimates in the literature. We
+show the mean values for posterior distributions in each panel with
+a vertical dotted line. When assuming an [ = 0.5 model, the in-
+ferred average 𝑓esc value is lower by 0.07 and 0.12 for spectroscopy
+and F336W detections, respectively. Thus, although 𝑇bias is roughly
+the same between the two 𝑓esc PDF models, the differences when
+considering the inferred 𝑓esc for galaxy samples is significant."
+"We note that the posterior distribution for the [ = 0.5 model
+for a given detection method is equivalent to the posterior for the
+flat 𝑓esc PDFmodel multiplied by the input [ = 0.5 distribution (the
+prior) in line with the framework of Bayesian statistics. This is true
+in general, thus one can simply determine the posterior distribution
+for any arbitrarily defined 𝑓esc PDF once the posterior for a flat
+distribution is determined for a given observational method and
+detection limit without the need to run a separate analysis. We stress
+again that the actual distribution of 𝑓esc is essentially unknown,
+however we discuss possibilities for placing some constraints on
+this in Sections 4.3 and 4.6."
+3.3 Dependence on SED Variations
+"In this Section we briefly explore the effects that varying the SED
+shape will have on our estimates of 𝑇bias presented in Sections 3.1
+and 3.2. In regards to detecting LyC from a given galaxy above a
+specified limit, the key difference resulting from a change in SED
+shape will be a change in the flux ratio of the LyC and UV (_rest ∼
+1500 Å) portions of the observed spectrum, (𝐹900/𝐹1500)𝑜𝑏𝑠 , at a
+fixed 𝑇IGM. The factor that will affect (𝐹900/𝐹1500)𝑜𝑏𝑠 (in addition"
+"to 𝑇IGM) considered here is variation in the intrinsic ratio of LyC
+and UV emission, (𝐿900/𝐿1500)𝑖𝑛𝑡 ."
+"To test the effect of altering (𝐿900/𝐿1500)𝑖𝑛𝑡 on our results we
+rerun the analysis described in Section 2.3 for each age of our ex-
+ponentially declining BPASSv2.1 models (with 𝑒-folding timescale
+of 0.1 Gyr) in the range 6.0 < log(age) < 9.0 in steps of Δlog(age)
+= 0.1. The models produced exhibit (𝐿900/𝐿1500)𝑖𝑛𝑡 in the range
+∼0.07-0.77, with corresponding values of b𝑖𝑜𝑛 from ∼25.4-26.0.
+For each aged model we again create 100 mock spectra for each of
+the 10,000 IGM transmission functions produced at each redshift
+(2.9 < 𝑧 < 3.9, Δ𝑧 = 0.1) with 1500 Å fluxes sampled from an LBG-
+like distribution. We then repeat our measurements of LyC flux as
+in previous sections and adopt the flux limits of our fiducial model:
+𝐹𝑙𝑖𝑚(spectroscopy) = 0.025 `Jy (∼27.9 mag) and 𝑚𝑙𝑖𝑚(F336W) =
+30.24. The CFHT 𝑢 comparison is not considered here as the rela-
+tively shallow nature of these observations results in prohibitively
+few detections at low (𝐿900/𝐿1500)𝑖𝑛𝑡 . For a similar reason, we also
+do not consider LAE-like samples in this section."
+"We show the resulting (𝐿900/𝐿1500)𝑖𝑛𝑡 versus𝑇bias for spectro-
+scopic, LBG-like LyC detections in the left panel of Figure 13. Sim-
+ilar to the results for our test on detection limits we find only slight
+variation in 𝑇bias with redshift with a total spread in values of ∼0.03
+for all redshifts at a fixed (𝐿900/𝐿1500)𝑖𝑛𝑡 above (𝐿900/𝐿1500)𝑖𝑛𝑡 =
+0.15 (again, a fractional definition of 𝑇bias will result in significant
+redshift variation). For reference, we show the location of the fidu-
+cial model presented in Section 3.1.1 with the dotted green line and
+shaded regions. Slight differences can be attributed to stochasticity
+as the analysis here represents and independent sample of 1500 Å
+fluxes and 𝑓esc values at the same (𝐿900/𝐿1500)𝑖𝑛𝑡 value. Regard-
+less, the results of Figure 13 are consistent with those of 3.1.1 within
+errors."
+"Results for F336W detections are shown similarly in the right
+panel of Figure 13. We show results at redshifts where F336W
+partially probes non-ionizing photons with dashed lines (i.e. 𝑧 <
+3.2). Qualitatively the curves are similar to those in the left panel,
+with the difference in 𝑇bias again attributed to the increased depth
+of the F336W observational comparison."
+"Finally, we note that none of the models presented to this point
+have considered the effects of dust attenuation on the observed LyC
+flux from mock galaxies. The effect that dust will have on LyC will
+be to further reduce the observed value of 𝐹 (𝐿𝑦𝐶)/𝐹 (𝑈𝑉) relative
+to (𝐿900/𝐿1500)𝑖𝑛𝑡 . In this way, dust attenuation is a third level
+of degeneracy between 𝑓esc and 𝑇IGM. Given the low attenuation
+for LyC detections (e.g. S18), we ignore the effects of dust simply
+noting that detections should be biased towards galaxies with low
+dust attenuation (or even none in the case of LAEs, e.g. Fletcher
+et al. 2019; Nakajima et al. 2020)."
+4 DISCUSSION
+4.1 Correlation between 𝑇IGM (𝐿𝑦𝐶) and 𝑇IGM (𝐿𝑦𝛼)
+"One major difficulty in accurately measuring 𝑓esc from high red-
+shift galaxies is the unknown value of 𝑇IGM. So far, there is no
+clear observational indicator of 𝑇IGM (LyC), which has necessitated
+statistical methods such as those explored in this paper. In the work
+of Inoue & Iwata (2008), however, it was argued that the 𝑇IGM at
+Ly𝛼 wavelengths may correlate with 𝑇IGM (LyC) (their Section 4.4,
+Figure 10). This claim is in direct contrast with previous results of
+Shapley et al. (2006) who found no such correlation at 𝑧 = 3.06.
+Inoue & Iwata (2008) suggest that the lack of correlation seen in"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 13
+"Figure 13. 𝑇bias as a function of intrinsic ratio of LyC (at 900Å) to UV (at 1500Å) luminosities for spectroscopy (left) and photometry (right). Solid lines show
+results in each redshift bin as indicated in each legend while dotted lines in the right panel indicate redshifts at which the F336W filter contains contamination
+from Ly𝛼 forest photons as it has not passed fully into the LyC portion of the spectrum. The location corresponding to intrinsic ratios presented in Sections 3.1
+and 3.2 are indicated with dotted green lines and shaded regions. The top axis of both panels indicates b𝑖𝑜𝑛 for the BPASSv2.1model at a given (𝐿900/𝐿1500)𝑖𝑛𝑡 ."
+"Shapley et al. (2006) was due to those authors exploring 𝑇IGM at
+only one redshift. Here we test for a correlation between𝑇IGM (LyC)
+and 𝑇IGM (Ly𝛼) for our simulated IGM transmission functions, not-
+ing that our simulations differ from those of Shapley et al. (2006)
+and Inoue & Iwata (2008) in that we include a CGM component to
+our HI column density distributions following the work of S18 and
+Rudie et al. (2013)."
+"To perform this test, we assess all one million IGM sightlines
+we have produced in Section 2.1, measuring 𝑇IGM for LyC at 880
+< _rest < 910 Å and for Ly𝛼 at 1050 < _rest < 1170 Å following
+Shapley et al. (2006) and Inoue & Iwata (2008). We note, however,
+that the LyC and Ly𝛼 wavelength ranges used in these works are
+not probing the same redshift range. Thus, we also measure an
+alternative Ly𝛼 wavelength range 1173 < _rest < 1213 Å, matched
+to the redshift of LyC in the specified range. In each redshift bin, we
+measure the spearman rank-order correlation coefficient between
+𝑇IGM (LyC) and 𝑇IGM (Ly𝛼) in both wavelength ranges and also the
+correlation coefficient of the combined data from all redshift bins."
+"Figure 14 shows 𝑇IGM (LyC) vs 𝑇IGM (Ly𝛼) for all one million
+sightlines colored by their redshift. Overall there appears to be a
+correlation between the two values (albeit with large scatter), how-
+ever at any individual redshift such a correlation is less apparent.
+For𝑇IGM (Ly𝛼) at 1050-1170 Åwemeasure correlation coefficients
+at individual redshifts finding values in the range 0.05-0.08 indicat-
+ing no correlation with 𝑇IGM (LyC) at fixed redshift consistent with
+Shapley et al. (2006). Considering all redshift bins together we find
+a drastic increase in the correlation coefficient to 0.34. This is still
+lower than the correlation of 0.86 quoted by Inoue & Iwata (2008),
+however, in this work the authors tested a much wider redshift range
+from 0.2 to 6.0. Our results combined with those of Inoue & Iwata
+(2008) suggest that any apparent correlation between 𝑇IGM at LyC
+and Ly𝛼 wavelengths is driven only by the fact that both values
+correlate similarly with redshift (e.g. Figure 1). For any individual
+galaxy (or sample) at a given redshift, however, 𝑇IGM (Ly𝛼) pro-
+vides no useful prediction for 𝑇IGM (LyC). Indeed, this is apparent
+from the contours shown in Inoue & Iwata (2008) Figure 10."
+"Figure 14. A comparison of 𝑇IGM for LyC (880-910 Å) and Ly𝛼 (1070-
+1170Å) for all onemillion simulated sightlines. Points are coloured based on
+their source redshift. We find that the apparent correlation seen between the
+IGM transmission of LyC and Ly𝛼 radiation is driven by the fact that both
+values exhibit individual redshift dependencies rather than any correlation
+between these two values. Indeed, there is no apparent correlation between
+𝑇IGM(LyC) and 𝑇IGM(Ly𝛼) at fixed redshift."
+"As we have pointed out, however, the Ly𝛼 wavelength range
+considered in Shapley et al. (2006) and Inoue & Iwata (2008) is
+not well matched to the LyC wavelength range they considered. If
+we instead use our alternative Ly𝛼 range, 1173-1213 Å, we find
+a significant increase in the correlation coefficient at fixed redshift
+range to 0.32-0.37. Combining the values for all bins we find a
+modest increase to 0.45. Thus, we find a weak correlation between"
+"MNRAS 000, 1–20 (2021)"
+14 R. Bassett et al.
+"Figure 15. Comparison of 〈 𝑓esc 〉 computed via Equation 9 (gold) and Equa-
+tion 10 (cyan) compared to the true 〈 𝑓esc 〉 at 𝑧 = 3.0 (left) and 𝑧 = 3.1
+(right). Here we perform 5000 trials in which 15 LyC detected galaxies
+are selected at random (comparable to the number detected in S18) from
+among the one million mock galaxies produced at each redshift as decribed
+in Section 2.3. We calculate the average (𝐹900/𝐹1500)𝑜𝑏𝑠 among the 15
+galaxies and use this value to estimate 〈 𝑓esc 〉 using Equations 9 and 10.
+The 1-to-1 relation is shown with the thick dotted line while the thin dotted
+lines represent the average 68 percentile spread of the 15 galaxies selected
+in individual trials (more description in text), which we find to decrease
+roughly linearly with increasing the mean 𝑓esc for a given trial."
+"𝑇IGM for LyC and Ly𝛼 at fixed redshift where the wavelength ranges
+for these two are well matched. We note that a direct comparison to
+the results of Inoue & Iwata (2008) and Shapley et al. (2006) may
+be slightly tenuous as the IGM transmission curves produced there
+do not include a CGM component while our models do. Indeed,
+this may be the reason that we find such a large increase in the
+correlation coefficient at fixed redshift when the wavelength ranges
+of LyC and Ly𝛼 are properly matched. Given the large scatter and
+the fact that 𝑇IGM (LyC) is found to be 0 for a range of 𝑇IGM (Ly𝛼)
+at fixed redshift, however, we would be hesitant to try and estimate
+one from the other regardless of the apparent weak correlation."
+4.2 Effects of 𝑇bias on 𝑓esc Estimates for Samples
+"The analysis presented in Section 3.1 was designed to predict the
+average bias for a sample of LyC detected galaxies, which in turn can
+be used to estimate the average 𝑓esc of the sample (e.g. S18, F19).
+Thus, it may not be appropriate to blindly apply values measured
+here to individual galaxies. Herewe test the discrepancy between the
+average value of 𝑓esc for a sample of LyC detections estimated with
+and without including 𝑇bias when compared to the true average 𝑓esc.
+This should be seen as a highly simplified test as all mock galaxies
+represent dust-freeBPASSv2.1modelswith a fixed (𝐿900/𝐿1500)𝑖𝑛𝑡
+of 0.18 (log10 (b𝑖𝑜𝑛/[Hz erg−1]) = 26.51). Real galaxy samples are
+likely to exhibit a range of (𝐿900/𝐿1500)𝑖𝑛𝑡 , and will thus decrease
+the accuracy of 𝑓esc estimates when compared to this test."
+"The typical method of estimating 𝑓esc is to employ an equation
+of the form (or similar to):"
+"𝑓esc =
+(𝐹900/𝐹1500)𝑜𝑏𝑠
+(𝐿900/𝐿1500)𝑖𝑛𝑡"
+"〈𝑇IGM〉
+(9)"
+"noting that the effects of dust attenuation are ignored here. In order to
+estimate 𝑓esc for a given level of 𝑇bias, Equation 9 must be modified
+in the following way:"
+"𝑓
+𝑐𝑜𝑟𝑟
+esc ="
+"(𝐹900/𝐹1500)𝑜𝑏𝑠
+(𝐿900/𝐿1500)𝑖𝑛𝑡"
+"〈𝑇IGM〉 + 𝑇bias
+(10)"
+"Our test of the recovery of 〈 𝑓esc〉 for a sample of spectroscopically
+LyC detected galaxies is performed on the mock observations de-
+scribed in Section 2.3. We first select those mock galaxies with
+output 880 < _rest < 910 Å fluxes above the detection limit of 0.025
+`Jy. We then perform 5000 trials in which we randomly select 15
+mock LyC detections (matched to the number of detections in S18)
+and measure 〈(𝐹900/𝐹1500)𝑜𝑏𝑠〉 of this subsample. For each trial
+we calculate the average 𝑓esc using Equations 9 and 10 and compare
+this with the true 〈 𝑓esc〉 for the 15 selected detections."
+"The results of this test at 𝑧 = 3.0 and 𝑧 = 3.1 for our [ = 0.5
+𝑓esc PDF model are shown in Figure 15, though we find similar
+results for the flat 𝑓esc PDF of our fiducial model. Here we plot
+the true 〈 𝑓esc〉 versus two estimated values. Gold and cyan contours
+show the distribution for 〈 𝑓esc〉 estimated using Equations 9 and 10,
+respectively. The thick dotted green line shows the 1-to-1 relation.
+The thin green lines are meant to be representative of the average
+68 percentile spread of the 15 galaxies from any individual trial. To
+produce these lines we measure the 68 percentile lower and upper
+bounds and the average values of 𝑓esc for the 15 galaxies from each
+of the 5000 trials.Wefind that the upper and lower bounds for a given
+trial decrease roughly linearly with increasingmean 𝑓esc (albiet with
+significant scatter), thus we fit each bound with a straight line as a
+function of mean 𝑓esc. In this way, we are attempting to illustrate,
+roughly, the expected speard in 𝑓esc values for a random selection
+of 15 LyC detected galaxies having a given mean 𝑓esc value."
+"At both redshifts there is good agreement between 𝑓 corresc and the
+true value,while failing to account for𝑇bias results in an overestimate
+of the average 𝑓esc. The level of overestimation is lower at 𝑧 = 3.0
+due to the fact that 𝑓esc in Equations 9 and 10 depends on the
+reciprocal of 𝑇IGM, which is decreasing with redshift towards 0. At
+𝑧 = 3.1, Only ∼1.4% of the estimated 〈 𝑓esc〉 values calculated using
+Equation 9 fall within the range of typical “true” 𝑓esc values for
+our detected sample (noting this percentage is stochastic). At higher
+redshifts this falls to 0%. Considering 𝑓 corresc , we find that, typically,
+less than 1% of trials fall outside of the rough confidence intervals
+presented in Figure 15. This test illustrates that not accounting for
+𝑇bias when estimating the stacked 𝑓esc for detected galaxies can
+result in a significant overestimate of the true value."
+"Of course, as has been repeated throughout this work, the ab-
+solute differences between 𝑓esc and 𝑓 𝑐𝑜𝑟𝑟esc (as well as the fractional
+decrease) will have some dependence on the details of our method
+for producing IGM transmission curves (e.g. 𝑁HI distributions), the
+assumed value(s) of (𝐿900/𝐿1500)𝑖𝑛𝑡 , the assumed 𝑓esc PDF, the
+input distribution of 1500 Å fluxes, etc. In addition, the inclusion
+of dust, choice of dust curve, and any assumed dependence be-
+tween E(B-V) and 𝑓esc will further affect these results. Although
+not shown, we also performed the test presented here with dust
+attenuation included following the method outlined in Section 4.4
+(where E(B-V) values are sampled from a distribution characterised
+by the observed values from S18) and find similar results with a
+similar level of scatter. This of course assumes that both the average
+𝐸 (𝐵 − 𝑉) for detected galaxies as well as the exact form of the
+attenuation curve is precisely known. Inevitably, these values will
+be highly uncertain for real observations resulting in a higher level
+of scatter. Providing more realistic tests of the associated effects
+on our stacking, while possible, would be highly model dependent,
+thus not particularly useful."
+"The fact that 𝑇IGM for LyC detected galaxies is expected to
+be larger than 〈𝑇IGM〉 at a given redshift will be true regardless
+of the exact implementations, however. Thus, the purpose of the
+illustration presented here is simply to highlight the fact that the
+assumption that 〈𝑇IGM〉 is representative of IGM sightlines towards"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 15
+"LyC detected galaxies will result in an overestimation of 𝑓esc. Given
+that 𝑇bias increases with decreasing observational depth, the over-
+estimation of 𝑓esc will be the higher for shallower LyC surveys."
+4.3 Survey Detection Rate vs 𝑓esc PDF
+"As we have shown in Section 3.2, the value of 〈 𝑓esc〉 inferred for
+stacked samples of LyC detections will depend on the PDF assumed
+for 𝑓esc. It has been repeated throughout this work that, observation-
+ally, there appears to be a preference for low (or zero) 𝑓esc from high
+redshift galaxies (e.g. Japelj et al. 2017; Smith et al. 2018; Bian &
+Fan 2020). This creates a chain of circular reasoning, however, as
+accurate measurements of 𝑓esc thus requires knowledge of the PDF
+of 𝑓esc, which seemingly requires accurate measurements of 𝑓esc to
+determine. The way forward is to determine an observational metric
+that can help to determine the PDF 𝑓esc that is independent of the
+individual values of 𝑓esc."
+"In this Section we propose that the detection rates of LyC
+from dedicated surveys can be used to probe the parameters of a
+given 𝑓esc PDF. We construct two mock versions of the surveys
+of S18, F19, and M20, one with a flat 𝑓esc PDF and one with
+an exponentially declining 𝑓esc PDF. In the latter case we tune
+the value of [ (see Equation 8) to match the observed detection
+rate of a given survey (more description to follow). In each case,
+we again use the same fixed input BPASSv2.1 SED model as our
+fiducial model with (𝐿900/𝐿1500)𝑖𝑛𝑡 = 0.18. In all cases the input
+1500 Å fluxes are sampled from a distribution matched to the fluxes
+reported by each of those surveys. Thus, in this case, the F19 sample,
+which is made up of LAEs, have a characteristic 1500 Å flux that
+is lower than that of the LBG samle of S18 at the same redshift
+resulting in a lower relativeLyCflux (see Figure 4). This is important
+as the selection method of a given sample strongly influences the
+distribution of galaxy properties included (e.g. typical 1500 Å flux,
+(𝐿900/𝐿1500)𝑖𝑛𝑡 , among others), which ultimately determine the
+output LyC fluxes, and thus the detectability of a given galaxy.
+Therefore, the toy model presented here is primarily for illustrative
+purposes."
+"The set of inputs described above is combined with our 𝑇IGM
+sightlines to produce an output sample of LyC fluxes. In the case of
+S18 and F19 we simply use the 𝑇IGM functions already produced,
+noting that this requires all of our mock galaxies to be at discrete
+redshifts with Δ𝑧 = 0.1. For S18 we match the observed redshift
+distribution in each bin from that work and for F19 all galaxies
+are simulated at 𝑧 = 3.1. As M20 explores significantly higher
+redshifts we simply randomly sample values across the full redshift
+range (matched to the observed distribution from that work) and
+create new 𝑇IGM functions each time. For each survey we produce
+10,000 mock observations. We then randomly draw subsamples
+from these mock observations with sizes matched to the observed
+sample sizes in each paper and measure the detection rates of LyC
+for each subsample with detection rates of 0.025 `Jy (∼27.9 mag),
+30.24 mag, and 27.82 mag for S18, F19, and M20, respectively. We
+perform this test with a few different [ values for the exponential 𝑓esc
+PDF, and coarsely tune the model such that the average detection
+rate falls within the range quoted for each survey."
+"The results of our test for KLCS and LACES are shown in
+Figure 16. In each panel the detection rate distribution for the tuned,
+exponentially declining model is shown in cyan (with the tuned
+[ value in the legend) and the distribution for the flat model is
+shown in gold. For LACES the observed detection rate range is
+defined by either only considering their “gold” sample (low) or
+considering the “gold” plus “silver” samples (high) and for KLCS"
+"Figure 16. Detection rate distributions for our mock LACES (top) and
+KLCS (bottom) surveys. In each case we create 50 thousand mock spectra
+at the respective survey redshifts following Section 2.3, however we now
+include the effects of dust attenuation for the S18 comparison (see text).
+The observed detection rates are shown in gray while the detection rates
+assuming a flat and exponentially declining 𝑓esc PDF are shown in gold and
+cyan, respectively. In each case, the value of [ for the exponentially declining
+PDF is coarsely tuned to match the detection rate of a given survey."
+"we take their detection rate of 15/124 ∼ 0.12. In the case of KLCS,
+the flat 𝑓esc PDF model is seen to predict a detection rate that
+is too large to reproduce the survey in question. While the [ =
+0.5 model is well matched to the observed detection rate. In the
+case of LACES, however, though the average detection rate for the
+flat model is close to the upper limit for the detection rate of that
+suvey, it is difficult to rule out a flat PDF. The coarsely matched
+exponential model requires a relatively high value of [ = 0.75.
+From Figure 12 we expect that the inferred 𝑓esc values from this
+model will not differ significantly from a flat distribution. In the
+case of our mock M20 test, we were unable to reproduce the high
+detection rate reported in the paper, which falls in the range 0.02-
+0.11 (1-5 out of 44) depending on the reliability cut for the LyC
+emitting galaxy candidates from that work. For our mocks we find
+an overall detection rate from the flat 𝑓esc PDF (which will give
+the highest detection rate) of 0.005, thus only a small fraction of
+random selections of 44 galaxies will even contain one detection."
+"Taken together, this toy model test for our three comparison
+samples provides strong evidence that the underlying 𝑓esc PDFs will
+be sensitive to the selection bias of the galaxy sample in question. In
+the case of KLCS and LACES, the former probes the bright end of
+the UV luminosity function characterised by LBGs while the latter
+significantly fainter LAEs. The fact that the detection rate of KLCS
+requires the 𝑓esc PDF to be skewed towards 0 while LACES is not
+inconsistent with a flat 𝑓esc PDF points towards a scenario in which
+faint galaxies, on average, have a 𝑓esc PDF less biased towards 0
+(similar to the results of Finkelstein et al. 2019). Our inability to
+reproduce the high detection rate of M20, even employing a flat 𝑓esc
+PDF, suggests that this sample may be biased towards high values
+of 𝑓esc (though we have not tested such a model here). Interestingly,
+the goal of M20 was to provide a methodology for preferentially
+selecting high 𝑓esc galaxies, consistent with the toy model presented
+here. The key point highlighted here is that we have shown the
+calculation of 𝑓esc to be sensitive to the underlying PDF (e.g. Figure
+12), which is in turn appears to depend on sample selection. Thus,"
+"MNRAS 000, 1–20 (2021)"
+16 R. Bassett et al.
+"a consideration of the 𝑓esc PDF should be considered in particular
+when comparing inferred 𝑓esc values between disparate samples
+(e.g. LAEs vs LBGs)."
+"We reiterate that the exponentially declining 𝑓esc PDF favoured
+here is simply an ad-hoc solution chosen for its bias towards low
+𝑓esc values and a preference for 𝑓esc = 0. This selection was moti-
+vated by the low detection rate of such emission and the, generally,
+low estimates of the average 𝑓esc for large galaxy samples (e.g.
+Vanzella et al. 2010; Grazian et al. 2016; Smith et al. 2018). The
+true functional form of the PDF of 𝑓esc is very likely more complex
+and may include dependencies on galaxy properties such as, e.g.,
+stellar mass (Finkelstein et al. 2019; Naidu et al. 2020). Further
+clarification of this issue will require larger samples of LyC de-
+tections at 𝑧 > 3 which would be greatly aided by more sensitive
+instrumentation at 𝑢-band wavelengths. It is also likely that inputs
+from high-resolution, hydrodynamics simulations of high redshift
+galaxies that include full radiative transfer can help greatly with
+the interpretation of detections (and non-detections), though run-
+ning such simulations is computationally expensive. Regardless, we
+show here evidence that the most likely PDF for 𝑓esc for LBG like
+galaxies favours a model with a reasonable bias towards low 𝑓esc."
+4.4 Dust Attenuation
+"To this point, we have avoided one key topic in the study of opti-
+cal and UV radiation from star-forming galaxies: dust attenuation.
+In general, the level of attenuation at fixed E(B-V) increases with
+decreasing _rest such that UV wavelengths experience the highest
+levels of attenuation (i.e. lowest transmission) irrespective of the
+functional form of the assumed attenuation curve (e.g. Gordon &
+Clayton 1998; Calzetti et al. 2000; Reddy et al. 2016, etc). This
+statement, of course, assumes that extending the chosen attenuation
+curve to short wavelengths (.1500 Å) is reasonable. We acknowl-
+edge that Buat et al. (2002) have investigated dust attenuation at 900
+Å in a handful of local star-forming galaxies and Weingartner &
+Draine (2001) have explored theoretical models of dust attenuation
+in a similar regime (based on the Magellanic clouds), however there
+applicability to high redshift galaxies is also uncertain. Regardless,
+the expected high level of attenuation at LyC wavelengths may lead
+one to expect that galaxies with a high enough LyC flux to be de-
+tected in current surveys should be biased towards low attenuation.
+Indeed, LyC detections from KLCS all have 〈𝐸 (𝐵 − 𝑉)〉 = 0.045
+(and 0.129 for full LBG parent sample, S18), and those of LACES
+all exhibit negligible attenuation (𝐸 (𝐵 − 𝑉) < 0.07, 〈𝐸 (𝐵 − 𝑉)〉 '
+0.01-0.03, F19, Nakajima et al. 2020)."
+"Regardless, to expect all LyC emitting galaxies to contain neg-
+ligible amounts of dust is likely too simplistic. Thus, some con-
+sideration of the effects of dust in the interpretive framework for
+𝑓esc calculations outlined in this paper is warranted. We advocate
+a methodology similar to that outlined in F19. First, a determina-
+tion of the stellar E(B-V) value should be computed based on the
+available photometric data for a given sample of objects. This can
+be achieved through full SED fitting or through calibrations such
+as those based on the UV slope, 𝛽 (e.g. Meurer et al. 1999). In
+the case of SED fitting, we advocate a method only incorporating
+bands redward of Ly𝛼, as shorter wavelengths are strongly affected
+by IGM attenuation (e.g. effects not intrinsic to the galaxy) that
+should be treated independently to avoid added degeneracy in the
+SED model. The effects of including or omitting flux with wave-
+lengths shortward of Ly𝛼 during the SED fitting process will be
+tested in future work (Bassett et al., in prep). The computed E(B-V)
+is combined with a choice of dust attenuation curve, 𝑘 (_), to correct"
+"the observed 1500 Å flux to the “intrinsic”, dust-free, value. Finally,
+the chosen input SED template for a given sample (either computed
+through SED fitting or simply selecting a template with a reasonable
+value of (𝐿900/𝐿1500)𝑖𝑛𝑡 ) is scaled to match the corrected 1500 Å
+flux. Through this process, the intrinsic LyC flux can be determined,
+noting this value will be dependent on the selection of the intrinsic
+SED."
+"From the intrinsic LyC flux calculated in this manner, one can
+then determine the expected value of 𝑓esc by comparing with the
+observed value. In this way, any attenuation of LyC flux due to dust
+is incorporated into the definition of 𝑓esc, as pointed out by F19 (i.e.
+there is no distinction between dust attenuation and absorption of
+LyC by neutral hydrogen). We also follow the methodology of F19
+who allow 𝑓esc for a given value of 𝐸 (𝐵 −𝑉) to only be as large as
+the transmission allowed by the extrapolated dust attenuation curve.
+This is reasonable as, in the case of a galaxy with relatively large
+𝐸 (𝐵 − 𝑉), a value of 𝑓esc = 1.0 would imply zero dust attenuation
+for LyC and high attenuation at 1500 Å. We note, however, that
+such a case is not entirely impossible given LyC emission is often
+dominated by stellar populations with ages < 10 Myr while stellar
+populations as old as a few hundred Myr can provide significant
+flux at 1500 Å (e.g. Eldridge et al. 2017), thus the emission at each
+wavelength may originate from different locations within a given
+galaxy."
+"We do note, however, that this maximum 𝑓esc allowed by the
+assumed attenuation curve is highly model dependent. For example
+a SmallMagellanic Cloud attenuation curve (e.g. Gordon&Clayton
+1998) will have amuch higher attenuation at LyCwavelengths when
+compared to either a Calzetti et al. (2000) or Reddy et al. (2016)
+attenuation curve with the same 1500 Å attenuation. This results
+from the fact that the extension of the functional form of either a
+Calzetti et al. (2000) or Reddy et al. (2016) 𝑘 (_) is significantly
+flatter at _ < 1500 Å than that of Gordon & Clayton (1998). This
+caveat is important to keep in mind when considering the possible
+“maximum” 𝑓esc allowable for a given value of 𝐸 (𝐵 −𝑉)."
+4.5 LyC Detections at Other Redshifts
+"The study of LyC escape from galaxies in ground-based studies is
+limited to redshifts & 2.8 due to the low atmospheric transmission of
+UV photons. This limitation is not suffered by space-based instru-
+mentation, thus, studies of LyC at lower redshifts can be performed
+at significantly lower redshifts with satellite instrumentation. In par-
+ticular LyC has been detected at 𝑧 ∼ 2.5 by Bian et al. (2017) using
+the HST-WFC3 F275W filter, and recently at 𝑧 = 1.42 by Saha
+et al. (2020) with the Ultra-Violet-Imaging Telescope (UVIT) on
+board AstroSat. We also note that there has been significant activ-
+ity in spectroscopic detection of LyC from green pea galaxies at
+𝑧 ∼ 0.3 − 4 with HST COS (e.g. Izotov et al. 2016, 2018). At such
+low redshifts, however, IGM transmission should be negligible, thus
+these studies are not of particular relevance to the study of 𝑇bias."
+"Here we focus on providing predictions for detection of LyC
+within the Ultraviolet Imaging of the Cosmic Assembly Near-
+infrared Deep Extragalactic Legacy Survey Fields (UVCANDELS;
+PI: Teplitz, PID 15647), a ∼430 arcmin2, 164-orbit Cycle 26
+UV HST program. UVCANDELS will provide 3-orbit depth of
+WFC3/275W and parallel ACS/F435W in four CANDELS fields:
+GOODS-N, GOODS-S, EGS, and COSMOS."
+"For our predictions we follow a similar procedure outlined in
+Section 4.3, however here we have produced 10,000 IGM trans-
+mission curves at both 𝑧 = 2.4 and 𝑧 = 4.4 for the purpose of
+providing mock observations of LyC using the WFC3/F275W and"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 17
+"Figure 17. UV magnitudes of mock star-forming galaxies at 𝑧 = 2.4 and
+𝑧 = 4.4 as observed by the UVCANDELS survey. Here 1500 Å fluxes are
+sampled from the 𝑧 ∼ 2.5 UV luminosity function of Moutard et al. (2020)
+and from the 𝑧 ∼ 4.0 UV luminosity function of Bouwens et al. (2015)
+with depths matched to UVCANDELS. Top row: LyC vs non-ionizing UV
+magnitudes ofmock observations.Bottom row: histograms ofmagnitudes for
+LyC probing bands. In all panels the vertical dashed line indicates the depths
+of UVCANDELS observations. Here mock galaxies are produced as dust-
+free, exponentially declining SFR BPASSv2.1 SEDs with (𝐿900/𝐿1500)𝑖𝑛𝑡
+= 0.184, and assuming a flat 𝑓esc PDF. We note that a larger value of
+(𝐿900/𝐿1500)𝑖𝑛𝑡 can produce a handful of individual LyC detected galaxies."
+"ACS/F435W filters, respectively. To sample the input 1500 Å fluxes
+or this comparison we sample from UV luminosity functions of
+Moutard et al. (2020) derived from the CLAUDS survey for 𝑧 = 2.4
+and from fits to B-band dropouts (𝑧 & 3.8) from Bouwens et al.
+(2015) for 𝑧 = 4.4. In both cases we use luminosity functions de-
+scribed by a Schechter function with 𝛼 = -1.4, 𝜙∗ = 2.708×10−3,
+and 𝑀∗ = −20.623 at 𝑧 = 2.2 and 𝛼 = -1.64, 𝜙∗ = 1.97×10−3, and
+𝑀∗ = −20.88 at 𝑧 = 4.4. For all mock galaxies we assume a value
+of (𝐿900/𝐿1500)𝑖𝑛𝑡 of 0.18."
+"To sample the _rest ∼ 1500 Å flux for mock galaxies we mea-
+sure our SED with the ACS/F435W and WFC3/F814W for 𝑧 = 2.4
+and 𝑧 = 4.4 respectively. The 5𝜎 depths of each filter are matched
+to the observations at 27.0 mag for F275W, 28.0 for F435W, and
+28.4 for F814W. For the best chance of detecting LyC emission
+we produce roughly 100,000 mock observations of galaxies at each
+redshift, significantly more than should be expected in the UVCAN-
+DELS volume. We also assume a flat 𝑓esc PDF, to further increase
+the possibility of producing galaxies with very bright LyC flux."
+"The results of this test are shown in Figure 17. The top row
+shows the non-ionizing UV versus LyC magnitudes (observational
+band is redshift dependent) and the bottom row show the his-
+tograms of F275W and F435W magnitudes in logscale. In both
+panels we show the magnitude limits of UVCANDELS for respec-
+tive LyC probing bands with a vertical dashed line. For galaxies
+with (𝐿900/𝐿1500)𝑖𝑛𝑡 = 0.18, the 5𝜎 limits of UVCANDELS are
+too shallow to detect individual galaxies within the UVCANDELS
+footprint as the brightest. In the event that UV bright galaxies with
+significantly higher (𝐿900/𝐿1500)𝑖𝑛𝑡 exist within the UVCANDELS
+footprint, it may be possible that one or two individual detections
+will be found. We conclude that pushing observations to a depth of"
+"30mag and beyond in small, targeted fields (i.e. similar to the 𝑧 = 3.1
+observations of Fletcher et al. 2019) is likely to be more fruitful than
+shallow searches over large areas such as UVCANDELS."
+"Given the expected faintness of LyC emission, wide area sur-
+veys such as UVCANDELS will likely rely on stacking analysis in
+order to estimate the average 𝑓esc for galaxy subsamples. In this sce-
+nario, prior information regarding the likelihood of escaping LyC
+emission (e.g. evidence of a hard ionizing spectrum or high Ly𝛼
+escape, if available) will be useful. This is due to the fact that,
+although high LyC flux is more common for UV bright galaxies,
+galaxies with the same UV brightness are also commonly found
+with relatively low LyC flux (as shown in Figure 17). Similarly, we
+find galaxies with relatively faint non-ionizing UV flux with rela-
+tively high LyC flux. Thus, simply stacking the galaxies with the
+highest 1500 Å flux does not guarantee that the galaxies with the
+highest LyC flux have been chosen."
+"Finally, we note a few caveats to this analysis. First, this analy-
+sis has been performed using 𝑇IGM curves produced independently,
+while UVCANDELS covers 4 individual fields. In the event that
+there is strong correlation in 𝑇IGM across the field, the resulting
+LyC fluxes may be systematically higher (in the case of high 𝑇IGM)
+or lower (in the case of low 𝑇IGM) for one particular field. Consider-
+ation of the correlation of𝑇IGM between sources in individual fields
+of a given area may require dedicated analysis of large scale simula-
+tions of the HI distributionns and is beyond the scope of this work.
+And second, this analysis has ignored variation in (𝐿900/𝐿1500)𝑖𝑛𝑡
+(as noted), assumed no dust attenuation, and employed a flat 𝑓esc
+PDF, all three of which will affect our resulting LyC fluxes."
+4.6 Observed vs True 𝑓esc
+"Ultimately the ongoing search for LyC emission from high redshift
+galaxies is closely connected with our understanding what types of
+galaxies are responsible for reionizing the universe. Characterising
+the population of strong LyC emitters will be key to informing our
+picture of the topological evolution of ionized regions during the
+EoR (Seiler et al. 2018). There exists, however, an inherent difficulty
+regarding the interpretation of 𝑓esc values measured observationally
+due to the complex geometry of LyC escape from galaxies, inde-
+pendent of 𝑇IGM. Indeed various models have been hypothesised
+that may provide slightly different interpretations of the detected
+LyC flux in the context of measuring 𝑓esc. A detailed discussion of
+various LyC escape models can be found in Section 9.4 of S18."
+"Crucially, it has been pointed out (e.g. Bassett et al. 2019;
+Barrow et al. 2020) that the detection of LyC from any individ-
+ual galaxy is reflective of only the fraction of LyC that is able to
+escape into our single line-of-sight. There is still no reliable way
+of inferring if the observed 𝑓esc value is reflective of 𝑓esc in all
+directions, i.e. the 3D 𝑓esc (though intriguing indirect measurement
+techniques for the 3D 𝑓esc have been proposed, which warrant fur-
+ther exploration within an anisotropic LyC escape scenario, e.g.
+Zackrisson et al. 2013; Yamanaka et al. 2020). Similarly, the lack
+of LyC emission from any individual galaxy is not evidence of 𝑓esc
+= 0.0 as large quantities of LyC photons could be escaping in di-
+rections other than our line-of-sight. As we have shown, the value
+of 𝑓esc is dependent on the assumed underlying PDF and current
+detection rates may disfavour a flat distribution. One way to provide
+a theoretically sound basis for our assumptions on the PDF of 𝑓esc
+for galaxies or galaxy samples is through the careful consideration
+of high resolution hydrodynamical simulations."
+"LyC escape can be measured in such simulations by applying
+full radiative transfer, then measuring 𝑓esc from a large number of"
+"MNRAS 000, 1–20 (2021)"
+18 R. Bassett et al.
+"sight lines towards the galaxy. This method provides the full three
+dimensional 𝑓esc at a given time and has shown that even for indi-
+vidual galaxies 𝑓esc is highly variable and can swing from 0 to 1
+within 100 Myr (Paardekooper et al. 2015; Trebitsch et al. 2017;
+Rosdahl et al. 2018) though there may be some mass dependence
+on the 3D 𝑓esc PDF. It has been shown, however, that for a galaxy
+with given 3D 𝑓esc value the value of 𝑓esc in any particular sight-
+line may vary from 0 to values larger than the true 3D value (e.g.
+Paardekooper et al. 2015, Figure 13). Thus, to construct the un-
+derlying 𝑓esc PDF for a given sample of galaxies may require the
+combination of the 3D 𝑓esc of galaxies (with possible dependencies
+on mass or other properties) with the probability distribution of 2D
+𝑓esc (line-of-sight) for a given 3D 𝑓esc value. Disentangling the var-
+ious dependencies on these underlying PDFs will require suites of
+high resolution simulations with full radiative transfer, but is of the
+utmost importance in interpreting the 2D 𝑓esc values from observa-
+tions with the true 3D 𝑓esc distributions. Ultimately it is the full 3D
+𝑓esc values from galaxies that are of interest in the context of the
+EoR, which can only be connected to our 2D observational results
+through such a complex line of reasoning as is described here."
+5 SUMMARY AND CONCLUSIONS
+"In this paper we have explored the level of bias in the IGM trans-
+mission, 𝑇IGM, for galaxies with LyC detections at 𝑧=3-4 under the
+observational limits imposed by current instruments and surveys.
+Our tests were performed by simulating one million IGM transmis-
+sion functions in our redshift range of interest and applying these
+to empirically motivated mock galaxy spectra constructed from the
+BPASSv2.1 models (Eldridge et al. 2017). We have also tested how
+the level of IGM transmission bias, 𝑇bias, depends on both the as-
+sumed probability distribution function, PDF, of 𝑓esc and SED shape
+(which controls (𝐿900/𝐿1500)𝑖𝑛𝑡 , a key value for measuring 𝑓esc).
+Our analysis has included modeling designed to approximate both
+spectroscopic and photometric LyC detections from recent surveys
+of Steidel et al. (2018), Fletcher et al. (2019), and Meštrić et al.
+(2020)."
+"Broadly, we find that, in all cases the average value of 𝑇IGM
+at LyC wavelengths for galaxies with LyC detections is found to
+be larger than the average 𝑇IGM for all simulated sightlines at the
+same redshift. This results from the fact that the underlying 𝑇IGM
+distribution at 880 Å < _rest < 910 Å is bimodal with the stronger
+peak at 𝑇IGM = 0, but the simple fact that the galaxy has been
+detected means that 𝑇IGM ≠ 0. Thus, the 𝑇IGM distribution for LyC
+detected galaxies is unimodal with a peak at relatively high 𝑇IGM,
+while the mean for all sightlines falls below this due to the inclusion
+of the 𝑇IGM = 0 peak. The result is that the assumption of a mean
+𝑇IGM for all sightlines when calculating 〈 𝑓esc〉 for a sample of LyC
+detected galaxies results in an overestimate of the true value. This
+result is similar to the recent results of Byrohl & Gronke (2020) for
+Ly𝛼 transmission. Thus, it is becoming clear that, while tempting,
+using a single statistic (e.g.median ormean)when considering𝑇IGM
+for individual objects provides misleading results for LyC detected
+samples. Considering sampleswhich include (are composed entirely
+of) LyC non-detected galaxies, the use of 〈𝑇IGM〉 when calculating
+upper limits on 〈 𝑓esc〉 is appropriate, however. The remainder of our
+conclusions can be summarised as follows:"
+"• Assuming the an LBG-like UV flux distribution and applying
+detection limits of Steidel et al. (2018), Fletcher et al. (2019), and
+Meštrić et al. (2020) we estimate minimum levels of 𝑇bias to be
+∼0.15, ∼0.11, and ∼0.22 for each survey, respectively."
+"• In the case of aUVflux distributionmore characteristic of LAE
+sample (e.g. those of Fletcher et al. 2019) a higher 𝑇bias should be
+expected. In this case, mock HST F336W observations similar to
+Fletcher et al. (2019), the minimum 𝑇bias increases to ∼0.21."
+"• We have shown in Section 3.2 that, although 𝑇bias does not
+increase significantly assuming an 𝑓esc PDF mildly biased towards
+0, there may be a slight decrease in the recovered 𝑓esc value in such
+a model."
+"• We have also demonstrated that the current detection rates of
+LyC radiation from surveys may reflect information regarding the
+underlying 𝑓esc PDF. Our simplifiedmodel presented in Section 4.3,
+for example, appears to slightly disfavour a flat 𝑓esc PDF for LBGs
+(e.g. Steidel et al. 2018), though this may not be the case for LAE
+samples (e.g. Fletcher et al. 2019)."
+"This final point may suggest that fainter galaxies, represented
+by LAE samples, are more likely to exhibit a higher 𝑓esc than bright
+galaxies, represented by LBGs. Such a scenario is in agreement with
+other recent studies (e.g. Finkelstein et al. 2019). Our comparisons
+in this context in Section 4.3 with the detection rates of Steidel
+et al. (2018) and Fletcher et al. (2019) are still in the realm of
+low statistical significance. Thus, confirmation of these results will
+require larger samples of LyC detected galaxies onwhich to perform
+a similar analysis."
+"Of course, all of our results will depend on the various input
+parameters of our models including the assumed distribution of
+1500 Å (rest-frame) fluxes, our treatment (or lack thereof) of dust
+attenuation, our assumptions regarding the intrinsic luminosity ratio
+((𝐿900/𝐿1500)𝑖𝑛𝑡 ) of galaxies, and even the details of our methods
+for producing 𝑇IGM functions (e.g. HI distribution functions). Thus,
+we do not claim that the absolute values of 𝑇bias from this work to
+be in any way definitive. The purpose of this work is to highlight
+the ways in which different assumptions regarding the underlying
+distributions of 𝑇IGM and 𝑓esc affect our attempts to estimate 𝑓esc
+from galaxies. It is clear that significant theoretical work is still
+required to better understand these PDFs that are critical to our
+interpretation of LyC detections from observations."
+"From an observational point of view, it is also clear that larger
+samples of LyC detections will be essential in disentangling the var-
+ious dependencies on 𝑓esc (e.g. stellar mass, SFR, etc). It is possible
+that more efficient searches can be conducted in the near future with
+a focus on increasing both depth and field-of-view (FOV). Indeed,
+we find the highest detection rates among our mock surveys for our
+mock LACES survey (Fletcher et al. 2019, Section 4.3), primar-
+ily due to those observations reaching 30.24 mag. The drawback
+is that this study is performed with WFC3, an instrument with a
+relatively small FOV. One possible future instrument that may push
+LyC surveys to the next level is the KeckWide Field Imager (KWFI,
+Gillingham et al. 2020) that is expected to achieve a signal to noise
+of ∼2 at 30th magnitude in the 𝑢-band across a 1 degree diameter
+FOV in just under 8 hours of exposures (private communication).
+From our mock LACES survey, we estimate that ∼50% of all simu-
+lated galaxies fall in the magnitude range between 30 and 32. Thus,
+the era of large samples of known LyC emitting galaxies may be
+near."
+DATA AVAILABILITY
+"Simulated data used in this work is produced primarily using pub-
+licly available codes found at https://github.com/robbassett as well
+as publicly available galaxy SEDmodels from theBPASS collabora-"
+"MNRAS 000, 1–20 (2021)"
+The IGM Transmission of LyC Detections 19
+"tion (Eldridge et al. 2017). Observational data used for comparison
+is available from publications associated with those surveys."
+ACKNOWLEDGEMENTS
+"This research was conducted by the Australian Research Council
+Centre of Excellence for All Sky Astrophysics in 3 Dimensions
+(ASTRO 3D), through project number CE170100013. The authors
+wish to thank Chris Blake, AdamBatten, andKatinkaGeréb for use-
+ful and illuminating discussions. We also wish to thank our referee,
+Akio K. Inoue, for careful consideration of the manuscript, which
+has resulted in an improved focus within the context of current
+studies exploring LyC emission from galaxies at high redshift. Re-
+sults presented in this work have made extensive use of the python3
+programming language (Van Rossum & Drake 2009) and, in par-
+ticular, the authors wish to acknowledge the the numpy (Oliphant
+2006), matplotlib (Hunter 2007), and scipy (Virtanen et al. 2020)
+packages. MR and LP acknowledge support from HST programs
+15100 and 15647. Support for Program numbers 15100 and 15647
+were provided by NASA through a grant from the Space Telescope
+Science Institute, which is operated by the Association of Universi-
+ties for Research in Astronomy, Incorporated, under NASA contract
+NAS5-26555."
+REFERENCES
+"Barrow K. S. S., Robertson B. E., Ellis R. S., Nakajima K., Saxena A., Stark
+D. P., Tang M., 2020, arXiv e-prints, p. arXiv:2010.00592"
+"Bassett R., et al., 2019, MNRAS, 483, 5223
+Becker G. D., Hewett P. C., Worseck G., Prochaska J. X., 2013, MNRAS,
+430, 2067"
+"Bershady M. A., Charlton J. C., Geoffroy J. M., 1999, ApJ, 518, 103
+Bian F., Fan X., 2020, MNRAS, 493, L65
+Bian F., Fan X., McGreer I., Cai Z., Jiang L., 2017, ApJ, 837, L12
+Boutsia K., et al., 2011, ApJ, 736, 41
+Bouwens R. J., Illingworth G. D., Oesch P. A., Caruana J., Holwerda B.,
+Smit R., Wilkins S., 2015, ApJ, 811, 140"
+"Bouwens R. J., Smit R., Labbé I., Franx M., Caruana J., Oesch P., Stefanon
+M., Rasappu N., 2016, ApJ, 831, 176"
+"Buat V., Burgarella D., Deharveng J. M., Kunth D., 2002, A&A, 393, 33
+Byrohl C., Gronke M., 2020, arXiv e-prints, p. arXiv:2006.10041
+Calzetti D., Armus L., Bohlin R. C., Kinney A. L., Koornneef J., Storchi-
+Bergmann T., 2000, ApJ, 533, 682"
+"Carswell R. F., Webb J. K., 2014, VPFIT: Voigt profile fitting program
+(ascl:1408.015)"
+"Eldridge J. J., Stanway E. R., Xiao L., McClelland L. A. S., Taylor G., Ng
+M., Greis S. M. L., Bray J. C., 2017, Publ. Astron. Soc. Australia, 34,
+e058"
+"Fan X., Carilli C. L., Keating B., 2006, ARA&A, 44, 415
+Fernández-Soto A., Lanzetta K. M., Chen H. W., 2003, MNRAS, 342, 1215
+Finkelstein S. L., et al., 2019, ApJ, 879, 36
+Fletcher T. J., Tang M., Robertson B. E., Nakajima K., Ellis R. S., Stark
+D. P., Inoue A., 2019, ApJ, 878, 87"
+"Forrest B., et al., 2017, ApJ, 838, L12
+Giallongo E., Cristiani S., D’Odorico S., Fontana A., 2002, ApJ, 568, L9
+Gillingham P., Cooke J., Glazebrook K., Mould J., Smith R., Steidel C.,
+2020, in Proc. SPIE. p. 112030F, doi:10.1117/12.2540717"
+"Gordon K. D., Clayton G. C., 1998, ApJ, 500, 816
+Grazian A., et al., 2016, A&A, 585, A48
+Greig B., Mesinger A., 2017, MNRAS, 472, 2651
+Hasinger G., et al., 2018, ApJ, 858, 77
+Hopkins P. F., Richards G. T., Hernquist L., 2007, ApJ, 654, 731
+Hui L., Rutledge R. E., 1999, ApJ, 517, 541
+Hunter J. D., 2007, Computing in Science & Engineering, 9, 90"
+"Inoue A. K., Iwata I., 2008, MNRAS, 387, 1681
+Inoue A. K., Iwata I., Deharveng J.-M., Buat V., Burgarella D., 2005, A&A,
+435, 471"
+"Inoue A. K., Iwata I., Deharveng J.-M., 2006, MNRAS, 371, L1
+Inoue A. K., et al., 2011, MNRAS, 411, 2336
+Inoue A. K., Shimizu I., Iwata I., Tanaka M., 2014, MNRAS, 442, 1805
+Iwata I., et al., 2009, ApJ, 692, 1287
+Izotov Y. I., Schaerer D., Thuan T. X., Worseck G., Guseva N. G., Orlitová
+I., Verhamme A., 2016, MNRAS, 461, 3683"
+"Izotov Y. I., Worseck G., Schaerer D., Guseva N. G., Thuan T. X., Fricke
+K. J., Verhamme A., Orlitová I., 2018, MNRAS,"
+"Janknecht E., Reimers D., Lopez S., Tytler D., 2006, A&A, 458, 427
+Japelj J., et al., 2017, MNRAS, 468, 389
+Kakiichi K., Dĳkstra M., 2018, MNRAS, 480, 5140
+Kakiichi K., et al., 2018, MNRAS, 479, 43
+Kimm T., Cen R., 2014, ApJ, 788, 121
+Ma X., Quataert E., Wetzel A., Hopkins P. F., Faucher-Giguère C.-A., Kereš
+D., 2020, arXiv e-prints, p. arXiv:2003.05945"
+"Mason C. A., Treu T., Dĳkstra M., Mesinger A., Trenti M., Pentericci L., de
+Barros S., Vanzella E., 2018, ApJ, 856, 2"
+"Meiksin A., 2006, MNRAS, 365, 807
+Meurer G. R., Heckman T. M., Calzetti D., 1999, ApJ, 521, 64
+Meštrić U., et al., 2020, MNRAS, 494, 4986
+Micheva G., Iwata I., Inoue A. K., Matsuda Y., Yamada T., Hayashino T.,
+2017, MNRAS, 465, 316"
+"Møller P., Jakobsen P., 1990, A&A, 228, 299
+Momcheva I. G., et al., 2016, ApJS, 225, 27
+Moutard T., Sawicki M., Arnouts S., Golob A., Coupon J., Ilbert O., Yang
+X., Gwyn S., 2020, MNRAS, 494, 1894"
+"Naidu R. P., Tacchella S., Mason C. A., Bose S., Oesch P. A., Conroy C.,
+2020, ApJ, 892, 109"
+"Nakajima K., Ellis R. S., Robertson B. E., Tang M., Stark D. P., 2020, ApJ,
+889, 161"
+"Nestor D. B., Shapley A. E., Steidel C. C., Siana B., 2011, ApJ, 736, 18
+Oliphant T., 2006, Guide to NumPy
+Osterbrock D. E., 1989, Astrophysics of gaseous nebulae and active galactic
+nuclei"
+"Ouchi M., et al., 2009, ApJ, 706, 1136
+Paardekooper J.-P., Khochfar S., Dalla Vecchia C., 2015, MNRAS, 451,
+2544"
+"Parsa S., Dunlop J. S., McLure R. J., 2018, MNRAS, 474, 2904
+Pentericci L., et al., 2018, A&A, 616, A174
+Planck Collaboration et al., 2016, A&A, 596, A107
+Reddy N. A., Pettini M., Steidel C. C., Shapley A. E., Erb D. K., Law D. R.,
+2012, ApJ, 754, 25"
+"Reddy N. A., Steidel C. C., Pettini M., Bogosavljević M., Shapley A. E.,
+2016, ApJ, 828, 108"
+"Rivera-Thorsen T. E., et al., 2019, Science, 366, 738
+Robertson B. E., Ellis R. S., Furlanetto S. R., Dunlop J. S., 2015, ApJ, 802,
+L19"
+"Rosdahl J., et al., 2018, preprint, (arXiv:1801.07259)
+Rudie G. C., Steidel C. C., Shapley A. E., Pettini M., 2013, ApJ, 769, 146
+Saha K., et al., 2020, Nature Astronomy,
+Sawicki M., et al., 2019, MNRAS, 489, 5202
+Seiler J., Hutter A., Sinha M., Croton D., 2018, MNRAS, 480, L33
+Shapley A. E., Steidel C. C., Pettini M., Adelberger K. L., 2003, ApJ, 588,
+65"
+"Shapley A. E., Steidel C. C., Pettini M., Adelberger K. L., Erb D. K., 2006,
+ApJ, 651, 688"
+"Shapley A. E., Steidel C. C., Strom A. L., Bogosavljević M., Reddy N. A.,
+Siana B., Mostardi R. E., Rudie G. C., 2016, ApJ, 826, L24"
+"Siana B., et al., 2007, ApJ, 668, 62
+Siana B., et al., 2015, ApJ, 804, 17
+Smith B. M., et al., 2018, ApJ, 853, 191
+Steidel C. C., Pettini M., Adelberger K. L., 2001, ApJ, 546, 665
+Steidel C. C., Bogosavlevic M., Shapley A. E., Reddy N. A., Rudie
+G. C., Pettini M., Trainor R. F., Strom A. L., 2018, preprint,
+(arXiv:1805.06071)"
+"MNRAS 000, 1–20 (2021)"
+"https://ui.adsabs.harvard.edu/abs/2020arXiv201000592B
+http://dx.doi.org/10.1093/mnras/sty3320
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.5223B
+http://dx.doi.org/10.1093/mnras/stt031
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.430.2067B
+http://dx.doi.org/10.1086/307257
+https://ui.adsabs.harvard.edu/abs/1999ApJ...518..103B
+http://dx.doi.org/10.1093/mnrasl/slaa007
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.493L..65B
+http://dx.doi.org/10.3847/2041-8213/aa5ff7
+http://adsabs.harvard.edu/abs/2017ApJ...837L..12B
+http://dx.doi.org/10.1088/0004-637X/736/1/41
+https://ui.adsabs.harvard.edu/abs/2011ApJ...736...41B
+http://dx.doi.org/10.1088/0004-637X/811/2/140
+http://adsabs.harvard.edu/abs/2015ApJ...811..140B
+http://dx.doi.org/10.3847/0004-637X/831/2/176
+http://adsabs.harvard.edu/abs/2016ApJ...831..176B
+http://dx.doi.org/10.1051/0004-6361:20020925
+https://ui.adsabs.harvard.edu/abs/2002A&A...393...33B
+https://ui.adsabs.harvard.edu/abs/2020arXiv200610041B
+http://dx.doi.org/10.1086/308692
+http://adsabs.harvard.edu/abs/2000ApJ...533..682C
+http://dx.doi.org/10.1017/pasa.2017.51
+http://adsabs.harvard.edu/abs/2017PASA...34...58E
+http://adsabs.harvard.edu/abs/2017PASA...34...58E
+http://dx.doi.org/10.1146/annurev.astro.44.051905.092514
+http://adsabs.harvard.edu/abs/2006ARA%26A..44..415F
+http://dx.doi.org/10.1046/j.1365-8711.2003.06622.x
+https://ui.adsabs.harvard.edu/abs/2003MNRAS.342.1215F
+http://dx.doi.org/10.3847/1538-4357/ab1ea8
+https://ui.adsabs.harvard.edu/abs/2019ApJ...879...36F
+http://dx.doi.org/10.3847/1538-4357/ab2045
+https://ui.adsabs.harvard.edu/abs/2019ApJ...878...87F
+http://dx.doi.org/10.3847/2041-8213/aa653b
+http://adsabs.harvard.edu/abs/2017ApJ...838L..12F
+http://dx.doi.org/10.1086/340254
+https://ui.adsabs.harvard.edu/abs/2002ApJ...568L...9G
+http://dx.doi.org/10.1117/12.2540717
+http://dx.doi.org/10.1086/305774
+http://adsabs.harvard.edu/abs/1998ApJ...500..816G
+http://dx.doi.org/10.1051/0004-6361/201526396
+http://adsabs.harvard.edu/abs/2016A%26A...585A..48G
+http://dx.doi.org/10.1093/mnras/stx2118
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.472.2651G
+http://dx.doi.org/10.3847/1538-4357/aabacf
+https://ui.adsabs.harvard.edu/abs/2018ApJ...858...77H
+http://dx.doi.org/10.1086/509629
+http://adsabs.harvard.edu/abs/2007ApJ...654..731H
+http://dx.doi.org/10.1086/307202
+https://ui.adsabs.harvard.edu/abs/1999ApJ...517..541H
+http://dx.doi.org/10.1109/MCSE.2007.55
+http://dx.doi.org/10.1111/j.1365-2966.2008.13350.x
+https://ui.adsabs.harvard.edu/abs/2008MNRAS.387.1681I
+http://dx.doi.org/10.1051/0004-6361:20041769
+http://adsabs.harvard.edu/abs/2005A%26A...435..471I
+http://dx.doi.org/10.1111/j.1745-3933.2006.00195.x
+https://ui.adsabs.harvard.edu/abs/2006MNRAS.371L...1I
+http://dx.doi.org/10.1111/j.1365-2966.2010.17851.x
+https://ui.adsabs.harvard.edu/abs/2011MNRAS.411.2336I
+http://dx.doi.org/10.1093/mnras/stu936
+http://adsabs.harvard.edu/abs/2014MNRAS.442.1805I
+http://dx.doi.org/10.1088/0004-637X/692/2/1287
+https://ui.adsabs.harvard.edu/abs/2009ApJ...692.1287I
+http://dx.doi.org/10.1093/mnras/stw1205
+http://adsabs.harvard.edu/abs/2016MNRAS.461.3683I
+http://dx.doi.org/10.1093/mnras/sty1378
+http://dx.doi.org/10.1051/0004-6361:20065372
+https://ui.adsabs.harvard.edu/abs/2006A&A...458..427J
+http://dx.doi.org/10.1093/mnras/stx477
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.468..389J
+http://dx.doi.org/10.1093/mnras/sty2214
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.480.5140K
+http://dx.doi.org/10.1093/mnras/sty1318
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.479...43K
+http://dx.doi.org/10.1088/0004-637X/788/2/121
+https://ui.adsabs.harvard.edu/abs/2014ApJ...788..121K
+https://ui.adsabs.harvard.edu/abs/2020arXiv200305945M
+http://dx.doi.org/10.3847/1538-4357/aab0a7
+https://ui.adsabs.harvard.edu/abs/2018ApJ...856....2M
+http://dx.doi.org/10.1111/j.1365-2966.2005.09756.x
+https://ui.adsabs.harvard.edu/abs/2006MNRAS.365..807M
+http://dx.doi.org/10.1086/307523
+http://adsabs.harvard.edu/abs/1999ApJ...521...64M
+http://dx.doi.org/10.1093/mnras/staa920
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.494.4986M
+http://dx.doi.org/10.1093/mnras/stw2700
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.465..316M
+https://ui.adsabs.harvard.edu/abs/1990A&A...228..299M
+http://dx.doi.org/10.3847/0067-0049/225/2/27
+https://ui.adsabs.harvard.edu/abs/2016ApJS..225...27M
+http://dx.doi.org/10.1093/mnras/staa706
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.494.1894M
+http://dx.doi.org/10.3847/1538-4357/ab7cc9
+https://ui.adsabs.harvard.edu/abs/2020ApJ...892..109N
+http://dx.doi.org/10.3847/1538-4357/ab6604
+https://ui.adsabs.harvard.edu/abs/2020ApJ...889..161N
+http://dx.doi.org/10.1088/0004-637X/736/1/18
+http://adsabs.harvard.edu/abs/2011ApJ...736...18N
+http://dx.doi.org/10.1088/0004-637X/706/2/1136
+http://adsabs.harvard.edu/abs/2009ApJ...706.1136O
+http://dx.doi.org/10.1093/mnras/stv1114
+http://adsabs.harvard.edu/abs/2015MNRAS.451.2544P
+http://adsabs.harvard.edu/abs/2015MNRAS.451.2544P
+http://dx.doi.org/10.1093/mnras/stx2887
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.474.2904P
+http://dx.doi.org/10.1051/0004-6361/201833047
+https://ui.adsabs.harvard.edu/abs/2018A&A...616A.174P
+http://dx.doi.org/10.1051/0004-6361/201628890
+https://ui.adsabs.harvard.edu/abs/2016A&A...596A.107P
+http://dx.doi.org/10.1088/0004-637X/754/1/25
+https://ui.adsabs.harvard.edu/abs/2012ApJ...754...25R
+http://dx.doi.org/10.3847/0004-637X/828/2/108
+http://adsabs.harvard.edu/abs/2016ApJ...828..108R
+http://dx.doi.org/10.1126/science.aaw0978
+https://ui.adsabs.harvard.edu/abs/2019Sci...366..738R
+http://dx.doi.org/10.1088/2041-8205/802/2/L19
+http://adsabs.harvard.edu/abs/2015ApJ...802L..19R
+http://adsabs.harvard.edu/abs/2015ApJ...802L..19R
+http://arxiv.org/abs/1801.07259
+http://dx.doi.org/10.1088/0004-637X/769/2/146
+https://ui.adsabs.harvard.edu/abs/2013ApJ...769..146R
+http://dx.doi.org/10.1038/s41550-020-1173-5
+http://dx.doi.org/10.1093/mnras/stz2522
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.489.5202S
+http://dx.doi.org/10.1093/mnrasl/sly122
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.480L..33S
+http://dx.doi.org/10.1086/373922
+http://adsabs.harvard.edu/abs/2003ApJ...588...65S
+http://adsabs.harvard.edu/abs/2003ApJ...588...65S
+http://dx.doi.org/10.1086/507511
+http://adsabs.harvard.edu/abs/2006ApJ...651..688S
+http://dx.doi.org/10.3847/2041-8205/826/2/L24
+http://adsabs.harvard.edu/abs/2016ApJ...826L..24S
+http://dx.doi.org/10.1086/521185
+http://adsabs.harvard.edu/abs/2007ApJ...668...62S
+http://dx.doi.org/10.1088/0004-637X/804/1/17
+https://ui.adsabs.harvard.edu/abs/2015ApJ...804...17S
+http://dx.doi.org/10.3847/1538-4357/aaa3dc
+https://ui.adsabs.harvard.edu/abs/2018ApJ...853..191S
+http://dx.doi.org/10.1086/318323
+http://adsabs.harvard.edu/abs/2001ApJ...546..665S
+http://arxiv.org/abs/1805.06071"
+"
+20 R. Bassett et al."
+"Straatman C. M. S., et al., 2016, ApJ, 830, 51
+Tepper-García T., 2006, MNRAS, 369, 2025
+Trebitsch M., Blaizot J., Rosdahl J., Devriendt J., Slyz A., 2017, MNRAS,
+470, 224"
+"Urrutia T., et al., 2019, A&A, 624, A141
+Van Rossum G., Drake F. L., 2009, Python 3 Reference Manual. CreateS-
+pace, Scotts Valley, CA"
+"Vanzella E., Siana B., Cristiani S., Nonino M., 2010, MNRAS, 404, 1672
+Vanzella E., et al., 2012, ApJ, 751, 70
+Vanzella E., et al., 2016, ApJ, 825, 41
+Vanzella E., et al., 2018, MNRAS, 476, L15
+Virtanen P., et al., 2020, Nature Methods,
+Weingartner J. C., Draine B. T., 2001, ApJ, 548, 296
+Wise J. H., Cen R., 2009, ApJ, 693, 984
+Yajima H., Choi J.-H., Nagamine K., 2011, MNRAS, 412, 411
+Yamanaka S., et al., 2020, MNRAS, 498, 3095
+Zackrisson E., Inoue A. K., Jensen H., 2013, ApJ, 777, 39"
+This paper has been typeset from a TEX/LATEX file prepared by the author.
+"MNRAS 000, 1–20 (2021)"
+"http://dx.doi.org/10.3847/0004-637X/830/1/51
+http://adsabs.harvard.edu/abs/2016ApJ...830...51S
+http://dx.doi.org/10.1111/j.1365-2966.2006.10450.x
+https://ui.adsabs.harvard.edu/abs/2006MNRAS.369.2025T
+http://dx.doi.org/10.1093/mnras/stx1060
+http://adsabs.harvard.edu/abs/2017MNRAS.470..224T
+http://dx.doi.org/10.1051/0004-6361/201834656
+https://ui.adsabs.harvard.edu/abs/2019A&A...624A.141U
+http://dx.doi.org/10.1111/j.1365-2966.2010.16408.x
+http://adsabs.harvard.edu/abs/2010MNRAS.404.1672V
+http://dx.doi.org/10.1088/0004-637X/751/1/70
+http://adsabs.harvard.edu/abs/2012ApJ...751...70V
+http://dx.doi.org/10.3847/0004-637X/825/1/41
+http://adsabs.harvard.edu/abs/2016ApJ...825...41V
+http://dx.doi.org/10.1093/mnrasl/sly023
+http://adsabs.harvard.edu/abs/2018MNRAS.476L..15V
+http://dx.doi.org/https://doi.org/10.1038/s41592-019-0686-2
+http://dx.doi.org/10.1086/318651
+https://ui.adsabs.harvard.edu/abs/2001ApJ...548..296W
+http://dx.doi.org/10.1088/0004-637X/693/1/984
+http://adsabs.harvard.edu/abs/2009ApJ...693..984W
+http://dx.doi.org/10.1111/j.1365-2966.2010.17920.x
+http://adsabs.harvard.edu/abs/2011MNRAS.412..411Y
+http://dx.doi.org/10.1093/mnras/staa2507
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.498.3095Y
+http://dx.doi.org/10.1088/0004-637X/777/1/39
+http://adsabs.harvard.edu/abs/2013ApJ...777...39Z"
+"	1 Introduction
+	2 Simulating LyC Leaking Galaxies
+	2.1 IGM Transmission Functions
+	2.2 fesc Distribution Functions
+	2.3 Producing Mock Galaxy Spectra"
+"	3 Results
+	3.1 Fiducial IGM Bias
+	3.2 An Alternative fesc Distribution
+	3.3 Dependence on SED Variations"
+"	4 Discussion
+	4.1 Correlation between TIGM(LyC) and TIGM(Ly)
+	4.2 Effects of Tbias on fesc Estimates for Samples
+	4.3 Survey Detection Rate vs fesc PDF
+	4.4 Dust Attenuation
+	4.5 LyC Detections at Other Redshifts
+	4.6 Observed vs True fesc"
+	5 Summary and Conclusions

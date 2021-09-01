@@ -1,0 +1,501 @@
+0
+"Draft version February 26, 2021"
+Typeset using LATEX preprint style in AASTeX62
+The First 3D Coronal Loop Model Heated by MHD Waves against Radiative Losses
+"Mijie Shi,1, 2 Tom Van Doorsselaere,2 Mingzhe Guo,1, 2 Konstantinos Karampelas,2, 3 Bo Li,1"
+and Patrick Antolin3
+"1Shandong Key Laboratory of Optical Astronomy and Solar-Terrestrial Environment, Institute of Space Sciences,
+Shandong University, Weihai, Shandong, 264209, China"
+"2Centre for mathematical Plasma Astrophysics, Department of Mathematics, KU Leuven, B-3001 Leuven, Belgium
+3Department of Mathematics, Physics and Electrical Engineering, Northumbria University, Newcastle Upon Tyne,"
+"NE1 8ST, UK"
+(Received 2020 May 28; Revised 2020 December 14; Accepted 2021 January 2)
+ABSTRACT
+"In the quest to solve the long-standing coronal heating problem, it has been sug-
+gested half a century ago that coronal loops could be heated by waves. Despite the
+accumulating observational evidence of the possible importance of coronal waves, still
+no 3D MHD simulations exist that show significant heating by MHD waves. Here we
+report on the first 3D coronal loop model heating the plasma against radiative cooling.
+The coronal loop is driven at the footpoint by transverse oscillations and subsequently
+the induced Kelvin-Helmholtz instability deforms the loop cross-section and generates
+small-scale structures. Wave energy is transfered to smaller scales where it is dissipated,
+overcoming the internal energy losses by radiation. These results open up a new avenue
+to address the coronal heating problem."
+"Keywords: Magnetohydrodynamics, Magnetohydrodynamics simulations, Solar coronal
+heating, Solar coronal waves"
+1. INTRODUCTION
+"The mechanisms to heat the corona to its multi-million Kelvin temperature have been divided
+between DC heating mechanisms and AC heating mechanisms. The DC heating mechanisms are
+models generating currents and magnetic reconnection. Given that previous detection of coronal
+waves were sporadic events (Aschwanden et al. 1999; Nakariakov et al. 1999), modelling efforts have
+mainly gone into 3D DC heating models (Gudiksen & Nordlund 2005; Chen et al. 2014; Carlsson et al.
+2016). However, the recent observational evidence for the ubiquitous presence of transverse coronal
+waves (Tomczyk et al. 2007; McIntosh et al. 2011; Anfinogentov et al. 2015), motivates a revisiting of
+the AC heating mechanisms. Wave heating has been successfully achieved in 1D (Suzuki & Inutsuka
+2005) and reduced 3D MHD (van Ballegooijen et al. 2011, 2014) models. Recently, Matsumoto (2018)
+extended the 1D wave heating models to 3D, but the model lacked any transverse structuring and"
+"Corresponding author: Mijie Shi
+mijie.shi@kuleuven.be"
+mailto: mijie.shi@kuleuven.be
+"
+2 Shi et al."
+"thus the waves heat a flux tube without a density-enhanced coronal loop. Recent 3D models with
+density-enhanced coronal loops have not been able to sustain the corona (Pagano et al. 2018; Pagano
+& De Moortel 2019). This is because the wave heating is insufficient to compete against the strong
+radiative cooling of the coronal loops. Since the optically thin radiative cooling directly decreases
+the internal energy, it is the key quantity to overcome in coronal heating models."
+"The observed transverse waves that show little to no decay (Tian et al. 2012; Wang et al. 2012)
+are called decayless kink waves (Nisticò et al. 2013). Even though it is still unconfirmed whether
+these transverse waves have enough energy for heating the corona (Tomczyk et al. 2007; McIntosh
+et al. 2011; Van Doorsselaere et al. 2014), the observed energy flux of transverse oscillations is usually
+underestimated because some “dark” energy is hidden in the non-thermal broadening of spectral lines
+(McIntosh & De Pontieu 2012; De Moortel & Pascoe 2012; Pant et al. 2019). The decayless waves
+are interpreted as being driven at the footpoints by photospheric motions, but the wave energy is
+transfered and dissipated in the corona, either through resonant absorption (Hollweg & Yang 1988;
+Goossens & Poedts 1992), mode coupling (Pascoe et al. 2012), phase mixing (Pagano & De Moortel
+2017), or Kelvin-Helmholtz instability (Browning & Priest 1984; Terradas et al. 2008; Antolin et al.
+2015). The latter mechanism cascades the driving energy from large scales to small scales, where it is
+dissipated at low Reynolds numbers (Karampelas et al. 2017; Guo et al. 2019b; Afanasyev et al. 2019;
+Karampelas et al. 2019a). The resulting loops have a fully turbulent cross-section (Karampelas &
+Van Doorsselaere 2018; Antolin & Van Doorsselaere 2019) and show decayless oscillations resembling
+observed events (Karampelas et al. 2019b)."
+"In this paper, we study the heating effects of transverse oscillations on coronal loops via three
+dimensional MHD simulations. Our work is different from the previous ones in the following three
+aspects: 1. We explicitly include the radiative cooling in simulations. 2. Our results show that the
+dissipation of transverse oscillations is promising to balance the radiative cooling of the coronal loops.
+3. As far as we know, we propose a new method estimating numerical viscosity and resistivity in
+MHD simulations. The numerical model is presented in Section 2. Section 3 provides the numerical
+results, and Section 4 is the discussion and conclusion."
+2. NUMERICAL MODEL
+"We model the coronal loop as a straight, density enhanced magnetic flux tube in the Cartesian
+coordinate. Gravity is ignored. The loop is along z direction, with all physical parameters depending
+only on the transverse position x and y. Specifically, density is given by this relation,"
+"ρ = ρe + (ρi − ρe) ∗ ζ(x, y), ζ(x, y) =
+1"
+"2
+(1− tanh(b("
+"√
+x2 + y2/R− 1))), (1)"
+"where [ρi, ρe] = [3 × 108, 108]mp cm−3 denote the density in the interior and exterior of the loop,
+R = 1 Mm is the loop radius. b is a parameter controlling the width of the transition layer l, which
+we choose b = 20, corresponding to l ≈ 0.3R. To study the heating of the loop we set temperature
+inside and outside of the loop to be equal, Ti = Te = 1 MK, in order to avoid mixture of plasma with
+different temperatures. The magnetic field is along z direction, with the magnetic filed strength inside
+of the loop being Bi = 30 Gauss. Stability is ensured by maintaining the total pressure balance. The
+Alfvén speed inside of the loop reads vAi ≈ 3778 km s−1."
+"Similar to previous works (Pascoe et al. 2010), we trigger kink wave by implementing a time-
+dependent transverse velocity driver at the footpoint. The velocity inside of the loop is"
+"[vx, vy] = [v0cos(
+2πt"
+"Pk
+), 0], (2)"
+and the velocity outside of the loop is
+"[vx, vy] = v0cos(
+2πt"
+"Pk
+)R2["
+x2 − y2
+"(x2 + y2)2
+,"
+"(x2 + y2)2
+], (3)"
+"where Pk is the period of the fundamental kink mode. We choose the loop length L = 200 Mm, so
+that Pk = 2L/ck = 86.4 s, with ck ≈ 4627 km s−1 being the kink speed. In our simulations we set
+v0 = 8 km/s, corresponding to the lower limits of chromospheric observations of the transverse waves
+(De Pontieu et al. 2007), which is larger than previously used typical values at the photosphere (e.g.
+Karampelas et al. 2017)."
+"The simulations are performed using the ideal MHD module of the PLUTO code (Mignone et al.
+2007). PLUTO solves the conservative form of the ideal MHD equations (i.e., continuity, momentum,
+induction, and energy equations). We use the finite volume piecewise parabolic method (PPM) for
+spatial reconstruction, and the second order Runge Kutta for time stepping. The HLLD approximate
+Riemann solver is used for flux computation, and a hyperbolic divergence cleaning method (GLM) is
+used to keep the magnetic field divergence-free. The simulation domain is [−8, 8] Mm, [−8, 8] Mm,
+and [0, 200] Mm in x, y, and z directions. To resolve the small-scale structures as far as possible
+in the transverse direction, we use 800 uniform grid points in both the x and y directions, and 100
+uniform grids in the z direction, corresponding to a spatial resolution in the x or y direction of
+20 km. For the side boundaries (x and y), we use outflow boundary conditions for all quantities. The
+transverse velocities at the bottom boundary are given by the driver, and at the top boundary are
+fixed to be zero. At both the top and bottom boundary, the z component of velocity is antisymmetric,
+while other quantities have zero-gradient boundary conditions. In the simulations, we have ignored
+resistivity, viscosity, and thermal conduction. The energy dissipation in our simulation is entirely
+caused by numerical dissipation at the grid scales."
+3. RESULTS
+"To study the heating effects of footpoint driven kink waves in the presence of radiative cooling, we
+perform a MHD simulation with the radiative cooling included (radiative simulation hereafter). As
+the comparison case, an ideal MHD simulation (adiabatic simulation hereafter) similar to previous
+works (Karampelas et al. 2017; Guo et al. 2019b) is also conducted. The setup of the radiative
+simulation is the same as the adiabatic simulation initially, but with radiative cooling turned on
+when t > 600 s. The radiative cooling function Λ(T ) is tabulated from the Chianti database1"
+"(Dere et al. 2019). At the same time when radiative cooling is turned on, in order to maintain the
+background corona, we also turn on a temporally and spatially independent constant heating term
+across the whole domain H0 = n"
+"2
+eΛ0, where ne = 10"
+"8 cm−3, Λ0 = 2.6 × 10−22 erg cm3 s−1. H0 is
+implemented to maintain the background corona via balancing its radiative loss. By having both the
+radiative cooling and the background heating, we are in fact analyzing the heating effects after the
+KHI has fully developed and only inside the density enhanced coronal loops."
+1 https://www.chiantidatabase.org/
+4 Shi et al.
+3.1. Loop Dynamics
+"For both cases, we run simulations till t = 2000 s (≈ 23Pk). Figure 1 displays the 3D density
+structure of the subvolume with ρ ≥ (ρe + ρi)/2, the temperature structure of the subvolume with
+T ≥ 1.1 MK, and the forward modeled intensity of the Fe XII 193.5 Å line by FoMo code2 (Van
+Doorsselaere et al. 2016) for the radiative simulation at t = 860 s (≈ 10Pk). From Figure 1 and the
+related movies we see the formation of a standing kink mode as the result of the footpoint driver.
+The loop is distorted first at the boundary due to the velocity shear, and then in the whole loop cross
+section as KHI develops. Heating is initiated at the loop boundary and more profound at the loop
+boundary than the loop interior, due to strong velocity shear at the boundary and strong radiative
+loss at the loop interior. Heating occurs first at the footpoint and only after at the loop apex, making
+the intensity enhancement of the Fe XII 193.5 Å line (formation temperature ∼ 1.58 MK) first at
+the footpoint and then at the loop apex."
+"Figure 2 shows the time-distance maps of density at the mid-plane (a slice at y = 0) of the loop
+apex for two simulation cases. We find that the introduction of the radiative cooling does not have
+any obvious influence to the evolution of the wave amplitude. The average displacement of the loop
+center is around 0.6 - 0.7 Mm in our simulations, which is comparable to the larger amplitude limit
+of the observed decayless oscillations (∼ 0.5 Mm from Nisticò et al. (2013) and Anfinogentov et al.
+(2015))."
+"In order to examine the loop dynamics in more detail, we plot in Figure 3 the density ρ, temperature
+T , z-component current Jz, and z-component vorticity ωz at the loop apex (z = 0.5L) and near the
+footpoint (z = 0.1L) for both adiabatic and radiative simulations at 860 s (∼ 10Pk). From Figure 3
+and the related movie, we find different evolutions at the apex and near the footpoint. At the apex,
+the KHI is initiated at the loop boundary due to the strong velocity shear, then develops further to
+the extent where the loop cross section is fully deformed. Near the footpoint, where mixing is less
+strong, the loop cross section is less deformed than at the apex. As simulations go on, both Jz and
+ωz develop. The high temperature regions coincide with the regions of strong current or viscosity.
+Jz is much stronger near the footpoint, while ωz is more prominent around the apex, indicating
+that numerical resistive heating is stronger near the footpoint, while numerical viscous heating is
+more prominent around the apex (Van Doorsselaere et al. 2007; Karampelas et al. 2017). Some high
+temperature peaks in the snapshot are also due to the adiabatic effects (Karampelas et al. 2017).
+Around the apex, mixing of different regions plays an important role redistributing and equilibrating
+the temperature, while near the footpoint, where mixing is less strong, the high temperature regions
+are more localized. The radiative cooling results in significantly lower temperatures in both the
+apex and near the footpoint. This is because the radiative cooling is proportional to the square of
+the density, and thus has most effect on the high density loop interior. However, despite the strong
+radiative cooling, also the radiative simulation maintains a temperature above the initial temperature
+of 1 MK. For the background corona, the gradual increase of the temperature around the apex is
+due to the ponderomotive force (Terradas & Ofman 2004), which is also found in previous numerical
+simulations (Magyar & Van Doorsselaere 2016; Karampelas et al. 2019a; Guo et al. 2019a)."
+3.2. Volume-averaged Energy Density and Temperature
+2 https://wiki.esat.kuleuven.be/FoMo
+"In order to investigate the evolution of global energy and temperature, we examine the volume-
+averaged energy density and temperature in the subdomain of |x|, |y| ≤ 4 Mm for both simulations.
+The variation of internal, kinetic, magnetic, and total energy densities with respect to their initial
+values (E(0)) are shown in the top panel of Figure 4. In the adiabatic simulation, the kinetic energy
+first increases as the loop is oscillating as a standing kink mode. When KHI has fully deformed the
+loop cross section by t ≈ 500 s and small-scale structures are formed, the kinetic energy becomes
+saturated. The numerical resistivity and viscosity increase the internal energy and heat the plasma
+via dissipating the magnetic and kinetic energy at the grid scales. By inspecting the red solid line
+in the top panel of Figure 4, we find that the evolution of internal energy has two stages. When
+t < 650 s, the increase rate of internal energy is accelerating, while after t > 650 s, an almost constant
+increase rate is seen. This difference is caused by the different dynamic behavior of the loop. The
+first stage is during the growth stage of KHI, with an accelerated energy transport from large to small
+scales. During the second stage, when KHI has saturated and the loop cross section is fully deformed
+and small-scale structures are generated, a constant energy transfer rate is found as indicated by the
+straight red solid line."
+"In the radiative simulation, when radiative cooling is turned on at t = 600 s, the kinetic energy
+is not obviously influenced, while the magnetic and internal energies are changed compared to the
+adiabatic ones. As the gas pressure of the loop is decreased by radiative cooling, the inward Poynting
+flux at the side boundaries of the simulation increases the magnetic energy of the loop. Due to
+the cooling, the internal energy stops increasing and stabilises around a fixed value. Indeed, in this
+stage of our configuration, the driver energy input from the footpoint is approximately balancing
+the radiative energy losses. To better gauge the heating in the simulation, we examine the volume
+averaged temperature in the subdomain, which is shown in the bottom panel of Figure 4. In the
+adiabatic case, the temperature increases continuously due to persistent viscous and resistive heating
+at the small scales. It also follows the two stage process that we discussed before, with first a steady
+increase until the KHI saturates. In the latter stage, the temperature increase in the adiabatic case is
+nearly constant. For the radiative simulation, when radiative cooling is switched on, the temperature
+remains almost constant in the second, radiatively cooling stage of the simulations. This result
+demonstrates that the energy dissipation of small-scale structures can balance the radiative cooling
+and maintain a high temperature loop. It also indicates that transverse oscillation dissipation is a
+promising mechanism for heating coronal loops."
+"To further address the heating effects, it is important to show the internal energy evolution of the
+regions where radiative cooling is stronger than background heating. To do this, we select the regions
+with ρ ≥ 1.1ρe and show in Figure 5 the results of (a) volume averaged temperature, (b) volume
+averaged internal energy density, (c) total volume, and (d) total internal energy of this domain. We
+find that the temperature within this domain shows similar trend as in Figure 4, for both adiabatic
+and radiative cases. This result shows that the heating effects are promising to balance the radiative
+cooling of the denser coronal loop. However, the internal energy density decreases obviously, even in
+the adiabatic case, which seems to contradict with the increase of temperature. A similar situation
+was already discussed by Magyar & Van Doorsselaere (2016) and Karampelas et al. (2017). The
+decrease of the internal energy density is not caused by the energy loss in this domain, but by the
+expansion of this domain, as Figure 5(c) shows, due to the development of KHI and the generated"
+6 Shi et al.
+"vortices. The gradual increase of internal energy in Figure 5(d) is also predominantly caused by the
+expansion of the domain."
+3.3. Resistive and Viscous Heating Rates
+"As mentioned in previous sections, in our model energy dissipation and heating are caused by
+numerical dissipation. Numerical resistivity or viscosity can be estimated by conducting a group
+of runs including varied physical resistivity or viscosity. In this section, we estimate the numerical
+resistivity and viscosity using a different way by taking into account the energy equations."
+"The change of volume-averaged magnetic energy density B2/8π can be expressed as (e.g., Schnack
+2009),"
+"8π
+dV = −"
+"4π
+(E×B) · dSdt−"
+"∫∫
+J · EdV dt"
+"4π
+[(E0 + ηnJ)×B] · dSdt−"
+"∫∫
+(J · E0 + ηnJ2)dV dt,"
+"where we let E = E0 + ηnJ. E0 = −(v×B)/c is the convective electric field and ηn is the numerical
+resistivity. For simplicity, we define the volume-averaged magnetic energy density as"
+"Em =
+1"
+"8π
+dV. (5)"
+"Equation 4 shows that the change of Em is caused by the terms from ideal MHD and the terms
+containing the numerical resistivity ηn. We define the change of the magnetic energy density caused
+by ideal MHD as"
+"Em,ideal = −
+1"
+"4π
+(E0 ×B) · dSdt−"
+"∫∫
+J · E0dV dt. (6)"
+"Assuming ηn is a constant, ηn can thus be derived by comparing Em and its ideal MHD counterpart
+Em,ideal. The top panels of Figure 6 show the results for the adiabatic case. We find that initially Em
+matches with Em,ideal, but later on obvious difference is seen between the two curves. This is because
+numerical resistivity will play a role dissipating magnetic energy when small-scale structures are
+generated. We see that ηn remains almost constant after t ≥ 500 s. The averaged numerical resistivity
+in the range of 500 s ≤ t ≤ 2000 s is ηn = 2.5×10−9 s. The corresponding magnetic Reynolds number
+is Rm = 4πvclc/(c"
+"2ηn) = 2.1 × 105, taking the characteristic velocity as the initial internal Alfvén
+speed vc = vAi = 3778 km/s, and the characteristic length as the loop radius lc = R = 1 Mm."
+"The change of volume-averaged kinetic energy density ρv2/2 is,"
+"2
+ρv2dV = −"
+"2
+ρv2 ¯̄I + ¯̄P ) · v] · dSdt+"
+"∫∫
+(p∇ · v + J · E0 − ¯̄Π : ∇v)dV dt"
+"where ¯̄P = p ¯̄I − ¯̄Π is the total stress tensor, and ¯̄Π is the viscous stress tensor. For simplicity,
+we adopt the expression of viscous stress tensor from fluid dynamics (e.g., Batchelor 2000), Πij ="
+"µn(
+∂ui
+xj"
+"+
+∂uj
+xi
+− 2"
+"3
+δij∇ ·v). Here we use µn to denote the numerical dynamic viscosity. Using a similar"
+"method above estimating ηn, and assuming µn is also a constant, µn can be derived by comparing
+the kinetic energy density Ek (left side of Eqution 7) and its ideal MHD counterpart Ek,ideal (right
+side of Equation 7 without the ¯̄Π terms). The bottom panels of Figure 6 show the results. We find
+that the kinetic energy density saturates at around t = 500 s, while its ideal MHD counterpart keeps
+increasing. The discrepancy between the two curves is caused by numerical viscosity. The averaged
+numerical viscosity in the range of 500 s ≤ t ≤ 2000 s is µn = 1.1×10−4 g/(cm s). The corresponding
+Reynolds number is R = lcvc/(µn/ρ0) = 1.7× 105, taking ρ0 = 3× 108mp cm−3 as the density of the
+loop interior at the initial state."
+"Using the numerical resistivity ηn and numerical dynamic viscosity µn from Figure 6, we can
+quantify the dissipation or heating rates caused by numerical resistivity Dres = ηnJ"
+"2 and numerical
+viscosity Dvis ="
+"¯̄Π : ∇v. Figure 7(a) shows Dres, Dvis, together with the background heating rate
+H0, and the radiative cooling rate, averaged over the domain of |x|, |y| ≤ 4 Mm for the radiative case.
+Both the background heating and the radiative cooling are smoothly turned on at t = 600 s. From
+Figure 7(a) we see that the cooling rate and background heating rate H0 are several times larger
+than both Dvis and Dres. This is mainly because both resistive and viscous dissipations are localized
+around the loop while Figure 7(a) is averaged over a domain much larger than the loop size. H0 is
+constant, as we mentioned above. The radiative cooling rate is roughly balanced by Dvis, Dres, and
+H0. The radiative cooling rate decreases only slightly, meaning that the development of small-scale
+structures does not obviously influence the radiative loss of this domain. Figure 7(b) shows the same
+quantities but averaged over the domain of ρ ≥ 1.1ρe. This domain is not fixed, rather it expands
+as small-scale structures are generated (see Figure 5(c)). The volume expansion obviously decreases
+the volume-averaged radiative cooling rate. The radiative cooling rate is also roughly balanced by
+Dvis, Dres, and H0. Even though H0 contributes around 30% of the total heating rate in the time
+range of 700 s ≤ t ≤ 2000 s, the dissipations from resistivity and viscosity play the major role in the
+dynamics and deserve further future studies."
+4. DISCUSSION AND CONCLUSION
+"It is necessary to have some discussion about the thermal conduction, which is not included in our
+simulations. Thermal conduction can also cause energy loss of a loop. In our initial setup, the time
+scales of a loop cooled down by thermal conduction (τc) and by radiative cooling (τr) can be roughly
+estimated by (e.g., Cargill 1994)"
+"τc = 4× 10−10
+nL20
+T 5/2"
+= 1.2× 104 s (8)
+"τr =
+2nkBT/(γ − 1)"
+"n2Λ(T )
+= 5300 s (9)"
+"where n = 3 × 108 cm−3 is the loop density, L0 = 100 Mm is the loop half length, T = 1 MK, and
+Λ(T ) = 2.6× 10−22 erg cm3 s−1 is the radiative cooling rate at 1 MK. We have τc > τr in our setup,
+indicating radiative cooling is more important than thermal conduction, though further analysis is
+required."
+"Thermal conduction can transport heat along the magnetic field, which may change the temperature
+profiles we obtained in this work. Figure 4 shows that heating can globally balance cooling, while"
+8 Shi et al.
+"Figure 3 shows different temperature profiles around the footpoint and the apex. In Figure 8 we show
+the temperatures averaged over five subdomains with the same volume but centered at different z
+positions for the radiative case. We find that heating is profound around the apex, while around the
+footpoint the temperature decreases because of cooling. Around z = 0.3L and z = 0.7L, heating
+and cooling are almost balanced with each other. If thermal conduction is included, the temperature
+profile along z direction could be smoothed. In the adiabatic stage of t < 600 s, we obtain a
+similar temperature profile as Guo et al. (2019a) in their monolithic case. The small reduction of
+the temperature near the footpoint is probably due to the ponderomotive force that can transport
+mass from the footpoint to the apex and thus influence the temperature profiles (Terradas & Ofman
+2004)."
+"Thus, we have proven with our simulations that AC heating mechanisms can be used in 3D MHD
+models of coronal loops to heat the coronal plasma compensating for the massive radiative losses.
+This was done by comparing an adiabatic simulation with a simulation in which radiative cooling
+was switched on. In the latter simulation, the temperature was kept at coronal values, because of the
+balance between the dissipation of the input driver flux, the background heating, and the radiative
+cooling."
+"This model constitutes a proof-of-principle for the AC heating mechanisms which have been pro-
+posed half a century ago. Our model opens the door for further exploration of these heating mech-
+anisms. This includes models incorporating a chromosphere and transition region who will induce
+field-aligned mass flows in response to the turbulent heating and thermal conduction. Moreover, we
+can look forward to models encompassing a whole active region heated with MHD waves. More im-
+portantly, the models that will build upon our model can be contrasted to earlier DC heating models
+for the solar corona. This comparison could in principle indicate which observable effects that can
+distinguish the two heating classes in observations."
+"Before closing, some remarks are necessary for future studies. Firstly, our current simulations
+have energy outflows near the boundary, which could be improved in the future, and secondly, a
+parametric study where the wave period is changed spanning and bridging the DC AC transition
+would be helpful in determining which heating mechanism is more efficient at least in this model."
+"We thank the referees for the comments which have greatly improved our manuscript. This work
+is supported by the European Research Council (ERC) under the European Union’s Horizon 2020
+research and innovation program (grant agreement No. 724326), the National Natural Science Foun-
+dation of China (41904150, 11761141002, 41674172). KK is supported by UK Science and Technology
+Facilities Council (STFC) grant ST/T000384/1 and by a FWO (Fonds voor Wetenschappelijk On-
+derzoek Vlaanderen) postdoctoral fellowship (1273221N). KK was also supported by a postdoctoral
+mandate from KU Leuven Internal Funds (PDM/2019). PA acknowledges funding from his STFC
+Ernest Rutherford Fellowship (No. ST/R004285/2). MS is support by the international postdoctoral
+exchange fellowship from China Postdoctoral Council. CHIANTI is a collaborative project involv-
+ing the University of Cambridge (UK), the NASA Goddard Space Flight Center (USA), the George
+Mason University(GMU, USA) and the University of Michigan (USA). The computational resources
+and services used in this work were provided by the VSC (Flemish Supercomputer Center), funded
+by the Research Foundation Flanders (FWO) and the Flemish Government – department EWI."
+REFERENCES
+"Afanasyev, A., Karampelas, K., & Van
+Doorsselaere, T. 2019, Astrophys. J., 876, 100"
+"Anfinogentov, S. A., Nakariakov, V. M., &
+Nisticò, G. 2015, A&A, 583, A136"
+"Antolin, P., Okamoto, T. J., De Pontieu, B., et al.
+2015, Astrophys. J., 809, 72"
+"Antolin, P., & Van Doorsselaere, T. 2019,
+Frontiers in Physics, 7, 85"
+"Aschwanden, M. J., Fletcher, L., Schrijver, C. J.,
+& Alexander, D. 1999, Astrophys. J., 520, 880"
+"Batchelor, G. K. 2000, An Introduction to Fluid
+Dynamics"
+"Browning, P. K., & Priest, E. R. 1984, Astron.
+Astrophys., 131, 283"
+"Cargill, P. J. 1994, ApJ, 422, 381
+Carlsson, M., Hansteen, V. H., Gudiksen, B. V.,"
+"Leenaarts, J., & De Pontieu, B. 2016, Astron.
+Astrophys., 585, A4"
+"Chen, F., Peter, H., Bingert, S., & Cheung,
+M. C. M. 2014, Astron. Astrophys., 564, A12"
+"De Moortel, I., & Pascoe, D. J. 2012, Astrophys.
+J., 746, 31"
+"De Pontieu, B., McIntosh, S. W., Carlsson, M.,
+et al. 2007, Science, 318, 1574"
+"Dere, K. P., Del Zanna, G., Young, P. R., Landi,
+E., & Sutherland, R. S. 2019, ApJS, 241, 22"
+"Goossens, M., & Poedts, S. 1992, Astrophys. J.,
+384, 348"
+"Gudiksen, B. V., & Nordlund, Å. 2005, Astrophys.
+J., 618, 1020"
+"Guo, M., Van Doorsselaere, T., Karampelas, K.,
+& Li, B. 2019a, Astrophys. J., 883, 20"
+"Guo, M., Van Doorsselaere, T., Karampelas, K.,
+et al. 2019b, Astrophys. J., 870, 55"
+"Hollweg, J. V., & Yang, G. 1988, J. Geophys.
+Res., 93, 5423"
+"Karampelas, K., & Van Doorsselaere, T. 2018,
+Astron. Astrophys., 610, L9"
+"Karampelas, K., Van Doorsselaere, T., & Antolin,
+P. 2017, Astron. Astrophys., 604, A130"
+"Karampelas, K., Van Doorsselaere, T., & Guo, M.
+2019a, Astron. Astrophys., 623, A53"
+"Karampelas, K., Van Doorsselaere, T., Pascoe,
+D. J., Guo, M., & Antolin, P. 2019b, Frontiers
+in Astronomy and Space Sciences, 6, 38"
+"Magyar, N., & Van Doorsselaere, T. 2016, Astron.
+Astrophys., 595, A81"
+"Matsumoto, T. 2018, MNRAS, 476, 3328"
+"McIntosh, S. W., & De Pontieu, B. 2012,
+Astrophys. J., 761, 138"
+"McIntosh, S. W., de Pontieu, B., Carlsson, M.,
+et al. 2011, Nature, 475, 477"
+"Mignone, A., Bodo, G., Massaglia, S., et al. 2007,
+Astrophys. J. Supplements, 170, 228"
+"Nakariakov, V. M., Ofman, L., Deluca, E. E.,
+Roberts, B., & Davila, J. M. 1999, Science, 285,
+862"
+"Nisticò, G., Nakariakov, V. M., & Verwichte, E.
+2013, A&A, 552, A57"
+"Pagano, P., & De Moortel, I. 2017, Astron.
+Astrophys., 601, A107"
+"—. 2019, Astron. Astrophys., 623, A37
+Pagano, P., Pascoe, D. J., & De Moortel, I. 2018,"
+"Astron. Astrophys., 616, A125
+Pant, V., Magyar, N., Van Doorsselaere, T., &"
+"Morton, R. J. 2019, Astrophys. J., 881, 95
+Pascoe, D. J., Hood, A. W., de Moortel, I., &"
+"Wright, A. N. 2012, Astron. Astrophys., 539,
+A37"
+"Pascoe, D. J., Wright, A. N., & De Moortel, I.
+2010, Astrophys. J., 711, 990"
+"Schnack, D. D. 2009, Conservation Laws, ed.
+D. D. Schnack, Vol. 780, 43"
+"Suzuki, T. K., & Inutsuka, S.-i. 2005, Astrophys.
+J. Letters, 632, L49"
+"Terradas, J., Andries, J., Goossens, M., et al.
+2008, Astrophys. J. Letters, 687, L115"
+"Terradas, J., & Ofman, L. 2004, Astrophys. J.,
+610, 523"
+"Tian, H., McIntosh, S. W., Wang, T., et al. 2012,
+ApJ, 759, 144"
+"Tomczyk, S., McIntosh, S. W., Keil, S. L., et al.
+2007, Science, 317, 1192"
+"van Ballegooijen, A. A., Asgari-Targhi, M., &
+Berger, M. A. 2014, Astrophys. J., 787, 87"
+"van Ballegooijen, A. A., Asgari-Targhi, M.,
+Cranmer, S. R., & DeLuca, E. E. 2011, ApJ,
+736, 3"
+"Van Doorsselaere, T., Andries, J., & Poedts, S.
+2007, A&A, 471, 311"
+"Van Doorsselaere, T., Antolin, P., Yuan, D.,
+Reznikova, V., & Magyar, N. 2016, Frontiers in
+Astronomy and Space Sciences, 3, 4"
+"Van Doorsselaere, T., Gijsen, S. E., Andries, J., &
+Verth, G. 2014, Astrophys. J., 795, 18"
+10 Shi et al.
+"Wang, T., Ofman, L., Davila, J. M., & Su, Y.
+2012, Astrophys. J. Letters, 751, L27"
+"Figure 1. 3D structure of the loop and the synthetic intensity at t = 860 s (∼ 10Pk) for radiative simulation.
+Top left: 3D density structure of subvolume with ρ ≥ (ρe + ρi)/2 (unit: 108 cm−3). Top right: temperature
+structure with T ≥ 1.1 MK. Bottom: forward modeled (with the line of sight along y axis) intensity of the
+Fe XII 193.5 Å line."
+12 Shi et al.
+"Figure 2. Time-distance maps of density at the mid-plane (a slice at y = 0) of the loop apex for (a)
+adiabatic and (b) radiative simulations. Vertical dash line marks the time when radiative cooling is turned
+on."
+"Figure 3. From top to bottom: plane cut of density, temperature, z-component of current and vorticity at
+z = 0.1L and z = 0.5L at t = 860 s for adiabatic and radiative simulations."
+14 Shi et al.
+"Figure 4. Top: Volume averaged energy density variation of the internal (red), kinetic (green), magnetic
+(blue), and total (black) energy for the adiabatic (solid lines) and radiative (dash-dot lines) simulations.
+Bottom: Volume averaged temperature variation of adiabatic (solid line) and radiative (dash-dot line)
+simulations. Vertical dot lines mark the time when radiative cooling is switched on. All quantities are
+averaged in the domain of |x|, |y| ≤ 4 Mm."
+"Figure 5. (a) Temperature, (b) Internal energy density, (c) volume, and (d) total internal energy of the
+domain with ρ ≥ 1.1ρe for adiabatic (solid lines) and radiative (dashed lines) cases."
+16 Shi et al.
+"Figure 6. Top: Evolution of magnetic energy density (Em) and the magnetic energy density from ideal
+MHD (Em,ideal). Estimated numerical resistivity ηn. Bottom: Evolution of kinetic energy density (Ek) and
+the kinetic energy density from ideal MHD (Ek,ideal). Estimated numerical dynamic viscosity µn. The results
+are for the adiabatic case in the fixed volume of |x|, |y| ≤ 4 Mm."
+"Figure 7. Viscous dissipation rate Dvis =
+¯̄Π : ∇v, resistive dissipation rate Dres = ηnJ2, background"
+"heating rate H0, and radiative cooling rate averaged in the domain of (a) |x|, |y| ≤ 4 Mm, and (b) ρ ≥ 1.1ρe
+for the radiative case. Note: as stated in the text, both background heating and radiative cooling are
+smoothly turned on at 600 s."
+18 Shi et al.
+Figure 8. Temperature averaged over volumes centered at different positions of z for the radiative case.

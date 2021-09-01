@@ -1,0 +1,1337 @@
+0
+"Astronomy & Astrophysics manuscript no. pebflux ©ESO 2021
+January 7, 2021"
+"How dust fragmentation may be beneficial to planetary growth
+by pebble accretion"
+"J. Drążkowska1, S. M. Stammler1, and T. Birnstiel1,2"
+"1 University Observatory, Faculty of Physics, Ludwig-Maximilians-Universität München, Scheinerstr. 1, 81679 Munich, Germany
+2 Exzellenzcluster ORIGINS, Boltzmannstr. 2, D-85748 Garching, Germany"
+Received ; accepted
+ABSTRACT
+"Context. Pebble accretion is an emerging paradigm for the fast growth of planetary cores. Pebble flux and pebble sizes are the key
+parameters used in the pebble accretion models.
+Aims. We aim to derive the pebble sizes and fluxes from state-of-the-art dust coagulation models, understand their dependence on
+disk parameters and the fragmentation threshold velocity, and the impact of those on the planetary growth by pebble accretion.
+Methods. We use a one dimensional dust evolution model including dust growth and fragmentation to calculate realistic pebble sizes
+and mass flux. We use this information to integrate the growth of planetary embryos placed at various locations in the protoplanetary
+disk.
+Results. Pebble flux strongly depends on disk properties, such as its size and turbulence level, as well as on the dust aggregates
+fragmentation threshold. We find that dust fragmentation may be beneficial to planetary growth in multiple ways. First of all, it
+prevents the solids from growing to very large sizes, for which the efficiency of pebble accretion drops. What is more, small pebbles
+are depleted at a lower rate, providing a long lasting pebble flux. As the full coagulation models are computationally expensive, we
+provide a simple method of estimating pebble sizes and flux in any protoplanetary disk model without substructure and with any
+fragmentation threshold velocity."
+"Key words. accretion, accretion disks – planets and satellites: formation – protoplanetary disks – methods: numerical"
+1. Introduction
+"In the classical paradigm of planet formation a significant frac-
+tion of solids is very quickly converted into kilometer-sized plan-
+etesimals. Some of those planetesimals continue to grow rapidly
+via the runaway growth (e.g., Wetherill & Stewart 1989; Ida &
+Makino 1993; Kokubo & Ida 1996). However, this fast stage of
+growth is soon over as the embryo starts to stir its feeding zone
+and the accretion transitions to oligarchic growth stage, slowing
+down with embryo mass (e.g., Kokubo & Ida 1998; Ormel et al.
+2010). By the end of the oligarchic growth, the embryo absorbs
+all of the material in its immediate vicinity and reaches the isola-
+tion mass, which is as low as Mars mass in the terrestrial planets
+region, but increases with the distance to the star (Kokubo &
+Ida 2002). The isolation mass may be high enough to reproduce
+the cores of giant planets but the core growth timescale in the
+planetesimal-driven scenario becomes prohibitively long to al-
+low for accretion of gaseous atmosphere outside of Jupiter loca-
+tion (Thommes et al. 2002, 2003; Levison et al. 2010; Johansen
+& Bitsch 2019)."
+"These drawbacks of the classical planetesimal-driven model
+motivated development of the alternative scenario called pebble
+accretion. In this paradigm, the embryo is accreting centimeter-
+sized pebbles rather than planetesimals. Gravity and gas drag
+act together to enhance the cross section of a planetary embryo
+for its encounters with pebbles and thus speed up the growth
+(Ormel & Klahr 2010; Lambrechts & Johansen 2012). Because
+pebbles are rapidly drifting through the protoplanetary disk, the
+size of the feeding zone increases, allowing the embryos to grow"
+"to larger sizes before the pebble flux is halted by planet-disk in-
+teractions (Lambrechts et al. 2014)."
+"In the pebble accretion scenario, the outcome of planet for-
+mation is determined by the sizes and flux of the pebbles drift-
+ing through the protoplanetary disk. Kretke & Levison (2014)
+used large pebbles with a size distribution between 0.5 m and
+5 m (corresponding to the Stokes number of 0.25 and 25) and
+a constant pebble flux of 0.13 M⊕ yr−1. They found that repro-
+ducing the giant planets in the Solar system is challenging as
+pebble accretion tends to convert too many planetesimals into
+large embryos. Levison et al. (2015a) showed that this difficulty
+may be mitigated if pebbles form gradually so that the grow-
+ing planetesimals have time to interact and stir each other. Re-
+cently, Lambrechts et al. (2019) showed that a high pebble flux
+leads to formation of giant planets, while a lower flux leads to
+formation of super-Earths. However, many authors studying the
+pebble-driven planet growth for simplicity define a fixed size or
+Stokes number of pebbles and the value of the pebble flux (or
+the pebble to gas flux ratio) as arbitrary parameters (typically
+fixed in orbital distance and/or time), independent of the pro-
+toplanetary disk model (Johansen et al. 2015; Liu et al. 2019;
+Lambrechts et al. 2019; Johansen et al. 2019; Ogihara & Hori
+2020; Brasser & Mojzsis 2020; Wimarsson et al. 2020)."
+"Lambrechts & Johansen (2014) presented an algorithm for
+calculating the pebble flux and pebble Stokes number, which is
+often used by the community (Levison et al. 2015a,b; Ida et al.
+2016; Bitsch & Johansen 2016; Matsumura et al. 2017; Brüg-
+ger et al. 2018; Bitsch 2019; Bitsch et al. 2019a; Izidoro et al.
+2019). In this model, which is based on a simplified scenario
+of dust evolution, it is assumed that all dust grains grow until"
+"Article number, page 1 of 12"
+A&A proofs: manuscript no. pebflux
+"the growth timescale becomes longer than the drift timescale.
+Since the growth timescale strongly increases with distance, the
+""pebble formation front"" moves outward, leading to subsequent
+portions of solids decoupling from the gas and maintaining in-
+ward pebble flux until the front reaches the outer edge of the
+disk. This picture is roughly consistent with the outcome of dust
+coagulation models as long as dust growth can proceed without
+being hindered by fragmentation. However, the increase of col-
+lision speeds with aggregate sizes often prevents dust growth to
+reach those sizes."
+"Laboratory experiments show that collisions of dust aggre-
+gates become destructive already at speeds much lower than pre-
+dicted for the protoplanetary disk environment. The exact frag-
+mentation threshold speed remains uncertain and it was shown
+to strongly depend on the porosity and composition of the ag-
+gregates (Wada et al. 2011; Meru et al. 2013; Blum 2018). Until
+recently, it was believed that the icy aggregates outside of the
+water ice line are significantly more sticky than the dry aggre-
+gates inside of the ice line (Aumatell & Wurm 2014; Gundlach &
+Blum 2015). However, newer laboratory data do not support this
+view, demonstrating that the icy aggregates break easily (Gund-
+lach et al. 2018; Steinpilz et al. 2019; Musiolik & Wurm 2019)."
+"Nevertheless, most of the works concerned with planet
+growth via pebble accretion published to date neglect the effect
+that fragmentation of pebbles has on their sizes and flux (the ex-
+ceptions are Chambers 2016, 2018, Guilera et al. 2020, and Ven-
+turini et al. 2020a,b). In this paper, for the first time, we study the
+growth of planetary embryo by pebble accretion in connection
+with a self-consistent dust evolution model considering full size
+distribution obtained in detailed dust coagulation simulation."
+"This paper is organized as follows. We present the numer-
+ical model used in this work in Sect. 2. We present the result-
+ing planet growth tracks and their dependence on the parameters
+that are the most important to defining dust evolution outcome
+in Sect. 3. We present a simple way of predicting a realistic peb-
+ble flux and sizes which is valid in a fragmentation dominated
+as well as in drift dominated protoplanetary disk in Sect. 4. In
+Sect. 5 we discuss our work and we summarize it in Sect. 6."
+2. Model
+2.1. Protoplanetary disk model
+"We model protoplanetary disk surrounding a solar mass star with
+effective temperature of Teff = 5772 K. In the initial condition,
+we set the gas surface density as a function of the radial distance
+r to the often used, self-similar solution to the viscous evolution
+equations (Lynden-Bell & Pringle 1974)"
+"Σgas,0 =
+Mdisk
+2πr2c"
+"(
+r
+rc"
+")−1
+exp"
+")
+, (1)"
+"where Mdisk is the initial disk mass, and rc is the characteristic
+radius, and the dust surface density to"
+"Σdust,0 = Z · Σgas,0, (2)"
+"where Z is the global solids-to-gas ratio. In all the models pre-
+sented in this paper, we consider disks with exactly the same
+initial mass budget. Mdisk is set to 0.2 M� and Z has the standard
+value of 0.01, which corresponds to the initial mass in solids of
+about 650 M⊕. We consider two values of the characteristic ra-
+dius, rc = 30 au in the compact disk model and rc = 300 au in the
+large disk model. The initial gas surface density profiles are pre-
+sented in the upper panel of Fig. 1. Despite their high mass, both"
+"ga
+s ["
+"compact disk
+large disk"
+"100 101 102
+r [au]"
+"Fig. 1. Comparison of the compact and large disk models with α =
+10−4. Top: Gas surface density profiles. Middle: Temperature in disk
+midplane. Bottom: Toomre Q parameter for both disk models used in
+this paper."
+"of the disk models are gravitationally stable, with the Toomre
+Q > 2, as shown in the bottom panel of Fig. 1."
+"The gas disk evolves viscously, which means that the char-
+acteristic radius increases, while the surface density drops with
+time. The speed of viscous evolution is determined by the α pa-
+rameter. We set the default value to α = 10−4. In Section 3.3, we
+show the effects of varying the α parameter. In this work, we do
+not consider disk dispersal by photoevaporation."
+"The pebble accretion rate is sensitive to the vertical scale
+height of gas Hgas and thus to the disk temperature structure.
+In this paper, we take into account both stellar irradiation and
+viscous heating using the simple prescription proposed by Ida
+et al. (2016, their equation 7 and 8). Most of the disk is heated
+by stellar irradiation, leading to a shallow temperature profile
+Tirr ∝ r−3/7. In the inner part of the disk, viscous heating may
+change the temperature profile to a steeper function of the radial
+distance, Tvis ∝ r−9/10. In the viscous heating regime, the temper-
+ature depends on the gas mass accretion rate, and thus this effect
+is particularly important in the compact disk model, as visible in
+the middle panel of Fig. 1, and in models with α = 10−3, where
+the gas mass flux, defined as Ṁgas = 3παΣgasH2gasΩK, with ΩK
+being the Keplerian frequency, is higher."
+2.2. Dust evolution
+"We investigate the dust evolution on a logarithmic radial grid
+with 120 grid points spaced between 1 au and 1000 au. We
+compute dust evolution in the azimuthally and vertically aver-
+aged framework using the DustPy code, a Python-based version
+dust coagulation model similar to the code presented by Birnstiel
+et al. (2010). At every radial distance to the star, dust mass grid
+with 9 mass bins per mass decade is built and the Smoluchowski
+equation is used to solve for dust growth and fragmentation. We
+assume that the dust grains initially have radius of one micron
+and internal density of 1.25 g cm−3. The collisions are driven by
+the Brownian motion, turbulence prescribed with the α param-"
+"Article number, page 2 of 12"
+J. Drążkowska1 et al.: How dust fragmentation may be beneficial to planetary growth by pebble accretion
+"10 4 10 3 10 2 10 1 100 101
+Stokes number of pebbles"
+"peb
+ble"
+" acc
+reti"
+"on 
+ons"
+headwind
+"10 4 10 3 10 2 10 1 100 101
+Stokes number of pebbles"
+"Fig. 2. The efficiency of pebble accretion parameter εPA as a function of the planetary embryo size and pebbles Stokes number calculated at 5 au
+(left panel) and at 30 au (right panel) in the compact disk model with α = 10−4. The dotted line corresponds to the pebble accretion onset (when the
+aerodynamic effects become important). The grey dashed line shows the transition between the headwind and shear regimes of pebble accretion.
+The dashed-dotted line shows the transition between 3D and 2D pebble accretion."
+"eter, radial and azimuthal drift, and dust settling. We consider
+various values of the fragmentation threshold speed vf , between
+1 m/s and ∞, corresponding to no fragmentation at all. In line
+with the newest laboratory results, we do not employ a transi-
+tion at the water ice line, but rather we use a single value of vf
+independent on the radial distance."
+"Radial drift of particles in every mass bin i is computed based
+on their local Stokes number (Weidenschilling 1977) Sti:"
+"vr,i =
+2vηSti
+1 + St2i"
+"+
+vgas"
+"1 + St2i
+, (3)"
+"where vgas is the local gas velocity (driven by gas viscous evolu-
+tion) and vη is the maximum velocity of the radial drift driven by
+the local pressure gradient ∂rPgas. We calculate the vη as"
+"vη =
+∂rPgas"
+"2ρgasΩK
+, (4)"
+"where ρgas = Σgas/(
+√"
+"2πHgas) is the midplane density of gas.
+We take into account both the Epstein and the Stokes drag"
+"regimes when calculating the Stokes number Sti. In this work,
+we do not include the backreaction from dust to gas."
+"Further details about the dust evolution code can be found in
+Birnstiel et al. (2010) and in forthcoming Stammler & Birnstiel
+(in prep.)."
+2.3. Planet growth by pebble accretion
+"We consider growth of planetary embryos with starting mass of
+0.001 M⊕ (approximately 0.1 Moon mass, or 7 masses of the
+largest asteroid, Ceres). We model the growth of embryos at
+various radial locations and do not consider their migration or
+planet-disk interaction. We do not subtract the dust accreted by
+an embryo from the dust evolution code, which means that we
+assume that each model corresponds to a single planet. We con-
+sider various possibilities for the point at which we insert the
+embryos into the simulation t0: either we let the pebble accre-
+tion start to grow from the beginning of the simulation, or after"
+"105 years and after 106 years. We assume that the embryos are
+on circular orbits with zero inclination."
+"To calculate the pebble accretion efficiency, we use the
+method provided by Liu & Ormel (2018) and Ormel & Liu
+(2018) who used 3-body calculations to obtain a general recipe
+for the pebble accretion efficiency of a single planet1. In Fig. 2,
+we show the example of pebble accretion efficiencies obtained
+using this recipe for a range of planetary embryo masses and
+sizes at 5 au and at 30 au in the initial condition of the com-
+pact disk model with the turbulence parameter α = 10−4. As
+can be seen in this figure, the recipe takes into account both
+the 2D regime, where the embryo is large enough to accrete
+from the complete layer of pebbles, and the 3D regime, where
+the small embryo only has access to some fraction of the peb-
+ble layer. The transition from 3D to 2D regime is marked with
+the dashed-dotted line. The grey dashed line shows the transi-
+tion between the headwind and shear regimes. The headwind
+regime, also called Bondi regime, is valid for small embryos
+or small pebbles, when the pebbles are accreted only from the
+embryo proximity and the relative velocity between the pebbles
+and the embryo is determined by the gas flow. Larger embryos
+enter the shear regime, also called Hill regime, when the pebbles
+are accreted from much larger area and their approach veloc-
+ity is determined by the Keplerian shear. The transition between
+the headwind and shear regimes does not impact the pebble ac-
+cretion efficiency in the 3D regime, while in the 2D regime it
+slightly changes the dependence of εPA on the Stokes number.
+This effect becomes more important in the outer regions of the
+disk, when the transition between headwind and shear regime
+shifts to higher embryo masses. As explained in Ormel (2017),
+in the 3D regime the pebble accretion efficiency increases with
+the Stokes number because dust settling is more efficient and
+the embryo accretes from a denser midplane layer, while in the
+2D regime this effect is canceled by the increasing drift speed
+of pebbles and the decreasing embryo-pebble interaction time.
+The dotted line in Fig. 2 shows the pebble accretion onset, that"
+"1 Python implementation of this algorithm is publicly available at
+https://staff.fnwi.uva.nl/c.w.ormel/software/epsilon.tar.gz"
+"Article number, page 3 of 12"
+A&A proofs: manuscript no. pebflux
+101 1 au1 au1 au1 au
+"10 5
+10 4
+10 3
+10 2 1 au1 au1 au1 au"
+"[M
+]  "
+"   
+   "
+"   
+   "
+"   
+   "
+"   
+   "
+5 au5 au5 au5 au
+"10 5
+10 4
+10 3
+10 2"
+"flu
+x "
+"   
+   "
+"   
+   "
+"   
+   "
+"   
+   "
+5 au5 au5 au5 au
+101 10 au10 au10 au10 au
+"t0=0 yrs
+t0=105 yrs
+t0=106 yrs 10 5"
+"10 4
+10 3
+10 2 10 au10 au10 au10 au"
+"103 104 105 106 107
+time [yr]"
+101 20 au20 au20 au20 au
+"vf = 1 m/s
+vf = 2 m/s
+vf = 10 m/s
+no fragmentation"
+"103 104 105 106 107
+time [yr]"
+"10 5
+10 4
+10 3
+10 2 20 au20 au20 au20 au"
+"Fig. 3. Left: Planetary embryos growth via pebble accretion in the compact protoplanetary disk in models with α = 10−4 with different fragmenta-
+tion threshold speed and one not including dust fragmentation at all. In all cases where the line representing the vf = 10 m/s run is not visible, it is
+identical with the ""no fragmentation"" run. Lines ended with a circle represent growth tracks that reached the pebble isolation mass. Right: Inward
+flux of solids (integrated all dust sizes) at different locations in the same models."
+"is the minimum embryo mass for which the aerodynamic deflec-
+tion becomes important (Visser & Ormel 2016). For reference,
+the typical planetesimal size formed in the streaming instability
+models is about 100 km (Schäfer et al. 2017; Li et al. 2019a;
+Klahr & Schreiber 2020). Interestingly, these smallest embryos
+could only grow by accretion of small pebbles and with an ex-
+tremely low efficiency. The pebble accretion onset shifts toward
+even larger embryo masses in the outer parts of the disk."
+"Figure 2 shows that the pebble accretion efficiency is mostly
+dependent on the embryo mass and not on the pebble size, as
+long as the Stokes number stays between 10−3 and 1, in the typ-
+ical ""pebble-size"" regime. A relatively large embryo, with sig-
+nificant fraction of an Earth mass, is able to grow quickly by
+accreting a considerable fraction of the pebble flux. It is worth
+noting that multiple small embryos could grow at the same time,
+collectively capturing similar fraction of pebbles as a single large
+embryo (Bitsch et al. 2019b). The growth rate of the planetary
+embryo depends both on the pebble accretion efficiency and the
+pebble flux. In this paper, we compute pebble fluxes consistently
+with the pebble size resulting from our full dust coagulation
+model."
+"Our pebble accretion algorithm works as follows. At the
+planetary embryo location ae, we calculate the Stokes number
+of the dust particles from every mass bin, Sti. Then we calculate
+the pebble accretion efficiency εPA(me, ae, Sti) for the current em-
+bryo mass me and multiply it by the flux of solids corresponding
+to each bin of the mass grid ṁp(ae, Sti) obtained in the dust evo-
+lution code. In the next step, we sum the contributions from each
+dust mass bin to obtain the embryo growth rate"
+"ṁe =
+∑"
+"εPA (me, ae, Sti) · ṁp(ae, Sti). (5)"
+"The growth stops when the embryo reaches the pebble isola-
+tion mass. Following Lambrechts et al. (2014), we calculate the"
+pebble isolation mass as
+"Miso = 20 M⊕ ·
+("
+"Hgas/r
+0.05"
+")3
+, (6)"
+"where Hgas/r is disk aspect ratio. It is worth noting that Ataiee
+et al. (2018) and Bitsch et al. (2018b) reported that the pebble
+isolation mass may be increased in turbulent disks while Zorm-
+pas et al. (2020) found that the pebble isolation mass is decreased
+when a realistic equation of state and radiative cooling are taken
+into account."
+3. Results
+"We performed seven different models, varying the fragmentation
+threshold velocity, disk size, and turbulence level. In each of the
+models, we considered growth of planetary embryos by pebble
+accretion at 1 au, 5 au, 10 au, 20 au, 30 au, 40 au, and 50 au.
+However, in none of the models did an embryo located outside
+of 20 au reach the pebble isolation mass."
+3.1. Fragmentation threshold
+"We first focus on the impact of the fragmentation threshold value
+on the planetary growth. Figure 3 presents results of four runs,
+all performed with the compact disk model with the turbulence
+strength α = 10−4 and different fragmentation threshold speeds
+vf = 1 m/s, vf = 2 m/s, vf = 10 m/s, and vf = ∞, corresponding
+to no fragmentation. The left panel of Fig. 3 presents the growth
+of planetary embryos at 1 au, 5 au, 10 au, and 20 au. At each
+location, we tested different embryo introduction times t0: at the
+beginning of the simulation (t0 = 0), after 105 years, and after
+106 years of dust evolution."
+"The runs with vf = 10 m/s and no fragmentation produced
+very similar results except for the inner region of the disk (r ≤
+5 au). Interestingly, in this inner region of the disk, the growth of
+embryos introduced at t0 = 0 and t0 = 105 years proceeds faster"
+"Article number, page 4 of 12"
+J. Drążkowska1 et al.: How dust fragmentation may be beneficial to planetary growth by pebble accretion
+"10 4
+10 2
+100
+102
+104"
+"r vf = 1 m/s
+vf = 2 m/s
+vf = 10 m/s
+no fragmentation"
+"100 101 102
+r [au]"
+"ze
+ [c"
+"Fig. 4. Mass-averaged (solid lines) and flux-averaged (dotted lines)
+Stokes number (upper panel) and grain size (lower panel) after 2 ·
+105 years of evolution in the models of compact protoplanetary disk
+with α = 10−4 and varying fragmentation threshold velocity vf ."
+"in the runs with fragmentation than in the run without fragmenta-
+tion. In the run without fragmentation, the embryo located at 1 au
+does not reach its pebble isolation mass irrespective on the intro-
+duction time, while in the run with vf = 10 m/s, the innermost
+embryo reaches the isolation mass after only tens of thousands of
+years. The reason for the slow growth of the close-in embryos in
+the model without fragmentation is that pebbles break through
+the drift barrier and continue growing quickly over the Stokes
+number of unity, in the Stokes drag regime. This process has
+been previously described in the literature, see e.g. Brauer et al.
+(2008a); Birnstiel et al. (2010); Okuzumi et al. (2012); Laibe
+(2014); Drążkowska et al. (2014)."
+"The breakthrough only happens in the inner part of the disk,
+as the outer part is still dominated by the radial drift barrier. Fig-
+ure 4 presents the average Stokes numbers and grain sizes as a
+function of radial distance at t = 2 · 105 years of evolution in the
+four models with different fragmentation threshold. It is worth
+noting that the flux-averaged dust size (and Stokes number) is
+typically a bit larger than the mass-averaged value, except for
+the grains that break through the St = 1 barrier. This is because
+the radial drift velocity increases up to St = 1 and then decreases
+again (see Eq. 3). The grain size of ∼100 m reached in the in-
+ner region in the run without fragmentation is an effect of the
+upper limit of the size grid used in the dust coagulation calcu-
+lation rather than a physical value. The large solids do not drift
+efficiently, which manifests as the low pebble flux at 1 au in the
+right panel of Fig. 3. Since the grain growth is limited to the
+upper boundary of the size grid, those results should be treated
+as approximate, as the pebble flux would drop even more if the
+growth could proceed without a limit."
+"Except for reducing the pebble flux, breaking through the
+St > 1 barrier has another negative impact on planet growth
+rate. The efficiency of pebble accretion significantly drops for
+such large dust aggregates (see Fig. 2), as technically they do
+not count as pebbles anymore. Thus, even though the total mass
+of solids passing around the close-in embryo over the disk life-
+time is essentially the same, in the run without fragmentation the
+planet does not reach the pebble isolation mass."
+"This result shows that some level of dust fragmentation may
+be beneficial for the planetary growth via pebble accretion. Thus,
+we performed additional runs, lowering the fragmentation speed
+even more, to vf = 2 m/s and vf = 1 m/s, the latter value being
+roughly consistent with the conclusions from laboratory work
+(Güttler et al. 2010). As visible in the right panel of Fig. 3,"
+"decreasing the fragmentation speed leads to pebble flux reduc-
+tion. In the runs with the low fragmentation speed, grains stay at
+smaller sizes (see Fig. 4) and drift slower, leading to lower but
+long-lasting mass flux, as depletion of small aggregates takes
+longer. This effect is particularly important if the planetary em-
+bryo takes a long time to form. In the left panel of Fig. 3, one
+can see that if embryos are introduced at 1 Myr of dust evolu-
+tion, they grow the most in the run with the lowest fragmentation
+threshold, vf = 1 m/s."
+"Interestingly, for embryos introduced at t0 = 105 years, the
+vf = 2 m/s is the most favorable value in terms of planetary
+growth. This is because, while the flux in the runs with the higher
+fragmentation threshold is already decreasing at that point, the
+flux in the vf = 2 m/s run stays high for another couple of hun-
+dred thousands years (see the right panel of Fig. 3). At the same
+time, the flux is factor of two higher in the vf = 2 m/s run than
+in the vf = 1 m/s case."
+3.2. Disk size
+"In the results presented in Sect. 3.1, the pebble flux lasts for at
+most 3 Myrs. However, millimeter and centimeter-sized pebbles
+are observed in protoplanetary disks older than several Myrs
+(Wilner et al. 2005; Ricci et al. 2010). Johansen et al. (2019,
+their Appendix A) noticed this problem and speculated that lim-
+ited dust growth in the outer part of the disk may be the solution
+to retaining pebbles for long timescales. They have also shown
+that large initial disk size facilitates long-lasting pebble flux, a
+solution often used in pebble accretion models (Lambrechts &
+Johansen 2014; Sato et al. 2016; Bitsch et al. 2018a). While large
+disks are bright and thus relatively easy to image at high angu-
+lar resolution (Andrews et al. 2018), there is evidence that most
+of the disks may, in fact, be small (Ansdell et al. 2018; Long
+et al. 2019; Maury et al. 2019; Tobin et al. 2020; Trapman et al.
+2020). In this section, we study the impact of disk size on the
+pebble flux and resulting planetary growth."
+"Figure 5 presents results of two models where the same ini-
+tial mass was distributed either in a compact disk with the criti-
+cal radius rc = 30 au or in a much larger disk with rc = 300 au.
+The other simulation parameters are the same: the fragmentation
+speed is vf = 10 m/s and the turbulence strength is α = 10−4."
+"The compact disk produces a very high pebble flux, well over
+10−3 M⊕/yr, which, however, only lasts for about 3 · 105 years
+and declines over the next couple of hundred thousands years
+(see the right panel of Fig. 5). With such a high pebble flux, the
+embryos introduced at the beginning of the simulation take less
+than one hundred thousand years to reach their isolation mass.
+The embryo placed at 1 au reaches its isolation mass in little
+over ten thousand years, which is the fastest growth we observe
+in any of our runs."
+"Pebble flux obtained in the large disk model is almost one
+order of magnitude lower than in the compact disk model, but
+lasts proportionally longer. Thus, even embryos introduced late
+during the simulation, at t0 = 106 years, are able to obtain their
+isolation mass, at least inside of 10 au. Thus, extending the ini-
+tial size of the disk gives similar results to lowering the frag-
+mentation speed, as we discussed in the previous section. There
+is however, one important difference, which manifests itself in
+the planet growth results at and outside of 10 au. In the compact
+disk, a significant fraction of the mass is initially located inside
+of 10 au. The mass reservoir available for wide-orbit planets is
+significantly higher in the large disk than in the compact disk.
+Thus, for example the embryo introduced at t0 = 105 years at"
+"Article number, page 5 of 12"
+A&A proofs: manuscript no. pebflux
+101 1 au1 au
+"10 5
+10 4
+10 3
+10 2 1 au1 au"
+"[M
+]  "
+"   
+   "
+"   
+   "
+"   
+   "
+"   
+   "
+5 au5 au
+"10 5
+10 4
+10 3
+10 2"
+"flu
+x "
+"   
+   "
+"   
+   "
+"   
+   "
+"   
+   "
+5 au5 au
+101 10 au10 au
+"t0=0 yrs
+t0=105 yrs
+t0=106 yrs 10 5"
+"10 4
+10 3
+10 2 10 au10 au"
+"103 104 105 106 107
+time [yr]"
+101 20 au20 au
+"compact disk
+large disk"
+"103 104 105 106 107
+time [yr]"
+"10 5
+10 4
+10 3
+10 2 20 au20 au"
+"Fig. 5. Left: Planetary embryos growth via pebble accretion in models with different characteristic radius, α = 10−4, and the fragmentation
+threshold of vf = 10 m/s. Lines ended with a circle represent growth tracks that reached the pebble isolation mass. Right: Inward flux of solids
+(integrated all dust sizes) at different locations in the same models."
+"10 au, reaches its isolation mass in the large disk model but not
+in the compact disk model."
+"With the large mass reservoir available even at wide orbital
+distances, it may be surprising that no embryo reaches its isola-
+tion mass outside of 10 au in the large disk model. This is be-
+cause the pebble accretion efficiency for a constant embryo size
+significantly decreases with radial distance (see Fig. 2). In this
+paper, we consider the initial embryo mass of 0.001 M⊕ irrespec-
+tive of its location (and starting time). More massive embryos
+could probably still reach pebble isolation mass in the outer parts
+of the disk."
+3.3. Turbulence
+"The turbulence level in protoplanetary disk is a key unknown.
+Observational constraints on the disk dispersal timescales sug-
+gest turbulence levels of α ≈ 10−2 if the dispersal would be
+driven solely by accretion driven by turbulent transport of angu-
+lar momentum (Hernández et al. 2007). However, more recent
+disk models suggest that the turbulence level may vary within
+the disk and that large regions of the disk, particularly near to
+the midplane, may have low levels of turbulence (Lesur et al.
+2014; Bai 2016). This would be consistent with the disk images
+obtained in millimeter wavelengths, where the pebbles appear
+to be well-settled (Pinte et al. 2016; Villenave et al. 2020), and
+also consistent with the low upper limits set by measurements
+of turbulent line broadening (Flaherty et al. 2015, 2020; Teague
+et al. 2016, 2018). Given the uncertainties and difficulties in con-
+straining the turbulence level observationally, in this section, we
+consider the turbulence strength α as a free parameter."
+"Figure 6 shows results of three runs performed on the back-
+drop of the compact disk model with different levels of turbu-
+lence. We keep the fragmentation speed at v f = 1 m/s in all the
+runs. As visible in the left panel of Fig. 6, low turbulence pro-
+motes the planetary growth irrespective on the distance to the
+star and the starting time of the embryo. This has multiple rea-
+sons. First of all, lower turbulence level leads to better settling of"
+"the pebbles and higher pebble accretion efficiency (Ormel 2017).
+Lower turbulence speed promotes growth to larger pebble sizes,
+which increases the pebble flux, although this effect is stopped
+when the fragmentation starts to be dominated by the differential
+radial drift rather than turbulence (this happens for α . 10−4, see
+the right panels of Fig. 6)."
+"It is worth noting that in case of the highest turbulence
+parameter value that we considered, α = 10−3, no embryo
+reaches the pebble isolation mass. If the turbulence is strong,
+with α ≥ 10−3, the fragmentation threshold velocity needs to be
+much higher than vf = 1 m/s, which we considered in models
+presented in Fig. 6, to allow planetary embryos to benefit from
+pebble accretion."
+4. Simple prediction of the pebble flux
+"As we showed above, planetary growth by pebble accretion is
+very sensitive to disk parameters and details of dust evolution.
+The pebble flux depends on the initial mass budget, disk size,
+turbulence level, and fragmentation threshold speed. The peb-
+ble accretion efficiency is sensitive to pebble size and settling.
+The DustPy simulations described above are relatively expen-
+sive, typically taking several days of computations. In this paper,
+we propose a simple and efficient method that predicts the size
+and flux of pebbles for arbitrary protoplanetary disk without sub-
+structure, the pebble predictor2."
+"The general mechanics of pebble predictor is closely re-
+lated to two-pop-py presented by Birnstiel et al. (2012), albeit it
+a full time integration of the disk is not performed. The pebble
+predictor uses the initial state of the gas and dust disk surface
+density Σgas,0 and Σdust,0, temperature T , the turbulence strength
+α, and the fragmentation threshold velocity vf to predict the flux-"
+"2 pebble predictor is publicly available at
+https://github.com/astrojoanna/pebble-predictor. Version 1.0
+of the script used in this paper is permanently available at
+https://doi.org/10.5281/zenodo.4383153."
+"Article number, page 6 of 12"
+J. Drążkowska1 et al.: How dust fragmentation may be beneficial to planetary growth by pebble accretion
+101 1 au1 au1 au
+"10 5
+10 4
+10 3
+10 2 1 au1 au1 au"
+"[M
+]  "
+"   
+   "
+"   
+   "
+"   
+   "
+"   
+   "
+5 au5 au5 au
+"10 5
+10 4
+10 3
+10 2"
+"flu
+x "
+"   
+   "
+"   
+   "
+"   
+   "
+"   
+   "
+5 au5 au5 au
+101 10 au10 au10 au
+"t0=0 yrs
+t0=105 yrs
+t0=106 yrs 10 5"
+"10 4
+10 3
+10 2 10 au10 au10 au"
+"103 104 105 106 107
+time [yr]"
+101 20 au20 au20 au
+"= 10 5
+= 10 4
+= 10 3"
+"103 104 105 106 107
+time [yr]"
+"10 5
+10 4
+10 3
+10 2 20 au20 au20 au"
+"Fig. 6. Left: Planetary embryos growth via pebble accretion in the compact disk models with different turbulence strength parameter α and the
+fragmentation threshold of vf = 1 m/s. Lines ended with a circle represent growth tracks that reached the pebble isolation mass. Right: Inward flux
+of solids (integrated all dust sizes) at different locations in the same models."
+"averaged Stokes number and total flux of pebbles at every loca-
+tion within the disk and at any time point."
+"It is assumed that all the dust grains are initially in the form
+of micron-sized monomers and they grow in collisions driven by
+turbulence, which leads to the growth timescale of"
+"τgrowth =
+Σgas,0"
+"Σdust,0
+·Ω
+−1
+K ·"
+")−1/3
+·"
+"( r
+au"
+")1/3
+, (7)"
+"where ΩK is the Keplerian frequency and r is the radial distance
+to the central star. The growth proceeds as an exponential func-
+tion of time t"
+"Stini = St0 · exp
+("
+"t
+τgrowth"
+")
+, (8)"
+"where St0 is the Stokes number corresponding to the micron-
+sized monomers, until one of the growth barriers is encountered:
+fragmentation or radial drift. Fragmentation may be driven by
+turbulence or the differential radial drift. The maximum Stokes
+number of dust aggregates possible to achieve with respect to the
+turbulent fragmentation is"
+"Stf = ff
+v2f"
+"3αc2s
+, (9)"
+"where ff is a parameter, vf is the fragmentation threshold veloc-
+ity, α is turbulence strength parameter, and cs is the sound speed.
+If the radial drift speeds dominate over the turbulent speeds, the
+maximum Stokes number is"
+"Stdf = ff
+vf"
+"2vη
+, (10)"
+"where vη is the maximum drift speed (see Eq. 4). We adopt ff =
+0.37."
+"We assume that the growth needs to be fd/g = 30 times faster
+than drift in order for the grains to be not impacted by the radial
+drift (see Okuzumi et al. 2012, their Sect. 4). We calculate the"
+"size of grains that are impacted by radial drift by checking the
+condition τdrift = fd/g · τgrowth, which leads to"
+"Stdrift =
+1"
+"fd/gη
+·"
+"Σgas
+, (11)"
+"where η = vη/vK is the pressure gradient parameter.
+The resulting, representative Stokes number St in every ra-"
+"dial bin is then chosen as a minimum of Stini, Stf , Stdf , and Stdrift,
+however, it is not allowed to fall below its initial value St0."
+"We use the first part of Eq. (3) to calculate the radial drift
+speed vr corresponding to the representative Stokes number and
+we can calculate the pebble flux as"
+"ṁp = 2πrvrΣdust, (12)"
+"where Σdust would be the surface density of dust at a given time.
+This equation is however only correct if the grains grow faster
+than they drift. In such a case, there are always ""enough"" large
+grains, as the drift is depleting them at a slower rate than the
+growth could replenish them. In the opposite case, the pebble
+flux needs to be limited by taking into account that the supply
+of large grains can only be replenished at the growth timescale
+τgrowth. Thus we limit the inward drift velocity vr to"
+"vr = min
+("
+"1 + St2
+,"
+"r
+fd/gτgrowth"
+")
+, (13)"
+"which gives us a good estimate of the flux both in the fragmen-
+tation dominated and drift dominated regions of the disk."
+"As mentioned above, pebble predictor does not perform
+a full time integration of the disk. We neglect the evolution of gas
+disk and we approximate the dust surface density evolution by
+keeping track of the mass budget. Using the initial Σdust,0 profile
+supplied as an input, we calculate the initial mass Mout,0 outside
+of every radial grid point. Using a time grid supplied as an input,
+pebble predictor calculates how much mass is left outside
+of every radial grid point at every time point i using the values
+obtained in the previous time step:"
+"Mout,i = Mout,i−1 − ṁp,i−1 · (ti − ti−1) . (14)"
+"Article number, page 7 of 12"
+A&A proofs: manuscript no. pebflux
+"flu
+x "
+"/y
+r] compact disk, = 10"
+"4, vf = 10 m/s"
+"flu
+x "
+"/y
+r] large disk, = 10"
+"4, vf = 10 m/s"
+"flu
+x "
+"/y
+r] compact disk, = 10"
+"4, no fragmentation"
+"flu
+x "
+"/y
+r] compact disk, = 10"
+"5, vf = 1 m/s"
+"10 1
+flu"
+"r] compact disk, = 10
+4, vf = 1 m/s"
+"flu
+x "
+"/y
+r] compact disk, = 10"
+"3, vf = 1 m/s"
+"103 104 105 106 107
+time [yr]"
+"103 104 105 106 107
+time [yr]"
+"103 104 105 106 107
+time [yr]"
+"103 104 105 106 107
+time [yr]"
+"103 104 105 106 107
+time [yr]"
+"103 104 105 106 107
+time [yr]"
+"Fig. 7. Comparison of the pebble flux and Stokes number predictions and simulation results for different models, as indicated by the title of each
+subplot, at 10 au. The solid lines show the DustPy results, the dotted lines come from the pebble predictor. The dashed line in the top right
+panel corresponds to the model proposed by Lambrechts & Johansen (2014), which can only be used if the fragmentation is not included."
+"The dust surface density used in Eqs (11-12) is then approxi-
+mated as Σdust,i = Σdust,0 · Mout,i/Mout,0. Since the time steps sup-
+plied in the input time grid are not necessarily fulfilling the CFL
+condition, this routine cannot be treated as a rigorous integration.
+Its goal is correcting the pebble flux for the remaining mass bud-
+get rather than recovering the actual surface density evolution."
+"Figure 7 shows the comparison of the pebble predictor
+and DustPy results for various setups varying the disk size, frag-
+mentation speed, and turbulence level. The representative Stokes
+number from pebble predictor is benchmarked against the
+flux averaged Stokes number from the full coagulation calcu-
+lation. On the top right panel of Fig. 7, we additionally show
+the flux and Stokes number prediction from the analytical model
+proposed by Lambrechts & Johansen (2014). In this model, it is
+assumed that the pebble flux is set by the initial dust surface den-
+sity at the pebble formation front, which spreads radially with
+time. The general outcome of this model fits our results well, al-
+though the growth timescale is slightly underestimated and the
+pebble flux starts later than in the numerical results. The most
+significant difference reveals at later times, as the pebble flux
+in Lambrechts & Johansen (2014) model abruptly stops when
+the pebble formation front reaches the outer edge of the disk. In
+reality, however, disk viscous spreading and dust diffusion mod-
+ify the shape of the outer disk edge before the grains there reach
+pebble sizes. What is more, not all the pebbles at a given location
+grow and start drifting at once, which extending the duration of
+the pebble flux as well. Finding analytical prediction that would
+encompass all the relevant processes is not feasible. Thus, the
+pebble predictor is a semianalytic model relying on some
+empirical scaling."
+"The main limitations of pebble predictor, causing some
+discrepancies between its predictions and the full simulation re-
+sults can be summarized as follows."
+"– pebble predictor assumes that the growth is driven by
+turbulence (only one of the turbulent regimes calculated by
+Ormel & Cuzzi 2007, to be precise). This assumption breaks
+in the case of low turbulence, when the collisions are mostly
+driven by differential drift. For very small particles, the tur-
+bulent speeds fall into a different regime (see also the dis-
+cussion in Powell et al. 2019, their appendix B), which leads
+to the need to modifying the growth timescale prescription
+with the empirical dependencies on turbulent strength α and
+radial distance in Eq. (7)."
+"– Only the Epstein drag regime is considered, which leads to
+error in estimating both the size and pebble flux where the
+growth enters the Stokes regime, so in the inner parts of
+disks in runs where dust fragmentation is not considered (see
+Sec. 3.1)."
+"– Gas disk evolution is not included, leading to inaccuracies
+particularly at the outer regions of the disk, where disk
+spreading slows down the flow of pebbles."
+"– Similarly, dust advection with the gas flow is not considered
+in pebble predictor, which may lead to issues with esti-
+mating both the flux and pebble size correctly in runs when a
+significant fraction of solids is coupled to the gas, for exam-
+ple when the turbulence level is high and the fragmentation
+threshold is low."
+"– Diffusion is not considered, which is particularly important
+at the outer edge of the disk, where the dust-to-gas ratio gra-
+dient is strong (Birnstiel & Andrews 2014). This leads to the
+characteristic peak in the dust flux visible in the runs involv-"
+"Article number, page 8 of 12"
+J. Drążkowska1 et al.: How dust fragmentation may be beneficial to planetary growth by pebble accretion
+"ing compact disk and high fragmentation threshold, a feature
+which is not reproduced by the pebble predictor."
+"– Because the dust advection with gas flow and diffusion are
+not included, pebble predictor should not be applied to
+disks with substructure (see Sect. 5.5). A full model, such
+as DustPy or a more advanced simplified method such as
+two-pop-py developed by Birnstiel et al. (2012) may be bet-
+ter choice in such case."
+"Considering all the limitations, the pebble predictor does
+surprisingly well predicting the dependencies of pebble flux and
+size on the fragmentation speed, disk size, and turbulence level,
+as demonstrated in Fig. 7."
+5. Discussion
+5.1. Limitations of the (full) model
+"In this paper, we coupled dust evolution calculated with the
+DustPy code and embryo growth by pebble accretion. Our mod-
+els have certain limitations, some of them may impact the plan-
+etary growth results discussed in this paper. These are listed be-
+low."
+"– We do not consider that dust grains are composed of various
+materials and that evaporation of volatile components could
+cause decrease of the pebble flux in the inner regions of the
+disk."
+"– We assume that all the dust aggregates are compact, with
+constant internal density, and neglect the effects of porosity."
+"– The structure of gas disk is independent of the evolution of
+solids. This is valid as long as the solids-to-gas ratio stays
+low, which is true in almost all of the models except for the
+one without fragmentation, when the grains break through
+the St = 1 barrier and pileup in the inner part of the disk."
+"– Our models correspond to one-planet-per-disk approach as
+we do not decrease the pebble reservoir by the amount ac-
+creted by each planet. Similarly, we do not include perturba-
+tions to disk structure caused by the growing planets. Such
+multiplanet effects could be important as many embryos
+would grow from the same pebble reservoir and the outer-
+most embryo would block the pebble flux when it reaches its
+pebble isolation mass."
+"– In this paper, we assume that the disk is fully turbulent, with a
+constant α value. Modern disk models predict that large parts
+of the disk may be free from turbulence and the accretion
+is primarily driven by magnetized disk winds (Lesur et al.
+2014; Bai 2017). In such disks, the viscous heating would
+not be relevant, leading to lower temperatures in the inner
+part of the disk than we assume in our models (Mori et al.
+2019). Lower temperatures typically promote pebble accre-
+tion as the grains grow to larger sizes and are more settled.
+On the other hand, the pebble isolation mass is lower for
+colder disks."
+"– Similarly, we do not include the gas disk dispersal by effects
+other than viscous accretion. Magnetic and photoevaporative
+winds could completely change the disk structure, particu-
+larly in the later phases of its evolution, which would im-
+pact the pebble fluxes and probably abruptly stop planetary
+growth by pebble accretion."
+5.2. Planet migration
+"Perhaps the most significant limitation of our models is that we
+do not include planetary migration. Interaction between a suffi-
+ciently massive planetary core and the gas disk leads to radial"
+"migration (Ward 1997). A typical timescale of the inward mi-
+gration for Earth-mass planet at 1 au is 105 years (Ogihara et al.
+2015), comparable to the timescale of planetary growth by peb-
+ble accretion."
+"Many authors have studied the interplay between the plan-
+etary migration and planet growth in pebble accretion scenario.
+Bitsch et al. (2015) showed that planets mostly migrate in the
+type I regime while accreting pebbles, but the migration direc-
+tion may be both inward and outward, depending on their radial
+location. Planets that reach masses allowing for gas accretion
+typically outgrow the outward migration region and significantly
+change their radial location, by tens of au. Nevertheless, planet
+growth by pebble accretion is generally fast enough for planets
+to reach the pebble isolation mass before falling onto the cen-
+tral star due to migration (Bitsch & Johansen 2016; Ndugu et al.
+2018; Johansen et al. 2019)."
+"A connection between planet migration and pebble accretion
+including the self-consistent dust evolution model will be a sub-
+ject to our future work."
+"5.3. Validity of the single dust size approach in pebble
+accretion models"
+"In the models presented in this paper, we used dust evolution
+model that includes distribution of dust sizes. For every size bin,
+we use the solid flux calculated by the DustPy code, and multi-
+ply it by the pebble efficiency factor εPA, corresponding to this
+pebble size, to get the pebble accretion rate. We sum up contri-
+bution from each size bin to calculate planet accretion rate, see
+Eq. (5)3. However, since this type of model is computationally
+expensive, many authors employ simplified models of dust evo-
+lution. For example, the two population model for dust evolution
+proposed by Birnstiel et al. (2012) is recently commonly used
+to compute dust evolution in protoplanetary disk as it allows us
+recovering the dust density evolution at a relatively low compu-
+tational cost, without solving the full coagulation equation (see.
+e.g., Drążkowska et al. 2016; Cridland et al. 2017; Tamfal et al.
+2018; Charnoz et al. 2019; Gárate et al. 2020)."
+"In this paper, we propose even simpler way of predicting
+pebble size and flux based on one representative grain size at
+every distance, the pebble predictor (see Sect. 4). It is justi-
+fied to ask whether these simple models can be reliably used to
+calculate planetary growth via pebble accretion even though they
+do not calculate the full size distribution. We tested this by using
+the results of pebble predictor to calculate embryo growth
+and compared the results to the results obtained in the DustPy
+models in Fig. 8. Although there are some differences, the re-
+sults in terms of the time of reaching the pebble isolation mass
+or the final embryo mass usually agree within one order of mag-
+nitude. The biggest differences are for planets introduced late,
+at t0 = 106 years. This is because the pebble predictor does
+not include the gas disk evolution."
+5.4. Early planet formation
+"Studies of mass reservoirs of planet forming disks infer that
+planet(-esimal) formation should start early (Greaves & Rice
+2011; Najita & Kenyon 2014; Manara et al. 2018; Tychoniec
+et al. 2020). There is growing evidence that planet formation"
+"3 The sum in Eq. (5) may actually be omitted by using a single pebble
+accretion efficiency parameter calculated for the flux-averaged Stokes
+number and the total flux of solids. This approach gives a very good
+agreement with the results presented in this paper."
+"Article number, page 9 of 12"
+A&A proofs: manuscript no. pebflux
+"103 104 105 106 107
+time [yr]"
+"compact disk, = 10 4, vf = 10 m/s"
+"103 104 105 106 107
+time [yr]"
+"large disk, = 10 4, vf = 10 m/s"
+"103 104 105 106 107
+time [yr]"
+"compact disk, = 10 4, no fragmentation"
+"103 104 105 106 107
+time [yr]"
+"compact disk, = 10 5, vf = 1 m/s"
+"103 104 105 106 107
+time [yr]"
+"compact disk, = 10 4, vf = 1 m/s"
+"103 104 105 106 107
+time [yr]"
+"compact disk, = 10 3, vf = 1 m/s
+t0=0 yrs
+t0=105 yrs
+t0=106 yrs"
+"Fig. 8. Planetary embryos growth tracks obtained in various DustPymodels (colored lines), as indicated by the title of each sub-plot, and calculated
+using the pebble predictor results (black lines). Planet growth is considered at 10 au with different starting times, as indicated by different line
+types."
+"process is indeed well underway in young disks (Harsono et al.
+2018; Segura-Cox et al. 2020). Pebble accretion may certainly
+be an avenue to fast planet formation, as young, massive disks
+should facilitate very high pebble fluxes."
+"Our results show that the pebble flux is the highest just after
+the dust aggregates at a given orbital distance reach their maxi-
+mum size. Thus, if a large enough embryo forms early enough,
+it may benefits from this high pebble flux and reach its peb-
+ble isolation mass already during early stages of disk evolu-
+tion (Tanaka & Tsukamoto 2019). The pathway to such an early
+formation of massive planetesimals is not yet understood. The
+fastest route to planetesimal formation, the streaming instabil-
+ity, needs an enhanced solids-to-gas ratio to operate (Johansen
+et al. 2009; Bai & Stone 2010). Enhancing their density requires
+significant redistribution of solids, which may take a long time
+(Drążkowska et al. 2016). The cold finger effect at water snow
+line could lead to formation of some planetesimals already dur-
+ing the disk buildup stage (Drążkowska & Dullemond 2018).
+However, the planetesimals formed via the streaming instability
+are most likely not large enough to accrete pebbles and inter-
+mediate stage of planetesimal accretion is necessary (Liu et al.
+2019)."
+5.5. Substructures
+"In this paper, we focused on the smooth disk model. However,
+there is observational evidence that substructures are ubiquitous
+in protoplanetary disks (ALMA Partnership et al. 2015; Long
+et al. 2018; Andrews et al. 2018). Substructures are thought
+to modify the evolution of dust, allowing for solids retention
+over long timescales, consistent with observations (Pinilla et al.
+2012b; Li et al. 2019b). They may be a preferential location of
+planetesimal and planet formation (Haghighipour & Boss 2003;
+Brauer et al. 2008b). In particular, planetesimal formation may
+be triggered at the outer edge of a gap carved by a preexisting
+planet (Stammler et al. 2019; Eriksson et al. 2020; Shibaike &
+Alibert 2020)."
+"In terms of pebble flux, substructures cause pileup of peb-
+bles, likely speeding up local growth of planet located inside of
+the pressure bump (Guilera et al. 2020; Morbidelli 2020). Ex-
+istence of a long lasting substructure may be a way to enable
+growth of giant planets at large orbital distance. At the same
+time, however, overall pebble flux through the disk inward from
+a pressure bump would decrease as some, potentially significant,
+fraction of solids is held in the substructure."
+"Comprehensive knowledge of the substructure and detailed
+dust models are necessary to calculate the resulting pebble flux.
+One dimensional models of dust evolution in a pressure bump
+showed that dust growth can proceed to larger sizes inside of a
+pressure bump (Brauer et al. 2008b; Pinilla et al. 2012a). Dust
+trapping is hindered by diffusion and advection of small grains
+with the gas flow. There is a critical size of dust, which depends
+on the details of the bump structure, below which the grains can-
+not be trapped (Pinilla et al. 2016; Weber et al. 2018). This ef-
+fects can, in principle, be modeled with DustPy, which includes
+both dust diffusion and advection with the gas flow, however
+the results must be treated with caution, as recent two dimen-
+sional models show that the planet induced spiral wakes may
+modify the growth pattern (Drążkowska et al. 2019). The simple
+flux prediction we proposed in Sect. 4 does not include diffusion
+and grains advection with the gas flow and thus is not suitable
+for disks with substructures. We leave development of tools that
+would be useful in such disks for future work."
+6. Summary
+"In this paper, we studied planetary growth by pebble accretion in
+a protoplanetary disk without substructure. We investigated how
+the most uncertain parameters, the fragmentation velocity, disk
+size, and turbulence strength, impact the growth rate of embryos
+placed at different radial locations and times during the dust evo-
+lution. We found that planetary growth strongly depends on dust
+evolution and the pebble sizes and fluxes should be calculated
+self-consistently with the disk structure. An important byprod-"
+"Article number, page 10 of 12"
+J. Drążkowska1 et al.: How dust fragmentation may be beneficial to planetary growth by pebble accretion
+"uct of this paper is the pebble predictor, publicly available
+script that predicts the Stokes number and flux of pebbles in
+any smooth protoplanetary disk model for a given fragmentation
+threshold velocity at a very low computational cost (see Sect. 4)."
+"One of our conclusions is that the planet growth by pebble
+accretion may be extremely fast if a large embryo is formed in
+the disk while the pebble flux is still high. Compact disk may
+produce very high pebble flux, leading to the close-in embryos
+reaching their pebble isolation mass within 104–105 years, de-
+pending on the fragmentation speed, when the turbulence is not
+too strong (α ≤ 10−4). High turbulence levels universally re-
+duce the planetary growth rate, while the effects of fragmenta-
+tion threshold and disk size are not as obvious."
+"Dust fragmentation keeps dust aggregates at pebble sizes, for
+which pebble accretion is the most efficient. Without fragmen-
+tation, dust growth would proceed over the pebble size limit,
+making the solids useless for growing planets by pebble ac-
+cretion. Strong fragmentation keeps the pebbles small and de-
+creases their drift speed, lowering pebble flux and slowing down
+the growth of embryos. At the same time, the low fragmentation
+threshold promotes keeping significant fraction of solids in the
+protoplanetary disk over long time and enables growth of em-
+bryos that formed late."
+"Compact disks are favorable for very rapid growth of close-
+in planets. In contrast, large disks are needed for formation of
+giant planets on wide orbits. Even with the large disk model,
+growing cores of giant planets outside of 10 au is challenging
+as the efficiency of pebble accretion drops with radial dis-
+tance. One possible solution to this problem may be existence of
+dust traps that could facilitate planet growth by pebble accretion."
+"The authors acknowledge funding from the European Re-
+search Council (ERC) under the European Unions Horizon
+2020 research and innovation programme under grant agreement
+No. 714769, the Deutsche Forschungsgemeinschaft (DFG, Ger-
+man Research Foundation) under Germany’s Excellence Strat-
+egy – EXC-2094 – 390783311, and the support from the DFG
+Research Unit “Transition Disks” (FOR 2634/1, ER 685/8-1)."
+"References
+ALMA Partnership, Brogan, C. L., Pérez, L. M., et al. 2015, ApJ, 808, L3
+Andrews, S. M., Huang, J., Pérez, L. M., et al. 2018, ApJ, 869, L41
+Ansdell, M., Williams, J. P., Trapman, L., et al. 2018, ApJ, 859, 21
+Ataiee, S., Baruteau, C., Alibert, Y., & Benz, W. 2018, A&A, 615, A110
+Aumatell, G. & Wurm, G. 2014, MNRAS, 437, 690
+Bai, X.-N. 2016, ApJ, 821, 80
+Bai, X.-N. 2017, ApJ, 845, 75
+Bai, X.-N. & Stone, J. M. 2010, ApJ, 722, 1437
+Birnstiel, T. & Andrews, S. M. 2014, ApJ, 780, 153
+Birnstiel, T., Dullemond, C. P., & Brauer, F. 2010, A&A, 513, A79
+Birnstiel, T., Klahr, H., & Ercolano, B. 2012, A&A, 539, A148
+Bitsch, B. 2019, A&A, 630, A51
+Bitsch, B., Izidoro, A., Johansen, A., et al. 2019a, A&A, 623, A88
+Bitsch, B. & Johansen, A. 2016, A&A, 590, A101
+Bitsch, B., Lambrechts, M., & Johansen, A. 2015, A&A, 582, A112
+Bitsch, B., Lambrechts, M., & Johansen, A. 2018a, A&A, 609, C2
+Bitsch, B., Morbidelli, A., Johansen, A., et al. 2018b, A&A, 612, A30
+Bitsch, B., Raymond, S. N., & Izidoro, A. 2019b, A&A, 624, A109
+Blum, J. 2018, Space Sci. Rev., 214, 52
+Brasser, R. & Mojzsis, S. J. 2020, Nature Astronomy, 4, 492
+Brauer, F., Dullemond, C. P., & Henning, T. 2008a, A&A, 480, 859
+Brauer, F., Henning, T., & Dullemond, C. P. 2008b, A&A, 487, L1
+Brügger, N., Alibert, Y., Ataiee, S., & Benz, W. 2018, A&A, 619, A174
+Chambers, J. E. 2016, ApJ, 825, 63
+Chambers, J. E. 2018, ApJ, 865, 30
+Charnoz, S., Pignatale, F. C., Hyodo, R., et al. 2019, A&A, 627, A50
+Cridland, A. J., Pudritz, R. E., & Birnstiel, T. 2017, MNRAS, 465, 3865
+Drążkowska, J., Alibert, Y., & Moore, B. 2016, A&A, 594, A105
+Drążkowska, J. & Dullemond, C. P. 2018, A&A, 614, A62"
+"Drążkowska, J., Li, S., Birnstiel, T., Stammler, S. M., & Li, H. 2019, ApJ, 885,
+91"
+"Drążkowska, J., Windmark, F., & Okuzumi, S. 2014, in Complex Planetary Sys-
+tems, Proceedings of the International Astronomical Union, Vol. 310, 208–
+211"
+"Eriksson, L. E. J., Johansen, A., & Liu, B. 2020, A&A, 635, A110
+Flaherty, K., Hughes, A. M., Simon, J. B., et al. 2020, ApJ, 895, 109
+Flaherty, K. M., Hughes, A. M., Rosenfeld, K. A., et al. 2015, ApJ, 813, 99
+Gárate, M., Birnstiel, T., Drążkowska, J., & Stammler, S. M. 2020, A&A, 635,"
+"A149
+Greaves, J. S. & Rice, W. K. M. 2011, MNRAS, 412, L88
+Guilera, O. M., Sándor, Z., Ronco, M. P., Venturini, J., & Miller Bertolami,"
+"M. M. 2020, A&A, 642, A140
+Gundlach, B. & Blum, J. 2015, ApJ, 798, 34
+Gundlach, B., Schmidt, K. P., Kreuzig, C., et al. 2018, MNRAS, 479, 1273
+Güttler, C., Blum, J., Zsom, A., Ormel, C. W., & Dullemond, C. P. 2010, A&A,"
+"513, A56
+Haghighipour, N. & Boss, A. P. 2003, ApJ, 583, 996
+Harsono, D., Bjerkeli, P., van der Wiel, M. H. D., et al. 2018, Nature Astronomy,"
+"2, 646
+Hernández, J., Hartmann, L., Megeath, T., et al. 2007, ApJ, 662, 1067
+Ida, S., Guillot, T., & Morbidelli, A. 2016, A&A, 591, A72
+Ida, S. & Makino, J. 1993, Icarus, 106, 210
+Izidoro, A., Bitsch, B., Raymond, S. N., et al. 2019, arXiv e-prints,"
+"arXiv:1902.08772
+Johansen, A. & Bitsch, B. 2019, A&A, 631, A70
+Johansen, A., Ida, S., & Brasser, R. 2019, A&A, 622, A202
+Johansen, A., Mac Low, M.-M., Lacerda, P., & Bizzarro, M. 2015, Science Ad-"
+"vances, 1, 1500109
+Johansen, A., Youdin, A., & Mac Low, M.-M. 2009, ApJ, 704, L75
+Klahr, H. & Schreiber, A. 2020, ApJ, 901, 54
+Kokubo, E. & Ida, S. 1996, Icarus, 123, 180
+Kokubo, E. & Ida, S. 1998, Icarus, 131, 171
+Kokubo, E. & Ida, S. 2002, ApJ, 581, 666
+Kretke, K. A. & Levison, H. F. 2014, AJ, 148, 109
+Laibe, G. 2014, MNRAS, 437, 3037
+Lambrechts, M. & Johansen, A. 2012, A&A, 544, A32
+Lambrechts, M. & Johansen, A. 2014, A&A, 572, A107
+Lambrechts, M., Johansen, A., & Morbidelli, A. 2014, A&A, 572, A35
+Lambrechts, M., Morbidelli, A., Jacobson, S. A., et al. 2019, A&A, 627, A83
+Lesur, G., Kunz, M. W., & Fromang, S. 2014, A&A, 566, A56
+Levison, H. F., Kretke, K. A., & Duncan, M. J. 2015a, Nature, 524, 322
+Levison, H. F., Kretke, K. A., Walsh, K. J., & Bottke, W. F. 2015b, Proceedings"
+"of the National Academy of Science, 112, 14180
+Levison, H. F., Thommes, E., & Duncan, M. J. 2010, AJ, 139, 1297
+Li, R., Youdin, A. N., & Simon, J. B. 2019a, ApJ, 885, 69
+Li, Y.-P., Li, H., Ricci, L., et al. 2019b, ApJ, 878, 39
+Liu, B. & Ormel, C. W. 2018, A&A, 615, A138
+Liu, B., Ormel, C. W., & Johansen, A. 2019, A&A, 624, A114
+Long, F., Herczeg, G. J., Harsono, D., et al. 2019, ApJ, 882, 49
+Long, F., Pinilla, P., Herczeg, G. J., et al. 2018, ApJ, 869, 17
+Lynden-Bell, D. & Pringle, J. E. 1974, MNRAS, 168, 603
+Manara, C. F., Morbidelli, A., & Guillot, T. 2018, A&A, 618, L3
+Matsumura, S., Brasser, R., & Ida, S. 2017, A&A, 607, A67
+Maury, A. J., André, P., Testi, L., et al. 2019, A&A, 621, A76
+Meru, F., Geretshauser, R. J., Schäfer, C., Speith, R., & Kley, W. 2013, MNRAS,"
+"435, 2371
+Morbidelli, A. 2020, A&A, 638, A1
+Mori, S., Bai, X.-N., & Okuzumi, S. 2019, ApJ, 872, 98
+Musiolik, G. & Wurm, G. 2019, ApJ, 873, 58
+Najita, J. R. & Kenyon, S. J. 2014, MNRAS, 445, 3315
+Ndugu, N., Bitsch, B., & Jurua, E. 2018, MNRAS, 474, 886
+Ogihara, M. & Hori, Y. 2020, ApJ, 892, 124
+Ogihara, M., Morbidelli, A., & Guillot, T. 2015, A&A, 578, A36
+Okuzumi, S., Tanaka, H., Kobayashi, H., & Wada, K. 2012, ApJ, 752, 106
+Ormel, C. W. 2017, Astrophysics and Space Science Library, Vol. 445, The"
+"Emerging Paradigm of Pebble Accretion, ed. M. Pessah & O. Gressel, 197
+Ormel, C. W. & Cuzzi, J. N. 2007, A&A, 466, 413
+Ormel, C. W., Dullemond, C. P., & Spaans, M. 2010, ApJ, 714, L103
+Ormel, C. W. & Klahr, H. H. 2010, A&A, 520, A43
+Ormel, C. W. & Liu, B. 2018, A&A, 615, A178
+Pinilla, P., Benisty, M., & Birnstiel, T. 2012a, A&A, 545, A81
+Pinilla, P., Birnstiel, T., Ricci, L., et al. 2012b, A&A, 538, A114
+Pinilla, P., Klarmann, L., Birnstiel, T., et al. 2016, A&A, 585, A35
+Pinte, C., Dent, W. R. F., Ménard, F., et al. 2016, ApJ, 816, 25
+Powell, D., Murray-Clay, R., Pérez, L. M., Schlichting, H. E., & Rosenthal, M."
+"2019, ApJ, 878, 116
+Ricci, L., Testi, L., Natta, A., & Brooks, K. J. 2010, A&A, 521, A66
+Sato, T., Okuzumi, S., & Ida, S. 2016, A&A, 589, A15
+Schäfer, U., Yang, C.-C., & Johansen, A. 2017, A&A, 597, A69"
+"Article number, page 11 of 12"
+A&A proofs: manuscript no. pebflux
+"Segura-Cox, D. M., Schmiedeke, A., Pineda, J. E., et al. 2020, Nature, 586, 228
+Shibaike, Y. & Alibert, Y. 2020, A&A, 644, A81
+Stammler, S. M., Drążkowska, J., Birnstiel, T., et al. 2019, ApJ, 884, L5
+Steinpilz, T., Teiser, J., & Wurm, G. 2019, ApJ, 874, 60
+Tamfal, T., Drążkowska, J., Mayer, L., & Surville, C. 2018, ApJ, 863, 97
+Tanaka, Y. A. & Tsukamoto, Y. 2019, MNRAS, 484, 1574
+Teague, R., Guilloteau, S., Semenov, D., et al. 2016, A&A, 592, A49
+Teague, R., Henning, T., Guilloteau, S., et al. 2018, ApJ, 864, 133
+Thommes, E. W., Duncan, M. J., & Levison, H. F. 2002, AJ, 123, 2862
+Thommes, E. W., Duncan, M. J., & Levison, H. F. 2003, Icarus, 161, 431
+Tobin, J. J., Sheehan, P. D., Megeath, S. T., et al. 2020, ApJ, 890, 130
+Trapman, L., Rosotti, G., Bosman, A. D., Hogerheijde, M. R., & van Dishoeck,"
+"E. F. 2020, A&A, 640, A5
+Tychoniec, Ł., Manara, C. F., Rosotti, G. P., et al. 2020, arXiv e-prints,"
+"arXiv:2006.02812
+Venturini, J., Guilera, O. M., Haldemann, J., Ronco, M. P., & Mordasini, C."
+"2020a, A&A, 643, L1
+Venturini, J., Guilera, O. M., Ronco, M. P., & Mordasini, C. 2020b, arXiv e-"
+"prints, arXiv:2008.05497
+Villenave, M., Ménard, F., Dent, W. R. F., et al. 2020, A&A, 642, A164
+Visser, R. G. & Ormel, C. W. 2016, A&A, 586, A66
+Wada, K., Tanaka, H., Suyama, T., Kimura, H., & Yamamoto, T. 2011, ApJ, 737,"
+"36
+Ward, W. R. 1997, Icarus, 126, 261
+Weber, P., Benítez-Llambay, P., Gressel, O., Krapp, L., & Pessah, M. E. 2018,"
+"ApJ, 854, 153
+Weidenschilling, S. J. 1977, MNRAS, 180, 57
+Wetherill, G. W. & Stewart, G. R. 1989, Icarus, 77, 330
+Wilner, D. J., D’Alessio, P., Calvet, N., Claussen, M. J., & Hartmann, L. 2005,"
+"ApJ, 626, L109
+Wimarsson, J., Liu, B., & Ogihara, M. 2020, MNRAS[arXiv:2006.06451]
+Zormpas, A., Picogna, G., Ercolano, B., & Kley, W. 2020, A&A, 638, A97"
+"Article number, page 12 of 12"
+"
+	1 Introduction
+	2 Model
+	2.1 Protoplanetary disk model
+	2.2 Dust evolution
+	2.3 Planet growth by pebble accretion"
+"	3 Results
+	3.1 Fragmentation threshold
+	3.2 Disk size
+	3.3 Turbulence"
+"	4 Simple prediction of the pebble flux
+	5 Discussion
+	5.1 Limitations of the (full) model
+	5.2 Planet migration
+	5.3 Validity of the single dust size approach in pebble accretion models
+	5.4 Early planet formation
+	5.5 Substructures"
+	6 Summary

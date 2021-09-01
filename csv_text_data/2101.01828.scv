@@ -1,0 +1,2078 @@
+0
+"MNRAS 000, 1–16 (2021) Preprint 24th May 2021 Compiled using MNRAS LATEX style file v3.0"
+"Structure formation in large-volume cosmological simulations of fuzzy
+dark matter: Impact of the non-linear dynamics"
+"Simon May1★, Volker Springel1
+1Max-Planck-Institut für Astrophysik, Karl-Schwarzschild-Straße 1, 85741 Garching, Germany"
+Accepted XXX. Received YYY; in original form ZZZ
+"ABSTRACT
+An ultra-light bosonic particle of mass around 10−22 eV/𝑐2 is of special interest as a dark matter candidate, as it both has particle
+physics motivations, and may give rise to notable differences in the structures on highly non-linear scales due to the manifestation
+of quantum-physical wave effects on macroscopic scales, which could address a number of contentious small-scale tensions in
+the standard cosmological model, ΛCDM. Using a spectral technique, we here discuss simulations of such fuzzy dark matter
+(FDM), including the full non-linear wave dynamics, with a comparatively large dynamic range and for larger box sizes than
+considered previously. While the impact of suppressed small-scale power in the initial conditions associated with FDM has been
+studied before, the characteristic FDM dynamics are often neglected; in our simulations, we instead show the impact of the full
+non-linear dynamics on physical observables. We focus on the evolution of the matter power spectrum, give first results for the
+FDM halo mass function directly based on full FDM simulations, and discuss the computational challenges associated with the
+FDM equations. FDM shows a pronounced suppression of power on small scales relative to cold dark matter (CDM), which can
+be understood as a damping effect due to ‘quantum pressure’. In certain regimes, however, the FDM power can exceed that of
+CDM, which may be interpreted as a reflection of order-unity density fluctuations occurring in FDM. In the halo mass function,
+FDM shows a significant abundance reduction below a characteristic mass scale only. This could in principle alleviate the need to
+invoke very strong feedback processes in small galaxies to reconcile ΛCDM with the observed galaxy luminosity function, but
+detailed studies that also include baryons will be needed to ultimately judge the viability of FDM."
+"Key words: dark matter – large-scale structure of Universe – cosmology: theory – galaxies: haloes – methods: numerical –
+software: simulations"
+1 INTRODUCTION
+"The ‘standard cosmological model’ with cold dark matter and a
+cosmological constant (ΛCDM) has been extremely successful in
+describing a wide variety of cosmological observations across a
+broad range of physical scales (e. g. Frenk & White 2012; Bull et al.
+2016). On small cosmological scales, however, challenges such as the
+‘cusp–core problem’, the ‘missing satellite problem’, or the ‘too-big-
+to-fail problem’ have sometimes raised questions about the validity
+of ΛCDM (Weinberg et al. 2015; Del Popolo & Le Delliou 2017;
+Boylan-Kolchin et al. 2011). Since physical effects experienced by
+baryons can become relevant at these scales, it has proven difficult
+to disentangle the apparent discrepancies from baryonic physics. In
+addition, even though the cosmological properties of cold dark matter
+are constrained extremely well on large scales, its micro-physical
+nature is still completely unknown thus far."
+"In light of these small-scale questions and the enduring lack of
+any direct detection of the most well-studied dark matter candidates,
+in particular weakly interacting massive particles (WIMPs), models
+based on ultra-light (‘axion-like’) scalar particles have been gaining
+interest as alternative dark matter models. Due to their small masses,
+quantum effects are expected to cause interesting wave-like behaviour"
+★ E-mail: simon.may@mpa-garching.mpg.de
+"at small (i. e. galactic) scales compared to heavy particles like WIMPs
+or compact objects. These effects have also been proposed to elucidate
+some of the ‘small-scale problems’ of cold dark matter (CDM); for
+example, early numerical simulations showed that ultra-light scalars
+form cores in the centres of dark matter haloes (Schive et al. 2014a).
+Furthermore, light (pseudo-)scalar particles are a common feature
+of theories in particle physics, from the original axion in quantum
+chromodynamics (QCD) to a plethora of axion-like particles predicted
+by unified and early-universe theories such as string theories (Marsh
+2016)."
+"The amount of existing work studying structure formation with
+CDM utterly dwarfs that of such fuzzy dark matter (FDM), par-
+ticularly concerning numerical simulations that reliably probe the
+non-linear regime. Computations have been performed using a variety
+of approaches and numerical methods, although many attempts were
+limited in scope (Zhang et al. 2019; Laguë et al. 2020, table 1).
+Correspondingly, our understanding of structure formation in FDM
+cosmologies is still comparatively spotty compared to CDM, where
+decades of experience have led to extremely detailed insights. Apart
+from the lower level of research attention, an important reason im-
+peding insight into FDM has been that numerically solving the
+corresponding equations of motion incurs very large computational
+costs – much higher than those associated with corresponding calcu-
+lations of ΛCDM. In particular, while it has been established that, in"
+© 2021 The Authors
+mailto:simon.may@mpa-garching.mpg.de
+"
+2 Simon May, Volker Springel"
+"the limit of large scales (or large particle mass), the FDM equations
+are equivalent to the Vlasov–Poisson equations of CDM (Mocz et al.
+2018; Widrow & Kaiser 1993), the effects of FDM in (mildly) non-
+linear regimes of structure formation are still poorly understood when
+compared to CDM."
+"Due to the computational requirements, the cosmological volumes
+studied in simulations with full FDM dynamics have been especially
+limited (Woo & Chiueh 2009; Schive et al. 2014a; Veltmaat et al.
+2018; Mocz et al. 2020), which is an issue that this work seeks to
+improve upon. In particular, we would like to carry out simulations
+that smoothly connect the non-linear state reached in isolated FDM
+haloes to the still linear large-scale structure, thereby bridging, in
+particular, the regime of mildly non-linear evolution where differences
+in the temporal evolution compared to CDM can be expected. To this
+end, we carry out very large uni-grid FDM simulations with a spectral
+method, which fully retains the quantum-mechanical effects. Because
+there is still a dearth of precision studies of how FDM compares
+to CDM for traditional measures of large-scale structure, we focus
+our analysis on central measures of matter clustering, namely the
+power spectrum and the halo mass function, and compare to ordinary
+ΛCDM where appropriate."
+"While methods which forego a treatment of the full wave dynamics
+have been able to conduct simulations with volumes much closer
+to those attainable using traditional 𝑁-body and smoothed-particle
+hydrodynamics (SPH) approaches for CDM (Schive et al. 2016;
+Veltmaat & Niemeyer 2016; Zhang et al. 2018; Nori & Baldi 2018;
+Nori et al. 2019), these do not capture inherent wave phenomena
+such as interference effects, which can have a significant impact on
+the overall evolution at least on small scales (Li et al. 2019), leaving
+the validity of results obtained in this way unclear in the absence
+of similar computations solving the fundamental wave equations. In
+particular, while all simulations can easily incorporate the impact of
+the suppressed small-scale power spectrum present with FDM in the
+initial conditions, such methods either lack the wave nature of FDM
+entirely or only approximate it. Using our simulations presented in this
+work, we aim to clarify the reliability of such approximative results
+by explicitly omitting the suppression in the FDM initial conditions,
+starting instead from ‘standard’ ΛCDM initial conditions. In this way,
+we disentangle the two essential physical differences distinguishing
+FDM from CDM in cosmological numerical simulations: the initial
+conditions and the non-linear dynamics."
+"This study is structured as follows. In section 2, we briefly review
+the theoretical basis for the equations of motion of FDM models. We
+then describe our numerical approaches for cosmological simulations
+of FDM in section 3. In section 4, we turn to an analysis of our
+results for the matter power spectrum, while in section 5 we report our
+findings for the halo mass function. Section 6 discusses halo profiles,
+and section 7 the differences expected in FDM due to modifications
+of the initial linear theory spectrum relative to ΛCDM if this is self-
+consistently computed. Finally, we give our conclusions in section 8."
+2 THEORETICAL BACKGROUND
+"Fundamentally, fuzzy dark matter is identical to the well-studied
+scalar field dark matter model, which is perhaps also the simplest
+particle-based dark matter model at the theoretical level. Such a model
+is described by the simple scalar field action"
+"𝑆 =
+1
+ℏ𝑐2"
+"∫
+d4𝑥
+√
+−𝑔"
+"(
+1
+2
+𝑔
+`a (𝜕`𝜙) (𝜕a𝜙) −"
+"1
+2
+𝑚2𝑐2"
+"ℏ2𝑐2
+𝜙"
+"4
+)
+(1)"
+"with the metric 𝑔`a and its determinant 𝑔, and the real scalar field 𝜙,
+its mass 𝑚 and a coupling strength _.1 This action is to be understood
+in the context of quantum field theory in a curved spacetime, i. e. 𝜙 is
+a (‘second-quantised’) quantum field."
+"The difference to most earlier studies of scalar field dark matter lies
+in the chosen parameters, specifically the mass 𝑚, which is commonly
+assumed to be in the range of 100 GeV–TeV, in line with the concept
+of CDM. In contrast, an ultra-light scalar field with a mass around
+𝑚𝑐2 ≈ 10−22 eV is under consideration here. This vast difference in
+the considered mass range compared to heavy scalar particles has
+drastic phenomenological consequences. Additionally, the ultra-light
+particles require a non-thermal production mechanism so that the
+resulting dark matter is not ultra-hot, but still resembles CDM."
+"The term ‘fuzzy dark matter’, then, is typically used for an ultra-light
+scalar field without self-interactions, i. e. _ = 0. Thus, it corresponds
+to a limit (_ → 0, or zero temperature, 𝑇 → 0) of more general
+ultra-light scalar field models (see Ferreira 2020, for a review), such
+as superfluid dark matter. Such models are often called axion-like
+particle (ALP) models due to the phenomenological similarity to the
+axion of QCD, which yields the same action as eq. (1) originating
+from a periodic potential 𝑉 (𝜙) ∝ Λ4 (1 − cos(𝜙/𝑓𝑎)) for 𝜙 � 𝑓𝑎 (see
+e. g. Marsh 2016; Hui et al. 2017)."
+"In order to perform numerical simulations of the non-linear structure
+formation in a universe with FDM, as they are traditionally done for
+CDM, it is necessary to use non-relativistic approximations. This is
+possible because virial velocities are small compared to 𝑐 and the
+simulations will be restricted to structures forming on scales smaller
+than the Hubble horizon 𝑐/𝐻0. Even so, as will be detailed later, FDM
+simulations are only possible with massively increased computational
+cost compared to CDM."
+"As sketched, for example, in Marsh (2016); Hui et al. (2017), the
+non-relativistic equations of motions for the fuzzy dark matter field
+can be obtained as follows. First, the real scalar field is rewritten in
+terms of a complex field 𝜓 as"
+"𝜙 =
+1
+2"
+"√︄
+ℏ3𝑐"
+"(
+𝜓e−i"
+"√︄
+ℏ3𝑐"
+"(
+𝜓e−i"
+"𝑡 + 𝜓∗ei
+𝑚𝑐2
+ℏ"
+")
+. (2)"
+"Next, the non-relativistic limit is taken, with the perturbed Fried-
+mann–Robertson–Walker (FRW) metric"
+"d𝑠2 =
+(
+1 +"
+"2d𝑡2 − 𝑎(𝑡)2
+(
+1 −"
+")
+dx2, (3)"
+"where 𝑎 is the scale factor and Φ corresponds to the Newtonian
+potential. This results in the Schrödinger equation"
+"iℏ
+(
+𝜕𝑡𝜓 +"
+"3
+2
+𝐻𝜓"
+"2𝑚
+∇2𝜓 + 𝑚Φ𝜓, (4)"
+"where Φ obeys the usual Poisson equation.
+Since the scalar particles are bosons with low velocities, most of"
+"the particles will be in the ground state. This enables the use of the
+mean field approximation, where 𝜓 in eq. (4) is interpreted as the
+single macroscopic wave function of a Bose-Einstein condensate with
+mass density"
+𝜌 = 𝑚 |𝜓 |2. (5)
+"Equation (4) and the Poisson equation can additionally be rewritten
+using the ‘comoving’ quantities"
+"𝜓c = 𝑎
+3/2
+𝜓, ∇c = 𝑎∇, Φc = 𝑎Φ, (6)"
+"1 𝑐 and ℏ have the usual meanings of the speed of light in vacuum and the
+reduced Planck constant, and are explicitly included in all equations."
+"MNRAS 000, 1–16 (2021)"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 3
+to yield the non-linear Schrödinger–Poisson system of equations:2
+"iℏ𝜕𝑡𝜓c (𝑡, x) = −
+ℏ2"
+"2𝑚𝑎(𝑡)2
+∇2c𝜓c (𝑡, x) +"
+"𝑎(𝑡)
+Φc𝜓c (𝑡, x) (7)"
+"∇2cΦc (𝑡, x) = 4𝜋𝐺𝑚
+(
+|𝜓c (𝑡, x) |2 − 〈|𝜓c |2〉(𝑡)"
+"The field 𝜓 is now a function of time and space whose values
+are ordinary complex numbers, instead of the operator-valued field
+that was the starting point in eq. (1). The challenge for numerical
+simulations is then to solve the non-linear time evolution of these
+FDM equations."
+"The Schrödinger equation has the form of a diffusion equation and
+thus has a well-known conservation law described by the continuity
+equation"
+"𝜕𝑡 𝜌c + ∇c · 𝜌cvc = 0, (9)"
+with the density current
+"𝜌cvc =
+ℏ"
+"2i
+(𝜓∗c∇c𝜓c − 𝜓c∇c𝜓"
+"∗
+c ) (10)"
+"(𝜌c = 𝑚 |𝜓c |2). The (comoving) velocity field vc gives the peculiar
+velocity of matter at each point. The interpretation of the wave function
+becomes clearer when written in polar form,3"
+"√︂
+𝜌c
+𝑚"
+"ei𝛼, (11)"
+"with absolute value
+√︁
+𝜌c/𝑚 and phase 𝛼, where 𝜌c = 𝑎3𝜌 = 𝑎3𝑚 |𝜓 |2"
+"is indeed the same mass density as in eq. (5). Inserting this into the
+expression for the current in eq. (10) yields"
+"vc =
+ℏ"
+"𝑚
+∇c𝛼, (12)"
+"that is, the velocity field is given by the gradient of the wave func-
+tion’s phase. The wave function in polar components (eq. (11)) can
+be rewritten in hydrodynamical form using the Madelung (1927)
+transformation, which results in the continuity eq. (9) along with a
+modified Euler equation"
+"𝜕𝑡vc +
+1
+𝑎2
+∇cv2c = −"
+"1
+𝑎
+∇cΦc +"
+"2𝑚2
+∇c
+∇2c
+√
+𝜌c"
+"(cf. e. g. Mocz et al. (2020)). This allows for a hydrodynamical
+interpretation of the density and velocity fields 𝜌c and vc."
+"It should be noted that eqs. (7) and (8) only have a single parameter
+given by the constant ℏ/𝑚,4 which is related to the de Broglie
+wavelength as"
+"_dB =
+2𝜋ℏ
+𝑚𝑣"
+. (14)
+"Another relevant scale, also determined by ℏ/𝑚, is the FDM Jeans
+length. Due to the existence of ‘quantum pressure’ resulting from
+the Heisenberg uncertainty principle, at least in linear theory, there
+exists a length scale where this ‘pressure’ cancels out the gravitational
+attraction of matter, analogous to ordinary pressure e g. for baryons.
+Perturbations at length scales larger than the Jeans length grow, while"
+"2 Due to its origin from the mean field approximation, the ‘Schrödinger
+equation’ eq. (7) is technically a Gross–Pitaevskii equation, and the system
+of eqs. (7) and (8) is also known as the Gross–Pitaevskii–Poisson system of
+equations.
+3 The inclusion of the comoving factor 𝑎3/2 has no impact on the wave
+function’s phase 𝛼, i. e. 𝜓c ="
+"√︁
+𝜌c/𝑚 ei𝛼 and 𝜓 ="
+"√︁
+𝜌/𝑚 ei𝛼."
+"4 This can be made explicit by using the variable 𝜓′ =
+√
+𝑚𝜓."
+"smaller perturbations oscillate. The comoving Jeans wave number 𝑘J
+at some redshift 𝑧 is given by (Hu et al. 2000)"
+"(
+6Ωm
+1 + 𝑧"
+") 1/4 (
+𝑚𝐻0
+ℏ"
+") 1/2
+. (15)"
+3 NUMERICAL METHODOLOGY
+"Our simulations are performed within the same framework as ordinary
+cosmological ΛCDM simulations. The simulation volume consists
+of a cubic box of side length 𝐿 with periodic boundary conditions,
+which is intended to sample the matter distribution in the universe.
+The volume is filled with matter whose average comoving density is
+the mean background density"
+"〈𝜌c〉 = Ωm𝜌crit = Ωm
+3𝐻20
+8𝜋𝐺"
+. (16)
+"In order to solve eqs. (7) and (8), a 2nd-order symmetrised split-step
+pseudo-spectral Fourier method (‘kick–drift–kick’) is employed. For a
+small time step Δ𝑡, the time evolution can be approximated as follows
+(Woo & Chiueh 2009; Edwards et al. 2018):"
+"𝜓c (𝑡 + Δ𝑡, x)"
+"= T e
+−i"
+"∫ 𝑡+Δ𝑡
+𝑡"
+"(
+− ℏ2𝑚"
+"1
+𝑎 (𝑡′)2"
+"∇2c+
+𝑚
+ℏ"
+"1
+𝑎 (𝑡′) Φc (𝑡"
+"′,x)
+)
+d𝑡′"
+"𝜓c (𝑡, x) (17)"
+"≈ e
+i Δ𝑡2"
+"1
+𝑎 (𝑡 )2"
+"∇2c−
+𝑚
+ℏ"
+"1
+𝑎 (𝑡 ) Φc (𝑡+Δ𝑡 ,x)−"
+"1
+𝑎 (𝑡 ) Φc (𝑡 ,x)"
+")
+𝜓c (𝑡, x) (18)"
+"≈ e−i
+𝑚
+ℏ"
+"1
+𝑎 (𝑡 )"
+"Δ𝑡
+2 Φc (𝑡+Δ𝑡 ,x)︸                     ︷︷                     ︸"
+‘kick’
+"e
+i ℏ
+𝑚"
+"1
+𝑎 (𝑡 )2"
+"Δ𝑡
+2 ∇"
+"2︸          ︷︷          ︸
+‘drift’"
+"e−i
+𝑚
+ℏ"
+"1
+𝑎 (𝑡 )"
+"Δ𝑡
+2 Φc (𝑡 ,x)︸                 ︷︷                 ︸"
+‘kick’
+"𝜓c (𝑡, x)"
+"whereT is the time ordering operator and, using the Baker–Campbell–
+Hausdorff formula, the time evolution operator has been split into
+three parts which do not mix functions of the position and derivative
+operators."
+"The fields 𝜓 and Φ are discretised on a uniform Cartesian mesh
+with 𝑁3 grid points to allow for numerical computations using the
+Fast Fourier Transform (FFT). Accordingly, the numerical algorithm
+of the pseudo-spectral method performs the following operations:"
+"• 𝜓c ← e−i
+𝑚
+ℏ"
+"Δ𝑡
+2 Φc𝜓c (kick) (20a)"
+"• 𝜓c ← FFT−1
+(
+e−i"
+"Δ𝑡
+2 𝑘"
+"2
+FFT(𝜓c)"
+")
+(drift) (20b)"
+"• Φc ← FFT−1
+(
+−"
+"FFT
+(
+4𝜋𝐺𝑚"
+"(
+|𝜓c |2 − 〈|𝜓c |2〉"
+")))
+(update potential) (20c)"
+"• 𝜓c ← e−i
+𝑚
+ℏ"
+"Δ𝑡
+2 Φc𝜓c (kick) (20d)"
+• Go to step (20a) (20e)
+"Consecutive executions of steps (20a) and (20d) (i. e. except for the
+initial and final time steps) can be combined into a single operation
+𝜓c ← e−i"
+"𝑚
+ℏ
+Δ𝑡Φc𝜓c to improve performance."
+"The choice of the time stepΔ𝑡 in steps (20a) to (20e) is determined by
+the requirement that the phase difference in the exponentials must not
+exceed 2𝜋, at which point the time step would be incorrectly ‘aliased’
+to a smaller time step corresponding to the phase difference subtracted
+by a multiple of 2𝜋 due to the periodicity of the exponential function.
+Both the kicks (steps (20a) and (20d)) and the drift (step (20b)) yield
+separate constraints for Δ𝑡, which must be simultaneously fulfilled."
+"MNRAS 000, 1–16 (2021)"
+"4 Simon May, Volker Springel"
+The resulting time step criterion is
+"Δ𝑡 < min
+("
+"2
+, 2𝜋"
+"1
+|Φc,max |"
+")
+, (21)"
+"where Δ𝑥 = 𝐿/𝑁 is the spatial resolution and Φc,max is the maximum
+value of the potential. The constraint involving the resolutionΔ𝑥 stems
+from the drift operation, while the constraint with the potentialΦc,max
+results from the kick operation. The dependence Δ𝑡 ∝ Δ𝑥2 seems to
+be typical for all numerical approaches to the Schrödinger–Poisson
+system of eqs. (7) and (8), and can be viewed as a reflection of the
+relation of the Schrödinger equation to diffusion problems."
+"Another constraint on the validity of the discretisation becomes
+apparent when considering the velocity field (eq. (12)). Since this is
+given by the gradient of the wave function’s phase, whose difference
+between two points can be at most 2𝜋, it follows that the discretised
+velocity field cannot exceed a maximum value (depending on the
+concrete form of the discretised gradient operator) of about"
+"𝑣max =
+ℏ"
+"Δ𝑥
+. (22)"
+"Velocities 𝑣 ≥ 𝑣max cannot be represented in a simulation with
+resolution Δ𝑥. Comparing to eq. (14), it becomes apparent that this
+statement is equivalent to a constraint on the resolution, which should
+be good enough to resolve the de Broglie wavelength of the largest
+velocities:"
+"Δ𝑥 <
+𝜋ℏ"
+"𝑚𝑣max
+="
+"1
+2
+_dB (𝑣max). (23)"
+"The requirement to resolve structures on the scale of the de Broglie
+wavelength, given by eq. (23), in combination with the time step
+requirement Δ𝑡 ∝ Δ𝑥2 (eq. (21)), is one of the main reasons why
+FDM simulations require so many more computational resources than
+traditional particle-based CDM simulations."
+"To enable our simulation work, the pseudo-spectral algorithm
+(steps (20a) to (20e)) has been implemented as a module in the AREPO
+code (Springel 2010; Weinberger et al. 2020) in a similar approach
+to Mocz et al. (2017, 2020). Step (20c) is performed using AREPO’s
+existing Poisson solver algorithm, while the split-step solution to the
+Schrödinger equation is solved using newly developed, highly parallel
+code inspired by the same algorithm. It, too, makes use of the ‘Fastest
+Fourier Transform in the West (FFTW)’ library (Frigo & Johnson
+2005) to perform the FFT."
+"This new implementation enables simulations of meshes which are
+several orders of magnitude larger than any previous work. The split-
+step scheme and the integration with AREPO also make it suitable for
+future simulations including baryons. All FDM simulations reported
+in this work were performed using this pseudo-spectral FDM AREPO
+module, whereas the CDM simulations were done using AREPO’s
+standard TreePM method."
+3.1 Initial conditions
+"As mentioned previously, there is in fact a correspondence between
+the Vlasov–Poisson equations which describe the evolution of a CDM
+fluid and the Schrödinger–Poisson equations, with the latter reducing
+to the former for ℏ/𝑚 → 0 (Widrow & Kaiser 1993; Mocz et al.
+2018; Garny et al. 2020). A wave function 𝜓(x) can be constructed
+from a phase space distribution function 𝑓 (x, p) by means of a
+Wigner or Husimi transform. This relationship illustrates why FDM
+behaves like CDM on scales larger than _dB. At first, this was in
+fact considered as an alternate method to simulate CDM (Widrow
+& Kaiser 1993). However, one can also take the equations seriously
+and actually consider the Schrödinger–Poisson equations as the ‘true’"
+"description of dark matter. In this case, the correspondence allows one
+to ‘translate’ a phase space distribution function to the wave function
+formalism. This is very useful because it enables direct comparisons
+between structure formation with CDM and FDM from the same
+initial conditions (ICs)."
+"In general, a wave function on a discretised lattice can be constructed
+using the prescription"
+"𝜓(xn) ∝
+𝑁−1∑︁
+𝑛′1=0"
+"𝑁−1∑︁
+𝑛′3=0"
+"√︁
+𝑓 (xn′ , vn) ei"
+"xn′ ·vn+𝑅n , (24)"
+"where n, n′ = (𝑛′1, 𝑛
+′
+2, 𝑛
+′
+3) are discrete grid indices, xn = nΔ𝑥 and"
+"vn = 2𝜋 ℏ𝑚
+n"
+"𝑁Δ𝑥
+are discrete phase space grid points, and 𝑅n is a"
+"random phase which is required to ensure that different velocity
+components are uncorrelated (cf. Widrow & Kaiser 1993; Mocz et al.
+2018)."
+"For the case of a ‘cold’ or ‘single-stream’ distribution function as in
+the case of CDM, where each point in space has a single well-defined
+value for the velocity, this value can be directly related to the wave
+function’s phase as in eq. (12). The construction of the wave function
+then simply reduces to the polar decomposition (eq. (11)), with the
+absolute value and phase determined by the density and velocity at
+each point, respectively:"
+"|𝜓(x) | =
+√︂"
+"𝜌(x)
+𝑚"
+", (25)"
+"∇ arg(𝜓(x)) = ∇𝛼(x) =
+𝑚"
+"ℏ
+v(x). (26)"
+"Equation (26) can be easily solved numerically by applying the
+spectral method to the equation"
+"∇2𝛼(x) =
+𝑚"
+"ℏ
+∇ · v(x). (27)"
+"The ICs were generated using the N-GenIC code (Springel 2015),
+which employs the Zel’dovich approximation to generate a perturbed
+particle distribution, for an ordinary ΛCDM cosmological simulation
+at the starting redshift 𝑧 = 1/𝑎−1 = 127 with an input power spectrum
+following Efstathiou et al. (1990, 1992), i. e. of the form"
+"𝑃(𝑘) ∝ 𝑘
+(
+1 +"
+"(
+𝑎𝑘 + (𝑏𝑘)"
+"3
+2 + 𝑐2𝑘2"
+")a )− 2
+a"
+"with 𝑎 = 6.4/Γ ℎ−1 Mpc, 𝑏 = 3.0/Γ ℎ−1 Mpc, 𝑐 = 1.7/Γ ℎ−1 Mpc,
+Γ = Ωmℎ = 0.21,5 and a = 1.13. A wave function was constructed
+from the same ICs using the procedure in eqs. (25) and (26)."
+3.2 Resolution and convergence tests
+"Before using the newly-developed FDM AREPO module for simula-
+tions of larger cosmological boxes, extensive tests were performed
+on boxes of comoving size 𝐿 = 1 ℎ−1 Mpc.6 This not only allowed
+for verification of the code’s correctness by comparing to CDM
+simulations with the same ICs and to other implementations of FDM,
+but also to study the behaviour of the pseudo-spectral method. Of
+particular interest are the resolution requirements, e. g. to what ex-
+tent the numerical results remain valid and the convergence of the
+matter power spectrum is compromised when the velocity constraint
+(eq. (22)) is violated. Moreover, the differences to the behaviour
+of CDM simulations are of interest even in this small test volume.
+Although the simulation volume is too small to be cosmologically"
+"5 See section 3.4.
+6 The cosmological parameters are the same as in section 3.4."
+"MNRAS 000, 1–16 (2021)"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 5
+"FDM: 483 , 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 16.5 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"FDM: 643 , 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 22.0 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"FDM: 1283, 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 44.1 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"FDM: 2563, 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 88.1 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"𝜌
+/〈
+𝜌
+〉"
+"FDM: 2723 , 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 93.6 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"FDM: 4003, 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 137.7 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"FDM: 5123, 𝑚𝑐2 = 1.75 × 10−23 eV
+𝑣max = 176.2 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"CDM: 2563
+𝑣99 = 100.6 km/s, 𝑧 = 0.00"
+0.25 / ℎ−1 Mpc
+"𝜌
+/〈
+𝜌
+〉"
+"Figure 1. Projected dark matter density at 𝑧 = 0 in 𝐿 = 1 ℎ−1 Mpc cosmological box simulations of FDM with 𝑚𝑐2 = 1.75 × 10−23 eV and CDM ICs for different
+resolutions. A high-resolution CDM simulation is shown for comparison. The 99th-percentile velocity of the particles in the CDM simulation is given as 𝑣99."
+"representative at 𝑧 = 0 since even the largest scales become non-
+linear by then, there are opportunities to observe what differences
+(or similarities) become apparent in both the linear (early times) and
+non-linear (late times) regimes of both dark matter models."
+"Fig. 1 shows the projected density at 𝑧 = 0 of such test simulations
+across a wide range of resolutions, with a CDM simulation for
+comparison.7 Notably, even at the lowest resolution, the qualitative
+features are preserved and structures on the largest scales remain
+the same. However, for the lower resolutions, structures become
+increasingly ‘smeared out’ (filling a larger volume), and the resulting
+range of values in the density contrast is decreased, indicating that
+the lack of resolution interferes with the formation of more compact
+structures. On the other hand, for the higher resolutions, there are no
+appreciable discrepancies in the low-density regions and filaments,
+with the only differences being slight changes in the position and
+internal structure of the largest haloes. This is in line with the idea of
+the velocity criterion eq. (22) and indicates that simulations can yield
+valid answers in regions with low velocities even in the presence of
+high-velocity regions which violate the criterion. Common to all the
+FDM simulations, and in contrast to the CDM simulation, almost
+all small-scale structure is erased due to the Heisenberg uncertainty
+principle with a large de Broglie wavelength (_dB = 1.21 kpc for
+𝑚𝑐2 = 10−22 eV, 𝑣 = 100 km s−1). The FDM structures consist of a
+few massive haloes and smooth overdense filaments, while in CDM,
+the filaments fragment into sub-haloes down to the smallest scales."
+A more quantitative indication of numerical convergence is given in
+"7 Due to the fact that at 𝑧 = 0, all scales have become non-linear with such
+a small box size, the largest-scale structures parallel to the coordinate axes
+(‘fundamental modes’, i. e. the modes with the minimal value of 𝑘 = 2𝜋/𝐿)
+are clearly visible."
+"10−210−1100
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 0.00
+"linear theory
+483"
+101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"Figure 2. Dark matter power spectra for cosmological FDM simulations
+with different resolutions, box size 𝐿 = 1 ℎ−1 Mpc, and FDM mass 𝑚𝑐2 =
+1.75 × 10−23 eV, at 𝑧 = 0 evolved from CDM ICs. The legend indicates the
+grid size for each included simulation. The power spectrum evolved using
+linear perturbation theory is shown for comparison. The bottom panel shows
+the ratio of the power spectra to the result from linear theory."
+"Fig. 2 by the power spectra of the density field. This demonstrates that,
+for the given setup, grid sizes of 1283 and smaller lead to significant
+deviations from higher-resolution results even on large scales. This
+discrepancy is visible even in the density projections of Fig. 1. On the"
+"MNRAS 000, 1–16 (2021)"
+"6 Simon May, Volker Springel"
+100 101
+𝐿 / ℎ−1 Mpc
+"PU
+tim"
+"𝑚𝑐
+2
+= 7 × 10−24 eV"
+"𝑚𝑐
+2
+= 1.75 × 10−23 eV"
+"𝑚𝑐
+2
+= 3.5 × 10−23 eV"
+"𝑚𝑐
+2
+= 7 × 10−23 eV"
+"𝑚𝑐
+2
+= 1.75 × 10−22 eV"
+"Figure 3. The expected computational cost of cosmological simulations when
+running to 𝑧 = 0 as a function of box size 𝐿 for a mesh size of 𝑁 3 = 80963
+and different FDM masses. Shaded areas indicate regions where the velocity
+constraint eq. (22) is violated for the corresponding mass at 𝑧 = 0 due to
+lack of resolution. The concrete values of CPU time correspond to the Cobra
+cluster at MPCDF for reference."
+"other hand, while it becomes difficult to see any visual differences for
+grid sizes of 2563 and larger, the power spectra show that, to some
+degree, even the 2563 grid suffers from lack of power on smaller
+scales. In this case, at least roughly, the velocity criterion seems to
+give a rather good indication of the resolution required to achieve
+convergence of the power spectrum on most scales (cf. the values
+of 𝑣max in Fig. 1). Generally, the (relative) lack of power is most
+pronounced and persists for higher resolutions on smaller scales, i. e.
+the power spectrum converges progressively from larger to smaller
+scales with increasing resolution, although even convergence on just
+the largest scales places significant demands on resolution (better
+than a 1283 grid in this case)."
+3.3 Computational cost analysis
+"As mentioned before, the required computational resources – both run-
+time cost and memory – are a significant obstacle when attempting to
+perform large-scale simulations of FDM. The run-time cost depends
+on three simulation parameters: the FDM mass 𝑚, the (comoving)
+box size 𝐿 and the number of mesh points 𝑁3 (where 𝑁 is the number
+of points per dimension).8"
+"For each individual time step, the operations in steps (20a) to (20e)
+are performed. The cost of a single time step only depends on the
+mesh size 𝑁3, while 𝑚 and 𝐿 only enter the computation through
+multiplication as constant factors. It is dominated by the cost of the
+FFT operations, which scales as 𝑂"
+"(
+𝑁3 ln(𝑁3)"
+")
+. The total cost then"
+"depends on the number of time steps which have to be performed,
+which is determined by the time step size given by eq. (21). The drift
+criterion ∝ Δ𝑥2 is typically more stringent, especially in light of the
+resolution requirements (e. g. eq. (22)) and for higher redshifts. Thus,
+the total number of time steps is roughly inversely proportional to
+the limit given by the drift criterion, which results in the following
+approximate behaviour of the computation time 𝐶:"
+"𝐶 ∝
+𝑁5 ln(𝑁3)"
+"𝑚𝐿2
+. (29)"
+"8 Instead of 𝑁 , the resolution Δ𝑥 = 𝐿/𝑁 can be equivalently considered."
+"110 23456789
+𝑧end"
+2 × 106
+3 × 106
+4 × 106
+6 × 106
+2 × 107
+"𝑚𝑐
+2
+= 7 × 10−24 eV"
+"𝑚𝑐
+2
+= 1.75 × 10−23 eV"
+"𝑚𝑐
+2
+= 3.5 × 10−23 eV"
+"𝑚𝑐
+2
+= 7 × 10−23 eV"
+"𝑚𝑐
+2
+= 1.75 × 10−22 eV"
+"Figure 4. The expected computational cost of cosmological simulations with
+different FDM masses as a function of target redshift 𝑧end for a mesh size
+of 𝑁 3 = 80963 at the maximum allowed box size 𝐿 = 𝐿max, as given by
+the velocity constraint eq. (22). The points where the curves intersect their
+associated shaded regions in Fig. 3 would correspond to 𝑧end = 0 in this figure."
+"This relation was also verified in practice using measurements of
+small test computations."
+"Particularly striking is the strong dependence of eq. (29) on 𝑁5,
+which rapidly leads to exploding computational costs for larger 𝑁 . At
+fixed 𝑁 , the cost can be decreased by choosing a larger box size 𝐿
+because this reduces the resolution Δ𝑥. However, as mentioned before,
+the resolution requirements are quite strict due to the inherent scale
+in the Schrödinger–Poisson system, which must be resolved in order
+to yield reliable results."
+"To give a tangible reference for the absolute costs involved on the
+one hand, but also the code’s performance on the other hand, Fig. 3
+shows the expected cost of simulations with mesh size 𝑁3 = 80963
+to 𝑧 = 0 in CPU hours on the state-of-the-art Cobra supercomputer
+at the Max Planck Computing and Data Facility (MPCDF).9 Fig. 3
+displays the CPU time for a range of masses 𝑚 with variable box
+size 𝐿. Even when allowing for the velocity criterion eq. (22) to be
+violated, it becomes clear that such a simulation would take at least
+107 CPU h. Even worse, the resolution requirements severely limit the
+possible simulation volume to 𝐿 < 10 ℎ−1 Mpc for the mass range
+of interest. Since the de Broglie wavelength increases with smaller
+masses, the resolution requirements can be loosened by choosing
+much smaller values for 𝑚, but this does not nearly go far enough
+as the physically viable range is bounded around & 10−22 eV. The
+computational cost for the largest possible box size 𝐿max at a given
+mass 𝑚 (intersections of the graphs with the vertical lines) decreases
+only weakly with decreasing 𝑚."
+"Fig. 4 shows the same computation time at the largest possible
+box size due to eq. (22) for each mass, but now for the case where
+the simulation is stopped earlier than 𝑧 = 0.10 Unfortunately, the
+computational cost does not depend very strongly on the final redshift
+(approximately ∝ 𝑧−1/2 in the region shown); it is merely lowered by a
+factor of . 5 even when stopping at 𝑧 = 6, and still remains at several
+million CPU hours for a 𝑁3 = 80963 simulation."
+"9 https://www.mpcdf.mpg.de/services/computing/cobra/
+10 The unevenness in the lines results due to AREPO’s time binning procedure,
+which ‘discretises’ the allowed time step values."
+"MNRAS 000, 1–16 (2021)"
+https://www.mpcdf.mpg.de/services/computing/cobra/
+"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 7"
+Type Res. el. 𝐿 / ℎ−1 Mpc 𝑚𝑐2 / eV Resolution
+"FDM 86403 10 7 × 10−23 1.16 ℎ−1 kpc
+FDM 43203 10 (3.5, 7) × 10−23 2.31 ℎ−1 kpc
+FDM 30723 10 (3.5, 7) × 10−23 3.26 ℎ−1 kpc
+FDM 20483 10 (3.5, 7) × 10−23 4.88 ℎ−1 kpc
+FDM 43203 5 7 × 10−23 1.16 ℎ−1 kpc
+FDM 30723 5 (3.5, 7) × 10−23 1.63 ℎ−1 kpc
+FDM 20483 5 (3.5, 7) × 10−23 2.44 ℎ−1 kpc
+FDM 10243 5 (3.5, 7) × 10−23 4.88 ℎ−1 kpc
+CDM 20483 10 — 9.69 × 103 ℎ−1 M�
+CDM 10243 10 — 7.75 × 104 ℎ−1 M�
+CDM 5123 10 — 6.20 × 105 ℎ−1 M�
+CDM 10243 5 — 9.69 × 103 ℎ−1 M�
+CDM 5123 5 — 7.75 × 104 ℎ−1 M�"
+"Table 1. List of performed simulations with important characteristics. The
+lengths given for the box sizes and resolutions are comoving."
+3.4 Simulations
+"All our simulations were performed using the cosmological parameters
+Ωm = 0.3, Ωb = 0, ΩΛ = 0.7, 𝐻0 = 70 km s−1 Mpc−1 (ℎ = 0.7), and
+𝜎8 = 0.9,11 with ICs as described in section 3.1. The same random
+seed was shared for the generation of all ICs at 𝑧 = 127 in order to allow
+for a direct comparison between different dark matter models and
+resolutions. In order to avoid the onset of resolution effects that would
+affect even our highest-resolution simulations, the simulations were
+run until 𝑧 = 3. For comoving box sizes of 5 ℎ−1 Mpc and 10 ℎ−1 Mpc,
+and masses 𝑚𝑐2 of 3.5 × 10−23 eV and 7 × 10−23 eV, simulations
+with different resolutions – up to mesh sizes of 𝑁3 = 86403 – were
+performed. A detailed list of the different simulations is given in
+Table 1."
+"To date, these are the largest three-dimensional cosmological
+simulations of structure formation including the full FDM dynamics
+to low redshifts, with a simulation volume which is at least 64 times
+larger and a mesh which has at least 600 times more resolution
+elements than any comparable existing work. The largest simulation
+required more than 7 × 106 CPU h on the Cobra cluster to complete.
+Previous efforts (using various methods) have only reached box
+sizes of 2.5 ℎ−1 Mpc (Mina et al. 2020, using an adaptive mesh
+refinement (AMR) method, until 𝑧 = 2.5) or 1.7 ℎ−1 Mpc (Mocz et al.
+2020, also with a pseudo-spectral method, until 𝑧 = 5.5) for full
+FDM simulations, and 2.5 ℎ−1 Mpc with a hybrid method (Veltmaat
+et al. 2018, i. e. not including the FDM dynamics everywhere in the
+simulation volume) for similar cosmological simulations."
+3.5 Grid-based halo finding
+"The halo mass function (HMF) is an important measure of large-scale
+structure. For typical CDM simulations, it is determined using an
+algorithm like friends-of-friends (FoF) in AREPO, which identifies
+haloes by connecting simulation particles (point masses) whose
+distance to other particles is below a certain threshold. When using
+the pseudo-spectral method, however, there are no particles, and
+the density field is instead represented by a Cartesian mesh. This
+means that widely-used algorithms, which operate on the particle
+distribution, cannot be used to analyse the FDM simulations presented
+here."
+"Because of this, a modified version of the FoF algorithm was"
+"11 As usual, the density parameters Ω𝑖 indicate the values at 𝑧 = 0."
+"𝑀
+d𝑛
+/d"
+"CDM, particles (5123 )
+CDM, grid (10243 )"
+108 109 1010 1011 1012 1013
+𝑀 / ℎ−1𝑀�
+"(𝑀
+d𝑛
+/d"
+"(𝑀
+d𝑛
+/d"
+"ar
+tic"
+"Figure 5. The HMF of a cosmological ΛCDM simulation at 𝑧 = 0 with
+𝐿 = 10 ℎ−1 Mpc and 5123 particles, as determined using AREPO’s standard
+FoF algorithm (‘particles’) and the newly implemented grid-based halo
+finder (‘grid’). The latter used the density grid constructed from a CiC mass
+assignment of the simulation particles onto a mesh with 10243 points as input.
+The bottom panel shows the ratio of the mass functions.Note that the masses
+given here are the masses of the FoF groups (i. e. the sum of all particle or grid
+cell masses in the group) to give a direct comparison of the two approaches."
+"developed in this work to enable the determination of the HMF for a
+discretised density mesh. Instead of a linking length, this grid-based
+halo finder uses a density threshold as a parameter. Adjacent cells in
+the mesh are linked if their density exceeds the density threshold. The
+grid-based halo finder is part of the pseudo-spectral FDM AREPO
+module."
+"Fig. 5 demonstrates that this new halo finder performs well in
+comparison to the standard particle-based FoF algorithm. Using a
+CDM simulation with 5123 particles, the density was represented
+both using the original particle data and a Cartesian mesh with 10243
+grid points whose density values were determined using cloud-in-cell
+(CiC) mass assignment. The HMF was determined with the particle
+and grid data as input for FoF and the new grid-based halo finder,
+respectively. As evident in Fig. 5, both procedures show excellent
+agreement. Differences arise in the lightest haloes, which are limited
+by resolution since density is always spread out over at least one cell
+volume, and slight variations are present for the most massive haloes,
+where statistical effects play a role since there are only a few haloes
+per mass bin."
+4 DARK MATTER POWER SPECTRUM
+"The matter power spectrum gives important insight into how matter
+clusters at different length scales, and its evolution in time is by now
+quite accurately known for ΛCDM (e. g. Jenkins et al. 1998), even
+when baryonic effects are included (Springel et al. 2018). The power
+spectrum is also a particularly important diagnostic for a comparison of
+FDM with CDM, because the former is expected to suppress structure
+formation at scales smaller than _dB due to the Heisenberg uncertainty
+principle. Due to the use of CDM ICs, our results demonstrate to what
+extent the dynamics of the Schrödinger–Poisson eqs. (7) and (8) affect"
+"MNRAS 000, 1–16 (2021)"
+"8 Simon May, Volker Springel"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 63.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+FDM Jeans length"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 15.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 10.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 7.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 5.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 3.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"Figure 6. Dark matter power spectra at different redshifts for a high-resolution cosmological FDM simulation with box size 𝐿 = 10 ℎ−1 Mpc, FDM mass
+𝑚𝑐2 = 7 × 10−23 eV, mesh size 𝑁 3 = 86403, and CDM ICs. The power spectrum evolved using linear perturbation theory is shown for comparison. The lower
+panels show the ratio of the power spectra to the result from linear theory. For 𝑧 = 63, the dashed line additionally indicates the FDM Jeans scale (eq. (15))."
+"MNRAS 000, 1–16 (2021)"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 9
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+"linear theory
+FDM, 86403"
+"FDM, 43203"
+"FDM, 20483"
+"𝑧 = 3
+𝑧 = 10
+𝑧 = 31"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"Figure 7. Dark matter power spectra for cosmological FDM simulations with
+box size 𝐿 = 10 ℎ−1 Mpc, FDM mass 𝑚𝑐2 = 7 × 10−23 eV and CDM ICs at
+different resolutions (indicated by different colours) and different redshifts
+(indicated by solid, dashed, and dotted lines). The power spectrum evolved
+using linear perturbation theory is shown for comparison. The bottom panel
+shows the ratio of the power spectra to the result from linear theory at 𝑧 = 3."
+"the clustering of matter compared to CDM, even without the initial
+suppression present in a ‘realistic’ FDM cosmology (cf. section 7)."
+"In Fig. 6, we show the time evolution of the matter power spectra
+of FDM at our highest resolution of 86403 cells in a 10 ℎ−1 Mpc
+box. From the top left to the bottom right panel, we show redshifts
+from 𝑧 = 63 to 𝑧 = 3, and compare to expectations from linear
+theory. In particular, the bottom of each panel gives the ratio of the
+measured FDM power to the linear theory power spectrum used for
+initializing the simulation. At high redshifts and at small 𝑘 , FDM
+accurately follows linear theory, with modes growing independently
+with the same linear growth factor, just like CDM does, so that the
+pattern of random fluctuations of our particular realization around
+the smooth initial input spectrum is preserved in time. Beginning
+at scales around 𝑘 ≈ 10 ℎMpc−1 and a redshift of 𝑧 ≈ 15, signs of
+mildly non-linear evolution are apparent, which manifest themselves
+in a stronger than linear growth of power. This non-linear evolution
+becomes quickly more pronounced in a way reminiscent of CDM,
+except that on the smallest resolved scales, for 𝑘 ≥ 1000 ℎMpc−1,
+the non-linear growth appears sluggish and lagging behind that seen
+on larger scales."
+"It is now important to examine on which scales and at which
+times these results are quantitatively reliable. As we have discussed
+earlier, the stringent numerical requirements of FDM make this more
+involved than for CDM, because here even the large-scale linear
+growth requires a fairly high resolution to get right, and it is not
+readily clear how numerical limitations will manifest themselves in
+the results. In Fig. 7 we first compare results for FDM simulations
+in a 10 ℎ−1 Mpc box using different resolutions, with grid sizes from
+20483 to 86403. Focusing on the three redshifts of 𝑧 = 31, 𝑧 = 10
+and 𝑧 = 3, we see that the results still appear well converged at the
+high redshifts of 𝑧 = 31 and 𝑧 = 10 (although the lowest-resolution
+simulation with 𝑁3 = 20483 slightly starts to lag behind at 𝑧 = 10 on
+smaller scales). However, this ceases to be true at the lower redshift
+of 𝑧 = 3, where the growth of the lower-resolution simulations now"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 3.00
+linear theory
+"FDM, 86403 , 𝐿 = 10 ℎ−1 Mpc"
+"FDM, 43203 , 𝐿 = 10 ℎ−1 Mpc"
+"FDM, 20483 , 𝐿 = 10 ℎ−1 Mpc"
+"FDM, 43203 , 𝐿 = 5 ℎ−1 Mpc"
+"FDM, 20483 , 𝐿 = 5 ℎ−1 Mpc"
+"FDM, 10243 , 𝐿 = 5 ℎ−1 Mpc"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"10−1
+100
+101
+102"
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"Figure 8. Dark matter power spectra for cosmological FDM simulations at
+fixed redshift (𝑧 = 3) with FDM mass 𝑚𝑐2 = 7 × 10−23 eV using CDM
+ICs, with varying box sizes (𝐿 = 5 ℎ−1 Mpc and 10 ℎ−1 Mpc) and resolutions.
+The power spectrum evolved using linear perturbation theory is shown for
+comparison. The bottom panel shows the ratio of the power spectra to the
+result from linear theory."
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 3.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+FDM, 43203 , 𝑚𝑐2 = 7 × 10−23 eV
+FDM, 20483 , 𝑚𝑐2 = 7 × 10−23 eV
+FDM, 43203 , 𝑚𝑐2 = 3.5 × 10−23 eV
+FDM, 20483 , 𝑚𝑐2 = 3.5 × 10−23 eV"
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"10−1
+100
+101
+102"
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"Figure 9. Dark matter power spectra for cosmological FDM simulations
+at fixed redshift (𝑧 = 3) with box size 𝐿 = 10 ℎ−1 Mpc using CDM ICs,
+with varying FDM masses (𝑚𝑐2 = 3.5 × 10−23 eV and 7 × 10−23 eV) and
+resolutions. The power spectrum evolved using linear perturbation theory is
+shown for comparison. The bottom panel shows the ratio of the power spectra
+to the result from linear theory."
+"clearly trails behind, and this effect occurs on an extended range of
+scales, including fairly large ones, quite unlike in CDM, where the
+impact of spatial resolution limits is typically constrained to fairly
+small scales. In particular, we see that once the onset of non-linear
+evolution is not properly resolved any more in a simulation, the FDM
+spectra even stop to follow linear growth on the largest scales, making
+the simulations appear to be frozen in in their current state."
+Further insights into these numerical effects can also be obtained
+"MNRAS 000, 1–16 (2021)"
+"10 Simon May, Volker Springel"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 15.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+CDM, 10243"
+"CDM, 20483"
+shot noise limit
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"10−3
+10−2
+10−1
+100"
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) C"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 7.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+CDM, 10243"
+"CDM, 20483"
+shot noise limit
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"10−3
+10−2
+10−1
+100"
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) C"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 5.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+CDM, 10243"
+"CDM, 20483"
+shot noise limit
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"10−3
+10−2
+10−1
+100"
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) C"
+"10−210−1100101
+𝑟 / ℎ−1 Mpc (comoving)"
+"102
+𝑃
+(𝑘
+)"
+𝑧 = 3.00
+"linear theory
+FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+CDM, 10243"
+"CDM, 20483"
+shot noise limit
+100 101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"10−3
+10−2
+10−1
+100"
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) C"
+"Figure 10. Dark matter power spectra at different redshifts for a high-resolution cosmological FDM simulation with box size 𝐿 = 10 ℎ−1 Mpc, FDM mass
+𝑚𝑐2 = 7 × 10−23 eV, mesh size 𝑁 3 = 86403, and CDM ICs, compared to cosmological 𝑁 -body CDM simulations with different resolutions. The power spectrum
+evolved using linear perturbation theory is shown for comparison. The lower panels show the ratio of the power spectra to the result of the highest-resolution
+CDM simulation. For 𝑧 = 63, the dashed line additionally indicates the FDM Jeans scale (eq. (15)). Faint dotted lines show the shot noise limits of the 𝑁 -body
+simulations; the power spectrum cannot be measured accurately once it reaches this limit."
+"by examining how they vary with box size and axion particle mass
+at a fixed epoch of 𝑧 = 3. This is shown in Figs. 8 and 9. Here, the
+impact of eq. (23) is clearly visible: The resolution requirements
+become more stringent with larger axion masses and at fixed grid size,
+a larger box size directly implies worse resolution. Thus, at fixed grid
+size, if axion mass and box size are scaled by the same factor, the
+resulting power spectra are identical except at small scales, which are
+impacted by the change in Jeans length with different axion masses.
+Accordingly, due to resolution effects and contrary to the physical
+expectation, for fixed box size and grid resolution, it is possible to
+see more small-scale power when the particle mass is lowered, since
+lower masses have less stringent resolution requirements."
+"We finally come to a direct comparison of FDM with the (non-
+linear) CDM power spectrum in Fig. 10. While both accurately agree
+with each other and with linear perturbation theory at large scales and"
+"early times, some differences start to show up as early as 𝑧 ≈ 15. The
+non-linear small-scale power enhancement sets in somewhat more
+vigorously for CDM than for FDM. For example, while mild non-
+linear amplification is similar at 𝑘 ≈ 10 ℎMpc−1 in CDM and FDM
+for 𝑧 = 15, this effects extends to smaller scales 𝑘 ≈ 100 ℎMpc−1
+in CDM, whereas FDM still pretty much tracks linear growth there.
+From the viewpoint of the overall time evolution, it can thus be said
+that the onset of non-linear structure formation is delayed for FDM,
+and does not proceed strictly in the same bottom-up fashion as in
+CDM."
+"Interestingly, FDM however eventually catches up in its non-linear
+growth and then shows a quite similar overall shape of the non-linear
+power spectrum. While FDM power is still somewhat suppressed at
+𝑧 ≤ 7 for non-linear scales, the difference to CDM is much smaller
+than at earlier redshifts. This is true until a characteristic scale of"
+"MNRAS 000, 1–16 (2021)"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 11
+2.5 / ℎ−1 Mpc
+"𝜌
+/〈
+𝜌
+〉"
+"Figure 11. Projected dark matter density at 𝑧 = 3 of a 3 ℎ−1 Mpc (comoving)
+slab in a high-resolution cosmological box simulation of FDM with box size
+𝐿 = 10 ℎ−1 Mpc, FDM mass 𝑚𝑐2 = 7 × 10−23 eV, mesh size 𝑁 3 = 86403,
+and CDM ICs. The largest haloes identified with the halo finder are marked
+with circles whose radii indicate the haloes’ virial radii 𝑅200."
+"around 𝑘 ≈ 1000 ℎMpc−1, where the FDM non-linear power drops
+significantly below the CDM power. This scale appears to be related
+to the ‘quantum pressure’ effects in FDM, and is thus ultimately
+related to the particle mass."
+"Curiously, just before the non-linear FDM power decays away from
+CDM towards small scales, it manages to slightly exceed it. This effect
+could be a reflection of the interference patterns in the dark matter
+density field resulting from the wave-like nature of FDM, which
+generates transient structures of size _dB that are clearly visible in
+high-resolution images that zoom in on large haloes.12 These types of
+order-unity density fluctuations are absent in CDM. If the associated
+enhancement of power localized around a characteristic scale 𝑘 could
+be measured by some tracer sufficiently accurately, it could be a
+tell-tale sign of FDM."
+5 HALO MASS FUNCTION
+"One of the most important and fundamental outcomes of structure
+formation are gravitationally collapsed structures of dark matter, so-
+called haloes, which are in turn the sites of baryonic galaxy formation
+processes. The abundance of haloes as a function of mass and epoch
+is thus fundamental to any cosmological model."
+"For the CDM scenario, the (extended) Press–Schechter formalism
+(Press & Schechter 1974; Sheth & Tormen 1999) has proven to be
+a simple and quite reliable approach to estimate the HMF and its
+evolution based on the linear theory power spectrum and the linear
+growth factor alone. Comparisons to full 𝑁-body simulations have
+both verified the basic approach and led to the calibration of more
+accurate empirical fitting formulae describing the HMF (Jenkins et al.
+2001; Tinker et al. 2008; Despali et al. 2016). As a result, the HMF
+in pure CDM models is now accurately known and understood."
+"In contrast, the situation for FDM is much more murky. While a few"
+"12 A similar effect (although in a different cosmological context) has been
+found in Mocz et al. (2020)."
+"𝑀
+d𝑛
+/d"
+"CDM, 5123"
+"FDM, 86403 , 𝑚𝑐2 = 7 × 10−23 eV
+FDM, 43203 , 𝑚𝑐2 = 7 × 10−23 eV
+Sheth–Tormen HMF (CDM)
+Schive et al. (2016) HMF (FDM,"
+"𝑚𝑐
+2
+= 7 × 10−23 eV)"
+"Fit to eq. (30) with
+𝑀0 = 6.36 × 108ℎ−1𝑀� , 𝛼 = −0.64"
+107 108 109 1010 1011 1012
+𝑀 / ℎ−1𝑀�
+"(𝑀
+d𝑛
+/d"
+"(𝑀
+d𝑛
+/d"
+"𝑀
+d𝑛
+/d"
+"CDM, 5123"
+"FDM, 43203 , 𝑚𝑐2 = 3.5 × 10−23 eV
+FDM, 20483 , 𝑚𝑐2 = 3.5 × 10−23 eV
+Sheth–Tormen HMF (CDM)
+Schive et al. (2016) HMF (FDM,"
+"𝑚𝑐
+2
+= 3.5 × 10−23 eV)"
+"Fit to eq. (30) with
+𝑀0 = 6.36 × 108ℎ−1𝑀� , 𝛼 = −0.64"
+107 108 109 1010 1011 1012
+𝑀 / ℎ−1𝑀�
+"(𝑀
+d𝑛
+/d"
+"(𝑀
+d𝑛
+/d"
+"Figure 12. HMF of cosmological FDM and CDM simulations at 𝑧 = 3
+with a box size of 𝐿 = 10 ℎ−1 Mpc, CDM ICs, and FDM masses of 𝑚𝑐2 =
+7 × 10−23 eV and 3.5 × 10−23 eV (top and bottom panels, respectively). The
+HMF derived for CDM by Sheth & Tormen (1999) is shown for comparison.
+The dotted lines show the fitting function determined by Schive et al. (2016)
+for the given FDM mass, while the dashed lines show a fit of the data to a
+similar function (eq. (30)) with two free parameters. The lower sub-panels
+show the ratios of the mass functions to the result of the CDM simulation."
+"analytic estimates have been published (Marsh & Silk 2014), based
+loosely on the idea of a Jeans-filtered power spectrum to account for
+the ‘quantum pressure’, it is still unclear whether these approaches
+are quantitatively reliable. Recently, Kulkarni & Ostriker (2020)
+have advocated that a sharp 𝑘-space filtering in the Press–Schechter
+formalism with a variable cut-off may be more adequate for the FDM
+regime. But their predictions could only be compared to FDM mass
+function estimates by Schive et al. (2016), which in turn were based
+on an approximate technique of removing ‘spurious’ low-mass haloes
+in a collisionless 𝑁-body simulation with truncated initial fluctuation
+spectrum, similar to how warm dark matter models are often treated
+(Wang & White 2007). Ultimately, full non-linear simulations of
+the Schrödinger–Poisson system are required to obtain quantitatively"
+"MNRAS 000, 1–16 (2021)"
+"12 Simon May, Volker Springel"
+"reliable results. However, due to the numerical challenges involved
+in large-volume simulations of FDM, such determinations have not
+been obtained thus far."
+"Our new simulations for the first time allow corresponding measure-
+ments, although the results are not representative of a fully consistent
+FDM cosmology due to the use of CDM ICs. However, our simu-
+lations allow us to demonstrate how strongly the FDM dynamics
+alone impact the HMF, and accordingly, to what extent their omission
+might affect the result. To this end, we study the HMF using the
+grid-based halo finder introduced in section 3.5, whose operation on
+our largest simulation is demonstrated in Fig. 11. In Fig. 12, we show
+the obtained mass functions for the FDM and CDM cases for a set of
+example simulations.13 As expected from the power spectra, the HMF
+of FDM exhibits a lack of low-mass haloes, but agrees for massive
+haloes. To obtain essentially perfect agreement with CDM for the
+most massive haloes, however, requires sufficiently high resolution in
+the FDM calculation for the target redshift. As we have seen earlier,
+the numerical resolution requirements become ever more stringent
+towards lower redshift, and once they start to be compromised, the
+growth on large (even still linear) scales becomes damped, which then
+manifests itself in halo masses which are biased low. This is clearly
+seen in Fig. 12 in the comparison of the low- and high-resolution
+FDM results for the HMF."
+"More interesting, however, is the abundance reduction of low-mass
+haloes in FDM. Indeed, the delayed onset of structure formation
+becomes apparent even more clearly in the HMF than in the power
+spectrum, with almost no objects present before 𝑧 = 7. At late times,
+there is a dearth of low-mass haloes in our results, but the deficit
+appears not as strong as the cut-off predicted by Kulkarni & Ostriker
+(2020). Rather, it appears that power transfer to smaller scales is
+sufficiently strong in FDM that the break in the HMF is weaker than
+predicted by simplified models based on ‘quantum pressure’-filtered
+versions of the Press–Schechter formalism. This reinforces the notion
+that simply applying a Jeans filtering at the linear level and assuming
+that all smaller scales never grow and thus can be ignored does not
+necessarily yield sufficient quantitative accuracy to predict the non-
+linear outcome of FDM. On the other hand, the simulations shown
+in Fig. 12 do not yet include the effect of ICs appropriate for the
+FDM model, which feature a strong cut-off even in the initial power
+spectrum (see section 7) and are thus expected to result in additional
+suppression of low-mass haloes."
+"Also shown in Fig. 12 are two fits, given by dotted and dashed
+lines, in a fashion similar to Schive et al. (2016). While the dotted
+line uses exactly the same function as given in Schive et al. (2016)
+for the corresponding particle mass 𝑚, the dashed line is a modified
+fit of the form"
+"����
+FDM
+(𝑀, 𝑧) ="
+")𝛼)−2.2 d𝑛
+d𝑀"
+"����
+CDM
+(𝑀, 𝑧), (30)"
+"where the Sheth & Tormen (1999) mass function has been used
+for the CDM mass function (d𝑛/d𝑀)"
+"��
+CDM (𝑀, 𝑧). In other words,"
+"the mass parameter 𝑀0 and the inner exponent 𝛼 are allowed to
+vary compared to the values found in Schive et al. (2016) (𝑀0 =
+1.6 × 1010 (𝑚𝑐2/(10−22 eV))−4/3M� and 𝛼 = −1.1 in Schive et al.
+(2016)). The result shows that while an appropriate fit to our mass"
+"13 The halo masses are determined using the spherical overdensity definition,
+i. e. identifying the densest cell (FDM) or the particle with the minimum
+gravitational potential (CDM) as the centre of a halo, the halo’s virial mass
+𝑀200 is defined as the enclosed mass of a sphere around the halo centre with
+a radius such that the enclosed region has a mean density of 𝜌200 = 200〈𝜌〉 =
+200Ωm𝜌crit."
+100 101 102 103
+𝑟 / ℎ−1 kpc (comoving)
+"𝜌
+/〈
+𝜌
+〉"
+"Soliton fits (eq. (31))
+NFW fits (eq. (32))
+FDM grid resolution"
+"FDM, 𝑧 = 3"
+"2 × 1011 M� ≤ 𝑀200 < 1012 M�
+(# = 6)"
+"2 × 1010 M� ≤ 𝑀200 < 1011 M�
+(# = 5.6 × 101)"
+"2 × 109 M� ≤ 𝑀200 < 1010 M�
+(# = 5.4 × 102)"
+"2 × 108 M� ≤ 𝑀200 < 109 M�
+(# = 1.2 × 103)"
+"2 × 107 M� ≤ 𝑀200 < 108 M�
+(# = 4.2 × 102)"
+100 101 102 103
+𝑟 / ℎ−1 kpc (comoving)
+"𝜌
+/〈
+𝜌
+〉"
+NFW fits (eq. (32))
+"CDM, 𝑧 = 3"
+"2 × 1011 M� ≤ 𝑀200 < 1012 M�
+(# = 9)"
+"2 × 1010 M� ≤ 𝑀200 < 1011 M�
+(# = 9.8 × 101)"
+"2 × 109 M� ≤ 𝑀200 < 1010 M�
+(# = 8.6 × 102)"
+"2 × 108 M� ≤ 𝑀200 < 109 M�
+(# = 6.7 × 103)"
+"2 × 107 M� ≤ 𝑀200 < 108 M�
+(# = 4.7 × 104)"
+"Figure 13. ‘Stacked’ halo profiles at 𝑧 = 3 for several bins of virial mass
+𝑀200 in 𝐿 = 10 ℎ−1 Mpc cosmological box simulations of FDM (𝑚𝑐2 =
+7 × 10−23 eV, 𝑁 3 = 86403) and CDM (5123 particles), using CDM ICs. The
+number of haloes contained in each mass bin is stated in parentheses. The
+top panel shows the results for FDM, while the bottom panel shows those for
+CDM. Thin dashed lines show NFW fits (eq. (32)) to the region within the
+virial radius 𝑅200, which is indicated with thick lines. For FDM, the inner
+region of the halo has been excluded from the NFW fit and instead been fit
+to the soliton density profile (eq. (31)), as indicated by dot-dashed lines. The
+FDM grid resolution is shown as a vertical dotted line."
+"function can be obtained using a very similar functional form, the
+shape changes slightly, and the peak mass 𝑀0 shifts to much lower
+halo masses. This indicates that either the method used by Schive
+et al. (2016) underestimates the number of low-mass haloes, or that
+the inclusion of FDM-appropriate initial conditions (as discussed in
+section 7) causes a strong impact on the formation of low-mass haloes.
+This question can only be resolved by performing another set of full
+FDM simulations with self-consistent initial conditions."
+6 HALO PROFILES
+"The internal density structure of cosmological dark matter haloes
+is a further key outcome of non-linear structure formation whose
+importance can hardly be overstated. This is because of its crucial
+influence on the size, kinematics and morphology of galaxies forming
+in the dark matter haloes, as well as on the gravitational lensing"
+"MNRAS 000, 1–16 (2021)"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 13
+"strength of these objects. These properties are of course decisive
+for the viability of a cosmological model in the first place. For cold
+dark matter models, the spherically averaged density profiles have
+𝜌(𝑟) ∝ 𝑟−1 density cusps at their centres (Navarro et al. 1996), giving
+rise to a particular rotation curve shape of galaxies."
+"One of the often cited motivations for considering FDM is the so-
+called cusp–core problem in ΛCDM, combined with the expectation
+that FDM naturally produces cored density profiles that may be
+potentially easier to reconcile with rotation curve data of certain
+galaxies. By considering a spherically-symmetric ground state of
+FDM, one arrives at solutions called solitons, whose density profiles
+are flat towards their centres. The production of such solitonic cores
+has been predicted on theoretical grounds and has been verified with
+simulations of small cosmological volumes (Schive et al. 2014a).
+Here, we are interested in testing whether we also see them in our
+comparatively large-volume simulations, which have however quite
+limited ability to resolve the internal structure of individual haloes."
+"In Fig. 13 we therefore consider spherically averaged density
+profiles, stacked for several different mass ranges,14 in our highest-
+resolution simulation at 𝑧 = 3. The stacking greatly reduces halo-to-
+halo scatter and allows us to clearly identify the mean density profile.
+For comparison, we also show in the bottom panel equivalent density
+profiles for haloes in a corresponding CDM 𝑁-body simulation. As
+before, the centres of haloes have been identified as the densest cell
+in the FDM case, or the particle with the minimum gravitational
+potential in CDM, while the total halo mass has been determined with
+the spherical overdensity definition in both cases. The measurements
+of the density profiles include all mass around the halo centres, i. e.
+beyond 𝑅200, the mean profiles eventually slow their decline and
+asymptote to the cosmic mean density."
+"In the FDM case, we clearly see the formation of solitonic cores in
+low-mass haloes, as illustrated by the dot-dashed lines, which are fits
+to the analytic approximation of the soliton density profile by Schive
+et al. (2014b):15"
+"𝜌c,soliton (𝑟c) =
+1.9 × 109 𝑎−1"
+10−23 eV
+")−2 (
+𝑟s"
+")−4
+(
+1 + 0.091"
+"(
+𝑟c
+𝑟s"
+")2)8 M� kpc−3. (31)
+Note that this profile depends on the core radius 𝑟s only, without
+further free parameters. Our simulations thus accurately reproduce
+earlier work on the shape of the innermost mean profile, where the
+‘quantum pressure’ dominates.16 In the outer parts of the haloes, the
+run of the mean density follows the Navarro–Frenk–White (NFW)"
+"14 The ‘stacking’ is performed by determining the mean density across all
+haloes in a given mass bin for each radial bin.
+15 As before, 𝜌c refers to the comoving density; 𝑟c is the comoving distance
+from the soliton centre.
+16 Since we use the mean of many halo density profiles in mass bins of a
+given width, the physical interpretation of fitting the soliton profile eq. (31),
+which describes a single soliton (with a given mass/radius), to such mean
+profiles is not necessarily immediately clear. The haloes in a given mass bin
+have a range of (soliton) masses, which are distributed according to the HMF.
+However, since the soliton profile is simply flat in the centre and for most of
+its domain of applicability, such a fit will simply produce a central density
+corresponding to the HMF-weighted mean soliton mass of the binned haloes.
+Although it is not necessarily to be expected that the drop in density beyond
+the flat central plateau of the stacked profile will be accurately described by
+the soliton profile due to the varying soliton radii contained in each mass bin,
+the general agreement with the soliton profile demonstrates the presence of
+the cores described in previous work in our simulations."
+form (Navarro et al. 1996)
+"𝜌c,NFW (𝑟c) =
+𝜌0"
+"(
+1 + 𝑟c"
+")2 (32)
+rather well. It is thus tempting to use a combination of a solitonic core
+and a NFW profile as comprehensive description of the non-linear
+density structure of FDM haloes, and to use this to forecast the rotation
+curve of galaxies and the core size of galaxies as a function of their
+virial mass (Burkert 2020). We caution, however, that this neglects the
+potentially significant impact of order-unity density fluctuations of the
+FDM wave function outside the solitonic core, which are completely
+lost in the spherical averaging and the halo stacking. Likewise, it
+is unclear how severely baryons can impact the innermost density
+profile. These baryonic effects are quite uncertain in CDM, but even
+less is known about them in FDM, where they could potentially be
+stronger due to the lower dark matter densities in the centres of haloes.
+It will thus likely require cosmological hydrodynamic simulations of
+galaxy formation in FDM to arrive at firm predictions about rotation
+curve shapes. Our results here confirm that such calculations are in
+principle feasible down to intermediate redshifts in sufficiently large
+volumes to allow population studies of galaxies, especially if the
+resolution can be made spatially adaptive (also see e. g. Mocz et al.
+2020)."
+7 FUZZY DARK MATTER INITIAL CONDITIONS
+"Finally, we would like to briefly consider the additional source of
+differences in FDM relative to CDM introduced due to modifications
+of the initial conditions. Thus far, we had focused for this study on
+studying differences between CDM and FDM resulting just from
+the different dynamics induced by the Schrödinger–Poisson system
+of equations as opposed to the Vlasov–Poisson system governing
+collisionless dynamics of classical particles. To this end, we had used
+identical initial perturbations, retaining the CDM power spectrum
+for definiteness. However, a physically consistent model of a FDM
+cosmology will witness modifications of its initial conditions relative
+to CDM, particularly in terms of a significant reduction in small-scale
+power below a scale set by the ‘quantum pressure’, yielding something
+resembling the truncated power spectra of warm dark matter models.
+In linear theory, this is determined by the Jeans scale 𝑘J (eq. (15)),
+above which perturbations evolve in an oscillatory rather than growing
+fashion. It is however not clear how scales 𝑘 > 𝑘J react to non-linear
+power transfer from larger scales once scales around 𝑘J become mildly
+or fully non-linear. This can only be accurately treated with explicit
+(e. g. spectral) FDM simulations like the ones we carry out here."
+"In Fig. 14 we show a comparison of two FDM simulations car-
+ried out either with CDM-like initial conditions or instead with
+ICs predicted by the Boltzmann code axionCAMB (Hložek et al.
+2017) for an axion cosmology with our adopted particle mass of
+2.5 × 10−22 eV 𝑐−2 in this comparison. For definiteness, we chose a
+2 ℎ−1 Mpc box size with 24003 mesh points to represent the wave
+function; the remaining cosmological parameters are the same as
+before (section 3.4). We consider the time evolution down to redshift
+𝑧 = 3, and show in each redshift panel of the plot also the linear
+theory power spectrum of the corresponding CDM cosmology, for
+comparison. At 𝑧 = 63, the FDM model with CDM-like ICs follows
+linear growth accurately only to a scale of order the Jeans scale set
+by the ‘quantum pressure’. On much smaller scales, the growth has
+completely stalled, while in the transition region oscillatory behaviour
+is seen. This is the expected behaviour based on linear theory, where
+scales with 𝑘 � 𝑘J should not grow, while those with 𝑘 � 𝑘J follow"
+"MNRAS 000, 1–16 (2021)"
+"14 Simon May, Volker Springel"
+"10−210−1100
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 63.00
+"linear theory (CDM)
+linear theory (FDM)
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, CDM IC
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, FDM IC
+FDM Jeans length (𝑧 = 63.00)
+FDM Jeans length (𝑧 = 𝑧eq)"
+101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 15.00
+"linear theory (CDM)
+linear theory (FDM)
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, CDM IC
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, FDM IC"
+101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100
+𝑟 / ℎ−1 Mpc (comoving)"
+"𝑃
+(𝑘
+)"
+𝑧 = 7.00
+"linear theory (CDM)
+linear theory (FDM)
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, CDM IC
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, FDM IC"
+101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"10−210−1100
+𝑟 / ℎ−1 Mpc (comoving)"
+"100
+𝑃
+(𝑘
+)"
+𝑧 = 3.00
+"linear theory (CDM)
+linear theory (FDM)
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, CDM IC
+FDM, 24003 , 𝑚𝑐2 = 2.5 × 10−22 eV, FDM IC"
+101 102 103
+𝑘 / ℎ Mpc−1 (comoving)
+"𝑃
+(𝑘
+)"
+"𝑃
+(𝑘
+) l"
+"Figure 14. Dark matter power spectra at different redshifts for cosmological FDM simulations with both FDM and CDM ICs (FDM mass 𝑚𝑐2 = 2.5 × 10−22 eV,
+box size 𝐿 = 2 ℎ−1 Mpc, mesh size 𝑁 3 = 24003). The CDM and FDM initial power spectrum evolved using linear perturbation theory are shown for comparison.
+The lower panels show the ratio of the power spectra to the result from CDM linear theory. For 𝑧 = 63, the dashed line additionally indicates the current FDM
+Jeans scale (eq. (15)), while the dotted line indicates the Jeans scale at matter–radiation equality, 𝑧 = 𝑧eq."
+"the same linear growth as CDM. In comparison, the FDM model
+with self-consistent ICs shows negligible small-scale power and only
+agrees with the CDM linear power on the largest scales that can be
+followed with this box size."
+"At redshift 𝑧 = 15, the FDM simulation with self-consistent ICs
+still shows a stalled growth at the smallest scales, but scales around
+𝑘J have already entered mild non-linear evolution, as reflected in
+small excess power relative to the linear theory CDM power spectrum.
+Apparently, this already couples significantly to smaller scales, so
+that scales beyond 𝑘J begin to catch up with the growth, such that
+in this instance, the power spectrum happens to agree coincidentally
+with the linear CDM power at around 𝑘 ≈ 200 ℎMpc−1, while scales
+𝑘 & 1000 ℎMpc−1 are not yet affected and still prevented from
+growth. Similarly, the self-consistent FDM model begins to witness
+power transfer to smaller scales, as evidenced by the change in shape
+of its small-scale power spectrum."
+"By redshift 𝑧 = 7, these trends have greatly accelerated. Now
+the non-linear evolution of the FDM model started from CDM-like
+initial conditions has produced a large power excess relative to linear
+theory for nearly all 𝑘 resolved in the simulation, except for the largest
+scales (which are still linear), and the smallest scales (which are
+still suppressed by ‘quantum pressure’). Interestingly, however, the
+model with self-consistent initial conditions is clearly in the process
+of catching up to this evolution, with its small-scale power being
+progressively filled in by the non-linear evolution on larger scales.
+Finally, at redshift 𝑧 = 3, both simulations have become even closer in
+their total matter power spectrum. We expect these trends to continue
+towards lower redshifts (which are unfortunately inaccessible with this
+resolution), so that the discrepancy introduced by starting from CDM-
+like initial conditions instead of self-consistent FDM ones becomes
+largely forgotten on small scales, simply because it is overwhelmed by
+non-linear evolution. However, there may still be an important impact"
+"MNRAS 000, 1–16 (2021)"
+Structure formation in large-volume cosmological FDM simulations: Impact of non-linear dynamics 15
+"on other quantities, such as the HMF (which, however, requires a
+larger box size, as in section 5, to measure). How large this is remains
+to be seen. In principle, excess oscillatory perturbations on small
+scales that cannot grow should not give rise to additional collapsed
+haloes, but due to the non-linear coupling to larger scales this may
+only be approximately true."
+8 SUMMARY AND CONCLUSIONS
+"In this study, we have carried out simulations of fuzzy dark matter
+models with the pseudo-spectral method. This can be considered
+the most accurate approach to solve the Schrödinger–Poisson sys-
+tem numerically, without neglecting certain aspects of the temporal
+evolution of the wave function. In particular, this can account for
+oscillatory, order-unity fluctuations of the local density due to the
+quantum-mechanical effects in the axion-like dynamics."
+"Unfortunately, the numerical resolution requirements to faithfully
+follow the FDM dynamics are much harder to fulfil than for the familiar
+𝑁-body techniques applicable in the CDM case. Even large-scale
+modes require a very fine mesh, otherwise the velocities appearing in
+the dynamics cannot properly be represented because then the spatial
+variation of the quantum-mechanical phase factor is not resolved. Yet,
+making the mesh fine enough to resolve the de Broglie wavelength
+_dB of the largest velocities drives down the time step, which depends
+quadratically and not linearly on the spatial resolution. In practice, this
+means that one cannot trivially simulate large cosmological volumes
+at low resolution in a way similar to the standard practice in CDM.
+Rather, one is relegated to very small volumes and to the high-redshift
+regime, whereas a push to large box sizes and low redshift quickly
+becomes extremely expensive, as we highlighted in this paper."
+"In this work, we could nevertheless compute the largest-volume
+simulations with full FDM dynamics thus far by using rather large grid
+sizes of up to 86403 cells. This allowed us to gain new insights into
+the evolution of the non-linear power spectrum in these cosmologies,
+and to make the first direct measurements of the halo mass function
+in such models, especially with respect to how the FDM dynamics
+affect these observables without starting from an already-suppressed
+power spectrum in the ICs. Our main findings can be summarized as
+follows:"
+"• Once sufficient resolution is available, the FDM power spectrum
+in our spectral simulations follows the CDM evolution very closely
+on large scales, even once highly non-linear evolution has set in on
+smaller scales.
+• Lacking resolution in pseudo-spectral simulations of FDM mani-"
+"fests itself in a spurious ‘freezing’ of further structure formation once
+the resolution requirements become violated. The evolution of the
+power spectrum then stops, and it remains roughly constant with
+decreasing redshift. This can be detected by comparing the power on
+the largest scales to linear perturbation theory or a CDM simulation,
+and observing that the FDM model falls behind.
+• The maximum simulation volume which can be achieved in the"
+"pseudo-spectral method without violating resolution requirements
+increases for lower particle masses𝑚. The computational time required
+for the corresponding maximum box size varies only slowly for
+different values of𝑚. Stopping a simulation before 𝑧end = 0 relaxes the
+resolution requirements, thus allowing for larger box sizes, and reduces
+computational time, but not very strongly (the cost approximately
+scales as ∝ 𝑧−"
+"1/2
+end at fixed box size, which parallels the scaling of the"
+"maximum particle velocity in linear perturbation theory).
+• On small scales, FDM structure formation is suppressed com-"
+"pared to CDM due to the effects of the ‘quantum pressure’, which
+also induces a small-scale cut-off in the initial power spectrum of
+self-consistent cosmological FDM models. The onset of non-linear
+structure formation is thus generally delayed in FDM compared to
+CDM. However, on scales comparable to _dB, the difference between
+FDM and CDM is reduced, and interference patterns on these scales
+in FDM can even lead to a small temporary excess of power compared
+to CDM. Mildly trans-linear and fully non-linear evolution in FDM in
+any case leads to significant power transfer to scales smaller than the
+initial FDM Jeans scale, even to the extent that oscillatory perturba-
+tions on these scales, if present, can become completely overwhelmed
+and buried by the power transfer from larger scales.
+• We could, for the first time, measure the halo mass function"
+"directly from spectral FDM simulations. For massive haloes, we find
+the same abundance of haloes as in CDM, consistent with expectations
+based on the agreement of their large-scale linear power spectra. The
+formation of the first haloes is however delayed for FDM with respect
+to CDM, and there are considerably fewer low-mass haloes forming
+compared to CDM. The low-mass cut-off of the HMF we find is
+less pronounced than found by methods which take into account the
+suppressed FDM ICs, even for those which neglect the non-linear
+FDM dynamics. This demonstrates that the FDM ICs have a larger
+impact on the HMF than the dynamics at later times, although the
+suppression caused by the latter is still sizeable. However, since the
+cut-off appears at much lower halo masses compared to the FDM ICs,
+the impact of this effect is much more difficult to observe.
+• Despite our large grid sizes, our simulations have only limited"
+"resolving power for the internal structure of dark matter haloes.
+However, we could still clearly detect characteristic solitonic cores in
+spherically averaged density profiles of haloes, with a profile shape
+that matches results of previous work well. These cores are particularly
+large for low-mass haloes, where they also substantially reduce the
+central dark matter densities relative to CDM."
+"Our results thus highlight that it is, in principle, possible to compute
+accurate cosmological simulation results for FDM in representative
+volumes, albeit at considerable computational cost. We will apply our
+implementation to FDM initial conditions (similar to section 7) in
+larger volumes in the future, providing physical observables in a fully
+consistent FDM scenario. However, to conclusively understand the
+combined dynamics of FDM and baryons in the centres of galaxies,
+and thus to arrive at reliable predictions about whether these scenarios
+can resolve, e. g., the cusp–core tension, will ultimately require to
+add baryonic physics to these simulations, and to make them spatially
+more adaptive inside individual haloes such that the resolution can be
+increased there in a targeted fashion. First attempts in this direction
+have been carried out (e. g. Mocz et al. 2019; Veltmaat et al. 2020),
+but the associated numerical challenges are still formidable."
+ACKNOWLEDGEMENTS
+"The authors would like to thank Jowett Chan and Elisa Ferreira for
+helpful discussions and validation of the numerical method, and
+Rüdiger Pakmor for guidance concerning the implementation of the
+simulation code."
+DATA AVAILABILITY
+"The data underlying this article will be shared on request to the
+corresponding author."
+"MNRAS 000, 1–16 (2021)"
+"16 Simon May, Volker Springel"
+REFERENCES
+"Boylan-Kolchin M., Bullock J. S., Kaplinghat M., 2011, MNRAS, 415, L40
+Bull P., et al., 2016, Phys. Dark Univ., 12, 56
+Burkert A., 2020, ApJ, 904, 161
+Del Popolo A., Le Delliou M., 2017, Galaxies, 5, 17
+Despali G., Giocoli C., Angulo R. E., Tormen G., Sheth R. K., Baso G.,"
+"Moscardini L., 2016, MNRAS, 456, 2486
+Edwards F., Kendall E., Hotchkiss S., Easther R., 2018, J. Cosmology Astropart."
+"Phys., 2018, 027
+Efstathiou G., Sutherland W. J., Maddox S. J., 1990, Nature, 348, 705
+Efstathiou G., Bond J. R., White S. D. M., 1992, Monthly Notices of the Royal"
+"Astronomical Society, 258, 1P
+Ferreira E. G. M., 2020, arXiv e-prints, p. arXiv:2005.03254
+Frenk C. S., White S. D. M., 2012, Annalen der Physik, 524, 507
+Frigo M., Johnson S., 2005, Proceedings of the IEEE, 93, 216
+Garny M., Konstandin T., Rubira H., 2020, J. Cosmology Astropart. Phys.,"
+"2020, 003
+Hložek R., Marsh D. J. E., Grin D., Allison R., Dunkley J., Calabrese E., 2017,"
+"Phys. Rev. D, 95, 123511
+Hu W., Barkana R., Gruzinov A., 2000, Phys. Rev. Lett., 85, 1158
+Hui L., Ostriker J. P., Tremaine S., Witten E., 2017, Phys. Rev., D95, 043541
+Jenkins A., et al., 1998, ApJ, 499, 20
+Jenkins A., Frenk C. S., White S. D. M., Colberg J. M., Cole S., Evrard A. E.,"
+"Couchman H. M. P., Yoshida N., 2001, MNRAS, 321, 372
+Kulkarni M., Ostriker J. P., 2020, What is the Halo Mass Function in a Fuzzy"
+"Dark Matter Cosmology? (arXiv:2011.02116)
+Laguë A., Bond J. R., Hložek R., Marsh D. J., Söding L., 2020, Evolving"
+"Ultralight Scalars into Non-Linearity with Lagrangian Perturbation Theory
+(arXiv:2004.08482)"
+"Li X., Hui L., Bryan G. L., 2019, Phys. Rev. D, 99, 063509
+Madelung E., 1927, Zeitschrift für Physik, 40, 322
+Marsh D. J. E., 2016, Phys. Rept., 643, 1
+Marsh D. J. E., Silk J., 2014, MNRAS, 437, 2652
+Mina M., Mota D. F., Winther H. A., 2020, Solitons in the dark: non-linear"
+"structure formation with fuzzy dark matter (arXiv:2007.04119)
+Mocz P., Vogelsberger M., Robles V. H., Zavala J., Boylan-Kolchin M., Fialkov"
+"A., Hernquist L., 2017, MNRAS, 471, 4559
+Mocz P., Lancaster L., Fialkov A., Becerra F., Chavanis P.-H., 2018, Phys."
+"Rev. D, 97, 083519
+Mocz P., et al., 2019, Phys. Rev. Lett., 123, 141301
+Mocz P., et al., 2020, MNRAS, 494, 2027
+Navarro J. F., Frenk C. S., White S. D. M., 1996, ApJ, 462, 563
+Nori M., Baldi M., 2018, MNRAS, 478, 3935
+Nori M., Murgia R., Iršič V., Baldi M., Viel M., 2019, MNRAS, 482, 3227
+Press W. H., Schechter P., 1974, ApJ, 187, 425
+Schive H.-Y., Chiueh T., Broadhurst T., 2014a, Nature Phys., 10, 496
+Schive H.-Y., Liao M.-H., Woo T.-P., Wong S.-K., Chiueh T., Broadhurst T.,"
+"Hwang W. Y. P., 2014b, Phys. Rev. Lett., 113, 261302
+Schive H.-Y., Chiueh T., Broadhurst T., Huang K.-W., 2016, ApJ, 818, 89
+Sheth R. K., Tormen G., 1999, MNRAS, 308, 119
+Springel V., 2010, MNRAS, 401, 791
+Springel V., 2015, N-GenIC: Cosmological structure initial conditions"
+"(ascl:1502.003)
+Springel V., et al., 2018, MNRAS, 475, 676
+Tinker J., Kravtsov A. V., Klypin A., Abazajian K., Warren M., Yepes G.,"
+"Gottlöber S., Holz D. E., 2008, ApJ, 688, 709
+Veltmaat J., Niemeyer J. C., 2016, Phys. Rev. D, 94, 123523
+Veltmaat J., Niemeyer J. C., Schwabe B., 2018, Phys. Rev. D, 98, 043509
+Veltmaat J., Schwabe B., Niemeyer J. C., 2020, Phys. Rev. D, 101, 083518
+Wang J., White S. D. M., 2007, MNRAS, 380, 93
+Weinberg D. H., Bullock J. S., Governato F., Kuzio de Naray R., Peter A."
+"H. G., 2015, Proceedings of the National Academy of Science, 112, 12249
+Weinberger R., Springel V., Pakmor R., 2020, ApJS, 248, 32
+Widrow L. M., Kaiser N., 1993, ApJ, 416, L71
+Woo T.-P., Chiueh T., 2009, ApJ, 697, 850
+Zhang J., Kuo J.-L., Liu H., Sming Tsai Y.-L., Cheung K., Chu M.-C., 2018,"
+"ApJ, 863, 73"
+"Zhang J., Liu H., Chu M.-C., 2019, Front. Astron. Space Sci., 5, 48"
+This paper has been typeset from a TEX/LATEX file prepared by the author.
+"MNRAS 000, 1–16 (2021)"
+"http://dx.doi.org/10.1111/j.1745-3933.2011.01074.x
+https://ui.adsabs.harvard.edu/abs/2011MNRAS.415L..40B
+http://dx.doi.org/10.1016/j.dark.2016.02.001
+http://dx.doi.org/10.3847/1538-4357/abb242
+https://ui.adsabs.harvard.edu/abs/2020ApJ...904..161B
+http://dx.doi.org/10.3390/galaxies5010017
+http://dx.doi.org/10.1093/mnras/stv2842
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.456.2486D
+http://dx.doi.org/10.1088/1475-7516/2018/10/027
+http://dx.doi.org/10.1088/1475-7516/2018/10/027
+https://ui.adsabs.harvard.edu/abs/2018JCAP...10..027E
+http://dx.doi.org/10.1038/348705a0
+http://dx.doi.org/10.1093/mnras/258.1.1P
+http://dx.doi.org/10.1093/mnras/258.1.1P
+https://ui.adsabs.harvard.edu/abs/2020arXiv200503254F
+http://dx.doi.org/10.1002/andp.201200212
+https://ui.adsabs.harvard.edu/abs/2012AnP...524..507F
+http://dx.doi.org/10.1109/jproc.2004.840301
+http://dx.doi.org/10.1088/1475-7516/2020/04/003
+https://ui.adsabs.harvard.edu/abs/2020JCAP...04..003G
+http://dx.doi.org/10.1103/PhysRevD.95.123511
+https://ui.adsabs.harvard.edu/abs/2017PhRvD..95l3511H
+http://dx.doi.org/10.1103/PhysRevLett.85.1158
+https://ui.adsabs.harvard.edu/abs/2000PhRvL..85.1158H
+http://dx.doi.org/10.1103/PhysRevD.95.043541
+http://dx.doi.org/10.1086/305615
+https://ui.adsabs.harvard.edu/abs/1998ApJ...499...20J
+http://dx.doi.org/10.1046/j.1365-8711.2001.04029.x
+https://ui.adsabs.harvard.edu/abs/2001MNRAS.321..372J
+http://arxiv.org/abs/2011.02116
+http://arxiv.org/abs/2004.08482
+http://dx.doi.org/10.1103/PhysRevD.99.063509
+https://ui.adsabs.harvard.edu/abs/2019PhRvD..99f3509L
+http://dx.doi.org/10.1007/bf01400372
+http://dx.doi.org/10.1016/j.physrep.2016.06.005
+http://dx.doi.org/10.1093/mnras/stt2079
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.437.2652M
+http://arxiv.org/abs/2007.04119
+http://dx.doi.org/10.1093/mnras/stx1887
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.471.4559M
+http://dx.doi.org/10.1103/PhysRevD.97.083519
+http://dx.doi.org/10.1103/PhysRevD.97.083519
+https://ui.adsabs.harvard.edu/abs/2018PhRvD..97h3519M
+http://dx.doi.org/10.1103/PhysRevLett.123.141301
+https://ui.adsabs.harvard.edu/abs/2019PhRvL.123n1301M
+http://dx.doi.org/10.1093/mnras/staa738
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.494.2027M
+http://dx.doi.org/10.1086/177173
+https://ui.adsabs.harvard.edu/abs/1996ApJ...462..563N
+http://dx.doi.org/10.1093/mnras/sty1224
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.478.3935N
+http://dx.doi.org/10.1093/mnras/sty2888
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.482.3227N
+http://dx.doi.org/10.1086/152650
+https://ui.adsabs.harvard.edu/abs/1974ApJ...187..425P
+http://dx.doi.org/10.1038/nphys2996
+http://dx.doi.org/10.1103/PhysRevLett.113.261302
+https://ui.adsabs.harvard.edu/abs/2014PhRvL.113z1302S
+http://dx.doi.org/10.3847/0004-637X/818/1/89
+https://ui.adsabs.harvard.edu/abs/2016ApJ...818...89S
+http://dx.doi.org/10.1046/j.1365-8711.1999.02692.x
+https://ui.adsabs.harvard.edu/abs/1999MNRAS.308..119S
+http://dx.doi.org/10.1111/j.1365-2966.2009.15715.x
+https://ui.adsabs.harvard.edu/abs/2010MNRAS.401..791S
+http://dx.doi.org/10.1093/mnras/stx3304
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.475..676S
+http://dx.doi.org/10.1086/591439
+https://ui.adsabs.harvard.edu/abs/2008ApJ...688..709T
+http://dx.doi.org/10.1103/PhysRevD.94.123523
+https://ui.adsabs.harvard.edu/abs/2016PhRvD..94l3523V
+http://dx.doi.org/10.1103/PhysRevD.98.043509
+https://ui.adsabs.harvard.edu/abs/2018PhRvD..98d3509V
+http://dx.doi.org/10.1103/PhysRevD.101.083518
+https://ui.adsabs.harvard.edu/abs/2020PhRvD.101h3518V
+http://dx.doi.org/10.1111/j.1365-2966.2007.12053.x
+https://ui.adsabs.harvard.edu/abs/2007MNRAS.380...93W
+http://dx.doi.org/10.1073/pnas.1308716112
+https://ui.adsabs.harvard.edu/abs/2015PNAS..11212249W
+http://dx.doi.org/10.3847/1538-4365/ab908c
+https://ui.adsabs.harvard.edu/abs/2020ApJS..248...32W
+http://dx.doi.org/10.1086/187073
+https://ui.adsabs.harvard.edu/abs/1993ApJ...416L..71W
+http://dx.doi.org/10.1088/0004-637X/697/1/850
+https://ui.adsabs.harvard.edu/abs/2009ApJ...697..850W
+http://dx.doi.org/10.3847/1538-4357/aacf3f
+https://ui.adsabs.harvard.edu/abs/2018ApJ...863...73Z
+http://dx.doi.org/10.3389/fspas.2018.00048"
+"	1 Introduction
+	2 Theoretical background
+	3 Numerical methodology
+	3.1 Initial conditions
+	3.2 Resolution and convergence tests
+	3.3 Computational cost analysis
+	3.4 Simulations
+	3.5 Grid-based halo finding"
+"	4 Dark matter power spectrum
+	5 Halo mass function
+	6 Halo profiles
+	7 Fuzzy dark matter initial conditions
+	8 Summary and Conclusions"

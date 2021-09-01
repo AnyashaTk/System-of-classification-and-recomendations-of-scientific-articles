@@ -1,0 +1,2318 @@
+0
+"MNRAS 000, 000–000 (0000) Preprint March 31, 2021 Compiled using MNRAS LATEX style file v3.0"
+"Statistical exploration of halo anisotropic clustering and
+intrinsic alignments with the mass-Peak Patch algorithm"
+"Bruno Regaldo-Saint Blancard1, Sandrine Codis2,3,4?, J. Richard Bond5, George
+Stein6
+1 Laboratoire de Physique de l’ENS, ENS, Université PSL, CNRS, Sorbonne Université, Université de Paris, 75005 Paris, France
+2 Institut d’Astrophysique de Paris, CNRS and Sorbonne Université, UMR 7095, 98 bis Boulevard Arago, 75014 Paris, France
+3 Institut de Physique Théorique, Université Paris-Saclay, CNRS, CEA, 91191 Gif-sur-Yvette, France
+4 AIM, CEA, CNRS, Université Paris-Saclay, Université Paris Diderot, Sorbonne Paris Cité, 91191 Gif-sur-Yvette, France
+5 Canadian Institute for Theoretical Astrophysics, 60 St. George St, Toronto, Canada, ON M5S 3H8
+6 Berkeley Center for Cosmological Physics, 341 Campbell Hall, University of California, Berkeley, CA 94720, USA"
+"March 31, 2021"
+"ABSTRACT
+The anisotropy or triaxiality of massive dark matter haloes largely defines the structure
+of the cosmic web, in particular the filaments that join the haloes together. Here we
+investigate such oriented correlations in mass-Peak Patch halo catalogues by using the
+initial strain tensor of spherical proto-halo regions to orient the haloes. To go beyond
+the spherically averaged two-point correlation function of haloes we use oriented stacks
+to compute oriented two-point correlations: we explicitly break isotropy by imposing a
+local frame set by the strain tensor of the reference halo before stacking neighbouring
+haloes. Beyond the exclusion zone of the reference halo, clustering is found to be
+strongly enhanced along the major direction of the strain tensor as expected. This
+anisotropic clustering of haloes along filaments is further quantified by using a spherical
+harmonics decomposition. Furthermore, we compute the evolution of cluster-scale halo
+principal directions relative to those of their neighbours and show that there are
+strong correlations extending up to very large scales. In order to provide calculations
+more suitable to observational confrontations, we also utilize 2D projected versions of
+some equivalent correlation functions. Finally, we show that the multipole structure of
+the mass-peak patch halo’s anisotropic clustering can be qualitatively captured in an
+analytic treatment based on peak theory. Though highly informative, giving the same
+qualitative features as the oriented correlations found from the simulation catalogue,
+analytic evaluation involves extensive use of Monte Carlo methods, which is also what
+the simulated catalogue uses, taking into account as they do the adaptive nature of
+the mass-peak patch mass hierarchy and all non-local complexities associated with
+the exclusion of smaller haloes overlapping with larger ones: there is no substitute
+for the mass-Peak Patch simulation-based determination of oriented and anisotropic
+correlations."
+"Key words: cosmology: theory — large-scale structure of Universe — gravitational
+lensing: weak"
+1 INTRODUCTION
+"Investigating the distribution of matter at scales ranging
+from a few megaparsecs to hundreds of megaparsecs has
+been a very prolific field of Cosmology for the last fifty years.
+From the first theoretical works on superclustering and ob-
+servations in the seventies through current large galaxy sur-
+veys, our knowledge of large scale structures has grown enor-"
+? E-mail: codis@iap.fr
+"mously, with much more to come with the upcoming massive
+galaxy surveys. The interconnectivity in the distribution of
+matter on the largest scales is referred to as the Cosmic
+Web (Klypin & Shandarin 1983; Bond et al. 1996; Pogosyan
+et al. 1998; van de Weygaert & Bond 2008), the natural non-
+linear evolution of primordial density fluctuations through
+gravitational instability in an expanding universe, giving
+rise to the galaxy clusters, filaments, sheets and bubble-
+like cosmic voids that we see today. The present day large-
+scale structure of the Universe was already imprinted in the"
+© 0000 The Authors
+2 B. Regaldo-Saint Blancard et al.
+"anisotropies of the initial conditions: initial peaks (Bardeen
+et al. 1986, hereafter BBKS) later form massive clusters at
+the nodes of the cosmic web, correlation bridges in between
+collapse to form filaments (Bond et al. 1996) surrounded by
+walls and voids in this fully connected cosmic network."
+"Observations and numerical simulations complement
+one another to get a deeper understanding of our Universe.
+But still technical issues coming from their manipulation
+are rather different. Information from observational data is
+subject to experimental measurement error and is restricted
+to the past light cone constraint. Simulations, though lim-
+ited by the theoretical approximations used and computer
+performance, can be used to derive mock catalogues of all as-
+pects of the matter distribution, including precise positions
+and velocities and field configuration properties for iden-
+tified objects, over all space and time, not just on the past
+light cone. The mass-Peak Patch computational halo-finding
+methodology described in Bond & Myers (1996a) (hereafter
+BM1) and other works of that era are accurate on the past
+light cone as well as over all space and time, and allow rapid
+calculations of ensembles of such realizations, as parame-
+ters defining the cosmology vary. Though traditional N-body
+simulations are more accurate, to this day N-body ensem-
+bles suitable for mocking all manner of massive observational
+campaigns remain limited. The mass-Peak Patch algorithm
+was further improved in Stein et al. (2019) for massively
+parallel computation. It allows identification from an initial
+(linear) state distribution of matter of regions (contiguous
+mass-patches) that will collapse to form virialized objects
+in the final state space, haloes. Other approximate meth-
+ods of varying speeds have been put forward over the past
+decades. e.g., Pinocchio (Monaco et al. 2002) is one such ex-
+ample. The attention to fast simulation techniques has been
+driven by a dire need to address very costly statistical prob-
+lems such as likelihood surface construction for large galaxy
+surveys, for which covariance matrices encode the simplest
+characterization, e.g., (see e.g Monaco 2016; Lippich et al.
+2019, and references therein)."
+"Here, we do not focus on these observationally-related
+problems but rather undertake a theoretical exploration, us-
+ing such approximate methods to determine the clustering
+of haloes in the web, in particular focussing on the ques-
+tion of halo alignments. Peak patch simulations can address
+this since they use coarse-grained ellipsoidal dynamics of
+the halo patches, following the nonlinear development of
+initial anisotropic tidal forces which correlate from halo to
+halo. Triaxial collapse along the last axis to equilibrate is
+slower than in isotropic spherical collapse for highly initially-
+sheared patches."
+"These tidal forces which dictate the formation sites
+of the filamentary cosmic web (van Haarlem & van de
+Weygaert 1993; Bond et al. 1996; van de Weygaert &
+Bertschinger 1996), also shape the morphology of haloes
+notably through tidal stretching (Catelan et al. 2001) and
+spin them up through tidal torques (see e.g Lee & Pen 2000;
+Crittenden et al. 2001; Schaefer 2009, for a review). Because
+tides are set on large scales by the cosmic web, a large-scale
+coherence of the shapes and spins of galaxies and haloes is
+naturally expected (see for instance Codis et al. 2015b, for a
+modelling of the spin alignments of galaxies induced by the"
+"cosmic web). Various numerical works 1 have indeed demon-
+strated that the shape of haloes tend to align with filaments
+and walls in dark matter simulations (Patiri et al. 2006;
+Brunino et al. 2007; Hahn et al. 2007; Aragón-Calvo et al.
+2007), a result also found more recently for galaxies in cos-
+mological hydrodynamical simulations (Codis et al. 2018b).
+This is in agreement with observations which have evidenced
+a clear radial alignment of massive clusters (Smargon et al.
+2012; van Uitert & Joachimi 2017), observations that go way
+back to the eighties."
+"These halo and galaxy alignments are key to understand
+galaxy formation and evolution notably through the role of
+the environment versus internal processes. They also repre-
+sent a worrisome contamination for current and, even more
+so, for future large photometric surveys which are designed
+to map the distribution of matter through measurement of
+cosmic shear, e.g., KiDS, DES, HSC, CFIS, Euclid, LSST
+(see e.g Joachimi et al. 2015; Kirk et al. 2015; Kiessling et al.
+2015; Troxel & Ishak 2015, for recent reviews). Indeed, in-
+trinsic alignments of galaxies induce a spurious signal in the
+lensing-induced shear-shear correlation function which bi-
+ases significantly the cosmological analysis if not accounted
+for properly (Kirk et al. 2010; Krause et al. 2016). Differ-
+ent strategies have been developed over the course of the
+last few years, from perturbative approaches (Blazek et al.
+2019; Vlah et al. 2020) to semi-analytical models (Schneider
+& Bridle 2010; Joachimi et al. 2013a,b; Fortuna et al. 2020),
+and now state-of-the-art hydrodynamical computations can
+address this, by simulating large cosmological volumes while
+keeping enough resolution for galaxies (Codis et al. 2015a;
+Tenneti et al. 2015; Chisari et al. 2016; Velliscig et al. 2015;
+Hilbert et al. 2017). One of the major difficulties in mod-
+elling such an effect is the high sensitivity to detailed as-
+pects of the nonlinear gastrophysics of galaxies, including
+feedback from short scales to large. It is therefore of inter-
+est to try to separate the large-scale coarse-grained patterns
+that can be predicted from first principle dark matter dy-
+namical methods such as peak patches from the complex
+response functions (susceptibilities) describing the interior
+characterizations of haloes, and their embedded galaxies."
+"In this paper, we focus on the theoretical modelling
+of the large-scale alignments of haloes. Rather than using
+general perturbative treatments, we rely on the nonlinear
+physical model for halo formation exemplified in the peak
+patch picture, encoding coarse-grained shapes and orienta-
+tion information in the derived halo catalogues. The detailed
+cosmic web structure of clusters, filaments, membranes and
+voids on large scales has been shown to follow by gravi-
+tational collapse from the linear fields constrained by the
+anisotropic linear tides of the most prominent haloes (Bond
+et al. (1996)). First, Section 2 gives a general overview
+of haloes, the peak patch theory of them, and the sim-
+ulation that yields the halo catalogue used here. In Sec-
+tion 3, we present calculations of correlations oriented by
+the shape of haloes using the 3D peak patch simulation
+and then using 2D projections of this simulation. Finally,
+Section 4 wraps up. To show how the main features of our
+orientation-induced findings are quite understandable from"
+1 We refer to Libeskind et al. (2018) for a review of algorithms
+designed to extract the cosmic web from simulations.
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 3
+"an analytic viewpoint, we develop in Appendix A an attempt
+to compute the same correlations from a theoretical point of
+view using the theory of peaks for Gaussian random fields
+(BBKS), cast in the peak-patch semi-analytic framework in
+BM1 which gives a simple but reasonably accurate account-
+ing of the low order statistics derived from the full numerical
+catalogue."
+"2 A STATISTICAL DESCRIPTION FOR
+HALOES"
+"We first discuss the general issue of cosmological-object cat-
+alogues, the difference between halo-finding in final-state
+space, as done in N-body simulations, and initial-state space,
+as done in peak-patch simulations. The catalogue statis-
+tics are encoded in number density distribution function
+operators that give masses, initial and final positions, ve-
+locities, and of great importance here, the linear tides and
+their associated strain tensors. Of most interest here are
+two-point halo-density halo-density averages constrained by
+strain/tide information which reveal the alignment charac-
+teristics of the halo-medium. We then briefly describe the
+numerical methods we have applied to this study."
+2.1 Reduced phase space
+"A halo catalogue Ctot = ∪cCc is a collection of the informa-
+tion on the properties Cc of individual cosmic objects c."
+"Let us consider the flow of a bundle of dark matter tra-
+jectories from the ”initial” linear regime (Lagrangian space)
+into the ”final” nonlinear regime (Eulerian space). If the
+dark matter starts cold, the 6D phase space is a 3D one,
+with zero peculiar velocities and it remains restricted to a
+3D hypersurface, but trajectories in collapsing regions inter-
+twine, phase wrapping in the 6D phase space. This is seen
+from the vantage point of a particular Eulerian 3D position
+in the halo as multiple streams passing through, with a dis-
+persion in velocity as well as a bulk average velocity (see e.g
+Shandarin 2011; Falck et al. 2012; Abel et al. 2012). From
+the 3D perspective, the dispersion is seen as heat and haloes
+are regions of such hot dynamics. Even with the most so-
+phisticated N-body computations it is difficult to simulate
+the orbits with full accuracy (see Sousbie & Colombi 2016;
+Hahn & Angulo 2016, for recent attempts at solving the
+Vlasov-Poisson system)."
+"In halo-finding, whether in initial or final space, the
+idea is to identify such regions of hot dynamics, compress
+the complex information into a few global parameters, such
+as overall mass, mass-concentration, angular momentum, in-
+terior heat and binding energy, and, of special interest to us
+for anisotropy exploration, tidal tensors, strain tensors and
+mass inertia tensors."
+"The positions xc, masses Mc and velocities vc of the
+haloes c are of course critical to their identification, but
+there are many other halo-internal measures Qαint,c and halo-"
+"external measures E
+β
+ext,c that are useful to characterize in"
+"a reduced phase space Cc = {Mc,xc,vc, Qαint,c, E
+β
+ext,c}. For"
+"any single realization a halo catalogue stores these quanti-
+ties. The entries can all correspond to one redshift, multi-
+ple redshifts (e.g., initial linear state and final nonlinearly
+evolved state), or can label the times by the comoving radial"
+"distances of the haloes along the past light-cone, related to
+their redshifts. Though the sky we observe is one specific
+past light cone realization, it is statistically modelled as a
+member of an ensemble of realizations characterized by a
+density matrix functional ρ[u]Du for all of the degrees of
+freedom of the system of fields in the cosmic medium uA(x),
+including the fine grained orbit details. The halo catalogue
+for each specific realization is a set of delta functions of the
+coarse-grained variables, with the (localized) halo number
+density operator defined as"
+"nh,op(C) =
+dNh,op(C)"
+d lnMd3xd3vdQintdEext
+δ(x− xc)δ(v − vc)δ(lnM − lnMc)
+"× δ(Qint −Qint,c)δ(Eext − Eext,c). (1)
+Typically we have to turn the x and M terms into opera-
+tors acting on the fields, as described below following earlier
+works such as BBKS for peak positions and BM1 for peak
+masses."
+"Measurements on the data we observe now are at the
+final times at the collapse redshift of the halo. In the mass-
+Peak Patch formulation, the measurements are naturally
+given in terms of initial times in the linear regime. Both the
+forward mapping from initial to final state and the backward
+flow from final to initial state can, of course, be done pre-
+cisely in N-body dark matter simulations since all informa-
+tion is carried along with the particle labels. There is much
+interest in flowing backward from current data to recover
+the initial linear state from the final state information, but
+the orbit entanglements inherent in nonlinear objects limit
+what is likely to be do-able with just final halo information.
+Using triaxial ellipsoid collapse in peak patches the forward
+flow is approximated, though not with enough accuracy to
+compute, e.g., final state mass-inertia tensors, at least in the
+current version of the peak patch codes."
+"Though one can define haloes in many ways, the most
+popular in Eulerian space is finding the patches at xc that
+have their average interior overdensity M(xc, VE)/VE first
+upcrossing through a threshold Mc/VE,c = ρ̄m∆M , as the
+smoothing volume VE shrinks from large volume to small.
+Typically one takes ∆M = 200. This then defines the
+halo mass M200,c, its volume VE,200,c, and hence its ra-
+dius RE,200,c. Some people use the total cosmological mean
+density ρ̄tot, including vacuum energy density (cosmological
+constant), to define the threshold, with the same 200 value:
+that mode of halo identification finds smaller volume and
+larger mass ones than the ones based on overdensity of the
+clustering matter relative to the mean density of clustering
+matter ρ̄m."
+"Though this is not true for all halo-finding methods, for
+the standard spherical overdensity method (Bond & My-
+ers (1996b), Behroozi et al. (2012)), whether determined
+in final state space or initial state space, as for hierarchi-
+cal mass-peak patches, the halo positions will be associated
+with peaks in the mass ∇M = 0, and the position opera-
+tor transforms to δ(x− xc) = |det(∇∇M)|δ(∇M), viewing
+M(x) as a continuous field."
+"Other reasonable criteria for defining haloes exist, e.g.,
+using binding energy, �BE in which case the operator would
+become |det(∇∇�BE)|δ(∇�BE). This is tightly correlated
+with mass (BM1), so the haloes found are quite similar."
+"MNRAS 000, 000–000 (0000)"
+4 B. Regaldo-Saint Blancard et al.
+"For Gaussian filtering the ∇M = 0 criterion is the same
+as requiring that xc is exactly at the centre of mass, but for
+the top-hat filters that are usually used to measure mass
+there can be differences."
+"The haloes are non-Gaussian, so all higher point con-
+nected components exist, 〈"
+"∏N
+j=1"
+"nh,op(Ccj )〉cc, where, as
+above, Ccj denotes the collection of reduced phase space vari-
+ables associated with each halo. Since this paper is focussing
+on halo anisotropic correlations and alignments, our main
+targets are constrained 1-point functions of haloes, which
+are related to the two-point halo-halo correlation function"
+"〈nh,op(Cc2)|nh,op(Cc1)〉 =
+〈nh,op(Cc2)nh,op(Cc1)
+〈nh,op(Cc1)〉"
+"1 + ξc2,c1(xc2 − xc1) =
+〈nh,op(Cc2)|nh,op(Cc1)〉"
+"〈nh,op(Cc2)〉
+, (3)"
+"relating haloes at position xc2 to those at xc1 . The list of
+variables may be truncated, e.g., with orientation informa-
+tion used in the c1 haloes but marginalized over in the c2
+haloes. As well the internal variables may be in selected
+parameter-bands rather than being precisely defined as in
+the various delta functions."
+"The one-point averages 〈nh,op(C1)〉 can also be used to
+deal with far field external effects. For example, one of the
+external variables Eext could be the mass-density field at
+position xE distant from the halo position xc1"
+"〈Eext(xE)|Cc1 = {Mc1 ,xc1 ,vc1 , Qint,c1}〉"
+"=
+〈Eext(xE)nh,op({Cc1 , Eext(xE)})〉"
+"〈nh,op(Cc1)〉
+.(4)"
+"This is the mean field of Eext(xE) subject to the con-
+straint of there being a halo with the specified properties
+Cc1 = {Mc1 ,xc1 ,vc1 , Qint,c1} at xc1 . It is related to the
+usual way of doing correlations, 〈Eext(xE)nh,op(Cc1)〉, with
+the averaging involving the joint probabilities at xE and xc1 ."
+"2.2 Halo Tides, Strain and Shear"
+"If our cluster-object Cc includes anisotropic tensor informa-
+tion, then the surroundings will have an anisotropic mean
+field constrained by the cluster’s oriented structure, and fluc-
+tuations about the mean. We now define the initial linear
+strains and tides of peak patch haloes which we use to char-
+acterize the anisotropy."
+"Let r be the initial comoving position of par-
+ticles2, X(r, t) the physical Eulerian position and
+x(r, t) = X(r, t)/ā(t) the comoving Eulerian position.
+The displacement field s(r, t) at time t is the difference
+between final and initial positions"
+"x(r, t) = r + s(r, t). (5)"
+"The associated differential relation giving the response of the
+infinitesimal Eulerian geodesic deviation δx to the stimulus
+of an initial Lagrangian deviation δr is δx(r, t) = eδr, where
+e = I + E defines the deformation tensor. It could also be
+called a response function."
+These relations hold if we smooth the displacement over
+2 Note that the Lagrangian position of particles r is also often
+denoted q in the literature.
+"a coarse-grained initial comoving radius Rc about each point
+r: 〈x|r, Rc, t〉 = r + 〈s|r, Rc, t〉 and"
+"δ〈x|rc, Rc, t〉 = 〈e|rc, Rc, t〉δr, (6)
+〈Eij |rc, Rc, t〉 = 〈(eij − δij)|rc, Rc, t〉 = ∂〈si|r, Rc, t〉/∂rj .(7)"
+"This differential relation of smoothed quantities is also of the
+stimulus–response form with the response function δij+〈Eij〉c.
+The homogeneous approximation for the finite difference in
+a sphere uses the local Taylor expansion:"
+"∆X/ā = 〈x|r, Rc〉 − 〈xc|rc, Rc〉 ≈ 〈e|rc, Rc, t〉(r− rc) . (8)"
+"Thus the (Eulerian) physical deformation of the original
+Lagrangian sphere coarse-grained over comoving radius RL,c
+is ∆Xi = ā〈eij〉cRL,cR̂"
+"j
+L,c, where R̂"
+"j
+L,c is a unit vector. This"
+"is to be contrasted with the unperturbed Hubble expansion,
+∆Xi = āδijRL,cR̂"
+"j
+L,c. Generally A"
+"i
+j = āe"
+"i
+j , the local tensorial"
+"expansion factor, has a symmetric and antisymmetric ten-
+sor decomposition, with the antisymmetric part related to
+a rotational component. In this paper we are interested in
+only the symmetric part. It is useful to define the nonlinear
+strain via a logarithm: �iNL,c,j = [ln〈e〉c]"
+"i
+j = α"
+"i
+NL,j − ᾱδ"
+"where ᾱ = ln a, encoding the state of strain from an unper-
+turbed expansion reference state, even in the highly nonlin-
+ear regime."
+"The linear strain [�L,c]
+i
+j is just the linear version of this"
+"deviation. Within the 1LPT (first order Lagrangian pertur-
+bation theory) aka the Zel’dovich approximation, for ini-
+tially cold matter the time and spatial components in the
+displacement field s(r, t) are separable:"
+"s(r, t) = D(t)s(r),"
+"where D(t) describes the linear growing mode of fluctuations
+and is normalized to unity at the present time. At the fully
+linear level in D EiL,j = �"
+"i
+L,j , but they deviate at 2LPT and"
+"higher order. Once nonlinearity becomes strong, �NL is a
+more controlled measure of strain than ENL. For example,
+the ”shell crossing” associated with complete collapse along
+each of the coarse-grained axes is sent off to −∞, where
+1 + ENL is zero, and beyond that 1 + ENL can go negative."
+"The physical velocity ∆V is related to the physical sep-
+aration ∆Xj by a bulk nonlinear Hubble flow and a fluctu-
+ation V ifluc about it: ∆V"
+"i = Hic,j∆X
+j + V ifluc, through the"
+"full nonlinear Hubble tensor of the coarse-grained patch c,"
+"Hc,ij = ∂∆Ẋc,i/∂∆Xc,j = α̇NL,ij = H̄δij + �̇ij ."
+The Hubble tensor evolves according to
+"Ḣij + (H
+2
+)ij = −ΦN,ij − τm,ij ,"
+"where (H2) is a matrix product, ΦN,ij ≡ ∂2ΦN/∂Xi∂Xj
+is the gravitational tide and τm,ij is a tide from matter
+forces, in particular from the pressure tensor. The trace of
+the gravitational part of the total tide is 4πG(ρtot + 3ptot),
+where ptot is the pressure, not important for cold dark
+matter and baryons, but the dominant term for dark en-
+ergy, and of importance for relativistic and semi-relativistic
+components. In the linear perturbation regime the grav-
+itational tide and strain are proportional to each other,
+ΦN,L,ij = −4πGρ̄m�L,ij . In the nonlinear regime ΦN,ij has
+to be self consistently calculated as a function of the in-
+stantaneous nonlinear strains, but these are expressible in
+terms of easily evaluated elliptic integrals. If dark energy is"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 5
+"dynamical but not coupled to other matter, it is uniform
+on subhorizon scales and is otherwise unperturbed, though
+that unperturbed part does play an important role in how
+the linear and nonlinear strains evolve, by virtue of its neg-
+ative pressure slowing the collapse-deformation."
+"During cold matter collapse τm,ij is zero, but in an
+equilibrium final collapsed state with Hc,ij = 0, the two
+tides balance. After shell crossing, multiple streams at each
+Eulerian point x lead to the ”heat” component of the
+pressure tensor, P ij/ρ = 〈V iflucV"
+"j
+fluc〉 becoming nonzero;"
+"τm,ij = ∂iρ
+−1∂kP"
+"k
+j (symmetrized in (ij)). The variance"
+"of the velocity fluctuations about the bulk flow is related
+to the sound speed c2s . To show this evolution equation
+is really a familiar one, consider the linear regime with a
+uniform isotropic sound speed cs ∝ [〈V 2fluc〉/3]"
+"1/2. In that
+case, τm,L,ij = c"
+"2
+s∇2�L,ij , and with δL = −�L,ii ∝ D(t),"
+"δ̈L + 2H̄δ̇L = 4πGρ̄mδL + c
+2
+s∇2δL. Hubble drag arises from"
+"the linear H2 tensor term, and below the Jeans wavenumber
+defined by c2sk"
+"2
+J = 4πGρ̄ there is unstable growth, slowed by"
+"the Hubble drag, and above there is Hubble-damped oscil-
+lation."
+"The complexity of shell crossing ”heat” generation im-
+plies τm,L,ij would need its own equation to develop it, so
+a drastic model that abruptly turns the gravitational col-
+lapse into an equilibrium balance along each principle axis
+is used in the BM1 homogeneous ellipsoid approximation for
+triaxially-collapsing peak patch haloes. Instead of the mat-
+ter tide being explicitly included, stopping criteria abruptly
+forcing H to zero with αNL,ij thereafter frozen are applied
+to the three axes to arrest the cold flow before āeNL passes
+through zero. The strain tensor is symmetric, so can be diag-
+onalized. We denote the eigenvalues of −�L,ij by {λi}, with
+the principle-axis ordering"
+"λ1 = −�L,11 6 λ2 = −�L,22 6 λ3 = −�L,33 . (9)"
+"The linear overdensity δL(r, R) is therefore δL(r, R) =
+−Tr(�L) = λ1 + λ2 + λ3. The anisotropic part �′L,ij of
+the tensor and its associated eigenvalues {λ′i} are defined
+through �L,ij = �"
+"′
+L,ij + δij Tr(�L)/3. There are also eigen-"
+"values for −�NL,ij = λNL,iδij , which are used for the peak
+patch stopping criteria of BM1 and Stein et al. (2019): we
+stop the final 1-axis collapse at a radial freeze-out factor
+of fcoll = 200"
+"−1/3 ≈ 0.17. Once that axis compression is
+reached it is αNL,11 which remains fixed, so the instanta-
+neous nonlinear strain gets progressively more negative since
+it is relative to the mean cosmological density, which is drop-
+ping. Similar stopping criterion for the earlier full collapse
+of the 3-axis then the 2-axis are used to arrest singular-
+ities and shell crossing. The results of 1-axis collapse are
+encapsulated in a table Tr(�L)(�"
+"′
+L). If we normalize �L by"
+"σ0(Rc), and define anisotropic eigenvalue combinations by
+νev = (λ3−λ1)/2σ0 and and νpv = (λ3−2λ2+λ1)/2σ0, with
+ν = δL/σ0, the 1-axis collapse criterion translated to initial
+condition (linear) space takes the form δL = δL,crit(ev, pv)."
+"2.3 Multi-point Correlation Functions and the
+Cosmic Web Structure"
+"Bond et al. (1996) described how the main features of the
+large-scale cosmic web could be understood in terms of mean
+fields subject to the constraint of the most prominent large-
+mass haloes oriented by their linear strain tensor (or equiva-"
+"lently their linear tidal tensor). Multi-point halo constraints
+(and void constraints) were used,"
+"〈Eext(xE)|Cc1 , Cc2 , ..., Ccn) . (10)"
+"A molecular picture was suggested, by building from 1-halo
+to 2-halo, showing filamentariness, to 3-halo, showing mem-
+branes as well, and to large n-halo constraints, all oriented.
+As more constraints are added, especially including the ori-
+ented information, the more structured 〈Eext(xE)〉 becomes,
+and the smaller the allowed but omnipresent fluctuations
+δEext(xE) about the mean field are. In the fully nonlinear
+Eulerian picture, dealing with multi-point halo constraints
+is more difficult than for Gaussian random fields. The mean
+field plus allowed fluctuations subject to multiple promi-
+nent mass-peak constraints has been useful in setting up N-
+body and gas-dynamical simulations, e.g., Wadsley & Bond
+(1997)."
+"In the linear regime of small Eext(xE) the mean can be
+written in terms of linear response functions βE,cj ,α"
+"〈Eext(xE)| ∪ Ccj )〉 →
+∑
+j"
+"3
+xcj dQ"
+"α
+cj
+Psel(Q"
+"× βE,cj ,α(xE − xcj )Q
+α
+cj
+ncj (xcj , Q"
+") , (11)"
+"where Psel(cj |Qαcj ) is a selection function acting on the in-
+ternal parameters. The response functions"
+"βE,cj ,α =
+δEext(xE)"
+"δQαcjncj (xcj )
+,"
+"are defined in terms of functional derivatives. Their inverses
+are often referred to as bias functions, and the expansion
+in terms of responses acting on halo number densities is a
+generalized form of the halo-model. Added to this mean field
+is a fluctuating residual, which exists both outside and inside
+of the haloes."
+"This extended use of the regular halo one-point func-
+tion describes how continuous fields Eext(xc2) at xc2 are
+influenced by a halo at xc1 . Of course we do not have to
+carry the Eext(xE) variable information in the distribution
+function to get this result, just cross-correlate Eext with the
+cluster-density operator, nh,op. Once we go to halo-halo cor-
+relations, the non-local complexity of exclusion means we
+would not want to carry nh,op(xc2) information in an ex-
+tended one point halo distribution function centered at xc1 .
+Instead to treat halo auto-clustering we do direct halo-halo
+two-point functions, and, if needed, higher connected N -
+point functions."
+2.4 The mass-Peak Patch method
+"N -body simulations often require demanding computational
+time to get a series of light-cone snapshots of the formation
+of large scale structures across cosmic time in a large cosmo-
+logical volume with enough mass and/or spatial resolution.
+In a series of papers in the late 80s and early 90s, Bond
+and Myers synthesized the random field theory of peaks
+(BBKS) and excursion sets (Bond et al. 1991) into the hi-
+erarchical mass-peak picture, with algorithms and compu-
+tational methods given in Bond & Myers (1996a) (BM1),
+validation in Bond & Myers (1996b) and applications to
+the thermal Sunyaev-Zeldovich effect and X-ray emission in"
+"MNRAS 000, 000–000 (0000)"
+6 B. Regaldo-Saint Blancard et al.
+"Bond & Myers (1996c), and to the cosmic infrared back-
+ground in (Bond & Myers 1993). The method has continued
+to be used ever since, for hydrodynamical and N-body sim-
+ulations of fields constrained by the mass-peak information,
+map-making for all sorts of applications. In particular the
+rise of huge datasets from large scale structure and cosmic
+background experiments has stimulated simulations of light
+cones on massive scales, and the associated construction of
+webskys, fully correlated maps in 2D and 3D (redshift) space
+for a large variety of signals. The further developments of
+the algorithm and its validation in this new era are described
+in Stein et al. (2019) and the websky applications in Stein
+et al. (2020)."
+"The conceptual picture is one of haloes as regions of
+hot dynamics that are bundled. Each light cone constructed
+using the hierarchical mass-Peak Patch method contains the
+large scale superclustering. Our target here is to extract from
+the initial distribution of matter (Lagrangian space) the re-
+gions that are likely to collapse and form a halo in the final
+state (Eulerian space). Here, one can decouple the very non-
+linear gravitational collapse of matter from the large-scale
+flows. Hence, starting from a linear density field, the mass-
+Peak Patch algorithm can be split into three stages:"
+"(i) Peak patches: from the initial distribution of matter,
+we look for non-nested regions3 that are likely to collapse
+and form a virialized object according to an ellipsoidal col-
+lapse dynamics, ie the peak patches. In practice, this cal-
+culation is only performed at peaks of the density field on
+a hierarchy of scales to reduce computational demands, as
+this has been found to be sufficient to find the complete list
+of non-nested regions for most use-cases."
+"(ii) Exclusion: from the list of tentative peak patches,
+binary exclusion is then implemented to ensure non-
+overlapping patches to avoid double counting mass."
+"(iii) Displacements: finally, displacements of these peak
+patches averaged over the Lagrangian volume of the halo
+are computed using the Zel’dovich approximation or higher
+orders (2LPT) when needed."
+"We refer to the header of Section 2 of Stein et al. (2019) for a
+short summary of the key aspects of the peak patch formal-
+ism. The reader will also find in the rest of the same article
+a detailed presentation of the algorithm as well as an exten-
+sive statistical validation of the halo catalogues compared to
+full N-body results."
+2.5 Characteristics of the simulation
+"In the peak patch simulation of dark matter used here,
+haloes are identified within a large comoving periodic box
+at a specified redshift. For this paper we ran a (3000 Mpc)3"
+"simulation using 40963 initial particles and output halo cat-
+alogues at z = 0. The final catalogue contains more than 32
+million haloes above a minimum halo mass of 100 simula-
+tion cells, or 1.5× 1012 M�. This run was not optimized for
+performance or memory requirements, but had a run time
+of 1.0 hour on 770 Intel “Skylak” 2.4 GHz cores of SciNet’s"
+"3 Here, non-nested collapsing regions refer to the largest scale
+which can collapse according to the ellipsoidal model, therefore
+rejecting cloud-in-cloud effects (substructures)."
+"Niagara cluster (Ponce et al. 2019), for a total runtime of
+700 hours and a peak memory footprint of 3.5 TB. This is
+over a thousand-fold speedup relative to N -body simulations
+of the same size. Our ΛCDM cosmological parameters are
+compatible with Planck 2018 results (Planck Collaboration
+I 2019): Ωm = 0.31; Ωb = 0.049; σ8 = 0.81; ns = 0.965;
+h = 0.68."
+"For the purposes of this work, a peak patch simula-
+tion gives, for each halo, a Lagrangian position and an Eu-
+lerian position (determined by its 2LPT displacement), a
+Lagrangian radius RL, and a strain tensor E computed in
+Lagrangian space. The mass of a halo is determined from its
+Lagrangian radius through the mean density of the Universe,"
+"Mh =
+4"
+"3
+LΩmρc,0 with ρc,0 ="
+"3H20
+8πG"
+. (12)
+"Throughout this work we consider three subsets of the halo
+catalogue which simply correspond to three different mass
+selections:"
+"(i) low masses haloes with mass M ∈ [1.5 ×
+1012M�, 10"
+"13M�);
+(ii) intermediate masses haloes corresponding to M ∈"
+"[1013M�, 10
+14M�);"
+(iii) high masses haloes with M > 1014M�.
+"3 ORIENTATION OF HALOES IN THE PEAK
+PATCH PICTURE"
+"Since the cosmic web develops from linear tidal anisotropies
+in the initial Gaussian random field which are correlated
+across scales, initial strains at halo positions are very likely
+to be strongly aligned with the large-scale cosmic web. This
+is what we investigate in detail in this paper."
+"Even though the initial strain tensor is not equivalent
+to the actual shape of the dark matter haloes at the present
+day, a number of theoretical models are based on this quan-
+tity (e.g., linear tidal alignment model, tidal torquing or any
+generalisation of these two based on perturbation theory).
+Because the strain and tide are proportional, and strain is
+what defines coarse-grained collapse on halo-scales, we think
+it is the most important indicator for collapse. By contrast
+the initial moment of inertia tensor, while highly correlated
+with the tide in linear theory, is generally mismatched be-
+cause of the r2 weighting of the strain compared to the un-
+weighted strain average that we want to concentrate on.
+This mismatch is important since it is acted upon by the
+tides in the perturbative treatment of angular momentum
+generation by tidal torques, which is quadratic in linear am-
+plitudes. Given this picture spatial correlations among the
+initial strain tensors should therefore induce correlations be-
+tween the (observable) late-time halo or host galaxy shapes.
+Modelling this initial large-scale tidal coherence is the first
+building block in any model of intrinsic alignments and is the
+purpose of this article , notably motivated by the fact that
+initial conditions have been shown to determine very accu-
+rately the late-time shape and spin of dark matter haloes
+(see e.g Cadiou et al. 2020, for a recent study). From there
+one can then try to model the relationship between the ini-
+tial strain and the late-time morphology and orientation of"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 7
+"Figure 1. Visualisation of haloes from the peak patch catalogue as projected ellipsoids based on the anisotropic strain tensor in the
+corresponding Lagrangian patches. Left-hand panel: haloes from a 512 × 512 × 25 Mpc3 slice in Lagrangian space. Right-hand panel:
+same haloes moved to Eulerian space. Colours encode the mass as labelled, even though the volume of the ellipsoids is also proportional"
+to the mass.
+"galaxies. This is however a complex and very challenging is-
+sue as it involves nonlinear physics, including for instance
+highly anisotropic accretion together with a precise under-
+standing of the baryonic physics engaged in the patch evo-
+lution, and, alas, is not within reach of first-principle calcu-
+lations. Cosmological hydrodynamical simulations that re-
+solve the details of galaxy physics together with their con-
+nection to the large-scale environment may be needed and is
+at the core of many developments in the recent years. This
+part of the modelling is thus for the future."
+"In this section, we first visualise the shape of peak patch
+haloes as given by their initial linear strain tensor – denoted
+in this work by E or the related � = ln(I + E), ≈ E to linear
+order – before moving to more quantitative measurements."
+3.1 Visualisation of haloes intrinsic alignment
+"Fig. 1 shows haloes in a 25 Mpc thick slice of the simulation,
+both in Lagrangian space (left-hand panel) that is to say in
+initial condition space, and in final state (Eulerian) space
+(right-hand panel) once an adaptive (cluster-specific) 2LPT
+displacement of the haloes is performed4."
+"For visualization we represent a halo by an ellipsoid
+whose principal axes follow the ones of the initial anisotropic
+strain tensor E (or, equivalently tidal tensor). Their lengths
+are given by"
+"Ci =
+1"
+"(
+−λ′i"
+")
+RL, (13)"
+"so as to keep the volume proportional to the mass and to cap-
+ture the deforming effects of Zeldovich dynamics (Zel’Dovich"
+4 This visualisation made use of the Mayavi 3D Python visuali-
+sation library (Ramachandran & Varoquaux 2011).
+Figure 2. Top panel: Zoom over the same slice of as Fig. 1 in
+"Lagrangian space. Bottom panel: Same as top panel but in Eule-
+rian space. Red squares mark regions from which videos, that are"
+"introduced in the main text, show 3D visualizations."
+"1970) at first order while avoiding singularities. In what fol-
+lows, we will call the major direction of the halo the one with
+the longest semi-axis Ci and the minor direction one with
+the smallest semi-axis. As we have ordered the eigenvalues"
+"MNRAS 000, 000–000 (0000)"
+8 B. Regaldo-Saint Blancard et al.
+"of the strain tensor (see equation (9)), the major direction
+is then referring to the direction of the smallest eigenvalue
+of the strain tensor λ1 such that"
+C3 6 C2 6 C1. (14)
+"This choice is not ad hoc since indeed haloes and galaxies
+are believed to undergo tidal stretching by the cosmic web
+such that their late-time shape is indeed tightly connected
+to the shear they experienced early on. The colour coding
+used in this figure is an indicator of the mass of the haloes,
+from blue (low mass) to red (high mass) as labelled, which
+is directly related to the radius (see Eq. (12)). Note that the
+volume enclosed in the ellipsoid is proportional to R3L and
+therefore to the mass. Hence, bigger haloes are the red ones
+(the more massive objects) and smaller haloes are the blue
+ones."
+"The emergence of the cosmic web is clearly seen on this
+figure, with large voids almost empty of haloes surrounded
+by walls and filaments which connect onto the nodes of the
+cosmic web. As expected, the most massive objects lie in
+the dense nodes of the web while smaller structures tend
+to reside mostly within filaments (e.g Oemler 1974; Kaiser
+1984; Cole & Kaiser 1989; Codis et al. 2015b, among many
+others). The representation of halo shapes shows remarkably
+well-aligned haloes with their surrounding denser filaments
+and walls. This alignment is subsequently enhanced by the
+collapse of structures (right-hand panel) but is already in
+place in the initial conditions. Even in less dense regions,
+the major direction of haloes seems to be strongly correlated
+amongst neighbouring haloes."
+"Fig. 2 displays a zoom onto a filament, again in La-
+grangian (top panel) and Eulerian space (bottom panel).
+In addition to the 2D projections shown in the paper, we
+provide 3D visualisations online so as to rotate the scene
+and get a more accurate view of the alignments of struc-
+tures. In particular, movies rotating around a halo in La-
+grangian space and Eulerian space together with a filament
+in Eulerian space – as delineated with the red squares in
+Fig. 2 – can be respectively accessed at https://youtu.be/
+1UOH8jaaQYU, https://youtu.be/dD4_vXHIk6o and https:
+//youtu.be/NodNFozaig8. The filaments of the cosmic web
+seem again to be well-aligned with the directions of the ini-
+tial anisotropic strain tensor and therefore potentially with
+halo and galaxy shapes at low redshift."
+"In the remainder of this article, we will quantify these
+intrinsic alignments as predicted by the peak patch model.
+We will first focus on the standard isotropic halo clustering
+before introducing halo anisotropic clustering in the frame
+of the cosmic web by means of the frame of the initial strain
+and eventually investigate initial shape alignments."
+3.2 Isotropic clustering of haloes
+"Before studying the orientation of haloes, let us first quantify
+the isotropic clustering of peak patch haloes by means of
+the two-point density-density isotropic correlation function
+defined as"
+"ξhh(r) = 〈δh(r′)δh(r′ + r)〉 =
+〈nh(r′)nh(r′ + r)〉"
+"〈nh〉2
+− 1, (15)"
+"where δh is the number density contrast of haloes, i.e.
+δh(r) = nh(r)/〈nh〉 − 1, and nh is the number density of"
+"haloes. Note that the halo correlation function ξhh only de-
+pends on the modulus of the pair separation r if we as-
+sume statistical homogeneity and isotropy of the random
+fields. By definition, this function can range from -1 (anti-
+correlation/exclusion) to +∞ (high correlation)."
+"For our catalogue, we stack halo pairs depending on
+their pair separation using regular bins in r (we call ∆r
+the corresponding radial step size). We then estimate ξhh by
+comparing this stacking to the total number of halo pairs if
+the haloes were uniformly distributed in the simulation box,
+weighted by the volume fraction of the bins. To estimate
+measurement uncertainty, we divide the simulation volume
+in 8 and compute separate estimations of ξhh for each of
+these sub-volumes. The final estimation of ξhh is the mean
+of the 8 separate estimations, and the corresponding uncer-
+tainties are computed as the standard error on the mean."
+"The resulting halo correlation function is shown in
+Fig. 3 for different halo masses, namely i) low masses with
+M ∈ [3.5 × 1013M�, 1014M�] (orange), ii) intermediate
+masses with M ∈ [1014M�, 1015M�] (green), and iii) high
+masses with M > 1015M� (red). The left-hand panel shows
+the measurements in Lagrangian space (with ∆r = 1.5 Mpc)
+while the right-hand panel displays the counterpart in Eu-
+lerian space (with ∆r = 0.5 Mpc). The vertical dashed lines
+show the minimal RL values for each bin of mass. Note that
+the radial step size of these measurements is higher for La-
+grangian measurements to prevent pixelization effects due
+to the limited resolution of the simulation."
+"In Lagrangian space we see a clear exclusion zone –
+when the correlation function goes to -1 – that is larger for
+massive haloes, depending upon a combination of the clus-
+ter’s Lagrangian radius RL,c, large for larger masses, and
+an average of the radii RL,c′ < RL,c of all other lower-mass
+haloes. Peak patches explore three types of exclusion, half-
+exclusion allowing for clusters anywhere outside of RL,c,
+full exclusion enforcing a larger disallowed zone, of radius
+RL,c′ + RL,c, and binary exclusion that is a compromise
+between the two: clusters in the in-between region have a
+mass-conserving apportionment of space to the two clusters
+in question, but this is done pairwise, whereas simultaneous
+apportioning of space of all clusters in the in-between region
+would be better, albeit statistically complex. It is difficult
+to do the binary exclusion adopted for our halo catalogue
+results, and, indeed, for full exclusion, in any semi-analytic
+framework, so there is little recourse but to do numerical
+estimates of the clustering such as those reported here to be
+quantitative about exclusion. As we vary the target masses
+of the haloes, RL,c ranges from a few megaparsecs at the
+lowest masses we consider to about 10 Mpc for the most
+massive clusters. Exclusion is a very nonlinear effect, in-
+volving in general full clustering information locally of the
+clusters, to ensure haloes are non-overlapping in Lagrangian
+space, a hard sphere exclusion. On top of that, the statistics
+of the initial field typically prevent the formation of deep
+enough potential wells too close to each other, simply be-
+cause of topological arguments (Baldauf et al. 2016; Codis
+et al. 2018a). Beyond the exclusion zone the correlation func-
+tion displays a positive enhancement, a biasing bump, be-
+fore it converges towards zero on tens of megaparsecs scales,
+following a perturbative bias model (Matsubara & Codis
+2019). As is evident, the linear bias, which measures the
+linear response of the halo density field to a mass density"
+"MNRAS 000, 000–000 (0000)"
+"https://youtu.be/1UOH8jaaQYU
+https://youtu.be/1UOH8jaaQYU
+https://youtu.be/dD4_vXHIk6o
+https://youtu.be/NodNFozaig8
+https://youtu.be/NodNFozaig8"
+"
+Clustering and alignments of peak patch haloes 9"
+Figure 3. Two-point density-density isotropic correlations in Lagrangian space (left-hand panel) and Eulerian space (right-hand panel)
+"for different bins of mass as labelled. Vertical dashed lines show minimal RL values for each bin of mass. The Eulerian analogue involves
+compression to an overdensity of 200, so these lines would be multiplied by ∼ (200)−1/3 ≈ 0.17, significant in this plot only for the
+largest mass bin where exclusion effects are still evident even after the dynamics draws the haloes together."
+"perturbation, is larger for larger mass haloes (Kaiser 1984;
+Desjacques et al. 2018)."
+"Once haloes are displaced according to second order La-
+grangian perturbation theory, the exclusion zone is progres-
+sively filled as haloes move and large structures collapse.
+Only the most massive haloes still display an exclusion zone
+larger than the resolution of our simulation at redshift zero.
+On large scales, gravitational collapse enhances halo cluster-
+ing as expected, with more massive objects having a larger
+bias."
+3.3 Halo clustering in the strain eigenframe
+"One of the obvious drawbacks of a standard isotropic halo
+correlation function is that it mixes all the directions of the
+cosmic web so that the quite anisotropic clustering, e.g.,
+along filaments, is averaged out. To highlight the clustering
+anisotropy, one can mark the two-point halo-halo correlation
+function by adding constraints on the pair members. In this
+section, we use knowledge of the target cluster’s strain ten-
+sor to compute the mean number density profile of haloes
+around it, for now not taking into account orientation as-
+pects of the non-target clusters that we stack on, although
+we do that later. In this work the shapes of haloes are mod-
+elled as ellipsoids, with axes deformed from spherical by the
+time-dependent nonlinear strain tensor, but the late-time
+deformations are determined completely by the pre-collapse
+linear initial strain. That is, we use the target’s strain frame
+to define directions in the local cosmic web and compute
+the strain-tensor-oriented correlation function within this
+frame. Hence we can investigate alignment of cluster-scale
+tides with the cosmic web, expecting to see differential clus-
+tering along filaments of the haloes rather than perpendic-
+ular to them."
+"3.3.1 Strain-tensor-oriented correlation functions via
+oriented stacking"
+"To compute the two-point strain-tensor-oriented halo-halo
+correlation function ξEhh we use the natural basis for each se-
+lected halo defined by the principal directions of the strain
+tensor E , as explained in Section 3.1, and we stack its neigh-
+bouring haloes in this frame in a procedure we call oriented
+stacking, the goal being to quantify anisotropic behavior fol-
+lowing the eigendirections of the target haloes. The correla-
+tion between two haloes at rh1 and rh2 only depends upon
+r = rh2 − rh1:"
+"ξ
+E,h1
+h1,h2(r) = 〈δh (rh1) δh (rh1 +RE,h1r))〉, (16)"
+"where RE,h1 is the orthogonal matrix that diagonalizes Eh1,
+the strain tensor of a halo at position rh1, and therefore rep-
+resents the change of basis from the frame of the simulation
+to the eigenframe of the strain tensor, such that"
+−E = RE
+"
+λ1 0 00 λ2 0"
+0 0 λ3
+"
+RTE with λ1 6 λ2 6 λ3. (17)"
+"For the sake of simplicity, we will use the shorter notation
+ξEhh(r) ≡ ξ"
+"E,h1
+h1,h2(r) in the remainder of this paper. The dif-"
+"ference with the previous isotropic correlation is that we
+are now deliberately breaking the isotropy by enforcing the
+halo eigenframe information upon the correlation statistics.
+Hence we now do the stacking in 3D instead of in 1D as was
+done with the isotropic case before when the correlation only
+depended upon the modulus of the pair separation. For the
+Lagrangian space results we adopt a regular grid with voxel
+size ∆x = 1.5 Mpc to get smoother results. For Eulerian
+space ∆x can be smaller."
+3.3.2 3D oriented clustering
+"Fig. 4 shows a 3D visualisation of the oriented halo corre-
+lation function for two bins of mass. The X, Y and Z axes
+respectively refer to the major, intermediate and minor prin-
+cipal directions of the strain tensor. Because of the arbitrary"
+"MNRAS 000, 000–000 (0000)"
+10 B. Regaldo-Saint Blancard et al.
+"Figure 4. Stacking of haloes on strain-oriented haloes yields the ξE
+hh"
+"(r) correlation function, shown here with a voxel size ∆x = 1.5 Mpc."
+"The top panel shows the measurements in Lagrangian space while the bottom shows Eulerian space measurements. Two mass bins are
+displayed: 1.5 × 1012–1013M�(left-hand panels) and 1013–1014M� (right-hand panels). Here, the X,Y, Z axes respectively refer to the
+major, intermediate and minor directions of the selected haloes. We show only a few isocontours for the sake of clarity. In Lagrangian"
+"(respectively Eulerian) space, we show contours for ξE
+hh"
+"= −0.5, 0.4, 0.8, 1.2 (resp. ξE
+hh"
+"= −0.1, 0, 2, 4, 6, 8)."
+"choice of orientation of the eigenvectors, the 3D oriented cor-
+relation function must be invariant under any rotation of π
+around these principal directions. The top panels of Fig. 4
+show the 3D oriented correlation function in Lagrangian
+space. The contours in blue show the exclusion zone near
+the central halo. This exclusion is very anisotropic and is
+stretched along the minor axis of the halo. The clustering
+that is maximum in the red region is also very anisotropic
+and occurs along the major direction. This is a clear sig-
+nature of the cosmic web like environment with typically a
+filament along the major direction where most neighbour-
+ing haloes reside, a wall that encompasses the filament and
+tend to lie in the plane formed by the major and intermedi-
+ate direction while two voids tend to be located in the minor
+eigendirection on both sides of the wall. The bottom panels
+show the oriented correlation functions in Eulerian space.
+The exclusion zone has been filled by the displacement of
+haloes and the anisotropy of the clustering is enhanced with
+large voids growing on both sides of the wall and the fila-"
+"ment along the major axis being even more pronounced and
+sharper as a result of the gravitational collapse of structures."
+"This corroborates what we were expecting from the halo
+shape visualisations of Fig. 1. The major direction of haloes
+more likely points towards other haloes while their minor di-
+rection points towards neighbouring voids. Let us also note
+that the bump in density is approximately at the same dis-
+tance, around 5-10 Mpc, found for the isotropic correlation
+(Fig. 3), quantifying the typical extent of inter-cluster fila-
+ments (which is an increasing function of halo mass). Note
+that this anisotropic clustering of haloes was also investi-
+gated recently in the context of galaxy-galaxy lensing (Osato
+et al. 2018) where similar results were found."
+3.3.3 Harmonic analysis of the oriented clustering
+"Since 3D correlation functions have obvious difficulties for
+visualization, we will now project the 3D correlation maps
+via a harmonic decomposition: for each successive spherical"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 11
+"Lag. - M ∈ [1.5× 1012M�, 1013M�)"
+l=0 m=0
+l=2 m=0
+l=2 m=2
+l=4 m=0
+l=4 m=2
+l=4 m=4
+l=6 m=0
+"Lag. - M ∈ [1013M�, 1014M�) Lag. - M > 1014M�"
+0 5 10 15 20 25 30
+r [Mpc]
+"Eul. - M ∈ [1.5× 1012M�, 1013M�)"
+0 5 10 15 20 25 30
+r [Mpc]
+"Eul. - M ∈ [1013M�, 1014M�)"
+0 5 10 15 20 25 30
+r [Mpc]
+Eul. - M > 1014M�
+"Figure 5. Ym
+l"
+"decomposition of the strain tensor oriented halo correlation function ξE
+hh"
+(r) in shells of various radii. Results in Lagrangian
+space (top panels) and Eulerian space (bottom panels) are displayed for different mass bins from left to right as labelled. The legend
+"gives the corresponding (l,m) values."
+"cut at fixed radius of ξEhh field we expand ξ
+E
+hh in the spherical"
+harmonics basis {Y ml }:
+"ξ
+E
+hh(r, θ, ϕ) ="
+"∞∑
+l=0"
+"l∑
+m=−l"
+"al,m(r)Y
+m
+l (θ, ϕ) , (18)"
+with radially dependent amplitudes
+"al,m(r) ="
+"∫ 2π
+ϕ=0"
+"∫ π
+θ=0"
+"ξ
+E
+hh(r, θ, ϕ)Y"
+"m
+l (θ, ϕ) sin(θ) dθ dϕ, (19)"
+"The {Y ml } convention we adopt, in terms of associated Leg-
+endre polynomials Pml , is"
+"Y
+m
+l (θ, ϕ) ="
+"√
+(2l + 1)"
+"(l −m)!
+(l +m)!"
+"P
+m
+l (cos(θ)). (20)"
+"Some visualizations on the sphere are given in Appendix B.
+The angular variables relative to the cluster position M
+are defined so that θ is the angle that (OM) makes with
+the major axis, and ϕ is the angle that (OM ′) makes
+with the intermediate axis, with M ′ the projection of M
+in the plane perpendicular to the major axis. Note that
+since ξEhh(r) is a real function, m < 0 coefficients can be
+identified with m > 0 ones using the relation: al,m =
+(−1)mal,−m. Also, ξEhh(r) is invariant under π-rotations
+around any of the three axes, leading to al,m = 0 when l
+or m is odd, and al,m ∈ R. Accordingly in the following we
+choose to restrain our harmonic description to al,m functions
+for (l,m) ∈ {(0, 0), (2, 0), (2, 2), (4, 0), (4, 2), (4, 4), (6, 0)}."
+"Higher harmonics quickly become negligible, hence the pre-
+vious harmonics correspond to a reasonable compromise be-
+tween restraining the number of coefficients and keeping the
+most relevant ones to describe ξEhh."
+"Fig. 5 shows the results up to 30 Mpc in Lagrangian
+space (top panels, with ∆r = 1.5 Mpc) and Eulerian space
+(bottom panels, with ∆r = 0.5 Mpc) for three mass bins
+from left to right. For a given radius, surface integrals on
+the sphere are computed using a trilinear interpolation of
+the regular grid of values corresponding to the ξEhh function.
+Note that we make the radial step size of al,m functions
+higher for Lagrangian measurements to prevent pixelization
+effects due to the limited resolution of the simulation. The
+monopole a00 is directly proportional to the isotropic corre-
+lation calculated in Fig. 3 with, in particular, an exclusion
+and a bump centered at increasing distances for increasing
+masses. The chosen normalisation for Y 00 leads to a factor
+of proportionality equal to"
+"√
+4π ∼ 3.5. In Lagrangian space,"
+"the monopole is clearly dominant in the exclusion zone. For
+larger radii, it is exceeded by the quadrupolar component
+which is a direct evidence for the importance of filamentary
+clustering (equivalently the lack of clustering in the neigh-
+bouring void regions). Higher order contributions also ap-
+pear with lower amplitude when l grows. This is a signature
+of the connectivity of the cosmic web with filaments typi-
+cally bifurcating even more so that the haloes under consid-
+eration are massive. This was modelled from first principles
+and thoroughly investigated in Codis et al. (2018a) where"
+"MNRAS 000, 000–000 (0000)"
+12 B. Regaldo-Saint Blancard et al.
+"more massive haloes/nodes where shown to be more con-
+nected to their environment (as was also tentatively mea-
+sured in numerical simulations – although with large uncer-
+tainties – in Aragón-Calvo et al. 2010). Typically the low-
+mass haloes are connected to ∼ 4 filaments on average while
+larger mass haloes can reach typically 8-10 connections. This
+is one reason why more massive haloes excite harmonics of
+higher orders. At low mass, haloes are embedded in one big
+filament so that two branches emanate on each side and
+a quadrupole in the correlation function appears. Possibly
+two more branches are also there but on average they will
+be less pronounced hence the lower amplitude of the cor-
+responding harmonics. There is no significant contribution
+beyond. On the other hand, massive haloes are connected
+to about 8-10 branches of filaments which is why harmon-
+ics up to higher order (8 or so) can be excited. Obviously,
+the low orders dominate (corresponding to the dominant fil-
+aments) and higher orders are progressively suppressed as
+they correspond to fainter ones."
+"In Eulerian space, gravitational collapse sharpens the
+filamentary cosmic web. The clustering of haloes is enhanced
+as they moved along the cosmic web. As can be seen on the
+bottom panel of Fig. 5, the monopole dominates now over
+the entire range of separations. This is especially true for the
+smaller mass haloes, maybe because those in clusters have
+erased memory of their large-scale environment and there-
+fore tend to reduce the relative impact of higher order har-
+monics. However, for the more massive bin, the quadrupole
+is large and reaches more or less the same amplitude as the
+monopole for all separations. This is probably because larger
+masses have evolved much less and have kept their initial
+main connections (although some small filaments may have
+merged)."
+3.4 Oriented stacks with symmetry-breaking
+"Previously, we have assumed no preferential orientation (i.e
+global sign) of the eigenvectors. Those were headless arrows.
+Hence, one could only consider one eighth of the space to
+represent the 3D oriented correlation function. This has two
+advantages: eight times more data per pixel which is useful
+to reduce numerical noise, and a memory usage divided by
+8. However, there might be some physical reasons to impose
+an orientation for the basis. For example if one wants to
+take into account the displacement of haloes between the
+initial and final positions to compute the correlations, one
+could impose the eigenvectors of our haloes to be oriented
+approximately in the direction of the displacement vector
+which more or less boils down to orientating filaments in
+the direction of the force (i.e the attractive node). Consider
+a halo with a displacement vector s, which in linear theory
+is proportional to its gravitational acceleration vector. We
+can add information to the stacking without losing any in-
+formation by orienting the positive directions of the frame
+axes to be preferentially pointing towards the gravitational
+acceleration, in particular by imposing that the three eigen-
+vectors {êi} of the strain tensor E are now directed and not
+headless:"
+"∀i ∈ {1, 2, 3}, s · êi > 0. (21)"
+"This representation allows us to get some information about
+how the flow of haloes influences the distribution of haloes"
+"around the principal axis of the strain tensors. We refer to
+this approach as dipolar symmetry breaking in the following."
+"Fig. 6 shows the impact of the flow symmetry breaking
+on the oriented density-density correlation function ξEhh(r).
+The 3D correlation has been visually blown in the direction
+of the flow. This asymmetry means that haloes are more
+likely to cluster in the direction of the flow. On the al,m co-
+efficients, as seen on Figs 7 and 8, this therefore excites odd
+modes that were null before, mainly the ones corresponding
+to l = 1 (the real part of even modes are left unchanged and
+therefore not displayed again here). These l = 1 modes cor-
+respond to the flow being from the voids to the walls, from
+the walls to the filaments and finally from the filaments to
+the nodes and simultaneously the clustering being more pro-
+nounced in walls, filaments and even more nodes. Hence, the
+main mode excited is along the filaments therefore it corre-
+sponds to the harmonics (1, 0), followed by the walls and
+voids. The amplitude of all modes is larger for larger masses
+as expected. Interestingly, the relative importance of higher
+order harmonics, notably (3, 0), increases for larger masses."
+3.5 Alignment of the strain tensors
+"Previously we have studied in detail the anisotropic halo
+clustering by constraining the strain of the target halo, but
+not using the second halo’s strain tensor. We use this in-
+formation to explore the intrinsic alignment of haloes by
+describing how the two principal eigenvector bases are cor-
+related as their separation changes. For this we compute the
+(isotropic) two-point correlation function defined by"
+"ξêiêj(r) = 〈(êi(rh2).êj(rh1))
+2〉 −"
+"3
+, (22)"
+"where êi(rh2) refers to the normalised eigenvector of the
+strain tensor of a halo at given position rh2 associated with
+the eigenvalue λi(rh2)."
+"Fig. 9 shows the resulting halo alignments in Lagrangian
+and Eulerian space for various mass bins. If no alignments
+were detected, one would get ξêiêj(r) = 0. As expected, halo
+eigendirections do tend to align, with a stronger alignment
+for the minor and major axes compared to the intermediate
+eigendirections. The coherence of these alignments extends
+to quite large scales, from about 15 to 50 Mpc as halo mass
+grows, in agreement with the expected coherence of the tidal
+tensor from linear theory (Lee et al. 2009) and recent mea-
+surements in N-body simulations (Kurita et al. 2020). Inter-
+estingly going from Lagrangian to Eulerian space does not
+erase these alignments although they are slightly suppressed
+at small scales as anticipated due to nonlinear effects. As de-
+tailed further in Appendix A, linear theory predict qualita-
+tively the same signal although the difference seen between
+minor and major axis, especially at large mass, is a clear
+signature of the nonlinearities at play, in particular due to
+the ellipsoidal collapse dynamics."
+"This result strongly suggests that halo intrinsic align-
+ment may pervade on very large scales and resist the non-
+linear evolution."
+3.6 Orientated stacks in projection
+"Visualizations of 3D correlations in the static format of the
+2D page do not convey as much information as one would"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 13
+Figure 6. Same as Fig. 4 after symmetry breaking in Eulerian space for two mass bins: 1.5×1012–1013M� (left) and 1013–1014M�(right).
+0 5 10 15 20 25 30
+r [Mpc]
+"R
+e(
+a
+lm"
+")(
+r
+)"
+"Eul. - M ∈ [1.5× 1012M�, 1013M�)"
+l=1 m=0
+l=1 m=1
+l=2 m=1
+l=3 m=0
+l=3 m=1
+l=3 m=2
+l=3 m=3
+l=4 m=1
+l=4 m=3
+0 5 10 15 20 25 30
+r [Mpc]
+"Eul. - M ∈ [1013M�, 1014M�)"
+0 5 10 15 20 25 30
+r [Mpc]
+Eul. - M > 1014M�
+"Figure 7. Ym
+l"
+"decomposition of ξE
+hh"
+"(r) with symmetry breaking on spheres of various radii. We show the real part of the first al,m
+coefficients, excluding those corresponding to even l and m values, which are redundant with the ones plotted in Fig. 5 by symmetry."
+"Results in Eulerian space are displayed for different mass bins from left to right as labeled. The legend gives the corresponding (l,m)
+values."
+0 5 10 15 20 25 30
+r [Mpc]
+"Im
+(a
+lm"
+")(
+r
+)"
+"Eul. - M ∈ [1.5× 1012M�, 1013M�)"
+l=1 m=1
+l=2 m=1
+l=2 m=2
+l=3 m=1
+l=3 m=2
+l=3 m=3
+l=4 m=1
+l=4 m=2
+l=4 m=3
+l=4 m=4
+0 5 10 15 20 25 30
+r [Mpc]
+"Eul. - M ∈ [1013M�, 1014M�)"
+0 5 10 15 20 25 30
+r [Mpc]
+Eul. - M > 1014M�
+"Figure 8. Same as Fig. 7 for the imaginary part of the al,m coefficients. m = 0 coefficients have a null imaginary part and are therefore
+not displayed."
+"MNRAS 000, 000–000 (0000)"
+14 B. Regaldo-Saint Blancard et al.
+"Figure 9. ξêiêj (r) correlation functions quantifying halo intrinsic alignments, as measured in Lagrangian (top panels) and Eulerian"
+(bottom panels) spaces for different mass bins as labelled.
+"like, making a case for 2D projections. This is also relevant
+for observations, which can deliver 2D maps, possibly with
+redshift foliation of the maps (photometric clustering, cos-
+mic shear, intensity mapping, CMB, etc). Hence we now
+show projections of 3D results into 2D. For that purpose,
+we choose an arbitrary axis of the simulation, let us call it
+(Oz), and define some z-slices of the simulation that are then
+projected onto the same plane. With two-point correlation
+functions, for a given z-slice, the projection of halo positions
+is simply achieved by ignoring the z-coordinates and using
+directly the (x, y) coordinates as the projected coordinates
+of the objects. To calculate a strain-tensor-oriented corre-
+lation, we also need to compute the 2D projections of the
+strain tensors on the (xOy) plane, which is simply"
+"E2D =
+(
+�xx �xy
+�yx �yy"
+")
+. (23)"
+"Using these projections within 5 Mpc slices, we then
+compute the oriented density-density correlation function
+in 2D ξ"
+"E/2D
+hh (r) using the same techniques as for the 3D"
+"function. Hence, we estimate the distribution of neighbour-
+ing haloes in the vicinity of a central halo with fixed ori-
+entation. In addition, we also measure in the same frame
+the average major eigendirection of the neighbours (set by
+their strain tensor) in order to get a clear visualisation of
+the shape alignments in the surroundings of a central halo.
+Fig. 10 shows the results of these calculations for several
+mass bins. The background coloured density map represents
+ξ
+E/2D
+hh , while headless arrows show the average direction of"
+"the major axis of surrounding haloes, and their length is
+proportional to the difference between the eigenvalues. Here,
+everything is computed within the frame of the central halo,
+the X axis being its major direction, and the Y axis its mi-
+nor direction. There is no symmetry breaking which is why
+the plots are reflection symmetric with respect to the two
+axes."
+"These projections show clearly the exclusion zone in
+dark blue growing from small to larger masses with a clear
+anisotropy as it is squashed along the minor axis of the cen-
+tral halo. The clustering of neighbours peaks again (in yel-
+low/red) at an increasing separation for larger masses. It
+does not happen in all directions but specifically along the
+major axis of the central halo. This anisotropy is even more
+pronounced in Eulerian space (bottom panels). All those
+results are nothing but a 2D visualisation of the same phe-
+nomenon already observed for 3D correlations (see Fig. 3)
+with a clear filament appearing along the major direction
+and two voids along the minor axis."
+"Looking at the black bars which represent the stacked
+orientation of neighbouring haloes, a clear alignment of their
+shape is detected, in particular close to the X axis. This
+shows an average alignment of haloes along the major di-
+rection (halo shapes tend to point towards each other) and
+for greater scales (> 30 Mpc, beyond the boundary of the
+plot) than what we already observed in isotropic settings like
+the one shown in Fig. 9. Tidal alignments seem therefore to
+occur on very large scales, even larger than the mean correla-
+tion length of the tidal field. This is a consequence of the so-"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 15
+Figure 10. Oriented correlations from 5 Mpc thick projections of the peak patch simulation: the colour map represents the oriented
+"halo density correlation function ξ
+E/2D
+hh"
+(r) while the bars show the average major eigendirection of surrounding haloes. The X axis is the
+"direction of the major axis of the central halo, and the Y axis follows its minor axis. Top panels are in Lagrangian space while bottom"
+"panels are in Eulerian space. Three mass bins are considered from left to right: M ∈ [1.5× 1012M�, 1013M�]; M ∈ [1013M�, 1014M�];
+M ∈ [1014M�,+∞[."
+"called biased clustering effect (Cole & Kaiser 1989): haloes
+do not form anywhere in the Universe but along filaments
+which are very special places where the field is coherent.
+This induces very strong and long-range halo correlations
+along the cosmic web."
+"Finally, we also compute the same projected correla-
+tions after symmetry breaking (taking into account the ori-
+entation of the flow). The result is displayed in Fig. 11.
+As expected, the clustering becomes dissymetric with many
+more neighbours in the direction of the flow. The orienta-
+tion of the neighbours is however relatively unaffected by
+the symmetry breaking procedure."
+4 DISCUSSION AND CONCLUSION
+"In this work, the peak patch picture was used as a model
+for halo formation and evolution. Based on this model,
+the anisotropic halo clustering was first investigated. The
+anisotropy could be revealed thanks to an oriented stack
+in the frame of the halo’s strain tensor whose orientation
+is very correlated with the surrounding cosmic web. Haloes
+were shown to cluster mostly in the direction of the fila-
+ments as expected. This effect was further quantified using
+an harmonic decomposition of the three dimensional cor-
+relation function, which allowed us to make the connec-"
+"tion with the so-called cosmic web connectivity modelled
+in Codis et al. (2018a). In addition, we also implemented
+a symmetry breaking procedure where the direction of the
+local flow is accounted for. As expected haloes cluster more
+in the direction of the flow."
+"Furthermore, the correlations between halo shapes as
+traced by their initial strain were quantified both in 3D and
+in projection. It was shown that those correlations exist on
+very large scales and are highly anisotropic. Along filaments,
+they extend to scales as large as 50 Mpc and more."
+"In order to provide theoretical insight onto those results,
+first principle calculations based on the hierarchical peak
+theory of Gaussian random fields can be performed. Such
+predictions for the oriented clustering of peaks in Gaussian
+random fields are provided in Appendix A and are shown to
+lead to the same qualitative picture as for the peak patch
+picture described in this paper. However, one should bear
+in mind that the peak theory description, although elegant
+since it can be fully written and derived from first principles,
+cannot model accurately the details of halo formation and
+alignments which require a more complex modelling of their
+collapse, displacements and nonlinear exclusion effects which
+are provided by the mass-peak patch model used here."
+"Of course it is quite likely that other elements of non-
+linear gravitational evolution and the complex baryonic pro-
+cesses (such as feedback from active galactic nuclei, galac-"
+"MNRAS 000, 000–000 (0000)"
+16 B. Regaldo-Saint Blancard et al.
+Figure 11. Same as the bottom panels of Fig. 10 with symmetry breaking in Eulerian space.
+"tic winds, supernovae explosion, turbulence, etc) associated
+with structure formation may decrease the initial alignments
+modelled in this article. However the work presented here al-
+lows us to understand more clearly one of the building blocks
+of halo intrinsic alignments: the large-scale tidal coherence.
+On smaller scale, this ingredient should be convolved with
+the complex response function of galaxies to this underly-
+ing tidal correlations. Hence, it would be of great interest
+to develop a hybrid framework combining the large-scale
+tidal alignments modelled in this paper with galaxy response
+functions that could be measured in hydrodynamical simu-
+lations. This is however beyond the scope of this paper and
+will be studied elsewhere."
+"Let us also note that in this study we have not consid-
+ered the build up of halo spin which also tends to align with
+the cosmic web (Codis et al. 2012; Trowland et al. 2013;
+Wang & Kang 2017, 2018; Ganeshaiah Veena et al. 2018).
+This would require a better understanding of the shape of
+protohaloes, although a simple proxy based on initial peak
+shape following Codis et al. (2015b) could easily be used.
+This will be the subject of future works."
+ACKNOWLEDGEMENTS
+"We thank the anonymous referee for a helpful report. These
+calculations were performed on the Niagara supercomputer
+(Ponce et al. 2019) at the SciNet HPC Consortium. SciNet is
+funded by: the Canada Foundation for Innovation under the
+auspices of Compute Canada; the Government of Ontario;
+Ontario Research Fund - Research Excellence; and the Uni-
+versity of Toronto. Part of the work has also made use of
+the Horizon Cluster hosted by Institut d’Astrophysique de
+Paris. We thank Stephane Rouberol for running smoothly
+this cluster for us. This work is partially supported by Fon-
+dation MERAC, the the Natural Sciences and Engineering
+Research Council of Canada (NSERC) and the Canadian
+Institute for Advanced Research. BRSB thanks CITA for
+supporting his internship in 2017 when this work was initi-
+ated. We also thank François Boulanger and François Lev-
+rier for their support and are grateful to Marcelo Alvarez
+for fruitful discussions and inputs. JRB also thanks Zhiqi
+Huang, Andrei Frolov, Connor Bevington, Martine Lokken,"
+"and Ronan Kerr for developing applications of the method-
+ology described here to a variety of projected 2D observables
+derived from large datasets, e.g., to cosmic microwave pri-
+mary anisotropies in the Planck and ACT maps and the
+primordial curvature oriented stacks derived from them, to
+superclustering in the thermal Sunyaev Zeldovich effect, to
+Line Intensity Mapping, and to Galactic dust filamentari-
+ness in the Planck maps."
+DATA AVAILABILITY
+The data underlying this article are available in the article.
+References
+"Abel T., Hahn O., Kaehler R., 2012, MNRAS, 427, 61"
+"Aragón-Calvo M. A., van de Weygaert R., Jones B. J. T., van der
+Hulst J. M., 2007, ApJ, 655, L5"
+"Aragón-Calvo M. A., van de Weygaert R., Jones B. J. T., 2010,"
+"MNRAS, 408, 2163"
+"Baldauf T., Codis S., Desjacques V., Pichon C., 2016, MNRAS,"
+"456, 3985"
+"Bardeen J. M., Bond J. R., Kaiser N., Szalay A. S., 1986, ApJ,
+304, 15"
+"Behroozi P. S., Wechsler R. H., Wu H.-Y., 2012, The Astrophys-"
+"ical Journal, 762, 109"
+"Blazek J. A., MacCrann N., Troxel M. A., Fang X., 2019, Phys.
+Rev. D, 100, 103506"
+"Bond J. R., Myers S. T., 1993, in Shull J. M., Thronson H. A.,"
+"eds, Evolution of Galaxies and their Environment. pp 21–22"
+"Bond J. R., Myers S. T., 1996a, The Astrophysical Journal Sup-"
+"plement Series, 103, 1"
+"Bond J. R., Myers S. T., 1996b, ApJS, 103, 41"
+"Bond J. R., Myers S. T., 1996c, ApJS, 103, 63"
+"Bond J. R., Cole S., Efstathiou G., Kaiser N., 1991, ApJ, 379,
+440"
+"Bond J. R., Kofman L., Pogosyan D., 1996, Nature, 380, 603"
+"Brunino R., Trujillo I., Pearce F. R., Thomas P. A., 2007, MN-
+RAS, 375, 184"
+"Cadiou C., Pontzen A., Peiris H. V., 2020, arXiv e-prints, p.
+arXiv:2012.02201"
+"Catelan P., Kamionkowski M., Blandford R. D., 2001, MNRAS,"
+"320, L7"
+"Chisari N., et al., 2016, MNRAS, 461, 2702"
+"MNRAS 000, 000–000 (0000)"
+"http://dx.doi.org/10.1111/j.1365-2966.2012.21754.x
+https://ui.adsabs.harvard.edu/abs/2012MNRAS.427...61A
+http://dx.doi.org/10.1086/511633
+http://cdsads.u-strasbg.fr/abs/2007ApJ...655L...5A
+http://dx.doi.org/10.1111/j.1365-2966.2010.17263.x
+https://ui.adsabs.harvard.edu/abs/2010MNRAS.408.2163A
+http://dx.doi.org/10.1093/mnras/stv2973
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.456.3985B
+http://dx.doi.org/10.1086/164143
+http://adsabs.harvard.edu/abs/1986ApJ...304...15B
+http://dx.doi.org/10.1088/0004-637x/762/2/109
+http://dx.doi.org/10.1088/0004-637x/762/2/109
+http://dx.doi.org/10.1103/PhysRevD.100.103506
+http://dx.doi.org/10.1103/PhysRevD.100.103506
+https://ui.adsabs.harvard.edu/abs/2019PhRvD.100j3506B
+http://dx.doi.org/10.1086/192268
+https://ui.adsabs.harvard.edu/abs/1996ApJS..103...41B
+http://dx.doi.org/10.1086/192269
+https://ui.adsabs.harvard.edu/abs/1996ApJS..103...63B
+http://dx.doi.org/10.1086/170520
+https://ui.adsabs.harvard.edu/abs/1991ApJ...379..440B
+https://ui.adsabs.harvard.edu/abs/1991ApJ...379..440B
+http://dx.doi.org/10.1038/380603a0
+http://adsabs.harvard.edu/abs/1996Natur.380..603B
+http://dx.doi.org/10.1111/j.1365-2966.2006.11282.x
+http://dx.doi.org/10.1111/j.1365-2966.2006.11282.x
+http://adsabs.harvard.edu/abs/2007MNRAS.375..184B
+https://ui.adsabs.harvard.edu/abs/2020arXiv201202201C
+https://ui.adsabs.harvard.edu/abs/2020arXiv201202201C
+http://dx.doi.org/10.1046/j.1365-8711.2001.04105.x
+http://adsabs.harvard.edu/abs/2001MNRAS.320L...7C
+http://dx.doi.org/10.1093/mnras/stw1409
+http://adsabs.harvard.edu/abs/2016MNRAS.461.2702C"
+"
+Clustering and alignments of peak patch haloes 17"
+"Codis S., Pichon C., Devriendt J., Slyz A., Pogosyan D., Dubois"
+"Y., Sousbie T., 2012, MNRAS, 427, 3320"
+"Codis S., et al., 2015a, MNRAS, 448, 3391"
+"Codis S., Pichon C., Pogosyan D., 2015b, MNRAS, 452, 3369"
+"Codis S., Pogosyan D., Pichon C., 2018a, MNRAS, 479, 973"
+"Codis S., Jindal A., Chisari N. E., Vibert D., Dubois Y., Pichon"
+"C., Devriendt J., 2018b, MNRAS, 481, 4753"
+"Cole S., Kaiser N., 1989, MNRAS, 237, 1127"
+"Crittenden R. G., Natarajan P., Pen U.-L., Theuns T., 2001, ApJ,
+559, 552"
+"Desjacques V., Jeong D., Schmidt F., 2018, Phys. Rep., 733, 1"
+"Falck B. L., Neyrinck M. C., Szalay A. S., 2012, ApJ, 754, 126"
+"Fortuna M. C., Hoekstra H., Joachimi B., Johnston H., Chis-"
+"ari N. E., Georgiou C., Mahony C., 2020, arXiv e-prints, p.
+arXiv:2003.02700"
+"Ganeshaiah Veena P., Cautun M., van de Weygaert R., Tempel"
+"E., Jones B. J. T., Rieder S., Frenk C. S., 2018, MNRAS, 481,"
+"Hahn O., Angulo R. E., 2016, MNRAS, 455, 1115"
+"Hahn O., Porciani C., Carollo C. M., Dekel A., 2007, MNRAS,
+375, 489"
+"Hilbert S., Xu D., Schneider P., Springel V., Vogelsberger M.,"
+"Hernquist L., 2017, MNRAS, 468, 790"
+"Joachimi B., Semboloni E., Bett P. E., Hartlap J., Hilbert S.,"
+"Hoekstra H., Schneider P., Schrabback T., 2013a, MNRAS,
+431, 477"
+"Joachimi B., Semboloni E., Hilbert S., Bett P. E., Hartlap J.,"
+"Hoekstra H., Schneider P., 2013b, MNRAS, 436, 819"
+"Joachimi B., et al., 2015, Space Sci. Rev., 193, 1"
+"Kac M., 1943, Bull. Am. Math. Soc., 49, 938"
+"Kaiser N., 1984, ApJ, 284, L9"
+"Kiessling A., et al., 2015, Space Sci. Rev., 193, 67"
+"Kirk D., Bridle S., Schneider M., 2010, MNRAS, 408, 1502"
+"Kirk D., et al., 2015, Space Sci. Rev., 193, 139"
+"Klypin A. A., Shandarin S. F., 1983, MNRAS, 204, 891"
+"Krause E., Eifler T., Blazek J., 2016, MNRAS, 456, 207"
+"Kurita T., Takada M., Nishimichi T., Takahashi R., Osato K.,"
+"Kobayashi Y., 2020, Monthly Notices of the Royal Astronom-
+ical Society, 501, 833–852"
+"Lee J., Pen U., 2000, ApJ, 532, L5"
+"Lee J., Hahn O., Porciani C., 2009, ApJ, 705, 1469"
+"Libeskind N. I., et al., 2018, MNRAS, 473, 1195"
+"Lippich M., et al., 2019, MNRAS, 482, 1786"
+"Matsubara T., Codis S., 2019, arXiv e-prints, p. arXiv:1910.09561"
+"Monaco P., 2016, Galaxies, 4, 53"
+"Monaco P., Theuns T., Taffoni G., 2002, MNRAS, 331, 587"
+"Oemler Augustus J., 1974, ApJ, 194, 1"
+"Osato K., Nishimichi T., Oguri M., Takada M., Okumura T.,"
+"2018, Monthly Notices of the Royal Astronomical Society,
+477, 2141–2153"
+"Patiri S. G., Cuesta A. J., Prada F., Betancort-Rijo J., Klypin"
+"A., 2006, ApJ, 652, L75"
+"Planck Collaboration I 2019, A&A, in press"
+"Pogosyan D., Bond J. R., Kofman L., 1998, J. R. Astron. Soc.
+Canada, 92, 313"
+"Pogosyan D., Pichon C., Gay C., Prunet S., Cardoso J. F., Sousbie
+T., Colombi S., 2009, MNRAS, 396, 635"
+"Ponce M., et al., 2019, arXiv e-prints, p. arXiv:1907.13600"
+"Ramachandran P., Varoquaux G., 2011, Computing in Science &"
+"Engineering, 13, 40"
+"Rice S. O., 1945, Bell System Tech. J., 25, 46"
+"Schaefer B. M., 2009, International Journal of Modern Physics D,
+18, 173"
+"Schneider M. D., Bridle S., 2010, MNRAS, 402, 2127"
+"Shandarin S. F., 2011, J. Cosmology Astropart. Phys., 2011, 015"
+"Smargon A., Mandelbaum R., Bahcall N., Niederste-Ostholt M.,"
+"2012, MNRAS, 423, 856"
+"Sousbie T., Colombi S., 2016, Journal of Computational Physics,"
+"321, 644"
+"Stein G., Alvarez M. A., Bond J. R., 2019, MNRAS, 483, 2236"
+"Stein G., Alvarez M. A., Bond J. R., van Engelen A., Battaglia"
+"N., 2020, arXiv e-prints, p. arXiv:2001.08787"
+"Tenneti A., Singh S., Mandelbaum R., Matteo T. D., Feng Y.,"
+"Khandai N., 2015, MNRAS, 448, 3522"
+"Trowland H. E., Lewis G. F., Bland-Hawthorn J., 2013, ApJ, 762,
+72"
+"Troxel M. A., Ishak M., 2015, Phys. Rep., 558, 1"
+"Velliscig M., et al., 2015, MNRAS, 454, 3328"
+"Vlah Z., Chisari N. E., Schmidt F., 2020, J. Cosmology Astropart."
+"Phys., 2020, 025"
+"Wadsley J. W., Bond J. R., 1997, in Clarke D. A., West M. J.,"
+"eds, Astronomical Society of the Pacific Conference Series Vol."
+"12, Computational Astrophysics; 12th Kingston Meeting on
+Theoretical Astrophysics. p. 332 (arXiv:astro-ph/9612148)"
+"Wang P., Kang X., 2017, MNRAS, 468, L123"
+"Wang P., Kang X., 2018, MNRAS, 473, 1562"
+"Zel’Dovich Y. B., 1970, A&A, 500, 13"
+"van Haarlem M., van de Weygaert R., 1993, ApJ, 418, 544"
+"van Uitert E., Joachimi B., 2017, MNRAS, 468, 4502"
+"van de Weygaert R., Bertschinger E., 1996, MNRAS, 281, 84"
+"van de Weygaert R., Bond J. R., 2008, Clusters and the Theory"
+"of the Cosmic Web. p. 335, doi:10.1007/978-1-4020-6941-3˙10"
+"APPENDIX A: ORIENTED STACKS OF PEAKS
+IN GAUSSIAN RANDOM FIELDS"
+"Let us consider a statistically homogeneous and isotropic
+Gaussian random field δL(r) (the linear density contrast)
+with zero mean and power spectrum Pk, where k is the mag-
+nitude of the comoving wavenumber. In this section, we will
+investigate how peaks of this matter density field cluster in
+the frame of the strain tensor. This is meant to be a toy
+model to explain the oriented stacks of haloes measured in
+peak patch simulations and described in the main text."
+A1 From mass-peak patches to overdensity peaks
+"As discussed and shown in BM1, in spite of the complex-
+ity of exclusion a surprisingly simple semi-analytic approx-
+imation for the number density of hierarchical mass-peaks
+works reasonably well compared with the full hierarchically
+merged numerical results, and we will use that for the il-
+lustration of how the main effects of exclusion and large
+scale anisotropic clustering emerge. The homogeneous ellip-
+soid dynamical model was described in Section 2. The col-
+lapse along all 3-axes to a final equilibrium can be translated
+to initial condition (linear) space, through a critical relation
+between δL and the anisotropic eigenvalues, νev and νpv:
+δL = δL,crit(ev, pv)."
+"At a given mass with top hat radius Rc, Mc ∝ R3c ,
+at the redshift in question, there are probability distribu-
+tions of δL(rc|Rc), ev(rc|Rc) and pv(rc|Rc) with mean val-
+ues 〈δL〉(rc|R), 〈ev〉(rc|R) and 〈pv〉(rc|R) and dispersions
+about those means, The BM1 semi-analytic approximation
+neglects pv, replaces ev by 〈ev〉(rc|Rc) and uses δL(rc|Rc) =
+δL,crit(〈ev〉). This also results in a function giving the cluster
+top-hat scale Rc(δL,crit, 〈ev〉). As the mass drops 〈ev〉 and
+δL,crit rise, the mass-peaks have greater initial anisotropy
+than high mass peaks. With this approximation mass is on
+average related to δL,crit, so the mass-peak finding criterion,"
+"MNRAS 000, 000–000 (0000)"
+"http://dx.doi.org/10.1111/j.1365-2966.2012.21636.x
+http://adsabs.harvard.edu/abs/2012MNRAS.427.3320C
+http://dx.doi.org/10.1093/mnras/stv231
+http://adsabs.harvard.edu/abs/2015MNRAS.448.3391C
+http://dx.doi.org/10.1093/mnras/stv1570
+http://adsabs.harvard.edu/abs/2015MNRAS.452.3369C
+http://dx.doi.org/10.1093/mnras/sty1643
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.479..973C
+http://dx.doi.org/10.1093/mnras/sty2567
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.481.4753C
+http://dx.doi.org/10.1093/mnras/237.4.1127
+https://ui.adsabs.harvard.edu/abs/1989MNRAS.237.1127C
+http://dx.doi.org/10.1086/322370
+http://cdsads.u-strasbg.fr/abs/2001ApJ...559..552C
+http://dx.doi.org/10.1016/j.physrep.2017.12.002
+https://ui.adsabs.harvard.edu/abs/2018PhR...733....1D
+http://dx.doi.org/10.1088/0004-637X/754/2/126
+https://ui.adsabs.harvard.edu/abs/2012ApJ...754..126F
+https://ui.adsabs.harvard.edu/abs/2020arXiv200302700F
+https://ui.adsabs.harvard.edu/abs/2020arXiv200302700F
+http://dx.doi.org/10.1093/mnras/sty2270
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..414G
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..414G
+http://dx.doi.org/10.1093/mnras/stv2304
+https://ui.adsabs.harvard.edu/abs/2016MNRAS.455.1115H
+http://dx.doi.org/10.1111/j.1365-2966.2006.11318.x
+http://cdsads.u-strasbg.fr/abs/2007MNRAS.375..489H
+http://dx.doi.org/10.1093/mnras/stx482
+http://adsabs.harvard.edu/abs/2017MNRAS.468..790H
+http://dx.doi.org/10.1093/mnras/stt172
+http://adsabs.harvard.edu/abs/2013MNRAS.431..477J
+http://dx.doi.org/10.1093/mnras/stt1618
+http://adsabs.harvard.edu/abs/2013MNRAS.436..819J
+http://dx.doi.org/10.1007/s11214-015-0177-4
+http://adsabs.harvard.edu/abs/2015SSRv..193....1J
+http://dx.doi.org/10.1086/184341
+http://adsabs.harvard.edu/abs/1984ApJ...284L...9K
+http://dx.doi.org/10.1007/s11214-015-0203-6
+http://adsabs.harvard.edu/abs/2015SSRv..193...67K
+http://dx.doi.org/10.1111/j.1365-2966.2010.17213.x
+http://adsabs.harvard.edu/abs/2010MNRAS.408.1502K
+http://dx.doi.org/10.1007/s11214-015-0213-4
+http://adsabs.harvard.edu/abs/2015SSRv..193..139K
+http://cdsads.u-strasbg.fr/abs/1983MNRAS.204..891K
+http://dx.doi.org/10.1093/mnras/stv2615
+http://adsabs.harvard.edu/abs/2016MNRAS.456..207K
+http://dx.doi.org/10.1093/mnras/staa3625
+http://dx.doi.org/10.1093/mnras/staa3625
+http://dx.doi.org/10.1088/0004-637X/705/2/1469
+https://ui.adsabs.harvard.edu/abs/2009ApJ...705.1469L
+http://dx.doi.org/10.1093/mnras/stx1976
+https://ui.adsabs.harvard.edu/abs/2018MNRAS.473.1195L
+http://dx.doi.org/10.1093/mnras/sty2757
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.482.1786L
+https://ui.adsabs.harvard.edu/abs/2019arXiv191009561M
+http://dx.doi.org/10.3390/galaxies4040053
+https://ui.adsabs.harvard.edu/abs/2016Galax...4...53M
+http://dx.doi.org/10.1046/j.1365-8711.2002.05162.x
+https://ui.adsabs.harvard.edu/abs/2002MNRAS.331..587M
+http://dx.doi.org/10.1086/153216
+https://ui.adsabs.harvard.edu/abs/1974ApJ...194....1O
+http://dx.doi.org/10.1093/mnras/sty762
+http://dx.doi.org/10.1086/510330
+http://adsabs.harvard.edu/abs/2006ApJ...652L..75P
+http://cdsads.u-strasbg.fr/abs/1998JRASC..92..313P
+http://dx.doi.org/10.1111/j.1365-2966.2009.14753.x
+http://adsabs.harvard.edu/abs/2009MNRAS.396..635P
+https://ui.adsabs.harvard.edu/abs/2019arXiv190713600P
+http://dx.doi.org/10.1142/S0218271809014388
+http://adsabs.harvard.edu/abs/2009IJMPD..18..173S
+http://dx.doi.org/10.1111/j.1365-2966.2009.15956.x
+http://adsabs.harvard.edu/abs/2010MNRAS.402.2127S
+http://dx.doi.org/10.1088/1475-7516/2011/05/015
+https://ui.adsabs.harvard.edu/abs/2011JCAP...05..015S
+http://dx.doi.org/10.1111/j.1365-2966.2012.20923.x
+http://adsabs.harvard.edu/abs/2012MNRAS.423..856S
+http://dx.doi.org/10.1016/j.jcp.2016.05.048
+https://ui.adsabs.harvard.edu/abs/2016JCoPh.321..644S
+http://dx.doi.org/10.1093/mnras/sty3226
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.483.2236S
+https://ui.adsabs.harvard.edu/abs/2020arXiv200108787S
+http://dx.doi.org/10.1093/mnras/stv272
+http://cdsads.u-strasbg.fr/abs/2015MNRAS.448.3522T
+http://dx.doi.org/10.1088/0004-637X/762/2/72
+http://adsabs.harvard.edu/abs/2013ApJ...762...72T
+http://adsabs.harvard.edu/abs/2013ApJ...762...72T
+http://dx.doi.org/10.1016/j.physrep.2014.11.001
+http://adsabs.harvard.edu/abs/2015PhR...558....1T
+http://dx.doi.org/10.1093/mnras/stv2198
+http://adsabs.harvard.edu/abs/2015MNRAS.454.3328V
+http://dx.doi.org/10.1088/1475-7516/2020/01/025
+http://dx.doi.org/10.1088/1475-7516/2020/01/025
+https://ui.adsabs.harvard.edu/abs/2020JCAP...01..025V
+http://arxiv.org/abs/astro-ph/9612148
+http://dx.doi.org/10.1093/mnrasl/slx038
+http://adsabs.harvard.edu/abs/2017MNRAS.468L.123W
+http://dx.doi.org/10.1093/mnras/stx2466
+http://adsabs.harvard.edu/abs/2018MNRAS.473.1562W
+https://ui.adsabs.harvard.edu/abs/1970A&A.....5...84Z
+http://dx.doi.org/10.1086/173416
+https://ui.adsabs.harvard.edu/abs/1993ApJ...418..544V
+http://dx.doi.org/10.1093/mnras/stx756
+http://adsabs.harvard.edu/abs/2017MNRAS.468.4502V
+http://dx.doi.org/10.1093/mnras/281.1.84
+https://ui.adsabs.harvard.edu/abs/1996MNRAS.281...84V
+http://dx.doi.org/10.1007/978-1-4020-6941-3_10"
+"
+18 B. Regaldo-Saint Blancard et al."
+1 2 3 4
+0 1 2 3 4 5
+separation / R
+"ξ
+p
+p
+ϵ"
+"major axis x
+minor axis z
+isotropic"
+Figure A1. Oriented correlation function of Gaussian peaks with height between 1.5 and 2.5 sigma for a power-law power spectrum
+"with spectral index ns = −2. Left-hand panel: Correlation function in the plane y = 0. Right-hand panel: Correlation function along
+the minor (z-axis) in cyan and major eigendirection (x-axis) of the shear in purple as labelled. For comparison, the isotropic correlation"
+function is shown with dashed lines.
+"∇M = 0, translates into a density-peak finding criterion,
+∇δL = 0. The position and mass delta function relations,
+r = rc and M = Mc, can be transformed into delta function
+relations for the δL:"
+"δ(r− rc)δ(lnM − lnMc)
+= det|∇∇ lnM |δ(∇ lnM)δ(lnM − lnMc)"
+"→ det|∇∇δL|δ(∇δL)|
+dδL"
+"d lnM
+|δ(δL − δL,crit) (A1)"
+"= np,op(ν|Rc)|
+dν"
+"d lnM
+|δ(ν − νcrit) ."
+"Here np,op(ν)dν is the conventional BBKS density-peak op-
+erator as a function of peak height ν = δL/σ0. (Whether
+one uses the conventional ρ/ρ̄ − 1 or ln ρ/ρ̄ for δL does not
+matter here in this fully linear regime.)"
+"The mass-Peak Patch algorithm, and halo finding gen-
+erally, is based on top hat filtering. The original BBKS peak
+description was more focused on Gaussian filtering, hence to
+relate to the well known BBKS paper we shall adopt Gaus-
+sian filtering in this appendix. Typically RTH = Rc ≈ 2RG
+is found in full peak patch simulations, with a small vari-
+ance around it, and this also follows from the analytic the-
+ory. Instead of determining RTH, BBKS adopted a relation
+M = ρ̄0(2π)"
+"3/2R3G that used the Gaussian volume which
+gives RTH = 1.56RG rather than the peak patch ≈ 2RG. For
+Gaussian filtering dδL/d lnM = R"
+"2δL/3 = R
+2
+Gσ2I1/3,"
+"where the spectral parameter σ22 =
+〈
+(∇2δL)2"
+"〉
+and the di-"
+"mensionless curvature variable I1 = ∇2δL/σ2 are famil-
+iar from BBKS. The approximate semi-analytic relation for
+the hierarchical peaks operator nhpk,op(r, lnMc)d"
+"3rd lnM is
+then expressible in terms of the BBKS peak density oper-
+ator np,op(r|RG, ν)d3rdν, where ν = δL/σ0 and σ20 = 〈δ2L〉,"
+"nhpk,op(rc, lnMc, qc) =
+σ2R"
+"3σ0
+I1np,op(rc, νcrit,c, qc), (A2)"
+"where qc can be an additional internal property of the haloes.
+In BBKS the determination of the one-point distribu-"
+"tion 〈npk〉(ν)dν of overdensity peaks was emphasized, but
+estimate of object numbers was done by integrating over
+a Prob(νth|ν) selection function of peaks above a thresh-
+old νth. Now with the peak patch theory we have a se-
+lection function Prob(νth|ν) = δ(ν − νcrit(Mc)). Selection
+functions may be a simple way to extend the analytics de-
+scribed here to take into account the spread of ν about
+νcrit(Mc) = 〈δL|Mc〉/σ0(Rc) for given Mc. However all the
+anisotropic variables would have their own selections, and
+all would have to be calibrated by the full peak patch simu-
+lations, especially relevant if clustering functions are the tar-
+get. In the next section we allow a range of ν for a specified
+mass which can be thought of as motivated by the spread
+about the mean νcrit(Mc))."
+"In these density distribution functions we carry along
+variables q, which include the original ones defined below,
+plus others fundamental to anisotropy and alignment stud-
+ies, in particular �′L,ij included in BM1 and BKP but which
+were not included in the original BBKS treatment. Just as
+ν and I1 are correlated (〈νI1〉 = −γ, γ = σ21/σ0σ2), so all
+components of anisotropic strain �′L,ij and anisotropic cur-
+vature ∇2�′L,ij = [∇i∇j Tr(�L)]"
+"′ are correlated. In particular
+〈I1|ν〉 ≈ −γν for large ν."
+"One might wonder how elements of exclusion enter into
+this semi-analytic framework since no exclusion operator de-
+pendent on higher mass peaks enter into this formula. Since
+peaks of the linear density field must be exactly νcritσ0(Rc),
+it is not that likely that there will be other peaks within
+radius Rc satisfying exactly this criterion. There are semi-"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 19
+"analytic approximations to half and full exclusion which are
+integrals over higher masses of npk〈I1|ν〉 that give an idea
+of what the further exclusion acting on the mass function is
+like, given the restrictions associated with the first upcross-
+ing peaks through νcrit."
+"Our target here is to explore semi-analytically the
+nhpk ∝ np approximation described above to make the two-
+point correlation of hierarchical peaks,"
+"〈nhpk,op(r1, R1, q1|C1)nhpk,op(r2, R2, q2|C2))〉, (A3)"
+tractable analytically.
+"A2 Gaussian statistics of the field and its
+derivatives"
+"We now expand the BBKS treatment of
+np,op(rc, νc, qc)d"
+"3rcdνcdqc to include the qc. Let us fo-
+cus on the field δL defined above smoothed over a scale R
+by a filter function W"
+"δL(r, R) ="
+"(2π)3
+δL(k)W (kR)e"
+"ik·r
+. (A4)"
+"In peak patches, the top hat form of W is used. BBKS em-
+phasized more the Gaussian form, which balances the spread
+in k space of the Fourier transform of W and the spread of
+W in x space."
+"Since we have translated the M = Mc criterion into a δL
+criterion using mean-field results, the mass-peak statistics
+are determined by the distribution of δL and its first and
+second derivatives (to define peaks using a constraint of zero
+gradient and negative curvatures). In addition, we will need
+the anisotropic parts of the strain tensor, or equivalently
+the tide ∇i∇jΦN , the second derivative of the gravitational
+potential ΦN , since in linear theory it is proportional to the
+strain, as noted in Section 2."
+"We shall mostly follow the normalized variable conven-
+tion used in Pogosyan et al. (2009); Codis et al. (2015b):
+φij = −�L,ij/σ0, x = Tr(φij) = δL/σ0, xk ≡ ∇kδL/σ1, and
+xkl ≡ ∇k∇lδL/σ2. The normalizations use their respective
+variances"
+"σ
+2
+i (R) ≡"
+"dkk
+2
+Pk(k)k"
+"2
+(kR) . (A5)"
+"Note that BBKS used ζij = −xkl and ηi = xi and ν for x.
+The catalogue of object information we are carrying is"
+"therefore C = {x, φij , xij , xi}, which amounts to 15 = 6 +
+6 + 3 variables in all. The displacement ∇−2∇i Tr(�L) adds
+3 extra variables to the list if we are interested in the linear
+velocity distribution - the velocities of peaks are reduced
+because of the correlation of the displacement and xi. In
+BM1 the general numerical peak patch catalogue also carried
+along the binding energy, which is a linear quantity. So the
+standard peak patch catalogue-object list has 20 variables,
+plus the position rc and mass scale Mc."
+"The joint two-point probability distribution function
+(PDF hereafter) of the set of 15 normalized fields X =
+{φij , xij , xi} and X′ = {φ′ij , x′ij , x′i} at two prescribed co-
+moving locations separated by a distance r is P(X,X′). For
+Gaussian initial conditions, this joint PDF is the multivari-"
+2.5<ν<3.5
+1.5<ν<2.5
+0 1 2 3 4
+"ξ
+p
+p
+ϵ"
+"Figure A2. Correlation function of Gaussian peaks of height
+between 1.5 and 2.5 sigma in red and 2.5 and 3.5 in purple for a"
+power law power spectrum with spectral index ns = −2.
+ate Normal
+"N (X,X′) =
+exp"
+"(
+X
+X′"
+")T
+·C−1 ·"
+"(
+X
+X′"
+")]
+det|C|1/2 (2π)15"
+", (A6)"
+"where C0 ≡ 〈X ·XT〉 and C× ≡ 〈X ·X′
+T〉 are the diagonal"
+and off-diagonal components of the covariance matrix
+"(
+C0 C×
+CT× C0"
+")
+. (A7)"
+"Because of statistical homogeneity the off-diagonal covari-
+ance depends only on the separation vector r. Equation (A6)
+is the only ingredient needed to compute the expectation
+value of any quantity involving the strain tensor, the den-
+sity gradient and second derivatives."
+A3 Peak clustering
+"In particular, equation (A6) can be used to compute the two-
+point correlation ξpp(r, ν) of overdensity peaks as a function
+of ν separated by r which is given by"
+"1 + ξpp(r, ν) ="
+"〈
+np(X)np(X"
+"np(X)
+〉2 , (A8)"
+"where the Klimontovich or “localized” density of peaks in
+three dimensions reads (Kac 1943; Rice 1945; Bardeen et al.
+1986)"
+"np(X)=−
+(
+σ2
+σ1"
+")3
+det(xij)δD(xi)δD(x− ν)ΘH(−λ3) , (A9)"
+"with λ1 < λ2 < λ3 the eigenvalues of the density hessian
+matrix, δD the Dirac delta function and ΘH the Heaviside
+step function. The dimensional factor (σ1/σ2)"
+"3 ensures that
+the ensemble average〈"
+"np(X)
+〉"
+"∫
+dX np(X)P(X), (A10)"
+"appearing in the denominator of equation (A8), is the mean
+number density of peaks in the band ν to ν+ dν for a given
+mass (Gaussian filtering scale)."
+Because of the constraint on the sign of the second
+"MNRAS 000, 000–000 (0000)"
+20 B. Regaldo-Saint Blancard et al.
+"0 1 2 3 4 5
+-4"
+separation / R
+"a
+l,
+m"
+"l=0 m=0
+l=2 m=0
+l=2 m=2
+l=4 m=0
+l=4 m=2
+l=4 m=4
+l=6 m=0
+l=6 m=2
+l=6 m=4
+l=6 m=6"
+"Figure A3. Oriented peak-peak correlation function for a Gaussian random field with spectral index ns = −2. Left-hand panel: Mollweide
+projection of the sphere at r = R (top panel) and r = 3R (bottom panel). The vertical axis is the major direction of the strain tensor,
+the minor direction corresponds to the two minima of the maps in dark blue while the intermediate direction corresponds to the saddle"
+"points at the centre of the maps and on the left and right edges. Right-hand panel: Decomposition of the oriented peak-peak correlation
+function onto spherical harmonics as a function of the separation."
+"derivatives, the peak two-point correlation cannot be com-
+puted analytically. Hence, we define the conditional proba-
+bility that xij and x"
+"′
+ij satisfy the PDF, subject to the con-"
+"dition that xi = x
+′
+i = 0 and x = x"
+"′ = ν and resort to
+Monte-Carlo methods in MATHEMATICA in order to eval-
+uate numerically equation (A8). Namely, we draw random
+numbers of dimension 12 from the conditional probability
+that xij and x"
+"′
+ij satisfy the PDF, subject to the condition"
+"that xi = x
+′
+i = 0 and x = x"
+′ = ν (using RandomVariate).
+"For each draw (k) if λ3(x
+(k)
+ij ) < 0 and λ3(x"
+"′(k)
+ij ) < 0, we keep"
+"the sample and evaluate det(x
+(k)
+ij )det(x"
+"′(k)
+ij ) and otherwise"
+"we drop it. Eventually,"
+"〈
+np(X)np(X"
+"′
+)
+〉
+≈"
+"[
+det(x"
+"(k)
+ij )det(x"
+"′(k)
+ij )"
+"]
+× P(x = x′ = ν, xi = x′i = 0) , (A11)"
+"where N is the total number of draws, and S is the subset of
+the indices of draws satisfying the constraints on the eigen-
+values. The same procedure can be applied to evaluate the
+denominator 〈np(X)〉. Equation (A8) then yields ξpp(r, ν).
+This algorithm is embarrassingly parallel. It is straightfor-
+ward to generalize it, for instance, to the computation of
+the correlation function ξpp(r,> ν) of peaks above a given
+threshold in density, or within a bin of rarity. Obviously, in
+those cases, the required number of draws is larger and in-
+creases with the value of the threshold (as the event x > ν
+becomes rarer) or the size of the bin."
+A4 Oriented stacks of peaks
+"Going one step further, the idea is now to also do the cal-
+culation in the frame of the tidal tensor φij , which can be"
+done by adding the constraint
+"BE(X) = 2π2(φ33 − φ22)(φ22 − φ11)(φ33 − φ11)δD(φ12)
+× δD(φ13)δD(φ23)ΘH(φ33 − φ22)ΘH(φ22 − φ11), (A12)"
+"which boils down to imposing the off-diagonal coefficients
+of the tidal tensor to be zero, the curvatures to be ordered
+and to adding the Jacobian of the transformation by means
+of the usual Vandermonde determinant (φ33 − φ22)(φ22 −
+φ11)(φ33−φ11) with an additional 2π2 due to the integration
+over the Euler angles."
+"As mentioned above, instead of using a delta-function
+at the mean 〈ν|Rc〉 = νcrit we use a range of ν with spread
+∆ν about the mean. The oriented two-point correlation
+ξEpp(r, ν,∆ν) of peaks in the range ν ±∆ν separated by r is
+then given by"
+"1 + ξ
+E
+pp(r, ν,∆ν) ="
+"〈
+BE(X)Np(X)Np(X′)"
+"〉
+〈BE(X)Np(X)〉 〈Np(X)〉"
+", (A13)"
+"where the“localized” density of peaks in the ν ± ∆ν range
+is"
+"Np(X)=−
+(
+σ2
+σ1"
+")3
+det(xij)δD(xi)ΘH(−λ3)"
+×ΘH(x− ν + ∆ν)ΘH(ν + ∆ν − x) . (A14)
+"Once again we undertake a Monte Carlo evaluation of this
+correlation function. We define the conditional probabil-
+ity that xij , φii, x"
+"′ and x′ij satisfy the PDF, subject to
+the condition that xi = x"
+"′
+i = 0 and φi 6=j = 0 and use"
+"the Monte-Carlo methods in MATHEMATICA to determine
+equation (A8) numerically. To do this we draw random num-
+bers of dimension 16 from the conditional probability that"
+"MNRAS 000, 000–000 (0000)"
+Clustering and alignments of peak patch haloes 21
+"xij , φii, x
+′ and x′ij satisfy the PDF, subject to the den-"
+"sity peak conditions xi = x
+′
+i = 0 and the φi 6=j = 0 strain"
+"eigenframe condition. For each draw (k) if λ3(x
+(k)
+ij ) < 0,"
+"λ3(x
+′(k)
+ij ) < 0, ν − ∆ν < x"
+"(k) < ν + ∆ν, ν − ∆ν < x′(k) <
+ν+∆ν and φ"
+"(k)
+11 < φ"
+"(k)
+22 < φ"
+"(k)
+33 , we keep the sample and eval-"
+"uate det(x
+(k)
+ij )det(x"
+"′(k)
+ij )(φ"
+"(k)
+33 −φ"
+"(k)
+22 )(φ"
+"(k)
+22 −φ"
+"(k)
+11 )(φ"
+"(k)
+33 −φ"
+"(k)
+11 );"
+"otherwise we drop that draw. Eventually,"
+"〈
+np(X)np(X"
+"′
+)
+〉
+≈"
+"(
+σ2
+σ1"
+")6
+P(xi = x′i = φi 6=j = 0)"
+"×
+∑
+k∈S"
+"det(x
+(k)
+ij )det(x"
+"′(k)
+ij )(φ"
+"(k)
+33−φ"
+"(k)
+22 )(φ"
+"(k)
+22−φ"
+"(k)
+11 )(φ"
+"(k)
+33−φ"
+"(k)
+11 ),"
+"where N is the total number of draws, and S is the subset of
+the indices of draws satisfying the constraints on the eigen-
+values. The same procedure can be applied to evaluate the
+two terms of the denominator. Equation (A8) then yields
+ξEpp(r, ν,∆ν)."
+"As an illustration, Fig. A1 shows the resulting oriented
+peak-peak correlation function ξEpp(r, ν,∆ν) for ν = 2 and
+∆ν = 0.5 in the case of a power law power spectrum with
+spectral index ns = −2. For simplicity, we only show here
+the slice corresponding to y = 0 on the left-hand panel and
+the correlation function along the major (cyan) and minor
+(purple) axis on the right-hand panel. For comparison, we
+also compute the isotropic peak-peak correlation function
+and display it on the same plot with black dashed lines.
+In this case, we used 170 millions draws of the fields per
+spatial location. Interestingly, the result of this calculation
+is qualitatively quite similar to the oriented halo cluster-
+ing in Lagrangian space obtained in Fig. 4. Peaks cluster
+along the major axis of the strain tensor mostly between
+3 and 4 smoothing lengths from the central object which
+is surrounded by an exclusion zone. Although qualitatively
+correct, we cannot expect this simple model to be quanti-
+tatively correct. It depends significantly on the distribution
+of peak heights we have chosen, hence on the mass. For in-
+stance, as can be seen in Fig. A2, high peaks tend to be
+more biased and more clustered. The size of the exclusion
+zone is also sensitive to the width of the height distribution.
+To go a step further we can cover the entire full mass range
+in the correlations by taking into account the specific ris-
+ing forms of δL,crit(M) and the M -dependent spread about
+it with dropping M , as determined most accurately by fits
+to these distributions in the peak patch simulations, or with
+analytic approximations to such. Here the large mass asymp-
+totic δL,crit(M) ≈ 1.7 was used. The nhpk formula also has
+an extra Tr(xij) multiplier, restricted to being of one sign
+because the piercing of the mass boundary first occurs from
+lower to higher M , an upcrossing constraint on the hierar-
+chical peak patch trajectories. This is a familiar condition
+in the excursion-set treatments. An important extension is
+to use Top Hat rather than Gaussian filtering to better cor-
+respond to what the peak patch code does. Since the peak
+patch simulation is in fact a Monte Carlo method for com-
+puting quantities precisely, and it automatically take all ef-
+fects into account, and more, it is better to just use the ex-
+tremely large number of Lagrangian halo samples, possibly
+from multiple large boxes, to determined the correlations.
+Thus that is what we have done in the body of the paper."
+"The analytic Monte Carlo formalism presented here also
+allows us to understand better the spherical harmonic de-"
+"composition of the 3D oriented peak-peak correlation func-
+tion. This is illustrated on the right-hand panel of Fig. A3
+for a few separations. We also display on the left-hand panel
+the Mollweide projection of the oriented peak-peak correla-
+tion function at separation one and three smoothing lengths.
+The structure we find is quite similar to what was found for
+peak patch haloes in the main text. At small separation,
+the monopole is negative because there is an exclusion zone,
+and all the other harmonics are negligible there because the
+peak is locally close to isotropic (especially so for rare high
+mass peaks). Then there is an increase with increasing sep-
+aration as the anisotropic cosmic web starts to play a role.
+The signal is largely dominated by the quadrupole as ex-
+pected (due to the main filament) and it peaks at about 3
+smoothing lengths – which corresponds to the typical sepa-
+ration between the peaks – before decreasing for large sepa-
+rations. Other harmonics up to l = 6 appear but the signal
+clearly diminishes with the order of the harmonics. Directly
+below the (2, 0) harmonics comes the (2, 2) and (4, 0) terms
+which characterise the anisotropy due to the intermediate
+(i.e wall) direction and the bifurcation of filaments. Follow-
+ing the isotropic case (see Desjacques et al. 2018, for a re-
+view), one could derive analytically the large separation bias
+expansion in this case. This is however beyond the scope of
+this paper."
+APPENDIX B: SPHERICAL HARMONICS
+"Fig. B1 shows Mollweide representations of the first spher-
+ical harmonics. The major direction is along the vertical
+axis, the intermediate direction crosses the centre and the
+left and right edges, and the minor direction passes through
+(θ = π/2, ϕ = ±π/2) points."
+"MNRAS 000, 000–000 (0000)"
+22 B. Regaldo-Saint Blancard et al.
+"Figure B1. Representation of the first spherical harmonics, real and imaginary parts as labelled. θ = 0 (respectively θ = π) corresponds"
+"to the North (South) pole, (θ = π/2, ϕ = 0) is at the center of the projections, and ϕ values increase from left to right."
+"MNRAS 000, 000–000 (0000)"
+"
+	1 Introduction
+	2 A statistical description for haloes
+	2.1 Reduced phase space
+	2.2 Halo Tides, Strain and Shear
+	2.3 Multi-point Correlation Functions and the Cosmic Web Structure
+	2.4 The mass-Peak Patch method
+	2.5 Characteristics of the simulation"
+"	3 Orientation of haloes in the peak patch picture
+	3.1 Visualisation of haloes intrinsic alignment
+	3.2 Isotropic clustering of haloes
+	3.3 Halo clustering in the strain eigenframe
+	3.4 Oriented stacks with symmetry-breaking
+	3.5 Alignment of the strain tensors
+	3.6 Orientated stacks in projection"
+"	4 Discussion and conclusion
+	A Oriented stacks of peaks in Gaussian random fields
+	A1 From mass-peak patches to overdensity peaks
+	A2 Gaussian statistics of the field and its derivatives
+	A3 Peak clustering
+	A4 Oriented stacks of peaks"
+	B Spherical Harmonics

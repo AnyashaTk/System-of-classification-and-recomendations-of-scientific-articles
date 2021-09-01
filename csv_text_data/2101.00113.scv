@@ -1,0 +1,4109 @@
+0
+"Cosmological inference from emulator based halo model I: Validation tests with HSC
+and SDSS mock catalogs"
+"Hironao Miyatake,1, 2, 3, ∗ Yosuke Kobayashi,3, 4 Masahiro Takada,3, † Takahiro Nishimichi,5, 3 Masato Shirasaki,6, 7"
+"Sunao Sugiyama,3, 4 Ryuichi Takahashi,8 Ken Osato,9 Surhud More,10, 3 and Youngsoo Park3"
+"1Institute for Advanced Research, Nagoya University, Nagoya 464-8601, Japan
+2Division of Particle and Astrophysical Science, Graduate School of Science, Nagoya University, Nagoya 464-8602, Japan"
+"3Kavli Institute for the Physics and Mathematics of the Universe (WPI),
+The University of Tokyo Institutes for Advanced Study (UTIAS),"
+"The University of Tokyo, Chiba 277-8583, Japan
+4Physics Department, The University of Tokyo, Bunkyo, Tokyo 113-0031, Japan"
+"5Center for Gravitational Physics, Yukawa Institute for Theoretical Physics, Kyoto University, Kyoto 606-8502, Japan
+6National Astronomical Observatory of Japan, Mitaka, Tokyo 181-8588, Japan
+7The Institute of Statistical Mathematics, Tachikawa, Tokyo 190-8562, Japan"
+"8Faculty of Science and Technology, Hirosaki University,
+3 Bunkyo-cho, Hirosaki, Aomori 036-8561, Japan"
+"9Institut d’Astrophysique de Paris, Sorbonne Université, CNRS,
+UMR 7095, 98bis boulevard Arago, 75014 Paris, France"
+"10The Inter-University Centre for Astronomy and Astrophysics, Post bag 4, Ganeshkhind, Pune 411007, India
+(Dated: January 5, 2021)"
+"We present validation tests of emulator-based halo model method for cosmological parameter
+inference, assuming hypothetical measurements of the projected correlation function of galaxies,
+wp(R), and the galaxy-galaxy weak lensing, ∆Σ(R), from the spectroscopic SDSS galaxies and the
+Hyper Suprime-Cam Year1 (HSC-Y1) galaxies. To do this, we use Dark Emulator developed
+in Nishimichi et al. based on an ensemble of N -body simulations, which is an emulation pack-
+age enabling a fast, accurate computation of halo clustering quantities (halo mass function, halo
+auto-correlation and halo-matter cross-correlation) for flat-geometry cold dark matter cosmologies.
+Adopting the halo occupation distribution, the emulator allows us to obtain model predictions of ∆Σ
+and wp for the SDSS-like galaxies at a few CPU seconds for an input set of parameters. We present
+performance and validation of the method by carrying out Markov Chain Monte Carlo analyses of
+the mock signals measured from a variety of mock catalogs that mimic the SDSS and HSC-Y1 galax-
+ies. We show that the halo model method can recover the underlying true cosmological parameters
+to within the 68% credible interval, except for the mocks including the assembly bias effect (although
+we consider the unrealistically-large amplitude of assembly bias effect). Even for the assembly bias
+mock, we demonstrate that the cosmological parameters can be recovered if the analysis is restricted
+to scales R & 10 h−1Mpc (i.e., if the information on the average mass of halos hosting SDSS galaxies
+inherent in the 1-halo term of ∆Σ is not included). We also show that, by using a single population
+of source galaxies to infer the relative strengths of ∆Σ for multiple lens samples at different redshifts,
+the joint probes method allows for self-calibration of photometric redshift errors and multiplicative
+shear bias. Thus we conclude that the emulator-based halo model method can be safely applied
+to the HSC-Y1 dataset, achieving a precision of σ(S8) ' 0.04 after marginalization over nuisance
+parameters such as the halo-galaxy connection parameters and the photo-z error parameter, and
+our method is complementary to methods based on perturbation theory."
+I. INTRODUCTION
+"Wide-area imaging galaxy surveys offer exciting op-
+portunities to address the fundamental questions in cos-
+mology such as the nature of dark matter and the origin
+of cosmic acceleration [1]. The current-generation imag-
+ing surveys such as the Subaru Hyper Suprime-Cam [2]
+[HSC 3–5], the Dark Energy Survey [6] [DES 7], and the
+Kilo-Degree Survey [KiDS 8] have succeeded in using ac-
+curate measurements of weak gravitational lensing effects
+to obtain tight constraints on cosmological parameters."
+"∗ hironao.miyatake@iar.nagoya-u.ac.jp
+† masahiro.takada@ipmu.jp"
+"Interestingly, the cosmological model inferred from these
+large-scale structure probes show the so-called σ8- or S8-
+tension [e.g. 4, 9] compared with cosmological models
+inferred from the Planck cosmic microwave background
+(CMB) measurement [10], perhaps indicating a signature
+beyond the standard cosmological model, i.e. the flat-
+geometry ΛCDM model [e.g. 9]. Upcoming galaxy sur-
+veys such as the Subaru Prime Focus Spectrograph [11]
+[12], the Dark Energy Spectrograph Instrument [13], the
+VRO Legacy Survey of Space and Time [14], the ESA
+Euclid [15] and the NASA Roman Space Telescope [16]
+[17] are expected to deliver a decisive conclusion on the
+possible tension and also revolutionize our understanding
+of the Universe."
+"Main challenges of large-scale structure probes lie in
+uncertainty in galaxy bias, which refers to unknown re-"
+"mailto:hironao.miyatake@iar.nagoya-u.ac.jp
+mailto:masahiro.takada@ipmu.jp"
+"lation between the distributions of matter and galaxies
+in large-scale structure [18, 19]. Since physical processes
+inherent in formation and evolution of galaxies are still
+difficult to accurately model from the first principles, we
+need both observational and theoretical approaches to
+tackle the galaxy bias uncertainty in order for us to ob-
+tain “unbiased” and “precise” estimation of the under-
+lying cosmological parameters from large-scale structure
+observables."
+"For observational approach, joint probes cosmology of-
+fers a promising way to mitigate the impact of galaxy
+bias uncertainty on cosmology inference [7, 8, 20–26].
+In particular, galaxy-galaxy weak lensing, obtained by
+cross-correlating positions of foreground (lens) galaxies
+with shapes of background galaxies, can be used to in-
+fer the average mass distribution around lens galaxies.
+A combination of galaxy-galaxy weak lensing with auto-
+correlation function of the same sample of galaxies as the
+lens galaxies can be used to observationally disentangle
+the galaxy bias and the correlation function of the under-
+lying matter distribution from the measured clustering
+signal of galaxies."
+"On theory side, there are mainly two empirical ap-
+proaches to tackle the galaxy bias uncertainty. First
+one is a model based on perturbation theory (PT) of
+large-scale structure [27, 28]. As long as only the large-
+scale information of clustering observables in the linear or
+quasi-nonlinear regime is used and nuisance parameters
+to model galaxy bias are introduced, such a PT-based
+method is expected to serve as an “accurate” theoreti-
+cal template of galaxy clustering [26, 29–31]. Accuracy
+here refers to the fact that a PT model can reproduce
+the observed clustering correlation of galaxies by varying
+the bias parameters, down to a certain scale still in the
+quasi-nonlinear regime, where PT is valid. An advantage
+of this method is that the model can be used for any type
+of galaxies, because PT is formulated based on properties
+of gravity and primordial fluctuations [32] and the free
+bias parameters absorb large-scale clustering properties
+of galaxies irrespective of galaxy types. A price to pay is
+that the method breaks down at scales below a certain
+nonlinear scale, and cannot be used to extract cosmolog-
+ical information from the small-scale clustering signals,
+which generally carry higher signal-to-noise ratios than
+in the large scales."
+"An alternative theoretical method is the halo model
+approach [33–36]. Halos are places where galaxies likely
+form, and clustering properties of halos are relatively
+well understood, on both analytical approach and N -
+body simulations [37]. Then an empirical model such as
+the halo occupation distribution (HOD) method [38, 39]
+can be used to connect halos to galaxies. An advan-
+tage of this method is that it would allow one to use the
+small-scale information in cosmology inference, thereby
+yielding tighter constraints on cosmological parameters.
+However, a danger is that, if the model is not sufficiently
+accurate nor flexible enough to capture the complicated
+galaxy-scale physics, the method might lead to a signifi-"
+"cant bias in cosmological parameters, more than the sta-
+tistical credible interval. A worst-case scenario is that
+one might claim a wrong cosmology, e.g. a time-varying
+dark energy model, from a given dataset due to the in-
+accurate theoretical templates."
+"Hence, the purpose of this paper is to assess perfor-
+mance and limitation of the halo model method for cos-
+mology inference. To do this, we use the Dark Emula-
+tor developed in Nishimichi et al. [40], which enables a
+fast, accurate computation of halo clustering quantities
+(halo mass function, halo auto-correlation function and
+halo-matter cross-correlation) for an input set of cosmo-
+logical parameters within flat-geometry wCDM frame-
+work with adiabatic Gaussian initial conditions. The
+Dark Emulator is particularly useful for our halo model
+approach, as it enables accurate predictions for the clus-
+tering quantities well into the non-linear regime and
+thereby allows us to make robust use of the cosmolog-
+ical information from small scales. We combine Dark
+Emulator with the HOD model to make model pre-
+dictions of the projected correlation functions of galax-
+ies, wp(R) and the galaxy-galaxy weak lensing, ∆Σ(R),
+that mimic those measured from the spectroscopic SDSS
+DR11 galaxies [41] and the HSC Year1 (HSC-Y1) galaxies
+[42]. More precisely, we consider mock galaxies of LOWZ
+and CMASS galaxies in the redshift range 0.15 . z . 0.7
+for the spectroscopic galaxies in the wp measurement and
+for the lens sample in ∆Σ, and then consider mock galax-
+ies of the deep HSC-Y1 data for the background galaxy
+sample in ∆Σ. We use a variety of mock catalogs for the
+SDSS galaxies to assess performance and limitation of the
+halo model method for cosmology inference, including a
+mock where we implement an extreme version of galaxy
+assembly bias [43]. Here we quantify the performance by
+studying whether the halo model method can recover the
+cosmological parameters employed in the mock catalogs,
+after marginalization over the halo-galaxy connection pa-
+rameters – hereafter we will often refer to this exercise
+as cosmology challenges. Moreover, following Oguri and
+Takada [21], we assess the ability of our method to per-
+form self-calibration of photometric redshift errors and
+multiplicative bias error for the joint probes cosmology.
+Those errors are among the most important, systematic
+errors for weak lensing cosmology, and we show below
+that the method allows for an accurate self-calibration
+of the errors, i.e. a robust estimation of cosmological
+parameters mitigating the impact of the systematic er-
+rors. This paper gives a validation of the halo model
+methodology for cosmology inference that we are plan-
+ning to carry out with the actual SDSS and HSC datasets
+(Miyatake et al. in preparation). The results of this pa-
+per are also compared to those of the companion paper,
+Sugiyama et al. [26], which used a perturbation theory in-
+spired method and was validated against the same mock
+catalogs."
+"The structure of this paper is as follows. In Section II
+we briefly review the halo model for wp and ∆Σ and dis-
+cuss the methodology of how cosmological parameters"
+"can be estimated from the clustering observables. In
+Section III we describe details of N -body simulations, the
+halo catalogs, the mock catalogs of SDSS and HSC galax-
+ies, and Dark Emulator. In Section IV we describe
+our strategy for assessing performance and limitation of
+the halo model method, i.e. cosmology challenges done
+from the comparison of the halo model with the mock
+signals. In Section V, we show the main results of this
+paper. Section VI is devoted to conclusion and discus-
+sion. Throughout this paper, unless otherwise stated, we
+employ the flat-geometry Planck cosmology as a target
+cosmology for cosmology challenges and as a fiducial cos-
+mology when we compute cosmological dependences of
+observables. The model is characterized by Ωm = 0.3156
+(the present-day matter density parameter), h = 0.672
+and σ8 = 0.831, respectively, and we adopt the units of
+c = 1 for the speed of light."
+II. THEORY
+"In this paper we focus on two observables that are ob-
+tained from imaging and spectroscopic data of galaxies
+in the overlapping regions of the sky. One is the galaxy-
+galaxy weak lensing that can be measured by stacking
+shapes of background galaxies around a sample of fore-
+ground lensing galaxies. Here we assume that the back-
+ground galaxy sample is taken from the Subaru HSC im-
+ages, while the foreground lensing galaxies are from the
+SDSS spectroscopic galaxies. The other is the projected
+correlation function of the spectroscopic galaxies that are
+from the same population of galaxies used as lens (fore-
+ground) galaxies in the galaxy-galaxy weak lensing."
+"A. Observables: galaxy-galaxy weak lensing and
+projected auto-correlation function"
+"Galaxy-galaxy weak lensing [24, 44] probes the aver-
+aged excess surface mass density profile, ∆Σ, around the
+lensing (foreground) galaxies that is given in terms of the
+surface mass density profile, Σgm(R), as"
+"∆Σ(R; zl) = 〈Σgm〉(< R)− Σgm(R)
+= Σcrit(zl, zs) γ+(R)|R=χl∆θ , (1)"
+"where γ+ is the average tangential shear of background
+galaxies in the circular annulus of projected centric ra-
+dius R from the foreground galaxies, and χl is the comov-
+ing angular diameter distance to each foreground galaxy.
+Note that background galaxy shapes are averaged over
+all the pairs of foreground-background galaxies in the
+same projected separation R, not the angular separation
+∆θ, even when the lensing galaxies have a redshift dis-
+tribution. 〈Σgm〉(< R) is the average surface mass den-
+sity within a circular aperture of radius R, defined as"
+"〈Σgm〉(< R) ≡ 1/(πR2)
+∫ R"
+"0
+2πR′dR′ Σgm(R"
+"′). Σcrit is
+the critical surface mass density that describes a lensing"
+"efficiency for pairs of foreground/background galaxies as
+a function of their redshifts, and is defined as"
+"Σcrit(zl, zs) ≡
+χs(zs)"
+"4πGχls(zl, zs)χl(zl)(1 + zl)
+, (2)"
+"where χs and χls are the comoving angular diameter dis-
+tances to each source galaxy and between source and lens
+galaxies in each pair, respectively. The factor (1 + zl) is
+due to our use of the comoving coordinates. In practice
+we need to take into account the redshift distributions
+of lens and source galaxies that are straightforward to
+include, e.g. following the method in Ref. [24]."
+"The surface mass density profile around lensing galax-
+ies, Σgm(R), is given in terms of the three-dimensional
+galaxy-matter cross-correlation function as"
+Σgm(R; zl) = ρ̄m0
+"∫ ∞
+−∞"
+dπ ξgm
+"(√
+π2 +R2; zl"
+"where ρ̄m0 is the mean mass density today, ξgm(r) is the
+three-dimensional cross-correlation function between the
+galaxies and matter, and π is the separation along the
+line-of-sight direction, and R is the projected separation
+perpendicular to the line-of-sight direction. Here we ig-
+nored the contribution from the background mean mass
+density because it is not relevant for weak lensing observ-
+ables [compared to Eq. 3 in Ref. 26]. Fourier-transformed
+counterpart of ξgm(r) is the galaxy-matter cross power
+spectrum, Pgm(k), defined as"
+"ξgm(r; zl) ≡
+∫ ∞"
+"2π2
+Pgm(k; zl)j0(kr), (4)"
+"where j0(x) is the zero-th order spherical Bessel function.
+Hereafter we omit the redshift of the lensing galaxies, zl,
+in the argument of the correlation functions for nota-
+tional simplicity. Throughout this paper we assume a
+distant observer approximation for computations of pro-
+jected correlation functions. In other words, we ignore
+the effects of curved sky for definitions of separations
+along or perpendicular to the line-of-sight direction. The
+excess surface mass density profile is given in terms of
+the galaxy-matter cross power spectrum as"
+∆Σgm(R) ≡ 〈Σgm〉(< R)− Σgm(R)
+= ρ̄m0
+"2π2
+Pgm(k)J2(kR), (5)"
+"where J2(x) is the 2nd-order Bessel function.
+To obtain the theoretical template of ∆Σ(R) for a given"
+"cosmological model within the flat ΛCDM framework, we
+use Dark Emulator, developed in Ref. [40], that en-
+ables accurate and fast computations of halo statistical
+quantities; the halo mass function, the halo-matter cross-
+correlation function and the halo-auto correlation func-
+tion as a function of redshift, halo masses, and separa-
+tions for an input cosmological model. As demonstrated"
+"in Ref. [40], the emulator outputs the predictions to bet-
+ter than a few percent in the fractional amplitude over
+scales of separations we are interested in."
+"However, the emulator does not take into account the
+effects of baryonic physics, and this is a limitation we
+should keep in mind. Nevertheless we do not think this
+limitation causes a catastrophic failure of our approach
+due to the following reasons. The baryonic physics is lo-
+cal in the sense that it affects the matter distribution at
+scales smaller than a maximum scale, denoted as R∗. For
+example, even if we consider a violent effect of the AGN
+feedbacks, it would affect the mass distribution around
+halos up to a few Mpc at maximum. As nicely discussed
+in Refs. [45, 46], we can safely consider that the bary-
+onic effect causes a “redistribution” of matter at r . R∗
+around galaxies, and does not alter the mass distribution
+at r & R∗ (r is the three-dimensional radius from the cen-
+ter of galaxy). In other words, even in the presence of
+the baryonic physics, the mass conservation at r . R∗
+holds. Keeping this in mind, we can say that Dark Em-
+ulator, as designed, can accurately model the matter
+distribution at r & R∗ around the host halos of galaxies,
+and also satisfies the mass conservation to within r ' R∗,
+even though Dark Emulator ceases to accurately pre-
+dict the mass profile at r . R∗."
+"Based on the above consideration, we can rewrite the
+lensing profile (Eq. 5) as"
+∆Σ(R) = 〈Σgm〉(< R)− Σgm(R)
+"=
+M(< R∗)"
+"∫ R
+R∗"
+"R′dR′ Σgm(R
+′)− Σgm(R)."
+"In the second line on the r.h.s., we used the relation"
+"M(< R∗) ≡
+∫ R∗"
+"0
+2πR′dR′ Σgm(R"
+"′), where M(< R∗) is
+the mass interior of a circular aperture of radius R∗. The
+second term is the contribution over the range of [R∗, R]
+to the average mass density. As long as we focus on the
+lensing profiles at R ≥ R∗, Dark Emulator can accu-
+rately predict the lensing profile, including the interior
+mass at the aperture of R ' R∗. On the other hand, we
+need to introduce various nuisance parameters to model
+the lensing “profile” at R ≤ R∗, if the information is in-
+cluded, and then marginalize over the parameters when
+estimating the interior mass M(< R∗) and performing
+cosmology inference."
+"Another clustering observable we use is the projected
+auto-correlation function for spectroscopic galaxy sam-
+ple that is the same sample used as lens (foreground)
+galaxies in the galaxy-galaxy weak lensing measurement.
+The projected correlation function is defined by a line-of-
+sight projection of the three-dimensional auto-correlation
+function of galaxies, ξgg(r), as"
+"wp(R) ≡ 2
+∫ πmax"
+dΠ ξgg
+"(√
+R2 + Π2"
+")
+, (7)"
+"where πmax is the length of the line-of-sight projection.
+Note that the projected correlation function has the unit"
+"of [h−1Mpc]. Throughout this paper, unless explicitly
+stated, we employ πmax = 100 h"
+"−1Mpc as our default
+choice. Also notice that ξgg(r) is given in terms of the
+auto-power spectrum of the galaxy number density field,
+Pgg, as"
+ξgg(r) =
+k2dk/(2π2) Pgg(k)j0(kr). (8)
+"The projected correlation function is not sensitive to the
+redshift-space distortion (RSD) effect due to peculiar ve-
+locities of galaxies, if a sufficiently large projection length
+(πmax) is taken [see Fig. 6 in Ref. 47]. The RSD effect
+itself is a useful cosmological probe, but its use requires
+an accurate modeling [43, 48], which is not straightfor-
+ward. Hence, the projected correlation function makes it
+somewhat easier to compare with theory in a cosmolog-
+ical analysis. In the following, we ignore the RSD effect
+in most cases of our cosmology challenges, but will sepa-
+rately discuss the impact of the RSD effect in parameter
+estimation."
+"B. Theoretical template: Dark Emulator
+implementation of halo model"
+"In this section we describe details of the halo model
+implementation to make model predictions for the ob-
+servables ∆Σ(R) and wp(R). As can be found around
+Eqs. (5) and (7), we need the real-space cross-power spec-
+trum of galaxies and matter Pgm(k; z), and the real-space
+auto-power spectrum of galaxies, Pgg(k; z), as a function
+of cosmological models to compute the observables."
+1. Halo Occupation Distribution
+"In the halo model we assume that all matter is asso-
+ciated with halos, and the correlation function of matter
+is given by the contributions from pairs of matter in the
+same halo and those in two different halos, which are
+referred to as the 1- and 2-halo terms, respectively. To
+connect halos to galaxies in a given sample, we employ
+the halo occupation distribution [HOD 34, 36, 38]. The
+HOD model gives the mean number of central and satel-
+lite galaxies in halos of mass M as"
+"〈N〉(M) = 〈Nc〉(M) + 〈Ns〉(M), (9)"
+"where 〈 〉(M) denotes the average of a quantity for halos
+of mass M ."
+"We employ the mean HOD for central galaxies, given
+as"
+"〈Nc〉(M) =
+1"
+"[
+1 + erf"
+"(
+logM − logMmin"
+")]
+, (10)"
+"where erf(x) is the error function and Mmin and σlogM
+are model parameters."
+"For the mean HOD of satellite galaxies, we employ the
+following form:"
+"〈Ns〉(M) ≡ 〈Nc〉(M)λs(M) = 〈Nc〉(M)
+(
+M − κMmin"
+"where κ,M1 and α are model parameters, and we have in-
+troduced the notation λs(M) = [(M−κMmin)/M1]α. For
+our default prescription we assume that satellite galaxies
+reside only in a halo that already hosts a central galaxy.
+This means Nc = 1 for such halos. Then we assume
+that the number of satellite galaxies in halos of mass
+M follows the Poisson distribution with mean λs(M);
+Prob(Ns) = (λs)"
+"Ns exp(−λs)/Ns! for halos that host a
+central galaxy inside, and Prob(Ns) = δ"
+"K
+Ns,0"
+for halos that
+"do not host a central galaxy, where δKij is the Kronecker
+delta function. Under these assumptions, the mean num-
+ber of galaxy pairs living in the same halo with mass M ,
+which is relevant for the 1-halo term, can be computed
+as"
+"〈N(N − 1)〉 = 〈Nc〉 〈N(N − 1)〉|Nc=1
++ (1− 〈Nc〉) 〈N(N − 1)〉|Nc=0"
+"= 〈Nc〉 [〈(Nc +Ns)(Nc +Ns − 1)〉]Nc=1
+= 〈Nc〉"
+"[〈
+N2s
+〉"
+"+ 〈Ns〉
+]"
+"= 〈Nc〉
+[
+2λs + λ"
+"]
+. (12)"
+"where we have used the fact N = 0 for halos which have
+no central galaxy for our default prescription."
+"We have 5 model parameters, {Mmin, σlogM , κ,M1, α},
+to characterize the central and satellite HODs in total for
+each galaxy sample for a given cosmological model."
+"Once the HOD model is given, the mean number den-
+sity of galaxies in a sample is given as"
+"dnh
+dM"
+"[〈Nc〉(M) + 〈Ns〉(M)] , (13)"
+"where dnh/dM is the halo mass function which gives the
+mean number density of halos in the mass range [M,M+
+dM ]. In the following we use “blue” fonts to denote a
+quantity that can be supplied by Dark Emulator. In
+the above case we use Dark Emulator to compute the
+halo mass function for wCDM cosmology, while we input
+the HOD model, as described, to compute the galaxy
+number density."
+2. Galaxy-galaxy weak lensing profile
+"As we described above, the galaxy-galaxy weak lensing
+arises from the cross-correlation of (spectroscopic) lens-
+ing galaxies with the surrounding matter distribution in
+large-scale structure, ξgm(r; zl). Hence we need to model
+ξgm(r) as a function of the parameters of halo-galaxy
+connection and cosmological parameters."
+"0
+6
+M
+�"
+central
+central w/offset
+satellite
+100 101 102
+R [h−1Mpc]
+"p
+[h
+−"
+1-halo cen-sat
+1-halo sat-sat
+2-halo cen-cen
+2-halo cen-sat
+2-halo sat-sat
+"FIG. 1. Break down of different contributions to the galaxy
+weak lensing profile (∆Σ(R); upper panel) and the projected
+correlation function of galaxies (wp; lower) for the SDSS
+LOWZ-like galaxies at z = 0.251, which are computed us-
+ing Dark Emulator and our model ingredients of the halo-
+galaxy connection for the Planck cosmology. For illustrative
+purpose we multiply each observable by R so that their dy-
+namic range (y-axis) becomes narrower. Upper panel: The
+dashed line shows a contribution arising from the cross-
+correlation of central galaxies with the surrounding matter
+distribution, while the dot-dashed line denotes a contribution
+from the cross-correlation of satellite galaxies with matter.
+For comparison, we also show how a possible off-centering
+of central galaxies affects the lensing profile, although we do
+not include this effect in the theoretical templates. Here, as
+a working example, we consider the off-centering parameters
+poff = 0.3 and Roff = 0.4 irrespective of halo mass, where poff
+models a fraction of off-centered central galaxies in halos of
+mass M , while R is the off-centering radius relative to the
+scale radius of NFW profile of halos. The upper solid lines
+is the total power. Lower: The similar break down of differ-
+ent contributions to the projected correlation function of the
+galaxies, for the same model in the upper panel."
+"Since the Fourier space gives a somewhat simpler form
+of the expression, we mainly write down the power spec-
+trum that is the Fourier-transformed counterpart of the
+two-point correlation function, here ξgm. Under the halo
+model approach, the cross-power spectrum of galaxies
+and matter is given as"
+"Pgm(k) =
+1"
+"dnh
+dM"
+"[〈Nc〉(M) + 〈Ns〉(M)ũs(k;M, z)]"
+"× Phm(k), (14)"
+"where Phm(k) is the halo-matter cross-power spectrum
+that can be computed by Dark Emulator as a func-
+tion of cosmological model within wCDM cosmologies.
+The quantity ũs(k;M) is the Fourier transform of the
+averaged radial profile of satellite galaxies in host ha-
+los of M at redshift z, which we need to specify. Note
+that all the quantities in the above equation are evalu-
+ated at the lens redshift zl, but we omit to denote in
+the argument of each function for notational simplicity.
+Dark Emulator was built to calibrate the halo-matter
+cross-correlation by measuring the averaged mass profile
+around halos with mass M in N -body simulation outputs
+[40]. By construction, the halo-matter cross-correlation
+satisfies the mass conservation around halos. We also
+note that Dark Emulator already includes both the
+1- and 2-halo term contributions in Phm, which corre-
+spond to the cross-correlations of halos with matter in
+the same halo and the surrounding matter outside the
+halo, respectively."
+"More exactly speaking, Dark Emulator outputs
+ξhm(r;M) for an input set of parameters (halo mass, sep-
+aration and cosmological parameters) that is the Fourier
+transform of Phm(k;M). In order to obtain ξgm or ∆Σ
+for the assumed model we extensively use the publicly-
+available FFTLog[49] code to perform the Hankel trans-
+forms when going back and forth between real- and
+Fourier-space (see Eqs. 4 and 5)."
+"For the radial profile of satellite galaxies, we as-
+sume that satellite galaxies follow a Navarro-Frenk-White
+(NFW) profile [50] that is an approximated model of the
+averaged dark matter profile in halos. To compute the
+NFW profile as a function of halo mass, redshift and cos-
+mological model, we need to specify the scaling relation
+of mass concentration with halo mass in the halo mat-
+ter profile. For this we employ the fitting formula given
+in Ref. [51]; more exactly, we use the publicly-available
+python code, “Colossus”[52] [53], to compute the con-
+centration parameter for a given set of parameters (halo
+mass, redshift and cosmological parameters)."
+"As for the default model of the halo-galaxy connection,
+we consider neither the off-centering effect nor the incom-
+pleteness effect of galaxies, where the latter describes a
+possibility that some fraction of even very massive ha-
+los might not host a SDSS-like galaxy due to an incom-
+plete selection after the specific color and magnitude cuts
+[25, for details of the model]. Rather than introduc-
+ing additional nuisance parameters to model these ef-
+fects, we employ a minimum halo model as our baseline
+model. However, we use different types of mock cata-
+logs of SDSS-like galaxies including the off-centering ef-"
+"fects and the incompleteness effect, and then will use the
+mock catalogs to validate and assess the performance of
+the baseline method. If our baseline model can recover
+the underlying cosmological parameters, we claim that
+the method is validated. If the method shows any failure
+to recover the cosmological parameters, we will start to
+introduce more parameters. However, if the cosmological
+constraints turn to be sensitive to such details of a treat-
+ment of galaxies inside the halo, this is a sign of the failure
+or limitation of the halo model based method, because
+such a small-scale distribution of galaxies is very diffi-
+cult to accurately model due to complexities of physical
+processes inherent in formation and evolution of galax-
+ies. Hence, rather than including such model parameters,
+we employ the minimum halo model to assess its perfor-
+mance."
+"The upper panel of Fig. 1 shows how different terms of
+Pgm contributes to the ∆Σ profile for the SDSS-like galax-
+ies at z = 0.251 as we will describe in more detail. Even
+though satellite galaxies tend to reside in massive halos,
+all the curves have a similar shape (R-dependence) in
+large R bins, R & 10 h−1Mpc, for a fixed cosmology. All
+the small-scale physics involved in the halo-galaxy con-
+nection affects ∆Σ at R . 10 h−1Mpc. Note that, due
+to the non-local nature of ∆Σ, the small-scale physics af-
+fects ∆Σ up to relatively large scales, compared to a virial
+radius of massive halos. Also importantly, the integrated
+lensing signal up to a few Mpc scales gives an estimate of
+the average halo mass, which has a close tie to the large-
+scale amplitudes of ∆Σ and wp via the scaling relation of
+halo bias with halo mass (see below). For comparison,
+the figure also shows the impact of off-centering effects
+of central galaxies on ∆Σ, assuming that some fraction of
+central galaxies might be off-set from the true halo cen-
+ter as a result of the assembly history of galaxies in their
+host halos [54, 55]."
+3. Projected correlation function of galaxies
+"To model wp we need to model the real-space corre-
+lation function of galaxies, ξgg, or the Fourier transform
+Pgg for an input set of parameters. The auto-power spec-
+trum of galaxies in a sample is decomposed into the two
+contributions, the 1- and 2-halo terms, and those are
+given within the halo model framework as"
+Pgg(k) ≡ P 1hgg (k) + P 2hgg (k) (15)
+"P 1hgg (k) =
+1"
+"dnh
+dM
+〈Nc〉(M)"
+"[
+2λs(M)ũs(k;M) + λs(M)"
+"2ũs(k;M)
+2
+]
+,"
+"P 2hgg (k) =
+1"
+"dnh
+dM
+〈Nc〉(M) {1 + λs(M)ũs(k;M)}"
+"]
+×
+[∫"
+"dM ′
+dnh
+dM ′"
+"〈Nc〉(M ′) {1 + λs(M ′)ũs(k;M ′)}
+]
+Phh(k;M,M"
+"′), (16)"
+"where Phh(k;M,M
+′) is the power spectrum between two"
+"halo samples with masses M and M ′. Dark Emula-
+tor outputs the real-space correlation function of halos,
+ξhh(r;M,M"
+"′), that is the Fourier transform of Phh. Simi-
+larly to the case of ∆Σ, we use the FFTLog code to perform
+the Fourier transform to obtain the prediction of ξgg(r)
+(see Eq. 8) and then perform the line-of-sight integral to
+obtain the prediction of wp(R) (see Eq. 7). We note that,
+strictly speaking, our standard halo model implementa-
+tion of the 1-halo term behaves as a shot noise like term
+of k0(= const.) at the limit of k → 0, and this gives a
+subtle violation of the mass and momentum conservation
+[32]. One could modify the halo model at very small k to
+enforce the conservation laws, as done in Ref. [56], but we
+found that our treatment, practically, gives a sufficiently
+accurate model prediction over scales of separations that
+we are interested in, for the SDSS-like galaxies [48] [also
+see 57, for the similar discussion]. As given by Eq. (7),
+we employ πmax = 100 h"
+"−1Mpc, as our default choice to
+integrate ξgg(r ="
+"√
+R2 + π2) to obtain the model predic-"
+tion for wp(R).
+"The lower panel of Fig. 1 shows different contributions
+in the projected correlation function wp for the Planck
+cosmology, assuming the same model as in the upper
+panel. As can be found from Eq. (16), the 1-halo term
+arises from the central-satellite and satellite-satellite cor-
+relations, while the 2-halo term is from the correlations
+of central-central, central-satellite and satellite-satellite
+galaxies in different halos, respectively. The figure clearly
+shows that all the contributions to the 1-halo term are
+confined to small scales, at R . a few Mpc, a virial ra-
+dius of massive halos, reflecting the local nature of wp
+in contrast to ∆Σ. All the different contributions to the
+2-halo term have a similar shape (R-dependence); the
+different terms differ from each other only by a mul-
+tiplicative factor for a fixed cosmology. This means
+that the shape of the 2-halo term is not sensitive to de-
+tails of the halo-galaxy connection. The features around
+R ' 90 h−1Mpc are the BAO features, which appear at
+smaller scales than the BAO scale of 100 h−1Mpc in the
+three-dimensional correlation function, due to the line-
+of-sight projection. However, we note that we will not
+include the BAO information in the parameter estima-
+tion in the following; we will use the wp information up
+to R ' 30 h−1Mpc as our default choice."
+"C. Joint probes cosmology: mitigation of galaxy
+bias uncertainty"
+"For convenience of our discussion let us define the
+cross-correlation coefficient function for halo correlation
+function:"
+"rhm(r) ≡
+ξhm(r)"
+"[ξhh(r)ξmm(r)]1/2
+. (17)"
+"As shown in Fig. 31 of Ref. [40], Dark Emulator pre-
+dicts rhm ' 1 on r & 10 h−1Mpc, the scale greater
+than a typical size of massive halos, and rhm is close
+to unity within 5% or so even at the intermediate scales
+a few Mpc < r . 10 h−1Mpc. As stressed in our com-
+panion paper [26], the real-space observables have an ad-
+vantage that all variants due to the halo-galaxy connec-
+tion are confined to small scales, r . 10 h−1Mpc, and the
+cross-correlation function on large scales satisfies rhm ' 1
+[also see 58, for the similar discussion]. This is not nec-
+essarily true in Fourier space, because the variations on
+small scales become extended in Fourier space due to the
+nature of Fourier transform. The simplest example is the
+shot noise; the shot noise affects the real-space correla-
+tions at zero separation, while it behaves like a white
+noise and affects the power spectrum over all scales (k
+bins)."
+"It is also constructive to discuss an asymptotic be-
+havior of the halo correlation functions, ξgm and ξgg, on
+large scales. At scales much greater than the nonlinear
+scale, r � R∗, the galaxy-matter cross correlation has an
+asymptotic behavior given as"
+"ξgm(r) −−−−→
+r�R∗"
+"dnh
+dM
+〈Ng〉(M)ξhm(r;M)"
+"' beffξmm(r), (18)
+where we have used ũs(k;M) → 1 for k � 1/R∗, and
+we defined the effective bias parameter, at a sufficiently
+large separation satisfying r � R∗, as"
+"beff ≡
+1"
+n̄gξmm(r)
+"dnh
+dM
+〈Ng〉 ξhm(r;M). (19)"
+"In addition, as can be found from Eq. (3), ∆Σ, which has
+a dimension of [hM�Mpc"
+"−2], has an additional depen-
+dence on ρ̄m0"
+∆Σ ∝ ρ̄m0ξgm ∝ Ωmbeffξmm. (20)
+"∆
+Σ
+/
+∆"
+100 101
+R [h−1Mpc]
+"w
+p
+/
+w"
+"FIG. 2. Dependences of ∆Σ and wp on cosmological parame-
+ters, σ8 (blue lines) and Ωm (red), computed using the Dark
+Emulator based halo model. Here we consider the HOD
+parameters for the LOWZ sample at z = 0.251. Here we
+consider fractional changes of σ28 (not σ8) or Ωm by ±5 % or
+±10 %, respectively, where the other parameters are fixed to
+their fiducial values. The solid and dashed, respective lines
+show the fractional changes in ∆Σ or wp relative to that for
+the fiducial model when σ28 or Ωm is changed to a positive or
+negative side from its fiducial value. The error bars around
+unity denote 1σ statistical errors that are computed from the
+diagonal terms of the covariance matrix expected for the SDSS
+and HSC-Y1 data, although the neighboring bins are highly
+correlated with each other."
+"Note that the dependence on h is not relevant because
+all the quantities are measured in units where the depen-
+dence of h is factorized out."
+"Similarly the auto-correlation function of galaxies is
+found to have an asymptotic behavior at the limit of large
+scales, r � R∗, as"
+"ξgg(r) −−−−→
+r�R∗"
+"dnh
+dM
+〈Ng〉(M)"
+"]
+×
+[∫"
+"dM ′
+dnh
+dM ′"
+"〈Ng〉(M ′)
+]
+ξhh(r;M,M"
+' b2effξmm(r). (21)
+"This is not an exact relation, but we found that the
+relation rgg ≡ ξgm/[ξggξmm]1/2 ' 1 holds for scales of
+r � R∗, as shown in Fig. 32 of Ref. [40]. Thus the com-"
+"bination of ξgm and ξgg, which are inferred from ∆Σ and
+wp, respectively, can be used to infer the underlying mat-
+ter correlation function ξmm, and in turn we can use it
+to extract cosmological information. Furthermore, as im-
+plied from Eq. (6), an amplitude of ∆Σ at scales around
+a transition scale between the 1- and 2-halo terms gives
+an estimate of the average mass of halos hosting galaxies:"
+∆Σgm(R)|R'a few Mpc → M̄h (22)
+"In turn this can put a strong constraint on the halo bias,
+beff , via the scaling relation of halo bias with halo mass
+(or the dependence of ξhm and ξhh amplitudes on halo
+mass). Hence, combining the small- and large-scale infor-
+mation of ∆Σ with wp helps break degeneracies between
+cosmological parameters and the galaxy bias, and then
+gives useful constraints on cosmological parameters. This
+is the basic picture of how the joint probes cosmology
+using ∆Σ and wp can constrain cosmological parameters.
+However, if the scaling relation of the large-scale galaxy
+bias amplitude with the average halo mass is broken, this
+method does not work. This would be the case for the
+assembly bias effect, where the galaxy bias depends on
+secondary parameter(s) related to the assembly history
+of host halos, in addition to halo mass."
+"In Fig. 2, we study how ∆Σ and wp depend on the
+cosmological parameters, Ωm and σ8, because large-scale
+structure probes are most sensitive to these parameters.
+Here we consider the expected signals of ∆Σ and wp for
+the SDSS LOWZ-like galaxies at z = 0.251 (as we will
+describe in detail in Section III B) which are computed
+using Dark Emulator based on the halo model. We
+note that, due to the non-local nature of ∆Σ, the lensing
+profile at a particular scale, say R0, is sensitive to the
+matter-galaxy cross-correlation at r ∼ R0/2. Note that
+we employ Rcut = 2 and 3 h"
+"−1Mpc for the scale cuts of
+∆Σ and wp as our default choice, respectively, and will
+use the information of ∆Σ and wp at scales greater than
+the scale cuts for the cosmology challenges."
+"Let us first consider the dependence of σ8. There are
+two competing effects in the change of our target observ-
+ables originating from that of σ8 for models with a fixed
+Ωm. First, an increase of σ8 boosts the amplitude of
+ξmm by definition. Second, it leads to a decrease of halo
+bias (beff) for massive halos hosting SDSS-like galaxies
+(∼ 1013h−1M�), because a model with higher σ8 leads
+to more evolved large-scale structure at an observed red-
+shift, thus the abundance of massive halos gets increased
+at the redshift, and such halos become less biased trac-
+ers, resulting in a lowered bias amplitude compared to
+that for the fiducial model. For ∆Σ, the first effect is
+more significant; an increase of σ8 leads to an increase of
+the amplitude of ∆Σ over all the scales we consider. For
+wp, these competing effects almost cancel out on large
+scales, R & a few Mpc in the 2-halo term, and the in-
+crease of σ8 does not largely change the amplitude on
+the large scales. Nevertheless we should emphasize that
+the change of σ8 causes a scale-dependent modification
+in these observables, especially wp, in contrast to the lin-"
+"∆
+Σ
+/
+∆"
+100 101
+R [h−1Mpc]
+"w
+p
+/
+w"
+logMmin
+"σ2
+20% 40%"
+"∆
+Σ
+/
+∆"
+"d
+100 101"
+R [h−1Mpc]
+"w
+p
+/
+w"
+"FIG. 3. Dependence of ∆Σ and wp on changes to HOD parameters can be seen in the top and the bottom panels, respectively.
+Here the fiducial HOD parameters are chosen to resemble the SDSS LOWZ-like galaxy sample at z = 0.251 for the Planck
+cosmology. When one HOD parameter is changed, the other parameters are fixed to their fiducial values. Solid line shows the
+result for an increase (positive-side change) of each HOD parameter from its fiducial value, while dashed line is the result for
+the decrease. From light- to dark-color lines show the results for the fractional change of each HOD parameter by ±20 % and
+±40 %, respectively. The left panel shows the dependences of the central HOD parameters, Mmin and σlogM , while the right
+panel shows the results for the satellite HOD parameters, M1, κ and α. The error bars are the same in the previous figure."
+"ear theory that predicts a constant (scale-independent)
+shift in the ratio at these large scales (also see Figure 6
+in [26] for the similar discussion). We checked that the
+scale-dependent changes are from a combination of the
+effects of σ8 changes on matter clustering (ξgg) and the
+halo bias function (see Fig. 19 in Appendix A). These
+effects are automatically built in the Dark Emultor
+predictions. Also note that the positive- and negative-
+side changes of σ8 cause an asymmetric change in wp at
+large scales. On the other hand, the 1-halo term ampli-
+tude of wp is boosted because the increase of σ8 leads to
+the increased abundance of massive halos, more satellite
+galaxies reside in such halos, and their correlations add.
+Thus the change of σ8 leads to characteristic modifica-
+tions of the amplitude and scale dependence in ∆Σ and
+wp. The notable features around R ∼ 90 h−1Mpc are
+due to the effect on BAO features [59], but this is not
+relevant for our results because we use the information
+of ∆Σ and wp on scales up to 30 h"
+"−1Mpc for the fidu-
+cial choice, so do not include the BAO information in
+parameter estimation."
+"Next we discuss the results for the change of Ωm, for
+a fixed σ8. First, an increase of Ωm leads to a faster
+evolution of clustering growth for models with a fixed σ8"
+"(the fixed normalization today), so leads to the smaller
+amplitude of ξmm at this redshift (z = 0.251). However,
+recalling that ∆Σ ∝ Ωm 〈γ+〉 ∼ Ωmδm, an increase of Ωm
+leads to higher amplitudes in ∆Σ due to the prefactor,
+while it leads to smaller amplitudes in wp. In addition,
+the change of Ωm causes a scale-dependent modification
+in both ∆Σ and wp."
+"In Fig. 3 we study how a change in each of the HOD
+parameters alters ∆Σ and wp for the Planck cosmology.
+Here we employ the same HOD parameters for the LOWZ
+galaxies as in Fig. 2, and vary only one HOD parameter
+for each result, where other parameters are fixed to their
+fiducial values. The figure shows that, when each of the
+central HOD parameters is varied, it causes a significant
+change over all the scales including both the 1- and 2-
+halo terms, because the change in the parameter leads
+to a change in the mean halo mass. More precisely, an
+increase in Mmin or a decrease in σlogM leads to an in-
+crease in the mean halo mass, leading to the increased
+amplitudes in ∆Σ and wp. The fractional changes in ∆Σ
+and wp at large separations in the 2-halo term regime
+are roughly given as δwp/wp ' 2δ∆Σ/∆Σ, reflecting the
+facts ξgg ' b2effξmm and ξgm ' beffξmm at the large scale
+limit as we discussed above. In addition, it is clear that"
+"the 1-halo term amplitude of ∆Σ is sensitive to the cen-
+tral HOD parameters, physically to the mean mass of
+halos hosting the galaxies in a sample. Hence, combining
+the 2-halo term amplitudes of ∆Σ and wp allows one to
+break degeneracies between the bias parameter and other
+parameters, and then adding the 1-halo term informa-
+tion of ∆Σ can constrain the HOD parameters and then
+tighten the determination of the large-scale bias. The
+satellite HOD parameters change the relative contribu-
+tion of massive halos to ∆Σ and wp as satellite galaxies
+preferentially reside in massive halos. In particular, the
+parameter M1, which determines the amplitude of the
+satellite HOD, causes a decent change in the large-scale
+amplitudes of ∆Σ and wp. The effects of other parame-
+ters are relatively mild."
+"Comparing Figs. 2 and 3 manifests that the cosmo-
+logical parameters and the HOD parameters lead to dif-
+ferent changes in ∆Σ and wp. Hence combining these
+observables in the 1- and 2-halo term regimes allows for
+an efficient determination of the cosmological parame-
+ters, by breaking the parameter degeneracies. These fig-
+ures nicely illustrate the complementarity of ∆Σ and wp,
+which is the main focus of this paper."
+"D. Observational effects: geometrical cosmology
+dependence, photo-z, multiplicative shear bias, and"
+"In this section we discuss the three observational ef-
+fects, i.e. the geometrical dependence of the observables
+on cosmology, photometric redshift errors of source galax-
+ies, multiplicative shear bias and redshift-space distortion
+effect. When comparing the measured signals with the
+model templates, we need to include these effects in the
+model templates, and here we describe how to do this."
+1. Geometrical cosmology dependence
+"The observables we consider in this paper are ∆Σ(R)
+and wp(R), which are different from other possible
+choices of the lensing and clustering observables such as
+γ+(θ) and wp(θ). Measurements of ∆Σ and wp require
+an observer to assume a reference cosmology to perform
+a correction of the lensing efficiency Σcr(zl, zs) (see Eq. 1)
+as well as the conversion of angular scales (θ) and redshift
+differences to the projected separation (R) and radial sep-
+aration (π). However, the assumed cosmology generally
+differs from the true underlying cosmology, and this de-
+pendence needs to be taken into account. We use the
+method in Ref. [60] to include this effect."
+"For a flat-geometry ΛCDM model, the relevant param-
+eter is only Ωm (or Ωde that is the density parameter of
+dark energy), because it affects the angular and radial
+distances (the lensing efficiency also depends on the com-
+bination of angular diameter distances and the overall
+factor of Ωm). Note that the dependence on h is taken"
+"out from the observables because all the quantities are
+measured in units of h−1Mpc or hM� Mpc"
+"−2 for wp and
+∆Σ, respectively. The Ωm dependences of ∆Σ and wp
+through this effect turn out to be very small, but add a
+slight sensitivity of Ωm in the theoretical templates."
+2. Photometric redshift errors
+"Photometric redshift errors of source galaxies are one
+of the most serious systematic errors in the weak lens-
+ing measurements. An accuracy of photometric redshifts
+(hereafter often simply photo-z), delivered from a set of
+broad-band filters (grizy in the HSC data), is limited,
+and can never be perfect, compared to spectroscopic red-
+shifts, although the photo-z accuracies are calibrated us-
+ing the COSMOS catalog [61]. For lens redshift we as-
+sume spectroscopic redshifts as we will focus on the spec-
+troscopic SDSS-like galaxies. Here we discuss how we can
+treat a possible uncertainty of source redshifts in the ob-
+servable ∆Σ. In this paper we use the method proposed
+in Oguri and Takada [21]. In this method we use a “sin-
+gle” population of source galaxies, selected based on the
+photo-z, and then use the relative strengths of ∆Σ for
+multiple lens samples at different redshifts to calibrate
+the photo-z uncertainty of source galaxies in a statistical
+sense."
+"In the presence of a redshift distribution of source
+galaxies, an estimator of ∆Σ(R) from the measured el-
+lipticity component of each source galaxy is given, e.g.
+by Eq. (11) in Ref. [24], as"
+"∆̂Σ(R) =
+1"
+"∑
+l,s wls"
+"[〈
+Σ−1cr"
+"]−1
+es+∑"
+"l,s wls
+(23)"
+"where R is the “responsivity” that is needed to con-
+vert the measured galaxy ellipticity, defined in terms of
+(a2−b2)/(a2 +b2) (a, b is the major, minor axes when the
+galaxy shape is approximated by an ellipse), to the lens-
+ing shear, defined in terms of (a− b)/(a+ b) [23, 42, 62];
+es+ is the tangential ellipticity component of the s-th
+source galaxy with respect to the l-th lensing galaxy; wls
+is the weight (see below). The summation"
+"∑
+l,s runs over"
+"all pairs of source and lens galaxies that are in a given
+bin of projected separation, R = χ(zl)∆θ. The measured
+lensing signal is for the effective redshift of lens galaxies,
+z̄l."
+"In a case that we have only the posterior distribution
+of photometric redshift for each source galaxy, the “ef-
+fective” lensing efficiency needs to be estimated as"
+"〈
+Σ−1cr"
+"〉
+ls
+≡
+∫ ∞"
+"dzs Σ
+−1
+cr (zl, zs)p(zs), (24)"
+"where p(zs) is the posterior distribution of redshift for the
+s-th source galaxy that satisfies the normalization condi-
+tion"
+"dzs p(zs) = 1. Note that we set Σ
+−1
+cr (zl, zs) = 0"
+"when zs < zl. We employ the weight wls, motivated by"
+"the inverse-variance weight, to have a higher signal-to-
+noise ratio for the weak lensing measurement [63–65]:"
+"[〈
+Σ−1cr"
+"〉
+(l,s)"
+"]2
+e2rms + σ"
+"where erms is the rms intrinsic ellipticity per component
+and σe is the measurement error of ellipticity for the s-th
+source galaxy."
+"Thus, in an estimator of ∆Σ, the quantities
+〈
+Σ−1cr"
+"and wls depend on photometric redshifts of source galax-
+ies via p(zs) for individual source galaxies. If the esti-
+mated redshift distribution of source galaxies is system-
+atically offset from the underlying true distribution, the
+measured ∆Σ has a systematic bias (offset) from the true
+one (even if the assumed cosmological model for the ∆Σ
+estimation is the true cosmology). Following the method
+in Refs. [21, 66], we take into account the systematic off-
+set by introducing additional nuisance parameter, ∆zph,
+to shift the posterior distribution of source redshift for
+all source galaxies as"
+p(zs) −→ p(zs + ∆zph). (26)
+"Then we can repeat the computations of
+〈
+Σ−1cr"
+"and
+wls for the pairs of source and lens galaxies in actual
+SDSS and HSC-Y1 datasets. We found that the lensing
+profile after shifting the source redshift distribution is
+well approximated by the following multiplicative form
+as"
+"∆̂Σ(R; z̄l,∆zph) ' fph(R; z̄l,∆zph)∆̂Σ(R; z̄l,∆zph = 0),
+(27)"
+"where fph(R; z̄l,∆zph) is the multiplicative factor to
+model the effect of systematic photo-z error, and z̄l is the
+mean of lens redshifts. Here we stress, by notation “̂”,
+that the above correction is made for the measured ∆Σ.
+By using a single population of source galaxies, we notice
+that the shift ∆zph leads to changes in the amplitudes of
+∆Σ for each of the multiple lens samples (LOWZ and
+the two subsamples of CMASS, divided into two redshift
+bins) depending on the lens redshift (z̄l). Conversely, we
+can use the relative variations in the ∆Σ amplitudes at
+different lens redshifts to calibrate out ∆zph, simultane-
+ously with cosmological parameter estimation. This is a
+self-calibration method of photo-z errors as proposed in
+Oguri and Takada [21]. In the above equation, we explic-
+itly include the R-dependence in the calibration factor,
+which could arise because the shift could change relative
+contributions of different lens-source pairs to the lens-
+ing efficiency"
+"〈
+Σ−1cr"
+". However, the R-dependence, al-
+beit very weak, appears only for the highest-redshift lens
+sample (CMASS2 in our sample, as we will define later)."
+"For our method, we multiply the inverse of the calibra-
+tion factor in Eq. (27) with the theoretical template of
+∆Σ, rather than correcting for the measurement, for an
+assumed ∆zph:"
+∆Σ(R)→ ∆Σ(R)/fph(R; ∆zph). (28)
+"We then include ∆zph as additional nuisance parameter
+when carrying out the parameter inference. This is bet-
+ter because we will use the same covariance matrix in
+our parameter inference, which allows for apple-to-apple
+comparison of the performance for different setups (be-
+cause this method does not change the error bars of ∆Σ
+in each R bin)."
+3. Multiplicative shear errors
+"An accurate weak lensing measurement requires an
+exquisite, accurate characterization of individual galaxy
+shapes. This is not straightforward [42], and an imper-
+fect shape measurement leaves a residual systematic er-
+ror in the weak lensing measurements. Systematic errors
+in shape measurements are usually modeled by “multi-
+plicative” and “additive” biases in the measured galaxy
+ellipticities, given as γ → (1+m)γ+c, where m and c are
+the multiplicative and additive bias parameters, respec-
+tively [67]. Since the spatial positions of lensing galaxies
+on the sky are considered random with respect to the po-
+sitions of source galaxies, the galaxy-galaxy weak lensing
+is not affected by the additive bias [42]. Hence, in the
+presence of the multiplicative shear bias, we modify the
+theoretical template as"
+∆Σ(R) −→ (1 +m)∆Σ(R;m = 0). (29)
+"By working on the single sample of source galaxies, we
+can employ the single m parameter for all the lensing pro-
+files at multiple lens redshifts. This is another advantage
+of the method of Ref. [21]. This is a good approxima-
+tion as long as source galaxies are well separated from
+lens redshifts; this is the case as long as we can ignore a
+contamination of source galaxies into lens redshifts due
+to photo-z errors. To make this method work, in actual
+data, we will employ a conservative cut of source galaxy
+redshifts to ensure that source galaxies are well separated
+from lens redshifts (Miyatake et al., in prep.)."
+4. Redshift-space distortion
+"To model the projected correlation function of galaxies,
+we ignored the redshift-space distortion (RSD) effect that
+is caused by peculiar velocities of galaxies. For our de-
+fault choice of the projected length, πmax = 100 h"
+"−1Mpc,
+however, the RSD effect is not negligible. We follow
+the method proposed in Ref. [47]. We employ the lin-
+ear Kaiser formula [68] to model the RSD effect. We
+follow Eqs. (51)-(54) in Ref. [47] to model the redshift-
+space two-point correlation function of galaxies using the
+Kaiser RSD β factor, given by β ≡ (1/beff)d lnD/d ln a,
+where beff is the effective linear bias for a sample of galax-
+ies (see Eq. 19) and D is the linear growth factor. Then
+we modify the theoretical template of wp as"
+"wp(R)→ fRSD(R, πmax)wp(R;β = 0), (30)"
+"TABLE I. The value of each cosmological parameter for
+the fiducial Planck cosmology which we use in the follow-
+ing cosmology challenges (we will study whether the method
+can recover the true values within the credible interval).
+The column, labeled as “supporting range”, gives the sup-
+porting range of each parameter in Dark Emulator that
+outputs the halo clustering quantities for a flat-geometry
+wCDM model specified by a set of 6 cosmological parame-
+ters {Ωde, ln"
+"(
+1010As"
+")
+, ωb, ωc, ns, w} each of which should be"
+"in the supporting range. Here σ8 and S8 ≡ σ8(Ωm/0.3)0.5 are
+derived parameters, and the values in table are those for the
+fiducial Planck cosmology."
+"Parameters fiducial value supporting range [min,max]
+Ωde 0.6844 [0.54752, 0.82128]
+ln
+(
+1010As"
+")
+3.094 [2.4752, 3.7128]"
+"ωb 0.02225 [0.0211375, 0.0233625]
+ωc 0.1198 [0.10782, 0.13178]
+ns 0.9645 [0.916275, 1.012725]
+w −1 [−1.2,−0.8]
+σ8 0.831 derived
+S8 0.852 derived"
+"where fRSD(R, πmax) is the correction multiplicative fac-
+tor to account for the RSD effect. This factor depends
+on the projected separation R and the projection length
+πmax for an assumed cosmology. For our default choice
+of πmax = 100 h"
+"−1Mpc, the linear Kaiser factor is a good
+approximation to model the RSD effect on wp [also see
+26]."
+"III. N-BODY SIMULATIONS, DARK
+EMULATOR, AND MOCK CATALOGS OF HSC"
+AND SDSS-LIKE GALAXIES
+"In this paper we use two types of mock catalogs
+of SDSS- and HSC-like galaxies. First, we use high-
+resolution N -body simulations, with periodic boundary
+conditions, and the halo catalogs to generate the mock
+catalogs of SDSS galaxies. We then measure ∆Σ and wp
+from the mock catalogs to define the mock signals that
+we use in cosmology challenges. Second, we also use the
+mock catalogs of SDSS- and HSC-like galaxies built in
+the light-cone simulations, including the simulated lens-
+ing signals on the HSC-like source galaxies, and use those
+catalogs to estimate the covariance matrix of the observ-
+ables. These mocks are the same as those used in our
+companion paper, Sugiyama et al. [26]. In this section,
+we describe details of N -body simulations and the mock
+catalogs."
+A. N-body simulations and Dark Emulator
+"In this paper we extensively use Dark Emulator de-
+veloped in Nishimichi et al. [40], which is a software pack-
+age enabling fast, accurate computations of halo clus-"
+"tering quantities for a given cosmological model. Here
+we will briefly review Dark Emulator. They con-
+structed an ensemble of cosmological of N -body simu-
+lations, each of which was performed with 20483 parti-
+cles for a box with 1 or 2 Gpc/h on a side length, for
+101 cosmological models within the flat wCDM cosmolo-
+gies. The wCDM cosmology is parametrized by 6 cosmo-
+logical parameters, p = {ωb, ωc,Ωde, ln"
+"(
+1010As"
+")
+, ns, w},"
+"where ωb(≡ Ωbh2) and ωc(≡ Ωch2) are the physical den-
+sity parameters of baryon and CDM, respectively, h is
+the Hubble parameter, Ωde ≡ 1 − (ωb + ωc + ων)/h2 is
+the density parameter of dark energy for a flat-geometry
+universe, As and ns are the amplitude and tilt param-
+eters of the primordial curvature power spectrum nor-
+malized at kpivot = 0.05 Mpc"
+"−1, and w is the equa-
+tion of state parameter for dark energy, respectively. For
+the N -body simulations, they included the neutrino ef-
+fect fixing the neutrino density parameter ων ≡ Ωνh2 to
+0.00064 corresponding to 0.06 eV for the total mass of
+three neutrino species. They included the effect of mas-
+sive neutrinos only in the initial linear power spectrum
+[see 40, for details]. To carry out “cosmology challenges”
+in the following, we employ the fiducial Planck cosmology
+that is characterized by the parameter values in Table I.
+We use the N -body simulation realizations of 1 h−1Gpc
+box size for the fiducial Planck cosmology to construct
+the mock catalogs for SDSS-like galaxies. The mass of
+simulation particle for the fiducial Planck simulations is
+m = 1.02 × 1010 h−1M�. In the following we use halos
+with mass greater than 1012 h−1M�, corresponding to
+about 100 simulation particles."
+"For each N -body simulation realization (each redshift
+output) for a given cosmological model, they constructed
+a catalog of halos using Rockstar [69] that identifies
+halos and subhalos based on clustering of N -body par-
+ticles in phase space (position and velocity space). The
+spherical overdensity mass, with respect to the halo cen-
+ter that is defined from the maximum mass density,
+M ≡ M200m = (4π/3)R3200m × (200ρ̄m0), is used for def-
+inition of halo mass, where R200m is the spherical halo
+boundary radius within which the mean mass density is
+200 times ρ̄m0. By combining the outputs of N -body
+simulations and the halo catalogs at multiple redshifts in
+the range z = [0, 1.48], they built an emulator, named as
+Dark Emulator, which enables fast and accurate com-
+putations of the halo mass function, halo-matter cross-
+correlation, and halo auto-correlation as a function of
+halo masses, redshift, separations and cosmological mod-
+els. It was shown that Dark Emulator achieves a suf-
+ficient accuracy for these statistical quantities for halos
+of 1013M�, which is a typical mass of host halos of SDSS
+galaxies, compared to the statistical measurement errors
+of ∆Σ and wp expected from the HSC and SDSS data,
+as shown in Fig. 31 of the paper. In summary, Dark
+Emulator outputs"
+"• dnh
+dM"
+"(M ; z,p): the halo mass function for halos in
+the mass range [M,M + dM ] at redshift z"
+"TABLE II. Specifications of the mock galaxy catalogs that
+resemble the LOWZ and CMASS galaxies for the spectro-
+scopic SDSS DR11 data. For the CMASS sample we consider
+two subsamples divided into two redshift ranges. We give the
+redshift range and the comoving volume for each sample, as-
+suming 8300 deg2 for the area coverage. The column denoted
+as “representative redshift” is a representative redshift of each
+sample which we assume to represent the clustering observ-
+ables for each sample (i.e. ignore redshift dependences of the
+observables within the redshift bin). The lower columns, be-
+low double lines, denote the HOD parameters used to build
+the mock catalogs of each sample from N -body simulations
+for the Planck cosmology. Note that Mmin and M1 are in
+units of h−1M�."
+"LOWZ CMASS1 CMASS2
+redshift range [0.15, 0.35] [0.47, 0.55] [0.55, 0.70]
+representative redshift 0.251 0.484 0.617
+volume [(h−1Gpc)3] 0.67 0.81 2.00"
+"HOD parameters fiducial values
+logMmin 13.62 13.94 14.19
+σlogM 0.6915 0.7919 0.8860
+κ 0.51 0.60 0.066
+logM1 14.42 14.46 14.85
+α 0.9168 1.192 0.9826"
+"• ξhm(r;M, z,p): the halo-matter cross-correlation
+function for a sample of halos in the mass range
+[M,M + dM ] at redshift z"
+"• ξhh(r;M,M ′, z,p): the halo-halo auto-correlation
+function for two samples of halos with masses
+[M,M + dM ] and [M ′,M ′ + dM ′] at redshift z"
+"for an input set of parameters, halo mass M (and M ′ for
+the correlation function of two halo samples), redshift z,
+and cosmological parameters p. In addition, the Dark
+Emulator package outputs auxiliary quantities, based
+on emulation, such as the linear halo bias (the large-scale
+limit of the halo bias), the linear mass power spectrum,
+the linear rms mass fluctuations of halo mass scale M
+(σLm(M)), and σ8. The supporting range of each of cos-
+mological parameters for Dark Emulator is given in
+Table I. These ranges are sufficiently broad, e.g. to cover
+the range of cosmological constraints from the current
+state-of-the-art large-scale structure probe such as the
+Subaru HSC cosmic shear results [4, 5]. In this paper
+we will use Dark Emulator to perform MCMC analy-
+ses of cosmological parameters by comparing the model
+templates of ∆Σ and wp with the mock signals expected
+from the SDSS and HSC data."
+"B. Mock catalogs for the SDSS-like galaxies for the
+mock signals of ∆Σ and wp"
+1. Mock catalogs of SDSS LOWZ- and CMASS-like galaxies
+"We use the N -body simulation realizations and the
+halo catalogs for the Planck cosmology to build mock"
+"catalogs of galaxies that resemble spectroscopic galaxies
+in the SDSS-III BOSS DR11 sample [70]. We consider
+three galaxy samples in three redshift bins: “LOWZ”
+galaxies in the redshift range z = [0.15, 0.30] and two
+subsample of “CMASS” galaxies that are obtained from
+subdivision of CMASS galaxies into two redshift bins,
+z = [0.47, 0.55] and z = [0.55, 0.70]. Here we consider
+luminosity-limited samples rather than flux-limited sam-
+ples for these galaxies (see Miyatake et al. in prepara-
+tion for details) [also see 24, for the similar discussion on
+the stellar-mass limited sample]. The luminosity-limited
+sample is considered as a nearly volume-limited sample
+in each redshift bin, and we expect that properties of
+galaxies do not strongly evolve within the redshift bin,
+which is desired because we ignore the redshift evolu-
+tion of clustering observables within the redshift bin for
+each sample. Table II summarizes characteristics of each
+galaxy sample."
+"To build the mock catalogs for each galaxy sample,
+we first perform a fitting of the HOD model predictions
+to the projected correlation function wp that is actually
+measured from the SDSS data for each sample, assuming
+the Planck cosmology model, and then estimate the HOD
+parameters for the best-fit model. Note, however, that
+we here use the analytical halo model method used in
+More et al. [25], and did not use the weak lensing profile
+to further constrain the HOD parameters. The fiducial
+HOD model is the same as that described in Section II B.
+Table II gives the best-fit HOD parameters for each sam-
+ple."
+"We use the outputs of N -body simulations at z =
+0.251, 0.484 and 0.617 as representative redshifts of the
+galaxy samples to build the mock catalogs. We then
+populate galaxies into halos of each realization for the
+Planck cosmology, using the best-fit HOD parameters in
+Table II [also see 43, 48, for details of the method]. For
+our default mocks, we assume the NFW profile for the
+radial distribution of satellite galaxies. The default mock
+is the same as the default HOD model used in the the-
+oretical template (see Section II B), so we will use the
+default mock to perform a sanity check of whether we
+can recover the true cosmological parameters, i.e. the
+parameter values of Planck cosmology, in the parameter
+estimation by comparing model templates with the mock
+signals measured from the default mocks. In the default
+mocks, we neither include the off-centering effect of cen-
+tral galaxies, an incompleteness effect of central galaxies,
+nor the redshift-space distortion effect. For other mocks,
+we include these effects one by one, and then study the
+impact of each effect on parameter estimation."
+2. Mock signals of ∆Σ and wp
+"We generate the mock signals of ∆Σ and wp for the
+SDSS-like galaxies, by measuring those clustering observ-
+ables from each of the mock catalog realizations for the
+Planck cosmology as we described in the preceding sec-"
+"0
+6
+M
+�"
+LOWZ CMASS1 CMASS2
+100 101 102
+R [Mpc/h]
+100 101 102
+"R [Mpc/h]
+100 101 102"
+R [Mpc/h]
+"FIG. 4. Mock signals of ∆Σ and wp for the SDSS LOWZ, CMASS1 and CMASS2 galaxies at the representative redshifts,
+z = 0.251, 0.484 and 0.617, respectively. The signals are computed from the mock catalogs of the galaxies that are constructed
+by applying the HOD model (Table II) to halo catalogs in high-resolution N -body simulations (see text for details). The
+error bars in each bin denote the statistical errors expected from the SDSS DR11 data (8,300 sq. deg.) and the HSC-Y1 data
+(140 sq. deg.), which are the square root of the diagonal components of each covariance matrix that is estimated from the mock
+catalogs of HSC and SDSS galaxies in the light-cone simulations. Here we multiply R by ∆Σ(R) and wp(R) for illustrative
+purpose."
+"tion. In doing this, we take an advantage of the periodic
+boundary conditions in each mock, which allows for a fast
+computation of the clustering quantities using the FFT
+algorithm. In addition, the measured clustering quanti-
+ties are not affected by the window function thanks to
+the periodic boundary conditions. We here describe de-
+tails of the measurement method of ∆Σ and wp from each
+mock catalog [43, 48]."
+"For ∆Σ, we first project the matter (N -body) parti-
+cles and galaxies along one axis of N -body cubic box
+assuming that the axis is along the line-of-sight direc-
+tion, and assign the matter particles and galaxies to the
+46, 3322 two-dimensional grids using the Nearest Grid
+Point (NGP) interpolation kernel. We then Fourier
+transform the matter and galaxy density fields and take a"
+"product of the two, Re
+[
+δ̃2Dg (k⊥)δ̃"
+"2D
+m (−k⊥)"
+"]
+, where k⊥ is"
+"the two-dimensional wavevector. We perform the inverse
+2D Fourier transform to obtain"
+ξ2Dgm(R) =
+"∫
+d2k⊥
+(2π)2"
+"eik⊥·R Re
+[
+δ̃2Dg (k⊥)δ̃"
+"2D
+m (−k⊥)"
+"where R is the two-dimensional separation vector per-
+pendicular to the projection direction. We perform the
+azimuthal angle average in an annulus of each radial bin
+and then obtain the two-dimensional galaxy-matter cross"
+"correlation function, ξ2Dgm(R).
+We compute the projected surface mass density profile"
+"around galaxies from ξ2Dgm(R), according to Eq. (3), as"
+Σgm(R) ' ρ̄m0ξ2Dgm(R). (32)
+"The above surface mass density differs from Eq. (3) by a
+constant additive term (spatially-homogeneous term), as
+this is okay because such a constant term is irrelevant to
+the weak lensing shear or the excess surface mass density
+profile. To achieve higher spatial resolution, we mea-
+sure Σgm(R) using the folding method of the FFT box
+[71]. Following the method described in Refs. [72, 73],
+we perform multiple measurements in which we fold the
+box different times (we denote the folding times as nfold).
+We have six measurements of nfold = {0, 1, 2, 3, 4, 5} for
+each catalog, while the grid number 46, 3322 is kept un-
+changed at each FFT step. It means that we have mea-
+surements which have finer resolutions by up to a factor
+of 25 = 32. We then combine the Σgm(R) signals ob-
+tained by stitching the six measurements between the
+five boundary scales {0.125, 0.25, 0.5, 0.1, 0.2}h−1 Mpc.
+Then we compute the excess surface mass density profile,
+∆Σ(R) from Σ(R), according to Eq. (1). In each mea-
+surement, to achieve better statistics we perform three
+measurements using the projection along x-, y- or z-axis
+directions, and use the average of the three results as the"
+"measured signal of ∆Σ for the realization.
+For wp, we first assign the mock galaxies to the 1024"
+"three-dimensional FFT grids using the NGP kernel. We
+then Fourier transform the number density field, and take
+its square amplitudes |δ̃g(k)|2 for each wavevector k. By
+performing the inverse Fourier transform, we obtain the
+estimate of the correlation function at each spatial sepa-
+ration r = (R, π),"
+ξgg(r) =
+"(2π)3
+eik·r"
+"∣∣∣δ̃g(k)∣∣∣2 . (33)
+Then we estimate the projected correlation function,
+wp(R), from the azimuthal angle average in the circular
+annulus of each radial bin R and the line-of-sight projec-
+tion over π = [0, πmax], according to Eq. (7)."
+"We use 19 and 22 independent realizations that are
+built using the different seeds of the initial conditions
+for ∆Σ and wp, respectively [40] [74]. We then measure
+the average mock signals of ∆Σ and wp for each of the
+galaxy samples (Table II). These correspond to 19 and
+22 (h−1Gpc)3 volumes, respectively, that are larger than
+the volume of any of the three redshift slices in Table II
+by at least a factor of 11. Recalling that the overlapping
+area of HSC-Y1 data and SDSS is only about 140 sq.
+deg., compared to the SDSS area coverage of 8,300 sq.
+deg., the effective volume for the ∆Σ measurement of
+each sample is smaller than that of wp by a factor of 60.
+Hence the simulation volume used for the mock signal
+of ∆Σ is larger than that of the ∆Σ measurement by at
+least a factor of 650. Thus by using the mock signals for
+the larger volumes in cosmology challenges, we can min-
+imize any unwanted bias in estimated parameters due to
+sample variance. In this way we can evaluate the per-
+formance of each method, i.e. the ability to recover the
+true cosmological parameters, without being affected by
+the sample variance."
+"The data points in each panel of Fig. 4 show the mock
+signals of ∆Σ and wp for each of the LOWZ, CMASS1
+and CMASS2 samples (see Table II) for the Planck cos-
+mology. The error bars in each bin are the statistical
+errors expected for the SDSS and HSC-Y1 surveys as we
+will explain below. The figure shows that a sufficient
+number of the realizations of the mock catalogs lead to
+well-converged, smooth signals in each bin, and the sta-
+tistical scatters appear to be negligible. This allows us
+to robustly evaluate the performance of the method for
+cosmological parameter estimation."
+"C. Light-cone mock catalogs of HSC- and
+SDSS-like galaxies for estimating the covariance"
+"As we described in Section II A, ∆Σ is independent of
+source redshift, and depends only on the galaxy-matter
+cross correlation at lens redshift. Based on this fact, we
+construct the best-available, accurate mock signal for ∆Σ
+from the mock catalogs of SDSS-like galaxies as we de-
+scribed above. However, the lensing effects on the same"
+"TABLE III. The cumulative signal-to-noise (S/N) ratios of
+∆Σ, wp and the joint measurements for the LOWZ, CMASS1
+and CMASS2 samples, which are estimated using the mock
+signals and the covariance matrices. Here we define the “cu-
+mulative” S/N over the ranges of R/[h−1 Mpc] = [3, 30] and
+[2, 30] for ∆Σ and wp, respectively, which are our baseline
+choices of the radial range (see text for details). For the “to-
+tal” S/N of ∆Σ we take into account the cross-covariances
+between ∆Σ’s of different galaxy samples. We assume that
+the wp-signals for the three samples are independent from
+each other, and ignore the cross-covariances between ∆Σ and
+wp."
+"LOWZ CMASS1 CMASS2 total
+∆Σ 8.64 8.86 8.48 14.7
+wp 32.9 32.1 30.4 54.7"
+joint (∆Σ + wp) 34.0 33.3 31.6 56.6
+"population of source galaxies by foreground structures at
+different redshifts, from the redshifts of SDSS galaxies,
+– cosmic shear causes statistical scatters in the observed
+galaxy ellipticitiies. We need to properly take into ac-
+count these effects. In this subsection, we describe the
+mock catalogs of HSC- and SDSS-like galaxies that are
+built in the light-cone simulations, and then use the mock
+catalogs to model the covariance matrices of ∆Σ and wp."
+"To construct the mock catalogs in a light-cone volume,
+we use the full-sky, light-cone simulations generated in
+Takahashi et al. [75]. The light-cone simulation consists
+of multiple spherical shells with an observer being at the
+center of the sphere, and each spherical shell contains the
+lensing fields and the halo distribution, where the lensing
+fields at the representative redshift of the shell can be
+used to simulate the lensing distortion effect on a galaxy
+at the position by foreground structure if the galaxy is
+located within the shell. The halo distribution in each
+shell reflects a realization of halos in large-scale structure
+at the redshift corresponding to the radius of the shell
+(the distance from an observer to the shell). In this paper
+we use 108 realizations of the full-sky simulations."
+"As described in Appendix B in detail, we populate
+HSC- and SDSS-like galaxies in the full-sky, light-cone
+simulation. For the HSC galaxies, we use the actual
+HSC shape catalog [42], used for the HSC-Y1 weak lens-
+ing measurements [4], and populate each galaxy into the
+corresponding shell in the light-cone simulation accord-
+ing to its angular position (RA and dec) and photometric
+redshift (best-fit photo-z). Then we simulate the lensing
+signal on each galaxy using the lensing information of
+light-cone simulation. Thus the mock HSC catalog in-
+cludes properties of actual data (the angular positions
+and the distributions of ellipticities and photo-z’s) as
+well as the geometry and masks of the HSC footprints.
+Since the HSC-Y1 data still has a small area coverage
+(140 sq.deg.), we identify 21 footprints of the HSC-Y1
+data in each of the all-sky, light-cone simulation realiza-
+tions [76, 77]. We thus generate 2268 mock catalogs of
+the HSC data in total."
+"For the SDSS galaxies, we populate galaxies into halos
+in the light-cone simulation based on the HOD method.
+We built mock catalogs for each of the three SDSS-like
+galaxies (LOWZ, CMASS1, and CMASS2) in their corre-
+sponding redshift ranges in the assigned survey regions of
+the SDSS DR11 survey footprints. Given the large sur-
+vey area of SDSS data (about 8,000 sq. deg.), we identify
+only one SDSS region in each realization of the light-cone
+simulations, and thus build 108 mock catalogs for each
+of the SDSS galaxies in total."
+"Each of our mock catalog realizations in the light-cone
+volume not only contains the angular and redshift (ra-
+dial) distributions of HSC and SDSS galaxies, but also
+contains the lensing effects on each source galaxy by the
+SDSS galaxies and other foreground structures at dif-
+ferent redshifts from the SDSS redshift. We then per-
+form measurements of ∆Σ and wp from each realization
+using the same analysis pipelines that are used in the
+actual measurements of the real HSC and SDSS data.
+Finally we estimate the covariance for the galaxy-galaxy
+weak lensing ∆Σ for each of the SDSS LOWZ, CMASS1
+and CMASS2 galaxies, from the scatters among the 2268
+measurements. The covariance matrices of ∆Σ for the
+different galaxy samples at different lens redshifts have
+cross-covariance components because the measurements
+use the same source galaxies and are affected by weak
+lensing due to the same foreground structure (cosmic
+shear) in each light-cone simulation realization. Our co-
+variance properly takes into account the cross-covariance.
+On the other hand, for the covariance of wp, we apply
+the jackknife method to estimate the covariance of wp
+for each realization, and then use the average of the 108
+covariances as the estimate of the wp covariance used in
+this paper."
+"The error bars in each bin in Fig. 4 are estimated from
+the covariance matrices we described above. The figure
+shows that the HSC-Y1 data allows for a significant de-
+tection of the lensing signals at each bin. Table III gives
+the cumulative signal-to-noise (S/N) ratios expected for
+measurements of ∆Σ and wp from the HSC-Y1 and SDSS
+data and the joint measurements. Here, as for our de-
+fault choice of the range of separation scales, we adopt
+3 ≤ R/[h−1Mpc] ≤ 30 for ∆Σ and 2 ≤ R/[h−1Mpc] ≤ 30
+for wp, respectively. The table gives the cumulative S/N
+integrated over the separation ranges properly taking into
+account the covariance and the cross-covariance matrices.
+It is clear that wp has a grater S/N value than ∆Σ does
+by a factor of 4, because of the much wider area coverage
+of SDSS data compared to the HSC-Y1 data by a factor
+of 60. Nevertheless, we will show later that combining
+∆Σ and wp is crucial to lift parameter degeneracies and
+obtain useful cosmological constraints."
+"In the following, we do not include the cosmology de-
+pendence of the covariance matrix, motivated by the dis-
+cussion in [78]. Hence the differences in the performance
+of different setups/methods that we will show below are
+purely from the differences in the model or setups."
+"TABLE IV. Prior range of each model parameter. In cos-
+mology challenges of parameter estimation, we consider two
+cosmological parameters, Ωde, and ln"
+"(
+1010As"
+")
+, and consider"
+"5 HOD parameters for each of the LOWZ, CMASS1 and
+CMASS2 samples. Hence we have 17 model parameters in
+total for the baseline method. For an extended method, we
+also include the nuisance parameters to model the effects of
+photo-z errors (∆zph) and the multiplicative shear bias (mγ)
+for which we employ the Gaussian prior with width given in
+the number in the table."
+"Parameters prior range [min,max]
+Ωde [0.54752, 0.82128]
+ln
+(
+1010As"
+")
+[2.4752, 3.7128]"
+"logMmin [12.0,14.5]
+σ2logM [0.01,1.0]
+logM1 [12.0,16.0]
+κ [0.01,3.0]
+α [0.5,3.0]
+∆zph Gauss: 0.04 or 0.1
+mγ Gauss: 0.01"
+"IV. METHODOLOGY FOR COSMOLOGY
+CHALLENGES"
+"The purpose of this paper is to study whether the halo
+model based method can recover the true cosmological
+parameters from a hypothetical parameter inference, i.e.
+comparing the theoretical templates with the mock sig-
+nals, taking into account the error covariance in the like-
+lihood analysis. Here we describe our methodology to
+perform cosmology challenges. We employ different se-
+tups of the analysis method to quantify the impact of
+various effects on cosmological parameter estimation, and
+describe each setup and its purpose."
+A. Parameter estimation method
+"We assume that the likelihood of the mock signals
+given the model parameters follows a multivariate Gaus-
+sian distribution:"
+"lnL(d|θ) = −1
+2"
+[di − ti(θ)] (C−1)ij [dj − tj(θ)]
+"+ const., (34)"
+"where d is the mock data vector, t is the model vector
+computed from the theoretical template as a function
+of the model parameters (θ), C−1 is the inverse of the
+covariance matrix, and the summation runs over the in-
+dices, i, j, corresponding to the dimension of the data
+vector. In our baseline analysis we use, as the data vec-
+tor, ∆Σ(R) given in 9 radial bins, logarithmically-evenly
+spaced over 3 ≤ R/[h−1Mpc] ≤ 30, and wp(R) in 16 ra-
+dial bins over 2 ≤ R/[h−1Mpc] ≤ 30, respectively, for
+each galaxy sample [79]. Thus we use 75 data points
+in total (3 × (9 + 16) = 75). Note that, for our default"
+"analysis, we do not include the abundance information of
+galaxies (n̄g) in parameter inference. Even if we employ
+a weak prior on the abundance (e.g., 50% of the number
+density), the following results remain almost unchanged,
+but will come back to a question of whether a mild use
+of the abundance information can improve the parameter
+estimation."
+"For the model parameters (θ) in Eq. (34), we consider
+the two cosmological parameters, Ωde and ln"
+"(
+1010As"
+"and 5 HOD parameters for each of the LOWZ, CMASS1,
+and CMASS2 samples (Table II). Hence we have 17 pa-
+rameters (2 + 3 × 5 = 17) in total. Since the clustering
+observables are primarily sensitive to the amplitude pa-
+rameters Ωde and As for the flat ΛCDM cosmology, we
+consider only the two parameters, and fix other cosmolog-
+ical parameters to their values of the Planck cosmology
+in parameter inference. Hence the degrees of freedom for
+the fiducial analysis is Ndof = Nd −Np = 75 − 17 = 58.
+If we include further nuisance parameters to model the
+photo-z errors and/or the shear multiplicative bias, we
+include up to 19 parameters (i.e. 1 or 2 additional pa-
+rameters). For a given set of the model parameters, we
+can compute the model vector t at each radial bin."
+"We then perform parameter estimation based on the
+Bayesian inference:"
+"P(θ|d) ∝ L(d|θ)Π(θ), (35)"
+"where P(θ|d) is the posterior distribution of θ and Π(θ)
+is the prior distribution. Throughout this paper we em-
+ploy a flat prior on each model parameter as given in
+Table IV. We checked that the priors of the cosmologi-
+cal parameters are wide enough, and the following results
+for the posterior distribution are not affected by the prior
+range."
+"We draw samples from the posterior distribution of pa-
+rameters, given the mock signals, with the help of nested
+sampling as implemented in the publicly available pack-
+age Multinest (Multi-Modal Nested Sampler) [80] to-
+gether with the package Monte Python [81] to sample
+the posterior distribution of the parameters. In the fol-
+lowing we mainly focus on the posterior distributions of
+Ωm, σ8 and S8 ≡ σ8(Ωm/0.3)0.5. These are derived pa-
+rameters from the cosmological parameters we use (Ωde,
+ln
+(
+1010As"
+")
+), and we employ the definition of S8 follow-"
+"ing Hikage et al. [4] so that the forecast of S8 estimation
+from our method is compared to the previous results."
+"In this paper we adopt the mode of the marginal-
+ized 1D or 2D posterior distribution to infer the central
+value(s) of the parameter(s), and the highest density in-
+terval of the marginalized posterior to infer the credible
+interval of the parameter(s). We often report the best-fit
+parameters that correspond to a model at the maximum
+likelihood in a multi-dimensional parameter space. As
+stressed in [26] [also see 82], a point estimate of param-
+eter is not useful, because it is sensitive to the degree of
+degeneracies between parameters. For example, even if
+we consider an ideal case that the input signals are from
+the model predictions, the central value of a parameter,"
+"estimated from the mode of the marginalized posterior
+distribution, does not necessarily recover the true value
+as a result of marginalization of the parameters, if the
+target parameter is highly degenerate with other param-
+eters. Rather a more useful quantity is the credible in-
+terval. Hence in the following we will mainly focus on
+the credible interval, and evaluate each method/setup to
+study whether the true value of the cosmological param-
+eters are recovered to within the 68% credible interval.
+We are not interested in an accuracy of recovery of the
+HOD parameters, and we will not pay much attention to
+the HOD parameters."
+"B. Validation strategy against analysis setups:
+scale cuts, parameter degeneracies, observational"
+effects and RSD
+"An advantage of the emulator based halo model is that
+Dark Emulator gives an accurate prediction of the
+halo correlation functions (ξhm and ξhh) including all the
+nonlinear effects down to small scales (nonlinear clus-
+tering, nonlinear bias, and the halo exclusion effect) and
+their dependences on cosmological models within wCDM
+framework. To evaluate the performance of the emulator
+based method, we study various setups as summarized in
+Table V."
+"One question we want to address in this paper is; which
+scale cuts for ∆Σ and wp are adequate in parameter esti-
+mation? Since ∆Σ and wp have higher signal-to-noise ra-
+tios at smaller scales, we want to include the information
+of ∆Σ and wp down to smaller scales in the nonlinear 1-
+halo term regime. However, such smaller scales are more
+affected by nonlinear physics, especially galaxy physics,
+so it would be difficult to accurately model the cluster-
+ing signals on very small scales. Including such small-
+scale information might cause a bias in the estimated
+cosmological parameters. We should avoid such a failure
+situation as much as possible. To estimate appropriate
+scale cuts, we will study the performance of the method
+adopting different scale cuts of (0.5, 0.75), (1,1.5), (2, 3)
+or (8,12) (in units of h−1Mpc) for wp and ∆Σ, respec-
+tively, where (2, 3) is our fiducial choice unless explicitly
+stated. For all the cases we adopt Rmax = 30 h"
+"−1Mpc
+for the maximum scale up to which we include the in-
+formation of ∆Σ and wp for parameter estimation. Thus
+we do not include the BAO information for all the anal-
+yses. To study the impact of the maximum scale, we
+also study the setup for Rmax = 70 h"
+"−1Mpc, fixing other
+parameters to those in the fiducial setups."
+"For the setups labeled as “∆Σ alone” and “wp alone”,
+we study the parameter constraints if using either of ∆Σ
+or wp alone. Comparing this result with the baseline
+method manifests complementarity of ∆Σ and wp in the
+cosmological parameter estimation."
+"To study the impact of the observational effects on
+parameter estimation, we include the geometrical depen-
+dence of Ωm and introduce additional parameter to model"
+TABLE V. A summary of the analysis setups.
+"setup scale cut sample parameters Note
+[h−1Mpc]"
+"baseline (2, 3) (Ωm, σ8)+HOD (17 paras.) fiducial mock (Rmax = 30 h
+−1Mpc)"
+"+RSD (2,3) – include RSD effect in the fiducial mock
+scale cuts (0.5, 0.75) – –"
+"(1, 1.5) – –
+(8, 12) – –"
+"Rmax = 70 h
+−1Mpc (2,3) – use up to Rmax = 70 h"
+"−1Mpc
+∆Σ alone (2,3) – –
+wp alone (2,3) – –
+Ωm-goem. (2,3) – via (Σcr, R)
+photo-z error (∆zph) (2,3) +∆zph only in model
+shear-m (∆mγ) (2,3) + ∆mγ only in model
+Ωm,geom+∆zph+∆mγ (2,3) + (Ωm,geom,∆zph,∆mγ) only in model
+full HSC (2,3) – use 0.1× Cov∆Σ mimicking the full HSC data"
+"the photo-z error and/or multiplicative shear bias, as dis-
+cussed in Sections II D 1–II D 3."
+"For the setup labeled as “RSD”, we study the impact
+of RSD effect. In the theoretical template we model the
+RSD effect using the linear RSD model. Then we com-
+pare the theoretical template with the mock catalog in-
+cluding the full RSD effects, and then assess whether the
+theoretical model is still applicable to a realistic setup,
+without any significant bias or degradation in the esti-
+mated parameter."
+"Finally, we show a forecast of how the anticipated full
+HSC dataset covering 1400 sq. deg., about factor of 10
+larger area than the HSC-Y1 data, can improve the cos-
+mological constraints. To do this forecast, we simply
+scales the covariance of ∆Σ by the area factor between
+the HSC-Y1 and full datasets."
+"C. Validation strategy against uncertainties in
+halo-galaxy connection"
+"The HOD model is an empirical prescription of the
+halo-galaxy connection. Our expectation is that we could
+recover the underlying cosmological parameters as long
+as a sufficient number of halo-galaxy connection parame-
+ters are introduced and then the effects are marginalized
+over when estimating cosmological parameters. To as-
+sess the “robustness” of our emulator based halo model
+against uncertainties in halo-galaxy connection, we use a
+wide variety of mock galaxy catalogs to study whether
+the baseline method can recover the true cosmological
+parameters for the different catalogs, as summarized in
+Table VI."
+"Fig. 5 compares the mock signals of ∆Σ and wp for
+different mocks relative to those of the fiducial mock.
+Here all the mocks, except for the “cent-incomp.” and
+“FoF-halo” mocks, are built using the same HOD as
+that of the fiducial mocks, but using different ways of"
+"populating galaxies into individual halos, as described
+below. The variety in the target observables for a fixed
+HOD is possible, because the HOD only specifies the av-
+erage number of galaxies per halo in each mass bin, but
+there are many different ways to populate galaxies into
+halos leading to different spatial distributions (cluster-
+ing properties) of galaxies, even for the same HOD. The
+different mock catalogs lead to modifications in the am-
+plitudes and scale-dependences of ∆Σ and wp in a com-
+plex way, compared to the fiducial mock. One of the
+most important systematic effects is the assembly bias
+effect, and we also use the mock catalogs, labeled as
+“assembly-b-ext” and “assembly-b”, to test the per-
+formance of our method against the assembly bias effect."
+"In the following we describe details of each mock.
+Readers, who are interested in the results, can skip this
+section and directly go to Section V."
+1. Satellite galaxies
+"Even if the HOD model is fixed, there are several ways
+of populating satellites in halos in each simulation real-
+ization. To study the impact of variations in the distri-
+bution of satellite galaxies, we construct several mocks,
+for the same HOD as that of the fiducial mock."
+"The “sat-mod” mock is a slight modification from the
+fiducial mock. In this mock we populate satellite galax-
+ies in halos irrespective of whether each halo already
+hosts a central galaxy. In this mock there are halos
+which host only satellite galaxy(ies) inside, without a
+central galaxy. Here we assume that the radial distri-
+bution of satellite galaxies follows the NFW profile as in
+the fiducial mock."
+"For the “sat-DM” mock, we populate satellite
+galaxy(ies) in each host halo by randomly assigning each
+satellite to dark matter particles in the halo, in contrast
+to the NFW profile."
+"TABLE VI. A summary of the mock catalogs we use in this paper to assess “robustness” of the baseline method against
+variations in halo-galaxy connection. All the mock catalogs, except for “cent-imcomp.” and “FoF-halo” catalogs, have the
+same HOD in average sense, but leads to modifications in ∆Σ and wp in their amplitudes and scale-dependences. The column
+“satellite gals.” denotes a model of the spatial distribution of satellite galaxies in the host halo. In the columns of ∆Σ and wp,
+“X” or “–” denote whether they are modified from the fiducial mock or not, respectively."
+"Model HOD satellite gals. ∆Σ wp description
+fiducial fid. NFW – – fiducial model
+RSD fid. NFW – X include the RSD effect in w
+sat-mod fid. NFW X X populate satellites irrespectively of centrals
+sat-DM fid. DM part. X X populate satellites according to N -body particles
+sat-sub fid. subhalos X X populate satellites according to subhalos
+off-cent1 fid. NFW X X all centrals off-centered, with Gaussian profile
+off-cent2 fid. NFW X X a fraction (0.34) of “off-centered” centrals, assuming Gaussian profile
+off-cent3 fid. NFW X X similar to “off-cent1”, but with NFW profile
+off-cent4 fid. NFW X X similar to “off-cent2”, but with NFW profile
+cent-incomp. 〈Nc〉 mod. NFW X X include an “incomplete” selection of centrals
+FoF-halo mod. FoF halos X X use FoF halos to populate galaxies
+assembly-b-ext fid. NFW X X populate galaxies according to concentrations of host halos
+assembly-b fid. NFW X X similar to “assembly-b-ext”, but introduce scatters
+baryon fid. NFW X – mimic the baryonic effect of Illustris on the halo mass profile"
+"For the “sat-subhalo” mock, we populate satellite
+galaxy(ies) in each host halo by randomly assigning each
+satellite to subhalo(s) in the host halo, which are taken
+from the Rockstar output."
+2. Off-centering effects of “central” galaxies
+"For the fiducial mocks, we assume that “central”
+galaxies are located at the center (the highest mass den-
+sity) of each host halo. However, a central galaxy in a
+host halo can be “off-centered” as a result of merger or ac-
+cretion in a hierarchical structure formation [54, 55]. To
+mimic this possible effect, we generate mock catalogs in-
+cluding the off-centering effects of central galaxy in each
+halo. Note here that we mean, by “central” galaxies,
+galaxies that are populated into halos according to the
+central HOD, and the central galaxies can be off-centered
+from the true halo center. More physically speaking, a
+galaxy which resides in the most massive subhalo can be
+considered as a central galaxy, but the galaxy can be off-
+centered due to the physical effects we discussed above."
+"We generate four kinds of mock catalogs including the
+off-centering effects, following the method in Kobayashi
+et al. [48] [also see 21]. The off-cent1 mock is de-
+signed to include the maximum possible amount of off-
+centering effect, where we assume that all central galax-
+ies are off-centered from the true halo center of each host
+halo. We assume that the average radial profile of off-
+centered galaxies with respect to the halo center follows
+a Gaussian profile with width Roff = 2.2, i.e. given by
+p̃off(k) ∝ exp"
+"[
+−k2(Roffrs)2/2"
+"]
+for the radial profile in"
+"Fourier space, where Roff is a parameter to characterize
+the typical off-centering radius relative to the scale radius
+(rs) of the NFW profile. When we populate a central"
+"galaxy in each halo, we randomly draw an off-centering
+radius from the Gaussian profile, and then place the
+galaxy into the spherical shell of the off-centering radius
+in the host halo (with randomly choosing the angular po-
+sition for the azimuthal angles). Then we populate satel-
+lite galaxies in the same way as that for the fiducial
+mock."
+"For the “off-cent2” mock, we assume that a frac-
+tion of central galaxies are off-centered. Following the
+implication found in More et al. [25] [54] for the SDSS
+galaxies, we assume qoff = 0.34 of the central galaxies are
+off-centered, while the remaining galaxies (1−qoff = 0.66)
+are at the halo center. We then populate satellite galaxies
+in the same way as that for the fiducial mock."
+"The “off-cent3” mock is very similar to the
+off-cent1 mock, but we populate the off-centered “cen-
+tral” galaxies into halos assuming that the off-centered
+galaxies follow the NFW profile of the host halo, similarly
+to satellite galaxies."
+"The “off-cent4” mock is very similar to the
+off-cent2 mock, but we populate the off-centered galax-
+ies assuming the NFW profile as in off-cent3 mock."
+3. FoF halos
+"Dark matter halos are neither uniquely-defined ob-
+jects nor have a clear boundary with the surrounding
+structure. In this paper we use those identified by the
+Rockstar algorithm with the spherical-oversensity (SO)
+masses in each simulation realizations as our default
+choice (see Section III A). For the “FoF halo” mock,
+we use halos that are identified by the friends-of-friends
+(FoF) method with linking length bFoF = 0.2, in simula-
+tion realizations. The FoF halos do not necessarily have"
+"1.50
+∆"
+"d
+LOWZ CMASS1 CMASS2"
+"w
+p
+/
+w"
+sat-mod
+sat-DM
+sat-sub
+off-cent1
+off-cent2
+off-cent3
+off-cent4
+"∆
+Σ
+/
+∆"
+100 101 102
+R [h−1Mpc]
+"w
+p
+/
+w"
+100 101 102
+"R [h−1Mpc]
+100 101 102"
+R [h−1Mpc]
+baryon
+assembly-b-ext
+assembly-b
+cent-incomp.
+FoF-halo
+"FIG. 5. The mock signals of ∆Σ and wp relative to those for the fiducial mock, for each of variants of the mock catalogs in
+Table VI. The error bars are the same as Fig. 2."
+"1012 1013 1014 1015
+M [h 1 M ]"
+"(d
+n F"
+"(d
+n S"
+"z = 0.251
+z = 0.484
+z = 0.617"
+"FIG. 6. The ratio of the halo mass function of FoF halos to
+that of SO halos in each mass bin. The data points show the
+results at three redshifts z = 0.251, 0.484 and 0.617, corre-
+sponding to the representative redshifts of LOWZ, CMASS1
+and CMASS2, respectively. The data point in each bin is the
+the mean of the ratios among 19 realizations of 1 (h−1Gpc)-
+size box simulations, and the error bar is the error on the mean
+among 19 realizations, which is computed from the scatters
+among 19 realizations, divided by"
+"a one-to-one correspondence to the fiducial halos. The
+mass of each FoF halo is different from the SO mass even
+if the corresponding halos are identified, because their
+boundaries are different. Fig. 6 compares the mass func-
+tion of halos measured using the SO halo mass definition
+or the FoF definition from the same N -body simulation
+realization, at three redshifts corresponding to those for
+LOWZ, CMASS1, and CMASS2, respectively. The fig-
+ure shows a sizable difference in the halo mass functions
+over the range of mass scales we consider."
+"To generate the “FoF-halo” mock we treat the FoF
+halo mass of individual halos, as the mass argument for
+the mean HOD functions, and then populate galaxies in
+FoF halos using the same HOD method as that for the
+fiducial mock."
+4. Assembly bias effect
+"The “assembly bias” effect refers to the fact that the
+clustering amplitudes of galaxies or halos at large scales
+depends on a secondary parameter other than the halo
+mass, especially depending on the assembly history of
+galaxies/halos [83–85]. The assembly bias is one of the
+most important physical effects causing a violation of the
+simple halo model picture which assumes that clustering
+properties of halos are determined solely by halo mass."
+"To study whether or not cosmology inference based on
+our method is robust against the assembly bias effect,
+we use the mocks generated following the method in
+Kobayashi et al. [43]. This is one of the most important
+tests we address in this paper."
+"The “assembly-b-ext” mock is intended to study the
+worst case scenario for the assembly bias effect. To make
+this mock, we first, for each halo, calculate the fraction of
+mass enclosed within a sphere of 50% of the halo radius
+R200 to the whole halo mass M200. We denote this inner
+mass fraction as fin. We use this quantity as a proxy
+of the halo concentration, i.e., the higher fin means the
+higher concentration. Then we make a ranked list of
+halos in which we sort the halo by ascending order of fin,
+in each narrow bin of halo masses. We populate central
+galaxies, according to the central HOD, into halos from
+the top of the list (from the lowest-concentration halo)
+in each mass bin. We then populate satellite galaxies in
+halos that already host central galaxies using the satellite
+HOD. For the mock generated in this way, we can have
+a maximum effect of the assembly bias in the large-scale
+clustering amplitudes for all the three galaxy samples. As
+can be found from Fig. 5, wp(R) has larger amplitudes
+at large separations, by up to a factor of 1.6 than that of
+wp in the fiducial mock, which is quite substantial."
+"For the mock assembly-b, we introduce a scatter to
+fin of each halo:"
+"log10 f
+scatter
+in = log10 fin + �. (36)"
+"We assign a random scatter, �, to each halo drawn from
+a zero-mean Gaussian distribution with σ, where σ is
+a parameter to control the amount of the scatter. We
+adopt σ = 0.1 to generate the assembly-b mock for all
+the three galaxy samples, which still leads to a significant
+boost in the clustering amplitudes in wp by up to a factor
+of 1.3 (therefore about halved strength compared to the
+assembly-b-ext mock) than that of wp in the fiducial
+mock. This might be more realistic for host halos of the
+SDSS galaxies (∼ 1013 h−1M�), although the assembly
+bias effect has not been detected at a high significance
+from the real data. Note that the mean HOD is not
+modified from the fiducial mocks with these procedures."
+5. Baryonic effect
+"The baryonic effects inherent in galaxy forma-
+tion/evolution, which we are missing in our N -body sim-
+ulations, are another important physical systematic ef-
+fect, and we need to quantify their impact on the param-
+eter inference in our cosmology challenges. Although the
+baryonic effects are still difficult to accurately model from
+the first principles, one should keep in mind some con-
+servation properties in the distribution of galaxies. First,
+massive galaxies like the SDSS LOWZ/CMASS galaxies
+are likely to form at the same peaks of primordial den-
+sity fluctuations even in the presence of baryonic physics.
+Hence the distribution of massive galaxies relative to the"
+10−1 100 101
+R [h−1Mpc]
+"(B
+a
+ry"
+Leauthaud+17 Fig12
+"FIG. 7. We use the method in Schneider and Teyssier [45] to
+model the baryonic effect on the galaxy-galaxy weak lensing
+profile, ∆Σ, where the mass conservation around halos hosting
+galaxies is explicitly imposed. We tune the model parameters
+to reproduce the baryonic effect that is seen in the Illus-
+tris hydrosimulation [18]. Shown is the ratio of ∆Σ for the
+matched host halos of SDSS-like galaxies in the simulations
+with and without the baryonic effect, which is taken from
+Fig. 12 in Leauthaud et al. [86]. Our method nicely capture
+the baryonic effect, but we note that this would be a worst
+case of the baryonic effect, because the Illustris (not Illus-
+trisTNG) employed the too large baryonic effect (especially
+AGN feedback)."
+"total matter distribution, i.e. the bias function, is not
+largely changed by baryonic physics [19, 87]. On the
+other hand, the baryonic physics causes a redistribution
+of matter around each galaxy, e.g. due to various effects
+such as dissipative contraction and supernova/AGN feed-
+backs. For this reason, the radial profile of matter distri-
+bution around a galaxy would likely be modified."
+"We follow the method in Schneider and Teyssier [45]
+[also see 46] to include baryonic effects to the mock sig-
+nals. The notable feature of this model is that the model
+explicitly imposes the mass conservation around halos,
+and models the baryonic effects as a redistribution of the
+surrounding matter around each halo (more exactly the
+halo profile). We tuned the model parameters so that the
+model prediction reproduces the baryonic effect on the
+lensing profile, ∆Σ, in the original Illustris hydrosim-
+ulation [18] that implemented too large baryonic effect
+than implied by observations, as explicitly demonstrated
+in Fig. 7. Hence the baryon mocks are considered as a
+worst case of the baryonic effect on the weak lensing pro-
+file. For wp, we use the mock signal for the fiducial
+mocks; that is, we do not include a possible effect of the
+baryonic physics on the distribution of galaxies in the
+host halo."
+100 101
+r [h−1Mpc]
+")
+LOWZ"
+100 101
+r [h−1Mpc]
+CMASS1
+100 101
+r [h−1Mpc]
+"CMASS2
+baseline"
+sat-mod
+sat-DM
+sat-sub
+off-cent1
+off-cent2
+off-cent3
+off-cent4
+assembly-b-ext
+assembly-b
+cent-incomp.
+FoF-halo
+"FIG. 8. Cross correlation coefficients, defined as r
+(ξ)
+cc (r) ≡ ξgm(r)/"
+"√
+ξgg(r)ξmm(r), for different mock catalogs of SDSS-like"
+galaxies we use in this paper.
+D. Cross-correlation coefficients in the mocks
+"All the mock catalogs we use in this paper have a
+property that the cross-correlation coefficient, rcc(r) ≡
+ξgm/[ξggξmm]"
+"1/2 ' 1 at the limit of large scales, greater
+than the size of massive halos, say at & 10 h−1Mpc,
+as shown in Fig. 8. This property is expected if galaxy
+physics is confined to local, small scales, and because
+the clustering amplitudes at larger scales than the scale
+of galaxy physics are governed by gravity alone (and
+properties of primordial fluctuations) and then behave
+as a linear biasing relation to the underlying matter
+distribution at the large scales. Encouragingly this is
+confirmed recently by using the hydrodynamical simu-
+lation IllustrisTNG in Ref. [58], where various galaxy
+samples, which are selected based on host halos and
+the various environment parameters, display rcc ' 1 at
+r & 10 h−1Mpc. The Dark Emulator outputs also pre-
+dict r ≡ ξhm/[ξhhξmm]1/2 ' 1 for halo correlation func-
+tions at scales greater than the size of halos. However,
+even for the scales where rcc ' 1, this does not mean
+that the linear theory serves as an accurate theoretical
+template [26]. It is important to include the nonlinear
+clustering, the nonlinear halo bias and the halo exclusion
+effect in the theoretical template."
+"We also note that rcc can be greater than unity;
+rcc ≥ 1, which occurs in the 1-halo term regime where
+the sub-Poisson nature 〈Ng(Ng − 1)〉 6= 〈Ng〉2 becomes
+important due to a finite number statistics of galaxies in
+the same host halo [25, 33, 36]."
+V. RESULTS
+"In this section we show the main results of this pa-
+per, which are assessment and validation of the emulator
+based halo model method for cosmology inference. Here
+we mean by “validation” whether the method can re-
+cover the true cosmological parameters, Ωm0, σ8 and S8,
+to within 68% credible intervals, after marginalization
+over the HOD parameters (galaxy-halo connection pa-"
+"rameters). Note that we will not focus on the accuracy
+of recovering the HOD parameters."
+"A. Validation of the baseline method,
+complementarity of ∆Σ and wp, and tests with"
+different scale cuts
+"First we perform a sanity check; we study whether
+our baseline method (see Table V) can recover the true
+cosmological parameters when comparing the theoreti-
+cal templates to the mock signals measured from the
+fiducial mock that is based on the same HOD model
+used in the theoretical template. Different model pa-
+rameters affect the observables in a complex way, so it
+is not obvious whether the baseline method can recover
+the true cosmological parameters, after projecting the
+posterior distribution in a multi-dimensional parameter
+space onto a sub-space including the cosmological param-
+eters. In fact, as discussed in Refs. [26, 82], the modes
+of the marginalized posterior distribution of cosmological
+parameters could be biased from the true values, if the
+parameters suffer from severe degeneracies."
+"Fig. 9 shows the results. Here we employ Rcut = 2 and
+3 h−1Mpc for the scale cuts for wp and ∆Σ above which
+we include the clustering and lensing information in pa-
+rameter inference (see Table V). The figure nicely shows
+that the lensing and clustering information are comple-
+mentary to each other, and combining the two lifts the
+parameter degeneracies. Thus Fig. 9 gives a validation
+of the baseline method; the baseline method can recover
+the cosmological parameters if properties of the galaxy
+clustering for SDSS-like galaxies are close to the fiducial
+HOD model we employed. The baseline method achieves
+a precision of σ(S8) ' 0.035 for the SDSS and HSC-Y1
+data. In the following we show mainly the results for
+the joint probes combining the information of ∆Σ and
+wp. For completeness of our discussion, in Fig. 22 we
+show the posterior distribution of the parameters includ-
+ing all the HOD parameters for the CMASS1-like galaxy
+sample."
+0.2 0.4
+"σ
+2 lo"
+"lo
+g
+M"
+0.6 0.8 1.0
+0.6 1.0
+logMmin(zCMASS1)
+0.2 0.5 0.8
+σ2logM(zCMASS1)
+lensing (∆Σ) alone
+clustering (wgg) alone
+baseline: ∆Σ + wgg
+"FIG. 9. Marginalized posterior distribution in each 2D sub-space of the parameters, obtained from the projected correlation
+function information alone (wp; orange-color contours), the lensing information alone (∆Σ; blue) and the joint constraints
+(green), respectively. The inner and outer contours show the 68 % and 95 % credible regions, respectively. We adopt the
+baseline setup for which we employ Rcut = 2 and 3 h"
+"−1Mpc for the scales cuts of wp and ∆Σ, respectively. For the mock
+signals, we use the signals measured from the fiducial mocks which are generated using the same HOD model as those in the
+theoretical templates. Here we include 17 model parameters in the parameter inference: 2 cosmological parameters (Ωm and
+σ8) plus 5 HOD parameters for each of the 3 galaxy samples (LOWZ, CMASS1 and CMASS2). Here we show, as an example,
+the results for the central HOD parameters for the CMASS1 sample at z = 0.484, i.e. Mmin and σlogM . The vertical and
+horizontal dashed lines denote the input parameter value used in the mock catalog."
+"What is the impact of HOD parameters on cosmolog-
+ical parameter estimation? To answer this question, in
+Fig. 10 we show the results when fixing the HOD param-
+eters to their fiducial values. It is clear that the HOD
+parameters cause significant degradations in the cosmo-
+logical parameters; for example, the marginalized error"
+"of Ωm is enlarged by a factor of 3 when including the
+HOD parameters. However, this is a price one has to
+pay to obtain robust constraints on cosmological param-
+eters when including the small-scale information. If one
+uses a more aggressive method, e.g. by using a less flexi-
+ble model of halo-galaxy connection (such as fixing some"
+0.30 0.38
+0.8 1.0
+0.8 0.9
+baseline
+fixed HOD
+"FIG. 10. Similar to the previous figure, but shown are the re-
+sults when fixing the HOD parameters in the model templates
+to their fiducial (input) values. The green contours (labeled
+as “baseline”) are the same as those in Fig. 9."
+"HOD parameters), one could suffer from severe biases in
+cosmological parameters."
+"Our results might also be compared to a more conser-
+vative approach, e.g. a method using only the clustering
+observables at large scales, i.e. not including the small-
+scale information. In Fig. 11 we compare the results from
+the halo model method, studied in this paper, with those
+from the perturbation theory (PT) based method studied
+in Sugiyama et al. [26]. They employed the “minimal”-
+bias model using the fully nonlinear matter power spec-
+trum and the linear bias parameter (b1); ξgm = b1ξ"
+"and ξgg = b
+2
+1ξ"
+"NL
+mm, where the halofit model is used to"
+"model the nonlinear ξNLmm. It was shown that, as long
+as the conservative scale cuts Rcut = 12 and 8 h"
+"−1Mpc
+for ∆Σ and wp are employed and the bias parameter is
+treated as a free parameter, the minimal bias method
+passes all the validation tests against a variety of the
+mock catalogs including the assembly bias mock. Hence,
+the results for the minimal bias method can be considered
+as conservative, yet robust parameter constraints that
+can be extracted from the SDSS and HSC-Y1 data. The
+figure clearly shows that including the small-scale infor-
+mation and the halo bias information can improve cosmo-
+logical constraints compared to the conservative method.
+In particular, the halo model based method gives a factor
+of 2 or 3 improvement in the marginalized error of σ8 or
+S8, respectively, compared to that for the minimal bias
+method. Thus the halo model method has a potential
+to obtain the improved cosmological constraints, if the
+model is flexible enough to describe variations in galaxy"
+0.3 0.4
+0.6 1.0
+0.6 0.8 1.0
+minimal bias model
+baseline
+"FIG. 11. Similar to Fig. 9, but the figure compares the
+marginalized posterior distributions obtained from the HOD
+based method, studied in this paper, and the perturbation
+theory (PT) inspired method in Sugiyama et al. [26]. Here
+we apply both the methods to the same fiducial mock sig-
+nals. For the PT method, we model the matter-galaxy cross-
+correlation (ξgm) and the galaxy auto-correlation (ξgg) by the
+nonlinear matter auto-correlation multiplied by a linear bias
+parameter: ξgm = b1ξ"
+"NL
+mm and ξgg = b"
+"NL
+mm. We then treat b1"
+"as a free parameter in the parameter inference, and employ
+the scale cuts of Rcut = 12 and 8 h"
+"−1Mpc for ∆Σ and wp,
+respectively, compared to Rcut = 3 and 2 h"
+"−1Mpc for the
+halo model based method. The green contours are the same
+as those in Fig. 9."
+"clustering at small scales down to a few Mpc, which we
+will test later."
+"In Fig. 12 we give a summary of the performance
+for different setups. The second to the fourth row, ly-
+ing between the horizontal dashed lines, show the re-
+sults when using the different scale cuts, (R∆Σcut, R"
+"wp
+cut) ="
+"(0.5, 0.75), (1.0, 1.5) or (8, 12) h−1Mpc, instead of (2, 3)
+as our fiducial choice. For the fiducial mocks, these
+smaller scale cuts apparently recover the cosmological
+parameters; the true value of each parameter is within
+the 68% credible interval. However, a closer look also
+reveals that the size of the credible interval is not signif-
+icantly improved by including the smaller information.
+We also checked that, when applying the smaller scale
+cuts to other mock catalogs rather than the fiducial
+mocks, those lead to a larger bias in the cosmological
+parameters compared to the baseline method. Hence,
+with these results, we conclude that the fiducial scale
+cuts of (2, 3) h−1Mpc are reasonable. On the other hand,
+the row labeled as “Rmax = 70 h"
+"−1Mpc” shows the re-
+sults when including the information of ∆Σ and wp up"
+"0.8 0.9
+S8"
+"0.7 0.8 0.9
+σ8"
+"0.25 0.35
+Ωm0"
+"baseline: (2,3)"
+"scale cuts: (0.5, 0.75)"
+"scale cuts: (1.0, 1.5)"
+"scale cuts: (8, 12)"
+"Rmax = 70h
+−1Mpc"
+lensing alone
+wp alone
+Ωm0-geom.
+∆zph: 0.04
+∆zph: 0.1
+∆mγ: 0.01
+"Ωm0+∆zph+∆mγ: (0.1, 0.01)"
+full HSC
+minimal bias (Sugiyama+ 2020)
+"FIG. 12. Summary of the estimation of each cosmological parameter, Ωm, σ8 or S8(≡ σ8Ω0.5m ), for the different setups in
+Table V. The blue dot in each row denotes the mode of the marginalized posterior distribution of each parameter, and the error
+bar denotes the 68% credible interval, which is computed from the highest density interval of the marginalized 1D posterior
+distribution. The vertical red line denotes the true value used in the mock catalog, and the shaded region denotes the 68%
+credible interval for the baseline setup for comparison."
+"to Rmax ' 70 h−1Mpc instead of our default choice
+Rmax = 30 h"
+"−1Mpc. Note that this maximum scale is
+still below the BAO scales, and we do not include the
+BAO information. It is clear that the larger-scale infor-
+mation does not improve the cosmological parameter es-
+timation, and 30 h−1Mpc seems sufficient for the signal-
+to-noise level expected for the HSC-SDSS analysis."
+B. Comparison with analytic halo model
+"In Fig. 13, we compare the results for our baseline
+method with those obtained by comparing the model pre-
+dictions of analytical halo model [88] in More et al. [25]
+with the mock signals from the fiducial mocks. The
+analytical halo model was constructed by calibrating the
+standard halo model [33] with N -body simulation results
+available at that time, e.g. to include the halo exclusion
+effect and the nonlinear halo bias effect [see Ref. 47, for
+details]. For example, the analytical halo model uses the
+fitting formula of halo bias developed in Ref. [89, 90],
+but several recent studies point out an inaccuracy in the
+fitting formula, up to 5% in the bias amplitude [see the
+bottom panel of Fig. 22 in Ref. 40] [also see Refs. 91–
+93]. For the analytical halo model, we did not include
+the off-centering effect or incompleteness effect as in our"
+"baseline method.
+The figure shows sizable differences in all the cosmo-"
+"logical parameters between our emulator based method
+and the analytical halo model. The 1D posterior dis-
+tribution shows that the analytical halo model cannot
+recover the true values of σ8 and S8 to within the 68%
+credible interval. In addition, the degeneracy directions
+in the projected two parameter subspace are quite differ-
+ent. Figuring out the cause of the difference is beyond
+the scope of this paper, but here at least we would like
+to stress that the emulator-based halo model displays a
+better performance."
+"C. The impacts of observational effects: the
+geometrical correction, photo-z errors, shear"
+multiplicative bias and RSD
+"As discussed in Section II D, various observational ef-
+fects could affect the cosmological inference from the
+measured ∆Σ and wp. For the results discussed up to
+the preceding subsections, we ignored these effects, and
+in this section we study the impact of these effects."
+"The rows with labels starting from “Ωm-geom.” to
+“+RSD” in Fig. 12 show the results when including each
+or all of these observational effects. First let us discuss"
+0.3 0.4
+0.8 1.0
+0.8 1.0
+baseline
+analytic halo model
+"FIG. 13. Similar to Fig. 9, but the plot shows the results for
+the baseline method with those obtained by using the analytic
+halo model in More et al. [25]. Here we used the same scale
+cuts, Rcut = 2 and 3 h"
+"−1Mpc, for wp and ∆Σ, respectively,
+for both methods."
+"the results for “+RSD”. For this test we use the mock cat-
+alogs where we use the fiducial HOD to populate galaxies
+into the simulation realizations and include the RSD ef-
+fects due to the peculiar velocities of individual galaxies
+[43, 48]. Then we perform the cosmology inference by
+comparing the theoretical templates, including the linear
+Kaiser effect (Section II D 4), with the mock signals. The
+figure shows that the linear Kaiser model can properly
+take into account the RSD effect for our fiducial pro-
+jection length (πmax = 100 h"
+"−1Mpc), and there is no
+degradation in the parameter estimation. This is similar
+to the result in Sugiyama et al. [26]. Although the RSD
+effect itself carries the dependence on Ωm (more exactly
+via the growth rate), it leads to only slight improvement
+in Ωm."
+"Now we discuss the results for “Ωm-geom.”, which
+refers to the fact that a reference cosmology needs to
+be assumed to measure ∆Σ(R) and wp(R) from direct
+observables, and the assumed cosmology generally dif-
+fers from the underlying true cosmology. Exactly speak-
+ing, for a flat-geometry ΛCDM model, we have to “re-
+measure” ∆Σ(R) and wp(R) every time Ωm is varied in
+parameter estimation. This might be time-consuming,
+and indeed More [60] showed that this conversion can
+be safely done by a multiplicative factor taking into ac-
+count the geometrical dependence, which we employ in
+this paper. Fig. 12 shows that including the Ωm geo-
+metrical dependence does not cause a bias in the cosmo-
+logical parameters. However, a closer look shows that"
+"including this dependence slightly enlarges the credible
+interval. This happens as follows. If we assume a slightly
+larger value of Ωm, it leads to the smaller amplitude in
+the model prediction of wp (recall that the current con-
+straint is mainly from the wp information). However,
+when assuming such a model with increased Ωm in the
+measurements, it leads to the smaller amplitudes in the
+measured wp as shown in Fig. 2. Thus the dependences
+of Ωm are compensated to some extent in the model and
+the measurement. This is the reason that the credible
+interval of Ωm is slightly degraded."
+"Next we discuss the impacts of photo-z errors and the
+multiplicative shear bias, which are among the most im-
+portant systematic errors in the weak lensing measure-
+ments. As discussed in Sections II D 2 and II D 3, we in-
+troduce nuisance parameters, denoted as ∆zph and ∆mγ ,
+to model these effects. To do this we employ the parame-
+ters to model the systematic effects that could be present
+for the actual HSC data. For a sample of source galax-
+ies, we assume that source galaxies are selected based
+on their photo-z’s satisfying a conservative cut that the
+photo-z posterior distribution of individual galaxies sat-
+isfies"
+"∫∞
+0.75"
+"dz p(z) ≥ 0.99 [94, 95], where the lower cutoff
+of the integration, z = 0.75, is well above the redshifts of
+CMASS galaxies (the maximum redshift cut of CMASS
+galaxies is 0.7 as shown in Table II). After using the re-
+weighting method in [4] to infer the intrinsic redshift dis-
+tribution of source galaxies, we compute the average of
+the lensing critical surface density over the source dis-
+tribution,"
+"〈
+Σ−1cr"
+"〉
+, that is used in the ∆Σ measurement"
+"for each sample of lensing galaxies (LOWZ, CMASS1
+and CMASS2). Then, by shifting the posterior distri-
+bution of all the source galaxies by the same amount,
+∆zph, we repeat the same calculation of"
+"〈
+Σ−1cr"
+"〉
+to esti-"
+"mate a shift in the ∆Σ signal. After computing these
+quantities for multiple values of ∆zph, we include ∆zph
+to compute the shift in ∆Σ from an interpolation of the
+pre-computed values of"
+"〈
+Σ−1cr"
+"〉
+. In this paper we study"
+"the impact of photo-z errors on parameter estimation by
+adopting the Gaussian prior with width σ(∆zph) = 0.04
+or 0.1. Here σ(zph) = 0.04 corresponds to the quoted
+errors of photo-z estimation for the source galaxies, es-
+timated using the same method in [4]. We also adopt a
+very conservative prior of σ(∆zph) = 0.1, which is about
+a factor of 2.5 larger than the quoted errors. Fig. 12
+shows that the cosmological parameters remain almost
+unchanged by the photo-z errors. Thus, as claimed in
+Oguri and Takada [21], a self-calibration of the photo-z
+errors seems to work very well, by using the single sample
+of source galaxies and utilizing the dependence of lensing
+efficiency on lens redshifts."
+"For a multiplicative shear bias, ∆mγ , we employ the
+Gaussian prior σ∆mγ = 0.01 as recommended based on
+dedicated image simulations of HSC galaxies in Mandel-
+baum et al. [42, 96]. Fig. 12 shows that the multiplica-
+tive shear bias does not either affect the cosmological
+parameters. Thus, the method of Oguri and Takada
+[21] allows us to self-calibrate both the photo-z errors"
+"and the multiplicative bias errors. The row denoted as
+“Ωm +∆zph +∆mγ” shows the results including all these
+three effects. The results are not so different from the
+baseline method ignoring these effects. Hence we con-
+clude that these observational effects are not a severe
+source of systematic errors causing a sizable bias in the
+cosmological parameters."
+"When including these observational effects, the base-
+line method can achieve a precision of σ(S8) ' 0.042."
+"D. Tests and validations against uncertainties in
+halo-galaxy connection"
+"In this section, to assess the performance of the halo
+model method against uncertainties in the halo-galaxy
+connection, we perform the parameter inference against
+various mock catalogs (Table VI). Note that we here
+employ the fiducial HOD model (5 parameters model),
+which does not include the off-centering effect, the in-
+completeness effect, the baryonic effect nor the assembly
+bias effect. Here we address whether the fiducial halo
+model can recover the true cosmological parameters to
+within the credible intervals after marginalizing over the
+HOD parameters. Even if we use a weak prior on the
+number density of galaxies (the abundance), e.g. 50% or
+5% of the number density, the following results remain
+almost unchanged."
+"Fig. 14 gives a summary of the results. The figure
+shows that, except for the assembly bias mocks (and the
+extreme off-centering mock, off-cent1, for Ωm0 and σ8),
+the halo model method with the baseline setup recov-
+ers the input cosmological parameters to within the 68%
+credible interval. We should also note that S8 is better
+recovered compared to Ωm0 or σ8. This is an encourag-
+ing result, because S8 is close to the primary parameter
+combination that determines the amplitudes of wp and
+∆Σ. We below discuss the results for some variants of
+the mocks in more detail."
+"Figs. 15 and 16 show the marginalized distributions of
+the cosmological parameters for the off-cent, FoF-halo
+and cent-incomp. mocks (see Table VI). For most cases
+except for the off-cent1 mock, where all the central
+galaxies are off-centered, the halo model method recov-
+ers the true cosmological parameters within 68% credible
+interval. As shown in Fig. 4, the off-cent1 mock gives
+smaller amplitudes in ∆Σ at scales around the scale cut
+(Rcut = 3 h"
+"−1Mpc), but does not change the wp ampli-
+tude at scales greater than the scale cut (R = 2 h−1Mpc).
+The smaller lensing amplitude leads to an underestima-
+tion in the average mass of host halos. Since smaller-mass
+halos give a smaller bias amplitude for a fixed cosmology,
+this would lead to a lower σ8 to reproduce the amplitude
+of wp in the mock signal (see Fig. 2). This explains a neg-
+ative bias in σ8 for the off-cent1 mock. We confirmed
+that, if we employ the larger scale cut for ∆Σ, the bias
+in σ8 is mitigated. For the FoF-halo mock, our method
+nicely recovers S8, although we find sizable biases in Ωm0"
+"and σ8.
+In Fig. 17, we show the results for the baryon,"
+"assembly-b and assembly-b-ext mocks. The figure
+shows that the assembly bias mocks lead to biases in
+the cosmological parameters, greater than the credible
+interval. Thus the assembly bias is indeed the most dan-
+gerous systematic effect, which violates the scaling rela-
+tion of halo bias with halo mass. However, we note that,
+in this paper, the result is considered as the worst-case
+scenario, because we include the maximum possible ef-
+fect of the assembly bias in the assembly-b-ext mock,
+where we populate galaxies into halos assuming a fully
+deterministic assignment of centrals in ascending order of
+halo concentration: we populate galaxies from the lowest
+concentration halos in each mass bin. The impact of the
+assembly bias for more realistic galaxies, even if exists
+for SDSS galaxies, would be much smaller than what is
+shown in this paper. Nevertheless, this possible impact
+of the assembly bias needs to be kept in mind."
+"To tackle the possibility that the actual galaxy sample
+is suffering from the assembly bias effect, we here propose
+a practical solution to assess its impact or mitigate it in
+parameter estimation. In Fig. 18, we show the results
+when using different scale cuts, (4, 6) or (8, 12) h−1Mpc,
+for wp and ∆Σ, instead of our fiducial choice (2, 3). Note
+that (8, 12) is the choice of the minimal bias method in
+Sugiyama et al. [26] (also see Figs. 11 and 14). The figure
+clearly shows that the posterior distribution systemati-
+cally moves with varying the scale cuts, and then the
+choice of (8, 12) recovers the true cosmological parame-
+ters. In this case, the method does not use the 1-halo
+term signal of ∆Σ, and tries to fit the mock signals by
+the model templates, where rcc ' 1 is satisfied. Thus,
+if we observe a similar systematic shift in the parameter
+constraints with varying the scale cuts, we could identify
+a signature of the assembly bias effect in actual data."
+VI. DISCUSSION AND CONCLUSION
+"In this paper we have in detail studied the performance
+of the halo model based method for cosmological param-
+eter estimation. We used Dark Emulator to model the
+halo clustering quantities (halo mass function, halo auto-
+correlation function and halo-matter cross correlation),
+where the emulator includes, by design, all non-trivial ef-
+fects such as nonlinear clustering, nonlinear halo bias and
+halo exclusion effect that are otherwise difficult to analyt-
+ically model. We combined Dark Emulator with the
+HOD method to model clustering observables of galaxies
+for which we consider the projected correlation function,
+wp(R), and the galaxy-galaxy weak lensing ∆Σ(R) in this
+paper. Then we validate the emulator-based halo model
+method by studying whether to recover the cosmologi-
+cal parameters from MCMC analyses by comparing the
+model predictions with the mock signals for the spectro-
+scopic SDSS galaxies and the HSC-Y1 galaxies."
+The main results of this paper are summarized as fol-
+"0.8 0.9
+S8"
+"0.7 0.8 0.9
+σ8"
+"0.25 0.35
+Ωm0"
+baseline
+sat-mod
+sat-DM
+sat-sub
+off-cent1
+off-cent2
+off-cent3
+off-cent4
+baryon
+assembly-b-ext
+assembly-b
+"assemnby-b-ext: (8,12)"
+"assemnby-b: (8,12)"
+cent-incomp.
+FoF-halo
+"FIG. 14. A summary of the performance of the baseline method against different mock catalogs. The circle shows the mode of
+the marginalized posterior distribution of each cosmological parameter, and the the error bar denotes the 68% credible interval.
+The vertical solid line denotes the true value of each parameter. The shaded region denotes the 68% credible interval for the
+fiducial mock, for comparison. The columns labeled as “assembly-b: (8,12)” and “assembly-b-ext: (8,12)” show the results
+when the larger scale cuts of (8, 12) h−1Mpc are employed for wp and ∆Σ."
+"• Our method using Dark Emulator allows for
+computations of wp and ∆Σ at a few CPU sec-
+onds for each model, which is equivalent to a fac-
+tor of million reduction in computation time com-
+pared to the standard method (run N -body simula-
+tions, populate galaxies in halos, and then measure
+the galaxy clustering observables from the mocks).
+With this emulator, we can perform the MCMC
+analysis in practice."
+"• Changes in the cosmological parameters cause char-
+acteristic changes in the amplitudes and scale-
+dependences of wp and ∆Σ via a combination of
+various effects: nonlinear clustering, nonlinear halo
+bias and halo exclusion effect (Fig. 2)."
+"• We showed that the halo model based method can
+recover the underlying cosmological parameters, es-
+pecially S8 = σ8Ω"
+"0.5
+m0, after marginalization over"
+"the halo-galaxy connection (HOD) parameters, for
+a variety of mock catalogs except for the mocks
+including an extreme effect of assembly bias, for"
+"the nominal choices of scale cuts, (R
+wp
+cut, R"
+"∆Σ
+cut) ="
+"(2, 3) h−1Mpc (Figs. 12 and 14). The baseline
+method can achieve a precision of σ(S8) ' 0.035–
+0.042 for the SDSS and HSC-Y1 datasets. This
+method allows for tight constraints on the cosmo-
+logical parameter, because the small-scale informa-
+tion of ∆Σ(R) at scales, 3 ≤ R/[h−1Mpc] . 10, can
+be used to infer the average mass of host halos of
+the SDSS galaxies, yielding useful information on
+the galaxy bias that is sensitive to the large-scale
+amplitudes of wp and ∆Σ."
+"• The halo model method suffers from sizable biases
+in the cosmological parameters if the SDSS galaxies
+have a significant assembly bias (although we con-
+sider the extreme mocks including the maximum
+amount of the assembly bias effect in this paper)
+(Figs. 14 and 17). Even if this is the case, we
+showed that the cosmological parameters can be
+recovered if employing sufficiently large scales cuts
+of Rcut & 10 h"
+"−1Mpc, where the cross-correlation
+coefficient rcc(r) ≡ ξgm(r)/[ξgg(r)ξmm(r)]1/2 ' 1
+(Fig. 18). This is equivalent to the case that we"
+0.3 0.4
+0.8 1.0
+0.8 0.9
+baseline
+off-cent1
+off-cent2
+off-cent3
+off-cent4
+"FIG. 15. Marginalized posterior distributions of the cosmo-
+logical parameters when applying the halo model method
+to the mock catalog where the off-centering effect of central
+galaxies is included (Table VI). For comparison, we show the
+result for the fiducial mock, the same as the green contours
+in Fig. 9."
+0.3 0.4
+0.8 1.0
+0.8 0.9
+baseline
+FoF-halo
+cent-incomp.
+"FIG. 16. Similar to the previous figure, but shown is the
+result for the FoF and cent-incomp. mocks."
+0.30 0.38
+0.8 1.0
+0.7 0.8 0.9
+baseline
+baryon
+assembly-b
+assembly-b-ext
+"FIG. 17. Similar to the previous figure, but shown is the
+marginalized posterior distributions for the baryon mocks and
+the assembly bias mocks (assembly-b and assembly-b-ext).
+Here the assembly-b-ext is the worst (extreme) effect of as-
+sembly bias, where the large-scale amplitude of wp is modified
+by a factor of 1.6 (see Fig. 4). In the assembly-b mock, the
+boost in the amplitude is halved, which is still larger than
+what is expected for an actual data, even if exists."
+"do not include the small-scale lensing information
+in the cosmological parameter estimation. However
+the price to pay is that the statistical accuracy of
+cosmological parameter determination is degraded,
+leading to σ(S8) ' 0.07 (see Fig. 14). Thus in
+practice we should monitor whether the cosmolog-
+ical parameters have a systematic shift with differ-
+ent scale cuts, as a test of the assembly bias effect
+inherent in actual data (Fig. 17)."
+"• We used the method using a single population of
+source galaxies to measure the galaxy-galaxy weak
+lensing for multiple lens galaxies at different red-
+shifts (LOWZ, CMASS1 and CMASS2) over the
+range of redshifts, z = [0.15, 0.7]. This method al-
+lows for self-calibration of the photometric redshift
+errors and the multiplicative shear bias (Fig. 12)."
+"Hence we conclude that we can safely apply the halo
+model based method to actual SDSS and HSC-Y1 data.
+The cosmological constraints from actual observational
+data are presented in a companion paper (Miyatake et
+al. in prep.)."
+0.3 0.4
+0.8 1.0
+0.7 0.9
+"assembly-b-ext (2.0, 3.0)"
+"assembly-b-ext (4.0, 6.0)"
+"assembly-b-ext (8.0, 12.0)"
+"FIG. 18. Similar to the previous figure, but we here study
+how biases in the cosmological parameters can be mitigated
+by using the different scale cuts, (4, 6) or (8, 12) h−1Mpc for
+wp and ∆Σ, respectively, instead of the baseline setup (2, 3).
+The true cosmological parameters are recovered if using the
+large-scale cuts such as (8, 12); that is, if we do not include
+the 1-halo term contribution."
+ACKNOWLEDGMENTS
+"We would like to thank Ryoma Murata for his con-
+tribution during the early phase of this work. This
+work was supported in part by World Premier Inter-
+national Research Center Initiative (WPI Initiative),
+MEXT, Japan, by JSPS KAKENHI Grant Numbers
+JP15H03654, JP15H05887, JP15H05893, JP15H05896,
+JP15K21733, JP17H01131, JP17K14273, JP18H04350,
+JP18H04358, JP19H00677, JP19K14767, JP20H01932,
+JP20H04723, JP20H05855, and JP20A203, by Japan Sci-
+ence and Technology Agency (JST) AIP Acceleration
+Research Grant Number JP20317829, Japan. SS is sup-
+ported by International Graduate Program for Excellence
+in Earth-Space Science (IGPEES), World-leading Inno-
+vative Graduate Study (WINGS) Program, the Univer-
+sity of Tokyo. KO is supported by JSPS Overseas Re-
+search Fellowships."
+"[1] D. H. Weinberg, M. J. Mortonson, D. J. Eisenstein,
+C. Hirata, A. G. Riess, and E. Rozo, Phys. Rep. 530,
+87 (2013), arXiv:1201.2434."
+"[2] https://hsc.mtk.nao.ac.jp/ssp/.
+[3] H. Aihara, N. Arimoto, R. Armstrong, S. Arnouts, N. A."
+"Bahcall, S. Bickerton, J. Bosch, K. Bundy, P. L. Ca-
+pak, J. H. H. Chan, M. Chiba, J. Coupon, E. Egami,
+M. Enoki, F. Finet, H. Fujimori, S. Fujimoto, H. Furu-
+sawa, J. Furusawa, T. Goto, A. Goulding, J. P. Greco,
+J. E. Greene, J. E. Gunn, T. Hamana, Y. Harikane,
+Y. Hashimoto, T. Hattori, M. Hayashi, Y. Hayashi,
+K. G. He lminiak, R. Higuchi, C. Hikage, P. T. P. Ho,
+B.-C. Hsieh, K. Huang, S. Huang, H. Ikeda, M. Iman-
+ishi, A. K. Inoue, K. Iwasawa, I. Iwata, A. T. Jae-
+lani, H.-Y. Jian, Y. Kamata, H. Karoji, N. Kashikawa,
+N. Katayama, S. Kawanomoto, I. Kayo, J. Koda,
+M. Koike, T. Kojima, Y. Komiyama, A. Konno,
+S. Koshida, Y. Koyama, H. Kusakabe, A. Leauthaud,
+C.-H. Lee, L. Lin, Y.-T. Lin, R. H. Lupton, R. Man-
+delbaum, Y. Matsuoka, E. Medezinski, S. Mineo,
+S. Miyama, H. Miyatake, S. Miyazaki, R. Momose,
+A. More, S. More, Y. Moritani, T. J. Moriya, T. Mo-
+rokuma, S. Mukae, R. Murata, H. Murayama, T. Na-
+gao, F. Nakata, M. Niida, H. Niikura, A. J. Nishizawa,
+Y. Obuchi, M. Oguri, Y. Oishi, N. Okabe, S. Okamoto,
+Y. Okura, Y. Ono, M. Onodera, M. Onoue, K. Osato,
+M. Ouchi, P. A. Price, T.-S. Pyo, M. Sako, M. Saw-
+icki, T. Shibuya, K. Shimasaku, A. Shimono, M. Shi-"
+"rasaki, J. D. Silverman, M. Simet, J. Speagle, D. N.
+Spergel, M. A. Strauss, Y. Sugahara, N. Sugiyama,
+Y. Suto, S. H. Suyu, N. Suzuki, P. J. Tait, M. Takada,
+T. Takata, N. Tamura, M. M. Tanaka, M. Tanaka,
+M. Tanaka, Y. Tanaka, T. Terai, Y. Terashima, Y. Toba,
+N. Tominaga, J. Toshikawa, E. L. Turner, T. Uchida,
+H. Uchiyama, K. Umetsu, F. Uraguchi, Y. Urata,
+T. Usuda, Y. Utsumi, S.-Y. Wang, W.-H. Wang, K. C.
+Wong, K. Yabe, Y. Yamada, H. Yamanoi, N. Yasuda,
+S. Yeh, A. Yonehara, and S. Yuma, PASJ 70, S4 (2018),
+arXiv:1704.05858 [astro-ph.IM]."
+"[4] C. Hikage, M. Oguri, T. Hamana, S. More,
+R. Mandelbaum, M. Takada, F. Köhlinger, H. Miy-
+atake, A. J. Nishizawa, H. Aihara, R. Armstrong,
+J. Bosch, J. Coupon, A. Ducout, P. Ho, B.-C. Hsieh,
+Y. Komiyama, F. Lanusse, A. Leauthaud, R. H. Lup-
+ton, E. Medezinski, S. Mineo, S. Miyama, S. Miyazaki,
+R. Murata, H. Murayama, M. Shirasaki, C. Sifón,
+M. Simet, J. Speagle, D. N. Spergel, M. A. Strauss,
+N. Sugiyama, M. Tanaka, Y. Utsumi, S.-Y. Wang,
+and Y. Yamada, PASJ 71, 43 (2019), arXiv:1809.09148
+[astro-ph.CO]."
+"[5] T. Hamana, M. Shirasaki, S. Miyazaki, C. Hik-
+age, M. Oguri, S. More, R. Armstrong, A. Leau-
+thaud, R. Mandelbaum, H. Miyatake, A. J. Nishizawa,
+M. Simet, M. Takada, H. Aihara, J. Bosch,
+Y. Komiyama, R. Lupton, H. Murayama, M. A. Strauss,
+and M. Tanaka, PASJ 72, 16 (2020), arXiv:1906.06041"
+"http://dx.doi.org/10.1016/j.physrep.2013.05.001
+http://dx.doi.org/10.1016/j.physrep.2013.05.001
+http://arxiv.org/abs/1201.2434
+https://hsc.mtk.nao.ac.jp/ssp/
+http://dx.doi.org/10.1093/pasj/psx066
+http://arxiv.org/abs/1704.05858
+http://dx.doi.org/10.1093/pasj/psz010
+http://arxiv.org/abs/1809.09148
+http://arxiv.org/abs/1809.09148
+http://dx.doi.org/10.1093/pasj/psz138
+http://arxiv.org/abs/1906.06041"
+"[astro-ph.CO].
+[6] https://www.darkenergysurvey.org.
+[7] T. M. C. Abbott, F. B. Abdalla, A. Alarcon, J. Aleksić,"
+"S. Allam, S. Allen, A. Amara, J. Annis, J. Asorey,
+S. Avila, D. Bacon, E. Balbinot, M. Banerji, N. Banik,
+W. Barkhouse, M. Baumer, E. Baxter, K. Bechtol,
+M. R. Becker, A. Benoit-Lévy, B. A. Benson, G. M.
+Bernstein, E. Bertin, J. Blazek, S. L. Bridle, D. Brooks,
+D. Brout, E. Buckley-Geer, D. L. Burke, M. T. Busha,
+A. Campos, D. Capozzi, A. Carnero Rosell, M. Car-
+rasco Kind, J. Carretero, F. J. Castander, R. Cawthon,
+C. Chang, N. Chen, M. Childress, A. Choi, C. Con-
+selice, R. Crittenden, M. Crocce, C. E. Cunha, C. B.
+D’Andrea, L. N. da Costa, R. Das, T. M. Davis,
+C. Davis, J. De Vicente, D. L. DePoy, J. DeRose, S. De-
+sai, H. T. Diehl, J. P. Dietrich, S. Dodelson, P. Doel,
+A. Drlica-Wagner, T. F. Eifler, A. E. Elliott, F. El-
+sner, J. Elvin-Poole, J. Estrada, A. E. Evrard, Y. Fang,
+E. Fernandez, A. Ferté, D. A. Finley, B. Flaugher,
+P. Fosalba, O. Friedrich, J. Frieman, J. Garćıa-Bellido,
+M. Garcia-Fernandez, M. Gatti, E. Gaztanaga, D. W.
+Gerdes, T. Giannantonio, M. S. S. Gill, K. Glaze-
+brook, D. A. Goldstein, D. Gruen, R. A. Gruendl,
+J. Gschwend, G. Gutierrez, S. Hamilton, W. G. Hart-
+ley, S. R. Hinton, K. Honscheid, B. Hoyle, D. Huterer,
+B. Jain, D. J. James, M. Jarvis, T. Jeltema, M. D.
+Johnson, M. W. G. Johnson, T. Kacprzak, S. Kent,
+A. G. Kim, A. King, D. Kirk, N. Kokron, A. Ko-
+vacs, E. Krause, C. Krawiec, A. Kremin, K. Kuehn,
+S. Kuhlmann, N. Kuropatkin, F. Lacasa, O. Lahav,
+T. S. Li, A. R. Liddle, C. Lidman, M. Lima, H. Lin,
+N. MacCrann, M. A. G. Maia, M. Makler, M. Manera,
+M. March, J. L. Marshall, P. Martini, R. G. McMa-
+hon, P. Melchior, F. Menanteau, R. Miquel, V. Miranda,
+D. Mudd, J. Muir, A. Möller, E. Neilsen, R. C. Nichol,
+B. Nord, P. Nugent, R. L. C. Ogando, A. Palmese,
+J. Peacock, H. V. Peiris, J. Peoples, W. J. Percival,
+D. Petravick, A. A. Plazas, A. Porredon, J. Prat, A. Pu-
+jol, M. M. Rau, A. Refregier, P. M. Ricker, N. Roe,
+R. P. Rollins, A. K. Romer, A. Roodman, R. Rosen-
+feld, A. J. Ross, E. Rozo, E. S. Rykoff, M. Sako,
+A. I. Salvador, S. Samuroff, C. Sánchez, E. Sanchez,
+B. Santiago, V. Scarpine, R. Schindler, D. Scolnic,
+L. F. Secco, S. Serrano, I. Sevilla-Noarbe, E. Shel-
+don, R. C. Smith, M. Smith, J. Smith, M. Soares-
+Santos, F. Sobreira, E. Suchyta, G. Tarle, D. Thomas,
+M. A. Troxel, D. L. Tucker, B. E. Tucker, S. A. Ud-
+din, T. N. Varga, P. Vielzeuf, V. Vikram, A. K. Vi-
+vas, A. R. Walker, M. Wang, R. H. Wechsler, J. Weller,
+W. Wester, R. C. Wolf, B. Yanny, F. Yuan, A. Zen-
+teno, B. Zhang, Y. Zhang, J. Zuntz, and Dark Energy
+Survey Collaboration, Phys. Rev. D 98, 043526 (2018),
+arXiv:1708.01530 [astro-ph.CO]."
+"[8] C. Heymans, T. Tröster, M. Asgari, C. Blake, H. Hilde-
+brandt, B. Joachimi, K. Kuijken, C.-A. Lin, A. G.
+Sánchez, J. L. van den Busch, A. H. Wright, A. Amon,
+M. Bilicki, J. de Jong, M. Crocce, A. Dvornik, T. Er-
+ben, F. Getman, B. Giblin, K. Glazebrook, H. Hoekstra,
+S. Joudaki, A. Kannawadi, C. Lidman, F. Köhlinger,
+L. Miller, N. R. Napolitano, D. Parkinson, P. Schneider,
+H. Shan, and C. Wolf, arXiv e-prints , arXiv:2007.15632
+(2020), arXiv:2007.15632 [astro-ph.CO]."
+"[9] Y. Park and E. Rozo, Mon. Not. Roy. Astron. Soc.
+(2020), 10.1093/mnras/staa2647, arXiv:1907.05798"
+"[astro-ph.CO].
+[10] Planck Collaboration, N. Aghanim, Y. Akrami, M. Ash-"
+"down, J. Aumont, C. Baccigalupi, M. Ballardini,
+A. J. Banday, R. B. Barreiro, N. Bartolo, S. Basak,
+R. Battye, K. Benabed, J. P. Bernard, M. Bersanelli,
+P. Bielewicz, J. J. Bock, J. R. Bond, J. Borrill,
+F. R. Bouchet, F. Boulanger, M. Bucher, C. Buri-
+gana, R. C. Butler, E. Calabrese, J. F. Cardoso,
+J. Carron, A. Challinor, H. C. Chiang, J. Chluba,
+L. P. L. Colombo, C. Combet, D. Contreras, B. P.
+Crill, F. Cuttaia, P. de Bernardis, G. de Zotti, J. De-
+labrouille, J. M. Delouis, E. Di Valentino, J. M.
+Diego, O. Doré, M. Douspis, A. Ducout, X. Dupac,
+S. Dusini, G. Efstathiou, F. Elsner, T. A. Enßlin,
+H. K. Eriksen, Y. Fantaye, M. Farhang, J. Fergusson,
+R. Fernandez-Cobos, F. Finelli, F. Forastieri, M. Frailis,
+A. A. Fraisse, E. Franceschi, A. Frolov, S. Galeotta,
+S. Galli, K. Ganga, R. T. Génova-Santos, M. Gerbino,
+T. Ghosh, J. González-Nuevo, K. M. Górski, S. Grat-
+ton, A. Gruppuso, J. E. Gudmundsson, J. Hamann,
+W. Handley, F. K. Hansen, D. Herranz, S. R. Hilde-
+brandt, E. Hivon, Z. Huang, A. H. Jaffe, W. C.
+Jones, A. Karakci, E. Keihänen, R. Keskitalo, K. Ki-
+iveri, J. Kim, T. S. Kisner, L. Knox, N. Krachmal-
+nicoff, M. Kunz, H. Kurki-Suonio, G. Lagache, J. M.
+Lamarre, A. Lasenby, M. Lattanzi, C. R. Lawrence,
+M. Le Jeune, P. Lemos, J. Lesgourgues, F. Levrier,
+A. Lewis, M. Liguori, P. B. Lilje, M. Lilley, V. Lind-
+holm, M. López-Caniego, P. M. Lubin, Y. Z. Ma,
+J. F. Maćıas-Pérez, G. Maggio, D. Maino, N. Man-
+dolesi, A. Mangilli, A. Marcos-Caballero, M. Maris,
+P. G. Martin, M. Martinelli, E. Mart́ınez-González,
+S. Matarrese, N. Mauri, J. D. McEwen, P. R. Mein-
+hold, A. Melchiorri, A. Mennella, M. Migliaccio, M. Mil-
+lea, S. Mitra, M. A. Miville-Deschênes, D. Molinari,
+L. Montier, G. Morgante, A. Moss, P. Natoli, H. U.
+Nørgaard-Nielsen, L. Pagano, D. Paoletti, B. Partridge,
+G. Patanchon, H. V. Peiris, F. Perrotta, V. Pettorino,
+F. Piacentini, L. Polastri, G. Polenta, J. L. Puget,
+J. P. Rachen, M. Reinecke, M. Remazeilles, A. Renzi,
+G. Rocha, C. Rosset, G. Roudier, J. A. Rubiño-Mart́ın,
+B. Ruiz-Granados, L. Salvati, M. Sandri, M. Savelainen,
+D. Scott, E. P. S. Shellard, C. Sirignano, G. Sirri, L. D.
+Spencer, R. Sunyaev, A. S. Suur-Uski, J. A. Tauber,
+D. Tavagnacco, M. Tenti, L. Toffolatti, M. Tomasi,
+T. Trombetti, L. Valenziano, J. Valiviita, B. Van Tent,
+L. Vibert, P. Vielva, F. Villa, N. Vittorio, B. D. Wand
+elt, I. K. Wehus, M. White, S. D. M. White, A. Zac-
+chei, and A. Zonca, Astronomy & Astrophysics 641,
+A6 (2020), arXiv:1807.06209 [astro-ph.CO]."
+"[11] https://pfs.ipmu.jp/index.html.
+[12] M. Takada, R. S. Ellis, M. Chiba, J. E. Greene, H. Ai-"
+"hara, N. Arimoto, K. Bundy, J. Cohen, O. Doré,
+G. Graves, J. E. Gunn, T. Heckman, C. M. Hirata,
+P. Ho, J.-P. Kneib, O. L. Fèvre, L. Lin, S. More, H. Mu-
+rayama, T. Nagao, M. Ouchi, M. Seiffert, J. D. Silver-
+man, L. Sodré, D. N. Spergel, M. A. Strauss, H. Sugai,
+Y. Suto, H. Takami, and R. Wyse, PASJ 66, R1 (2014),
+arXiv:1206.0737."
+"[13] https://www.desi.lbl.gov.
+[14] https://www.lsst.org.
+[15] https://www.euclid-ec.org.
+[16] https://roman.gsfc.nasa.gov."
+"http://arxiv.org/abs/1906.06041
+https://www.darkenergysurvey.org
+http://dx.doi.org/10.1103/PhysRevD.98.043526
+http://arxiv.org/abs/1708.01530
+http://arxiv.org/abs/2007.15632
+http://dx.doi.org/10.1093/mnras/staa2647
+http://dx.doi.org/10.1093/mnras/staa2647
+http://arxiv.org/abs/1907.05798
+http://arxiv.org/abs/1907.05798
+http://dx.doi.org/10.1051/0004-6361/201833910
+http://dx.doi.org/10.1051/0004-6361/201833910
+http://arxiv.org/abs/1807.06209
+https://pfs.ipmu.jp/index.html
+http://dx.doi.org/10.1093/pasj/pst019
+http://arxiv.org/abs/1206.0737
+https://www.desi.lbl.gov
+https://www.lsst.org
+https://www.euclid-ec.org
+https://roman.gsfc.nasa.gov"
+"[17] D. Spergel, N. Gehrels, C. Baltay, D. Bennett, J. Breck-
+inridge, M. Donahue, A. Dressler, B. S. Gaudi,
+T. Greene, O. Guyon, C. Hirata, J. Kalirai, N. J. Kas-
+din, B. Macintosh, W. Moos, S. Perlmutter, M. Post-
+man, B. Rauscher, J. Rhodes, Y. Wang, D. Wein-
+berg, D. Benford, M. Hudson, W.-S. Jeong, Y. Mellier,
+W. Traub, T. Yamada, P. Capak, J. Colbert, D. Mas-
+ters, M. Penny, D. Savransky, D. Stern, N. Zimmerman,
+R. Barry, L. Bartusek, K. Carpenter, E. Cheng, D. Con-
+tent, F. Dekens, R. Demers, K. Grady, C. Jackson,
+G. Kuan, J. Kruk, M. Melton, B. Nemati, B. Parvin,
+I. Poberezhskiy, C. Peddie, J. Ruffa, J. K. Wallace,
+A. Whipple, E. Wollack, and F. Zhao, ArXiv e-prints
+(2015), arXiv:1503.03757 [astro-ph.IM]."
+"[18] M. Vogelsberger, S. Genel, V. Springel, P. Torrey,
+D. Sijacki, D. Xu, G. Snyder, S. Bird, D. Nelson,
+and L. Hernquist, Nature (London) 509, 177 (2014),
+arXiv:1405.1418 [astro-ph.CO]."
+"[19] V. Springel, R. Pakmor, A. Pillepich, R. Wein-
+berger, D. Nelson, L. Hernquist, M. Vogelsberger,
+S. Genel, P. Torrey, F. Marinacci, and J. Naiman,
+Mon. Not. Roy. Astron. Soc. 475, 676 (2018),
+arXiv:1707.03397 [astro-ph.GA]."
+"[20] U. Seljak, A. Makarov, P. McDonald, S. F. Anderson,
+N. A. Bahcall, J. Brinkmann, S. Burles, R. Cen, M. Doi,
+J. E. Gunn, Ž. Ivezić, S. Kent, J. Loveday, R. H. Lupton,
+J. A. Munn, R. C. Nichol, J. P. Ostriker, D. J. Schlegel,
+D. P. Schneider, M. Tegmark, D. E. Berk, D. H. Wein-
+berg, and D. G. York, Phys. Rev. D 71, 103515 (2005),
+arXiv:astro-ph/0407372 [astro-ph]."
+"[21] M. Oguri and M. Takada, Phys. Rev. D 83, 023008
+(2011), arXiv:1010.0744 [astro-ph.CO]."
+"[22] M. Cacciato, F. C. van den Bosch, S. More, H. Mo, and
+X. Yang, Mon. Not. Roy. Astron. Soc. 430, 767 (2013),
+arXiv:1207.0503 [astro-ph.CO]."
+"[23] R. Mandelbaum, A. Slosar, T. Baldauf, U. Seljak,
+C. M. Hirata, R. Nakajima, R. Reyes, and R. E.
+Smith, Mon. Not. Roy. Astron. Soc. 432, 1544 (2013),
+arXiv:1207.1120."
+"[24] H. Miyatake, S. More, R. Mandelbaum, M. Takada,
+D. N. Spergel, J.-P. Kneib, D. P. Schneider,
+J. Brinkmann, and J. R. Brownstein, Astrophys. J.
+806, 1 (2015), arXiv:1311.1480."
+"[25] S. More, H. Miyatake, R. Mandelbaum, M. Takada,
+D. N. Spergel, J. R. Brownstein, and D. P. Schneider,
+Astrophys. J. 806, 2 (2015), arXiv:1407.1856."
+"[26] S. Sugiyama, M. Takada, Y. Kobayashi, H. Miyatake,
+M. Shirasaki, T. Nishimichi, and Y. Park, Phys. Rev.
+D 102, 083520 (2020), arXiv:2008.06873 [astro-ph.CO]."
+"[27] F. Bernardeau, S. Colombi, E. Gaztañaga, and
+R. Scoccimarro, Phys. Rep. 367, 1 (2002), arXiv:astro-
+ph/0112551."
+"[28] V. Desjacques, D. Jeong, and F. Schmidt, Phys. Rep.
+733, 1 (2018), arXiv:1611.09787 [astro-ph.CO]."
+"[29] E. Krause, T. F. Eifler, J. Zuntz, O. Friedrich, M. A.
+Troxel, S. Dodelson, J. Blazek, L. F. Secco, N. Mac-
+Crann, E. Baxter, C. Chang, N. Chen, M. Crocce,
+J. DeRose, A. Ferte, N. Kokron, F. Lacasa, V. Miranda,
+Y. Omori, A. Porredon, R. Rosenfeld, S. Samuroff,
+M. Wang, R. H. Wechsler, T. M. C. Abbott, F. B.
+Abdalla, S. Allam, J. Annis, K. Bechtol, A. Benoit-
+Levy, G. M. Bernstein, D. Brooks, D. L. Burke,
+D. Capozzi, M. Carrasco Kind, J. Carretero, C. B.
+D’Andrea, L. N. da Costa, C. Davis, D. L. DePoy,"
+"S. Desai, H. T. Diehl, J. P. Dietrich, A. E. Evrard,
+B. Flaugher, P. Fosalba, J. Frieman, J. Garcia-Bellido,
+E. Gaztanaga, T. Giannantonio, D. Gruen, R. A. Gru-
+endl, J. Gschwend, G. Gutierrez, K. Honscheid, D. J.
+James, T. Jeltema, K. Kuehn, S. Kuhlmann, O. La-
+hav, M. Lima, M. A. G. Maia, M. March, J. L. Mar-
+shall, P. Martini, F. Menanteau, R. Miquel, R. C.
+Nichol, A. A. Plazas, A. K. Romer, E. S. Rykoff,
+E. Sanchez, V. Scarpine, R. Schindler, M. Schubnell,
+I. Sevilla-Noarbe, M. Smith, M. Soares-Santos, F. So-
+breira, E. Suchyta, M. E. C. Swanson, G. Tarle, D. L.
+Tucker, V. Vikram, A. R. Walker, and J. Weller, ArXiv
+e-prints (2017), arXiv:1706.09359."
+"[30] N. MacCrann, J. DeRose, R. H. Wechsler, J. Blazek,
+E. Gaztanaga, M. Crocce, E. S. Rykoff, M. R. Becker,
+B. Jain, E. Krause, T. F. Eifler, D. Gruen, J. Zuntz,
+M. A. Troxel, J. Elvin-Poole, J. Prat, M. Wang, S. Do-
+delson, A. Kravtsov, P. Fosalba, M. T. Busha, A. E.
+Evrard, D. Huterer, T. M. C. Abbott, F. B. Ab-
+dalla, S. Allam, J. Annis, S. Avila, G. M. Bernstein,
+D. Brooks, E. Buckley-Geer, D. L. Burke, A. Carnero
+Rosell, M. Carrasco Kind, J. Carretero, F. J. Cas-
+tander, R. Cawthon, C. E. Cunha, C. B. D’Andrea,
+L. N. da Costa, C. Davis, J. De Vicente, H. T.
+Diehl, P. Doel, J. Frieman, J. Garćıa-Bellido, D. W.
+Gerdes, R. A. Gruendl, G. Gutierrez, W. G. Hart-
+ley, D. Hollowood, K. Honscheid, B. Hoyle, D. J.
+James, T. Jeltema, D. Kirk, K. Kuehn, N. Kuropatkin,
+M. Lima, M. A. G. Maia, J. L. Marshall, F. Menan-
+teau, R. Miquel, A. A. Plazas, A. Roodman, E. Sanchez,
+V. Scarpine, M. Schubnell, I. Sevilla-Noarbe, M. Smith,
+R. C. Smith, M. Soares-Santos, F. Sobreira, E. Suchyta,
+M. E. C. Swanson, G. Tarle, D. Thomas, A. R. Walker,
+J. Weller, and DES Collaboration, Mon. Not. Roy. As-
+tron. Soc. 480, 4614 (2018), arXiv:1803.09795 [astro-
+ph.CO]."
+"[31] T. Nishimichi, G. D’Amico, M. M. Ivanov, L. Sena-
+tore, M. Simonović, M. Takada, M. Zaldarriaga, and
+P. Zhang, arXiv e-prints , arXiv:2003.08277 (2020),
+arXiv:2003.08277 [astro-ph.CO]."
+"[32] P. J. E. Peebles, The large-scale structure of the universe
+(1980)."
+"[33] U. Seljak, Mon. Not. Roy. Astron. Soc. 318, 203 (2000),
+arXiv:astro-ph/0001493."
+"[34] J. A. Peacock and R. E. Smith, Mon. Not. Roy. As-
+tron. Soc. 318, 1144 (2000), arXiv:astro-ph/0005010."
+"[35] C. Ma and J. N. Fry, Astrophys. J. 543, 503 (2000),
+arXiv:astro-ph/0003343."
+"[36] R. Scoccimarro, R. K. Sheth, L. Hui, and B. Jain, As-
+trophys. J. 546, 20 (2001), arXiv:astro-ph/0006319."
+"[37] A. Cooray and R. Sheth, Phys. Rep. 372, 1 (2002),
+arXiv:astro-ph/0206508."
+"[38] Y. P. Jing, H. J. Mo, and G. Börner, Astrophys. J. 494,
+1 (1998), arXiv:astro-ph/9707106 [astro-ph]."
+"[39] Z. Zheng et al., Astrophys. J. 633, 791 (2005),
+arXiv:astro-ph/0408564."
+"[40] T. Nishimichi, M. Takada, R. Takahashi, K. Osato,
+M. Shirasaki, T. Oogi, H. Miyatake, M. Oguri, R. Mu-
+rata, Y. Kobayashi, and N. Yoshida, Astrophys. J. 884,
+29 (2019), arXiv:1811.09504 [astro-ph.CO]."
+"[41] S. Alam, M. Ata, S. Bailey, F. Beutler, D. Bizyaev,
+J. A. Blazek, A. S. Bolton, J. R. Brownstein, A. Burden,
+C.-H. Chuang, J. Comparat, A. J. Cuesta, K. S. Daw-
+son, D. J. Eisenstein, S. Escoffier, H. Gil-Maŕın, J. N."
+"http://arxiv.org/abs/1503.03757
+http://dx.doi.org/10.1038/nature13316
+http://arxiv.org/abs/1405.1418
+http://dx.doi.org/10.1093/mnras/stx3304
+http://arxiv.org/abs/1707.03397
+http://dx.doi.org/10.1103/PhysRevD.71.103515
+http://arxiv.org/abs/astro-ph/0407372
+http://dx.doi.org/10.1103/PhysRevD.83.023008
+http://dx.doi.org/10.1103/PhysRevD.83.023008
+http://arxiv.org/abs/1010.0744
+http://dx.doi.org/ 10.1093/mnras/sts525
+http://arxiv.org/abs/1207.0503
+http://dx.doi.org/ 10.1093/mnras/stt572
+http://arxiv.org/abs/1207.1120
+http://dx.doi.org/ 10.1088/0004-637X/806/1/1
+http://dx.doi.org/ 10.1088/0004-637X/806/1/1
+http://arxiv.org/abs/1311.1480
+http://dx.doi.org/10.1088/0004-637X/806/1/2
+http://arxiv.org/abs/1407.1856
+http://dx.doi.org/10.1103/PhysRevD.102.083520
+http://dx.doi.org/10.1103/PhysRevD.102.083520
+http://arxiv.org/abs/2008.06873
+http://dx.doi.org/10.1016/S0370-1573(02)00135-7
+http://arxiv.org/abs/arXiv:astro-ph/0112551
+http://arxiv.org/abs/arXiv:astro-ph/0112551
+http://dx.doi.org/10.1016/j.physrep.2017.12.002
+http://dx.doi.org/10.1016/j.physrep.2017.12.002
+http://arxiv.org/abs/1611.09787
+http://arxiv.org/abs/1706.09359
+http://dx.doi.org/ 10.1093/mnras/sty1899
+http://dx.doi.org/ 10.1093/mnras/sty1899
+http://arxiv.org/abs/1803.09795
+http://arxiv.org/abs/1803.09795
+http://arxiv.org/abs/2003.08277
+http://dx.doi.org/10.1046/j.1365-8711.2000.03715.x
+http://arxiv.org/abs/arXiv:astro-ph/0001493
+http://dx.doi.org/10.1046/j.1365-8711.2000.03779.x
+http://dx.doi.org/10.1046/j.1365-8711.2000.03779.x
+http://arxiv.org/abs/arXiv:astro-ph/0005010
+http://dx.doi.org/10.1086/317146
+http://arxiv.org/abs/arXiv:astro-ph/0003343
+http://dx.doi.org/10.1086/318261
+http://dx.doi.org/10.1086/318261
+http://arxiv.org/abs/arXiv:astro-ph/0006319
+http://dx.doi.org/10.1016/S0370-1573(02)00276-4
+http://arxiv.org/abs/arXiv:astro-ph/0206508
+http://dx.doi.org/10.1086/305209
+http://dx.doi.org/10.1086/305209
+http://arxiv.org/abs/astro-ph/9707106
+http://dx.doi.org/10.1086/466510
+http://arxiv.org/abs/arXiv:astro-ph/0408564
+http://dx.doi.org/ 10.3847/1538-4357/ab3719
+http://dx.doi.org/ 10.3847/1538-4357/ab3719
+http://arxiv.org/abs/1811.09504"
+"Grieb, N. Hand, S. Ho, K. Kinemuchi, D. Kirkby, F. Ki-
+taura, E. Malanushenko, V. Malanushenko, C. Maras-
+ton, C. K. McBride, R. C. Nichol, M. D. Olm-
+stead, D. Oravetz, N. Padmanabhan, N. Palanque-
+Delabrouille, K. Pan, M. Pellejero-Ibanez, W. J. Per-
+cival, P. Petitjean, F. Prada, A. M. Price-Whelan,
+B. A. Reid, S. A. Rodŕıguez-Torres, N. A. Roe, A. J.
+Ross, N. P. Ross, G. Rossi, J. A. Rubiño-Mart́ın,
+S. Saito, S. Salazar-Albornoz, L. Samushia, A. G.
+Sánchez, S. Satpathy, D. J. Schlegel, D. P. Schneider,
+C. G. Scóccola, H.-J. Seo, E. S. Sheldon, A. Simmons,
+A. Slosar, M. A. Strauss, M. E. C. Swanson, D. Thomas,
+J. L. Tinker, R. Tojeiro, M. V. Magaña, J. A. Vazquez,
+L. Verde, D. A. Wake, Y. Wang, D. H. Weinberg,
+M. White, W. M. Wood-Vasey, C. Yèche, I. Zehavi,
+Z. Zhai, and G.-B. Zhao, Mon. Not. Roy. Astron. Soc.
+470, 2617 (2017), arXiv:1607.03155 [astro-ph.CO]."
+"[42] R. Mandelbaum, H. Miyatake, T. Hamana, M. Oguri,
+M. Simet, R. Armstrong, J. Bosch, R. Murata,
+F. Lanusse, A. Leauthaud, J. Coupon, S. More,
+M. Takada, S. Miyazaki, J. S. Speagle, M. Shirasaki,
+C. Sifón, S. Huang, A. J. Nishizawa, E. Medezinski,
+Y. Okura, N. Okabe, N. Czakon, R. Takahashi, W. R.
+Coulton, C. Hikage, Y. Komiyama, R. H. Lupton, M. A.
+Strauss, M. Tanaka, and Y. Utsumi, PASJ 70, S25
+(2018), arXiv:1705.06745 [astro-ph.CO]."
+"[43] Y. Kobayashi, T. Nishimichi, M. Takada, and
+R. Takahashi, Phys. Rev. D 101, 023510 (2020),
+arXiv:1907.08515 [astro-ph.CO]."
+"[44] R. Mandelbaum, U. Seljak, G. Kauffmann, C. M. Hi-
+rata, and J. Brinkmann, Mon. Not. Roy. Astron. Soc.
+368, 715 (2006), arXiv:astro-ph/0511164."
+"[45] A. Schneider and R. Teyssier, JCAP 2015, 049 (2015),
+arXiv:1510.06034 [astro-ph.CO]."
+"[46] A. Schneider, R. Teyssier, J. Stadel, N. E. Chisari,
+A. M. C. Le Brun, A. Amara, and A. Refregier, JCAP
+2019, 020 (2019), arXiv:1810.08629 [astro-ph.CO]."
+"[47] F. C. van den Bosch, S. More, M. Cacciato, H. Mo, and
+X. Yang, Mon. Not. Roy. Astron. Soc. 430, 725 (2013),
+arXiv:1206.6890 [astro-ph.CO]."
+"[48] Y. Kobayashi, T. Nishimichi, M. Takada, R. Taka-
+hashi, and K. Osato, Phys. Rev. D 102, 063504 (2020),
+arXiv:2005.06122 [astro-ph.CO]."
+"[49] https://jila.colorado.edu/~ajsh/FFTLog/index.
+html."
+"[50] J. F. Navarro, C. S. Frenk, and S. D. M. White, Astro-
+phys. J. 490, 493 (1997), arXiv:astro-ph/9611107."
+"[51] B. Diemer and A. V. Kravtsov, Astrophys. J. 799, 108
+(2015), arXiv:1407.4730 [astro-ph.CO]."
+"[52] https://bdiemer.bitbucket.io/colossus/.
+[53] B. Diemer, Astrophys. J. Suppl. 239, 35 (2018),"
+"arXiv:1712.04512 [astro-ph.CO].
+[54] C. Hikage, R. Mandelbaum, M. Takada, and D. N."
+"Spergel, Mon. Not. Roy. Astron. Soc. 435, 2345 (2013),
+arXiv:1211.1009 [astro-ph.CO]."
+"[55] S. Masaki, C. Hikage, M. Takada, D. N. Spergel, and
+N. Sugiyama, Mon. Not. Roy. Astron. Soc. 433, 3506
+(2013), arXiv:1211.7077 [astro-ph.CO]."
+"[56] I. Mohammed and U. Seljak, Mon. Not. Roy. As-
+tron. Soc. 445, 3382 (2014), arXiv:1407.0060."
+"[57] O. H. E. Philcox, D. N. Spergel, and F. Villaescusa-
+Navarro, Phys. Rev. D 101, 123520 (2020),
+arXiv:2004.09515 [astro-ph.CO]."
+"[58] B. Hadzhiyska, S. Bose, D. Eisenstein, and
+L. Hernquist, arXiv e-prints , arXiv:2008.04913 (2020),
+arXiv:2008.04913 [astro-ph.CO]."
+"[59] Due to the line-of-sight projection, the BAO features,
+which are around 100 h−1Mpc in the three-dimensional
+correlation function, appear at shorter projected sepa-
+ration."
+"[60] S. More, Astrophys. J. Lett. 777, L26 (2013),
+arXiv:1309.2943 [astro-ph.CO]."
+"[61] M. Tanaka, J. Coupon, B.-C. Hsieh, S. Mineo, A. J.
+Nishizawa, J. Speagle, H. Furusawa, S. Miyazaki, and
+H. Murayama, PASJ 70, S9 (2018), arXiv:1704.05988
+[astro-ph.GA]."
+"[62] G. M. Bernstein and M. Jarvis, Astron. J. 123, 583
+(2002), astro-ph/0107431."
+"[63] E. S. Sheldon, D. E. Johnston, J. A. Frieman, R. Scran-
+ton, T. A. McKay, A. J. Connolly, T. Budavári, I. Ze-
+havi, N. A. Bahcall, J. Brinkmann, and M. Fukugita,
+Astron. J. 127, 2544 (2004), arXiv:astro-ph/0312036
+[astro-ph]."
+"[64] R. Mandelbaum, A. Tasitsiomi, U. Seljak, A. V.
+Kravtsov, and R. H. Wechsler, Mon. Not. Roy. As-
+tron. Soc. 362, 1451 (2005), arXiv:astro-ph/0410711."
+"[65] M. Shirasaki and M. Takada, Mon. Not. Roy. As-
+tron. Soc. 478, 4277 (2018), arXiv:1802.09696 [astro-
+ph.CO]."
+"[66] D. Huterer, M. Takada, G. Bernstein, and B. Jain,
+Mon. Not. Roy. Astron. Soc. 366, 101 (2006),
+arXiv:astro-ph/0506030."
+"[67] S. Bridle, S. T. Balan, M. Bethge, M. Gentile,
+S. Harmeling, C. Heymans, M. Hirsch, R. Hos-
+seini, M. Jarvis, D. Kirk, T. Kitching, K. Kuijken,
+A. Lewis, S. Paulin-Henriksson, B. Schölkopf, M. Ve-
+lander, L. Voigt, D. Witherick, A. Amara, G. Bern-
+stein, F. Courbin, M. Gill, A. Heavens, R. Man-
+delbaum, R. Massey, B. Moghaddam, A. Rassat,
+A. Réfrégier, J. Rhodes, T. Schrabback, J. Shawe-
+Taylor, M. Shmakova, L. van Waerbeke, and
+D. Wittman, Mon. Not. Roy. Astron. Soc. 405, 2044
+(2010), arXiv:0908.0945 [astro-ph.CO]."
+"[68] N. Kaiser, Mon. Not. Roy. Astron. Soc. 227, 1 (1987).
+[69] P. S. Behroozi, R. H. Wechsler, and H.-Y. Wu, As-"
+"trophys. J. 762, 109 (2013), arXiv:1110.4372 [astro-
+ph.CO]."
+"[70] https://www.sdss.org/dr11/.
+[71] A. Jenkins, C. S. Frenk, F. R. Pearce, P. A. Thomas,"
+"J. M. Colberg, S. D. M. White, H. M. P. Couchman,
+J. A. Peacock, G. Efstathiou, and A. H. Nelson, Astro-
+phys. J. 499, 20 (1998), arXiv:astro-ph/9709010 [astro-
+ph]."
+"[72] P. Valageas and T. Nishimichi, Astronomy & As-
+trophysics 527, A87 (2011), arXiv:1009.0597 [astro-
+ph.CO]."
+"[73] R. Takahashi, M. Sato, T. Nishimichi, A. Taruya, and
+M. Oguri, The Astrophysical Journal 761, 152 (2012)."
+"[74] We use the slightly different number of realizations for
+∆Σ and wp, because the N -body simulation data for the
+4 realizations in the difference were lost in the middle
+of this work. The difference is small compared to the
+statistical measurement errors for the SDSS and HSC
+data, and the main results of this paper are not changed."
+"[75] R. Takahashi, T. Hamana, M. Shirasaki, T. Namikawa,
+T. Nishimichi, K. Osato, and K. Shiroyama, Astrophys.
+J. 850, 24 (2017), arXiv:1706.01472 [astro-ph.CO]."
+"http://dx.doi.org/10.1093/mnras/stx721
+http://dx.doi.org/10.1093/mnras/stx721
+http://arxiv.org/abs/1607.03155
+http://dx.doi.org/ 10.1093/pasj/psx130
+http://dx.doi.org/ 10.1093/pasj/psx130
+http://arxiv.org/abs/1705.06745
+http://dx.doi.org/10.1103/PhysRevD.101.023510
+http://arxiv.org/abs/1907.08515
+http://dx.doi.org/10.1111/j.1365-2966.2006.10156.x
+http://dx.doi.org/10.1111/j.1365-2966.2006.10156.x
+http://arxiv.org/abs/arXiv:astro-ph/0511164
+http://dx.doi.org/10.1088/1475-7516/2015/12/049
+http://arxiv.org/abs/1510.06034
+http://dx.doi.org/10.1088/1475-7516/2019/03/020
+http://dx.doi.org/10.1088/1475-7516/2019/03/020
+http://arxiv.org/abs/1810.08629
+http://dx.doi.org/ 10.1093/mnras/sts006
+http://arxiv.org/abs/1206.6890
+http://dx.doi.org/10.1103/PhysRevD.102.063504
+http://arxiv.org/abs/2005.06122
+https://jila.colorado.edu/~ajsh/FFTLog/index.html
+https://jila.colorado.edu/~ajsh/FFTLog/index.html
+http://dx.doi.org/10.1086/304888
+http://dx.doi.org/10.1086/304888
+http://arxiv.org/abs/arXiv:astro-ph/9611107
+http://dx.doi.org/10.1088/0004-637X/799/1/108
+http://dx.doi.org/10.1088/0004-637X/799/1/108
+http://arxiv.org/abs/1407.4730
+https://bdiemer.bitbucket.io/colossus/
+http://dx.doi.org/10.3847/1538-4365/aaee8c
+http://arxiv.org/abs/1712.04512
+http://dx.doi.org/10.1093/mnras/stt1446
+http://arxiv.org/abs/1211.1009
+http://dx.doi.org/ 10.1093/mnras/stt981
+http://dx.doi.org/ 10.1093/mnras/stt981
+http://arxiv.org/abs/1211.7077
+http://dx.doi.org/10.1093/mnras/stu1972
+http://dx.doi.org/10.1093/mnras/stu1972
+http://arxiv.org/abs/1407.0060
+http://dx.doi.org/ 10.1103/PhysRevD.101.123520
+http://arxiv.org/abs/2004.09515
+http://arxiv.org/abs/2008.04913
+http://dx.doi.org/10.1088/2041-8205/777/2/L26
+http://arxiv.org/abs/1309.2943
+http://dx.doi.org/ 10.1093/pasj/psx077
+http://arxiv.org/abs/1704.05988
+http://arxiv.org/abs/1704.05988
+http://dx.doi.org/10.1086/338085
+http://dx.doi.org/10.1086/338085
+http://arxiv.org/abs/astro-ph/0107431
+http://dx.doi.org/10.1086/383293
+http://arxiv.org/abs/astro-ph/0312036
+http://arxiv.org/abs/astro-ph/0312036
+http://dx.doi.org/10.1111/j.1365-2966.2005.09417.x
+http://dx.doi.org/10.1111/j.1365-2966.2005.09417.x
+http://arxiv.org/abs/arXiv:astro-ph/0410711
+http://dx.doi.org/10.1093/mnras/sty1327
+http://dx.doi.org/10.1093/mnras/sty1327
+http://arxiv.org/abs/1802.09696
+http://arxiv.org/abs/1802.09696
+http://dx.doi.org/10.1111/j.1365-2966.2005.09782.x
+http://arxiv.org/abs/arXiv:astro-ph/0506030
+http://dx.doi.org/ 10.1111/j.1365-2966.2010.16598.x
+http://dx.doi.org/ 10.1111/j.1365-2966.2010.16598.x
+http://arxiv.org/abs/0908.0945
+http://dx.doi.org/10.1088/0004-637X/762/2/109
+http://dx.doi.org/10.1088/0004-637X/762/2/109
+http://arxiv.org/abs/1110.4372
+http://arxiv.org/abs/1110.4372
+https://www.sdss.org/dr11/
+http://dx.doi.org/10.1086/305615
+http://dx.doi.org/10.1086/305615
+http://arxiv.org/abs/astro-ph/9709010
+http://arxiv.org/abs/astro-ph/9709010
+http://dx.doi.org/10.1051/0004-6361/201015685
+http://dx.doi.org/10.1051/0004-6361/201015685
+http://arxiv.org/abs/1009.0597
+http://arxiv.org/abs/1009.0597
+http://dx.doi.org/ 10.1088/0004-637x/761/2/152
+http://dx.doi.org/10.3847/1538-4357/aa943d
+http://dx.doi.org/10.3847/1538-4357/aa943d
+http://arxiv.org/abs/1706.01472"
+"[76] M. Shirasaki, M. Takada, H. Miyatake, R. Taka-
+hashi, T. Hamana, T. Nishimichi, and R. Mu-
+rata, Mon. Not. Roy. Astron. Soc. 470, 3476 (2017),
+arXiv:1607.08679 [astro-ph.CO]."
+"[77] M. Shirasaki, T. Hamana, M. Takada, R. Takahashi,
+and H. Miyatake, Mon. Not. Roy. Astron. Soc. 486, 52
+(2019), arXiv:1901.09488 [astro-ph.CO]."
+"[78] D. Kodwani, D. Alonso, and P. Ferreira, The Open
+Journal of Astrophysics 2, 3 (2019), arXiv:1811.11584
+[astro-ph.CO]."
+"[79] Precisely speaking, the binning of R does not have an
+exact cut at 2, 3 or 30 h−1Mpc for the lower and upper
+cuts. We employ the 30 bins logarithmically spaced over
+0.05 ≤ R/[h−1Mpc] ≤ 80, and use the bins residing the
+fitting range of ∆Σ and wp."
+"[80] F. Feroz, M. P. Hobson, and M. Bridges,
+Mon. Not. Roy. Astron. Soc. 398, 1601 (2009),
+arXiv:0809.3437 [astro-ph]."
+"[81] B. Audren, J. Lesgourgues, K. Benabed, and
+S. Prunet, JCAP 2013, 001 (2013), arXiv:1210.7183
+[astro-ph.CO]."
+"[82] B. Joachimi, C. A. Lin, M. Asgari, T. Tröster, C. Hey-
+mans, H. Hildebrandt, F. Köhlinger, A. G. Sánchez,
+A. H. Wright, M. Bilicki, C. Blake, J. L. van den
+Busch, M. Crocce, A. Dvornik, T. Erben, F. Get-
+man, B. Giblin, H. Hoekstra, A. Kannawadi, K. Kui-
+jken, N. R. Napolitano, P. Schneider, R. Scoccimarro,
+E. Sellentin, H. Y. Shan, M. von Wietersheim-Kramsta,
+and J. Zuntz, arXiv e-prints , arXiv:2007.01844 (2020),
+arXiv:2007.01844 [astro-ph.CO]."
+"[83] L. Gao, V. Springel, and S. D. M. White,
+Mon. Not. Roy. Astron. Soc. 363, L66 (2005),
+arXiv:astro-ph/0506510 [astro-ph]."
+"[84] R. H. Wechsler, A. R. Zentner, J. S. Bullock, A. V.
+Kravtsov, and B. Allgood, Astrophys. J. 652, 71 (2006),
+arXiv:astro-ph/0512416 [astro-ph]."
+"[85] N. Dalal, M. White, J. R. Bond, and A. Shirokov, As-
+trophys. J. 687, 12 (2008), arXiv:0803.3453 [astro-ph]."
+"[86] A. Leauthaud, S. Saito, S. Hilbert, A. Barreira, S. More,
+M. White, S. Alam, P. Behroozi, K. Bundy, J. Coupon,
+T. Erben, C. Heymans, H. Hildebrandt, R. Mandel-
+baum, L. Miller, B. Moraes, M. E. S. Pereira, S. A.
+Rodŕıguez-Torres, F. Schmidt, H.-Y. Shan, M. Viel,
+and F. Villaescusa-Navarro, Mon. Not. Roy. As-
+tron. Soc. 467, 3024 (2017), arXiv:1611.08606 [astro-
+ph.CO]."
+"[87] E. Semboloni, H. Hoekstra, and J. Schaye,
+Mon. Not. Roy. Astron. Soc. 434, 148 (2013),
+arXiv:1210.7303 [astro-ph.CO]."
+"[88] The code of analytical halo model is available from
+https://github.com/surhudm/aum."
+"[89] J. L. Tinker, D. H. Weinberg, Z. Zheng, and I. Zehavi,
+Astrophys. J. 631, 41 (2005), arXiv:astro-ph/0411777
+[astro-ph]."
+"[90] J. L. Tinker, B. E. Robertson, A. V. Kravtsov,
+A. Klypin, M. S. Warren, G. Yepes, and S. Gottlöber,
+Astrophys. J. 724, 878 (2010), arXiv:1001.3162 [astro-
+ph.CO]."
+"[91] Y. Li, W. Hu, and M. Takada, Phys. Rev. D 93, 063507
+(2016), arXiv:1511.01454."
+"[92] T. Baldauf, U. Seljak, L. Senatore, and M. Zaldarriaga,
+JCAP 9, 007 (2016), arXiv:1511.01465."
+"[93] T. Lazeyras, C. Wagner, T. Baldauf, and F. Schmidt,
+JCAP 2, 018 (2016), arXiv:1511.01096."
+"[94] M. Oguri, Y.-T. Lin, S.-C. Lin, A. J. Nishizawa,
+A. More, S. More, B.-C. Hsieh, E. Medezinski, H. Miy-
+atake, H.-Y. Jian, L. Lin, M. Takada, N. Okabe,
+J. S. Speagle, J. Coupon, A. Leauthaud, R. H. Lup-
+ton, S. Miyazaki, P. A. Price, M. Tanaka, I. N. Chiu,
+Y. Komiyama, Y. Okura, M. M. Tanaka, and T. Usuda,
+PASJ 70, S20 (2018), arXiv:1701.00818 [astro-ph.CO]."
+"[95] H. Miyatake, N. Battaglia, M. Hilton, E. Medezin-
+ski, A. J. Nishizawa, S. More, S. Aiola, N. Bahcall,
+J. R. Bond, E. Calabrese, S. K. Choi, M. J. Devlin,
+J. Dunkley, R. Dunner, B. Fuzia, P. Gallardo, M. Gralla,
+M. Hasselfield, M. Halpern, C. Hikage, J. C. Hill, A. D.
+Hincks, R. Hložek, K. Huffenberger, J. P. Hughes,
+B. Koopman, A. Kosowsky, T. Louis, M. S. Mad-
+havacheril, J. McMahon, R. Mandelbaum, T. A. Mar-
+riage, L. Maurin, S. Miyazaki, K. Moodley, R. Murata,
+S. Naess, L. Newburgh, M. D. Niemack, T. Nishimichi,
+N. Okabe, M. Oguri, K. Osato, L. Page, B. Partridge,
+N. Robertson, N. Sehgal, B. Sherwin, M. Shirasaki,
+J. Sievers, C. Sifón, S. Simon, D. N. Spergel, S. T.
+Staggs, G. Stein, M. Takada, H. Trac, K. Umetsu,
+A. van Engelen, and E. J. Wollack, Astrophys. J. 875,
+63 (2019), arXiv:1804.05873 [astro-ph.CO]."
+"[96] R. Mandelbaum, F. Lanusse, A. Leauthaud, R. Arm-
+strong, M. Simet, H. Miyatake, J. E. Meyers,
+J. Bosch, R. Murata, S. Miyazaki, and M. Tanaka,
+Mon. Not. Roy. Astron. Soc. 481, 3170 (2018),
+arXiv:1710.00885 [astro-ph.CO]."
+"[97] J. Hartlap, P. Simon, and P. Schneider, Astronomy &
+Astrophysics 464, 399 (2007), arXiv:astro-ph/0608064
+[astro-ph]."
+"[98] A. Taylor, B. Joachimi, and T. Kitching,
+Mon. Not. Roy. Astron. Soc. 432, 1928 (2013),
+arXiv:1212.4359 [astro-ph.CO]."
+"[99] S. Dodelson and M. D. Schneider, Phys. Rev. D 88,
+063537 (2013), arXiv:1304.2593 [astro-ph.CO]."
+"[100] D. J. Paz and A. G. Sánchez, Mon. Not. Roy. As-
+tron. Soc. 454, 4326 (2015), arXiv:1508.03162 [astro-
+ph.CO]."
+"[101] O. Friedrich and T. Eifler, Mon. Not. Roy. Astron. Soc.
+473, 4150 (2018), arXiv:1703.07786 [astro-ph.IM]."
+"[102] http://cosmo.phys.hirosaki-u.ac.jp/takahasi/
+allsky_raytracing/."
+"[103] G. Hinshaw, D. Larson, E. Komatsu, D. N. Spergel,
+C. L. Bennett, J. Dunkley, M. R. Nolta, M. Halpern,
+R. S. Hill, N. Odegard, L. Page, K. M. Smith, J. L.
+Weiland, B. Gold, N. Jarosik, A. Kogut, M. Limon, S. S.
+Meyer, G. S. Tucker, E. Wollack, and E. L. Wright,
+ApJS 208, 19 (2013)."
+"[104] T. Hamana and Y. Mellier, Mon. Not. Roy. Astron. Soc.
+327, 169 (2001), astro-ph/0101333."
+"[105] M. R. Becker, MNRAS 435, 115 (2013).
+[106] M. Shirasaki, T. Hamana, and N. Yoshida,"
+"Mon. Not. Roy. Astron. Soc. 453, 3043 (2015),
+arXiv:1504.05672."
+"[107] P. Fosalba, E. Gaztañaga, F. J. Castander, and
+M. Manera, Mon. Not. Roy. Astron. Soc. 391, 435
+(2008), arXiv:0711.1540 [astro-ph]."
+"[108] K. M. Górski, E. Hivon, A. J. Banday, B. D. Wandelt,
+F. K. Hansen, M. Reinecke, and M. Bartelmann, ApJ
+622, 759 (2005), astro-ph/0409513."
+"[109] R. Mandelbaum, H. Miyatake, T. Hamana, M. Oguri,
+M. Simet, R. Armstrong, J. Bosch, R. Murata,
+F. Lanusse, A. Leauthaud, J. Coupon, S. More,"
+"http://dx.doi.org/10.1093/mnras/stx1477
+http://arxiv.org/abs/1607.08679
+http://dx.doi.org/10.1093/mnras/stz791
+http://dx.doi.org/10.1093/mnras/stz791
+http://arxiv.org/abs/1901.09488
+http://dx.doi.org/10.21105/astro.1811.11584
+http://dx.doi.org/10.21105/astro.1811.11584
+http://arxiv.org/abs/1811.11584
+http://arxiv.org/abs/1811.11584
+http://dx.doi.org/10.1111/j.1365-2966.2009.14548.x
+http://arxiv.org/abs/0809.3437
+http://dx.doi.org/10.1088/1475-7516/2013/02/001
+http://arxiv.org/abs/1210.7183
+http://arxiv.org/abs/1210.7183
+http://arxiv.org/abs/2007.01844
+http://dx.doi.org/10.1111/j.1745-3933.2005.00084.x
+http://arxiv.org/abs/astro-ph/0506510
+http://dx.doi.org/10.1086/507120
+http://arxiv.org/abs/astro-ph/0512416
+http://dx.doi.org/10.1086/591512
+http://dx.doi.org/10.1086/591512
+http://arxiv.org/abs/0803.3453
+http://dx.doi.org/10.1093/mnras/stx258
+http://dx.doi.org/10.1093/mnras/stx258
+http://arxiv.org/abs/1611.08606
+http://arxiv.org/abs/1611.08606
+http://dx.doi.org/10.1093/mnras/stt1013
+http://arxiv.org/abs/1210.7303
+https://github.com/surhudm/aum
+http://dx.doi.org/10.1086/432084
+http://arxiv.org/abs/astro-ph/0411777
+http://arxiv.org/abs/astro-ph/0411777
+http://dx.doi.org/10.1088/0004-637X/724/2/878
+http://arxiv.org/abs/1001.3162
+http://arxiv.org/abs/1001.3162
+http://dx.doi.org/10.1103/PhysRevD.93.063507
+http://dx.doi.org/10.1103/PhysRevD.93.063507
+http://arxiv.org/abs/1511.01454
+http://dx.doi.org/10.1088/1475-7516/2016/09/007
+http://arxiv.org/abs/1511.01465
+http://dx.doi.org/10.1088/1475-7516/2016/02/018
+http://arxiv.org/abs/1511.01096
+http://dx.doi.org/10.1093/pasj/psx042
+http://arxiv.org/abs/1701.00818
+http://dx.doi.org/ 10.3847/1538-4357/ab0af0
+http://dx.doi.org/ 10.3847/1538-4357/ab0af0
+http://arxiv.org/abs/1804.05873
+http://dx.doi.org/ 10.1093/mnras/sty2420
+http://arxiv.org/abs/1710.00885
+http://dx.doi.org/10.1051/0004-6361:20066170
+http://dx.doi.org/10.1051/0004-6361:20066170
+http://arxiv.org/abs/astro-ph/0608064
+http://arxiv.org/abs/astro-ph/0608064
+http://dx.doi.org/10.1093/mnras/stt270
+http://arxiv.org/abs/1212.4359
+http://dx.doi.org/10.1103/PhysRevD.88.063537
+http://dx.doi.org/10.1103/PhysRevD.88.063537
+http://arxiv.org/abs/1304.2593
+http://dx.doi.org/10.1093/mnras/stv2259
+http://dx.doi.org/10.1093/mnras/stv2259
+http://arxiv.org/abs/1508.03162
+http://arxiv.org/abs/1508.03162
+http://dx.doi.org/10.1093/mnras/stx2566
+http://dx.doi.org/10.1093/mnras/stx2566
+http://arxiv.org/abs/1703.07786
+http://cosmo.phys.hirosaki-u.ac.jp/takahasi/allsky_raytracing/
+http://cosmo.phys.hirosaki-u.ac.jp/takahasi/allsky_raytracing/
+http://dx.doi.org/10.1088/0067-0049/208/2/19
+http://dx.doi.org/10.1046/j.1365-8711.2001.04685.x
+http://dx.doi.org/10.1046/j.1365-8711.2001.04685.x
+http://arxiv.org/abs/astro-ph/0101333
+http://dx.doi.org/10.1093/mnras/stt1352
+http://dx.doi.org/10.1093/mnras/stv1854
+http://arxiv.org/abs/1504.05672
+http://dx.doi.org/10.1111/j.1365-2966.2008.13910.x
+http://dx.doi.org/10.1111/j.1365-2966.2008.13910.x
+http://arxiv.org/abs/0711.1540
+http://dx.doi.org/10.1086/427976
+http://dx.doi.org/10.1086/427976
+http://arxiv.org/abs/astro-ph/0409513"
+"M. Takada, S. Miyazaki, J. S. Speagle, M. Shirasaki,
+C. Sifón, S. Huang, A. J. Nishizawa, E. Medezinski,
+Y. Okura, N. Okabe, N. Czakon, R. Takahashi, W. R.
+Coulton, C. Hikage, Y. Komiyama, R. H. Lupton, M. A.
+Strauss, M. Tanaka, and Y. Utsumi, PASJ 70, S25
+(2018), arXiv:1705.06745 [astro-ph.CO]."
+"[110] M. Shirasaki and N. Yoshida, Astrophys. J. 786, 43
+(2014), arXiv:1312.5032 [astro-ph.CO]."
+"[111] http://gfarm.ipmu.jp/~surhud/.
+[112] M. Takada and W. Hu, Phys. Rev. D 87, 123504 (2013),"
+"arXiv:1302.6994 [astro-ph.CO].
+[113] Y. Li, W. Hu, and M. Takada, Phys. Rev. D 89, 083519"
+"(2014), arXiv:1401.0385 [astro-ph.CO].
+[114] R. Takahashi, T. Nishimichi, M. Takada, M. Shirasaki,"
+"and K. Shiroyama, Mon. Not. Roy. Astron. Soc. 482,
+4253 (2019), arXiv:1805.11629 [astro-ph.CO]."
+"Appendix A: Cosmological dependence of the 2-halo
+term of galaxy correlation functions"
+"The cosmological information in the joint probes cos-
+mology using ∆Σ and wp lies in the 2-halo terms of ∆Σ
+and wp. In particular, an advantage in the use of Dark
+Emulator is that it includes all the nonlinear effects
+such as the nonlinear matter clustering, the nonlinear
+halo bias and the halo exclusion effect that are very dif-
+ficult to accurately calibrate unless N -body simulations
+are employed as done in Dark Emulator. In this ap-
+pendix, we study how these nonlinear effects cause scale-
+dependent variations in the 2-halo term by changes in
+the cosmological parameters."
+"Fig. 19 shows how a change in σ8 or Ωm0 causes a
+scale-dependent change in the 2-halo term of the three-
+dimensional correlation function, ξgg,2h, while other pa-
+rameters including the HOD parameters are kept to their
+fiducial values. Note that we use Dark Emulator to
+compute these results, and we here focus on the galaxy
+auto-correlation function because most of the cosmologi-
+cal information for the SDSS and HSC datasets are from
+wp that is obtained from the projection of ξgg. First,
+for comparison, the upper panel shows the change in the
+matter correlation function, ξmm, relative to that for the
+fiducial model (Planck cosmology). The figure shows that
+a change in σ8 causes a fairly sale-independent change in
+ξmm at scales r . 70 h"
+"−1Mpc which we consider through-
+out this paper. On the other hand, a change in Ωm0
+causes a scale-dependent change in ξmm."
+"The middle panel shows the fractional change in
+ξgg,2h/ξmm relative to the ratio for the fiducial model.
+Note that we here consider the fiducial model of HOD for
+LOWZ-like galaxies at z = 0.25. The reason we consider
+this ratio is that, if ξgg follows the linear theory predic-
+tion as given by ξgg = b"
+"2ξmm with a scale-independent
+coefficient b, the change becomes scale-independent for
+the change in the cosmological parameters. Here, for the
+sake of clarity, we consider only the 2-halo term of ξgg us-
+ing Eq. (16). The figure shows that a change in σ8 causes
+a scale-dependent change in the ratio, which should arises"
+"ξ m
+m
+/
+ξ"
+"(ξ
+g
+g
+,2"
+"h
+/
+ξ m"
+"d
+g
+g
+,2"
+100 101 102
+r [h−1Mpc]
+"(ξ
+g
+g
+,c"
+"c/
+ξ m"
+"d
+g
+g
+,c"
+"FIG. 19. Fractional changes in the 2-halo term of the three-
+dimensional galaxy-galaxy correlation function relative to
+that for the fiducial model, when varying either of σ8 or Ωm0.
+Note that other model parameters keep fixed to their fiducial
+values. The middle panel shows the fractional change for the
+ratio ξgg,2h/ξmm, because the ratio becomes scale-independent
+if the linear theory holds, which predicts ξgg = b"
+"2ξmm with a
+scale-independent coefficient b. The lower panel shows the re-
+sult for the two-point correlation function of central galaxies
+that includes only the two-halo term by definition. The dif-
+ferent lines show the results when ±5% and ±10% changes in
+σ28 and Ωm0, and the solid or dashed lines correspond to the
+results when increasing or decreasing the parameter by the
+amount from the fiducial value. Here we consider the HOD
+for LOWZ-like galaxies at z = 0.25."
+"from the scale-dependent change in the halo bias and the
+halo exclusion effect by the change in σ8. The change in
+Ωm0 is also found to cause a scale-dependent change in
+the ratio, again via the dependence of halo bias on Ωm0.
+Thus Dark Emulator includes these complex depen-
+dences of ξgg on the cosmological parameters. For further"
+"http://dx.doi.org/ 10.1093/pasj/psx130
+http://dx.doi.org/ 10.1093/pasj/psx130
+http://arxiv.org/abs/1705.06745
+http://dx.doi.org/10.1088/0004-637X/786/1/43
+http://dx.doi.org/10.1088/0004-637X/786/1/43
+http://arxiv.org/abs/1312.5032
+http://gfarm.ipmu.jp/~surhud/
+http://dx.doi.org/10.1103/PhysRevD.87.123504
+http://arxiv.org/abs/1302.6994
+http://dx.doi.org/10.1103/PhysRevD.89.083519
+http://dx.doi.org/10.1103/PhysRevD.89.083519
+http://arxiv.org/abs/1401.0385
+http://dx.doi.org/10.1093/mnras/sty2962
+http://dx.doi.org/10.1093/mnras/sty2962
+http://arxiv.org/abs/1805.11629"
+"comparison, the lower panel shows the results for ξgg,cc,
+i.e the two-point correlation function of central galaxies,
+which includes only the 2-halo term by definition. The
+results appear to be similar to those in the middle panel."
+"Thus Dark Emulator includes these complex depen-
+dences of the galaxy-galaxy correlation function on the
+cosmological parameters (σ8 and Ωm0). These depen-
+dences are difficult to accurately calibrate analytically
+e.g. by the perturbation theory, and the accurate cali-
+bration requires the use of N -body simulations as done
+in the development of Dark Emulator. These complex
+cosmological dependences of ξgg are an advantage of our
+method."
+"Appendix B: Covariance estimation based on mock
+catalogs"
+"In this appendix, we describe the estimation of statisti-
+cal uncertainties in the galaxy-galaxy weak lensing profile
+(∆Σ) by using a set of synthetic observational datasets,
+i.e. the covariance matrix."
+"A robust estimation of the covariance matrix is one
+of the most important subjects in modern cosmology in
+practice [e.g., see Refs. 97–101]. In this paper, we use a
+set of numerical simulations in Ref. [75] to construct real-
+istic mock catalogs of galaxy shapes as well as the tracers
+of large-scale structures. We then adopt the same analy-
+sis pipeline to measure ∆Σ from the mock catalogs as we
+do for actual measurements. Our mock measurements
+of the lensing signals have 2268 realizations in total, al-
+lowing us to evaluate the covariance matrix of ∆Σ for
+the SDSS-like galaxies at multiple redshifts in a rigorous
+way. In the following, we describe how to produce mock
+catalogs from the simulations incorporated with observa-
+tional data and show the validation of our mock lensing
+analyses."
+1. Massive production of mock catalogs
+Full-sky simulations of lensing and halos
+"We first briefly introduce the full-sky ray-tracing sim-
+ulations and the halo catalogs in the line-cone simulation
+realization, developed in Ref. [75] (The full-sky simula-
+tion data are freely available from [102]). The full-sky
+simulations are based on a set of N -body simulations
+with 20483 particles in cosmological volumes. Ref. [75]
+adopted the standard ΛCDM cosmology with the follow-
+ing cosmological parameters: the CDM density param-
+eter Ωcdm = 0.233, the baryon density Ωb = 0.046, the
+matter density Ωm = Ωcdm + Ωb = 0.279, the cosmologi-
+cal constant ΩΛ = 0.721, the Hubble parameter h = 0.7,
+the amplitude of density fluctuations σ8 = 0.82, and the
+spectral index ns = 0.97. Note that the cosmological
+model in the simulation is consistent with the WMAP 9
+year cosmology [103]."
+"Full-sky weak gravitational lensing simulations have
+been performed with the standard multiple lens-plane al-
+gorithm [104–106]. In this simulation, one can take into
+account the light-ray deflection on the celestial sphere
+by using the projected matter density field given in the
+format of spherical shell (see the similar approach for
+Ref. [107]). The simulations used the projected matter
+fields in 38 shells in total, each of which was computed
+by projecting N -body simulation realization over a radial
+width of 150h−1Mpc, in order to make the light-cone
+simulation covering a cosmological volume up to z = 5.3.
+As a result, the lensing simulations consist of the shear
+field at each of 38 different source redshifts with angular
+resolution of 0.43 arcmin. Each simulation data is given
+in the HEALPix format [108]. The radial depth be-
+tween nearest source redshifts is set to be 150h−1Mpc in
+comoving distance, corresponding to the redshift interval
+of 0.05− 0.1 for z <∼ 1."
+"In each output of the N -body simulation, Ref. [75]
+identified dark matter halos using the Rockstar algo-
+rithm [69]. In the following, we define the halo mass
+by using the spherical overdensity criterion: M200m =
+200ρ̄m0(4π/3)R"
+"3
+200m. Individual halos in N -body boxes"
+"are assigned to the pixels in the celestial sphere with the
+HEALPix software. It should be noted that the N -body
+simulations allow us to resolve dark matter halos with
+masses greater than a few times 1012 h−1M� with more
+than 50 N -body particles at redshifts z < 0.7, which is
+a typical redshift range of massive galaxies in the SDSS
+BOSS survey."
+Shapes of background galaxies
+"For shapes of background galaxies, we use the mock
+catalogs produced in Ref. [77]. The mocks are specific
+to cosmological analyses with the Subaru HSC-Y1 shape
+catalog [109] by taking into account various observational
+effects as the survey footprints, inhomogeneous angular
+distribution of source galaxies, statistical uncertainties in
+photometric redshift estimate, variations in the lensing
+weight, and the statistical noise in galaxy shape mea-
+surements including both intrinsic shapes and the mea-
+surement errors. We produced 2268 mock catalogs from
+108 full-sky ray-tracing simulations of gravitational lens-
+ing in Ref. [75] by using a similar approach developed in
+Refs. [76, 110]. We properly incorporated with the sim-
+ulated lensing shear and the observed galaxy shape on
+an object-by-object basis, enabling the mock to share ex-
+actly the same information of angular positions, redshifts,
+the lensing weights and the shear responsivity with the
+real catalog. The further details are found in Ref. [77].
+The mock shape catalogs are publicly available at [111]."
+"Mock catalogs of lensing galaxies, SDSS-like galaxies"
+"For the foreground galaxies to be used in the galaxy-
+galaxy lensing analysis, we produce the mock galaxy
+catalogs assuming the HOD method as summarized in
+Section III B. As in the mock galaxy shape catalogs,
+we first extract 2268 realizations of the HSC-Y1 sur-
+vey windows from 108 full-sky halo catalogs in Ref. [75].
+We then populate galaxies into halos using the fiducial
+HOD method whose parameters are chosen to mimic
+LOWZ and CMASS galaxies in the redshift range of
+0.15 < z < 0.35, 0.43 < z < 0.55, and 0.55 < z < 0.70,
+but spanning the entire SDSS BOSS footprint. The HOD
+method is used to populate mock LOWZ and CMASS
+galaxies in halos of each of the light-cone simulation re-
+alization."
+"Besides, we include the redshift-space distortion effects
+in mock LOWZ and CMASS galaxies. Along the line of
+sight of each host halo, we set the radial velocity of the
+central galaxy to be the same as one of its host halo,
+while we assign the random velocities to the satellites by
+following a Gaussian distribution with width given by the
+virial velocity dispersion."
+2. Validation of our covariance estimation
+"In this section, we validate the performance of our
+covariance estimation with the mock measurements of
+galaxy-galaxy lensing signals. For comparison, we pre-
+dict the Gaussian covariances of the lensing signals by
+a halo-model framework developed in Ref. [65]. In this
+framework, we can properly take into account the weight
+function related to the conversion between the lensing
+shear and the excess surface mass density in the covari-
+ance matrix. It would be worth noting that the covari-
+ance model has been extensively validated with a set of
+numerical simulations for a variety of the weight func-
+tions in the lensing analysis (see Ref. [65] for details)."
+"Fig. 20 shows the comparison of the variance of the
+lensing signal in each of three redshift bins with the sim-
+ulation results and their Gaussian predictions. In each
+panel, the simulation results are shown in the colored
+points, while the solid and dashed lines represent the
+Gaussian covariances with and without the shape noise,
+respectively. The figure clearly shows that the sample
+variance caused by the line-of-sight large scale structures
+dominates the mock variance, and the shot noise is dom-
+inant at the length scale less than 10h−1Mpc."
+"We then study the off-diagonal elements of the mock
+covariance matrices. The left panels in Fig. 21 summa-
+rize the comparison of the cross correlation coefficient in
+the covariance for the lensing signals at the lens redshift
+0.43 < z < 0.55. This figure shows that our simple Gaus-
+sian prediction provides a reasonable agreement with the
+off-diagonal elements of the mock covariance, indicating
+the super-sample covariance (SSC) [112] is not impor-
+tant to our galaxy-galaxy lensing analyses. The SSC is"
+"FIG. 20. Comaprison of the diagonal components in the co-
+variance matrices for the galaxy-galaxy lensing signals. From
+top to bottom, we show the variances of the lensing signals at
+three different redshift bins (the lower panel corresponds to
+the case at the higher redshift). The points represent the sim-
+ulation results based on 2268 realizations, while the solid lines
+stand for the Gaussian predictions developed in Ref. [65]. In
+each panel, the dashed line shows the variance in the absence
+of shape noises, highlighting the contribution from uncorre-
+lated large-scale structures along a line of the sight. Note that
+we define ∆Σ in units of hM� pc"
+"−2 in this figure. Hence, the
+unit in each vertical axis is given by Mpc (M� pc"
+"expected to arise from the four-point correlation among
+super- and sub-survey modes [112, 113], and the recent
+simulations have shown that the SSC in the halo-matter
+cross correlation becomes important only at 1h−1Mpc
+[114]. At the scale of R ∼ 1h−1Mpc, the statistical un-
+certainties in our lensing analyses are mostly determined
+by the shot noise terms."
+"The right panel of Fig. 21 shows the cross correlation
+coefficient of the mock covariance matrix across three
+redshift bins. The lower triangular panel shows the sim-
+ulation results, while the upper panels represent the dif-
+ference between the simulation results and the Gaussian
+predictions. We find the large cross correlation coeffi-
+cients in the radius range of R > 10h−1Mpc with a level
+of ∼ 0.5 at most for single redshifts and the cross covari-
+ance between two different redshifts is less prominent.
+Our Gaussian covariance is in good agreement with the
+simulation results, allowing to explain the mock covari-"
+LOWZ CMASS1 CMASS2
+"R
+[h
+−"
+"71.3
+HSCS16A GGL covariance"
+"FIG. 21. Comparisons of the off-diagonal elements in the covariance matrices with the simulation results and their Gaussian
+predictions. The left panels show the cross correlation coefficient in the covariance at the medium redshift bin (in the redshift
+range of 0.43 < z < 0.55) as a function of radii. In the left, the points show the simulation results, while the lines are for
+the Gaussian predictions. Each small panel in the left represents the scale dependence of the cross correlation coefficient.
+In the right, we show the cross correlation coefficients in the full covariance across three redshift bins. The lower triangular
+panels show the simulation results, while the upper one displays the difference between the simulation results and the Gaussian
+predictions. In the right, we use the labels of “LOWZ”, ”CMASS1” and “CMASS2” from the lowest to the highest redshift
+bins. Note that we limit the length scales to be in the range of R > 10h−1Mpc in the right panels to focus on the sample
+covariance. The diagonal elements in the right is set to 1 by construction."
+ance with a 20%-level accuracy.
+"Appendix C: Posterior distribution of parameters in
+a full-dimension parameter space"
+"For comprehensiveness of our discussion, in Fig. 22 we
+show the posterior distribution for all the parameters in-"
+"cluding all the HOD parameters for the CMASS1-like
+galaxies. The results for the LOWZ- and CMASS2-like
+galaxies at different redshifts are similar to this plot.
+Even if we use the joint information of wp and ∆Σ, each
+of the HOD parameters is not well constrained, but the
+cosmological parameters are recovered."
+0.2 0.4
+"lo
+g
+M"
+"σ
+2 lo"
+"lo
+g
+M"
+0.6 0.8 1.0
+0.6 0.8 1.0 1.2
+logMmin(zCMASS1)
+0.2 0.5 0.8
+σ2logM(zCMASS1)
+13 14 15
+logM1(zCMASS1)
+α(zCMASS1)
+κ(zCMASS1)
+lensing alone
+clustering alone
+baseline
+"FIG. 22. Posterior distributions of cosmological parameters and HOD parameters, as in Fig. 9. Here we show the results for
+all the HOD parameters for the CMASS1-like galaxies (see Table II)."
+"
+	Cosmological inference from emulator based halo model I: Validation tests with HSC and SDSS mock catalogs
+	Abstract
+	I introduction
+	II Theory
+	A Observables: galaxy-galaxy weak lensing and projected auto-correlation function
+	B Theoretical template: Dark Emulator implementation of halo model
+	1 Halo Occupation Distribution
+	2 Galaxy-galaxy weak lensing profile
+	3 Projected correlation function of galaxies"
+"	C Joint probes cosmology: mitigation of galaxy bias uncertainty
+	D Observational effects: geometrical cosmology dependence, photo-z, multiplicative shear bias, and RSD
+	1 Geometrical cosmology dependence
+	2 Photometric redshift errors
+	3 Multiplicative shear errors
+	4 Redshift-space distortion"
+"
+	III N-body simulations, Dark Emulator, and Mock Catalogs of HSC and SDSS-like galaxies
+	A N-body simulations and Dark Emulator
+	B Mock catalogs for the SDSS-like galaxies for the mock signals of  and wp
+	1 Mock catalogs of SDSS LOWZ- and CMASS-like galaxies
+	2 Mock signals of  and wp"
+	C Light-cone mock catalogs of HSC- and SDSS-like galaxies for estimating the covariance
+"	IV Methodology for cosmology challenges
+	A Parameter estimation method
+	B Validation strategy against analysis setups: scale cuts, parameter degeneracies, observational effects and RSD
+	C Validation strategy against uncertainties in halo-galaxy connection
+	1 Satellite galaxies
+	2 Off-centering effects of ``central'' galaxies
+	3 FoF halos
+	4 Assembly bias effect
+	5 Baryonic effect"
+	D Cross-correlation coefficients in the mocks
+"	V Results
+	A Validation of the baseline method, complementarity of  and wp, and tests with different scale cuts 
+	B Comparison with analytic halo model
+	C The impacts of observational effects: the geometrical correction, photo-z errors, shear multiplicative bias and RSD
+	D Tests and validations against uncertainties in halo-galaxy connection"
+"	VI Discussion and Conclusion
+	 Acknowledgments
+	 References
+	A Cosmological dependence of the 2-halo term of galaxy correlation functions
+	B Covariance estimation based on mock catalogs
+	1 Massive production of mock catalogs
+	 Full-sky simulations of lensing and halos
+	 Shapes of background galaxies
+	 Mock catalogs of lensing galaxies, SDSS-like galaxies"
+	2 Validation of our covariance estimation
+	C Posterior distribution of parameters in a full-dimension parameter space

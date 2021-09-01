@@ -1,0 +1,1025 @@
+0
+"PSF Estimation in Crowded Astronomical Imagery
+as a Convolutional Dictionary Learning Problem"
+Brendt Wohlberg and Przemek Wozniak
+"Abstract—We present a new algorithm for estimating the Point
+Spread Function (PSF) in wide-field astronomical images with
+extreme source crowding. Robust and accurate PSF estimation in
+crowded astronomical images dramatically improves the fidelity
+of astrometric and photometric measurements extracted from
+wide-field sky monitoring imagery. Our radically new approach
+utilizes convolutional sparse representations to model the contin-
+uous functions involved in the image formation. This approach
+avoids the need to detect and precisely localize individual point
+sources that is shared by existing methods. In experiments involv-
+ing simulated astronomical imagery, it significantly outperforms
+the recent alternative method with which it is compared."
+"This is an extended version of an IEEE Signal Processing
+Letters paper (doi:10.1109/LSP.2021.3050706), with supple-
+mental material included as appendices."
+I. INTRODUCTION
+"Astronomical images deliver a wealth of information on a
+wide range of phenomena in natural objects such as stars and
+galaxies. Similar techniques have been successfully applied to
+tracking man made space objects, showing great promise to
+address pressing problems in Space Traffic Management [1].
+Point Spread Function (PSF) estimation in astronomical im-
+agery presents unique challenges [2], [3]. Stars are nearly
+perfect point sources, so there is no shortage of fiducial points
+for analysis. At the same time, there are numerous factors
+that affect the PSF shape: atmospheric blur, imperfect optics
+and sky tracking, vibration etc. Modeling is often performed
+iteratively, using stars to improve the PSF model and using the
+model to better fit all stars [4]. While deconvolution is often
+considered more fundamental in signal processing [5], [6],
+many applications in astronomy are framed as PSF estimation
+and forward modeling in the convolved image [3], [7]. For ex-
+ample, changes in brightness and motion of unresolved sources
+are typically extracted by fitting individual PSF profiles and
+”streaks” in differenced (uncluttered) images of the same field
+separated in time [8]. PSF fitting on the original crowded
+images is performed to measure positions and brightness of
+stars used for calibration and science. Reaching the required
+fidelity is rarely possible without a good subpixel PSF model."
+"The analysis of crowded stellar fields is an important and
+challenging application of astronomical imaging [9]. When
+deep source confusion sets in, every image pixel includes"
+"B. Wohlberg is with Theoretical Division, Los Alamos National Laboratory,
+Los Alamos, NM 87545, USA (Email: brendt@lanl.gov)"
+"P. Wozniak is with Space and Remote Sensing Group, Los Alamos National
+Laboratory, Los Alamos, NM 87545, USA (Email: wozniak@lanl.gov)"
+"Research presented in this article was supported by the Laboratory Directed
+Research and Development program of Los Alamos National Laboratory
+under project numbers 20170183ER and 20200061DR."
+"signal from multiple PSF profiles. This situation naturally
+arises in densely populated sky areas and in very wide-field
+imaging that aims to cover as many objects as possible [10].
+There is a scarcity of algorithms and software tools that
+can tackle extreme crowding. Standard source extraction and
+PSF estimation codes like DAOPHOT [11], DoPHOT [4],
+SExtractor [12] were not designed to handle images where not
+a single star can be considered sufficiently isolated to ignore
+perturbations from neighbors. Their treatment of crowding
+typically consists of identifying occasional PSF collisions
+to either fit special local models or eliminate them from
+consideration. Recent PSF estimation work in astronomy has
+focused primarily on super-resolution and sub-pixel sampling
+by paying close attention to the correct image formation model
+and introducing modern sparsity based approaches (e.g. [13],
+[14], [15]). These algorithms are an important step forward,
+but they still ignore the cross-talk between sources and rely
+on user’s ability to identify isolated stars."
+"In this paper we present a new PSF estimation algorithm
+based on convolutional sparse representation (CSR). There
+is no need to detect and fit individual stars, eliminating
+the uncertainties and instabilities associated with these local
+modeling decisions. We are not aware of any prior use of CSR
+methods for this application.1"
+"We also note that the methods presented here include some
+more general contributions in CSR, including the use of
+an interpolation kernel to generate a dictionary suitable for
+approximating the translations of a continuous function, as
+well as additional algorithm refinements described in Sec. III.
+Other authors have also devised techniques for CSR of con-
+tinuous signals [17], [18], [19], but employing very different
+methods. The approach of [20], which we became aware
+of during the final stages of preparation of this manuscript,
+exploits similar ideas to ours in the use of interpolation to
+generate the dictionary, but makes use of greedy algorithms
+as opposed to our optimization-based approach. The latter
+has the advantage of greater flexibility supporting different
+regularization terms and constraints, which is exploited in
+constructing our proposed PSF estimation method."
+II. IMAGE FORMATION MODEL
+"We restrict our attention to estimation of a spatially-invariant
+PSF. In practice it is usually necessary to characterize imaging"
+"1These methods have previously been considered for analysis of astronom-
+ical imagery [16], but the application was background removal rather than
+PSF estimation, and no attempt was made to model the continuous nature of
+the underlying scene."
+https://doi.org/10.1109/LSP.2021.3050706
+"systems with a spatially-varying PSF, but since these varia-
+tions are typically negligible across the small image regions
+required by our approach, they can be represented by making
+independent estimates of a fixed PSF in overlapping image
+regions covering the image. We represent the scene being
+imaged as the continuous function r(x, y), where x and y are
+spatial coordinates, the image on the detector as the continuous
+function s(x, y), and the PSF of the optical system by the
+continuous function g(x, y), so that we have (ignoring noise
+for now)"
+"s(x, y) ="
+"∫ ∞
+−∞"
+"∫ ∞
+−∞"
+"r(x− u, y − v)g(u, v) du dv . (1)"
+"In the case of an ideal detector, the final sampled version of the
+image, s, is obtained by point sampling of the image function
+s(x, y). In practice, however, detectors sample the image func-
+tion s(x, y) by integrating its product with some sensitivity
+function at each photosite. This behavior can be modeled as
+the convolution of s(x, y) by the photosite sensitivity function,
+followed by point sampling. As a result of the commutative
+property of convolution, this additional convolution can be
+included in (1) by redefining s(x, y) as the image on the sensor
+blurred by the photosite sensitivity function, and g(x, y) as the
+convolution of the PSF of the optical system and the photosite
+sensitivity function. It is this effective PSF [13] that we will
+be estimating."
+"Our image formation model assumes that the scene consists
+of a finite sum of impulses"
+"r(x, y) =
+∑
+k"
+"akδ(x− xk, y − yk) , (2)"
+"where ak, xk, and yk are the scaling factor and x and y
+locations respectively of the kth impulse, so that we have"
+"s(x, y) ="
+"∫∫ ∑
+k"
+"akδ(x− xk − u, y − yk − v)g(u, v) du dv"
+"akg(x− xk, y − yk) . (3)"
+"If the xk, and yk values were quantized to a finite resolution
+grid, this equation could be equivalently represented in discrete
+form as s = g ∗ a , where s and g denote s(·, ·) and g(·, ·)
+sampled on that grid, and a is an image, on the same sampling
+grid, taking on the value zero except at sample positions
+corresponding to one of the xk, yk pairs above."
+"Fig. 1: Illustration of dependence of sampled PSF values on
+alignment of the PSF with the sampling grid. The dotted
+red lines indicate the location of the impulses defining the
+locations of the PSFs."
+"In this simplified context, a natural approach to the PSF
+estimation problem would be to exploit the sparsity of a,
+posing the problem as blind deconvolution via regularized
+inversion with a sparsity prior, e.g."
+"argmin
+g,a"
+(1/2) ‖g ∗ a− s‖22 + λ ‖a‖1 (4)
+"with a squared `2 data fidelity term2 and an `1 regularization
+term. However, since our images are typically sampled close
+to the Nyquist rate, different alignments of the signal with
+respect to the sampling grid can result in significant differences
+in the samples obtained from the same continuous signal, as
+illustrated in Fig. 1."
+III. CONVOLUTIONAL DICTIONARY LEARNING
+"In this section, for simplicity of notation, concepts are
+introduced and mathematically defined in the context of 1D
+signals. The extension to the 2D signals is, for the most part
+trivial, and details of the extension are explicitly provided
+when it is not. While the simple convolutional model s = g∗a
+is not entirely adequate, a significantly more accurate discrete
+model can be defined as s ="
+"∑
+m gm ∗am , where gm denote"
+"different sub-pixel sampling offsets of the continuous function
+g(·), and the am are corresponding maps of the sub-pixel
+impulse locations as in (3). A naive extension of (4) to account
+for this model would be"
+"argmin
+{gm},{am}"
+"∥∥∥∑
+m"
+"gm ∗ am − s
+∥∥∥2
+2
++ λ"
+"‖am‖1 , (5)"
+"i.e. a convolutional dictionary learning (CDL) problem [22].
+We modify the generic CDL problem for our purposes"
+"by defining the gm, sampled at different sub-pixel offsets,
+to be derived via linear interpolation from a common grid-
+aligned (i.e. zero sub-pixel offset) PSF kernel g. Since linear
+interpolation to a set of M fractional offsets from the sampling
+grid can be computed via convolution with a set of M filters
+{hm}, we can write dictionary filters gm as3"
+gm = hm ∗ g . (6)
+"We use Lanczos interpolation [23, Sec. 10.3.6], for which the
+interpolation kernel of order K is defined as"
+φ(x) =
+"{
+sinc(x) sinc(x/K) if −K < x < K
+0 otherwise"
+"where sinc(x) = sin(πx)/(πx). Defining the set of fractional
+offsets (chosen to evenly divide the intervals between the
+integer grid points) as values n/M where n ∈ Z and
+−b(M − 1)/2c ≤ n ≤ bM/2c, filter hm is obtained by
+evaluating φ(x) at the set of points {−K + δm,−K + 1 +
+δm, . . . ,K−1+ δm,K+ δm}, where δm is the mth fractional
+offset."
+"2The Poisson noise model encountered in practice suggests that we should
+at least employ an appropriate weighted `2 data fidelity term [21, Ch. 17].
+We retain the unweighted norm since the Poisson noise weighting was
+found to complicate algorithm convergence without providing any significant
+performance improvements."
+"3In two dimensions we have M2 filters gm,n = (hm⊗hn)∗g, where m
+and n index the fractional offsets on the two axes, and ⊗ denotes the tensor
+product of two vectors."
+We can therefore pose our variant of the CDL problem as
+"argmin
+g,{am}"
+"∥∥∥∑
+m"
+"hm ∗ g ∗ am − s
+∥∥∥2
+2
++ λ"
+"‖am‖1 , (7)"
+"which, as usual for such bi-convex problems, is solved via
+alternating minimization with respect to the am and g. By
+associativity of convolution we can express the minimization
+with respect to the am as a convolutional sparse coding
+(CSC) [24] of s with respect to dictionary dm = hm ∗ g, and
+by commutativity and linearity of convolution we can express
+the minimization with respect to g as a deconvolution of s
+with respect to the kernel b ="
+"∑
+m hm ∗ am."
+"We introduce a number of additional refinements for im-
+proved performance:"
+"DC invariance: Astronomical imagery includes a very
+smooth background that can be accurately modeled as a
+constant offset on spatial scales of up to a few hundred pixels.
+In practice, this amounts to a non-zero DC offset that is
+omitted from image formation model (2), and is not accounted
+for in the data fidelity term of our CDL problem, resulting in
+poor performance due to the mismatch between the model
+and the data. The most effective solution is to include a
+frequency-domain mask in the data fidelity term that excludes
+the DC value from having any effect. This is straightforward to
+implement since both the sparse coding and dictionary update
+sub-problems employ frequency-domain solvers [22]."
+"Non-negativity: Both g and the am must be non-negative
+according to the physical process being modeled. This re-
+quirement is included as an additional constraint on g, but
+is omitted for am since it was empirically observed not to
+make a significant performance difference."
+"Normalization of g: We include a unit-norm constraint on
+g to resolve the scaling ambiguity between g and the am."
+"Regularization of the am: In the CSC sub-problem, we
+replace the usual `1 norm regularizer with an `1−`2 norm,
+which has been demonstrated to provide improved sparse
+recovery with a highly coherent dictionary [25]."
+"Regularization of g: We include a regularization term
+consisting of the squared `2 norm of the gradient of g [26, Sec.
+4], which has the effect of penalizing non-smooth solutions."
+The resulting CDL problem can be written as
+"argmin
+g,{am}"
+"∥∥∥∑
+m"
+"hm ∗ g ∗ am − s
+∥∥∥2
+W
++"
+"λa
+∑
+m"
+(‖am‖1 − ‖am‖2)+
+"∥∥∥√(c0 ∗ g)2 + (c1 ∗ g)2∥∥∥2
+2
++ ιC(g) , (8)"
+"where ‖·‖2W denotes an `2 norm with weighting in the
+frequency-domain, λa and λg are regularization parameters,
+‖am‖1−‖am‖2 is the `1−`2 norm of am, c0 and c1 are filters
+that compute the gradients along image rows and columns re-
+spectively, and ιC(·) is the indicator function4 of constraint set"
+4The indicator function of set C is defined as
+ιC(x) =
+"{
+0 if x ∈ C
+∞ if x /∈ C ."
+"C = {x ∈ RN | ‖x‖ = 1 , xi ≥ 0 ∀i ∈ {0, 1, . . . , N−1}}. As
+is usual for CDL problems, we tackle this bi-convex problem
+via alternating minimization over the two convex sub-problems
+corresponding to holding g constant and minimizing with
+respect to the am, and vice-versa. While there has been some
+work on establishing convergence guarantees for alternating
+minimization algorithms for dictionary learning [27], we are
+not aware of any guarantees that would apply to this specific
+algorithm."
+"The minimization with respect to the am can be solved via
+the ADMM [28] algorithm for CSC [29, Sec. 2.2][24, Sec.
+III], with the proximal operator of the `1 norm replaced by the
+proximal operator of the `1 − `2 norm [30], with the required
+frequency domain weighting being achieved by setting the DC
+components of the frequency-domain representations of the
+dm and s to zero. The convergence of ADMM applied to
+problems involving the `1 − `2 norm is addressed in [30]."
+"The minimization with respect to g can be solved by
+a variant of the FISTA [31] algorithm for the constrained
+convolutional method of optimal directions (CCMOD) [22].
+The only changes required to this algorithm are (i) implement
+the frequency-domain weighting by setting the DC component
+of the frequency-domain representations of"
+"∑
+m hm∗am and s"
+"to zero in the gradient calculation [22, Sec. III.D], (ii) include
+a term for the gradient regularization in the calculation of the
+FISTA gradient, and (iii) compose the usual spatial support
+projection [22, Sec. III.D] in the FISTA proximal step with
+a clipping to zero of negative values, which is the proximal
+operator of the non-negativity constraint. Since this is a convex
+problem, the usual convergence results for FISTA apply [31]."
+IV. RESULTS
+A. Test Images
+"Our benchmark images were simulated to reproduce a
+realistic distribution of star brightness, pixel sampling, and
+noise. They span a range of PSF shapes and star densities. The
+scene consists of PSF light profiles of point sources (stars) on
+top of a constant sky background. After injecting uniformly
+distributed stars at random sub-pixel locations and re-sampling
+to the pixel grid of the image, we add Poisson noise to model
+the effects of counting statistics in electro-optical sensors such
+as CCDs and CMOS arrays. The amplitude of the signal
+(full 16-bit dynamic range) and sky background (a flat DC
+offset of 1000 counts) are typical of well exposed astronomical
+images, where the noise distribution is effectively Gaussian.
+The baseline noise level corresponds to an inverse gain of 1
+electron per data number (variance equal to signal)."
+"The observed number density of stars varies dramatically
+across the sky. This, in combination with the field of view,
+sensitivity, and the spatial extent of the PSF, will determine
+the severity of source confusion. The density of stars in our test
+images (see Fig. 4 in Appx. C) varies from 100 to 1 pixels per
+star, i.e. between 655 and 65,500 stars in a tile of 256× 256
+pixels. This size is both sufficiently large for a robust PSF
+estimate and sufficiently small to avoid significant variations
+of the PSF and the sky background within the tile."
+"TABLE I: PSF estimation performance in SNR (dB) for
+the RCA method with parameters optimized for each case.
+Performance relative to that of the proposed method in Table II
+is indicated by the font and parentheses6."
+"shape
+density"
+1 10 25 50 100
+"narrow 20.17 23.63 20.78 20.56 23.77
+wide 24.39 25.91 25.43 24.57 (26.42)
+elongated 23.18 26.11 22.76 22.33 23.75
+complex 28.45 26.12 25.08 24.77 (25.38)"
+"We use a set of four reference PSFs, shown in Fig. 3
+in Appx. C. The “narrow” PSF consists of a circularly sym-
+metric pseudo-Gaussian function5 with Full Width at Half
+Maximum (FWHM) of 2 pixels, resulting in a near critical
+sampling. This represents a very sharp image under excellent
+viewing conditions. The “wide” PSF has the same shape
+as the narrow one, except for FWHM = 4 pixels. This
+represents poor focus and/or strong atmospheric blurring. The
+“elongated” PSF is an elliptical pseudo-Gaussian at 45 degrees
+with the major and minor axis FWHM = 4 and 2 pixels. An
+elongated PSF may arise e.g. due to a coma in imaging optics
+or imperfect tracking of the sidereal sky motion. Finally, the
+“complex” PSF includes one of each with different amplitudes
+and small centroid offsets to simulate shapes resulting from a
+combination of factors."
+B. Metrics
+"The metric for evaluating the accuracy of sampled estimates
+of a continuous PSF must take into account both a scaling
+ambiguity (multiplication of the PSF by a scalar factor can
+be compensated by dividing the star field by the same factor)
+and a phase shift ambiguity (a phase shift in the PSF can be
+compensated by a corresponding phase shift in the star field).
+We denote the reference continuous PSF by the function g(·)
+and the sampled PSF with which it is to be compared by
+vector h, with components hi, which are assumed to represent
+samples of an underlying continuous function h(·) taken at
+points I ⊂ Z+. A correlation function between continuous
+function g(·) and vector h at sampling offset n is defined as"
+c(n) =
+"∑
+i∈I hig(i+ n/NR)√∑"
+"i∈I h
+2
+i"
+"√∑
+i∈I g(i+ n/NR)"
+"2
+, (9)"
+"where NR is the sub-pixel resolution factor at which the
+correlation is computed. Now, defining"
+"n̂ = argmax c(n) g = g(I + n̂/NR) a = hTh/gTh ,"
+"we compute the value of the metric as the Signal-to-Noise
+Ratio (SNR) of h with respect to ag, i.e., the SNR between a
+sampled and scaled representation of g(·) with the sampling
+offset, n, and scaling, a, chosen to maximize the SNR."
+"5A pseudo-Gaussian is an inverse of a Taylor expansion of the exponential
+used by the DoPHOT software [4]."
+"6Performance relative to values in the other table is indicated by parentheses
+where the performance is less than 2dB better than that in the other table,
+and by bold font where it is at least 2dB better than that in the other table."
+"TABLE II: PSF estimation performance in SNR (dB) for the
+proposed method. Performance relative to that of the RCA
+method in Table I is indicated by the font and parentheses6."
+"shape
+density"
+1 10 25 50 100
+"narrow 34.39 39.06 36.15 36.36 31.57
+wide 34.41 32.97 30.90 31.19 25.46
+elongated 33.20 35.14 34.11 34.95 30.95
+complex 30.32 29.52 27.24 29.71 25.08"
+C. Performance Comparisons
+"A direct comparison to existing approaches is difficult
+because few algorithms can handle extreme crowding and even
+fewer have publicly available implementations. We compare
+the performance of the proposed algorithm with that of the
+recent Resolved Components Analysis (RCA) [15] method,
+using the implementation provided by the authors [32]. The
+algorithm takes input in the form of postage stamp images
+approximately centered around well detected, isolated stars.
+In our most crowded images, finding isolated stars is virtually
+impossible. In order to ensure the best possible quality of input
+data, we manually selected several dozen bright stars, while
+attempting to minimize the contamination from neighboring
+objects. Since this method has six parameters for which
+there are no clear selection guidelines, for each test case we
+select the best parameters by evaluating the performance of
+the method over 9000 different parameter combinations. The
+results of this experiment are displayed in Table I."
+"The proposed algorithm is implemented in Python as an
+extension [33] of the SPORCO package [34], [35]. Parameter
+M was set to 5 for all cases, K and σ0 were chosen according
+to the PSF shape, and the remaining parameters were chosen
+according to the star density, as described in Appx. B.6 The
+results of this experiment are displayed in Table II. Despite the
+much larger parameter space explored in computing the RCA
+results, the performance of the proposed method exceeds that
+of RCA by more than 2db for all but two cases, and in some
+cases is better by more than 10 dB. The only cases where
+RCA outperforms the proposed method are at the lowest star
+density of 100 pixels per star."
+V. CONCLUSIONS
+"We have proposed a new PSF estimation algorithm, based
+on a CDL framework, for crowded astronomical imagery. The
+resulting performance over a very wide range of crowding
+conditions compares very favorably with that of RCA, a
+recent alternative method. Unlike competing algorithms, our
+approach does not require laborious pre-processing to select
+isolated stars. The need to detect and model individual point
+sources—a complicated and error prone task—is eliminated
+altogether. Our hypothesis is that the global nature of the pro-
+posed model accounts for most of the observed performance
+improvements over the usual patch-based methods. The CDL
+method can be further extended to support a spatial mask for"
+"6The development of reliable automated parameter selection, which would
+enhance the practical value of the proposed method, is left as a topic for
+future study."
+"rejection of artifacts such as saturated pixels, cosmic ray hits,
+or bad columns. These properties make the algorithm well
+suited for PSF estimation anywhere from extremely crowded
+stellar populations like the Galactic bulge and globular clusters
+to more routine work."
+REFERENCES
+"[1] B. Lal, A. Balakrishnan, B. M. Caldwell, R. S. Buenconsejo, and S. A.
+Carioscia, “Global trends in space situational awareness (SSA) and space
+traffic management (STM),” Institute for Defense Analyses, Tech. Rep.
+D-9074, 2018."
+"[2] R. Racine, “The telescopic point-spread function,” Publications of the
+Astronomical Society of the Pacific, vol. 108, no. 726, pp. 699–705, Aug.
+1996. doi:10.1086/133788"
+"[3] R. Lupton, “The characterization, subtraction, and addition of astronom-
+ical images,” in Statistical Challenges in Modern Astronomy IV, ser.
+Astronomical Society of the Pacific Conference Series, G. J. Babu and
+E. D. Feigelson, Eds., vol. 371, Nov. 2007, p. 160."
+"[4] P. L. Schechter, M. Mateo, and A. Saha, “DoPHOT, A CCD Photometry
+Program: Description and Tests,” Publications of the Astronomical
+Society of the Pacific, vol. 105, p. 1342, Nov. 1993. doi:10.1086/133316"
+"[5] P. Campisi and K. Egiazarian, Blind image deconvolution: Theory and
+Applications. CRC Press, 2017."
+"[6] S. Chaudhuri, R. Velmurugan, and R. Rameshan, “Blind deconvolution
+methods: A review,” in Blind Image Deconvolution. Springer Interna-
+tional Publishing, 2014, pp. 37–60. doi:10.1007/978-3-319-10485-0 3"
+"[7] R. Mandelbaum, “Weak Lensing for Precision Cosmology,” Annual
+Review of Astronomy and Astrophysics, vol. 56, pp. 393–433, Sep. 2018.
+doi:10.1146/annurev-astro-081817-051928"
+"[8] P. Wozniak, L. Prasad, and B. Wohlberg, “Moving point source
+detection and localization in wide-field images,” in The Advanced
+Maui Optical and Space Surveillance Technologies Conference,
+Wailea, Maui, HI, USA, Sep. 2018. [Online]. Available: http:
+//amostech.com/TechnicalPapers/2018/Poster/Wozniak.pdf"
+"[9] P. Wozniak, “Crowded Field Photometry and Difference Imaging,”
+in Proceedings of The Manchester Microlensing Conference: The
+12th International Conference and ANGLES Microlensing Workshop,
+E. Kerins, S. Mao, N. Rattenbury, and L. Wyrzykowski, Eds., Jan. 2008.
+doi:10.22323/1.054.0003"
+"[10] L. W. Piotrowski, T. Batsch, H. Czyrkowski, M. Cwiok, R. Dabrowski,
+G. Kasprowicz, A. Majcher, A. Majczyna, K. Malek, L. Mankiewicz,
+K. Nawrocki, R. Opiela, M. Siudek, M. Sokolowski, R. Wawrzaszek,
+G. Wrochna, M. Zaremba, and A. F. Żarnecki, “PSF modelling for very
+wide-field CCD astronomy,” Astronomy & Astrophysics, vol. 551, p.
+A119, Mar. 2013. doi:10.1051/0004-6361/201219230"
+"[11] P. B. Stetson, “DAOPHOT: A Computer Program for Crowded-Field
+Stellar Photometry,” Publications of the Astronomical Society of the
+Pacific, vol. 99, pp. 191–222, Mar. 1987. doi:10.1086/131977"
+"[12] E. Bertin and S. Arnouts, “SExtractor: Software for source extraction,”
+Astronomy and Astrophysics Supplement Series, vol. 117, pp. 393–404,
+Jun. 1996. doi:10.1051/aas:1996164"
+"[13] J. Anderson and I. R. King, “Toward high-precision astrometry with
+WFPC2. I. Deriving an accurate point-spread function,” Publications of
+the Astronomical Society of the Pacific, vol. 112, no. 776, pp. 1360–
+1382, Oct. 2000. doi:10.1086/316632"
+"[14] F. M. Ngolè Mboula, J.-L. Starck, S. Ronayette, K. Okumura, and
+J. Amiaux, “Super-resolution method using sparse regularization for
+point-spread function recovery,” Astronomy & Astrophysics, vol. 575,
+p. A86, Mar. 2015. doi:10.1051/0004-6361/201424167"
+"[15] F. Ngolè, J.-L. Starck, K. Okumura, J. Amiaux, and P. Hudelot,
+“Constraint matrix factorization for space variant PSFs field restoration,”
+Inverse Problems, vol. 32, no. 12, p. 124001, 2016."
+"[16] P. del Aguila Pla and J. Jaldén, “Convolutional group-sparse coding
+and source localization,” in IEEE International Conference on Acous-
+tics, Speech and Signal Processing (ICASSP), 2018, pp. 2776–2780.
+doi:10.1109/ICASSP.2018.8462235"
+"[17] C. Ekanadham, D. Tranchina, and E. P. Simoncelli, “Recovery of
+sparse translation-invariant signals with continuous basis pursuit,” IEEE
+Transactions on Signal Processing, vol. 59, no. 10, pp. 4735–4744, Oct.
+2011. doi:10.1109/tsp.2011.2160058"
+"[18] G. Tang, B. N. Bhaskar, and B. Recht, “Sparse recovery over continuous
+dictionaries – just discretize,” in Proc. Asilomar Conference on Signals,
+Systems and Computers, Pacific Grove, CA, USA, 2013, pp. 1043–1047.
+doi:10.1109/ACSSC.2013.6810450"
+"[19] Y. S. Soh, “Group invariant dictionary learning,” 2020,”
+arXiv:2007.07550."
+"[20] A. Song, F. J. Flores, and D. Ba, “Convolutional dictionary learning
+with grid refinement,” IEEE Transactions on Signal Processing, vol. 68,
+pp. 2558–2573, Apr. 2020. doi:10.1109/TSP.2020.2986897"
+"[21] C. A. Bouman, “Model based imaging,” 2020. [Online]. Available: https:
+//engineering.purdue.edu/∼bouman/publications/pdf/MBIP-book.pdf"
+"[22] C. Garcia-Cardona and B. Wohlberg, “Convolutional dictionary learn-
+ing: A comparative review and new algorithms,” IEEE Transactions
+on Computational Imaging, vol. 4, no. 3, pp. 366–381, Sep. 2018.
+doi:10.1109/TCI.2018.2840334"
+"[23] W. Burger and M. J. Burge, Principles of Digital Image Processing:
+Core Algorithms. Springer, 2009."
+"[24] B. Wohlberg, “Efficient algorithms for convolutional sparse represen-
+tations,” IEEE Transactions on Image Processing, vol. 25, no. 1, pp.
+301–315, Jan. 2016. doi:10.1109/TIP.2015.2495260"
+"[25] Y. Lou, P. Yin, Q. He, and J. Xin, “Computing sparse representation
+in a highly coherent dictionary based on difference of L1 and L2,”
+Journal of Scientific Computing, vol. 64, no. 1, pp. 178––196, Jul. 2015.
+doi:10.1007/s10915-014-9930-1"
+"[26] B. Wohlberg, “Convolutional sparse representations as an image model
+for impulse noise restoration,” in Proceedings of the IEEE Image, Video,
+and Multidimensional Signal Processing Workshop (IVMSP), Bordeaux,
+France, Jul. 2016. doi:10.1109/IVMSPW.2016.7528229"
+"[27] N. S. Chatterji and P. L. Bartlett, “Alternating minimization
+for dictionary learning: local convergence guarantees,” 2017,”
+arXiv:1711.03634."
+"[28] S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein, “Distributed
+optimization and statistical learning via the alternating direction method
+of multipliers,” Foundations and Trends in Machine Learning, vol. 3,
+no. 1, pp. 1–122, 2010. doi:10.1561/2200000016"
+"[29] B. Wohlberg, “Efficient convolutional sparse coding,” in Proceedings
+of IEEE International Conference on Acoustics, Speech, and Sig-
+nal Processing (ICASSP), Florence, Italy, May 2014, pp. 7173–7177.
+doi:10.1109/ICASSP.2014.6854992"
+"[30] Y. Lou and M. Yan, “Fast L1-L2 minimization via a proximal operator,”
+Journal of Scientific Computing, vol. 74, no. 2, pp. 767–785, 2018.
+doi:10.1007/s10915-017-0463-2"
+"[31] A. Beck and M. Teboulle, “A fast iterative shrinkage-thresholding algo-
+rithm for linear inverse problems,” SIAM Journal on Imaging Sciences,
+vol. 2, no. 1, pp. 183–202, 2009. doi:10.1137/080716542"
+"[32] F. Ngolé Mboula, “Resolved components analysis,” Python package
+available from https://www.cosmostat.org/software/rca, Jun. 2017."
+"[33] B. Wohlberg and P. Wozniak, “Software implementation of CDL-based
+PSF estimation technique,” Software available from https://github.com/
+bwohlberg/sporco-extra, 2021."
+"[34] B. Wohlberg, “SParse Optimization Research COde (SPORCO),” Soft-
+ware library available from http://purl.org/brendt/software/sporco, 2016."
+"[35] ——, “SPORCO: A Python package for standard and convolutional
+sparse representations,” in Proceedings of the 15th Python in Science
+Conference, Austin, TX, USA, Jul. 2017, pp. 1–8. doi:10.25080/shinma-
+7f4c6e7-001"
+"https://doi.org/10.1086/133788
+https://doi.org/10.1086/133316
+https://doi.org/10.1007/978-3-319-10485-0_3
+https://doi.org/10.1146/annurev-astro-081817-051928
+http://amostech.com/TechnicalPapers/2018/Poster/Wozniak.pdf
+http://amostech.com/TechnicalPapers/2018/Poster/Wozniak.pdf
+https://doi.org/10.22323/1.054.0003
+https://doi.org/10.1051/0004-6361/201219230
+https://doi.org/10.1086/131977
+https://doi.org/10.1051/aas:1996164
+https://doi.org/10.1086/316632
+https://doi.org/10.1051/0004-6361/201424167
+https://doi.org/10.1109/ICASSP.2018.8462235
+https://doi.org/10.1109/tsp.2011.2160058
+https://doi.org/10.1109/ACSSC.2013.6810450
+http://arxiv.org/abs/arXiv:2007.07550
+https://doi.org/10.1109/TSP.2020.2986897
+https://engineering.purdue.edu/~bouman/publications/pdf/MBIP-book.pdf
+https://engineering.purdue.edu/~bouman/publications/pdf/MBIP-book.pdf
+https://doi.org/10.1109/TCI.2018.2840334
+https://doi.org/10.1109/TIP.2015.2495260
+https://doi.org/10.1007/s10915-014-9930-1
+https://doi.org/10.1109/IVMSPW.2016.7528229
+http://arxiv.org/abs/arXiv:1711.03634
+https://doi.org/10.1561/2200000016
+https://doi.org/10.1109/ICASSP.2014.6854992
+https://doi.org/10.1007/s10915-017-0463-2
+https://doi.org/10.1137/080716542
+https://www.cosmostat.org/software/rca
+https://github.com/bwohlberg/sporco-extra
+https://github.com/bwohlberg/sporco-extra
+http://purl.org/brendt/software/sporco
+https://doi.org/10.25080/shinma-7f4c6e7-001
+https://doi.org/10.25080/shinma-7f4c6e7-001"
+"APPENDIX A
+CDL ALGORITHM"
+"The algorithm for minimization of our CDL problem, (8),
+consists of alternating minimization with respect to the am
+(sparse coding) and to g (dictionary update)."
+"A. Sparse Coding
+The minimization with respect to the am can be expressed"
+"argmin
+{am}"
+"∥∥∥∑
+m"
+"dm ∗ am − s
+∥∥∥2
+W"
+ιC(am)+
+"λa
+∑
+m"
+"(‖am‖1 − ‖am‖2) , (10)"
+"where dm = hm ∗ g. This problem is similar to the standard
+convolutional sparse coding (CSC) [24] problem, and can be
+solved via a variant of the ADMM algorithm described in [24]"
+"{am}(j+1) = argmin
+{am}"
+"∥∥∥∑
+m"
+"dm ∗ am − s
+∥∥∥2
+W
++"
+"∥∥∥am − u(j)m + v(j)m ∥∥∥2
+2"
+"{um}(j+1) = argmin
+{um}"
+"λa
+∑
+m"
+"(‖um‖1 − ‖um‖2)+∑
+m"
+ιCa(um)+
+"∥∥∥a(j+1)m − um + v(j)m ∥∥∥2
+2"
+"v(j+1)m = v
+(j)
+m + a"
+"(j+1)
+m − u"
+"(j+1)
+m , (13)"
+"where ρa is the ADMM penalty parameter that controls the
+convergence of the algorithm."
+"Update (11) can be solved by setting the DC components
+of the frequency-domain representations of the dm and s to
+zero before applying the computationally efficient frequency-
+domain solution described in [29, Sec. 2.2][24, Sec. III].
+Update (12) corresponds to the proximal operators of the
+`1−`2 norm, for which there is a closed form expression [30]."
+"B. Dictionary Update
+The minimization with respect to g can be expressed as"
+"argmin
+g"
+"∥∥∥b ∗ g − s∥∥∥2
+W"
++ ιC(g)+
+"∥∥∥√(c0 ∗ g)2 + (c1 ∗ g)2∥∥∥2
+2
+, (14)"
+"where b =
+∑
+m hm ∗ am, which is a regularized and con-"
+"strained deconvolution of s with respect to b. This problem
+is similar to the constrained convolutional method of optimal
+directions (CCMOD) [22] problem, and can be solved via a
+variant of the FISTA algorithm described in [22, Sec. III.D]"
+g(i+1) = proxιC
+"(
+y(i) − L−1g ∇yf(y)"
+")
+(15)"
+"t(i+1) =
+1"
+"√
+1 + 4 (t(i))2"
+")
+(16)"
+"y(i+1) = g(i+1) +
+t(i) − 1
+t(i+1)"
+"(
+g(i+1) − y(i)"
+")
+, (17)"
+"where f(g) represents the sum of the first and third terms
+in (14), t(0) = 1, and Lg > 0 is a parameter controlling the
+step size. The frequency-domain weighting of the data fidelity
+term can be implemented by setting the DC component of
+the frequency-domain representations of"
+"∑
+m hm ∗ am and s"
+"to zero in the calculation of the gradient of f(g), and the
+proximal operator of the indicator function of C corresponds
+to the composition of the usual spatial support projection [22,
+Sec. III.D] in the FISTA proximal step with clipping to zero
+of negative values and normalization."
+C. Alternating Minimization
+"Input: image s
+Initialize: Initialize g as a symmetric Gaussian PSF of"
+"width σ0
+for i ∈ 1, 2, . . . , Niter,0 do"
+"Compute sparse coding steps (11)–(13) with fixed
+dictionary dm = hm ∗ g"
+"Set final am as the current sparse representation
+end
+for i ∈ 1, 2, . . . , Niter,0 do"
+"Compute dictionary update steps (15)–(17) with
+fixed b ="
+"∑
+m hm ∗ am"
+"Set final g as the current PSF estimate
+end
+for i ∈ 1, 2, . . . , Niter do"
+"Compute sparse coding steps (11)–(13) with fixed
+dictionary dm = hm ∗ g"
+"Set resulting am as the current sparse
+representation"
+"Compute dictionary update steps (15)–(17) with
+fixed b ="
+"∑
+m hm ∗ am"
+"Set resulting g as the current PSF estimate
+end
+Output: Estimated PSF g"
+"Algorithm 1: Summary of CDL algorithm for PSF esti-
+mation."
+The full CDL algorithm is summarized in Alg. 1.
+"APPENDIX B
+PARAMETER SELECTION"
+"Our algorithm has four model parameters M (number of
+sub-pixel offsets of the fundamental PSF g), K (order of the
+Lanczos interpolation used in computing the sub-pixel shifts),
+λa (regularization parameter for the sparse representation),
+and λg (regularization parameter for the fundamental PSF
+g). In addition, there are five optimization parameters σ0
+(width parameter of the symmetric Gaussian PSF used to
+initialize the dictionary learning), ρa (penalty parameter of the
+ADMM algorithm of the CSC update), Lg (inverse step length
+parameter of the FISTA algorithm for the dictionary update),
+Niter,0 (initialization iterations), and Niter (main iterations).
+We set M = 5 for all our experiments since this value was
+found to give represent a good balance between performance
+(see Fig. 2) and computational cost, which is quadratic in M"
+"for 2D signals. We set K = 5 for “complex” and “narrow” PSF
+shapes, and K = 10 for the “elong” and “wide” shapes since
+these values maximize the accuracy of the Lanczos kernel in
+interpolating the respective PSF shapes."
+"1 2 3 4 5 6 7
+M"
+"Mean
+Median"
+"Fig. 2: Dependence on parameter M of mean and median of
+PSF estimation performance over all test cases, with param-
+eters σ0, λa, λg , ρa, and Lg individually optimized for each
+case. Note that competitive performance is even achieved at
+K = 1, which corresponds to a dictionary with a single filter,
+without any interpolation to account for sub-pixel offsets of
+the PSF."
+"For the results in Table II, we set σ0 = 1.0 for the
+“complex” and “wide” PSF shapes, σ0 = 0.5 for the “narrow”
+and “elong” shapes, Niter,0 = 10, and Niter = 100. The other
+parameters are all selected according to the star density, as
+indicated in Table III. The dependency of σ0 on the PSF shape
+and of the other parameters on the star density was chosen
+by selecting the dependency rules to maximize the mean
+SNR for all test cases over a set of 768 different parameter
+combinations."
+TABLE III: Parameter selection according to star density.
+"param.
+density"
+1 10 25 50 100
+"λa 0.01 0.01 0.01 0.01 0.1
+λg 0.01 0.1 0.1 0.1 0.1
+ρa 1 1 1 1 10
+Lg 50 100 100 500 1000"
+"APPENDIX C
+REFERENCE PSFS AND TEST IMAGES"
+"Reference PSFs and test images are shown in Figs. 3 and 4
+respectively."
+"APPENDIX D
+COMPUTATIONAL COST COMPARISON"
+"We compared the run times of the proposed method and
+RCA on a host with a 14 core Xeon E5-2690 CPU. The typical"
+"7The gray scale levels have been adjusted using the “zscale” algorithm,
+which preferentially displays data around the peak of the pixel distribution
+without computing the actual histogram (see the documentation for the IRAF
+display utility at https://iraf.net/irafhelp.php?val=display&help=Help+Page#s
+zscale algorithm), and is widely used in the astronomical community."
+6 4 2 0 2 4 6
+"0.250 0.5
+00"
+(a) Narrow PSF
+6 4 2 0 2 4 6
+"0.0
+50"
+"0.5
+00"
+(b) Wide PSF
+6 4 2 0 2 4 6
+(c) Elongated PSF
+6 4 2 0 2 4 6
+(d) Complex PSF
+Fig. 3: Reference PSFs
+(a) 1 pixel per star (b) 10 pixels per star
+(c) 100 pixels per star
+Fig. 4: Example test images7 with noise level 1.0.
+"run time of RCA was approximately 6s, and the typical run
+times of the proposed method, which depend on parameter
+M , are displayed in Fig. 5. While the typical run time of the
+proposed method is approximately 24s when M = 5, which
+is the value selected for the results reported in Table II in the
+main document, smaller values of M have corresponding run
+times that are closer to that of RCA while retaining good PSF
+estimation performance (see Fig. 2). It is also important to
+note that the typical run-time reported for RCA excludes the
+time required for identifying isolated stars and extracting their"
+"https://iraf.net/irafhelp.php?val=display&help=Help+Page#s_zscale_algorithm
+https://iraf.net/irafhelp.php?val=display&help=Help+Page#s_zscale_algorithm"
+"1 2 3 4 5
+M"
+"Fig. 5: Dependence on parameter M of run time of the
+proposed method."
+"surrounding patches, which can be a time-consuming manual
+process, while no such process is required by the proposed
+method."
+"APPENDIX E
+PERFORMANCE COMPARISONS"
+"Selected examples from the performance comparison
+in Sec. IV-C of the main document are displayed in Figs. 6–17.
+The sub-pixel resolution PSF estimates shown in these figures
+were obtained by Lanczos interpolation of the pixel resolution
+PSFs estimated via RCA and CDL."
+"4 3 2 1 0 1 2 3 4
+4"
+"4
+Reference"
+"0.050
+0.200"
+"4 3 2 1 0 1 2 3 4
+4"
+"0.200
+0.400"
+"4 3 2 1 0 1 2 3 4
+4"
+"0.200
+0.400"
+"Fig. 6: Contour plots comparing the reference “narrow” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star."
+8 6 4 2 0 2 4 6 8
+"Row slice
+Reference
+RCA
+CDL"
+8 6 4 2 0 2 4 6 8
+"Column slice
+Reference
+RCA
+CDL"
+"Fig. 7: Row and column slices comparing the reference “narrow” shape PSF with estimates computed via RCA and CDL from
+images with a star density of 1 pixel per star."
+"8 6 4 2 0 2 4 6 8
+0.08"
+"Row slice
+RCA - Ref.
+CDL - Ref."
+8 6 4 2 0 2 4 6 8
+"Column slice
+RCA - Ref.
+CDL - Ref."
+"Fig. 8: Row and column slices of the differences between the reference “narrow” shape PSF and the estimates (a constant zero
+difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star."
+6 4 2 0 2 4 6
+Reference
+"0.05
+0"
+0.4000.6000.800
+6 4 2 0 2 4 6
+"0.05
+0"
+"0.4000.600
+0.800"
+6 4 2 0 2 4 6
+"0.0
+50"
+0.4000.6000.800
+"Fig. 9: Contour plots comparing the reference “wide” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star."
+8 6 4 2 0 2 4 6 8
+"Row slice
+Reference
+RCA
+CDL"
+8 6 4 2 0 2 4 6 8
+"Column slice
+Reference
+RCA
+CDL"
+"Fig. 10: Row and column slices comparing the reference “wide” shape PSF with estimates computed via RCA and CDL from
+images with a star density of 1 pixel per star."
+"8 6 4 2 0 2 4 6 8
+0.03"
+"Row slice
+RCA - Ref.
+CDL - Ref."
+8 6 4 2 0 2 4 6 8
+"Column slice
+RCA - Ref.
+CDL - Ref."
+"Fig. 11: Row and column slices of the differences between the reference “wide” shape PSF and the estimates (a constant zero
+difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star."
+"4 3 2 1 0 1 2 3 4
+4"
+"4
+Reference"
+"0.050
+0.200
+0.400"
+"4 3 2 1 0 1 2 3 4
+4"
+"0.200
+0.400"
+"4 3 2 1 0 1 2 3 4
+4"
+"0.050
+0.200"
+"0.400
+0.600"
+"Fig. 12: Contour plots comparing the reference “elong” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star."
+8 6 4 2 0 2 4 6 8
+"Row slice
+Reference
+RCA
+CDL"
+8 6 4 2 0 2 4 6 8
+"Column slice
+Reference
+RCA
+CDL"
+"Fig. 13: Row and column slices comparing the reference “elong” shape PSF with estimates computed via RCA and CDL from
+images with a star density of 1 pixel per star."
+"8 6 4 2 0 2 4 6 8
+0.03"
+"Row slice
+RCA - Ref.
+CDL - Ref."
+8 6 4 2 0 2 4 6 8
+"Column slice
+RCA - Ref.
+CDL - Ref."
+"Fig. 14: Row and column slices of the differences between the reference “elong” shape PSF and the estimates (a constant zero
+difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star."
+"4 2 0 2 4
+5"
+"4
+Reference"
+"0.200
+0.400
+0.600"
+"4 2 0 2 4
+5"
+"0.200
+0.400
+0.600"
+"4 2 0 2 4
+5"
+"0.200
+0.400"
+"Fig. 15: Contour plots comparing the reference “complex” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star."
+8 6 4 2 0 2 4 6 8
+"Row slice
+Reference
+RCA
+CDL"
+8 6 4 2 0 2 4 6 8
+"Column slice
+Reference
+RCA
+CDL"
+"Fig. 16: Row and column slices comparing the reference “complex” shape PSF with estimates computed via RCA and CDL
+from images with a star density of 1 pixel per star."
+8 6 4 2 0 2 4 6 8
+"Row slice
+RCA - Ref.
+CDL - Ref."
+8 6 4 2 0 2 4 6 8
+"Column slice
+RCA - Ref.
+CDL - Ref."
+"Fig. 17: Row and column slices of the differences between the reference “complex” shape PSF and the estimates (a constant
+zero difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star."

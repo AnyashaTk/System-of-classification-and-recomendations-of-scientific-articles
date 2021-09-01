@@ -1,0 +1,2622 @@
+0
+"Astronomy & Astrophysics manuscript no. tabone_MvH_EvD_JB ©ESO 2021
+February 23, 2021"
+"OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+I. Model and application to the HH 211 shock
+"Benoît Tabone1, Marc C. van Hemert2, Ewine F. van Dishoeck1, 3, John H. Black4"
+"1 Leiden Observatory, Leiden University, PO Box 9513, 2300 RA Leiden, The Netherlands
+2 Leiden Institute of Chemistry, Gorlaeus Laboratories, Leiden University, Einsteinweg 55, 2333 CC Leiden, The Netherlands
+3 Max-Planck-Institut für Extraterrestrische Physik, Giessenbachstrasse1, 85748 Garching, Germany
+4 Department of Space, Earth and Environment, Chalmers University of Technology, Onsala Space Observatory, 43992, Onsala,"
+Sweden
+"February 23, 2021"
+ABSTRACT
+"Context. Water is an important molecule in interstellar and circumstellar environments. Previous observations of mid-infrared (IR)
+rotational lines of OH toward star-forming regions suggest that OH emission may be used to probe the photodissociation of water.
+Aims. Our goal is to propose a method to quantify H2O photodissociation and measure the local ultraviolet (UV) flux from observa-
+tions of mid-infrared OH lines.
+Methods. Cross sections for the photodissociation of H2O resolving individual electronic, vibrational, and rotational states of the OH
+fragment are collected. The state distribution of nascent OH following H2O photodissociation is computed for various astrophysically
+relevant UV radiation fields (e.g., a single Lyα line or a broadband spectrum). These distributions are incorporated in a new molecular
+excitation code called GROSBETA, which includes radiative pumping, collisional (de)excitation, and prompt emission (i.e., following
+the production of OH in excited states). The influence of the photodissociation rate of H2O, the spectral shape of the UV radiation
+field, the density, the temperature of the gas, and the strength of the IR background radiation field on the integrated line intensities are
+studied in detail. As a test case, our model is compared to Spitzer-IRS observations at the tip of the HH 211 bow-shock.
+Results. The OH rotational line intensities in the range 9−16 µm, covering rotational transitions with Nup = 18 to 45, are proportional
+to the column density of H2O photodissociated per second by photons in the range 114 − 143 nm (denoted as ΦB̃) and do not depend
+on other local properties such as the IR radiation field, the density, or the kinetic temperature. Provided an independent measurement
+of the column density of water is available, the strength of the local UV radiation field can be deduced with good accuracy, regardless
+of the exact shape of the UV field. In contrast, OH lines at longer far-IR wavelengths are primarily produced by IR radiative pumping
+and collisions, depending on the chemical pumping rate defined asDB̃ = ΦB̃/N(OH) and on the local physical conditions (nH, TK, IR
+radiation field). Our model successfully reproduces the OH mid-IR lines in the 10 − 16 µm range observed toward the tip of the HH
+211 bow-shock and shows that the jet shock irradiates its surroundings, exposing H2O to a UV photon flux that is about 5× 103 times
+larger than the standard interstellar radiation field. We also find that chemical pumping by the reaction H2 + O may supplement the
+excitation of lines in the range 16 − 30 µm, suggesting that these lines could also be used to measure the two-body formation rates of
+OH.
+Conclusions. The mid-IR lines of OH constitute a powerful diagnostic for inferring the photodissociation rate of water and thus the
+UV field that water is exposed to. Future JWST-MIRI observations will be able to map the photodestruction rate of H2O in various
+dense (nH& 106 cm−3) and irradiated environments and provide robust estimates of the local UV radiation field."
+Key words. Stars: formation – molecular processes – radiative transfer – ISM: astrochemistry – Individual: HH 211
+"Use \titlerunning to supply a shorter title and/or \authorrunning to suply a shorter list of author.
+1. Introduction"
+"Oxygen is the third-most abundant element in the interstellar
+medium (ISM) after hydrogen and helium. Water is an im-
+portant oxygen-bearing molecule in the formation of stars and
+planets.Water ice promotes the coagulation of dust grains, from
+dense clouds to planet-forming disks (Chokshi et al. 1993; Testi
+et al. 2014; Schoonenberg & Ormel 2017), and water vapor is
+an important coolant of the gas in warm molecular environments
+(Neufeld et al. 1995), particularly in embedded protostellar sys-
+tems (Karska et al. 2013). Ultimately, the delivery of water to
+young planets and small bodies conditions the emergence of life
+as we know it (Chyba & Hand 2005). Following the trail of wa-"
+"ter and its associated chemistry from clouds to young forming
+planets is a major goal of astrochemistry (van Dishoeck et al.
+2014)."
+"Infrared (IR) observations, supplemented by chemical mod-
+eling, have demonstrated that abundant ice is built at the sur-
+face of grains in cold dense clouds, locking in ∼ 25% of the
+oxygen (Cuppen & Herbst 2007; Boogert et al. 2015). En route
+to the protostellar disk, condensed H2O is released into the gas
+phase by passive heating from the accreting protostar (Cecca-
+relli et al. 1996) and jet-driven shocks (e.g., Flower & Pineau
+des Forêts 2012). Under these dense (nH& 106 cm−3) and warm
+(T & 200 K) conditions, oxygen chemistry is then driven by fast"
+"Article number, page 1 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"neutral-neutral reactions and photodissociation. In this context,
+the hydroxyl radical (OH) is a key reactive intermediate between
+atomic oxygen and water. The available gas-phase atomic oxy-
+gen is converted into OH by the reaction O + H2 → OH + H,
+followed by the formation of water through OH + H2 → H2O +
+H. OH is destroyed by the latter reaction, by the former reaction
+in the backward direction, and by UV photodissociation. Water
+is also destroyed either by the backward reaction H2O + H →
+OH + H2 or by photodissociation leading mostly to OH."
+"The observations of warm H2O and OH vapor toward em-
+bedded protostars culminated with the Herschel Space Observa-
+tory (van Dishoeck et al. 2011), which outperformed previous
+far-IR and submillimeter observatories (e.g., SWAS, Odin, ISO-
+LWS). The detection of far-IR OH lines in inner envelopes and
+outflows (Wampfler et al. 2010, 2011, 2013; Goicoechea et al.
+2015), supplemented by similar detections in prototypical pho-
+todissociation regions (Goicoechea et al. 2011; Parikka et al.
+2017) and extragalactic sources (Sturm et al. 2011; González-
+Alfonso et al. 2012) evidenced the presence of an active warm
+oxygen chemistry in dense interstellar environments. One of the
+most striking results is the relatively low abundance of gaseous
+water found toward most of the protostellar sources, which con-
+trasts with the abundant water ice supplied by the infalling en-
+velope. In particular, multiple outflow components, which dom-
+inate H2O emission, exhibit abundances ranging from 10−7 to
+10−5 (Kristensen et al. 2012; Nisini et al. 2013; Kristensen
+et al. 2017). Water vapor from envelopes and perhaps embed-
+ded disks is typically traced by H172 O and H"
+"18
+2 O lines and is best"
+"observed by Herschel-HIFI and (sub)millimeter interferometers
+(NOEMA, SMA, ALMA). While Visser et al. (2013) show that
+water abundance can be as high as 10−4, most of the protostellar
+systems exhibit lower water abundances, typically ranging be-
+tween 10−7 and 10−5 (Jørgensen & van Dishoeck 2010; Persson
+et al. 2012, 2016; Harsono et al. 2020). Following the dissipation
+of the envelope, near- and mid-IR observations from space (e.g.,
+Spitzer) and from the ground (e.g., VLT-CRIRES) have unveiled
+abundant hot water vapor in the planet-forming regions of Class
+II disks (. 10 au, Pontoppidan et al. 2014) but surprisingly dry
+Herbig disks (Pontoppidan et al. 2010; Fedele et al. 2011; Walsh
+et al. 2015)."
+"The solution to this conundrum of low water abundance may
+lie in the impact of the ultraviolet (UV) radiation field produced
+by the accreting young star or strong jet shocks (V & 40 km s−1).
+Observations of hydrides provide evidence of the driving role of
+UV irradiation in the chemistry of protostars (Benz et al. 2016).
+It has been proposed that the low abundance of H2O in protostel-
+lar outflows is the result of the UV photodissociation of H2O va-
+por (Nisini et al. 2002, 2013; Karska et al. 2014). The low water
+abundance in embedded protostellar disks is generally attributed
+to the freeze-out of water (Visser et al. 2009). However, recent
+constraints on the thermal structures of Class 0 disk-like struc-
+tures may contradict this interpretation (van ’t Hoff et al. 2020)
+and require the efficient destruction of H2O or a large opacity of
+the dust in the far-IR."
+"The impact of UV photodissociation is generally explored by
+means of astrochemical models (van Kempen et al. 2010; Visser
+et al. 2012; Panoglou et al. 2012; Yvart et al. 2016). However,
+the strength of the local UV radiation field incident on disks,
+envelopes, and outflows is poorly known, due to the complex
+sources of UV emission and the unknown level of dust and gas
+attenuation on the line of sight, severely limiting the diagnostic
+capabilities. Assessing the exact role of UV photodissociation
+of water from astrochemical models based only on molecular
+abundances remains highly uncertain."
+"Alternatively, the excitation of molecular species provides
+in some cases a direct access to their formation and destruc-
+tion routes. In irradiated regions, IR lines of H2 and CO from
+ro-vibrationally excited levels trace the UV pumping followed
+by radiative decay (Krotkov et al. 1980; Black & van Dishoeck
+1987) and have been used to probe the photodissociation of these
+species (Röllig et al. 2007; Thi et al. 2013). The excitation of
+reactive species for which the collisional time scale is compa-
+rable to the destruction time scale, carry also key information
+on their formation and destruction rates through a process called
+”chemical pumping” (Black 1998). So far, the incorporation of
+a state-to-state chemistry in models (i.e., models considering the
+state distribution of the reagents and the products) have been car-
+ried out only for a handful of molecular ions relevant for diffuse
+ISM and early universe (Godard & Cernicharo 2013; Stäuber &
+Bruderer 2009; Coppola et al. 2013)."
+"Mid-infrared observations with Spitzer-IRS toward proto-
+stellar outflows and young disks evidenced the presence of a su-
+perthermal population of rotationally excited OH with energies
+up to Eup ' 28000 K (Tappe et al. 2008, 2012; Carr & Najita
+2014). Two decades of extensive quantum calculations supple-
+mented by laboratory experiments have permitted the direct in-
+terpretation of these observations as the smoking gun of H2O
+photodissociation. Specifically, seminal works have shown that
+H2O photodissociation through the Ã excited electronic state of
+H2O (λ & 143 nm) produces OH in vibrationally hot but rota-
+tionally cold states (e.g., Hwang et al. 1999a; Yang et al. 2000;
+van Harrevelt & van Hemert 2001), whereas photodissociation
+through the B̃ state (114 . λ . 143 nm) produces OH in high
+rotational states with levels up to N ' 47 (E ' 45000 K, Harich
+et al. 2000; van Harrevelt & van Hemert 2000). The rotationally
+excited lines of OH would thus probe the radiative cascade of
+OH products following their formation via H2O photodissocia-
+tion, a process called ”prompt emission”. If consistently mod-
+eled, rotational lines of OH can thus give a direct access to the
+photodissociation of H2O. However, a detailed modeling that in-
+cludes chemical data accumulated over the past decades is lack-
+ing."
+"Probing H2O photodissocation in astrophysical environ-
+ments may also lead to unique constraints on the local UV irradi-
+ation field that H2O is exposed to. The far-UV radiation field is a
+key parameter that controls the chemical, physical, and dynam-
+ical evolution of circumstellar regions. It regulates the overall
+chemistry of disk upper layers (e.g., van Dishoeck et al. 2006;
+Walsh et al. 2012) and outflows (Panoglou et al. 2012; Tabone
+et al. 2020), the thermal structure of disks (Gorti & Hollen-
+bach 2004; Bruderer et al. 2012; Woitke et al. 2016), and the
+coupling between the gas and the magnetic field (e.g., Gammie
+1996; Wang et al. 2019). The impact of the UV radiation field de-
+pends not only on attenuation processes, but also on its spectral
+shape. While the interstellar radiation field exhibits a broadband
+emission down to 91 nm (Habing 1968; Draine 1978; Mathis
+et al. 1983), the UV radiation emitted by accreting nascent stars
+(Bergin et al. 2003; Herczeg et al. 2004; Yang et al. 2012;
+Schindhelm et al. 2012) or by strong jet shocks (& 40 km s,−1
+Raymond 1979; Dopita & Sutherland 2017) is often dominated
+by Lyman-α emission, leading to the selective photodissociation
+of species that exhibit large photodissociation cross sections at
+121.6 nm."
+"To date, few robust diagnostics have been proposed to di-
+rectly access the local UV radiation field. H2 and CO lines ex-
+cited by UV pumping probe only UV photons in narrow lines at
+< 114 nm that are rapidly attenuated and are not indicative of
+the broadband UV spectrum relevant for the other UV photopro-"
+"Article number, page 2 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+"cesses. Chemical diagnostics have also been proposed but they
+rely either on H2 UV pumping (e.g., CN formed from excited
+H2, Cazzoletti et al. 2018) or depend on elemental abundance
+ratios (e.g., hydrocarbons, Bergin et al. 2016)."
+"In this work, we explore the potential of the OH mid-IR
+lines for probing H2O photodissociation and the local UV ra-
+diation field under a broad range of physical conditions repre-
+sentative of dense irradiated environments, such as molecular
+shocks, circumstellar media, and prototypical photodissociation
+regions (PDRs). To reach this goal, results of quantum mechan-
+ical calculations resolving the electronic, vibrational, and rota-
+tional states of the OH product following H2O dissociation at
+different UV wavelengths are collected. The distribution of the
+OH fragments following H2O photodissociation by UV fields of
+various spectral shapes are derived. The emerging line intensities
+are then calculated using GROSBETA, a new molecular excitation
+code that includes prompt emission, radiative decay, collisional
+(de)excitation, and IR radiative pumping in a slab approach. For
+sake of conciseness, ro-vibrational lines of OH are not studied in
+this work."
+"In Sect. 2, we present the OH model and the basics of
+GROSBETA. The competition of the different excitation processes
+on the OH line intensities are studied in detail for H2O photodis-
+sociation at Lyα (λ = 121.6 nm) and extended to other UV radia-
+tion fields in Sect. 3. In Sec. 4, a method to observationally derive
+the amount of H2O photodissociated per unit time, the photodis-
+sociation rate of H2O, and the strength of the local UV radiation
+field is proposed and applied to Spitzer-IRS observations of the
+tip of the HH 211 protostellar bow-shock. Our findings are sum-
+marized in Sect. 5."
+2. Model
+2.1. OH model
+2.1.1. Energy levels
+"H2O photodissociation can produce OH with high rotational and
+vibrational quantum numbers in the X2Π ground and the A2Σ+
+first excited electronic states. Our OH model includes the en-
+ergy levels provided by Brooke et al. (2016) and Yousefi et al.
+(2018) and made available on the EXOMOL database1. Figure 1-
+a shows the electronic, vibrational, and rotational levels included
+in the model. Regarding the ground electronic state OH(X2Π),
+vibrational levels up to 3 = 13 were included. We retained ro-
+tational levels that are stable against dissociation and in partic-
+ular included energy levels above the dissociation energy of the
+OH(X) that are stabilized by the centrifugal barrier (Chang et al.
+2019). This corresponds to a quantum number of N = 54 in the
+3 = 0 state, where N denotes the rotational quantum number as-
+sociated with the motion of the nuclei. Each rotational level is
+further split into two spin-orbit manifolds corresponding to pro-
+jected quantum numbers of the sum of the electronic orbital and
+spin angular momenta of Ω = 3/2 and Ω = 1/2 (see Fig. 1-b).
+This results in two rotational ladders with fine-structure levels
+characterized by a total angular momentum quantum number of
+J = N + 1/2 and J = N − 1/2, respectively. Lastly, each rota-
+tional level (N,Ω) is further split by the Λ-doubling into two lev-
+els labeled by their spectroscopic parity index2 e/ f . Our model"
+"1 http://www.exomol.com/, Tennyson et al. (2016)
+2 The spectroscopic parity index is related to the parity p = +/− by
+the relation � = p(−1)J−1/2, where � = 1 for e states and � = −1 for f
+states."
+"includes the fine structure and Λ-splitting of the OH(X2Π)(3,N)
+states. Hyperfine structure is not considered in this work."
+"Regarding the OH(A2Σ+) state, levels with 3 ≥ 2 are dis-
+sociative (van Dishoeck & Dalgarno 1983) and the 3 = 0 with
+N ≥ 26 and the 3 = 1 with N ≥ 17 levels are predissociated
+(Yarkony 1992). Therefore, we limited the OH(A) levels to lower
+N of the 3 = 0, 1 states. The two rotational ladders emerging
+from the spin-orbit coupling of the OH(A2Σ+)(3) states were also
+taken into account. In the following, the electronic, vibrational,
+rotational, fine-structure, and parity states of OH are labeled as
+Λ, 3, N, Ω, and �, respectively."
+2.1.2. Radiative transitions
+"Our OH model includes 54276 radiative transitions with their
+corresponding Einstein-A coefficients from Brooke et al. (2016)
+and Yousefi et al. (2018). The mid- and far-IR lines of OH origi-
+nate from radiative transitions occurring within vibrational states
+(∆3 = 0) of the OH(X) state (Fig. 1-c). Figure 1-b shows the ra-
+diative transitions that connect levels within a vibrational level of
+the X2Π ground state. The radiative transitions with the highest
+Einstein-A coefficients are the intra-ladder rotational transitions
+N → N − 1 (or equivalently J → J − 1) that preserve the e/f
+parity. These transitions give rise to lines from the mid- to the
+far-IR (see Fig. 1-c). The cross-ladder transitions connecting the
+Ω = 1/2 and Ω = 3/2 states are of two kinds: J-conserving
+(∆N = −1) and e/f conserving transitions, and J → J ± 1
+(∆N = 0,−2) and e/f parity changing transitions. Einstein-A co-
+efficients of the latter two kinds are at least an order of magnitude
+lower than intra-ladder transitions and can be used to measure
+the opacity of the intra-ladder lines. Lastly, the Λ-doubling tran-
+sitions, that lie from centimeter to sub-millimeter wavelengths
+are also considered in this work. Rovibrational transitions follow
+the same selection rules and any rovibrational transition accom-
+panied by any change of vibrational quantum number 3′ → 3′′
+is included in this work. Rovibrational lines 3′ = 1 → 3′′ = 0
+typically lie at near-IR wavelengths, around 2.7 µm. Transitions
+connecting to the OH(A2Σ+) state are electronic dipole allowed
+at near UV wavelengths."
+2.2. Excitation by H2O photodissociation
+"The OH state-specific formation rate associated with the photo-
+process"
+"H2O + hν→ OH(λ,Λ, 3,N,Ω, �) + H (1)"
+can be expressed as
+"k(Λ, 3,N,Ω, �) =
+∫
+λ"
+"η(λ,Λ, 3,N,Ω, �)σ̄(λ)I(λ)dλ (2)"
+"and measured in cgs units in s−1. In this equation,
+η(λ,Λ, 3,N,Ω, �) is the probability of forming OH in a given
+state following H2O photodissociation by a photon of wave-
+length λ, σ̄ is the total photodissociation cross section ([cm2]) of
+H2O→ OH + H at that wavelength, and I(λ) is the photon flux
+averaged over all incidence angles ([photon cm−2 s−1 cm−1])."
+"We assumed that the fine structure and Λ-doubling states of
+OH are equally populated by the photoprocess (1) so that η does
+not depend on Ω and �. It is also convenient to define the nascent
+state distribution of the OH fragments as"
+"f (Λ, 3,N) =
+k(Λ, 3,N)"
+"k̄
+, (3)"
+"Article number, page 3 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"E
+n
+e
+rg"
+"y
+E
+/
+k"
+"N-1  
+J-1"
+"N 
+J + 1f"
+! = 3/2! = 1/2
+"N - 2 
+J -1"
+"N-1 
+J"
+"N-2  
+J-2"
+"10 20 30 50 70 100
+∏ (µm)"
+"N
+o
+rm"
+"a
+li
+ze"
+"te
+n
+si
+ty"
+"ΔJ = 0, ΔΩ = − 1"
+"ΔJ = − 1, Ω = 3/2
+ΔJ = − 1, Ω = 1/2"
+"ΔJ = ± 1, ΔΩ = − 1"
+Δv = 0
+"A2Σ+
+v = 13"
+"a) b)
+N =54"
+"4 Nup=2
+9"
+"v = 0
+v = 1"
+N = 20
+N = 10
+"Fig. 1. OH model adopted in this work. a) X2Π and A2Σ+ electronic levels split into vibrational levels and further split into rotational levels
+labeled by N (left ladder corresponding the OH(X2Π)(3 = 0) state). The red line indicates the dissociation energy of OH(X2Π). b) Structure of the
+rotational ladders of OH(X2Π) within a vibrational state that gives rise to mid- and far-IR lines. Each N level is split by the spin-orbit coupling
+and the Λ-doubling. The two spin-orbit states are labeled by the Ω quantum number and the Λ-doubling states are labeled by their � = e/ f
+spectroscopic parity. Radiative transitions included in our model and emerging from the four N-levels are also depicted by arrows. There are three
+kinds of transitions: intra-ladder rotational transitions (blue and red arrows), cross-ladder transitions (orange, with ∆N = +1, and green, with
+∆N = 0, 2), and Λ-doubling transitions (purple). c) Optically thin LTE spectrum of OH at TK = 750 K. The color code is the same as panel b) and
+is repeated in Fig. 4 and 9. The upper N level is indicated for some transitions. The Λ-doubling lines are too weak and at longer radio wavelengths
+to appear in this spectrum. Ro-vibrational lines are at shorter wavelengths than shown here (λ . 2.7 µm)."
+"where k̄ is the total rate for the photdissociation process (1). For
+a monochromatic UV radiation field emitting at a wavelength λ,
+fi = η(λ, i)."
+"The absorption of a UV photon in the range 143 to 190 nm
+excites H2O in its first excited singlet state Ã (first absorption
+band) and leads to a direct dissociation to OH + H. In this work,
+we adopted the OH state-specific cross sections computed by van
+Harrevelt & van Hemert (2001) using a wave packet approach.
+These data successfully reproduce the total photodissociation
+cross section of water in the considered energy range as well
+as the OH distributions measured by time-of-flight spectroscopy
+techniques (Yang et al. 2000). Figure 2-a shows the distribution
+of the OH fragments following photodissociation by a photon of
+wavelength λ = 166 nm, where the cross section of the first ab-
+sorption band peaks. Throughout the first absorption band, OH
+is produced in a rotationally cold (N . 9) but vibrationally hot
+state (see also Appendix A). The proportion of vibrationally ex-
+cited states increases with photon energy."
+"The absorption of a UV photon in the second absorption
+band (B̃ state of H2O) results in a nonadiabatic transition, lead-
+ing to OH in its ground electronic state and in a direct dissoci-
+ation forming electronically excited OH. The second absorption
+band produces a broad continuum bump in the photodissocia-
+tion cross section of H2O in the range 114 to 143 nm. However,
+shortward of 124.6 nm, this dissociation channel coexists with"
+"the third and fourth absorption bands that result in sharper peaks
+in the photodissociation cross section (see Fig. A.3). As argued
+by van Harrevelt & van Hemert (2008), the C̃ and D̃ states are
+bound states and predissociated by the B̃ state. We consequently
+assumed that these channels lead to the same state distribution
+of the OH fragments as that via the B̃ state at the same photon
+energy. This is further supported by the agreement between ex-
+periments at λ ≤ 124 nm (e.g., Lyα, Harich et al. 2000) and
+theoretical work considering only the fragmentation dynamics
+from the B̃ state (van Harrevelt & van Hemert 2000, 2008). In
+the following, we use the term ""photodissociation through the B̃
+state"" to refer to photodissociation in the range 114 to 143 nm.
+In order to obtain the relevant OH distributions, we repeated the
+quantum wave packet calculations as described in van Harrev-
+elt & van Hemert (2000), but using the Dobbyn and Knowles
+potential (Dobbyn & Knowles 1997) instead of the Leiden po-
+tential since it was found that it gave better agreement with ex-
+periments (Fillion et al. 2001). In this wavelength range, H2O
+photodissociation also leads to O with a branching ratio com-
+puted by van Harrevelt & van Hemert (2008). We used the total
+photodissociation cross section measured by Mota et al. (2005)
+that includes features due to the C̃ and D̃ states of H2O (see Fig.
+A.3). The photodissociation cross section of H2O → OH + H
+was then derived by taking into account the branching ratio of
+the OH forming channel as described by Heays et al. (2017)."
+"Article number, page 4 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+0 10 20 30 40 50
+"f i
+(%"
+TW hya
+0 10 20 30 40 50
+"f i
+(%"
+121.6 nm
+0 10 20 30 40 50
+"f i
+(%"
+0 10 20 30 40 50
+"f i
+(%"
+")
+166 nm"
+0 10 20 30 40 50
+"f i
+(%"
+TW hya
+0 10 20 30 40 50
+"f i
+(%"
+121.6 nm
+0 10 20 30 40 50
+"f i
+(%"
+0 10 20 30 40 50
+"f i
+(%"
+166 nm
+"v=0 
+v=1 
+v=2"
+121.6 nm (Lyα)
+166 nm
+NEW!!!
+"Fig. 2. State distribution of the OH product following H2O photodisso-
+ciation at two photon wavelengths. a) At λ = 166 nm, H2O dissociating
+via its first excited Ã electronic state and producing OH in rotationally
+cold but vibrationally hot states. b) At λ = 121.6 nm, H2O dissociat-
+ing via its second excited B̃ electronic state and producing OH in rota-
+tionally hot but vibrationally cold states. Vibrational quantum numbers
+are color coded as indicated in the top panel. The distributions within
+OH(X2Π, 3) and OH(A2Σ+, 3) are plotted in solid and dashed lines, re-
+spectively, as a function of the rotational quantum number N. Only vi-
+brational levels that contribute at least 0.1% to the population of nascent
+OH are shown."
+"As an example, we show in Fig. 2-b the distibution of OH
+products at Lyα wavelength (λ = 121.6 nm). In contrast to pho-
+todissociation by lower energy photons, photodissociation in the
+range 114 to 143 nm produces OH(X2Π) with low vibrational
+excitation but high rotational excitation. OH is produced pref-
+erentially in the ground vibrational and electronic state, and the
+resulting rotational distribution within this state peaks around
+N = 45, corresponding to an energy level of ' 45000 K. As
+shown in Appendix A (see Fig. A.1), the peak in the rotational
+distribution increases with the photon energy from N ' 35 up to
+N ' 49. The other vibrational states follow a similar rotational
+distribution as that of the 3 = 0 state, but their relative contri-
+bution is much smaller, with less than 5% of OH produced in
+each of the OH(X)(3 ≥ 1) states at Lyα. A fraction of OH is also
+produced in the excited electronic state OH(A) for λ < 137 nm.
+The rotational distributions of the 3 = 0, 1 states exhibit the same
+pattern as that of OH(X) but shifted toward lower N numbers."
+"Shortward of λ = 114 nm, photodissociation proceeds via
+even more excited electronic states of H2O and systematic quan-
+tum calculations are lacking. Time-of-flight spectroscopy indi-
+cates that at λ = 115 nm OH distributions are vibrationally hot-
+ter than those computed through the B̃ but still rotationally hot
+(Chang et al. 2019). Photodissociation shortward of λ = 114 nm
+may also produce preferentially atomic oxygen instead of OH.
+In this work, we neglected the contribution of OH produced
+through photodissociation at wavelengths shorter than 114 nm."
+"Our adopted chemical dataset pertains only to water in the
+rotational ground state (""cold water""). Experimental data sug-
+gest that photodissociation of ""warm water"" could result in a"
+"small change in the rotational distribution of OH in the range
+N ' 32 − 40 (Hwang et al. 1999b). This change would however
+affect only lines coming from N & 32 in the 9 − 10.5 µm range
+(see Sec. 3). Additionally, the adopted dataset does not include
+the fine-structure and the Λ-doubling states of the OH products.
+Recent theoretical investigations suggest that photodissociation
+through the B̃ state produces OH preferentially in the A′ symmet-
+ric states, that corresponds to the (Ω = 1/2, e) and (Ω = 3/2, f )
+states (Zhou et al. 2015). This asymmetry is also expected to
+depend on the rotational state of the parent H2O, which is not
+considered here. New quantum calculations resolving the fine-
+structure and the Λ-doubling state and including the rotational
+state of the parent H2O are needed to study in detail the A′/A′′
+asymmetry. Our predictions presented in Sec. 3 remain valid by
+summing the line intensities over the fine-structure and Λ dou-
+blets of each Nup line."
+2.3. OH excitation
+"When radiative processes dominate, the emitted spectrum of OH
+will be governed by the state-specific dissociation rates of H2O
+(see Eq. (2)) and by the spontaneous transition probabilities in
+the subsequent cascade of vibronic and rotational transitions.
+This is called the prompt spectrum of OH. In astrophysically
+relevant conditions, excited states of OH can be populated in
+steady-state by various other collisional and radiative processes,
+and these excited molecules also contribute to an observable
+spectrum. Thus the true population of excited OH differs from
+the nascent population."
+"In this work, the OH level populations and the line intensities
+were computed with a new code named GROSBETA (Black et al.
+in prep.). This code is based on a single-zone model, following
+the formalism presented in van der Tak et al. (2007) and imple-
+mented in the RADEX 3 code. Under the assumption of statistical
+equilibrium, the local population densities, denoted ni [cm−3],
+are given by"
+"dni
+dt"
+"=
+∑
+j,i"
+"P jin j − ni
+∑
+j,i"
+"Pi j +
+∑"
+"Fki −
+∑"
+"k′
+niD"
+"k′
+i = 0, (4)"
+"where Fki and niD
+k′
+i are the formation and destruction rates"
+"([cm−3s−1]) for level i = (Λ, 3,N,Ω, �) and are associated with
+the chemical reactions labeled k and k′, respectively. The Pi j are
+the radiative and collisional transition probabilities i → j given
+by"
+"Pi j =
+{"
+"Ai j + Bi j J̄νi j + Ci j (Ei > E j)
+Bi j J̄νi j + Ci j (Ei < E j)."
+"Here, Ai j and Bi j are the Einstein coefficients of spontaneous
+and induced emission, Ci j are the collisional rates [s−1], and J̄νi j
+is the mean specific intensity at the frequency of the radiative
+transition i → j averaged over the line profile. As in van der
+Tak et al. (2007), the contribution of the lines to the local radia-
+tion field was computed following the escape probability method
+for a uniform sphere setting the line width to ∆V = 2 km s−1.
+When all other physical parameters (e.g., density and tempera-
+ture) are fixed, the solution depends only on the value of the ratio
+N(OH)/∆V ."
+"The collisional (de)excitation rates in Eq. (5) were computed
+considering collision with H2 and He for the OH levels within
+the 3 = 0 state using the rate coefficients from Offer et al. (1994)"
+3 https://home.strw.leidenuniv.nl/~moldata/radex.html
+"Article number, page 5 of 22"
+https://home.strw.leidenuniv.nl/~moldata/radex.html
+"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB"
+"and Kłos et al. (2007), respectively. The rate coefficients com-
+puted by Offer et al. (1994) that include levels up to N = 5 have
+been extrapolated to higher N numbers (see Appendix B)."
+"The induced radiative rates in Eq. (5) depend upon mean in-
+tensities J̄ν at the frequencies of all OH transitions. Thus the ex-
+citation model requires a specified ambient radiation field. Pure
+rotational and vibration-rotation transitions involve infrared ra-
+diation, which we parametrized as a blackbody intensity (Planck
+function) at a temperature TIR times a geometrical dilution fac-
+tor W. For illustration, we took W = 1. This gives a sim-
+ple parametrization of the IR radiation field and a reasonably
+good proxy for the local radiation field in the far-IR regime rel-
+evant for the IR radiative pumping of pure rotational lines of the
+OH(X2Π)(3 = 0) state. The impact of a more complex and real-
+istic IR radiation field on the line intensities is briefly discussed
+in Sec. 3.1.2. Electronic transitions A − X respond to the near-
+ultraviolet. In this work, we neglected the impact of the near-UV
+radiative pumping."
+"The impact of formation and destruction of OH on its level
+population is described by the last two terms in Eq. (4). When
+activation barriers can be overcome (TK & 200 K), OH is primar-
+ily produced by the reaction of O atoms with H2 and is rapidly
+converted into H2O by the reaction with H2. In turn, OH can also
+be regenerated from H2O by UV photodissociation or by the re-
+action with atomic hydrogen. Photodissociation of OH, which
+is generally slower than H2O photodissociation (depending on
+the spectral shape of the UV radiation field, see Heays et al.
+2017), can also limit the abundance of OH. The formation and
+destruction routes are described by the state specific rates Fki and
+Dk"
+"i , respectively. Their relative importance depends on the exact
+physical conditions. A complete model coupling chemistry and
+excitation of OH is beyond the scope of the present paper and
+for the sake of generality and conciseness, we made a number
+of simplifying assumptions to focus on the impact of H2O pho-
+todissociation on OH excitation in various environments with a
+limited number of free parameters. The possible impact of O+H2
+on the excitation of OH is discussed in Sec. 4.2.1. In this work,
+we assumed that chemical steady-state holds, so that"
+"Fki =
+∑"
+"niDi, (6)"
+"where F is the total formation rate of OH ([cm−3 s−1]), and
+Di ≡"
+"k
+i the total destruction rate of level i ([s"
+"−1]). We also
+neglected any state selective destruction of OH assuming that
+OH is destroyed at the same rate for each state denoted here as
+D (i.e.,Di does not depend on i)4. Finally, we assumed that only
+H2O photodissociation leading to OH modifies the level popula-
+tion of OH, with a state specific rate of Fi = n(H2O)k(i), where
+n(H2O) is the number density of H2O and k(i) the state specific
+formation rate defined in Eq. (2)."
+"Equation (4) can then be rewritten as an equation on the col-
+umn density of OH in the levels i denoted as Ni, upon which line
+intensities depend. Assuming constant concentrations and exci-
+tation conditions along the line of sight, this yields"
+"P jiN j − Ni
+∑
+j,i"
+"Pi j + Φ ×
+("
+"fi −
+Ni"
+")
+= 0, (7)"
+"4 Di is the probability of OH in a given state to be destroyed [in s−1].
+Consequently, this assumption leads toD = Di and notDi = D/n, with
+n the number of OH levels included in the model, as stated in Stäuber
+& Bruderer (2009)."
+"with fi the state distribution of the OH fragments as defined in
+Eq. (3) and"
+Φ ≡ N(H2O) k̄ (8)
+"the column density of H2O photodissociated per unit time ([cm−2
+s−1]). The state distribution fi depends on the spectral shape
+of the UV radiation field. In this work, we explore UV radia-
+tion fields of various shape that are given in Fig. A.3, including
+narrow-band and broadband UV spectra."
+"Equation (7) shows that Φ is the relevant parameter that ul-
+timately controls the impact of prompt emission on the OH line
+intensities. The relation between the strength of the UV radia-
+tion field and Φ depends on its spectral shape. For a Lyα UV
+radiation field"
+"Φ = 1.8 × 104G0
+N(H2O)
+1013cm2"
+"cm−2 s−1, (9)"
+"and for a Draine ISRF,"
+"Φ = 5.9 × 103G0
+N(H2O)
+1013cm2"
+"cm−2 s−1, (10)"
+"where G0 is the intensity integrated between 91 and 200 nm, in
+units of the Draine (1978) radiation field (2.6 × 10−6 W m−2).
+In this work we adopt Φ = 107 cm−2 s−1 as a fiducial value and
+explore a broad range of values (see Table 1)."
+Φ can also be written as
+"Φ ≡ DN(OH), (11)"
+"whereD ([s−1]) is generally referred to as a destruction rate (see
+e.g., van der Tak et al. 2007; Stäuber & Bruderer 2009). Since
+chemical steady-state is assumed,D is also connected to the for-
+mation rate of OH. If other chemical reactions participate to the
+formation and destruction of OH (see Eq. (4)) and if these addi-
+tional reactions form and destroy OH in proportion to their local
+population densities, then Eq. (7) still holds butD would not be
+associated with a destruction rate.D should rather be associated
+with a chemical pumping rate equal to the formation rate of the
+species by the considered process (in cm−3 s−1) divided by its
+particle number density."
+"The line intensities were computed taking into account opti-
+cal depth effects under the large velocity approximation. When
+calculating the line intensities, we assumed that the IR contin-
+uum background interacting with the gas is not along the same
+line of sight as the observations are taken. That is, the IR field
+contributes to the radiative pumping but not to the line forma-
+tion. Throughout this work, we present line intensities I in erg
+s−1 cm−2, which are sometimes called emergent fluxes. That is,
+our I is related to the specific intensity in a line Iν in erg s−1 cm−2"
+"Hz−1 sr−1 by I = 4π
+∫"
+"Iνdν. One can recover the observed line
+flux by the relation:"
+"4π
+∆Ω, (12)"
+"where ∆Ω is the solid angle subtended by the source.
+In other words, the populations and the line intensities of"
+"OH were computed from statistical equilibrium calculations in-
+volving prompt emission, IR radiative pumping and collisional
+excitation. Our model is controlled by six parameters summa-
+rized in Table 1: the spectral shape of the UV radiation field that
+determines the distribution of nascent OH denoted as fi, the col-
+umn density of H2O photodissociated per unit time denoted as
+Φ, the column density of OH N(OH), the proton density nH, the
+kinetic temperature TK, and the temperature of the IR radiation
+field TIR."
+"Article number, page 6 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+Table 1. Parameters of the model and their fiducial values.
+"Parameter Units Range Fiducial
+Shape of the UV field . see text Lyα"
+Φ ≡ N(H2O)k cm−2 s−1 104-1010 107
+N(OH) cm−2 1012 − 1016 1014
+"nH cm−3 105-1013 107
+TK K − 500
+TIR K 50, 120 120
+D(1) s−1 10−12-10−2 10−7"
+"Notes. (1) the chemical pumping rate is not considered as a free param-
+eter here sinceD ≡ Φ/N(OH)."
+"Table 2. Rotational lines used as a template for the different excitation
+regimes."
+"Transition λi j Ei Ai j
+2ΠΩ′ (N′, �′)→ 2ΠΩ′′ (N′′, �′′) (µm) (K) (s−1)
+2Π1/2(30, f )→ 2Π1/2(29, f ) 10.8 22600 3.5(2)"
+"2Π1/2(5, f )→ 2Π3/2(3, f ) 24.6 875 3.8(-2)
+2Π3/2(10, f )→ 2Π3/2(9, f ) 27.4 2905 2.0(1)"
+3. Results
+"Figure 3 illustrates the difference between OH spectra follow-
+ing H2O photodissociation through the Ã and B̃ state. Photodis-
+sociation via the H2O Ã state leads to an OH spectrum dom-
+inated by far-IR lines coming from low rotational levels. H2O
+photodissociation does not impact the mid- and far-IR spectrum
+since only collisions and IR pumping contribute to the excitation
+of those lines. In contrast, photodissociation through the H2O B̃
+state produces additional lines lying in the mid-IR coming from
+high-N states (15 . N . 45). These lines are produced by H2O
+photodissociation. In this section, we shall identify the physi-
+cal quantities that can be retrieved from the intensities of the
+mid- and far-IR lines. To do so, an in-depth study of the exci-
+tation mechanisms is provided in the case of photodissociation
+by Lyα photons (121.6 nm). The impact of a broadband UV ra-
+diation field, for which photodissociation proceeds through both
+the H2O Ã and B̃ states is then studied."
+3.1. Lyman alpha
+"As seen in Sect. 2.2, photodissociation of H2O by Lyα photons
+produces OH in high rotational states (Fig. 2-b). Figure 4 illus-
+trates the influence of the column density of H2O photodisso-
+ciated per unit time denoted as Φ and of the column density of
+OH, N(OH). The results of a more systematic exploration of the
+parameter space are presented in Fig. 5 by focusing on the inten-
+sities of three representative rotational lines that will be observed
+by JWST-MIRI (see Table 2)."
+3.1.1. High-N lines: Prompt emission
+"The mid-IR spectrum (λ . 20 µm) is dominated by pure intra-
+ladder rotational lines emerging from levels with high rotational
+quantum number (N ≥ 14), corresponding to upper energies
+> 5000 K. Figure 4 shows that in this wavelength range, the
+line intensities are higher for a larger value of Φ (top and mid-
+dle panels) but do not depend on N(OH) (top and bottom pan-
+els). The relative intensities of the intra-ladder lines depend nei-
+ther on N(OH) nor on Φ so we focus on the intensity of the"
+"10 20 40 100
+10°5"
+10 20 40 100
+∏ (µm)
+"rg
+cm
+°"
+"10 15 20 30 50 100
+10°5"
+10 15 20 30 50 100
+∏ (µm)
+"rg
+cm
+°"
+121.6 nm (Lyα)
+166 nm
+NEW!!!
+"Fig. 3. Infrared spectra of OH following H2O photodissociation at two
+photon wavelengths computed with GROSBETA. Top: At λ = 166 nm,
+H2O dissociating via its first excited Ã electronic state and produc-
+ing rotationally cold OH. The OH infrared spectrum is dominated by
+far-IR lines excited by collisions and IR radiative pumping. Bottom:
+At λ = 121.6 nm, H2O dissociating via its second excited B̃ elec-
+tronic state and producing rotationally hot OH. OH lines in the mid-
+IR with Nup = 20 − 45 trace H2O photodissociation through this elec-
+tronic state. The density, temperature of the background radiation and
+kinetic temperature are fixed to their fiducial values (see Table 1) and
+Φ = 1010 cm−2 s−1. In this figure, all lines are colored red, even if com-
+ing from cross-ladder and intra-ladder transitions."
+"2Π1/2(30, f ) → 2Π1/2(29, f ) line at 10.8 µm (see Table 2) as a
+proxy for the intensities of the mid-IR lines. Figure 5 (left pan-
+els) shows that the absolute line intensity is directly proportional
+to Φ and does not depend on other parameters such as N(OH),
+TIR or nH. This is one of the most fundamental properties of
+the high-N lines that makes them an unambiguous diagnostic
+of H2O photodissociation."
+"This very simple result points toward a simple excitation
+process. Due to the high energy of the upper levels, IR radia-
+tive pumping does not contribute to the excitation of these lines.
+De-excitation by stimulated emission by the IR background is
+also negligible as long as the photon occupation number is much
+smaller than unity in the mid-IR domain, a condition that is ful-
+filled over the full parameter space. Due to the very high crit-
+ical densities of these levels (ncrit & 1013 cm−3), collisional
+(de)excitation is also negligible. Instead, the level populations,
+and the intensity of the lines coming from those levels, are set by
+the radiative cascade following the formation of OH in high-N
+states by H2O photodissociation. The line intensities, or equiva-
+lently the number of radiative transitions per unit time between
+two excited levels, are then directly proportional to the forma-
+tion rate of OH in higher excited states, which is proportional to
+the photodissociation rate of H2O. The proportionality between
+the mid-IR line intensity and Φ is thus a direct consequence of
+the radiative cascade."
+"In order to analyze the relative intensity of the mid-IR lines,
+it is then convenient to define the normalized and dimensionless"
+"Article number, page 7 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"10 20 30 50 100
+10°5"
+"10 20 30 50 100
+10°5"
+"rg
+cm
+°"
+10 20 30 50 100
+∏ (µm)
+Φ = 1010 cm−2 s−1
+109 cm−2 s−1
+"1010 cm−2 s−1
+1012 cm−2"
+1014 cm−2
+"N(OH) = 1014 cm−2
+30 20"
+"10
+40 46 6"
+"Fig. 4. Infrared spectra of OH depending on the column density of H2O photodissociated per unit time Φ and on N(OH) computed with GROSBETA
+for a Lyα UV radiation field. The density, temperature of the background radiation and kinetic temperature are fixed to their fiducial values (see
+Table 1). Following the color code used in Fig. 1, intra-ladder rotational lines are in red and blue and cross-ladder lines are in orange and green.
+Λ-doubling lines are too weak to appear here. The weak mid-IR lines lying in the range ∼ 10-13 µm are intra-ladder rotational lines within the
+OH(X)(3 = 1) state. The Nup rotational number of the upper energy level is indicated for selected lines."
+105 106 107 108 109
+© (cm°2 s°1)
+"n
+si
+ty"
+10.8 µm
+105 106 107 108 109
+© (cm°2 s°1)
+"10°1
+24.6 µm"
+104 105 106 107 108 109 1010 1011 1012
+"nH (cm
+°3)"
+"n
+si
+ty"
+104 105 106 107 108 109 1010 1011 1012
+"nH (cm
+°3)"
+"10°2 Φ
+="
+"10 7cm
+−2s −1"
+"nH =
+10 7cm"
+"1014 cm−2
+1016 cm−2"
+1  prompt emission
+2  IR pumping
+3  IR pumping+collisions
+4  collisions (LTE)
+"Fig. 5. OH line intensities and the associated excitation processes as a function of Φ and nH for various values of N(OH) and TIR. The color
+indicates the value of N(OH) and the line style the value of TIR as defined in the right panels. The black circle indicate the fiducial model.
+The processes that dominate the excitation of the lines depending on the explored parameters are indicated along each curve. Left: Intra-ladder
+rotational line at 10.8 µm coming from a high-N level (N = 30, Eup = 22600 K). This line depends only on Φ. Right: Cross-ladder rotational line
+at 24.6 µm coming from a low-N level (N = 6, Eup = 875 K). This line traces the bulk population of OH. As such, it depends on N(OH), TIR and
+nH but does not depend on Φ."
+"Article number, page 8 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+"20 30 40 50
+Nup"
+"N
+o
+rm"
+"a
+li
+ze"
+"d
+p
+h
+o
+to"
+"te
+n
+si
+ty"
+"I N
+,≠"
+",≤ Lyα"
+"Fig. 6. Normalized photon intensity of the OH(X2Π)(3 = 0) intra-ladder
+mid-IR lines as a function of the quantum number of the upper energy
+level Nup. The photon intensities are computed for the fiducial values
+of the parameters and divided by Φ (see Eq. (13)). Circle and triangle
+markers correspond to lines belonging to the Ω = 1/2 and Ω = 3/2
+ladders, respectively. Λ-doublets are indiscernible in this plot. In this
+regime, rotational levels are only populated by the radiative cascade of
+OH photofragments and IN,Ω,� , depends only on the spectral shape of
+the adopted radiation field. The solid line is an analytical model that as-
+sumes that the intra-ladder lines within the 3 = 0 state are powered by
+the radiative cascade of the OH fragments produced in the 3 = 0 state.
+The dotted line is an analytical model that assumes that any OH pro-
+duced in a vibrational state instantaneously decays toward the ground
+vibrational state with negligible change in its rotational number (see
+Appendix C)."
+line intensity
+"IN,Ω,� =
+IΩ,�N→N−1"
+"hνΦ
+, (13)"
+"where IΩ,�N→N−1 is the integrated intensity (in erg s
+−1 cm−2) of the"
+"N → N − 1 line within the ladder Ω and the parity �, and ν is the
+frequency of the line. As long as the population of the high-N
+levels is set by the radiative cascade, IN,Ω,� depends only on the
+distribution of nascent OH, or equivalently on the spectral shape
+of the UV field, and not on Φ or on any other physical parameter.
+Figure 6 shows that IN,Ω,� depends mostly on N and very little
+on Ω and �. This is due to the fact that in our model, levels are
+assumed to be populated by H2O photodissociation regardless
+of their Ω and � states. In the following, we thus omit the refer-
+ence to Ω and � and note the normalized line intensity as IN . IN
+increases with decreasing N, with a stiff rise between N = 47
+and N = 35. This feature is also visible in Fig. 4 where the
+line intensities increase with wavelength between 9 and 10 µm.
+For 22 ≤ N ≤ 32, IN is rather constant, corresponding also to
+a rather flat mid-IR spectra between 10 and 20 µm (see Fig. 4).
+This results in suprathermal excitation temperatures that vary be-
+tween 2300 K for the lines at λ ' 20 µm up to 13000 K for the
+lines at λ ' 10 µm."
+"The normalized intensity IN is directly related to the distri-
+bution of nascent OH. Interestingly, IN can be interpreted as the
+probability that a photodissociation event H2O→ H + OH even-
+tually leads to a radiative decay N → N − 1 via the radiative
+cascade. As such, IN is necessarily smaller than unity. Because
+we assume the spin-orbit and Λ-doubling states to be equally
+populated by H2O photodissociation, IN . 1/4. Owing to the"
+"selection rules, the rotational cascade within the 3 = 0 state is
+dominated by N → N − 1 transitions. Moreover, OH produced
+in an electronic level is shown to rapidly decay toward OH(X2Π)
+with little change of rotational number. Consequently, the forma-
+tion of an OH fragment in an OH(Λ, 3 = 0,N′) state eventually
+leads to an intra-ladder transitions N → N − 1, with N ≤ N′. We
+plot in Fig. 6 (solid line) an analytical prediction of IN assuming
+that transitions N → N − 1 are supplied by the radiative decay
+of the OH fragments produced in the 3 = 0 states (see model in
+Appendix C). This analytical expression relies only on the dis-
+tribution of nascent OH denoted as fi. The model reproduces the
+increase in IN with deceasing N well, showing that its global
+variation with N is mostly due the fact that more and more OH
+fragments are added to the N → N − 1 rotational cascade as N
+decreases. The radiative cascade should then rather be seen as
+a ”radiative river” that grows by it tributaries. In particular, the
+steep increase in IN from N = 47 to 35 is due to the fact that
+most of the OH fragments are produced with these N-quantum
+numbers (see Fig. 2-b)."
+"We also note that for N < 35, our analytical model progres-
+sively underestimates IN . This is due to the contribution of the
+OH fragments produced in vibrationally excited states that are
+not included in our first analytical model. In Fig. 6 (dashed line)
+we show the analytical prediction of IN assuming that any OH
+produced in an OH(Λ)(3,N) state immediately decays toward the
+OH(X2Π)(3 = 0,N−1) state. The model overestimates IN show-
+ing that vibrationally excited states tend to undergo rotational
+transitions within 3 ≥ 1 vibrational states before decaying to the
+3 = 0 state."
+"In other words, the spectral shape of the normalized intensity
+IN is set by the population of nascent OH following photodis-
+sociation of H2O. Our two simple analytical models, which rely
+only on the knowledge of the distribution of the OH fragments
+fi, allow one to bracket IN ."
+3.1.2. Low-N lines
+"Figure 4 shows that, in contrast to the mid-IR lines, the far-
+IR lines (λ > 40 µm) do not depend on the column density
+of H2O photodissociated per unit time Φ but on N(OH). The
+same conclusions apply to the cross-ladder transitions apparent
+from 20 µm to 114 µm. All these lines arise from N . 6 levels
+(Eup . 1200 K) and trace the bulk population of OH that is not
+excited by the radiative cascade from high-N levels. Because of
+the high optical depth of the intra-ladder lines, we focus in the
+following on the optically thin cross-ladder transition at 24.6 µm
+that arises from a N = 5 level (see Table 2). Figure 5 (right)
+shows for a broader range of parameters that the intensity of this
+line does not depend on Φ but on N(OH), TIR, and nH. Prompt
+emission is always negligible and the line intensity is the result
+of a competition between collisional (de-)excitation and IR ra-
+diative pumping."
+"Figure 5 (lower right panel) highlights three distinct excita-
+tion regimes as a function of density. At low density, the intensity
+does not depend on the density but on TIR. In this regime, labeled
+by ­, levels are exclusively populated by IR radiative pumping.
+Because of our specific choice of the IR radiation field, all low-
+energy levels are thermalized to the same excitation temperature
+equal to TIR and the intensities of the optically thin lines are"
+"Ii→ j ' Ai jgi
+N(OH)
+Q(TIR)"
+"hc
+λi j"
+"e−Ei/kBTIR , (14)"
+"where Q(TIR) is the partition function of OH. The intensity of the
+line at 24.6 µm is simply proportional to N(OH) and increases"
+"Article number, page 9 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"with TIR. For an IR radiation field that deviates from a black-
+body, the excitation of the OH(X2Π)(3 = 0,N) levels is more
+complex. In this general case, the radiation brightness temper-
+ature Trad varies with wavelength across the far-IR spectrum of
+OH (λ . 120 µm). As a rule of thumb, the line intensity is then
+bracketed between our predictions with an undiluted blackbody
+at a value of TIR that lies between the minimum and maximum
+values of Trad."
+"At intermediate density, the intensity increases with nH. For
+our fiducial values of TIR and TK, it corresponds to densities be-
+tween 108 and 1010cm−3. In this regime, labeled by ®, collisions
+contribute to the excitation of the levels. However, line inten-
+sities also depend on TIR, showing that IR radiative pumping is
+also relevant. Since the density is smaller than the critical density
+of the upper energy level (nH∼ 1011cm−3), the de-excitation of
+the level is via radiative decay. Interestingly, the critical density
+above which collisions contribute to the excitation of the levels
+depends on TIR and on TK. It is lower for a lower TIR(Fig. 5, bot-
+tom right) or for a higher TK (not shown here). By comparing the
+rates of collisional excitation with the IR radiative pumping rate,
+collisions take over from IR radiative pumping in the excitation
+of a given N-level for"
+"nH & nγ(νN) ncrit e
+hνN/kBTK ' ncrit e"
+"hνN/kB(1/TK−1/TIR), (15)"
+"where νN denotes the frequency of the N → N − 1 radiative
+transition, nγ is the photon occupation number, and where we
+assume hνN � TIR for the second term. With ncrit having a weak
+dependence on TK, the critical density above which collisions
+take over from IR radiative pumping depends on the contrast
+between the temperature of the gas and that of the radiation field."
+"Finally, above the critical density of the upper energy level
+(ncrit ' 1011cm−3), the line intensity converges toward its LTE
+value. In this regime, labeled by ¯, collisions control the exci-
+tation and the de-excitation of the level and Eq. (14) gives the
+intensity of the optically thin line by substituting TIR by TK."
+"One has to keep in mind that when IR radiative pumping is
+relevant for the excitation of a level, the geometry of the source
+turns out to be of great importance for the formation of the line
+coming from this level. We recall that the line intensities pre-
+sented in this work are computed assuming that the IR back-
+ground does not contribute to the line formation process. If the
+background IR field does contribute to the observed emission,
+lines can be weaker or seen in absorption (see OH lines observed
+by Wampfler et al. 2010, 2013). Collisions can also play a role in
+the formation of the line even when negligible in the excitation of
+the levels. Models incorporating specific source geometries are
+beyond the scope of this work and have already been explored
+to analyze low-N OH lines observed by Herschel toward pro-
+tostars and photodissociation regions (Goicoechea et al. 2011;
+Wampfler et al. 2013)."
+3.1.3. Intermediate-N lines
+"We have shown in Section 3.1.1 that the high-N rotational lines
+excited by prompt emission are proportional to Φ and can thus be
+used to probe the photodissociation of H2O. In contrast, low-N
+lines do not depend on Φ and trace the bulk population of OH. It
+is thus of a great importance to determine if a line coming from
+an intermediate-N level is indeed excited by prompt emission or
+by other processes such as IR radiative pumping or collisions."
+"Figures 7-a and b show that the intermediate−N line at
+27.4 µm, which originates from a N = 10 level, shares features
+of low-N and high-N lines. This complex excitation pattern is"
+"the result of the competition between prompt emission, IR ra-
+diative pumping and collisions. Figure 7-c summarizes the dom-
+inant excitation processes as a function of the density nH and the
+chemical pumping rate D = Φ/N(OH) for the fiducial values of
+TIR and N(OH)."
+"For high values of the chemical pumping rate, the line in-
+tensity normalized by N(OH) is proportional to D (Fig. 7-a).
+This corresponds to the right part of the parameter space shown
+in Fig. 7-c. In this regime, the excitation of the upper energy
+level is dominated by prompt emission (regime ¬) and we re-
+cover the result obtained for the high-N lines that the line in-
+tensity is proportional to Φ = DN(OH) (Sec. 3.1.1). Figure 7-a
+shows that below a critical value of the chemical pumping rate,
+denoted here as Dcrit, the intensity does not depend on D as IR
+radiative pumping or collisions take over from prompt emission.
+This corresponds to the left region of the parameter space (Fig.
+7-c). The excitation of the line as a function of the density then
+follows a pattern similar to that found for low−N lines (Fig. 7-
+b). At low density, the excitation is dominated by IR radiative
+pumping (regime ­) whereas at higher density collisions pro-
+gressively take over (regime ®). We find that for the fiducial val-
+ues of TIR and TK, collisions contribute to the excitation of the
+line above nH' 108 cm−3. However, we recall that the effect of
+collisions on levels with N & 5 is highly uncertain due to the lack
+of quantum calculations of collisional rate coefficients for these
+levels. In other words, the parameter space is divided into two
+regions: a region dominated by prompt emission for which re-
+sults found in Sec. 3.1.1 apply, and a region dominated by other
+excitation processes for which results found in Sec. 3.1.2 apply."
+"The boundary between the two regions is defined by Dcrit
+(green line Fig. 7-c). Its value depends on the parameters that
+control the thermal and radiative excitation of OH, namely nH,
+TK, and TIR. For example, Fig. 7-a shows that Dcrit increases
+from ∼ 2 × 10−9 to ∼ 2 × 10−8 s−1 by increasing the density
+from nH=107 to 109 cm−3. SinceDcrit quantifies the competition
+between thermal or radiative excitation and prompt emission, it
+also depends on the upper energy level of the line. We derive in
+Appendix E simple estimates of Dcrit as a function of the ex-
+citation conditions (nH, TIR, and TK) for any rotational level.
+In particular, we show that the schematic view of the parame-
+ter space proposed in Fig. 7-c remains valid for the low-N lines
+for which the boundary is shifted to the right, and for high-N
+lines, for which the boundary is shifted to the left by orders of
+magnitudes."
+3.1.4. Summary
+"The integrated intensities of the lines coming from high-N levels
+(N & 20) are proportional to the column density of H2O pho-
+todissociated per unit time and do not depend on other physical
+parameters. The shape of the mid-IR spectrum is only set by the
+distribution of the nascent OH and we define a normalized inten-
+sity of the intra-ladder lines, denoted as IN (Fig. 6). The cross-
+ladder and intra-ladder rotational lines coming from low-N lev-
+els (N . 6) are populated by IR radiative pumping or collisions
+and are thus tracing the bulk population of OH. Intermediate-
+N lines can be either excited by prompt emission, IR radiative
+pumping and/or collisions (see Fig. 7-c)."
+"Article number, page 10 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+10°10 10°8 10°6
+D (s°1)
+"n
+si
+ty"
+27.4 µm
+10°1210°1110°10 10°9 10°8 10°7 10°6 10°5
+D (s°1)
+"n
+si
+ty"
+27.4 µm
+105 107 109 1011 1013
+"nH (cm
+°3)"
+"n
+si
+ty"
+10°1210°1110°10 10°9 10°8 10°7 10°6 10°5
+D (s°1)
+"n
+si
+ty"
+27.4 µm
+105 107 109 1011 1013
+"nH (cm
+°3)"
+"n
+si
+ty"
+"D = 10-9 s-1nH = 1
+07 cm"
+nH (cm−3)
+D (s−1)
+Collision (LTE)
+IR pumping
+" Chemical 
+pumping"
+"≃ 10
+13"
+Collision+IR pumping
+nH = 109 cm−3
+"a) b)
+c)"
+"Dcrit = 3 × 10
+−9"
+"Fig. 7. Transition from prompt emission to thermal or radiative excitation as revealed by the intensity of the intermediate N = 10 rotational
+line at 27.4 µm. The dominant excitation processes are indicated by ¬,­,®,¯ as defined in Fig. 5. a) Line intensity normalized by N(OH) as a
+function ofD ≡ Φ/N(OH). The transition between radiative pumping and prompt emission depends onD and on nH. In particular, one can define
+a critical pumping rate Dcrit below which thermal or radiative excitation processes take over from prompt emission. b) Line intensity normalized
+by N(OH) as a function of nH for D = 10−9s−1 < Dcrit. c) Schematic parameter space indicating the dominant excitation process of the N = 10
+line as a function of nH and D. We note that whereas the specific values of D and nH reported in the x- and y-axis are for the N = 10 line, this
+schematic view remains valid for any rotational line. The prompt emission region is delimited by Dcrit (green line). The regime ¬ corresponds to
+the excitation regime of high-N line whereas the regimes ­, ® and ¯ correspond to the excitation regime of low-N lines. Panels a) and b) are cuts
+in the parameter space and are indicated by red, magenta and blue lines. The temperature of the IR background, the kinetic temperature and the
+column density of OH are fixed to their fiducial values. The other parameters are indicated in each panel."
+"Table 3. Branching ratio between H2O photodissociation leading to OH
+through the Ã state (λ & 143 nm) and the B̃ state (114 . λ . 143 nm)
+for UV radiation fields of various spectral shapes."
+"Radiation field Ã B̃
+Ly α 0% 100%"
+"T Tauri 13% 87%
+ISRF 46% 54%"
+Blackbody 1000K 82% 18%
+3.2. Other UV radiation fields
+3.2.1. State distribution of the OH fragments
+"Figure 8 shows the state distribution of the OH fragments fol-
+lowing H2O photodissociation by UV radiation fields of vari-
+ous spectral shapes. As shown in Section 3.1.1, the OH(A)(3,N)
+states decay toward the ground electronic state with little change
+of N. We consequently plot only the sum of the rotational distri-
+bution of OH(X) and OH(A) as defined by"
+"f̃i = f (X, 3,N) +
+1
+2"
+"f (A, 3,N), (16)"
+"where the factor 12 stands for the different degeneracies between
+OH(A)(3,N) and OH(X)(3,N) states. The distribution of nascent
+OH computed from Eqs. (2) and (3) results from photodissoci-
+ation at various wavelengths. As shown in Sec. 2.2, the distri-
+bution of the OH fragment η(λ, i) depends markedly on the UV
+wavelength (see Fig. A.1). One of the most prominent differ-
+ences is between photodissociation longward of λ = 143 nm,
+that produces OH(X) in low-N states, and photodissociation
+shortward of this value that produces OH(X) in high-N states and
+a small fraction of electronically excited OH(A) with N ≤ 27.
+The distribution of OH following H2O photodissociation by a
+broad UV radiation field reflects the relative contribution of the
+different photodissociation channels. The fraction of photodisso-
+ciation that proceeds through the two channels is given in Table
+3."
+"We first study the effect a radiation field representative of the
+UV spectrum emitted by an accreting T Tauri star that includes
+a UV continuum plus emission lines (see Fig. A.3). As shown
+by Bergin et al. (2003) and Schindhelm et al. (2012), Lyα emis-
+sion dominates over the continuum emission with ∼ 90% of H2O
+photodissociation done by Lyα photons. It results in a state dis-
+tribution that is similar to that produced by a pure Lyα radiation
+field (Fig. 8-a). Contribution of H2O photodissociation through
+the H2O Ã state (λ ≥ 143 nm), that represents ∼ 10% of the total
+photodissociation rate, is however seen at N ≤ 6."
+"In contrast, a standard UV interstellar radiation field (ISRF)
+has a smooth and rather flat spectral distribution (Fig. A.3). H2O
+photodissociation then proceeds through a broad wavelength
+range and results in a distribution of OH fragments that exhibits
+features of both photodissociation through the H2O Ã and B̃ state
+(Fig. 8-b). Photodissociation through the B̃ state creates a peak
+in the rotational distribution around N = 41 similar to that pro-
+duced by photodissociation by Lyα, though somewhat smoother.
+OH(A) states are produced with a broad range of rotational quan-
+tum numbers, which results in a small bump in the rotational dis-
+tribution that is perceptible in the range N = 10 − 27. We note
+that a significant fraction of the OH(A) products are dissociative
+and therefore not visible in Fig. 8-b. Photodissociation through
+the H2O Ã state, that represents 46% of the total photodissocia-
+tion rate, yields to a prominent peak at low-N numbers."
+"A UV radiation field with a blackbody shape at T = 10000 K
+has the steepest UV slope. Most of H2O photodissociation pro-
+ceeds through the Ã state (82%). The resulting distribution of
+nascent OH is then dominated by low-N numbers whereas the
+bump at N ' 40 is reduced accordingly (Fig. 8-c)."
+"In other words, the state distribution of OH following H2O
+photodissociation by a broad UV spectrum exhibits a bump at
+high-N number and a peak at low-N number. The amount of
+OH produced with high-N numbers is globally proportional to
+the fraction of photodissociation occurring through the B̃ state
+(λ < 143 nm)."
+"Article number, page 11 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+0 10 20 30 40 50
+"f i
+(%"
+")
+TW hya"
+0 10 20 30 40 50
+"f i
+(%"
+121.6 nm
+0 10 20 30 40 50
+"f i
+(%"
+0 10 20 30 40 50
+"f i
+(%"
+Black body 10000K
+0 10 20 30 40 50
+"f i
+(%"
+TW hya
+0 10 20 30 40 50
+"f i
+(%"
+121.6 nm
+0 10 20 30 40 50
+"f i
+(%"
+0 10 20 30 40 50
+"f i
+(%"
+Black body 10000K
+0 10 20 30 40 50
+"f i
+(%"
+TW hya
+0 10 20 30 40 50
+"f i
+(%"
+121.6 nm
+0 10 20 30 40 50
+"f i
+(%"
+0 10 20 30 40 50
+"f i
+(%"
+Black body 10000K
+"v=0 
+v=1 
+v=2"
+T Tauri
+10 000 K
+NEW!!!!!
+"Fig. 8. Rotational distribution of the OH fragments following H2O pho-
+todissociation by UV radiation fields of different shapes. The impact of
+three radiation fields is explored: a) a radiation field representative of
+an accreting T Tauri star dominated by a Lyα emission line, b) an ISRF
+radiation field and c) a blackbody radiation field at 10 000 K. Vibra-
+tional quantum number are color coded as indicated in the top panel.
+The distribution is summed over the two electronic states. Only vibra-
+tional levels that contribute to at least 1.5% to the population of nascent
+OH are shown."
+3.2.2. Mid-IR lines
+"As shown in the case of H2O photodissociation by a Lyα radia-
+tion field, mid-IR lines are proportional to Φ. The same conclu-
+sion applies for any UV radiation field and we show in Fig. 9
+the mid-IR spectrum emitted by OH for the UV radiation fields
+explored in this work, for the same value of Φ."
+"The mid-IR line intensities depend markedly on the shape of
+the radiation field. The main difference resides in the absolute
+line intensity between 10 and ∼ 20 µm. For example, line inten-
+sities are ∼ 5 times weaker for a blackbody at 104 K than for a T
+Tauri radiation field. As seen in the case of a Lyα radiation field,
+mid-IR lines are fueled by the radiative decay of OH produced
+in high-N states. The absolute mid-IR line intensities are then
+proportional to the fraction of OH produced in a rotationally ex-
+cited state, which is also proportional to the column density of
+H2O photodissociated through B̃ state ([cm−2 s−1]) as defined by"
+"Φ
+B̃
+≡ N(H2O)"
+"∫ 143 nm
+114 nm"
+σ(λ)I(λ)dλ. (17)
+"10 12 14 16 18 20 22 24
+0.0e+00"
+1.0e-04
+2.0e-04
+"10 12 14 16 18 20 22 24
+0.0e+00"
+1.0e-04
+2.0e-04
+"rg
+cm
+°"
+10 12 14 16 18 20 22 24
+∏ (µm)
+0.0e+00
+1.0e-04
+2.0e-04
+T Tauri
+10 000 K
+"Fig. 9. OH mid-infrared spectrum for various UV spectra computed
+with GROSBETA for Φ = 1010 cm−2 s−1. Other parameters are constant
+and equal to their fiducial values given in Table 1. In this regime, the
+intensity of intra-ladder lines (red and blue) are proportional to Φ and
+do not depend on other parameters such as TIR or nH."
+"This is further shown in Fig. 10, where the line intensities nor-
+malized by ΦB̃ as defined by5"
+"I
+B̃
+N,Ω,� ≡"
+"IΩ,�N→N−1
+hνΦB̃"
+"are the about same for the different UV fields (within 20%).
+In other words, the absolute intensity of mid-IR lines traces
+the amount of H2O photodissociated through the B̃ state (λ <
+143 nm). It follows that the absolute intensity is, to a first approx-
+imation, only proportional to ΦB̃, regardless of the exact shape
+of the UV radiation field."
+"The other difference resides in the relative intensity of the
+lines, that reveals the precise shape of the rotational distribution
+of nascent OH fragments. This is best seen in Fig. 10. The in-
+crease in the line intensities from Nup = 46 down to Nup ∼ 35
+is steeper for T Tauri and Lyα radiation fields than for the other
+two. These differences are due differences in the exact shape of
+the rotational distributions of the OH(X) fragments shown in Fig.
+8. In the case of T Tauri and Lyα radiation fields, the peak at
+high-N is more pronounced than for the broadband UV spectra.
+The differences in the rotational distributions at lower N, that are
+mostly due to differences in the OH(A) distributions, result in mi-
+nor differences in the line intensities in the range Nup = 25− 15."
+3.2.3. Low and intermediate-N lines
+"Regarding far-IR lines and cross-ladder mid-IR lines, that
+emerge from N . 6 levels, we find that the integrated intensities
+depend neither on the shape of the UV radiation field nor on Φ.
+5 In the case of the photodissociation by a Lyα radiation field studied
+in Sec. 3.1, Φ = ΦB̃ and IN = IB̃N"
+"Article number, page 12 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+"15 20 25 30 35 40 45 50
+Nup"
+"N
+o
+rm"
+"a
+li
+ze"
+"d
+p
+h
+o
+to"
+"te
+n
+si
+ty"
+"IB N
+,≠"
+"Ly  
+TW Hya 
+ISRF 
+Blackbody at 104 K"
+"Fig. 10. Normalized photon intensity of the OH(X2Π)(3 = 0) intra-
+ladder mid-IR lines as a function of the quantum number of the upper
+energy level Nup. The intensities are computed for the fiducial values of
+the parameters (see Table 1) and normalized by the column density of
+water photodissociated via its B̃ state (see Eq. (18)). Circle and triangle
+markers correspond to lines belonging to the Ω = 1/2 and Ω = 3/2
+ladders, respectively. Λ-doublets are indiscernible in this plot. In this
+regime, rotational levels are only populated by the radiative cascade
+of OH photofragments and IB̃N,Ω,� , depends only on the shape of the
+adopted radiation field."
+"This is a surprising result since UV radiation fields with a signif-
+icant flux longward of 143 nm, produce OH with low rotational
+quantum numbers. Our finding indicates that the contribution of
+this rotationally cold population of nascent OH to the excitation
+of low-N levels within 3 = 0 is negligible compared to infrared
+pumping or collisions. The only population of nascent OH that
+affects the intensity of the rotational lines are the one produced
+with a high rotational number, typically N & 15. However, we
+note that for much lower IR radiation fields and lower densities,
+these lines might be fueled by prompt emission (see Fig. 7-c,
+regime ¬). In that case, we expect to have a competition pattern
+between excitation via the H2O Ã state and the B̃ state."
+"As studied in the case of photodissociation by a Lyα radia-
+tion field, intermediate-N lines can be excited either by prompt
+emission or IR radiative pumping and/or collisions. For a given
+set of physical parameters {TIR, TK, nH}, the transition between
+prompt emission and the other excitation processes is controlled
+by the chemical pumping rate D ≡ Φ/N(OH) as summarized
+in Fig. 7-c. The analysis proposed in Sec. 3.1.3 can be general-
+ized to any UV radiation field by simply substituting D by DB̃
+as defined by"
+"= Φ
+B̃/N(OH). (19)"
+"We note that for the explored UV radiation fields, this adaptation
+has little impact on the transition between prompt emission and
+the other excitation processes."
+4. Discussion and application to HH 211
+"In this section, we present a method for observationally inferring
+the photodissociation rate of H2O and deducing the local UV
+radiation field. As an illustration, our model is applied to the
+Spitzer-IRS observations of the apex of the HH 211 bow-shock
+published by Tappe et al. (2008)."
+4.1. Diagnostics
+4.1.1. Column density of H2O photodissociated per second
+"Our results show that the absolute intensities of the intra-ladder
+lines in the mid-IR are proportional to the column density of
+H2O photodissociated per second via the B̃ state, denoted as ΦB̃
+(see Fig. 10). To our knowledge, the only alternative process that
+can also excite the rotational levels of energy Eup ≥ 20000 K is
+the electron impact dissociation of H2O (Beenakker et al. 1974;
+Bodewits et al. 2019). In some situations, such as disks around
+young stellar objects where there might be a source of energetic
+electrons (& 10 eV), the high-N OH lines would thus trace the
+destruction of H2O via both e-impact and UV photodissocia-
+tion. Complementary diagnostics, such as lines emerging from
+the triplet electronic states of H2 or CO that can be excited effi-
+ciently by electron impact but not by UV absorption, can help to
+determine if OH lines might also trace the electron impact dis-
+sociation of H2O. In this context, the predictions presented in
+this work remain valid as long as the destruction rate of H2O by
+UV photodissociation dominates over destruction by e-impact, a
+condition that is generally satisfied in irradiated regions."
+"Consequently, the mid-IR lines of OH(X)(3 = 0) provide a
+robust measurement of the column density of H2O photodisso-
+ciated in the range 114 to 143 nm. This key quantity can be ob-
+servationally derived using the relation"
+"=
+IN,Ω,�"
+"hνIB̃N,Ω,�
+, (20)"
+"with IB̃N,Ω,� provided in Fig. 10 and in Appendix D. As shown
+above, IB̃N,Ω,� depends little on the spectral shape of the UV radi-
+ation field, and, in the absence of any other information, ΦB̃ can
+still be derived with a high accuracy (∼ 10%). Interestingly, the
+time scale associated with the radiative cascade is about 10 ms,
+which is short compared with relevant dynamical time scales.
+Therefore, the value of ΦB̃ should be considered as an instanta-
+neous measurement of the photodissociation activity. If the emit-
+ting region is unresolved, the derived value of ΦB̃ depends on the
+assumed source size as for any determination of a column den-
+sity. Strictly speaking, the total flux integrated over a region on
+the sky gives the total number of H2O molecules photodissoci-
+ated per second in that region."
+4.1.2. Spectral shape of the UV radiation field
+"The small deviations in the relative line intensities could be used
+to constrain the spectral shape of the radiation field (see Fig. 9
+and 10). In particular, our results show that a Lyα dominated ra-
+diation field produces a steeper increase in the photon line inten-
+sities with decreasing Nup. However, detecting these small dif-
+ferences in the intensities in the range 9 to 11 µm requires an ac-
+curate relative flux calibration. In fact, the 10 µm silicate feature
+plays a significant role in the dereddening of the fluxes at visual
+extinctions AV & 10. In that perspective, the relative intensity
+of the lines between ' 9 and 10 µm in regions with high ex-
+tinction should be interpreted with caution since the exact shape
+of the extinction curve varies significantly with Av (Chapman
+et al. 2009; McClure 2009; Hensley & Draine 2020). We posit
+that a significant extinction in the mid-IR hampers the diagnos-
+tic capabilities of the OH lines to securely constrain the shape of
+the local UV radiation field. The impact of the rotational excita-
+tion of the parent H2O may also complicate the interpretation of"
+"Article number, page 13 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"the relative line intensities and detailed quantum calculations are
+needed to propose robust diagnostics based on the exact shape
+of the OH mid-IR spectrum."
+4.1.3. Photodissociation rate of H2O
+"Our work shows that the detection of mid-IR lines of OH is
+prime evidence for the presence of H2O, in particular in envi-
+ronments where the H2O column density is limited by strong
+UV fields. If an independent measurement of the local UV radi-
+ation field can be observationally obtained, the column density
+of H2O that it exposed to the UV field can be deduced as"
+"N(H2O) =
+ΦB̃"
+"kB̃
+, (21)"
+"where kB̃ is the photodissociation rate in s
+−1 associated with H2O"
+"→ OH + H through the H2O B̃ state.
+Conversely, the OH emission can be used to measure the"
+"photodissociation rate kB̃ by measuring the column density of
+water N(H2O):"
+"kB̃ =
+ΦB̃"
+"N(H2O)
+, (22)"
+"where ΦB̃ is measured from the mid-IR lines of OH (see Eq.
+(20)). This quantity being a ratio between a column density and
+ΦB̃, it does not depend on the assumed source size."
+"The measurement of N(H2O) is challenging and may be the
+major source of uncertainty in the determination of kB̃. Besides
+the uncertainties that plague the determination of the column
+densities, the variation of the UV field and of the number density
+of H2O along the line of sight may be an important bias. Indeed,
+irradiated environments exhibit a layered structure with physical
+conditions that vary steeply with distance, due to the attenuation
+of the radiation field or shocks. Because the OH mid-IR lines are
+optically thin and depend little on the shape of the UV radiation
+field, our predictions can be directly extended to any physical
+structure with"
+"IN = I
+B̃
+N"
+"∫
+z
+nH2O(z)kB̃(z)dz, (23)"
+"with nH2O(z) the local number density of H2O and kB̃(z) the local
+photodissociation rate of H2O through the B̃ state. ΦB̃ being a
+quantity integrated along the line of sight, a spatial variation of
+the UV radiation field and of nH2O(z) does not affect its measure-
+ment. On the contrary, kB̃ is a local quantity and Eq. (22) should
+be applied with caution. Considerations on the geometry and on
+the viewing angle of the source may also help."
+4.1.4. Local UV field
+"Our model shows that the OH mid-IR lines trace the photodis-
+sociation of H2O by photons in the range 114 − 143 nm. As
+such, mid-IR OH lines carry information on the local UV ra-
+diation field in this range. In the following, we note F B̃UV , the
+photon flux integrated between 114 and 143 nm, which is F B̃UV =
+6 × 107 cm−2 s−1 for a Draine radiation field. The photodissoci-
+ation rate kB̃ is the integral over the wavelength of the local UV
+radiation field multiplied by the photodissociation cross section:"
+"kB̃ =
+∫ 143 nm"
+"114 nm
+I(λ)σ(λ)dλ. (24)"
+"Strictly speaking, the conversion between kB̃ and the local UV
+flux F B̃UV should then rely on the knowledge of the shape of the
+UV radiation field. However, for the considered radiation fields,
+the intensity weighted cross section averaged between 114 and
+143 nm varies only by a factor of ∼ 3 and is about σ ' 6 ×
+10−18 cm2. Thus, Eq. (24) can be approximated by"
+"F B̃UV '
+kB̃"
+"6 × 10−18 cm2
+, (25)"
+with a typical uncertainly of about a factor of three.
+4.2. Application to HH 211
+"The Spitzer-IRS observations of the apex of the young proto-
+stellar jet HH 211 provide one of the best examples of highly
+rotationally excited OH. Figure 11 shows the unique sequence
+of superthermal OH emission lines unveiled from 10 µm down
+to 30 µm coming from rotational levels between N = 34 to
+N = 9. The association between OH mid-IR emission and ongo-
+ing H2O photodissociation is further supported by the detection
+of a compact Hα emission by Walawender et al. (2006), tracing
+a strong UV emitting shock in the close vicinity of the OH emis-
+sion. Complementary observations of H2 rovibrational emission
+(2.12 µm, Hirano et al. 2006) and in the sub-millimeter domain
+unveiled a complex structure of multiple molecular bow-shocks
+encompassing the strong shock (Tappe et al. 2012)."
+4.2.1. Diagnostics from N > 20 lines
+"From the Spitzer-IRS spectrum published by Tappe et al. (2008),
+we measure a flux of the OH line at 14.6 µm of F = 3.5 × 10−15
+erg s−1 cm−2 in an aperture of Ω = 1.9 × 10−9 sr. This line
+emerges from the N = 20 level of the OH(X)(3 = 0) state
+and corresponds to an intensity integrated over solid angle of
+I = 2.3 × 10−5 erg s−1 cm−2 (see Eq. (12)). Figure 10 indicates
+that the conversion factor for each component of the quadruplet
+is ∼ 0.2, regardless the spectral shape of the radiation field. At
+Spitzer-IRS spectral resolution (R ' 600 for the short–high mod-
+ule), the Λ-doublet and the fine-structure is however not spec-
+trally resolved. Equation (20) then yields a column density of
+H2O photodissociated per unit time of"
+"4 × 0.2hν
+= 2.1 × 108 cm−2 s−1, (26)"
+"where the factor 4 stands for the sum over the four components
+of quadruplet, and ν is the frequency of the line. This corre-
+sponds to a total number of H2O molecule photodissociated per
+second of 4 × 1041 molecule s−1."
+"Figure 11 (top panel) compares a synthetic spectrum of OH
+produced by a Lyα radiation field with the Spitzer-IRS spectrum
+between 10 and 16 µm. We recall that in this wavelength range,
+the spectrum depends only on ΦB̃ and not on nH, TK or TIR. Our
+model reproduces well the sequence of the lines coming from
+N = 31 down to N = 14."
+"The higher three lines lying in the range 10-10.5 µm are over-
+estimated by the model. The extinction correction (Av = 10 mag,
+Walawender et al. 2006) cannot explain this discrepancy since
+the extinction curve used by Tappe et al. (2008) tends to overesti-
+mate the extinction at 10 µm. An ISRF UV radiation field, which
+produces relatively weaker line fluxes shortward of 11 µm does
+not significantly improve the fit. Alternatively, we posit that the
+rotational state of the parent H2O could modify the rotational
+distribution above N ' 30. JWST observations with a higher"
+"Article number, page 14 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+27 28 29 30 31 32 3330
+"2
+µ
+m
+°"
+"1
+) £10°16"
+10 11 12 13 14 15 16
+"2
+µ
+m
+°"
+"1
+) £10°16"
+"H2O N(OH) = 2 × 1013 cm−2
+N(H2O) = 2.2 × 1013 cm−2"
+"TK = 1300 K
+nH = 5 × 107cm−3"
+"ΦB̃ = 2.1 × 108 cm−2 s−1
+OH (Ly )α"
+Cross-ladder
+10 10 9 9
+very NEW!!!!
+" H
+2 
+S"
+"[C
+l I"
+10 11 12 13 14 15 16
+"1
+cm
+°"
+"2
+µ
+m
+°"
+£10°16
+× 10−13
+× 10−13
+× 10−13
+"Fig. 11. Comparison of the Spitzer-IRS mid-IR spectrum of the tip of HH 211 outflow from Tappe et al. (2008) (black lines) and of a synthetic
+GROSBETA spectrum for OH (in red) and H2O (in blue). The best fit parameters are indicated in the top right parts of the panels. The GROSBETA
+spectra are plotted assuming a source size equal to the extraction aperture ∆Ω = 1.9 × 10−9 sr. The rotational quantum number Nup are indicated
+for some OH lines. The model reproduces well the OH lines at 10-16 µm, but underproduces them at longer wavelengths."
+"signal-to-noise ratio, combined with modeling including the ro-
+tational state of the parent H2O are required to clarify this."
+"ΦB̃ can then be used to derive kB̃, provided the column den-
+sity of H2O is known. Rotational lines of H2O are detected from
+the far-IR with Herschel-PACS to the mid-IR with Spitzer-IRS,
+spanning energy levels from 110 up to 1800 K. The mid-IR lines
+have been analyzed using GROSBETA and we derive a column
+density of 2.2+2.0"
+"−1.2 × 10
+13 cm2, a density of nH' 5 × 107 cm−3,"
+"and a temperature of TK' 1300 K (see synthetic spectrum in
+Fig. 11, bottom panel). Interestingly, the same model reproduces
+the excitation temperature derived from the observations of far-
+IR lines (Tex ' 90 K, Dionatos et al. 2018). This suggests that
+both mid-IR and far-IR lines trace the same warm H2O reservoir
+that is photodissociated. Assuming a common origin for the OH
+and H2O lines, Eq. (22) yields"
+"kB̃ ' 9.5 ± 4 × 10
+−6 s−1. (27)"
+"The strong shock revealed by compact Hα emission is ex-
+pected to produce a UV field dominated by Lyα photons. Equa-
+tion (24) then gives F B̃UV ' 8.5 × 10"
+"11 photon cm−2 s−1, which
+corresponds to a UV photon flux 5×103 times larger than that of
+the Draine ISRF in the range 91.2−200 nm. This value is well in
+line with models of fast dissociative shocks with VS ' 50 km s−1
+and nH' 3×105cm−3 (Raymond 1979; Lehmann et al. 2020), as-
+suming that H2O is produced in the warm postshock without fur-
+ther dilution of the UV radiation field. An origin of OH and H2O"
+"emission in slower shocks passively illuminated by the stronger
+dissociative shock is also possible (see models of Melnick &
+Kaufman 2015; Godard et al. 2019). Spatially resolved obser-
+vations with JWST-MIRI of both OH mid-IR lines and atomic
+lines that trace fast dissociative shocks such as [NeII] at 12.8µm
+or [Ni II] at 6.6µm (Hollenbach & McKee 1989) are required to
+distinguish the two possible scenarios."
+4.2.2. Evidence of additional chemical pumping routes
+"Figure 11-b shows that the OH lines coming from lower N lev-
+els are detected with the Spitzer-IRS long-high module. In par-
+ticular, the cross-ladder transition at 28.9 µm is well reproduced
+by our GROSBETA model with a column density of N(OH) =
+2 × 1013cm−2, assuming a density of nH= 5 × 107cm−3 and a
+temperature of TK= 1300 K derived from the H2O lines. This
+model is illustrative since the emission of the OH cross-ladder
+line might originates from a different layer of gas but its suggests
+a N(OH)/N(H2O) ratio of about ' 0.9. This value lies in the up-
+per part of the range 10−3 to 0.8 typically derived toward proto-
+stellar outflows, and is higher than those derived toward warm
+inner envelopes (Wampfler et al. 2011; Goicoechea et al. 2012,
+2015). Interestingly, our derived ratio of ' 0.9 is closer to that
+estimated in low AV regions of the Orion Bar (& 1, Goicoechea
+et al. 2011). This further supports the driving role of UV pho-
+todissociation in preventing the full conversion of OH into H2O
+and in maintaining a relatively high N(OH)/N(H2O) ratio un-"
+"Article number, page 15 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"der warm conditions. Interestingly, detailed models of molecu-
+lar shocks do predict that both, fast dissociative shocks and pas-
+sively irradiated slow shocks exhibit high N(OH)/N(H2O) ratios
+(Neufeld & Dalgarno 1989; Godard et al. 2019; Lehmann et al.
+2020)."
+"For this set of GROSBETA parameters, the intra-ladder rota-
+tional lines longward of λ = 18 µm are underestimated by our
+GROSBETA model by up to a factor of eight. As shown in Sec.
+3.1.3, these intermediate-N lines (9 < N < 15) are excited either
+by prompt emission, or by IR radiative pumping or collisions. In
+HH 211, the IR background detected by Spitzer-IRS is too weak
+to have a significant impact on the excitation of these levels. In
+fact, for the selected set of parameters, the excitation is domi-
+nated by prompt emission (right part of the schematic diagram,
+Fig. 7-c). One could invoke collisional excitation to take over
+from prompt emission and increase the intensities of the intra-
+ladder transitions. This can be achieved by either decreasing the
+chemical pumping rate D or by increasing nH and/or TK (i.e.,
+increasing Dcrit, see Fig. 7-c). Because Φ = DN(OH) is con-
+strained by the lines in the range 10 to 16 µm, the intensity
+of the chemical pumping rate D can only be decreased by in-
+creasing N(OH). However, increasing N(OH), nH or TK would
+increase the intensities of the cross-ladder transitions, which are
+already well reproduced by our model. In other words, collisions
+or IR radiative pumping cannot reconcile our models with obser-
+vations."
+"Interestingly, in this wavelength range, Λ doublets are spec-
+trally resolved and show an asymmetry between A′ and A′′ Λ-
+doublet states of about a factor of 1.5-2. As discussed by Carr &
+Najita (2014), this further supports the minimal impact of colli-
+sional (de)excitation since collisions might eliminate asymmetry
+in the population. This suggests that the intermediate-N transi-
+tions reveal another excitation process that is not included in our
+model."
+"The reaction H2+O can produce OH in rotationally and
+vibrationally excited states and supplement the excitation of
+intermediate-N levels. In particular, experimental data show that
+the reaction"
+"H2 + O(
+1D)→ OH + H (28)"
+"produces OH with rotational number between N = 10 and 25
+with a large fraction produced in 3 ≥ 1 and a propensity to
+the A′ states (Liu et al. 2000). Interestingly, the discrepancy be-
+tween our predictions and the Spitzer-IRS spectra increases from
+N ∼ 16 down to N ∼ 9. The case of chemical excitation by
+reaction (28) can be treated in a similar way as we described
+the excitation of OH following H2O photodissociation (see Sec.
+3.1.1). In the case of H2O photodissociation, the line intensities
+are given by the column density of OH formed by H2O photodis-
+sociation. Similarly, reaction (28) will increase the line intensi-
+ties in proportion to the number of OH produced per second via
+this reaction. The discrepancy between the model and the ob-
+servations suggests that the formation rate of OH via Eq. (28)
+is about 6 times larger than that via H2O photodissociation. In-
+terestingly, at the density derived by our non-LTE analysis of
+H2O lines, O(1D) would be converted into OH instead of de-
+caying via the radiative transition at λ =6300 Å. However, this
+scenario requires an efficient production of O(1D), either by OH
+or H2O photodissociation, or by collisional excitation. Still, the
+estimated column density ratio OH/H2O appears to be too low
+for OH photodissociation to take over from H2O photodissocia-
+tion in the excitation of OH mid-IR lines. Moreover, at Lyα, only
+∼ 10% of the water photodissociation ends in O(1D) (Slanger &
+Black 1982; van Harrevelt & van Hemert 2008), a fraction that"
+9.2 9.4 9.6 9.8 10.0
+"2
+µ
+m
+°"
+£10°16
+13.05 13.10
+"2
+µ
+m
+°"
+£10°16
+"Nup = 23
+1/2, f3/2,"
+"e1/2,e3/2, f"
+364045
+"Fig. 12. Expected OH mid-IR spectrum at JWST-MIRI resolving power
+(R ' 2000 − 3000). The parameters of the model correspond to those
+derived from the Spitzer-IRS observations of HH 211. The weak lines
+around 9.8 µm are pure rotational lines within the OH(X)(3 = 1) state."
+"is too small for the required efficiency of O(1D) production. Al-
+ternatively, the reaction between O(3P) and vibrationally excited
+H2, known to be present at the tip of the bow-shock, could lead to
+OH in rotationally (and vibrationally) excited states (Gorti et al.
+2011; Carr & Najita 2014). These additional chemical pumping
+routes could also impact the excitation of even lower-N lines.
+Further modeling combining OH excitation and chemistry is re-
+quired to clarify the excitation of the intermediate-N lines."
+4.3. Perspectives with JWST-MIRI
+"JWST-MIRI will provide a unique view in the mid-IR regime by
+combining spectroscopic and imaging capabilities (Rieke et al.
+2015; Wright et al. 2015). At the observed wavelength range
+(5 − 28 µm), JWST will be able to detect pure rotational lines
+coming from N ≥ 10 and cross-ladder lines coming from N ≥ 5,
+allowing for detailed studies of the excitation of OH across the
+full rotational ladder. In this section, we focus on the high-N ro-
+tational lines."
+"Up to now, OH mid-IR lines tracing H2O photodissociation
+have been detected toward three protostellar outflows (Tappe
+et al. 2012) and a large number of protoplanetary disks (Pontopp-
+idan et al. 2010; Salyk et al. 2011; Carr & Najita 2011, 2014). We"
+"Article number, page 16 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+"predict that the jump in sensitivity will extend the detectability of
+high-N lines to other irradiated environments. Since the line in-
+tensities depend on the local abundance of H2O and on the local
+radiation field, only astrochemical models designed for specific
+sources can robustly predict mid-IR line intensities. However,
+the detectability of the mid-IR lines as a function of the physi-
+cal conditions can be explored with simple chemical arguments.
+The line emissivity per hydrogen atom depends on x(H2O)G0,
+where x(H2O) is the H2O abundance with respect to the total
+density of H atoms and G0 the local UV flux (see Eq. (23)). In
+warm and irradiated environments (fast shocks, disk surface lay-
+ers, low AV depths of prototypical PDRs), one can assume that
+H2O is destroyed by photodissociation and formed in the gas
+phase by two-body reactions so that x(H2O) ∝ nH/G0. For cooler
+regions, for which H2O vapor is produced by photodesorption or
+by gas-phase ion-neutral routes, the scaling is expected to be dif-
+ferent. Therefore, at least for warm environments, the emissivity
+of the OH lines per total hydrogen is expected to scale with the
+density. This may explain why superthermal OH emission has
+been detected by Spitzer in dense environments and remains un-
+detected is classical photodissociation regions (Goicoechea et al.
+2011). We thus posit that high-N lines could be detected by
+JWST-MIRI in more diffuse regions. Observation of dense clas-
+sical PDRs such as the Orion bar or NGC 2023 should be con-
+sidered as primary targets. In even more diffuse environments,
+such as translucent clouds, we expect OH mid-IR lines to re-
+main undetected where we estimate Φ ' 103 − 104 cm−2 s−1
+(Flagey et al. 2013), corresponding to line intensities as low as
+∼ 10−12 − 10−11 erg s−1 cm−2 sr−1."
+"The sensitivity of JWST will also allow us to probe the mid-
+IR emission in deeply embedded protostars. At high extinction
+(AV & 20), the OH lines in the range 13-15 µm will be par-
+ticularly suited to minimize the IR extinction. The OH mid-IR
+emission can then constitute a unique tool to unravel the poorly
+known physical and chemical structure of young protostellar
+disks. Regarding protostellar jets and outflows, it will allow us to
+test if the low water abundance derived from Herschel observa-
+tions is due to UV photodissociation or other physical processes
+(Karska et al. 2014)."
+"The spatial resolution provided by mapping capabilities will
+also be crucial to constrain the emitting region of OH and map
+the photodissociation of H2O. For dense environments, maps of
+N(H2O) can be built from pure rotational lines of H2O lying typ-
+ically longward of 20 µm (Eup . 1200 K) or ro-vibrational lines
+and used to construct maps of the local UV radiation field (see
+Eq. (25))."
+"The Medium Resolution Spectrometer (MIRI-MRS), with
+its relatively high spectral resolution (R ∼ 2000 − 3000) will
+provide a valuable astrophysical view of H2O photodissocia-
+tion that will challenge current quantum calculations. Figure 12
+shows a synthetic spectrum at MIRI-MRS spectral resolution.
+First, MIRI-MRS will give access to the OH lines in the range
+9-10 µm that are directly populated by H2O photodissociation
+(35 < Nup < 46, see also Fig. 8). The Λ-doublets up to Nup = 40
+and the fine-structure up to Nup = 29 will be spectrally resolved.
+This information will help to further constrain the shape of the
+UV radiation field and understand the impact of the rotational
+state of the parent H2O. New quantum calculations, including the
+rotational state of H2O, and the fine-structure and the Λ-doubling
+of the OH product, are warranted."
+5. Conclusion
+"In this work, we explore the potential of the OH(X)(3 = 0,N)
+mid-IR emission to probe H2O photodissociation. To reach this
+goal, results from quantum mechanical calculations resolving
+the electronic, vibrational and rotational state of the OH product
+following H2O photodissociation at different UV wavelengths
+are collected. The distribution of the OH photofragments is then
+calculated for UV fields of various spectral shapes and included
+in a new radiative transfer code called GROSBETA. The impact of
+prompt emission (i.e., formation of OH in excited states follow-
+ing H2O photodissociation), collisional excitation and radiative
+pumping is extensively studied."
+The main conclusions of this study are:
+"1. The mid-IR emission of OH in the range 9-16 µm is an unam-
+biguous tracer of H2O photodissociation. The mid-IR emis-
+sion is the result of the rotational radiative cascade of OH
+photofragments within the 3 = 0 state. As such, the detection
+of these lines constitutes a prime evidence for the presence
+of active H2O chemistry. In particular, the line intensities are
+directly proportional to the column density of H2O photodis-
+sociated per second by photon in the range 114 − 143 nm,
+denoted as ΦB̃. The conversion factors between the line in-
+tensities and ΦB̃ is provided for each rotationally excited line
+and for UV radiation fields of various shapes in Fig. 10 and
+in Appendix D. These conversion factors depend little on the
+exact spectral shape of the UV radiation field."
+"2. Provided a measurement of the column density of the irradi-
+ated water is known, the photodissociation rate by photons
+in the range 114−143 nm can be inferred (see Eq. (22)). The
+UV flux can then be deduced with good accuracy, regardless
+of the shape of the UV radiation field. Alternatively, provided
+an estimate of the strength of the local UV radiation field is
+available, the column density of H2O can be derived."
+"3. The precise state distribution of the OH fragments depends
+on the spectral shape of the UV radiation field and results
+in small differences in the shape of mid-IR spectrum of OH.
+This suggests that the relative line intensities, if accurately
+measured, can be used to derive constraints on the spectral
+energy distribution of the UV radiation field."
+"4. The lower rotational levels, probed either by cross-ladder ro-
+tational lines shortward of 30 µm, or by far-IR rotational
+lines, are excited by IR radiative pumping or collisions. We
+provide criteria to determine if a rotational level of an inter-
+mediate energy (typically Eup = 3000 K,N ' 10) is excited
+by prompt emission or thermal processes."
+"5. As a test case, our model is applied to an irradiated region
+located at the tip of the HH 211 protostellar jet. Our simple
+single-zone model reproduces the Spitzer-IRS spectrum in
+the range 11-16 µm and shows that water is exposed to a UV
+photon flux that is about ∼ 5×103 times larger than the stan-
+dard UV interstellar radiation field. Discrepancies between
+our predictions and the observations at longer wavelength
+suggest that additional chemical pumping processes such as
+the reaction H2+O might contribute to the excitation of the
+rotational levels between N ∼ 10 − 20."
+"6. JWST-MIRI will probe the rotational ladder of OH from
+N = 5 up to N ' 45 corresponding to energy levels from
+800 K up to 45000 K. We posit that the jump in sensitivity
+will unveil OH mid-IR emission in new environments such
+as classical photodissociation regions (e.g., Orion bar) and
+embedded protostars. Moreover, armed with good spectral
+resolution (R ∼ 2000 − 3000), the MIRI-MRS observing
+mode will give access to even more excited lines in the range"
+"Article number, page 17 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"9− 10 µm and to the fine-structure and Λ-doubling state dis-
+tribution of the OH fragments."
+"Our work demonstrates the potential of OH mid-IR lines to
+probe H2O photodissocation and the strength of the UV field.
+New quantum calculations and astrochemical models taking into
+account the quantum state of the species are warranted to lever-
+age future JWST observations and unveil oxygen chemistry
+through the excitation of OH.
+Acknowledgements. The authors thank the anonymous referee for their construc-
+tive comments. B.T. would also like to thank B. Godard, A. Bosman and A. Faure
+for fruitful discussions. This work is part of the research programme Dutch As-
+trochemistry Network II with project number 614.001.751, which is (partly) fi-
+nanced by the Dutch Research Council (NWO)."
+"References
+Beenakker, C. I. M., Heer, F. J. D., Krop, H. B., & Möhlmann, G. R. 1974,"
+"Chemical Physics, 6, 445
+Benz, A. O., Bruderer, S., van Dishoeck, E. F., et al. 2016, A&A, 590, A105
+Bergin, E., Calvet, N., D’Alessio, P., & Herczeg, G. J. 2003, ApJ, 591, L159
+Bergin, E. A., Du, F., Cleeves, L. I., et al. 2016, ApJ, 831, 101
+Black, J. H. 1998, Faraday Discussions, 109, 257
+Black, J. H. & van Dishoeck, E. F. 1987, ApJ, 322, 412
+Bodewits, D., Országh, J., Noonan, J., Ďurian, M., & Matejčík, Š. 2019, ApJ,"
+"885, 167
+Boogert, A. C. A., Gerakines, P. A., & Whittet, D. C. B. 2015, ARA&A, 53, 541
+Brooke, J. S. A., Bernath, P. F., Western, C. M., et al. 2016, J. Quant. Spec. Ra-"
+"diat. Transf., 168, 142
+Bruderer, S., van Dishoeck, E. F., Doty, S. D., & Herczeg, G. J. 2012, A&A, 541,"
+"A91
+Carr, J. S. & Najita, J. R. 2011, ApJ, 733, 102
+Carr, J. S. & Najita, J. R. 2014, ApJ, 788, 66
+Cazzoletti, P., van Dishoeck, E. F., Visser, R., Facchini, S., & Bruderer, S. 2018,"
+"A&A, 609, A93
+Ceccarelli, C., Hollenbach, D. J., & Tielens, A. G. G. M. 1996, ApJ, 471, 400
+Chang, Y., Yu, Y., Wang, H., et al. 2019, Nature Communications, 10, 1250
+Chapman, N. L., Mundy, L. G., Lai, S.-P., & Evans, Neal J., I. 2009, ApJ, 690,"
+"496
+Chokshi, A., Tielens, A. G. G. M., & Hollenbach, D. 1993, ApJ, 407, 806
+Chyba, C. F. & Hand, K. P. 2005, ARA&A, 43, 31
+Coppola, C. M., Galli, D., Palla, F., Longo, S., & Chluba, J. 2013, MNRAS, 434,"
+"114
+Cuppen, H. M. & Herbst, E. 2007, ApJ, 668, 294
+Dionatos, O., Ray, T., & Güdel, M. 2018, A&A, 616, A84
+Dobbyn, A. J. & Knowles, P. J. 1997, Molecular Physics, 91, 1107
+Dopita, M. A. & Sutherland, R. S. 2017, ApJS, 229, 35
+Draine, B. T. 1978, ApJS, 36, 595
+Fedele, D., Pascucci, I., Brittain, S., et al. 2011, ApJ, 732, 106
+Fillion, J. H., Dulieu, F., Baouche, S., et al. 2003, Journal of Physics B Atomic"
+"Molecular Physics, 36, 2767
+Fillion, J. H., Ruiz, J., Yang, X. F., et al. 2004, J. Chem. Phys., 120, 6531
+Fillion, J. H., van Harrevelt, R., Ruiz, J., et al. 2001, Journal of Physical Chem-"
+"istry A, 105, 11414
+Flagey, N., Goldsmith, P. F., Lis, D. C., et al. 2013, ApJ, 762, 11
+Flower, D. R. & Pineau des Forêts, G. 2012, MNRAS, 421, 2786
+Gammie, C. F. 1996, ApJ, 457, 355
+Godard, B. & Cernicharo, J. 2013, A&A, 550, A8
+Godard, B., Pineau des Forêts, G., Lesaffre, P., et al. 2019, A&A, 622, A100
+Goicoechea, J. R., Cernicharo, J., Karska, A., et al. 2012, A&A, 548, A77
+Goicoechea, J. R., Chavarría, L., Cernicharo, J., et al. 2015, ApJ, 799, 102
+Goicoechea, J. R., Joblin, C., Contursi, A., et al. 2011, A&A, 530, L16
+González-Alfonso, E., Fischer, J., Graciá-Carpio, J., et al. 2012, A&A, 541, A4
+Gorti, U. & Hollenbach, D. 2004, ApJ, 613, 424
+Gorti, U., Hollenbach, D., Najita, J., & Pascucci, I. 2011, ApJ, 735, 90
+Habing, H. J. 1968, Bull. Astron. Inst. Netherlands, 19, 421
+Harich, S. A., Hwang, D. W. H., Yang, X., et al. 2000, J. Chem. Phys., 113,"
+"10073
+Harsono, D., Persson, M. V., Ramos, A., et al. 2020, A&A, 636, A26
+Heays, A. N., Bosman, A. D., & van Dishoeck, E. F. 2017, A&A, 602, A105
+Hensley, B. S. & Draine, B. T. 2020, ApJ, 895, 38
+Herczeg, G. J., Wood, B. E., Linsky, J. L., Valenti, J. A., & Johns-Krull, C. M."
+"2004, ApJ, 607, 369
+Hirano, N., Liu, S.-Y., Shang, H., et al. 2006, ApJ, 636, L141
+Hollenbach, D. & McKee, C. F. 1989, ApJ, 342, 306
+Hwang, D. W., Yang, X., & Yang, X. 1999a, J. Chem. Phys., 110, 4119"
+"Hwang, D. W., Yang, X. F., Harich, S., Lin, J. J., & Yang, X. 1999b,
+J. Chem. Phys., 110, 4123"
+"Jørgensen, J. K. & van Dishoeck, E. F. 2010, ApJ, 710, L72
+Karska, A., Herczeg, G. J., van Dishoeck, E. F., et al. 2013, A&A, 552, A141
+Karska, A., Kristensen, L. E., van Dishoeck, E. F., et al. 2014, A&A, 572, A9
+Kłos, J., Lique, F., & Alexander, M. H. 2007, Chemical Physics Letters, 445, 12
+Kristensen, L. E., van Dishoeck, E. F., Bergin, E. A., et al. 2012, A&A, 542, A8
+Kristensen, L. E., van Dishoeck, E. F., Mottram, J. C., et al. 2017, A&A, 605,"
+"A93
+Krotkov, R., Wang, D., & Scoville, N. Z. 1980, ApJ, 240, 940
+Lehmann, A., Godard, B., Pineau des Forêts, G., & Falgarone, E. 2020, A&A,"
+"643, A101
+Liu, X., Lin, J. J., Harich, S., Schatz, G. C., & Yang, X. 2000, Science, 289, 1536
+Mathis, J. S., Mezger, P. G., & Panagia, N. 1983, A&A, 500, 259
+McClure, M. 2009, ApJ, 693, L81
+Melnick, G. J. & Kaufman, M. J. 2015, ApJ, 806, 227
+Mota, R., Parafita, R., Giuliani, A., et al. 2005, Chemical Physics Letters, 416,"
+"152
+Neufeld, D. A. & Dalgarno, A. 1989, ApJ, 340, 869
+Neufeld, D. A., Lepp, S., & Melnick, G. J. 1995, ApJS, 100, 132
+Nisini, B., Giannini, T., & Lorenzetti, D. 2002, ApJ, 574, 246
+Nisini, B., Santangelo, G., Antoniucci, S., et al. 2013, A&A, 549, A16
+Offer, A. R., van Hemert, M. C., & van Dishoeck, E. F. 1994, J. Chem. Phys.,"
+"100, 362
+Panoglou, D., Cabrit, S., Pineau Des Forêts, G., et al. 2012, A&A, 538, A2
+Parikka, A., Habart, E., Bernard-Salas, J., et al. 2017, A&A, 599, A20
+Persson, M. V., Harsono, D., Tobin, J. J., et al. 2016, A&A, 590, A33
+Persson, M. V., Jørgensen, J. K., & van Dishoeck, E. F. 2012, A&A, 541, A39
+Pontoppidan, K. M., Salyk, C., Bergin, E. A., et al. 2014, in Protostars and Plan-"
+"ets VI, ed. H. Beuther, R. S. Klessen, C. P. Dullemond, & T. Henning, 363
+Pontoppidan, K. M., Salyk, C., Blake, G. A., et al. 2010, ApJ, 720, 887
+Raymond, J. C. 1979, ApJS, 39, 1
+Rieke, G. H., Wright, G. S., Böker, T., et al. 2015, PASP, 127, 584
+Röllig, M., Abel, N. P., Bell, T., et al. 2007, A&A, 467, 187
+Salyk, C., Pontoppidan, K. M., Blake, G. A., Najita, J. R., & Carr, J. S. 2011,"
+"ApJ, 731, 130
+Schindhelm, E., France, K., Herczeg, G. J., et al. 2012, ApJ, 756, L23
+Schoonenberg, D. & Ormel, C. W. 2017, A&A, 602, A21
+Slanger, T. G. & Black, G. 1982, J. Chem. Phys., 77, 2432
+Stäuber, P. & Bruderer, S. 2009, A&A, 505, 195
+Sturm, E., González-Alfonso, E., Veilleux, S., et al. 2011, ApJ, 733, L16
+Tabone, B., Godard, B., Pineau des Forêts, G., Cabrit, S., & van Dishoeck, E. F."
+"2020, A&A, 636, A60
+Tappe, A., Forbrich, J., Martín, S., Yuan, Y., & Lada, C. J. 2012, ApJ, 751, 9
+Tappe, A., Lada, C. J., Black, J. H., & Muench, A. A. 2008, ApJ, 680, L117
+Tennyson, J., Yurchenko, S. N., Al-Refaie, A. F., et al. 2016, Journal of Molecu-"
+"lar Spectroscopy, 327, 73
+Testi, L., Birnstiel, T., Ricci, L., et al. 2014, in Protostars and Planets VI, ed."
+"H. Beuther, R. S. Klessen, C. P. Dullemond, & T. Henning, 339
+Thi, W. F., Kamp, I., Woitke, P., et al. 2013, A&A, 551, A49
+van der Tak, F. F. S., Black, J. H., Schöier, F. L., Jansen, D. J., & van Dishoeck,"
+"E. F. 2007, A&A, 468, 627
+van Dishoeck, E. F., Bergin, E. A., Lis, D. C., & Lunine, J. I. 2014, in Protostars"
+"and Planets VI, ed. H. Beuther, R. S. Klessen, C. P. Dullemond, & T. Henning,
+835"
+"van Dishoeck, E. F. & Dalgarno, A. 1983, J. Chem. Phys., 79, 873
+van Dishoeck, E. F., Jonkheid, B., & van Hemert, M. C. 2006, Faraday Discus-"
+"sions, 133, 231
+van Dishoeck, E. F., Kristensen, L. E., Benz, A. O., et al. 2011, PASP, 123, 138
+van Harrevelt, R. & van Hemert, M. C. 2000, J. Chem. Phys., 112, 5787
+van Harrevelt, R. & van Hemert, M. C. 2001, J. Chem. Phys., 114, 9453
+van Harrevelt, R. & van Hemert, M. C. 2008, Journal of Physical Chemistry A,"
+"112, 3002
+van Kempen, T. A., Kristensen, L. E., Herczeg, G. J., et al. 2010, A&A, 518,"
+"L121
+van ’t Hoff, M. L. R., van Dishoeck, E. F., Jørgensen, J. K., & Calcutt, H. 2020,"
+"A&A, 633, A7
+Visser, R., Jørgensen, J. K., Kristensen, L. E., van Dishoeck, E. F., & Bergin,"
+"E. A. 2013, ApJ, 769, 19
+Visser, R., Kristensen, L. E., Bruderer, S., et al. 2012, A&A, 537, A55
+Visser, R., van Dishoeck, E. F., Doty, S. D., & Dullemond, C. P. 2009, A&A,"
+"495, 881
+Walawender, J., Bally, J., Kirk, H., et al. 2006, AJ, 132, 467
+Walsh, C., Nomura, H., Millar, T. J., & Aikawa, Y. 2012, ApJ, 747, 114
+Walsh, C., Nomura, H., & van Dishoeck, E. 2015, A&A, 582, A88
+Wampfler, S. F., Bruderer, S., Karska, A., et al. 2013, A&A, 552, A56
+Wampfler, S. F., Bruderer, S., Kristensen, L. E., et al. 2011, A&A, 531, L16
+Wampfler, S. F., Herczeg, G. J., Bruderer, S., et al. 2010, A&A, 521, L36
+Wang, L., Bai, X.-N., & Goodman, J. 2019, ApJ, 874, 90
+Woitke, P., Min, M., Pinte, C., et al. 2016, A&A, 586, A103
+Wright, G. S., Wright, D., Goodson, G. B., et al. 2015, PASP, 127, 595
+Yang, H., Herczeg, G. J., Linsky, J. L., et al. 2012, ApJ, 744, 121
+Yang, X. F., Hwang, D. W., Lin, J. J., & Ying, X. 2000, J. Chem. Phys., 113,"
+"10597
+Yarkony, D. R. 1992, J. Chem. Phys., 97, 1838
+Yousefi, M., Bernath, P. F., Hodges, J., & Masseron, T. 2018, J. Quant. Spec. Ra-"
+"diat. Transf., 217, 416
+Yvart, W., Cabrit, S., Pineau des Forêts, G., & Ferreira, J. 2016, A&A, 585, A74
+Zhou, L., Xie, D., & Guo, H. 2015, J. Chem. Phys., 142, 124317"
+"Article number, page 18 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+120140160180200
+! (nm)
+120140160180200
+! (nm)
+120140160180
+! (nm)
+120140160180
+! (nm)
+"OH(X,v=0)"
+"OH(X)
+v=0 
+v=1 
+v=2 
+v=3 
+v=4"
+"OH(X,v=2)"
+"OH(A,v=0)"
+"OH(X,v=1)"
+"OH(X,v=3)"
+"OH(A,v=1)"
+"N
+120140160180"
+! (nm)
+"N
+120140160180"
+! (nm)
+!4.0 !3.5 !3.0 !2.5 !2.0 !1.5 !1.0 !0.5 0.0
+120140160180
+! (nm)
+120140160180
+! (nm)
+!4.0 !3.5 !3.0 !2.5 !2.0 !1.5 !1.0 !0.5 0.0
+120140160180
+! (nm)
+120140160180
+! (nm)
+!4.0 !3.5 !3.0 !2.5 !2.0 !1.5 !1.0 !0.5 0.0
+log(η)
+"Fig. A.1. Rotational distributions of nascent OH for various vibrational
+and electronic states as a function of the photodissociation wavelength.
+The OH distributions are summed over fine-structure and Λ-doubling
+states. The difference in the rotational distribution between photodisso-
+ciation through the Ã (λ > 143 nm) and B̃ (λ < 143 nm) states of H2O
+is clearly visible."
+Appendix A: Distribution of OH fragments
+"In this appendix, we present the state distribution of OH follow-
+ing H2O photodissociation as a function of the UV wavelength
+implemented in our model. The data stem from the quantum cal-
+culations published in van Harrevelt & van Hemert (2000) and
+van Harrevelt & van Hemert (2001). For the latter, the calcula-
+tions have been repeated using an another potential energy sur-
+face that gives better agreement with experiments (see Sec. 2.2).
+As discussed in Sec. 2.2, we denote as η(λ,Λ, 3,N) the probabil-
+ity to form OH in the state OH(Λ)(3,N) following H2O photodis-
+sociation by a photon of wavelength λ. Figure A.1 shows the
+rotational distributions of OH as function of the photon wave-
+length for different electronic and vibrational states. Figure A.2
+gives the vibrational distributions for each electronic state. The
+distributions shown in Fig. A.1 and A.2 do not account for the
+subsequent dissociation of the OH products. For example, the
+OH(A) rotational levels with 3 ≥ 2 are dissociative and are thus
+discarded in our excitation calculations."
+"In this work, the state distribution of the OH fragments fol-
+lowing H2O photodissociation by UV radiation fields of dif-
+ferent shapes are computed using Eq. (2) and (3). Figure A.3
+presents the spectral shape of the radiation fields adopted in
+this work. The radiation fields representative of an accreting T"
+120140160180200
+! (nm)
+120140160180200
+! (nm)
+120140160180
+! (nm)
+120140160180
+! (nm)
+"OH(X,v=0)"
+"OH(X)
+v=0 
+v=1 
+v=2 
+v=3 
+v=4"
+"OH(X,v=2)"
+"OH(A,v=0)"
+"OH(X,v=1)"
+"OH(X,v=3)"
+"OH(A,v=0)"
+120140160180
+! (nm)
+120140160180
+! (nm)
+!4.0 !3.5 !3.0 !2.5 !2.0 !1.5 !1.0 !0.5 0.0
+120140160180
+! (nm)
+120140160180
+! (nm)
+!4.0 !3.5 !3.0 !2.5 !2.0 !1.5 !1.0 !0.5 0.0
+120140160180
+! (nm)
+120140160180
+! (nm)
+!4.0 !3.5 !3.0 !2.5 !2.0 !1.5 !1.0 !0.5 0.0
+log(η)
+"Fig. A.2. Vibrational distributions of nascent OH for the two electronic
+states of OH as a function of the UV wavelength. The distributions
+η are summed over rotational, fine-structure and Λ-doubling states.
+The difference in the vibrational distribution between photodissociation
+through the Ã (λ > 143 nm) and B̃ (λ < 143 nm) states of H2O is clearly
+visible."
+"Tauri star and of the interstellar radiation field corresponds to
+those used by Heays et al. (2017) and are available at https:
+//home.strw.leidenuniv.nl/~ewine/photo/. The UV ra-
+diation field named ""Lyα"" is a single Lyα line (λ = 121.567 nm)
+with a Doppler broadening parameter of b = 200 km s−1. The
+total photodissociation cross section of H2O leading to OH (Fig.
+A.3) is collected by Heays et al. (2017) from Fillion et al. (2003,
+2004), Mota et al. (2005), and van Harrevelt & van Hemert
+(2008)."
+Appendix B: Collisional rate coefficients
+"The collisional rate coefficients between OH and H2 computed
+by Offer et al. (1994) that include levels up to N = 5 have been
+extrapolated to higher N numbers assuming that the downward
+rates follow"
+"kN→N′ = gN′ae
+−b∆E/TK , (B.1)"
+"where N and N′ designate the rotational quantum number of the
+upper and lower levels, ∆E the energy difference between these
+levels and gN′ the degeneracy of the lower energy level. The pa-
+rameters a and b are the best fit coefficients of available data at
+temperature TK . Collisions with the ortho and para states of H2
+have been considered separately. In this work, TK ≥ 500 K and
+we adopted the rate coefficient computed at a maximum kinetic
+temperature of TK = 300 K by Offer et al. (1994) without any
+further extrapolation. The relative proportion of ortho and para
+populations of H2 is set to 3. We estimate that the extrapolated
+rate coefficients are accurate within a factor of ten. Collisional
+(de)excitation involving vibrational and electronic states is not
+considered here. Collisional excitation by electrons and H can
+also be relevant in certain irradiated environments. However, to
+our knowledge, the corresponding rate coefficients have not yet
+been computed: Thus, we neglected the contribution of electrons
+and H to the excitation of OH."
+"Article number, page 19 of 22"
+"https://home.strw.leidenuniv.nl/~ewine/photo/
+https://home.strw.leidenuniv.nl/~ewine/photo/"
+"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB"
+"T Tauri 
+ISRF 
+Blackbody at 104 K"
+"Fig. A.3. Radiation fields and H2O photodissociation cross section for
+photodissociation adopted in this work. Top: Spectral shape of the radi-
+ation fields as a function of wavelength. The radiation fields have been
+scaled to agree with the integrated energy-intensity of the Draine 1978
+radiation field between 91.2 and 200 nm, that is 2.6× 10−6 W m−2. Bot-
+tom: Photodissociation cross section of H2O producing OH adopted in
+this work (black) and the extension to 911 Å (gray). The features due
+to photodissociation through the Ã, B̃, C̃, and D̃ states of H2O are also
+indicated."
+Appendix C: Analytical model for mid-IR lines
+"The link between the state distribution of OH fragments fi (Fig.
+2 and 8) and the variation of the line intensities with the upper N
+number (see Fig. 6 and 9), quantified here by IN , can be clarified
+by a simple analytical model of the radiative cascade. Neglecting
+collisional (de)exciatation and radiative pumping, and assuming
+that the fraction of OH in rotationally excited states constitutes
+a negligible fraction of the total population of OH, the statistical
+equilibrium equation (see Eq. (7)) for high-N states yields"
+"∑
+i> j"
+"Mi jN j + Φ × fi = 0 with Mi j =
+{"
+"Ai j (Ei > E j)
+−Ai j (Ei < E j),"
+"where Ni is the column density of OH in the state i, and Ai j the
+Einstein-A coefficient of the spontaneous emission i → j. This
+equation being linear in Ni and the right hand side term depend-
+ing linearly on Φ, shows that Ni is proportional to Φ and that the
+relative population Ni/N(OH) depends only on the Einstein-A
+coefficients and on fi but not on Φ. Consequently, the linear re-
+lation between high-N line integrated intensities and Φ shown in
+Fig. 5 (top right panel), as well as the fact that the global shape of"
+"20 30 40 50
+Nup"
+"N
+o
+rm"
+"a
+li
+ze"
+"d
+p
+h
+o
+to"
+"te
+n
+si
+ty"
+"I N
+,≠"
+",≤ Ly  
+TW Hya 
+ISRF 
+Blackbody at 104 K"
+"Fig. C.1. Normalized photon intensity of the OH(X2Π)(3 = 0) intra-
+ladder mid-IR lines as a function of the rotational number of the upper
+energy level. The intensities are computed for the fiducial parameters
+given in Table 1 and for three spectral shapes of the UV field (color
+coded), and divided by Φ according to Eq. 13. Circle and triangle mark-
+ers correspond to lines belonging to the Ω = 1/2 and Ω = 3/2 ladders,
+respectively. Λ-doublets are indiscernible in this plot. In this regime,
+rotational levels are only populated by the radiative cascade of OH
+photofragments. The solid line is the analytical model assuming that
+the intra-ladder lines within the 3 = 0 state are produced by the radia-
+tive cascade of OH fragments produced in the 3 = 0 state (Eq. (C.6)).
+The dotted line is the analytical model that assumes that any OH pro-
+duced in a vibrational state instantaneously decays toward the ground
+vibrational state with a negligible change of its rotational number (see
+Eq. (C.7))."
+"the mid-infrared spectrum is independent of Φ, is a characteristic
+feature of the radiative cascade."
+"The radiative matrix Mi j in Eq. (C.1) can be greatly re-
+duced by noting that the radiative decays of the N levels within
+the X2Π(3 = 0) state are dominated by pure rotational N →
+N − 1 transitions. Moreover, excited electronic states are found
+to rapidly decay to the ground electronic state with little change
+of their vibrational and rotational quantum number. By neglect-
+ing the contribution of vibrationally excited levels to the popu-
+lations of OH(3 = 0,N) and assuming that all OH photofrag-
+ments produced in the OH(A2Σ+) (3 = 0,N) state decay imme-
+diately to the OH(X2Π) (3 = 0,N) state, Eq. (C.1) applied to the
+OH(X)(3 = 0,N) levels yields"
+"AN+1→N NN+1 − AN→N−1NN + Φ × f̃ (N, 3 = 0) ' 0, (C.2)"
+"f̃ (N, 3 = 0) = f (X,N, 3 = 0) +
+1
+2"
+"f (A,N, 3 = 0), (C.3)"
+"where the factor 12 stands for the different degeneracies between
+the OH(X)(3,N) and OH(A)(3,N) states. The solution of Eq.
+(C.2) is then"
+"AN→N−1NN ' ĨNΦ, (C.4)"
+"ĨN '
+∑"
+"Ĩ(N′, 3 = 0) (C.5)"
+"Article number, page 20 of 22"
+"Benoît Tabone, Marc C. van Hemert, Ewine F. van Dishoeck, John H. Black: OH mid-infrared emission as a diagnostic of H2O UV
+photodissociation"
+"is the probability to form OH in the ground vibrational state with
+a rotational number larger than N. The high-N lines are found to
+be optically thin. Their integrated intensities are then given by"
+"I1(N → N − 1) = ĨN
+hc
+λ"
+Φ. (C.6)
+"Thus, according to our analytical model, the normalized inte-
+grated photon intensity IN corresponds to ĨN , the probability
+to form an OH photofragment in a 3 = 0 state with a rota-
+tional number N′ larger than N. In particular, the line intensities
+N → N − 1 do not depend on the Einstein-A coefficients. This
+equation reflects the fact that any OH produced in an excited ro-
+tational level N′ will eventually decay through the N → N − 1
+transition with N ≤ N′. Because each rotational state of OH is
+split into two spin-orbit substates that are further subdivided into
+two Λ-doubling states, ĨN ≤ 1/4, as seen in Figs. 6 and C.1."
+"As discussed in Sec. 3.1.1 and further shown in Fig. C.1,
+our model underestimates the line intensities computed with
+GROSBETA. This indicates that the radiative decay from vibra-
+tionaly excited levels contributes to the population of X2Π(N, 3 =
+0) levels. In order to take into account the contribution of vi-
+brationaly excited levels, we assume that any OH produced
+in a vibrationally excited state immediately decays toward the
+X2Π(3 = 0) state with no change of the rotational number. This
+leads to a normalized integrated photon intensity of"
+"ĨN '
+∑
+3≥0"
+"∑
+N′≥N"
+"Ĩ(N′, 3). (C.7)"
+"This model always overestimates the line intensities (dashed
+lines, Figs. 6 and C.1). This is due to the fact that for N & 15,
+Einstein-A coefficients of rovibrational transitions are smaller
+than those of pure rotational transitions. Thus, an OH fragment
+produced in a 3 > 0 state tends to decay through the intra-ladder
+transition within its nascent vibrational state before decaying to
+the 3 = 0 state with a lower N number than its nascent one. Be-
+low N ' 25, the analytical model reproduces well the computed
+intensities as all levels produced in higher N numbers in 3 > 0
+have decayed toward the 3 = 0 states. The lines emerging from
+N < 25 are thus tracing the production of OH in high rotational
+states, even though the decay of electronically excited OH in the
+ground vibrational state also contributes to the variation of IN
+below N ' 25."
+Appendix D: Conversion factors
+"Table D.1 gives the line intensities of the OH mid-IR lines in the
+pure radiative cascade regime normalized by ΦB̃ denoted as IB̃
+(see Eq. (18)). The intensity of the Nup → Nup − 1 lines of the
+OH(X)(3 = 0) state are summed over the four components of the
+quadruplet. IB̃ can be used to convert any line intensity into a
+column density of H2O photodissociated per second through the
+H2O B̃ state denoted as ΦB̃ using Eq. (20)."
+Appendix E: Critical pumping rate
+"Figure 7-c summarizes the dominant excitation processes as
+a function of the density nH and the chemical pumping rate
+D = Φ/N(OH) for a given OH line. The parameter space is
+split in two regions: For low values of D, the excitation is dom-
+inated thermal and radiative processes whereas for high values
+of D the excitation is set by the radiative cascade of the OH
+photofragments."
+"Table D.1. Conversion factors between the photon intensity integrated
+over solid angle (in photon cm−2 s−1) of the rotational lines Nup → Nup−
+1 summed over the components of each quadruplet and ΦB̃ (molecule
+cm−2 s−1)."
+"Nup Lyα T Tauri ISRF BB 104 K
+10 0.96 0.94 0.88 0.88
+11 0.95 0.92 0.86 0.85
+12 0.93 0.91 0.84 0.83
+13 0.92 0.89 0.82 0.81
+14 0.90 0.88 0.80 0.79
+15 0.88 0.86 0.78 0.77
+16 0.87 0.84 0.76 0.75
+17 0.85 0.83 0.74 0.73
+18 0.83 0.81 0.72 0.71
+19 0.82 0.80 0.70 0.69
+20 0.80 0.78 0.69 0.68
+21 0.78 0.76 0.67 0.66
+22 0.76 0.74 0.66 0.65
+23 0.75 0.73 0.65 0.63
+24 0.74 0.72 0.64 0.62
+25 0.73 0.71 0.63 0.61
+26 0.72 0.70 0.61 0.60
+27 0.72 0.69 0.60 0.58
+28 0.71 0.69 0.59 0.57
+29 0.70 0.68 0.58 0.56
+30 0.69 0.67 0.56 0.54
+31 0.68 0.66 0.55 0.52
+32 0.67 0.64 0.53 0.50
+33 0.65 0.63 0.51 0.48
+34 0.63 0.61 0.48 0.45
+35 0.61 0.59 0.45 0.42
+36 0.58 0.56 0.42 0.38
+37 0.54 0.52 0.39 0.35
+38 0.50 0.49 0.35 0.31
+39 0.46 0.44 0.31 0.27
+40 0.42 0.40 0.27 0.23
+41 0.37 0.36 0.23 0.19
+42 0.33 0.31 0.18 0.14
+43 0.29 0.27 0.14 0.11
+44 0.23 0.22 0.11 0.08
+45 0.16 0.15 0.07 0.05
+46 0.07 0.07 0.05 0.03
+47 0.03 0.03 0.03 0.02
+48 0.01 0.01 0.01 0.01
+49 0.00 0.00 0.01 0.00"
+"The boundary between the two regions is defined by Dcrit
+(green line Fig. 7-c). Its value depends on the physical condi-
+tions of the gas, namely nH, TIR, and TK. For example, Fig. 7-a
+shows that Dcrit increases from 2 × 10−9 to 2 × 10−8 s−1 by in-
+creasing the density from nH=107 to 109cm−3. We propose here
+to derive simple estimates of Dcrit for any rotational level and
+any TK and TIR. To do so, we compare the intensity predicted by
+a pure radiative cascade (see Eq. (13) and Fig. 6) to that produced
+by collisions and/or IR radiative pumping only. In the pure IR ra-
+diative pumping regime (regime ­), the line intensity is given by
+Eq. (14). This yields to a critical chemical pumping rate above
+which prompt emission sets the population of a level N of"
+"Dcrit(Tex,N) =
+gN AN→N−1
+IN Q(Tex)"
+"e−EN/kBTex , (E.1)"
+"Article number, page 21 of 22"
+A&A proofs: manuscript no. tabone_MvH_EvD_JB
+"6 8 10 12 14 16 18 20 22 24
+Nup"
+"it
+(s
+°"
+"Fig. E.1. Critical value of the chemical pumping rate Dcrit ≡
+(Φ/N(OH))crit below which populations in the X"
+"2Π(3 = 0,N,Ω) states
+are populated by collisions or IR radiative pumping processes rather
+than by prompt emission. Collisions or IR radiative pumping are as-
+sumed to populate the levels according to a Boltzmann distribution of a
+single temperature Tex. Because Einstein-A coefficients differ between
+the two rotational ladders, two Dcrit exist for each N quantum number.
+For simplicity, we have assumed IN = 0.25 for all N (see sec. C)."
+"where Tex =TIR. This equation can also be directly transposed
+to the high density regime for which Tex ' TK (regime ¯). For
+intermediate densities, for which both collisions and IR radia-
+tive pumping are relevant (regime ®),Dcrit varies smoothly from
+Dcrit(TIR) toDcrit(TK) (see Fig. 7-c)."
+"Figure E.1 shows Dcrit as a function of the upper N num-
+ber of the level and as a function of the excitation temperature.
+Dcrit(Tex,N) decreases with N, demonstrating that lines with
+higher N are less sensitive to thermal or radiative excitation pro-
+cesses and more sensitive to prompt emission. This is mostly due
+to the fact that these lines are coming from levels that are much
+higher in energy than TK or TIR. For higher temperatures, ther-
+mal processes are more efficient at populating higher N levels
+resulting in an increase in Dcrit. We also note that the decrease
+in Dcrit with N is stiff, showing that for given chemical pump-
+ing rate, the transition between lines excited by prompt emission
+and lines excited by IR radiative pumping or collisions is well
+defined. In particular, we recover the fact that when collision are
+negligible and for TIR= 120 K, Dcrit ' 10−9 s−1 for the line
+coming from N = 10. In contrast, a chemical pumping rate of at
+least 10−4 s−1 is required to excite the line coming from N = 6.
+For high-N levels prompt emission dominates for rates as low as
+D ' 10−12 s−1. This shows that the schematic view of the pa-
+rameter space proposed in Fig. 7-c remains valid for the low-N
+lines for which the boundary is shifted to the right, and for high-
+N lines, for which the boundary is shifted to the left by orders of
+magnitudes."
+"Article number, page 22 of 22"
+"
+	1 Introduction
+	2 Model
+	2.1 OH model
+	2.1.1 Energy levels
+	2.1.2 Radiative transitions"
+"	2.2 Excitation by H2O photodissociation
+	2.3 OH excitation"
+"	3 Results
+	3.1 Lyman alpha
+	3.1.1 High-N lines: Prompt emission
+	3.1.2 Low-N lines
+	3.1.3 Intermediate-N lines
+	3.1.4 Summary"
+"	3.2 Other UV radiation fields
+	3.2.1 State distribution of the OH fragments
+	3.2.2 Mid-IR lines
+	3.2.3 Low and intermediate-N lines"
+"
+	4 Discussion and application to HH 211
+	4.1 Diagnostics
+	4.1.1 Column density of H2O photodissociated per second
+	4.1.2 Spectral shape of the UV radiation field
+	4.1.3 Photodissociation rate of H2O
+	4.1.4 Local UV field"
+"	4.2 Application to HH 211
+	4.2.1 Diagnostics from N>20 lines
+	4.2.2 Evidence of additional chemical pumping routes"
+	4.3 Perspectives with JWST-MIRI
+"	5 Conclusion
+	A Distribution of OH fragments
+	B Collisional rate coefficients
+	C Analytical model for mid-IR lines
+	D Conversion factors
+	E Critical pumping rate"

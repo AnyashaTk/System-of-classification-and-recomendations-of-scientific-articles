@@ -1,0 +1,1739 @@
+0
+"Chiral Effective Field
+Theory and the
+High-Density Nuclear
+Equation of State"
+"C. Drischler,1,2,3 J.W. Holt,4 and
+C. Wellenhofer,5,6"
+"1Department of Physics, University of California, Berkeley, California 94720,"
+"USA
+2Nuclear Science Division, Lawrence Berkeley National Laboratory, Berkeley,"
+"California 94720, USA
+3Facility for Rare Isotope Beams, Michigan State University, Michigan 48824,"
+"USA; email: drischler@frib.msu.edu
+4Cyclotron Institute and Department of Physics and Astronomy, Texas A&M"
+"University, College Station, Texas 77843, USA; email: holt@physics.tamu.edu
+5Institut für Kernphysik, Technische Universität Darmstadt, 64289 Darmstadt,"
+"Germany; email: wellenhofer@theorie.ikp.physik.tu-darmstadt.de
+6ExtreMe Matter Institute EMMI, GSI Helmholtzzentrum für"
+"Schwerionenforschung GmbH, 64291 Darmstadt, Germany"
+Annu. Rev. Nucl. Part. Sci. 2021. 71:1–31
+This article’s doi:
+10.1146/annurev-nucl-102419-041903
+"Copyright © 2021 by Annual Reviews.
+All rights reserved"
+Annu. Rev. Nucl. Part. Sci. in press.
+Keywords
+"chiral effective field theory, nuclear matter, neutron stars, many-body"
+"perturbation theory, Bayesian uncertainty quantification"
+Abstract
+"Born in the aftermath of core collapse supernovae, neutron stars con-"
+tain matter under extraordinary conditions of density and temperature
+"that are difficult to reproduce in the laboratory. In recent years, neu-"
+tron star observations have begun to yield novel insights into the nature
+of strongly interacting matter in the high-density regime where current
+"theoretical models are challenged. At the same time, chiral effective"
+field theory has developed into a powerful framework to study nuclear
+matter properties with quantified uncertainties in the moderate-density
+"regime for modeling neutron stars. In this article, we review recent"
+developments in chiral effective field theory and focus on many-body
+perturbation theory as a computationally efficient tool for calculating
+the properties of hot and dense nuclear matter. We also demonstrate
+how effective field theory enables statistically meaningful comparisons
+"between nuclear theory predictions, nuclear experiments, and observa-"
+tional constraints on the nuclear equation of state.
+"h]
+  2"
+"drischler@frib.msu.edu
+holt@physics.tamu.edu
+wellenhofer@theorie.ikp.physik.tu-darmstadt.de"
+"
+Contents"
+"1. Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+2. From microscopic interactions to the nuclear equation of state . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3"
+"2.1. Chiral effective field theory for nuclear forces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
+2.2. Perturbative chiral nuclear interactions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.3. Many-body perturbation theory at zero and finite temperature . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2.4. Other many-body methods . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.5. Implementing three-body forces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10"
+"3. Nuclear equation of state at zero and finite temperature . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.1. Confronting nuclear forces with empirical constraints . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.2. Nuclear symmetry energy and the isospin-asymmetry expansion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+3.3. Nuclear thermodynamics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18"
+"4. Applications to neutron star physics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.1. Scales in hot and dense stellar matter . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.2. Neutron star structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.3. Neutron star mergers. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+4.4. Core-collapse supernovae . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25"
+5. Summary and outlook . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+1. Introduction
+Neutron stars are one of Nature’s most intriguing astronomical objects and provide a unique
+"laboratory for studying strongly interacting, neutron-rich matter under extreme conditions."
+"With masses of about 1 − 2 times that of the Sun and radii of only approximately 10 km,
+neutron stars contain the densest form of matter in the observable Universe and lie just"
+at the threshold for collapse to a black hole. Much has already been learned about neu-
+"tron stars through mass and radius measurements, pulsar timing, x-ray observations, and"
+gravitational-wave measurements of binary mergers in the new era of multimessenger as-
+"tronomy (see, e.g., Refs. (1, 2, 3) for reviews). But many interesting questions remain to"
+"be answered, especially regarding the nature of ultra-compressed matter located in the in-"
+ner cores of heavy neutron stars where a variety of exotic new states of matter have been
+theorized to exist.
+"While neutron stars are bound together by gravity acting over macroscopic length scales,"
+strong short-ranged nuclear interactions provide the essential pressure support to counteract
+gravitational collapse. The central densities in the heaviest neutron stars may reach up to
+"5−10n0, where n0 ≈ 0.16 fm−3 is the nucleon number density typical of heavy atomic nuclei
+(the associated mass density is ρ0 ≈ 2.7× 1014 g cm−3). Although the strong interaction is
+in principle described by quantum chromodynamics (QCD) over all relevant energy scales,"
+at present no systematic computational method is available to calculate the properties of
+the high-density matter in the inner cores of heavy neutron stars.
+"QCD: quantum
+chromodynamics"
+"ChEFT: chiral
+effective field theory"
+"With chiral effective field theory (ChEFT), however, a powerful tool has emerged to"
+carry out microscopic calculations of nuclear matter properties at densities up to around
+"2n0. Instead of QCD’s quarks and gluons, ChEFT is formulated in terms of nucleons and"
+"pions (and delta isobars), which are the effective strong interaction degrees of freedom"
+"present throughout most of the neutron star interior. In its range of validity, ChEFT"
+provides a systematic expansion for two- and multi-nucleon interactions consistent with the
+"2 Drischler, Holt, and Wellenhofer"
+symmetries of low-energy QCD. The unresolved short-distance physics is parameterized in
+terms of contact interactions whose low-energy couplings are fitted to experimental data.
+An essential advantage over phenomenological approaches is that theoretical uncertainties
+can be quantified by analyzing the order-by-order convergence of the ChEFT expansion. In
+"the last few years, the combination of systematic nuclear matter predictions from ChEFT,"
+"uncertainty quantification, and neutron star observations has developed into a new avenue"
+for constraining the high-density regime of the nuclear equation of state (EOS).
+"EOS: equation of
+state"
+"MBPT: many-body
+perturbation theory"
+In this review our aim is to describe recent advances in microscopic ChEFT calculations
+of the nuclear EOS and their application to neutron stars. [For recent reviews of nuclear
+"structure calculations with ChEFT see, e.g., Refs. (4, 5, 6, 7).] We highlight many-body"
+perturbation theory (MBPT) as an efficient framework for nuclear matter calculations at
+zero and finite temperature based on chiral two- and multi-nucleon interactions. We also
+discuss Bayesian methods for quantifying and propagating statistically meaningful theo-
+"retical uncertainties. Together with nuclear experiments, astrophysical simulations, and"
+"neutron star observations, next-generation ChEFT calculations will be crucial to infer the"
+nature of the extreme matter hidden deep beneath the surface of neutron stars.
+The review is organized as follows. In Section 2 we focus on recent progress in deriving
+nuclear forces from ChEFT and renormalization group (RG) methods to improve the many-
+body convergence in nuclear matter calculations. We then dedicate Section 3 to recent
+high-order MBPT calculations of the moderate-density nuclear EOS at zero temperature
+and advances in the Bayesian quantification of EFT truncation errors. We also discuss
+finite-temperature calculations and nuclear thermodynamics. In Section 4 we review the
+"present status of the high-density nuclear EOS constrained by nuclear theory, experiment,"
+"and observation in the era of multimessenger astronomy, emphasizing the importance of"
+ChEFT. Section 5 ends the review with our summary and perspectives on future advances
+in nuclear matter calculations and their applications to astrophysics.
+"RG: renormalization
+group"
+2. From microscopic interactions to the nuclear equation of state
+"In this section, we briefly review delta-less ChEFT and the construction of chiral nuclear"
+interactions as microscopic input for many-body calculations. Applying RG methods allows
+"one to systematically generate (perturbative) low-momentum interactions, for which the"
+nuclear EOS and related observables can be efficiently calculated using MBPT. We discuss
+"both zero- and finite-temperature MBPT, complementary many-body approaches, and the"
+implementation of 3N interactions in nuclear matter calculations.
+2.1. Chiral effective field theory for nuclear forces
+"The interactions among nucleons arise as an effective low-energy phenomenon of QCD, the"
+"theory of the strong interaction. At the momentum scales relevant for nuclear physics,"
+"p ∼ mπ, QCD is strongly coupled and features nonperturbative effects such as sponta-
+neous chiral symmetry breaking and the confinement of quarks and gluons into hadrons."
+"Direct applications of QCD to hadronic physics at finite density, where lattice QCD faces a"
+"formidable sign problem, are therefore extremely challenging and not feasible at present and"
+"in the near future. However, one can construct a systematic description of nuclear physics"
+in terms of the effective degrees of freedom at low energies: nucleons and pions (and delta
+"isobars). This effective description is given by ChEFT (8, 9, 10, 11, 12)."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 3
+The starting point of ChEFT is to write down the most general Lagrangian consistent
+"with the symmetries of low-energy QCD, in particular, the spontaneously broken chiral"
+"symmetry, for which pions are the (pseudo) Nambu-Goldstone bosons. This naturally sets a"
+"limit for the applicability of ChEFT, i.e., the breakdown scale Λb will be of order of the chiral"
+"symmetry breaking scale Λχ ∼ 1 GeV. [A Bayesian analysis of free-space NN scattering with
+several (not-too-soft) chiral NN potentials in Weinberg power counting estimated Λb ≈
+600 MeV (13).] A truncation scheme, known as power counting, is then needed to organize"
+the infinite number of operators in the effective Lagrangian in a systematic expansion.
+"This expansion is governed by the separation of scales inherent in ChEFT, i.e., the power"
+counting is based on powers of a typical momentum p (or the pion mass) over the ChEFT
+"breakdown scale, Q = max(p,mπ)/Λb."
+"In perturbative EFT, both power counting and ultraviolet renormalization are essen-"
+tially unambiguous and straightforward. The situation is different for applications of
+"ChEFT in nuclear physics, where the calculational framework must be able to account"
+for nonperturbative effects such as bound states (atomic nuclei) and large S-wave scatter-
+ing lengths in NN scattering. While there has been some controversy in the literature as
+"to how the ChEFT expansion should be set up precisely (see, e.g., Refs. (10, 12) and refer-"
+"ences therein), the prevalent and most successful power counting for ChEFT (in particular"
+"regarding many-body applications) is the one first suggested by Weinberg (14, 15, 16)"
+NN: nucleon-nucleon
+3N: three-nucleon
+4N: four-nucleon
+"Within Weinberg power counting, chiral nuclear interactions (and currents) are orga-"
+"nized according to naive (i.e., perturbative) dimensional analysis. The nuclear potentials"
+constructed at a given truncation order in the ChEFT expansion are then used for com-
+"puting observables. Renormalization in this approach is approximative, and carried out by"
+equipping the potentials with regulator functions that suppress contributions above a cutoff
+"scale Λ . Λb, typically chosen in the range 450−600 MeV. That is, the cutoff independence
+of the observables will be achieved only approximatively through Λ-dependent low-energy"
+"constants (LECs), which are in practice optimized for a given Λ to reproduce low-energy"
+"NN scattering data and few-nucleon observables; see, e.g., Refs. (12, 17). The residual"
+"cutoff dependence can then be attributed to higher-order terms in the expansion, so results"
+are expected to become less cutoff dependent with increasing truncation order.
+"LEC: low-energy
+constant"
+Figure 1 depicts the hierarchy of nuclear interactions up to fifth order (or N4LO) in the
+chiral expansion without delta isobars. [For recent work on the currently less developed
+"delta-full ChEFT, see, e.g., Refs. (18, 19).] In this review, NkLO indicates (next-to)k-"
+"leading order, where k is the number of orders beyond leading order (LO). At each order the"
+interactions are composed of short-range contact interactions as well as one- and multi-pion
+"exchanges at long- and intermediate distances, respectively. The LECs associated with pion"
+exchanges have recently been determined with high precision through an analysis of pion-
+nucleon scattering within the framework of Roy-Steiner equations (20). The short-range
+LECs corresponding to NN couplings are generally fixed by matching to NN scattering data.
+Figure 1 shows that ChEFT naturally predicts the observed hierarchy of two- and multi-
+"nucleon interactions, i.e., VNN > V3N > V4N, etc. The first nonvanishing 3N forces appear at"
+N2LO in three topologies; from left to right: the long-range two-pion exchange (involving the
+"pion-nucleon LECs c1, c3, and c4), intermediate-range one-pion exchange-contact (∝ cD),
+and short-range 3N contact interaction (∝ cE). At N3LO the 3N forces are significantly more
+involved and operator-rich, and also 4N interactions start to contribute. Apart from the"
+"two N2LO 3N LECs, cD and cE , chiral interactions up to N
+3LO are completely determined"
+"by the πN and NN system. While N4LO NN forces have already been worked out, partly"
+"4 Drischler, Holt, and Wellenhofer"
+N2LO (Q3)
+N3LO (Q4)
+N4LO (Q5)
+NLO (Q2)
+LO (Q0)
+3N forces 4N forcesNN forces         
+Figure 1: Hierarchy of chiral nuclear interactions up to fifth order (or N4LO) in the chiral
+expansion without delta isobars (12). Nucleons (pions) are depicted by solid (dashed) lines.
+The circled numbers give the number of short-range contact LECs.
+"even at N5LO, the derivation of N4LO 3N interactions has not been finished yet. The"
+"3N LECs cD and cE can be fit to (uncorrelated) few-body observables; for instance, the
+3H binding energy combined with, e.g., the charge radius of 4He, the 3H β-decay half-life,"
+or the nucleon-deuteron scattering cross section. Also heavier nuclei and even saturation
+properties in infinite nuclear matter have been used to constrain 3N forces.
+"NkLO:
+(next-to)k-leading"
+Although the residual regulator and cutoff dependence of obervables at a given chiral
+"order is expected to decrease at higher orders, actual calculations show significant influence"
+of these so-called regulator artifacts on the ChEFT convergence depending on the specific
+regularization scheme and computational framework. These issues have resulted in the
+"development of a flurry of chiral potentials with nonlocal, local as well as semilocal regulators"
+"for a range of cutoff values; see, e.g., Table I of Ref. (21). Moreover, as discussed in"
+"Section 2.2, RG methods allow one to modify a given set of two- and multi-nucleon potentials"
+such that observables are left invariant (up to RG truncations) but the convergence of many-
+body calculations is optimized. These RG transformations are most suitably formulated
+"at the operator (i.e., Hamiltonian) level. The nuclear Hamiltonian constructed at a given"
+"order in the ChEFT expansion reads H = Tkin +VNN(Λ, ci) +V3N(Λ, ci) +V4N(Λ, ci) + . . . ,"
+"where Λ stands for the (initial) cutoff or resolution scale, and ci for the set of LECs inferred"
+"from fits to experimental data. The nuclear Hamiltonian is not an observable, and the basic"
+idea of the RG is to exploit this feature to generate more perturbative Hamiltonians.
+2.2. Perturbative chiral nuclear interactions
+The strong short-range repulsion (“hard core”) and tensor force found in nuclear potentials
+constructed at cutoff scales Λ & 500 MeV raise questions regarding the applicability of
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 5
+"perturbation theory for many-body calculations. In fact, nuclear many-body calculations"
+were historically considered a nonperturbative problem (see also Section 2.3). Both features
+"give rise to strong couplings between high- and low-momentum states, i.e., large off-diagonal"
+"matrix elements, which enhance the intermediate-state summations in perturbation theory."
+RG methods allow one to amend this feature while preserving nonperturbative few-body
+results.
+The initial application (22) of RG methods to study the scale dependence of nuclear
+"forces was based on T -matrix equivalence, but in recent years the similarity renormalization"
+group (SRG) has been the standard RG method for “softening” nuclear interactions. The
+SRG decouples high- and low-momentum states through continuous infinitesimal unitary
+"transformations, Hs = UsHU
+†
+s , described by a differential flow equation in the evolution"
+"parameter s. As the SRG flow progresses, the matrix-elements of the NN potential are"
+"driven toward a band-diagonal (or block-diagonal) form in momentum space, see Ref. (23)"
+for illustrations. While NN observables are by construction invariant under any RG evo-
+"lution of the NN potential, A-body observables will remain so only if one also consistently"
+evolves the multi-nucleon part of the nuclear Hamiltonian. The SRG allows one to imple-
+"ment this in principle exactly, in terms of so-called “induced” many-body forces. However,"
+"for practical applications, a truncation of the consistent evolution of multi-nucleon inter-"
+"actions is required, e.g., at the 3N level. Neutron matter calculations with SRG-evolved"
+chiral interactions truncated at the 3N level indicate that induced 4N forces are (in that
+"case) negligible within uncertainties for a wide range of SRG resolution scales (24, 25)."
+"SRG: similarity
+renormalization"
+There have been many developments recently in the application of ChEFT and SRG
+technology for the construction of high-precision nuclear potentials. Hebeler et al. (26)
+explored a set of low-momentum N3LO NN potentials combined with unevolved N2LO 3N
+forces where the two 3N LECs were fit to reproduce few-body data (assuming that the
+3N contact interactions capture dominant contributions from induced 3N forces). For the
+"softest of these potentials (with λ = 1.8 and Λ3N = 2.0 fm
+−1), which was found to predict"
+"nuclear saturation properties (26, 27) and ground-state energies of light- to medium-mass"
+"nuclei in agreement with experiment (28), Stroberg et al. (29) have computed ground-state"
+"and separation energies of nearly 700 isotopes up to iron. Moreover, Hüther et al. (30)"
+"have constructed a family of SRG-evolved NN and 3N potentials up to N3LO. Also,"
+Reinert et al. (17) have developed the first chiral NN potentials up to N4LO with semilocal
+regulators in momentum space such that the long-range part of the pion exchanges remains
+invariant in contrast to nonlocal regulators. They showed that several N3LO contact terms
+present in previous generations of chiral NN potentials can be eliminated using unitary
+"transformations, leading to considerably softer potentials (even without SRG evolution)."
+"The Weinberg eigenvalue analysis (31, 21) is a powerful tool for quantifying and mon-"
+itoring the perturbativeness of nuclear forces at different resolution scales. Given an NN
+"potential, the Weinberg eigenvalues ην(W ) of the operator G0(W )VNN determine the (rate"
+"of) convergence of the Born series for NN scattering. Here, G0(W ) is the (free-space or"
+in-medium) propagator as a function of the complex energy W . The Born series converges
+"if and only if all eigenvalues satisfy |ην(W )| < 1. Bound states of the potential (such as
+the deuteron) correspond to ην(W ) = 1 at energies W < 0, so the free-space Born series"
+"diverges even for soft potentials. In nuclear matter at sufficiently high densities, however,"
+Pauli blocking suppresses the (in-medium) eigenvalues associated with bound (or nearly-
+"bound) states. For potentials constructed at Λ . 550 MeV, other sources of nonperturbative
+behavior (such as the hard core) are suppressed as well, both in free-space and in-medium"
+"6 Drischler, Holt, and Wellenhofer"
+"(see, e.g., Ref. (23) for details). This implies that a nonperturbative treatment of in-medium"
+NN scattering in the particle-particle channel (see Section 2.3) is not mandatory for these
+"interactions. Instead, order-by-order MBPT calculations can be used for systematically"
+studying the many-body convergence of (low-momentum) chiral nuclear interactions.
+2.3. Many-body perturbation theory at zero and finite temperature
+MBPT starts with partitioning the nuclear Hamiltonian H into a reference one-body part
+"H0 = Tkin + U and a perturbation H1 = V − U , where Tkin is the kinetic-energy operator
+and U is an effective single-particle potential. We consider here NN-only potentials and"
+discuss the implementation of 3N interactions in Section 2.5. The standard choice for U is
+"the Hartree-Fock potential1 given by U
+(HF)
+i ="
+"∑
+j
+V ij,ijfj , with the antisymmetrized NN"
+"matrix elements V ij,ab = 〈kikj |(1− P12)VNN|kakb〉, the Pauli exchange operator P12, the
+momentum integral"
+"d3kj /(2π)
+3, and the zero-temperature distribution function"
+"fj = θ(kF − kj). For simplicity, we assume here a single-species system and neglect spin-
+isospin degrees of freedom. In zero-temperature MBPT, the ground-state energy density"
+"E is obtained by expanding Hint about its reference value E0. Truncating the many-body
+expansion at a finite order L then leads to the approximation E(kF) ' E0(kF)+"
+"∑L
+l=1
+El(kF),2"
+where the Fermi momentum kF is in one-to-one correspondence with the particle number
+"density via n(kF) =
+∑
+i
+fi(kF)."
+"The first-order correction is determined by the expectation value of U
+(HF)
+i (32). At"
+"higher orders it is useful to represent the contributions diagrammatically, e.g., as Hugenholtz"
+diagrams. The diagram and expression for the second-order contribution E2 are given by
+"E2(kF) = = −
+1"
+"∑
+ijab"
+"V
+ij,ab"
+"V
+ab,ij"
+"fij f̄ab
+1"
+"Dab,ij
+, (1)"
+"with the distribution functions fij = fifj (holes) and f̄ab = (1−fa)(1−fb) (particles), energy
+denominator Dab,ij = εa + εb − εi − εj , and single-particle energies εi = k2i /(2M) + U (HF)i .
+Writing down the expression associated with a diagram follows these simple rules:"
+"• Each vertex gives a factor V ij,ab, with i and j are the lines directed toward the vertex,
+and a and b are the lines directed away from the vertex."
+"• Downwards lines give factors of fi while upwards lines give (1− fi), corresponding to
+hole and particle excitations of the reference ground-state, respectively, and"
+"• For adjacent vertices there is an energy denominator given by subtracting the energy
+of the reference ground-state from the excited state corresponding to the particle and"
+hole lines that are crossed by a virtual horizontal line between the two vertices.
+Each diagram’s overall factor can be inferred from the diagrammatic structure as well (32).
+"For instance, the expression of the third-order particle-particle (pp) diagram reads"
+"E3,pp(kF) = =
+1"
+"∑
+ijabcd"
+"V
+ij,ab"
+"V
+ab,cd"
+"V
+cd,ij"
+"fij f̄abcd
+1"
+"Dab,ijDcd,ij
+. (2)"
+"1In Hartree-Fock MBPT, the −U part of H1 = V −U cancels all diagrams involving single-vertex
+loops (32, 27, 25)."
+"2The many-body expansion is in fact a divergent asymptotic series, but the divergent behavior
+is expected to appear only for high truncation orders L & 20 (33)."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 7
+Finding all valid diagrams (and associated expressions) at a given MBPT order has
+been formalized using graph-theory methods (34): in Hartree-Fock MBPT there are
+"(1, 3, 39, 840, 27300) diagrams at order l = (2, 3, 4, 5, 6). Together with the automated code"
+generation for the efficient Monte Carlo integration of arbitrary MBPT diagrams developed
+"in Ref. (27), this has led to a fully automated approach to MBPT calculations."
+"In the traditional Brueckner (or G-matrix) approach (35), the pp ladder diagrams are"
+"resummed to all orders, motivated by the large high-momentum components of traditional"
+NN potentials to which the pp ladders are particularly sensitive. The pp bubbles in these
+diagrams are even ultraviolet divergent if the potential is not sufficiently suppressed at high
+"momenta. For modern low-momentum potentials, however, the pp ladders no longer play"
+"a distinguished role in the many-body expansion, and explicit MBPT calculations at third"
+and fourth order have shown that they are not enhanced compared to other diagrams at
+"the same order (27). Nevertheless, partial diagrammatic resummations are still pertinent"
+for consistent calculations of in-medium single-particle properties and response functions as
+performed in the self-consistent Green’s functions method (for more details see Section 2.4).
+The consistent generalization of MBPT to finite temperatures (T > 0) is a nontrivial
+issue. From the standard finite-T perturbation series for the grand-canonical potential3
+"Ω(T, µ) ' Ω0(T, µ) +
+L∑
+l=1"
+"Ωl(T, µ) , (3)"
+"the free energy density F(T, µ) is obtained via the thermodynamic relation F(T, µ) =
+Ω(T, µ) + µn(T, µ). Here, the density is given by n(T, µ) = −∂Ω(T, µ)/∂µ. The issue is
+now that the relations between (F , n) and (E , n) obtained in finite- and zero-T MBPT,
+respectively, do not match in the limit T → 0 (as discussed further below)."
+"Regarding this, we first consider the finite-T expression for the second-order diagram,"
+"Ω2(T, µ) = = −
+1"
+"∑
+ijab"
+"V
+ij,ab"
+"V
+ab,ij"
+fij f̄ab G2 . (4)
+"Equation (4) differs only slightly from E2(kF) in Eq. (1). First, the energy denominator is
+replaced by G2 = (1− e−Dab,ij/T )/(2Dab,ij). The numerator in this expression vanishes at
+any zero of the denominator, i.e., there are no poles at finite T . In the T → 0 limit the
+integration regions corresponding to the two terms in the numerator of G2 separate into two
+equivalent parts (with integrable poles at the integral boundaries), i.e., G2 → 1/Dab,ij for
+T → 0. These features pertain for higher-order diagrams (36).4 The second difference at
+finite T compared to T = 0 is that the fi = fi(T, µ) are Fermi-Dirac distributions instead"
+of step functions centered at the Fermi energy εkF .
+"Similar to the free Fermi gas (i.e., MBPT with U = 0 and L = 0), for Hartree-Fock"
+"MBPT at L = 1, the chemical potential µ at T = 0 matches the reference Fermi energy εkF ,"
+"with n(T, µ) =
+∑
+i
+fi(T, µ) (36). But these relations cease to be valid at higher orders due"
+"to higher-order contributions in the expression for n(T, µ). Note that these contributions"
+"involve factors ∂fi/∂µ = fi(1 − fi)/T , which become δ(εi − µ) at T = 0 (so there is a"
+"3Using the grand-canonical ensemble is required for the evaluation of quantum-statistical aver-
+ages in the thermodynamic limit."
+"4The poles (at the integral boundary) at T = 0 lead to nonanalyticities in the asymmetry
+dependence of the nuclear EOS, see Section 3.2."
+"8 Drischler, Holt, and Wellenhofer"
+"nonvanishing contribution at T = 0). Contributions involving factors fi(1− fi)/T are also
+present in certain perturbative contributions to Ω, starting at fourth order for Hartree-Fock"
+"MBPT (36). [For U = 0, they appear already at second order.] These contributions can be"
+"associated with the presence of additional so-called anomalous diagrams in finite-T MBPT,"
+"see Refs. (37, 36) for more details. As evident from the discussion above (i.e., below Eq. (4)),"
+"the T → 0 limit of the finite-T expressions for normal (i.e., not anomalous) contributions Ωl
+matches the corresponding zero-T contributions El, except that the reference Fermi energy
+is replaced by the (true) chemical potential. Therefore, a consistent finite-T version of"
+Hartree-Fock MBPT for L 6 3 would be given by
+"F(T, µ̃) ' F0(T, µ̃) +
+L∑
+l=1"
+"Fl(T, µ̃) , (5)"
+"where Fl = Ωl (for l = 1, 2, 3) and the auxiliary “chemical potential” µ̃ is related to the
+density via n(T, µ̃) ="
+"∑
+i
+fi(T, µ̃), implying µ̃→ εkF in the T → 0 limit.5"
+"In the U = 0 case, the method for constructing a finite-T perturbation series of the form"
+"of Eq. (5) for any L is well known (37): one expands each contribution to F(T, µ) about µ̃
+according to µ = µ̃+"
+"∑L
+l=1"
+"µl(T, µ̃) while neglecting all terms beyond the truncation order L."
+"[The terms µl are determined by the requirement that the truncated expansion of n(T, µ)"
+"about µ̃ reproduces n(T, µ̃) =
+∑
+i
+fi(T, µ̃).] This process can also be applied to Hartree-"
+"Fock MBPT (25), with the caveat that the single-particle potential has to be evaluated at"
+"µ̃, i.e., no derivatives of U
+(HF)
+i (T, µ̃) in µ̃ appear. In both cases, U = 0 and Hartree-Fock"
+"MBPT, the resulting perturbation series for the free energy reproduces zero-T MBPT at"
+"each truncation order L, even though the terms Fl contain anomalous contributions for
+l > 4 (l > 2, for U = 0). The fact that Eq. (5) results from a truncated re-expansion shows
+explicitly that the original grand-canonical series is not consistent with zero-T MBPT. For"
+general arguments why the free-energy series is expected to give improved results compared
+"to grand-canonical MBPT, see Refs. (36, 38)."
+"Altogether, MBPT as formulated in the free-energy series [Eq. (5)] provides a consistent"
+"framework for nuclear matter calculations at zero- and finite-temperature, where many-body"
+uncertainties can be systematically assessed by increasing the truncation order L. Although
+"the number of MBPT diagrams increases rapidly with L, the technologies recently developed"
+"for automated diagram generation and evaluation (34, 27) enable calculations at high-"
+enough orders to probe in detail the many-body convergence for chiral low-momentum NN
+"and 3N interactions. Furthermore, exploring MBPT with single-particle potentials beyond"
+"the Hartree-Fock level is an important task for future research. In particular, the single-"
+particle potential U can be chosen at each truncation order such that the grand-canonical
+"and free-energy series are also equivalent for L > 1 (36); for Hartree-Fock MBPT, they"
+are only equivalent for L = 1. First investigations of this order-by-order renormalization
+of the single-particle potential have shown that higher-order contributions to U can have a
+significant effect on low-order MBPT results and the many-body convergence (39).
+2.4. Other many-body methods
+The advances in ChEFT and RG methods have established MBPT as a central approach
+for studying the nuclear EOS at zero and finite temperature. While MBPT is the focus of
+"5The true chemical potential is obtained from F(T, µ̃) via µ = ∂F/∂n."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 9
+"this review, various other many-body methods have been applied in initial nuclear matter"
+"studies with chiral NN and 3N interactions. In particular, nonperturbative frameworks are"
+important to benchmark the MBPT convergence and probe aspects of many-body physics
+beyond the nuclear EOS. Below we will briefly discuss the self-consistent Green’s functions
+(SCGF) approach and Quantum Monte Carlo (QMC) methods. Other methods not dis-
+"cussed here for brevity are coupled-cluster (CC) theory (40), the in-medium SRG (4), and"
+lattice EFT (41). Systematic comparisons between different many-body frameworks will
+provide a coherent picture of microscopic interactions and nuclear many-body properties.
+"The SCGF approach (42, 43) is based on the self-consistent computation of in-medium"
+"propagators (or Green’s functions) in Fourier (Matsubara) space, corresponding to the to-"
+all-orders resummation of some perturbative contributions to the propagators. SCGF calcu-
+"lations of the nuclear EOS at zero and finite temperature (44, 45) have been implemented"
+"using the in-medium T -matrix approximation, where the ladder diagrams are resummed"
+"to all orders, providing a thermodynamically consistent generalization of Brueckner the-"
+"ory (43). Furthermore, SCGF calculations have been used to benchmark the order-by-order"
+convergence of MBPT (up to third order) in neutron matter (46). The energy per particle
+obtained in SCGF and MBPT was found to agree well for a range of unevolved chiral NN
+and 3N interactions up to N3LO. The SCGF approach allows for fully consistent compu-
+"tations of response functions and transport properties, which will be vital for comparisons"
+with MBPT calculations of these quantities.
+QMC refers to a family of stochastic methods that solve the many-body Schrödinger
+"equation through random sampling (6). As such, QMC methods are truly nonperturba-"
+tive and provide important benchmarks for many-body methods with basis expansions.
+"However, apart from the fermion sign problem a caveat is that most QMC methods require"
+"local nuclear potentials to obtain low-variance results, restricting both the regularization"
+scheme and the interaction operators that can be included in the ChEFT expansion. QMC
+calculations with local chiral NN and 3N potentials up to N2LO have been carried out in
+"neutron matter (47, 48) and recently also symmetric nuclear matter (49). Because of Fierz"
+"invariance breaking, the regulator artifacts are significantly larger than in MBPT calcula-"
+"tions with nonlocal potentials. On the other hand, since QMC methods are not restricted"
+"to soft interactions, a much wider range of momentum cutoffs can be studied with QMC."
+"Hence, QMC methods can provide important insights into the residual cutoff dependence"
+of observables and the breakdown scale of ChEFT at high densities.
+2.5. Implementing three-body forces
+Three-nucleon forces are crucial for understanding properties of finite nuclei and nuclear
+"matter (7), such as drip lines along isotopic chains and nuclear saturation in SNM. Even"
+though partial-wave decomposed matrix elements of chiral 3N forces have become available
+"recently up to N3LO (50), implementing 3N forces in many-body calculations remains com-"
+putationally difficult and usually requires approximations (51). The large uncertainties due
+"to 3N forces, e.g., in the nuclear EOS at densities n & n0, emphasize the need for improving
+these approximations as well as developing novel chiral NN and 3N potentials in general."
+Normal ordering allows one to include dominant 3N contributions in many-body frame-
+works using density-dependent effective two-body potentials (52). Through Wick’s theorem
+the general three-body Hamiltonian can be exactly normal ordered with respect to a finite-
+"density reference state (e.g., the Fermi sea of noninteracting nucleons or the Hartree-Fock"
+"10 Drischler, Holt, and Wellenhofer"
+ground state) instead of the free-space vacuum (23). This shifts contributions from the
+"three-body Hamiltonian operator to effective zero-body, one-body, and two-body operators"
+plus a residual (reduced) three-body operator. A many-body framework built for NN inter-
+actions can then incorporate a density-dependent effective interaction V medNN derived from
+"V3N as VNN → VNN + ξ V medNN . The combinatorial factor ξ is determined by Wick’s theorem
+and depends on the many-body calculation of interest. The matrix elements of V medNN are"
+obtained by summing one particle over the occupied states in the reference state:
+"〈
+2
+′
+3
+′
+∣∣∣V medNN ∣∣∣23〉 = V̄3N = ∑"
+"(2π)3
+f1
+〈
+12
+′
+3
+′ ∣∣ V̄3N ∣∣123〉 , (6)"
+"with the shorthand notation |i〉 = |kiσiτi〉, antisymmetrized 3N interactions V̄3N, and
+momentum distribution function of the reference state f1."
+"In contrast to the (Galilean-invariant) NN potential, the effective two-body potential (6)"
+"depends on the center-of-mass momentum P of the two remaining particles. Hence, both"
+potentials cannot be straightforwardly combined in a partial-wave basis and different ap-
+proximations for the P dependence have been used to enable applications to nuclear matter.
+Under the assumption that P = 0 first implementations evaluated Eq. (6) semi-analytically
+in symmetric nuclear matter and pure neutron matter starting from the N2LO 3N interac-
+"tions (53, 54, 26). Extensions to asymmetric nuclear matter and finite temperature have"
+"followed (38, 55, 46, 56), and a new method that allows for the construction of an effective"
+two-body potential from any partial-wave decomposed 3N interaction in an improved P
+angle-averaging approximation has been developed (56). The latter approach is especially
+"advantageous for studying 3N forces at N3LO (56), bare and SRG-evolved, and in different"
+regularization schemes. Semi-analytic expressions along the lines of Ref. (53) have been
+derived up to N3LO and also partially to N4LO (57).
+The three-body term in the normal-ordered Hamiltonian cannot be implemented using
+effective two-body potentials. In nuclear matter such residual 3N contributions have been
+"studied in CC (58) and MBPT calculations (59, 60, 61, 27). Explicit calculations of the"
+"residual 3N diagram in MBPT at second order,"
+"Eres2 (kF) = = −
+1"
+"∑
+ijkabc"
+"V
+ijk,abc"
+"V
+abc,ijk"
+"fijkf̄abc
+1"
+"Dabc,ijk
+, (7)"
+showed for a range of chiral interactions that its contribution is typically much smaller
+than both the overall EFT truncation error and the individual contributions from the other
+MBPT diagrams up to this order (27). While these findings give some justification for
+"the commonly used approximation where residual 3N contributions are neglected, the au-"
+"tomated approach introduced in Ref. (27) implements chiral NN, 3N, and 4N interactions"
+exactly in nuclear matter calculations using a single-particle spin-isospin basis. Combined
+"with high-performance computing, this method sets the stage for systematic studies of"
+ChEFT interactions in MBPT up to high orders without the mentioned approximations.
+3. Nuclear equation of state at zero and finite temperature
+"In this Section we survey recent nuclear matter calculations up to n ≈ 2n0 in MBPT with
+chiral NN and 3N interactions. We discuss advances in the quantification and propagation"
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 11
+0.00 0.05 0.10 0.15 0.20
+"Density n [fm
+−3"
+"E
+n
+e
+rg"
+"P
+a
+rt"
+"ic
+le
+E
+/A"
+"[M
+e
+V"
+δ = 0.0
+δ = 1.0
+δ = 0.5
+δ = 0.7
+δ = 0.8
+δ = 0.9
+Nuclear Equation of State at T = 0
+0.14 0.16 0.18
+"Saturation Density n0 [fm
+−3"
+"S
+a
+tu"
+"E
+n
+e
+rg"
+Nuclear Saturation
+"(1
+.8
+/
+2
+.0
+)"
+"(2
+.0
+/
+2
+.0
+)"
+"(2
+.0
+/
+2
+.5
+)"
+"(2
+.2
+/
+2
+.0
+)"
+"(2
+.8
+/
+2
+.0
+)"
+"(2
+.0
+/
+2
+.0
+*
+)"
+"4
+5
+0
+) (s"
+"im
+4
+7
+5
+)"
+"5
+0
+0
+)"
+"5
+2
+5
+)"
+"5
+5
+0
+)"
+"(H
+o
+lt"
+"4
+1
+4
+)"
+"(H
+o
+lt"
+"4
+5
+0
+)"
+"(H
+o
+lt"
+"5
+0
+0
+)"
+(NNLOsat)
+(∆NNLOGO 394)
+(∆NNLOGO 450)
+(∆NLOGO 450)
+(GP-B 500 2σ)
+(GP-B 450 2σ)
+Figure 2: (left) Nuclear EOS at T = 0 as a function of density n for a representative set
+of isospin asymmetries δ. The uncertainty bands in the energy per particle E/A were ob-
+tained in Ref. (56) by second-order MBPT calculations based on the Hebeler et al. interac-
+"tions (26). Key observables that characterize E(n ≈ n0, δ)/A are illustrated: the saturation
+point (n0, E0), incompressibility K0, symmetry energy Sv and its slope parameter L at n0."
+(right) Saturation points of numerous chiral interactions from fourth- (circles) and third-
+"order (squares) MBPT calculations, as well as CC theory (triangles); specifically, the NN"
+"and 3N interactions by Hebeler et al. (26) (as in (left), “λ/Λ3N [ fm
+−1]”), Carlsson et al. (62)"
+"(“sim Λ [ MeV]”), and Holt et al. (39, 63) (“Holt Λ [ MeV]”). The ellipses show the 2σ re-"
+gions of order-by-order calculations up to N3LO in MBPT with EFT truncation errors fully
+quantified (64). Note that the saturation points are aligned along a Coester-like band (gray
+"anticorrelation band). The white box in each panel depicts the empirical saturation point,"
+"E0 = −15.86 ± 0.57 MeV with n0 = 0.164 ± 0.007 fm−3 (56). The Hamiltonian “2.0/2.0*”
+uses the ci values from the NN partial-wave analysis in Ref. (65) in the 3N forces. The data"
+"in the right panel were taken from Refs. (18, 27, 39, 64)."
+"of EFT truncation errors, confront different microscopic constraints on the nuclear sym-"
+"metry energy with experiment, and examine contributions beyond the standard quadratic"
+expansion of the EOS in the isospin asymmetry. We conclude the Section with results for
+the nuclear liquid-gas phase transition at finite temperature.
+3.1. Confronting nuclear forces with empirical constraints
+Figure 2 (left) illustrates the nuclear EOS at zero temperature as a function of density n
+"for a representative set of isospin asymmetries δ = (nn − np)/n, where nn (np) is the
+neutron (proton) number density. Several general observations can be gleaned. Nuclear"
+"interactions are much stronger in SNM compared to PNM, which is closer to the free Fermi"
+"gas (FFG, solid lines). Consequently, the uncertainties are larger in SNM, especially for"
+"densities n & n0. In PNM they are well controlled for n . n0, and a wide range of"
+"12 Drischler, Holt, and Wellenhofer"
+"chiral NN and 3N interactions lead to similar results for PNM (see, e.g., Refs. (66, 7, 67))."
+Increasing uncertainties toward higher densities are predominantly due to 3N interactions.
+"Although the complexity of 3N interactions is much reduced in PNM (54), they provide"
+at all values of δ important repulsive contributions that grow stronger with the density
+than those of NN interactions. The 3N interactions are therefore crucial for understanding
+the high-density EOS and the structure of neutron stars. In PNM all chiral interactions
+up to N3LO are completely determined by the πN and NN system. The intermediate-
+"and short-range 3N interactions at N2LO that are proportional to the LECs cD and cE ,"
+"respectively, vanish (for regulators symmetric in the particle labels) due to the coupling of"
+"pions to spin and the Pauli principle, respectively. Also the long-range two-pion exchange"
+3N forces at N2LO are simplified since the LEC c4 does not contribute. This allows for
+tight low-density constraints on the neutron-rich matter EOS from PNM calculations and
+systematic high-density extrapolations (see Section 4).
+"PNM: pure neutron
+matter (δ = 1)"
+"ANM: asymmetric
+nuclear matter"
+(0 < δ < 1)
+"SNM: symmetric
+nuclear matter"
+(δ = 0)
+FFG: free Fermi gas
+Nuclear matter represents an ideal system for testing nuclear interactions at the densities
+accessible to laboratory experiments and their implementation in many-body methods. As
+"illustrated in Fig. 2 (left), the nuclear EOS in the vicinity of n0 is (to good approximation)"
+"characterized by only a few experimentally accessible quantities. That is, the EOS of"
+"SNM can be expanded about its minimum n0 as E(n, δ = 0)/A ≈ E0 + (K/2) η2, with
+the saturation energy E0 = E(n0, 0)/A, incompressibility K, and η = (n − n0)/(3n0).
+Further, explicit ANM calculations with chiral NN and 3N interactions (56, 68, 69) have"
+shown that the asymmetry dependence of the nuclear EOS is reasonably well reproduced
+"by the standard quadratic approximation E(n, δ)/A = E(n, 0)/A + Esym(n) δ
+2, where the"
+"symmetry energy expanded in density reads Esym(n) ≈ Sv + Lη. In this approximation
+one finds E(n, 1)/A ≈ (E0 + Sv) + Lη for PNM. Microscopic predictions and empirical
+constraints for (n0, E0,K) and (Sv, L) can then be confronted with one another."
+Nuclear saturation emerges from a delicate cancellation between kinetic and interaction
+"contributions to the EOS. Reproducing empirical constraints on (n0, E0,K) is therefore an"
+"important benchmark of nuclear interactions, especially 3N forces (providing the necessary"
+repulsion). Figure 2 (right) depicts the saturation points of numerous chiral potentials as
+predicted by fourth- (circles) and third-order (squares) MBPT calculations. The saturation
+"points are aligned along a Coester-like band (gray anticorrelation band), which overlaps with"
+"the empirical saturation point (white boxes, see legend), determined from a set of energy"
+"density functionals (71). Also shown are results from CC calculations with NNLOsat (▶)
+and the new deltaful chiral potentials (18) “∆NLOGO Λ [ MeV]” and “∆NNLOGO Λ [ MeV]”"
+"(▶, ▶, ▶), constructed by the Gothenburg-Oak-Ridge (GO) collaboration. Only the latter
+fall into the empirical range for (n0, E0). However, judging the extent a nuclear potential"
+reproduces empirical (saturation) properties can be quite misleading without taking mean-
+"ingful uncertainties into account; especially, the truncation of the EFT expansion at a finite"
+order can result in sizable EFT truncation errors (even at N3LO) that need to be quantified.
+"Until a few years ago, the prevalent way of estimating theoretical uncertainties in nuclear"
+"matter calculations was parameter variation within some (arbitrary) range; that is, probing"
+"the observable’s sensitivity to, e.g., the 3N LECs or momentum cutoff. Recently, the"
+"focus has been more on the systematic quantification of EFT truncation errors (72), which"
+can be estimated by assuming that an observable’s EFT convergence pattern at order k
+"6See Ref. (70) for a review of the link between the nuclear EOS and nuclear observables; e.g.,
+from measurements of the isoscalar giant monopole resonance K ≈ 210− 230 MeV was inferred."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 13
+"takes the form yk(n) = yref(n)
+∑k
+m=0"
+"cm(n)Q
+m(n) (73). Here, yref(n) sets a dimensionful"
+"reference scale, Q(n) is the dimensionless expansion parameter, and the cm(n) are the"
+"dimensionless coefficients not to be confused with the LECs of the interaction (e.g., y4 ="
+E/A at N3LO). Note that c1 = 0 in Weinberg power counting. For given choices of yref(n)
+"and Q(n),7 the cm6k(n) are obtained from order-by-order calculations {y0, y1, . . . , yk} of
+the observable. Since yref(n) and Q(n) factor in all physical scales, the cm(n) are expected"
+"to be of order one (i.e., natural), unless the coefficients are fine-tuned. The standard EFT"
+"uncertainty, which assumes that the truncation error is dominated by the first omitted term,"
+has been implemented by Epelbaum et al. (74) and applied to a wide range of observables in
+finite nuclei and infinite matter. This “EKM uncertainty” can be summarized at NjLO as
+"δy(n) = yref Q
+j+2 max(|c0|, |c1|, . . . , |cj+1|), whose point-wise estimates can be interpreted"
+as Bayesian credibility regions under a particular choice of priors for cm (13).
+The Bayesian Uncertainty Quantification: Errors in Your EFT (BUQEYE)
+Collaboration has recently introduced a Bayesian framework for quantifying correlated
+"EFT uncertainties in the nuclear EOS (75, 64).8 In contrast to the standard EFT un-"
+"certainty, the new framework allows for the quantification and propagation of statistically"
+"meaningful uncertainties to derived quantities (e.g., the pressure) while accounting for cor-"
+"relations across densities and between observables. Without considering these correlations,"
+uncertainties can be overestimated. The framework also includes Bayesian model checking
+tools (76) for diagnosing and testing whether the in-medium ChEFT expansion works as
+"assumed (e.g., inference for Λb). Gaussian Processes (GPs) with physics-based hyperpa-"
+rameters are trained on the order-by-order calculations of the energy per particle under the
+assumption that all cm(n) are random curves drawn from a single GP (73). The Gaussian
+posterior for the cm(n) is then used to estimate the to-all-orders EFT truncation error
+"δyk(n) = yref(n)
+∑∞
+m=k+1"
+"cm(n)Q
+m(n) and combined with additional (e.g., many-body)"
+uncertainties. From the posterior also arbitrary derivatives in n can be obtained.
+"BUQEYE: Bayesian
+Uncertainty"
+"Quantification:
+Errors in Your EFT"
+"GP: Gaussian
+Process"
+"GP–B: Gaussian
+Process–BUQEYE"
+Collaboration
+"Using this new framework, Drischler et al. (75, 64) studied the EFT convergence of the"
+"first order-by-order calculations with NN and 3N interactions up to N3LO in PNM and SNM,"
+"conducted in Refs. (27, 77) using a novel Monte Carlo integration framework for MBPT."
+The associated N3LO 4N Hartree-Fock energies have been found negligible compared to the
+overall uncertainties (see also Ref. (78)). To construct a set of order-by-order NN and 3N
+"interactions up to N3LO, Ref. (27) adjusted the two 3N LECs to the triton and (n0, E0)"
+"for two cutoffs. Several potentials with reasonable saturation properties were obtained,"
+although generally underbound at N3LO. This holds also at the 2σ credibility level with
+"EFT truncation errors quantified (64), as depicted by the ellipses “GP–B Λ [MeV]” in"
+"Fig. 2 (right). Hoppe et al. (79) found that, in agreement with the expectations from SNM,"
+predicted values for the corresponding binding energies of medium-mass nuclei are too small
+"compared with experiment and, in contrast to the SNM expectations, predicted values for"
+the corresponding charge radii are too large. Since both observables were also much more
+"sensitive to the 3N LEC cD, SNM and medium-mass nuclei seem more intricately connected"
+than one might naively expect (79).
+"Figure 3 shows the order-by-order predictions for the energy per particle, pressure, and"
+speed of sound squared in PNM at the 1σ confidence level based on “GP–B 500” (75).
+"7For instance, yref ' y0 and Q ∼ p/Λb with the typical momentum p ∝ kF(n) and some estimate
+of the EFT breakdown scale Λb have been used to estimate uncertainties in the nuclear EOS."
+8The framework is publicly available at https://buqeye.github.io/software/.
+"14 Drischler, Holt, and Wellenhofer"
+https://buqeye.github.io/software/
+"
+0.1 0.2 0.3"
+"Density n [fm
+−3"
+"E/N ± 1σ
+[MeV]"
+0.1 0.2 0.3
+"Density n [fm
+−3"
+"N
+2
+LO"
+"N
+3
+LO"
+"P ± 1σ
+[MeV fm"
+0.1 0.2 0.3
+"Density n [fm
+−3"
+"c
+2
+s ± 1σ
+[−]"
+"Figure 3: Order-by-order predictions for the energy per particle E/N (left panel), pressure"
+"P = n2 d(E/N)/dn (middle panel), and speed of sound squared c2s = ∂P/∂ε (right panel)"
+in PNM as a function of the density (75) based on the MBPT calculations up to N3LO in
+Ref. (27). The energy density ε = n(E/N +mn) includes the neutron rest mass energy mn.
+Correlated uncertainty bands are given at the 1σ confidence level. The data were taken
+from Ref. (75).
+"The observables show an order-by-order convergence pattern at n . 0.1 fm−3, whereas
+N2LO and N3LO have a markedly different density dependence at n & n0 due to repulsive
+3N contributions. This is also manifested in the Bayesian diagnostics (73). Assuming"
+"Q = kF/Λb, the inferred breakdown scale Λb ≈ 600 MeV is consistent with free-space
+NN scattering and could be associated with n > 2n0. The EFT truncation errors are"
+strongly correlated in density and to those in SNM. A correlated approach is therefore
+"necessary to propagate uncertainties reliably to derived quantities, although the standard"
+EFT uncertainty for the energy per particle is broadly similar to the 1σ confidence level (75).
+3.2. Nuclear symmetry energy and the isospin-asymmetry expansion
+The nuclear symmetry energy is a key quantity to understand the structure of neutron-
+rich nuclei and neutron stars. Although masses of heavy nuclei constrain the value of the
+"symmetry energy well at nuclear densities, its density dependence is much less known (94)."
+"Studying the density-dependent symmetry energy from theory, experiment, and observation"
+is therefore an important task in the era of multimessenger astronomy.
+"Figure 4 (left) summarizes theoretical constraints for Esym(n 6 2n0) from a wide range
+of chiral NN and 3N forces as well as different many-body methods. Specifically, we show the"
+"results for Esym(n) = E(n, δ = 1)/A− E(n, 0)/A as obtained in the calculations by Lim &
+Holt (83) and Drischler et al. (64, 27) [“GP–B 500”] in MBPT, Carbone et al. (44) in the"
+"SCGF method, and Lonardoni et al. (49) using QMC methods. The latter were conducted"
+"with two different parameterizations of the N2LO 3N contact interaction (i.e., distinct bands"
+for E1 and Eτ ) to demonstrate the significant regulator artifacts present in local chiral 3N
+potentials. Different uncertainty estimates were used in these calculations. The uncertainty
+"bands by Carbone et al. probe parameter variations in the nuclear interactions, while those"
+by Lonardoni et al. and Drischler et al. quantify truncation errors using the standard
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 15
+26 28 30 32 34
+Symmetry Energy Sv [MeV]
+"P
+a
+ra"
+"m
+e
+te"
+"[M
+e
+V"
+"vy
+-I
+on"
+"lis
+io"
+"eutron
+Skin"
+"G
+ia
+nt"
+"20
+8 Pb"
+"Po
+lar"
+"iza
+bi"
+"M
+a
+ss"
+UG Analytic
+GP–B 450
+GP–B 500
+0.0 0.1 0.2 0.3
+"Density n [fm
+−3"
+"m
+e
+tr"
+"n
+e
+rg"
+"[M
+e
+V"
+"Lim ’18 (1σ∣2σ)
+Carbone ’14"
+Lonardoni ’20 (E1;Eτ )
+GP–B 500 ’20 (1σ∣2σ)
+Akmal ’98
+Baldo ’97
+Muether ’87
+Figure 4: (left) Constraints on Esym(n) based on chiral interactions (bands) and phe-
+nomenological potentials (symbols). The vertical band depicts the empirical satura-
+tion density. Dashed lines are used to enhance readability. Data were taken from
+"Akmal et al. (80), Baldo et al. (81), Muether et al. (82), Lim & Holt (83), Carbone et al. (44),"
+"Lonardoni et al. (49), and Drischler et al. (64, 27) [“GP–B 500”]. (right) Theoretical and"
+"experimental constraints for (Sv, L) as well as the conjectured UG bounds (84) in compari-"
+son (see annotations in the panel). The experimental constraints are derived from heavy-ion
+"collisions (HIC) (85), neutron-skin thicknesses of Sn isotopes (86), giant dipole resonances"
+"(GDR) (87), the dipole polarizability of 208Pb (88, 89), nuclear masses (90), and isobaric"
+"analog states and isovector skins (IAS + ∆R) (91). In addition, theoretical constraints"
+"derived from microscopic neutron-matter calculations by Hebeler et al. (H) (92), Holt &"
+"Kaiser (HK) (39), and Gandolfi et al. (G) (93). Gray ellipses (64) show the allowed regions"
+"from PNM and SNM calculations at N3LO with truncation errors quantified (light: 1σ,"
+dark: 2σ). The white area in the center shows the joint experimental constraint; the con-
+straints extracted from measurements of IAS + ∆R are not included in this area because
+they barely overlap.
+"EFT uncertainty (up to N2LO) and BUQEYE’s new Bayesian framework (up to N3LO),"
+respectively. Also many-body (or statistical Monte Carlo) uncertainties are included in
+the bands. Lim & Holt performed a statistical analysis of MBPT calculations based on a
+range of chiral potentials at different orders and two single-particle spectra to probe the
+chiral and many-body convergence. Only the results by Lim & Holt and Drischler et al.
+"(both MBPT) have a clear statistical interpretation, each at the 1σ and 2σ confidence level"
+"(different shadings). Overall, the constraints from ChEFT are consistent with each other,"
+"even at the highest densities shown, but the uncertainties in Esym(n) are generally sizable,"
+"e.g., 20.7±1.1, 31.5±3.0, and 49.0±12.0 MeV at n0/2, n0, and 2n0, respectively, for Lim &
+Holt at the 1σ confidence level. Drawing general conclusions from comparing the sizes of"
+these bands can be misleading since the underlying methods for estimating uncertainties
+"16 Drischler, Holt, and Wellenhofer"
+are quite different. Order-by-order comparisons for a wider range of chiral NN and 3N
+interactions with EFT truncation errors quantified are called for to provide more insights
+in and stringent constraints on Esym(n). The Bayesian statistical tools introduced by the
+BUQEYE Collaboration allow for such systematic studies.
+"Despite the large uncertainties in the SNM EOS (see Sec. 3.1), predictions for Esym(n)"
+[as an energy difference] can be made with significantly smaller uncertainties than those
+"in E(n, 1)/A and E(n, 0)/A individually, if correlations are properly considered. The"
+BUQEYE Collaboration (64) found that the EFT truncation errors associated with the
+"PNM and SNM calculations in Ref. (27) are highly correlated, meaning that the uncertainty"
+in Esym(n) is less than the usual in-quadrature sum of errors. Combined with order-by-order
+calculations up to N3LO this led to the narrow constraints [see gray bands in Fig. 4 (left)]
+"based on the interactions used with Λ = 500 MeV (e.g., Esym(2n0) = 45.0 ± 2.8 MeV).
+Another set with Λ = 450 MeV is compatible at the 2σ confidence level. The bands agree"
+with the constraints by Lim & Holt at the 1σ level (or even better) as well as the calcula-
+"tions by Akmal et al. (80), Baldo et al. (81), and Muether et al. (82) with phenomenological"
+"nuclear potentials. The latter, however, do not provide uncertainties that could be used"
+to judge the level of agreement. These correlations need to be investigated further using
+different many-body frameworks and interactions.
+Figure 4 (right) compares various theoretical and experimental constraints in the Sv–L
+"plane (see annotations). The regions obtained by Hebeler et al. (92, “H”), Gandolfi et al."
+"(93, “G”), and Holt & Kaiser (39, “HK”), which were derived from microscopic PNM calcu-"
+"lations and the empirical saturation point, agree well with each other and are consistent with"
+"the range in Sv of the joint experimental constraint (white area), although L is predicted"
+with somewhat lower values. The 1σ and 2σ ellipses of “GP–B 500” (as in Fig. 4 (left))
+are in excellent agreement with the joint experimental constraint [“GP–B 450” is slightly
+"shifted to higher (Sv, L)], indicating a stiffer neutron-rich matter EOS at n0 compared to the"
+"other theoretical constraints. This is, however, consistent with joint theory-agnostic poste-"
+"riors from pulsar, gravitational-wave, and NICER observations (e.g., compare with Figure 1"
+in Ref. (95)). An important feature of the correlated GP approach is that the theoretical
+uncertainties in n0 (including truncation errors) are accounted for through marginalization
+"over the Gaussian posterior for the saturation density predicted from the SNM calculations,"
+"pr(n0) ≈ 0.17± 0.01 fm−3. Apart from the calculations by Holt & Kaiser (“HK”) allowing
+slightly lower (Sv, L), all shown theory calculations satisfy the constraint (solid black line)"
+derived from the conjecture (84) that the unitary gas (UG) sets a lower bound for the PNM
+EOS. [Note that Ref. (84) also made additional assumptions to derive an analytic bound
+"(dashed black line).] Overall, Fig. 4 (right) shows that current constraints from nuclear the-"
+"ory and experiment predict the symmetry energy parameters in the range Sv ≈ 28−35 MeV
+and L ≈ 20− 72 MeV."
+UG: unitary gas
+"While the standard quadratic approximation [E(n, δ)/A = E(n, 0)/A + Esym(n) δ
+2] is"
+"in general sufficient to characterize the isospin-asymmetry dependence of the nuclear EOS,"
+"certain neutron-star properties, such as the crust-core transition (96) and the threshold"
+"for the direct URCA cooling process (97), are sensitive to nonquadratic contributions."
+"Neglecting charge-symmetry breaking effects, the energy per particle may be assumed to"
+"have an expansion in the asymmetry δ of the form E(n, δ)/A ≈ E(n, 0)/A+
+∑L
+l=1"
+"S2l(n) δ
+2l,"
+"where the standard quadratic approximation corresponds to S2l>2(n) = 0. Note, however,"
+"that already the FFG contributes to the nonquadratic terms, e.g., SFFG4 (n) ' 0.45 MeV×
+(n/n0)"
+"2/3
+. Parametric fits to microscopic ANM calculations have been used to investi-"
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 17
+0.00 0.05 0.10 0.15
+"Density n [fm
+−3"
+"p
+e
+ra"
+"tu
+re
+T"
+"[M
+e
+V"
+gas-liquid
+liquid
+n3lo414
+n3lo450
+n3lo500
+0.0 0.2 0.4 0.6 0.8 1.0
+Isospin Asymmetry δ
+"Tc(δ)
+TκT (δ)"
+gas-liquid
+n3lo414
+n3lo450
+Figure 5: (left) Liquid-gas coexistence boundary (binodal) of SNM from second-order
+MBPT calculations based on three sets of N3LO NN potentials and N2LO 3N interactions
+"with Λ = 414, 450, and 500 MeV (38, 55). The zero-temperature limit of the coexistence"
+boundary corresponds to the nuclear saturation point. The white box shows the empirical
+range for the critical point from Ref. (101). (right) Asymmetry dependence of the critical
+"temperature Tc(δ) and the temperature TκT (δ) where the region with negative κ
+−1
+T vanishes."
+"gate the nonquadratic contributions and found them to be relatively small (56, 68, 98, 69)."
+"Recently, however, Kaiser (99) has shown that MBPT at second order gives rise to addi-"
+"tional logarithmic contributions ∼ δ2l ln |δ| with l > 2. Furthermore, Wellenhofer et al. (69)
+found that the analogous expansion of the free energy exhibits convergent behavior for"
+"δ 6 1 only at high temperature. That is, the expansion’s radius of convergence decreases
+to zero in the limit T → 0 (with diverging S2l>2), as implied by the logarithmic terms at
+T = 0. Nevertheless, Wen & Holt (100) demonstrated that the coefficients of the normal"
+"and logarithmic terms at T = 0 can be extracted up to O(δ6) from high-precision MBPT
+calculations with chiral interactions. Such calculations allow for the improvement of ex-"
+isting parametrizations in δ at T = 0 and help motivate the investigation of alternative
+"schemes, such as an expansion in terms of the proton fraction x = np/n = (1 − δ)/2 for
+neutron-rich matter."
+3.3. Nuclear thermodynamics
+"While thermal effects are negligible in isolated neutron stars, they become important in"
+"neutron star mergers and core-collapse supernovae, where T . 100 MeV can be reached.
+Dense matter at such high temperatures not only consists of nucleons and leptons but also of"
+additional particles such as pions and hyperons. The consistent inclusion of these particles
+"in medium is work in progress (102, 103). In the nascent field of multimessenger astronomy,"
+"one of the immediate theoretical needs is consistent modeling of (i) cold neutron stars,"
+"(ii) hot hypermassive neutron stars formed in the aftermath of compact object mergers,"
+and (iii) core-collapse supernovae so that observations and simulations in any one of these
+astrophysical regimes can be propagated to constrain the others. Finite-temperature MBPT
+"with ChEFT interactions is a suitable framework for this purpose, and here we describe some"
+"of the results on nuclear thermodynamics in recent years (for reviews, see Refs. (104, 105))."
+"18 Drischler, Holt, and Wellenhofer"
+The salient thermodynamic feature of homogeneous nuclear matter at sub-saturation
+densities is the presence of a liquid-gas type instability toward the formation of clustered
+"structures. In neutron stars, this instability corresponds to the crust-core transition, in-"
+volving such intricate features as a variety of “pasta” shapes (106). The nuclear liquid-gas
+instability is also connected to the observed multifragmentation events in intermediate-
+"energy heavy-ion collisions. In the idealized case of (infinite) nuclear matter, there is a"
+liquid-gas phase transition of van-der-Waals type. Nuclear matter calculations at finite
+temperature with chiral interactions have provided predictions for the properties of this
+"phase transition, in particular the location of the critical point. Figure 5 (left) shows the"
+second-order MBPT results for the boundary of the liquid-gas coexistence region (so-called
+binodal) of SNM obtained in Ref. (38). [The results for the binodal of SNM recently ob-
+tained with the SCGF method (45) and lattice EFT (41) are similar to those in Fig. 5.]
+"The predicted critical point, especially the associated temperature Tc ≈ 17 − 19 MeV, is
+consistent with estimates (e.g., Tc ≈ 15−20 MeV (107)) extracted from multifragmentation,
+nuclear fission, and compound nuclear decay experiments (107, 101)."
+In the interior of the binodal a region where the homogeneous system is unstable with
+respect to infinitesimal density fluctuations can be found. The boundary of this region is
+called spinodal. Between the binodal and spinodal the uniform system is metastable. [The
+"two boundaries coincide at the critical point.] For SNM, the unstable region is identified by"
+"a negative inverse isothermal compressibility, κ−1T = n(∂P/∂n) < 0. An equivalent stability"
+"criterion is ∂µ/∂n > 0, corresponding to a strictly convex free energy density F(T, n) as a
+function of n. If charge-symmetry breaking effects are neglected, SNM can be treated as"
+"a pure substance with one particle species (nucleons), whereas ANM is a binary mixture"
+with two thermodynamically distinct particles (neutrons and protons). This implies that
+"the stability criteria are different in the two cases, and for ANM the region with κ−1T < 0 is"
+a subregion of the spinodal region. There are various equivalent stability criteria for binary
+"mixtures (108). A useful criterion is that outside the spinodal the free energy F(T, nn, np)
+is a strictly convex function of nn and np (see Ref. (55) for details). The MBPT results"
+for the asymmetry dependence of the critical temperature Tc(δ) from Ref. (55) are shown
+"in Fig. 5 (right). For comparison, we also show the trajectory of the temperature TκT (δ)"
+where the subregion with negative κ−1T vanishes. The trajectory of Tc(δ) reaches its T = 0
+"endpoint at a small proton fraction x; i.e., while PNM is stable at all densities, already"
+"small x lead to a region where the system undergoes a phase separation (55, 109)."
+A useful characteristic for the temperature dependence of the nuclear EOS is the ther-
+"mal index Γth(T, n, δ) = 1 + Pth(T, n, δ)/Eth(T, n, δ), where Pth is the thermal part of the
+pressure, and Eth is the thermal energy density. For a free gas of nucleons with effective
+masses m∗n,p(n, δ) one obtains for Γth the following temperature-independent expression"
+"Γ
+?
+th(n, δ) ="
+"3
+−
+∑
+t=n,p"
+"nt(n, δ)"
+"m∗t (n, δ)"
+"∂m∗t (n, δ)"
+"∂n
+. (8)"
+"[To be precise, for δ /∈ {0, 1} the above expression is valid only in the classical limit, but it
+provides a good approximation to Γ?th(n, x) for intermediate values of δ as Ref. (67) showed.]"
+"Recently, Refs. (25, 110) showed that Γ?th(n, δ) reproduces the exact Γth with high accuracy."
+This implies that the temperature-dependence of the EOS can be characterized in terms of
+"9The thermal index of a free Fermi gas is Γth,free = 5/3."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 19
+"a temperature-independent effective mass (see Ref. (67) for a recent implementation), which"
+"is in particular useful for monitoring thermal effects in astrophysical applications (111, 112)."
+4. Applications to neutron star physics
+In this Section our goal is to emphasize the prominent role of nuclear theory in modeling
+"neutron stars, core-collapse supernovae, and neutron star mergers. We begin by placing"
+high-energy nuclear astrophysics in the more general context of the QCD phase diagram
+and discuss under what ambient conditions ChEFT can serve as a tool to constrain the
+properties of hot and dense matter. Specific applications include the neutron-star mass-
+"radius relation, moment of inertia, and tidal deformability, as well as the nuclear EOS and"
+neutrino opacity for astrophysical simulations.
+4.1. Scales in hot and dense stellar matter
+"The extreme astrophysical environments found in core-collapse supernovae, neutron star"
+"interiors, and neutron-star mergers span baryon number densities nB ∼ 10−7 − 101 n0,
+temperatures T ∼ 0 − 100 MeV, and isospin asymmetries δ ∼ 0 − 1 (corresponding to
+electron fractions Ye ∼ 0 − 0.5) (113). In Sections 2 and 3 we have shown that ChEFT
+provides a suitable framework to constrain the EOS, transport, and response properties of"
+hadronic matter when the physical energy scale is well below the chiral symmetry breaking
+"scale of Λχ ∼ 1 GeV. In practice, ChEFT descriptions of nuclear matter based on high-
+precision NN and 3N forces begin to break down at densities n ≈ 2−3n0 and temperatures
+T . 30 MeV. Therefore, additional modeling is needed at high densities and temperatures to
+cover all regions of astrophysical interest. For this purpose, high-energy heavy-ion collisions"
+"at RHIC, LHC, and especially FAIR aim to probe states of matter similar to those that"
+"exist naturally in neutron stars, but reaching sufficiently large proton-neutron asymmetries"
+remains a significant challenge that may be addressed with next-generation radioactive
+"ion beam facilities, such as FRIB. The interplay of microscopic ChEFT, whose convergence"
+"pattern is not especially sensitive to the isospin asymmetry, together with upcoming nuclear"
+"experiments that create and study hot, dense, and neutron-rich matter, will provide a direct"
+line of inquiry probing neutron-star physics from low to high densities.
+"From the observational side, measurements of neutron star masses, radii, tidal deforma-"
+"bilities, and moments of inertia are expected to place constraints on the pressure of beta-"
+"equilibrium matter at n & 2n0 (114, 83, 115). In Fig. 6, we present a qualitative overview
+of the QCD phase diagram and highlight regions probed by nuclear experiments (RHIC,"
+"LHC, FAIR, and FRIB), theory (lattice QCD and ChEFT), and astrophysical simulations"
+"of neutron stars, supernovae, and neutron star mergers. We see that ChEFT intersects"
+"strongly with the region of FRIB experiments and nuclear astrophysics, providing a bridge"
+between new discoveries in the laboratory and their implications for neutron stars. The
+"next decade is expected to witness a strong interplay among all of these different fields,"
+with nuclear theory predictions getting confronted with stringent empirical tests.
+"RHIC: Relativistic
+Heavy Ion Collider"
+"LHC: Large Hadron
+Collider"
+"FAIR: Facility for
+Antiproton and Ion"
+Research
+"FRIB: Facility for
+Rare Isotope Beams"
+4.2. Neutron star structure
+The mass-radius relation of non-rotating neutron stars is determined from the EOS by
+"the general relativistic equations for hydrostatic equilibrium, the Tolmann-Oppenheimer-"
+"20 Drischler, Holt, and Wellenhofer"
+Figure 6: Schematic view of the QCD phase diagram. We highlight regions probed by ex-
+"periments (RHIC, LHC, FAIR, and FRIB), regions of validity for lattice QCD and ChEFT,"
+"and environments reached in neutron stars, supernovae, and neutron star mergers."
+Volkoff (TOV) equations:
+"dr
+= −G(M(r) + 4πr"
+3p)(ε+ p)
+"r(r − 2GM(r)) ,
+dM"
+"dr
+= 4πr"
+"2
+ε, (9)"
+"where r is the radial distance from the center of the star, M(r) is the mass enclosed within"
+"r, ε is the energy density, and p is the pressure. Analysis of spectral data from neutron stars"
+"in quiescent low-mass x-ray binaries and x-ray bursters (116, 117) have resulted in radius"
+"measurementsR1.5 = 10−13 km for typical 1.5 M� neutron stars. More recently, the NICER
+x-ray telescope has observed hot spot emissions from the accretion-powered x-ray pulsar"
+PSR J0030+045. Pulse profile modeling of the x-ray spectrum from two independent groups
+have yielded consistent results for the neutron star’s mass M = 1.44+0.15−0.14 M� (118) and M =
+"1.34+0.15−0.16 M� (119) and radius R = 13.02
++1.24
+−1.06 km (118) and R = 12.71"
+"+1.14
+−1.19 km (119) at the"
+"68% credibility level. Future large area x-ray timing instruments, such as STROBE-X and"
+"eXTP, have the potential to reduce uncertainties in the neutron-star mass-radius relation"
+"to ∼ 2% at a given value of the mass. This would significantly constrain the neutron-rich
+matter EOS at n ≈ 2n0 and when combined with mass and radius measurements of the
+heaviest neutron stars could give hints about the composition of the inner core (120)."
+"TOV: Tolmann-
+Oppenheimer-"
+Volkoff
+"NICER: Neutron star
+Interior Composition
+ExploreR"
+"STROBE-X:
+Spectroscopic"
+"Time-Resolving
+Observatory for"
+"Broadband Energy
+X-rays"
+"eXTP: enhanced
+X-ray Timing and"
+Polarimetry
+In recent years numerous works have studied constraints on the neutron star EOS from
+ChEFT.10 In Ref. (92) the EOS of neutron-rich matter was calculated up to saturation
+"10In addition to a high-density extrapolation, a uniform-matter EOS from ChEFT needs to be
+supplemented with a neutron-star crust model, e.g., the BPS crust model (121)."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 21
+30 40 50 60 70
+"Esym(2n0) (MeV)
+9"
+"R
+1
+.4"
+"10−3
+30 40 50 60 70"
+"1.0
+PDF"
+R = 12.38 km
+Figure 7: Correlations between the radius of a 1.4 M� neutron star and the isospin asym-
+metry energy Esym at twice saturation density n = 2n0. The inset shows the probability
+distribution function (PDF) of Esym(2n0) for the specific value R1.4 = 12.38 km. Results
+obtained from the Bayesian modeling of the nuclear EOS in Ref. (83).
+"density with MBPT using chiral NN and 3N interactions. To extrapolate to higher densities,"
+a series of piecewise polytropes was used to parameterize the EOS. It was found that ChEFT
+generically gives rise to soft EOSs that lead to 1.4 M� neutron stars with radii in the range
+"R1.4 = 10 − 14 km. Subsequent studies (e.g., Refs. (122, 123, 124, 67)) have employed a
+wider range of chiral forces, increased the assumed range of validity for ChEFT calculations"
+"to 2n0, and explored other high-density EOSs, including smooth extrapolations and speed"
+of sound parameterizations. The choice of transition density at which ChEFT predictions
+are replaced by model-dependent high-density parameterizations has a particularly large
+"influence on neutron-star radius constraints. For instance, when the transition density"
+"was raised to nt = 2n0, Ref. (125) obtained R1.4 = 9.4 − 12.3 km while Ref. (124) found
+R1.4 = 10.3− 12.9 km, both calculations eliminating the stiffest EOSs that would give rise
+to R1.4 > 13 km. To demonstrate how a precise neutron-star mass and radius measurement"
+"can constrain the EOS of beta-equilibrium matter at n = 2n0, in Fig. 7 we show the"
+correlated probability distribution (83) for the radius of a 1.4 M� neutron star and the
+nuclear symmetry energy at twice saturation density Esym(2n0). In the inset we show
+the conditional probability distribution for Esym(2n0) assuming a precise measurement of
+"R1.4 = 12.38 km. For the specific EOS modeling used in Ref. (83), such a precise radius"
+constraint determines Esym(2n0) with an uncertainty of approximately 10%.
+"In addition to radius measurements, there has long been the possibility (126, 127) of"
+obtaining a neutron-star moment of inertia measurement based on long-term radio timing
+"of PSR J0737-3039, a binary pulsar system in which the periastron advance receives a small"
+correction from relativistic spin-orbit coupling. A recent analysis (128) has shown that
+by 2030 a moment of inertia measurement of PSR J0737-3039A to 11% precision at the
+68% confidence level will be achievable. The moment of inertia for a uniformly rotating
+neutron star of radius R and angular velocity Ω can be calculated in the slow-rotation
+"approximation, valid for most millisecond pulsars, by solving the TOV equations together"
+"22 Drischler, Holt, and Wellenhofer"
+"I =
+8π"
+"r
+4
+(ε+ p)e"
+(λ−ν)/2 ω̄
+"Ω
+dr , e"
+"(
+1− 2m"
+"dr
+= − 2"
+"dr
+, (10)"
+"where λ and ν are metric functions and ω̄ is the rotational drag. In Refs. (129, 130) the"
+"moment of inertia of PSR J0737-3039A, which has a very well measured mass of M ="
+"1.338 M�, was calculated from EOSs based on ChEFT. In Ref. (129) it was found that at"
+"the 95% credibility level, the moment of inertia of J0737-3039A lies in the range 0.98 ×
+1045 g cm2 < I < 1.48×1045 g cm2, while Ref. (130) found a consistent but somewhat larger
+range of 1.06 × 1045 g cm2 < I < 1.70 × 1045 g cm2. The moment of inertia is strongly
+correlated with the neutron star radius, and it has been shown (131) that measurements of"
+"the PSR J0737-3039A moment of inertia can constrain its radius to within ±1 km.
+In the past ten years, several neutron stars (132, 133, 134) with well measured masses"
+"of M & 2 M� have been observed. The maximum mass (M
+TOV
+max ) of a non-rotating neutron"
+"star is a key quantity to probe the composition of the inner core, which must have a"
+sufficiently stiff EOS to support the enormous pressure due to the outer layers.11 To date
+"the strongest candidate for the heaviest measured neutron star is PSR J0740+6620, with"
+"a mass of M = 2.14+0.20−0.18 M� at the 95% credibility level (134). As mentioned previously,"
+ChEFT generically gives rise to relatively soft EOSs just above nuclear saturation density.
+The existence of a very massive neutron star with M = 2.14 M� would require a stiff EOS
+"at high densities, revealing a slight tension with ChEFT (136). However, even smooth"
+"extrapolations (83, 67) of EOSs from ChEFT can produce maximum neutron star masses"
+"in the range 2.0 M� . M
+TOV
+max . 2.4 M�, and therefore more precise radius measurements"
+(or the observation of heavier neutron stars) are needed to make strong inferences about
+the EOS in the ChEFT validity region n . 2n0.
+4.3. Neutron star mergers
+The advent of gravitational wave astronomy has opened a new window into the visible
+Universe. Current gravitational wave detectors (LIGO and Virgo) are sensitive to fre-
+"quencies 10 Hz < f < 10 kHz, which is the prime range for compact object mergers and"
+supernovae. Gravitational wave astronomy therefore has major implications for the field
+"of nuclear astrophysics (3). In particular, during the late-inspiral phase of binary neutron"
+"star coalescence, a pre-merger neutron star will deform with induced quadrupole moment"
+"Q under the large tidal gravitational field E : Qij = −λEij , where λ is the dimensionful tidal
+deformability parameter. Tidal deformations enhance gravitational radiation and increase"
+the rate of inspiral. Gravitational wave detectors are sensitive to such phase differences
+"and hence the dense matter EOS, but such corrections enter formally at fifth order (137)"
+in a post-Newtonian expansion of the waveform phase and are therefore difficult to extract.
+"The tidal deformability is an important observable in its own right, but this quantity is also"
+"strongly correlated with both the neutron star radius (138), since more compact stars expe-"
+"rience a smaller deformation under a given tidal field, and especially the moment of inertia"
+through the celebrated I-Love-Q relations (139). The post-merger gravitational wave signal
+from binary neutron star coalescence can also carry important information on the nuclear
+"11Beyond MTOVmax , additional stable branches (135), such as hybrid quark-hadron stars or pure
+quark stars, may appear before the ultimate collapse to a black hole."
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 23
+"8 10 12 14
+R1.4 (km)"
+"eV
+fm
+−"
+nt = 2n0
+"200 400 600
+Λ1.4"
+"0.8 1.0 1.2 1.4 1.6
+I1.338 (10"
+45g cm2)
+Figure 8: Joint probability distribution for the pressure of beta-equilibrium matter p(2n0)
+"with the radius of a 1.4 M� neutron star (left), the tidal deformability of a 1.4 M� neutron"
+"star (middle), and the moment of inertia of PSR J0737-3039A with a mass of 1.338 M�
+(right). Results obtained from the Bayesian modeling of the nuclear EOS in Ref. (83)."
+EOS. It has been shown (140) that the peak oscillation frequency fpeak of a neutron-star
+"merger remnant is strongly correlated with neutron star radii. Moreover, a strong first-order"
+"phase transition can show up as a deviation in the empirical correlation band between fpeak
+and Λ (141)."
+"LIGO: Laser
+Interferometer
+Gravitational-Wave"
+Observatory
+"The first observation (142), GW170817, of a neutron star merger through its gravita-"
+tional wave emissions was accompanied by a short gamma-ray burst and optical counter-
+part (143). The combined multi-messenger observations of this single event have resulted
+in a wealth of new insights about the origin of the elements and the properties of neutron
+"stars. Analysis of the gravitational waveform resulted in a prediction (144) Λ1.4 = 190
++390
+−120"
+for the dimensionless tidal deformability Λ = λ/M5 of a 1.4 M� neutron star. Theoretical
+"predictions from ChEFT (83, 145) predating the analysis in Ref. (144) yielded similarly"
+small tidal deformabilities 140 < Λ < 520 (83). Analogous constraints on the binary tidal
+deformability parameter
+"Λ̃ =
+16"
+"(m1 + 12m2)m
+4
+1Λ1 + (m2 + 12m1)m"
+"(m1 +m2)5
+(11)"
+from gravitational-wave data [Λ̃ = 300+420−230 (146)] and ChEFT [80 < Λ̃ < 580 (145)] were
+similarly consistent. From the strong correlation between neutron star radii and tidal de-
+"formabilities, the LIGO/Virgo Scientific Collaboration reported (144) an inferred constraint"
+of R = 11.9+1.4−1.4 km for both of the neutron stars involved in the merger under the assump-
+tion that the shared EOS could support 2 M� neutron stars. Only the combined mass
+"Mtot = 2.74
++0.04
+−0.01 M� of the binary was very well measured from the gravitational wave-"
+"form, but neither of the individual component masses 1.17 M� < M1,2 < 1.60 M� were"
+"expected (142) to deviate more than 20% from the canonical value of M ' 1.4 M�, assum-
+ing low neutron star spins. In summary, GW170817 data were found to strongly favor the"
+"soft EOSs predicted from ChEFT, though many other models (147) with generically stiffer"
+EOSs were consistent with the upper bounds on Λ and R1.4 from GW170817.
+Current gravitational wave interferometers do not have large signal-to-noise ratios at the
+high frequencies expected during the post-merger ringdown phase and therefore GW170817
+"24 Drischler, Holt, and Wellenhofer"
+"provided no clues about the fate of the merger remnant. Nevertheless, an analysis of the"
+spectral and temporal properties of the kilonova (148) optical counterpart to GW170817
+"have been used (149, 150, 151, 152, 153) to infer the lifetime of the merger remnant."
+Depending on the component neutron star masses prior to merger (primarily the total
+"mass Mtot) as well as the maximum mass for a nonrotating neutron star M
+TOV
+max , the merger"
+"remnant can (i) undergo immediate collapse to a black hole, (ii) exist as a short-lived hy-"
+"permassive neutron star supported against collapse by differential rotation, (iii) persist as"
+"a longer-lived supramassive neutron star supported against collapse by rigid-body rotation,"
+or (iv) form a stable massive neutron star. While there is still some uncertainty about what
+"ranges of Mtot will lead to each of the above four scenarios, it has been suggested (150)"
+"that prompt collapse will occur when Mtot & 1.3− 1.6MTOVmax , hypermassive neutron stars
+will be created when 1.2MTOVmax .Mtot . 1.3− 1.6MTOVmax , and supramassive neutron stars
+will result when Mtot . 1.2M"
+"TOV
+max . Each merger outcome is expected to have a qualita-"
+"tively different optical counterpart and total mass ejection, since longer remnant lifetimes"
+generically give rise to more and faster moving disk wind ejecta.
+Observations of the GW170817 kilonova suggest that the most likely outcome of the
+"neutron star merger was the formation of a hypermassive neutron star, which would imply a"
+"value of MTOVmax = 2.15−2.35 M� (151, 150, 153). Eliminating the possibility of prompt black
+hole formation in GW170817 also rules out compact neutron stars with small radii and tidal"
+"deformabilities. In Ref. (149) such arguments were used to infer that the radius of a 1.6 M�
+neutron star must be larger than R1.6 & 10.7 km, while in Ref. (152) it was found that the
+binary tidal deformability parameter for the GW170817 event must satisfy Λ̃ & 400. Both of
+these inferred constraints are compatible with predictions (83, 145, 124, 123) from ChEFT."
+"However, the constraint on the binary tidal deformability Λ̃ > 400 can rule out a significant"
+"set of soft EOSs (154), roughly half of those allowed in the analysis of Ref. (83). Combined"
+gravitational wave and electromagnetic observations of binary neutron star mergers together
+with more precise radius measurements therefore have the possibility to strongly constrain
+the dense matter EOS and related neutron star properties in the regime of validity of
+"ChEFT (154, 155, 156). As a demonstration, in Fig. 8 we show the joint probability"
+distributions (83) for the pressure of nuclear matter at n = 2n0 with (i) the radius of a
+"1.4 M� neutron star, (ii) the tidal deformability of a 1.4 M� neutron star, and (iii) the"
+moment of inertia of PSR J0737-3039A with a mass of 1.338 M�.
+4.4. Core-collapse supernovae
+Neutron stars are born following the gravitational collapse and ensuing supernova explosion
+"of massive stars (M & 8 M�). The core bounce probes densities only slightly above normal
+nuclear saturation density (113) and leaves behind a hot (T ∼ 20− 50 MeV) nascent proto-
+neutron star. During the subsequent Kelvin-Helmholtz phase that lasts tens of seconds, the"
+"proto-neutron star emits neutrinos, cools to temperatures T < 5 MeV, de-leptonizes, and"
+contracts to reach supra-saturation densities in the innermost core. The success or failure of
+"the supernova itself (157), the thermal and chemical evolution during the Kelvin-Helmholtz"
+"phase (158), and the possibility of novel nucleosynthesis in the neutrino-driven wind (159)"
+depend on details of the nuclear EOS and weak reaction rates.
+"Investigating the qualitative impact of specific EOS properties, such as the incompress-"
+"ibility or the symmetry energy, on the fate of supernova explosions is often challenging due"
+"to “Mazurek’s Law”, a colloquial observation that feedback effects tend to wash out any"
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 25
+"fine tuning of parameters in core-collapse supernovae (160). Nevertheless, several recent"
+"systematic investigations (161, 111) of EOS parameters have supported the idea that a"
+"high density of states, linked to a large value of the in-medium nucleon effective mass M∗,"
+reduces thermal pressure and leads to enhanced contraction of the initial proto-neutron star.
+This results in the emission of higher-energy neutrinos that support the explosion through
+the neutrino reheating mechanism (157). Since microscopic calculations based on ChEFT
+"tend to predict larger values of the effective mass than many mean-field models (162, 110),"
+"these observations help motivate recent efforts (163, 67) to include thermal constraints from"
+ChEFT directly into supernova EOS tables.
+Neutrino reactions also affect the nucleosynthesis outcome in neutrino-driven wind out-
+flows and the late-time neutrino signal that will be measured with unprecedented de-
+tail during the next galactic supernova. Charged-current neutrino-absorption reactions
+"νe + n → p + e− and ν̄e + p → n + e+, which can be calculated from the imaginary
+part of vector and axial vector response functions, are especially sensitive (164, 165) to"
+"nuclear interactions and in particular the difference ∆U = Un − Up between proton and
+neutron mean fields. The isovector mean field is especially important in the neutrinosphere,"
+the region of warm and dense matter where neutrinos decouple from the exploding star.
+"Recently, the calculation (166, 162) of nuclear response functions that include mean-field"
+effects from ChEFT interactions have shown that terms beyond the Hartree-Fock approxi-
+"mation are needed for accurate modeling. In particular, resummed particle-particle ladder"
+"diagrams were shown (166) to produce larger isovector mean fields due to resonant, non-"
+"perturbative effects in the NN interaction. Moreover, for neutral-current neutrino reactions,"
+"such as neutrino pair bremsstrahlung and absorption, resonant NN interactions were shown"
+to significantly enhance reaction rates at low densities compared to the traditional one-pion
+exchange approximation (167).
+5. Summary and outlook
+"In this article, we have reviewed recent progress in ChEFT calculations of nuclear matter"
+properties (with quantified uncertainties) and their implications in the field of nuclear as-
+"trophysics. Combined with observational and experimental constraints, these microscopic"
+"calculations provide the basis for improved modeling of supernovae, neutron stars, and neu-"
+"tron star mergers. In particular, we have highlighted MBPT as an efficient framework for"
+"studying the nuclear EOS and transport properties across a wide range of densities, isospin"
+"asymmetries, and temperatures. We have also shown how advances in high-performance"
+computing have enabled the implementation of two- and multi-nucleon forces in MBPT
+"up to high orders in the chiral and many-body expansions. Finally, we have described"
+new tools for quantifying theoretical uncertainties (especially EFT truncation errors) to
+confront microscopic calculations of the nuclear EOS with empirical constraints. Such sys-
+tematic studies are particularly important in view of EOS constraints anticipated in the
+"new era of multimessenger astronomy; e.g., from gravitational wave detection, mass-radius"
+"measurements of neutron stars, and experiments with neutron-rich nuclei."
+In the following we briefly summarize several open research directions at the interface
+of nuclear EFT and high-energy nuclear astrophysics. (i) EFT truncation errors and their
+correlations in density and across observables need to be studied with different many-body
+frameworks and nuclear interactions at arbitrary isospin asymmetry and finite temperature.
+"(ii) Together with EFT truncation errors, the uncertainties in the LECs parametrizing the"
+"26 Drischler, Holt, and Wellenhofer"
+interactions need to be quantified and propagated to nuclear matter properties using a
+comprehensive Bayesian statistical analysis. (iii) The full uncertainty quantification of the
+nuclear EOS will be aided by the development of improved order-by-order chiral NN and
+3N potentials and the study of different regularization schemes as well as delta-full chiral
+interactions. (iv) Many-body calculations of nuclear matter properties beyond the nuclear
+"EOS (e.g., linear response and transport coefficients) with chiral NN and 3N interactions are"
+required for more accurate numerical simulations of supernovae and neutron star mergers.
+(v) Future neutron star observations will provide stringent tests of nuclear forces and nuclear
+many-body methods in a regime that is presently largely unconstrained. The interplay
+"between observation, experiment, and theory in the next decade can be expected to result"
+in many further advances in our understanding of strongly interacting matter.
+DISCLOSURE STATEMENT
+"The authors are not aware of any affiliations, memberships, funding, or financial holdings"
+that might be perceived as affecting the objectivity of this review.
+ACKNOWLEDGMENTS
+We are very grateful to our collaborators and colleagues for fruitful discussions over the years
+that contributed in one way or another to the completion of this review article. We specifi-
+cally thank Evgeny Epelbaum for providing us with the diagrams in Figure 1 and Yeunhwan
+Lim for sharing the results of Figures 7 and 8. C.D. acknowledges support by the Alexander
+von Humboldt Foundation through a Feodor-Lynen Fellowship and thanks the N3AS and
+BUQEYE Collaborations for creating warm research environments. This material is based
+"upon work supported by the U.S. Department of Energy, Office of Science, Office of Nuclear"
+"Physics, under the FRIB Theory Alliance award DE-SC0013617. The work of J.W.H. was"
+supported by the National Science Foundation under Grant No. PHY1652199 and by the
+U.S. Department of Energy National Nuclear Security Administration under Grant No.
+"DE-NA0003841. C.W. has been supported by the Deutsche Forschungsgemeinschaft (DFG,"
+German Research Foundation) – Project-ID 279384907 – SFB 1245.
+LITERATURE CITED
+"1. Özel F, Freire P. Annu. Rev. Astron. Astrophys. 54:401 (2016)"
+"2. Watts AL, et al. Rev. Mod. Phys. 88:021001 (2016)"
+3. Baiotti L. Prog. Part. Nucl. Phys. 109:103714 (2019)
+4. Hergert H. Front. in Phys. 8:379 (2020)
+"5. Stroberg SR, Bogner SK, Hergert H, Holt JD. Ann. Rev. Nucl. Part. Sci. 69:307 (2019)"
+"6. Lynn J, Tews I, Gandolfi S, Lovato A. Ann. Rev. Nucl. Part. Sci. 69:279 (2019)"
+"7. Hebeler K, Holt J, Menendez J, Schwenk A. Ann. Rev. Nucl. Part. Sci. 65:457 (2015)"
+"8. Epelbaum E, Hammer HW, Meißner UG. Rev. Mod. Phys. 81:1773 (2009)"
+"9. Machleidt R, Entem DR. Phys. Rep. 503:1 (2011)"
+"10. Hammer HW, König S, van Kolck U. Rev. Mod. Phys. 92:025004 (2020)"
+"11. Hammer HW, Nogga A, Schwenk A. Rev. Mod. Phys. 85:197 (2013)"
+"12. Epelbaum E, Krebs H, Reinert P. Front. in Phys. 8:98 (2020)"
+"13. Furnstahl R, Klco N, Phillips D, Wesolowski S. Phys. Rev. C 92:024005 (2015)"
+14. Weinberg S. Phys. Lett. B 251:288 (1990)
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 27
+15. Weinberg S. Nucl. Phys. B 363:3 (1991)
+16. Weinberg S. Phys. Lett. B 295:114 (1992)
+"17. Reinert P, Krebs H, Epelbaum E. Eur. Phys. J. A 54:86 (2018)"
+"18. Jiang W, et al. Phys. Rev. C 102:054301 (2020)"
+"19. Piarulli M, Tews I. Front. in Phys. 7:245 (2020)"
+"20. Hoferichter M, Ruiz de Elvira J, Kubis B, Meißner UG. Phys. Rev. Lett. 115:192301 (2015)"
+"21. Hoppe J, et al. Phys. Rev. C 96:054002 (2017)"
+"22. Bogner S, Kuo T, Coraggio L. Nucl. Phys. A 684:432 (2001)"
+"23. Bogner S, Furnstahl R, Schwenk A. Prog. Part. Nucl. Phys. 65:94 (2010)"
+"24. Hebeler K, Furnstahl RJ. Phys. Rev. C 87:031302 (2013)"
+"25. Keller J, Wellenhofer C, Hebeler K, Schwenk A. Phys. Rev. C 103:055806 (2021)"
+"26. Hebeler K, et al. Phys. Rev. C 83:031301 (2011)"
+"27. Drischler C, Hebeler K, Schwenk A. Phys. Rev. Lett. 122:042501 (2019)"
+"28. Simonis J, et al. Phys. Rev. C 96:014303 (2017)"
+"29. Stroberg S, Holt J, Schwenk A, Simonis J. Phys. Rev. Lett. 126:022501 (2021)"
+"30. Hüther T, et al. Phys. Lett. B 808:135651 (2020)"
+31. Weinberg S. Phys. Rev. 131:440 (1963)
+"32. Szabo A, Ostlund NS. New York: Dover Publications (1982), Modern Quantum Chemistry:"
+Introduction to Advanced Electronic Structure Theory
+"33. Mariño M, Reis T. J. Stat. Mech. 2019:123102 (2019)"
+"34. Arthuis P, et al. Comp. Phys. Comm. 240:202 (2019)"
+35. Day BD. Rev. Mod. Phys. 39:719 (1967)
+36. Wellenhofer C. Phys. Rev. C 99:065811 (2019)
+"37. Kohn W, Luttinger JM. Phys. Rev. 118:41 (1960)"
+"38. Wellenhofer C, Holt JW, Kaiser N, Weise W. Phys. Rev. C 89:064009 (2014)"
+"39. Holt JW, Kaiser N. Phys. Rev. C 95:034326 (2017)"
+"40. Hagen G, Papenbrock T, Hjorth-Jensen M, Dean DJ. Rep. Prog. Phys 77:096302 (2014)"
+"41. Lu BN, et al. Phys. Rev. Lett. 125:192502 (2020)"
+"42. Dickhoff WH, Barbieri C. Prog. Part. Nucl. Phys. 52:377 (2004)"
+43. Rios A. Front. in Phys. 8:387 (2020)
+"44. Carbone A, Rios A, Polls A. Phys. Rev. C 90:054322 (2014)"
+"45. Carbone A, Polls A, Rios A. Phys. Rev. C 98:025804 (2018)"
+"46. Drischler C, Carbone A, Hebeler K, Schwenk A. Phys. Rev. C 94:054307 (2016)"
+"47. Tews I, Gandolfi S, Gezerlis A, Schwenk A. Phys. Rev. C 93:024305 (2016)"
+"48. Lynn J, et al. Phys. Rev. Lett. 116:062501 (2016)"
+"49. Lonardoni D, Tews I, Gandolfi S, Carlson J. Phys. Rev. Res. 2:022033 (2020)"
+"50. Hebeler K, et al. Phys. Rev. C 91:044001 (2015)"
+51. Hebeler K. Phys. Rept. 890:1 (2021)
+"52. Holt JW, Kawaguchi M, Kaiser N. Front. Phys. 8:100 (2020)"
+"53. Holt JW, Kaiser N, Weise W. Phys. Rev. C 79:054331 (2009)"
+"54. Hebeler K, Schwenk A. Phys. Rev. C 82:014314 (2010)"
+"55. Wellenhofer C, Holt JW, Kaiser N. Phys. Rev. C 92:015801 (2015)"
+"56. Drischler C, Hebeler K, Schwenk A. Phys. Rev. C 93:054314 (2016)"
+57. Kaiser N arXiv:2010.02739 (2020)
+"58. Hagen G, et al. Phys. Rev. C 89:014319 (2014)"
+59. Kaiser N. Eur. Phys. J. A 48:58 (2012)
+"60. Dyhdalo A, Furnstahl R, Hebeler K, Tews I. Phys. Rev. C 94:034001 (2016)"
+"61. Dyhdalo A, Bogner S, Furnstahl R. Phys. Rev. C 96:054005 (2017)"
+"62. Carlsson BD, et al. Phys. Rev. X 6:011019 (2016)"
+"63. Sammarruca F, et al. Phys. Rev. C 91:054311 (2015)"
+"64. Drischler C, Melendez J, Furnstahl R, Phillips D. Phys. Rev. C 102:054315 (2020)"
+"28 Drischler, Holt, and Wellenhofer"
+"65. Rentmeester MCM, Timmermans RGE, de Swart JJ. Phys. Rev. C 67:044001 (2003)"
+"66. Coraggio L, et al. Phys. Rev. C 87:014322 (2013)"
+"67. Huth S, Wellenhofer C, Schwenk A. Phys. Rev. C 103:025803 (2021)"
+"68. Drischler C, Somà V, Schwenk A. Phys. Rev. C 89:025806 (2014)"
+"69. Wellenhofer C, Holt JW, Kaiser N. Phys. Rev. C 93:055802 (2016)"
+"70. Roca-Maza X, Paar N. Prog. Part. Nucl. Phys. 101:96 (2018)"
+"71. Drischler C, Krüger T, Hebeler K, Schwenk A. Phys. Rev. C 95:024302 (2017)"
+"72. Furnstahl R, Phillips D, Wesolowski S. J. Phys. G 42:034028 (2015)"
+"73. Melendez J, et al. Phys. Rev. C 100:044001 (2019)"
+"74. Epelbaum E, Krebs H, Meißner U. Eur. Phys. J. A 51:53 (2015)"
+"75. Drischler C, Furnstahl R, Melendez J, Phillips D. Phys. Rev. Lett. 125:202702 (2020)"
+"76. Melendez J, Wesolowski S, Furnstahl R. Phys. Rev. C 96:024003 (2017)"
+"77. Leonhardt M, et al. Phys. Rev. Lett. 125:142502 (2020)"
+"78. Tews I, Krüger T, Hebeler K, Schwenk A. Phys. Rev. Lett. 110:032504 (2013)"
+"79. Hoppe J, et al. Phys. Rev. C 100:024318 (2019)"
+"80. Akmal A, Pandharipande VR, Ravenhall DG. Phys. Rev. C 58:1804 (1998)"
+"81. Baldo M, Bombaci I, Burgio GF. Astron. Astrophys. 328:274 (1997)"
+"82. Müther H, Prakash M, Ainsworth TL. Phys. Lett. B 199:469 (1987)"
+"83. Lim Y, Holt JW. Phys. Rev. Lett. 121:062701 (2018)"
+"84. Tews I, Lattimer JM, Ohnishi A, Kolomeitsev EE. Astrophys. J. 848:105 (2017)"
+"85. Tsang MB, et al. Phys. Rev. Lett. 102:122701 (2009)"
+"86. Chen LW, Ko CM, Li BA, Xu J. Phys. Rev. C 82:024321 (2010)"
+"87. Trippa L, Colo G, Vigezzi E. Phys. Rev. C 77:061304(R) (2008)"
+"88. Tamii A, et al. Phys. Rev. Lett. 107:062502 (2011)"
+"89. Roca-Maza X, et al. Phys. Rev. C 88:024316 (2013)"
+"90. Kortelainen M. Lesinski T, et al. Phys. Rev. C 82:024313 (2010)"
+"91. Danielewicz P, Singh P, Lee J. Nucl. Phys. A 958:147 (2017)"
+"92. Hebeler K, Lattimer J, Pethick C, Schwenk A. Phys. Rev. Lett. 105:161102 (2010)"
+"93. Gandolfi S, Carlson J, Reddy S. Phys. Rev. C 85:032801 (2012)"
+"94. Horowitz C, et al. J. Phys. G 41:093001 (2014)"
+"95. Essick R, et al. Phys. Rev. C 102:055803 (2020)"
+"96. Cai BJ, Chen LW. Phys. Rev. C 85:024302 (2012)"
+97. Steiner AW. Phys. Rev. C 74:045808 (2006)
+"98. Somasundaram R, Drischler C, Tews I, Margueron J. Phys. Rev. C 103:045803 (2021)"
+99. Kaiser N. Phys. Rev. C 91:065201 (2015)
+"100. Wen P, Holt JW arXiv:2012.02163 (2020)"
+"101. Elliott JB, Lake PT, Moretto LG, Phair L. Phys. Rev. C 87:054622 (2013)"
+"102. Fore B, Reddy S. Phys. Rev. C 101:035809 (2020)"
+"103. Petschauer S, et al. Front. in Phys. 8:12 (2020)"
+"104. Holt JW, Kaiser N, Weise W. Prog. Part. Nucl. Phys. 73:35 (2013)"
+"105. Holt JW, Rho M, Weise W. Phys. Rept. 621:2 (2016)"
+"106. Schneider AS, Horowitz CJ, Hughto J, Berry DK. Phys. Rev. C 88:065807 (2013)"
+"107. Karnaukhov VA, et al. Phys. Atom. Nucl. 71:2067 (2008)"
+"108. Beegle BL, Modell M, Reid RC. Amer. Inst. Chem. Eng. J. 20:1200 (1974)"
+"109. Ducoin C, Chomaz P, Gulminelli F. Nucl. Phys. A 771:68 (2006)"
+"110. Carbone A, Schwenk A. Phys. Rev. C 100:025805 (2019)"
+"111. Yasin H, Schäfer S, Arcones A, Schwenk A. Phys. Rev. Lett. 124:092701 (2020)"
+"112. Bauswein A, Janka HT, Oechslin R. Phys. Rev. D 82:084043 (2010)"
+"113. Oertel M, Hempel M, Klähn T, Typel S. Rev. Mod. Phys. 89:015007 (2017)"
+"114. Lattimer JM, Prakash M. Astrophys. J. 550:426 (2001)"
+"115. Tsang C, et al. Phys. Lett. B 796:1 (2019)"
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 29
+"116. Özel F, et al. Astrophys. J. 820:28 (2016)"
+"117. Nättilä J, et al. Astron. Astrophys. 608:A31 (2017)"
+"118. Miller MC, et al. Astrophys. J. 887:L24 (2019)"
+"119. Riley TE, et al. Astrophys. J. 887:L21 (2019)"
+"120. Annala E, et al. Nature Phys. 16:907 (2020)"
+"121. Baym G, Pethick C, Sutherland P. Astrophys. J. 170:299 (1971)"
+"122. Greif S, et al. Mon. Not. Roy. Astron. Soc. 485:5363 (2019)"
+"123. Tews I, Margueron J, Reddy S. Eur. Phys. J. A 55:97 (2019)"
+"124. Lim Y, Holt J. Eur. Phys. J. A 55:209 (2019)"
+"125. Tews I, Carlson J, Gandolfi S, Reddy S. Astrophys. J. 860:149 (2018)"
+"126. Lyne AG, et al. Science 303:1153 (2004)"
+"127. Lattimer JM, Schutz BF. Astrophys. J. 629:979 (2005)"
+"128. Hu H, et al. Mon. Not. Roy. Astr. Soc. 497:3118 (2020)"
+"129. Lim Y, Holt JW, Stahulak RJ. Phys. Rev. C 100:035802 (2019)"
+"130. Greif S, et al. Astrophys. J. 901:155 (2020)"
+"131. Raithel CA, Özel F, Psaltis D. Phys. Rev. C 93:032801 (2016)"
+"132. Demorest PB, et al. Nature 467:1081 (2010)"
+"133. Antoniadis J, et al. Science 340:6131 (2013)"
+"134. Cromartie HT, et al. Nature Astronomy 4:72 (2019)"
+"135. Alford MG, Han S, Prakash M. Phys. Rev. D 88:083013 (2013)"
+"136. Drischler C, et al. Phys. Rev. C 103:045808 (2021)"
+"137. Flanagan EE, Hinderer T. Phys. Rev. D 77:021502 (2008)"
+"138. Annala E, Gorda T, Kurkela A, Vuorinen A. Phys. Rev. Lett. 120:172703 (2018)"
+"139. Yagi K, Yunes N. Phys. Rev. D 88:023009 (2013)"
+"140. Bauswein A, Janka HT, Hebeler K, Schwenk A. Phys. Rev. D 86:063001 (2012)"
+"141. Bauswein A, et al. Phys. Rev. Lett. 122:061102 (2019)"
+"142. Abbott BP, et al. Phys. Rev. Lett. 119:161101 (2017)"
+"143. Abbott BP, et al. Astrophys. J. Lett. 848:L12 (2017)"
+"144. Abbott BP, et al. Phys. Rev. Lett. 121:161101 (2018)"
+"145. Tews I, Margueron J, Reddy S. Phys. Rev. C 98:045804 (2018)"
+"146. Abbott BP, et al. Phys. Rev. X 9:011001 (2019)"
+"147. Fattoyev FJ, Piekarewicz J, Horowitz CJ. Phys. Rev. Lett. 120:172702 (2018)"
+"148. Metzger BD, et al. Mon. Not. Roy. Astr. Soc. 406:2650 (2010)"
+"149. Bauswein A, Just O, Janka HT, Stergioulas N. Astrophys. J. Lett. 850:L34 (2017)"
+"150. Margalit B, Metzger BD. Astrophys. J. Lett. 850:L19 (2017)"
+"151. Shibata M, et al. Phys. Rev. D 96:123012 (2017)"
+"152. Radice D, Perego A, Zappa F, Bernuzzi S. Astrophys. J. Lett. 852:L29 (2018)"
+"153. Rezzolla L, Most ER, Weih LR. Astrophys. J. Lett. 852:L25 (2018)"
+"154. Capano CD, et al. Nature Astron. 4:625 (2020)"
+"155. Lim Y, Bhattacharya A, Holt JW, Pati D arXiv:2007.06526 (2020)"
+"156. Raaijmakers G, et al. Astrophys. J. Lett. 893:L21 (2020)"
+"157. Janka HT, et al. Phys. Rept. 442:38 (2007)"
+"158. Pons JA, et al. Astrophys. J. 513:780 (1999)"
+"159. Roberts LF, Woosley SE, Hoffman RD. Astrophys. J. 722:954 (2010)"
+160. Müller B. Publ. Astron. Soc. Aust. 33:e048 (2016)
+"161. Schneider AS, Roberts LF, Ott CD, O’Connor E. Phys. Rev. C 100:055802 (2019)"
+"162. Rrapaj E, Roggero A, Holt JW. Phys. Rev. C 93:065801 (2016)"
+"163. Du X, Steiner AW, Holt JW. Phys. Rev. C 99:025803 (2019)"
+"164. Roberts LF, Reddy S, Shen G. Phys. Rev. C 86:065803 (2012)"
+"165. Mart́ınez-Pinedo G, Fischer T, Lohs A, Huther L. Phys. Rev. Lett. 109:251104 (2012)"
+"166. Rrapaj E, et al. Phys. Rev. C 91:035806 (2015)"
+"30 Drischler, Holt, and Wellenhofer"
+"167. Bartl A, Pethick C, Schwenk A. Phys. Rev. Lett. 113:081101 (2014)"
+www.annualreviews.org • Chiral EFT and the High-Density Nuclear EOS 31
+"
+	1 Introduction
+	2 From microscopic interactions to the nuclear equation of state
+	2.1 Chiral effective field theory for nuclear forces
+	2.2 Perturbative chiral nuclear interactions
+	2.3 Many-body perturbation theory at zero and finite temperature
+	2.4 Other many-body methods
+	2.5 Implementing three-body forces"
+"	3 Nuclear equation of state at zero and finite temperature
+	3.1 Confronting nuclear forces with empirical constraints
+	3.2 Nuclear symmetry energy and the isospin-asymmetry expansion
+	3.3 Nuclear thermodynamics"
+"	4 Applications to neutron star physics
+	4.1 Scales in hot and dense stellar matter
+	4.2 Neutron star structure
+	4.3 Neutron star mergers
+	4.4 Core-collapse supernovae"
+	5 Summary and outlook

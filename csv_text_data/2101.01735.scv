@@ -1,0 +1,924 @@
+0
+"Draft version January 25, 2021
+Typeset using LATEX twocolumn style in AASTeX63"
+GW170817 and GW190814: tension on the maximum mass
+"Antonios Nathanail,1 Elias R. Most,2, 3, 4 and Luciano Rezzolla1, 5, 6"
+"1Institut für Theoretische Physik, Max-von-Laue-Strasse 1, 60438 Frankfurt, Germany
+2Princeton Center for Theoretical Science, Princeton University, Princeton, NJ 08544, USA"
+"3Princeton Gravity Initiative, Princeton University, Princeton, NJ 08544, USA
+4School of Natural Sciences, Institute for Advanced Study, Princeton, NJ 08540, USA"
+"5Frankfurt Institute for Advanced Studies, Ruth-Moufang-Strasse 1, 60438 Frankfurt, Germany
+6School of Mathematics, Trinity College, Dublin 2, Ireland"
+"(Received January 25, 2021; Revised; Accepted)"
+"ABSTRACT
+The detection of the binary events GW170817 and GW190814 has provided invaluable constraints on the"
+"maximum mass of nonrotating configurations of neutron stars, 𝑀TOV . However, the large differences in the
+neutron-star masses measured in GW170817 and GW190814 has also lead to a significant tension between
+the predictions for such maximum masses, with GW170817 suggesting that 𝑀TOV . 2.3 𝑀�, and GW190814
+requiring 𝑀TOV & 2.5 𝑀� if the secondary was a (non- or slowly rotating) neutron star at merger. Using a genetic
+algorithm, we sample the multidimensional space of parameters spanned by gravitational-wave and astronomical
+observations associated with GW170817. Consistent with previous estimates, we find that all of the physical
+quantities are in agreement with the observations if the maximum mass is in the range 𝑀TOV = 2.210"
+"+0.116
+−0.123 𝑀�"
+"within a 2-𝜎 confidence level. By contrast, maximum masses with 𝑀TOV & 2.5 𝑀�, not only require efficiencies
+in the gravitational-wave emission that are well above the numerical-relativity estimates, but they also lead to
+a significant under-production of the ejected mass. Hence, the tension can be released by assuming that the
+secondary in GW190814 was a black hole at merger, although it could have been a rotating neutron star before."
+Keywords: equation of state — gravitational waves — methods: analytical — stars: neutron
+"1. INTRODUCTION
+The recent detection of the gravitational-wave (GW) event"
+"GW190814 has seen involved the merger of black hole (BH),
+with a mass of 22.2− 24.3 𝑀�, with a compact object having
+a much smaller mass of 2.50−2.67 𝑀� (The LIGO Scientific
+Collaboration et al. 2020). The unclear nature of the sec-
+ondary component has raised questions about the astrophys-
+ical evolutionary paths that would yield objects with these
+masses in a binary system. When assigning a NS nature to
+the secondary in GW190814, two scenarios are possible. In
+the first one, the secondary was a nonrotating or slowly ro-
+tating NS at merger, so that GW190814 should effectively be
+considered a BH-NS merger (see, e.g., Zevin et al. 2020; Sa-
+farzadeh et al. 2020; Kinugawa et al. 2020; Liu & Lai 2020;
+Lu et al. 2020; Ertl et al. 2020, for some possible formation
+scenarios). In this case, the maximum mass 𝑀TOV of nonrotat-
+ing NSs needs to reach values as large as & 2.5 𝑀� (Fattoyev
+et al. 2020; Sedrakian et al. 2020; Tan et al. 2020; Tsokaros
+et al. 2020; Godzieba et al. 2020; Biswas et al. 2020). In the
+second scenario, the need for a large maximum mass can be
+replaced by the presence of rapid rotation. In fact, it has been"
+"shown that uniformly rotating NS can support about 20%
+more mass than nonspinning ones (Breu & Rezzolla 2016;
+Shao et al. 2020). Note that in the case of NSs with a phase
+transition, universal relations are still present, but depend on
+the properties of the phase transition (Bozzola et al. 2019;
+Demircik et al. 2020)."
+"Based on these universal relations, Most et al. (2020b) and
+Zhang & Li (2020) have pointed out that a massive (rapidly)
+rotating NS with a mass > 2.5 𝑀� is perfectly consistent
+with a maximum mass 𝑀TOV ' 2.3 𝑀� inferred from the
+GW170817 event (see, e.g., Rezzolla et al. 2018; Shibata
+et al. 2019). Given the difficulty of sustaining rapid rotation
+over the very long timescales associated with the inspiral of
+the binary, the secondary must have collapsed at one point
+before merger, so that in this second scenario GW190814
+should effectively be considered a BH-BH merger."
+"While a priori both scenarios are plausible, shedding light
+on which of them is the most likely is important from several
+points of view. To this scope, we here exploit the rich vari-
+ety of GW and electromagnetic observables that have been
+obtained with GW170817 to explore the two scenarios com-"
+"http://orcid.org/0000-0002-0491-1210
+http://orcid.org/0000-0002-1330-7103"
+"
+2 Nathanail, Most and Rezzolla"
+"bining the constraints set from the GW and electromagnetic
+signal from GW170817. In particular, we employ a genetic
+algorithm to sample through the distributions of maximum
+masses, ejected matter (Drout et al. 2017; Cowperthwaite
+et al. 2017; Kasen et al. 2017; Villar et al. 2017; Cough-
+lin et al. 2018), and GW emission from numerical-relativity
+(NR) simulations (Zappa et al. 2018). Consistent with pre-
+vious results (Rezzolla et al. 2018; Shibata et al. 2019) we
+find that GW170817’s observations clearly set an upper limit
+for the maximum mass of 𝑀TOV . 2.33 𝑀�. When forcing
+the algorithm to allow for maximum masses 𝑀TOV & 2.4 𝑀�,
+we find that this requires unrealistically large GW efficiencies
+from the merger remnant and a deficit in the ejected matter."
+"2. FRAMEWORK FOR THE GENETIC ALGORITHM
+The observations of a bright blue kilonova has provided"
+"convincing evidence that the merger remnant in GW170817
+could not have collapsed promptly to a BH. Rather, it must
+have survived for a timescale of the order of one second (Gill
+et al. 2019; Lazzati et al. 2020; Hamidani et al. 2020), and suf-
+ficiently large so that the hypermassive NS (HMNS) produced
+by the merger has reached uniform rotation at least in its core
+(Margalit & Metzger 2017; Rezzolla et al. 2018). Following
+Rezzolla et al. (2018), we recall that quasi-universal relations
+exist between the masses of uniformly rotating stellar models
+along the stability line to BH formation and the correspond-
+ing dimensionless angular momentum 𝑗coll normalised to the
+maximum (Keplerian) one 𝑗Kep (Breu & Rezzolla 2016). We
+here express this relation as"
+"𝜒( 𝑗coll/ 𝑗Kep) :=
+𝑀crit
+𝑀TOV"
+"= 1 + 𝛼2
+(
+𝑗coll
+𝑗Kep"
+")2
++ 𝛼4"
+"(
+𝑗coll
+𝑗Kep"
+")4
+, (1)"
+"where 𝛼2 = 1.316×10−1 and 𝛼4 = 7.111×10−2, and the value
+of the Keplerian specific angular momentum is approximately
+given by 𝑗Kep ∼ 0.68 (see Eq. (4) in Most et al. 2020b, for
+more accurate estimates). The function 𝜒 is defined between
+0 and 1 and describes all models with a mass that is critical
+for collapse to a BH. To fix ideas, in the case of nonorotating
+models, 𝑗coll = 0 and 𝜒(0) = 1, while for maximally rotating
+models 𝑗coll = 𝑗Kep and (Breu & Rezzolla 2016) 𝜒(1) :=
+𝑀max/𝑀TOV ≈ 1.20+0.02−0.05, where 𝑀max is the maximum mass
+that can be sustained through uniform rotation (see Weih et al.
+2018, for differentially rotating stars). Note that range 𝜒(1) is
+based on a specific set of hadronic equations of state (EOSs)
+and that a different estimate suggests 𝜒(1) = 1.17+0.02−0.05 (Shao
+et al. 2020)."
+"Because Eq. (1) expresses a relation between gravitational
+masses, while the electromagnetic emission from GW170817
+informs us about the ejected baryonic mass, we need a relation
+between gravitational and baryonic mass 𝑀𝑏 for uniformly
+rotating NSs at the mass-shedding limit (see, e.g., Timmes
+et al. 1996; Gao et al. 2020, for a detailed discussion). Also in"
+"this case, this relation obeys a quasi-universal relation near the
+values of the maximum mass that, with a 2-𝜎 uncertainty, is
+given by [ := 𝑀𝑏,max/𝑀max ≈ 1.171±0.014 at the maximum-
+mass limit (Rezzolla et al. 2018). Note that [ is in principle
+a function of 𝑀 and that the value reported above is for 𝑀 =
+𝑀max. However, [ is almost constant in the neighbourhood
+of 𝑀max – where all of our considerations are made – so that
+hereafter we simply write the conversion between the two
+masses as 𝑀𝑏 = [𝑀 ."
+"The total gravitational mass of GW170817 as inferred from
+the GW signal is 𝑀𝑔 = 2.73+0.04−0.01 (The LIGO Scientific Col-
+laboration et al. 2019), whose corresponding baryonic mass
+𝑀𝑏 soon after the merger can be thought of as being given by
+the combination of the baryonic mass in the HMNS 𝑀𝑏,HMNS
+– itself composed of the mass in the core and in a Keplerian
+disk – and of the mass ejected dynamically, i.e.,"
+"𝑀𝑏 = 𝑀𝑏,core + 𝑀𝑏,disk + 𝑀
+dyn
+ej = [𝑀"
+"∗
+𝑔 , (2)"
+"where 𝑀∗𝑔 := 𝑀𝑔 −𝑀
+insp
+GW and 𝑀"
+"insp
+GW is the energy lost to GWs"
+"in the inspiral. Here, the last equality relates the baryonic and
+gravitational mass of the merger remnant. Defining now b as
+the fraction of the HMNS baryonic mass in the core, the two
+components of the HMNS shortly after merger can be written
+as"
+"𝑀𝑏,core := b
+(
+𝑀𝑏 − 𝑀"
+"dyn
+ej"
+"∗
+𝑔 − 𝑀"
+"dyn
+ej"
+"The fraction b is in principle unknown, but numerical simula-
+tions have shown that this ratio is actually weakly dependent
+on the EOS and given by b ≈ 0.95+0.04−0.05 (Hanauske et al.
+2017). As time goes by, the merger remnant will loose part
+of its baryonic mass via the emission of magnetically driven
+or viscous-driven winds, so that at collapse it will have a
+baryonic mass"
+"𝑀𝑏 = 𝑀
+coll
+𝑏,core + 𝑀"
+"coll
+𝑏,disk + 𝑀"
+"dyn
+ej + 𝑀"
+"blue
+ej + 𝑀"
+"red
+ej , (4)"
+"where the last equality follows from rest mass conservation
+and 𝑀coll"
+"𝑏,core and 𝑀
+coll
+𝑏,disk are the respective values of the core"
+"and the disk at the time when BH formation of the core is
+triggered, while 𝑀blueej (𝑀"
+"red
+ej ) is the part of the ejected matter"
+"leading to the blue (red) emission in the kilonova and differs
+from the dynamical ejecta from the timescale over which the
+material is lost. The two components also differ in the typical
+velocities of the matter, which is larger in the blue component
+(𝑣/𝑐 . 0.3 for the blue part and 𝑣/𝑐 � 0.1 for the red part),
+but also with in the electron fraction 𝑌𝑒, which is again larger
+in the blue component (0.2 . 𝑌𝑒 . 0.3 for the blue part and
+𝑌𝑒 . 0.2 for the red part). Numerical simulations of remnant
+disks indicate that most of the red ejecta originate from the
+disk, whereas most of the blue ejecta will come from the hot
+surface of the HMNS. Hence, for simplicity we will assume
+that the blue ejecta originate from the HMNS only, while the"
+GW170817 and GW190814: tension on the maximum mass 3
+"red ejecta exclusively represent unbound material of the disk.
+We classify the latter via a parameter"
+"𝑓disk := 𝑀 redej /𝑀𝑏,disk ' 0.2 − 0.5 , (5)"
+"representing the unbound fraction of the disk mass, which
+can be estimated based on numerical simulations (Siegel
+& Metzger 2017; Fernández et al. 2019; Fujibayashi et al.
+2018; Nathanail et al. 2020). In a merger scenario as that of
+GW170817, where the remnant may have lived for about one
+second (Gill et al. 2019), BH formation is triggered when the
+gravitational mass is reduced by the emission of GWs and the
+remnant hits the stability line for uniformly rotating models
+with a massive core 𝑀coll"
+"𝑏,core"
+"𝑀
+coll
+𝑏,core = [𝑀"
+"∗
+𝑔 − 𝑀𝑏,disk − 𝑀"
+"dyn
+ej − 𝑀"
+"blue
+ej = [𝜒𝑀TOV , (6)"
+"where the last equality relates the baryon mass of the remnant
+core to the maximum mass 𝑀TOV of nonrotating NS via Eq.
+(1). Indeed, when expressed as as a constraint equation on
+the maximum mass, Eq. (6) can also be written"
+[𝜒𝑀TOV = b
+"∗
+𝑔 − 𝑀"
+"dyn
+ej"
+")
+− 𝑀blueej . (7)"
+Two more equations can be used for consistency
+"𝑀
+red
+ej = 𝑓disk (1 − b)"
+"∗
+𝑔 − 𝑀"
+"dyn
+ej"
+")
+, (8)"
+"𝜒𝑀TOV = 𝑀
+∗
+𝑔 − ["
+"−1
+(
+𝑀"
+"coll
+𝑏,disk+𝑀"
+"dyn
+ej +𝑀"
+"blue
+ej +𝑀"
+"red
+ej"
+")
+− 𝑀post"
+"where the first one expresses the conservation of rest-mass
+leading to the kilonova emission and the second one the con-
+servation of gravitational mass since 𝑀postGW is the mass lost
+to GWs after the merger. Expression (9) does not constrain
+𝑀"
+"post
+GW , which thus remains undetermined. As a way around"
+"(see also Fan et al. (2020)), we use an approximate quasi-
+universal relation between the total mass lost to GWs 𝑀 totGW
+and the specific angular momentum of the remnant after the
+merger (Zappa et al. 2018)"
+"𝑚
+tot
+GW ∼ 𝑐0 + 𝑐1 𝑗rem,20 + 𝑐2"
+"(
+𝑗rem,20"
+")2
+, (10)"
+"where 𝑚totGW := 𝑀
+tot
+GW/(𝑀𝑔a), 𝑗rem,20 := 𝐽rem,20/(𝑀"
+"2
+𝑔a) is the"
+"specific angular momentum of the remnant within ∼ 20 ms
+from the merger, and a := 𝑚1𝑚2/(𝑚1+𝑚2)2 is the symmetric
+mass ratio. Note that 𝑐0 = 0.9, 𝑐1 = −0.4 and 𝑐2 = 0.05
+(Zappa et al. 2018) and that the two component masses𝑚1 and
+𝑚2 are chosen considering the low-spin prior for GW170817,
+i.e., a ∈ [0.243, 0.25]. By splitting total mass lost to GWs
+into the two components relative to the inspiral and post-
+merger, i.e., 𝑀 totGW = 𝑀"
+"insp
+GW + 𝑀"
+"post
+GW , Eq. (10) allows us to"
+"introduce an additional constraint between 𝑗coll – which we
+derive from Eq. (1) – and 𝑀postGW ."
+"Two more remarks before concluding the presentation of
+our methodology. First, not all of the merger remnant’s an-
+gular momentum will end up in the collapsed object. A
+number of physical processes will move part of the angu-
+lar momentum outwards, placing it on stable orbits relative
+to the newly formed BH. Because the efficiency of this pro-
+cess depends on microphysics that is poorly understood, we
+account for this by introducing a fudge factor 𝑓𝐵 defined as
+𝑗coll =: (1− 𝑓𝐵) 𝑗rem,20, so that the specific angular momentum
+of the disk is 𝑗disk := 𝑓𝐵 𝑗rem,20. Second, since in Eqs. (7), (8)
+and (9) the function 𝜒 always appears together with 𝑀TOV , it
+is difficult to set reasonable ranges for 𝜒. However, numerical
+simulations have revealed that the dimensionless spin of the
+BH produced by the merger 𝑗BH (and hence 𝑗coll . 𝑗BH ) is actu-
+ally constrained in a rather limited range, i.e., 0.7 . 𝑗BH . 0.9
+(Kastaun et al. 2013; Bernuzzi et al. 2014). Exploiting this
+information, and assuming conservatively that 80% of the spe-
+cific angular momentum at collapse is inherited by the BH,
+i.e., 𝑗coll = 0.8 𝑗BH , we can effectively constrain 𝜒 to be in
+the range 1.11 ≤ 𝜒 . 1.22. Very similar results are obtained
+when making the more drastic assumption that only half of
+the BH spin comes from the remnant, i.e., 𝑗coll = 0.5 𝑗BH ,
+which further reduces the lower limit to be 𝜒 = 1.05 (see
+Supplement Material for details)."
+"In summary, we need to solve a multidimensional para-
+metric problem as expressed by Eqs. (7), (8) and (9) after
+varying in the appropriate ranges the (ten) free parameters in
+the system: 𝜒, b, [, 𝑀 inspGW , 𝑀"
+"blue
+ej , 𝑀"
+"dyn
+ej , 𝑀TOV , a, 𝑓disk and 𝑓𝐵."
+"While we treat all these parameters equally, some of them
+([, 𝑀dynej , a), vary in very narrow ranges and their variations
+do not significantly affect the overall results. In practice, at
+any iteration of the genetic algorithm we ensure that: (i) the
+total gravitational mass of the system is 𝑀𝑔 = 2.73+0.04−0.01 (The
+LIGO Scientific Collaboration & The Virgo Collaboration
+2017; The LIGO Scientific Collaboration et al. 2019); (ii)
+the total ejected mass is 𝑀 totej = 0.0537 ± 0.013 𝑀� (Arcavi
+et al. 2017; Nicholl et al. 2017; Chornock et al. 2017; Cow-
+perthwaite et al. 2017; Villar et al. 2017; Drout et al. 2017;
+Kasen et al. 2017; Tanaka et al. 2017; Waxman et al. 2018;
+Coughlin et al. 2018); (iii) the dynamically ejected mass is
+𝑀"
+"dyn
+ej ≈ 10"
+"−3 𝑀� (Sekiguchi et al. 2015; Bovard et al. 2017;
+Radice et al. 2018; Poudel et al. 2020); (iv) the blue/red ejected
+components are respectively 0.005 < 𝑀blueej /𝑀� < 0.02 and
+0.03 < 𝑀 redej /𝑀� < 0.55 (Drout et al. 2017; Cowperthwaite
+et al. 2017; Smartt & Chen 2017; Kasliwal et al. 2017; Kasen
+et al. 2017; Villar et al. 2017; Tanaka et al. 2017; Waxman
+et al. 2018; Coughlin et al. 2018) we have also explored a
+larger upper bound on the blue ejecta, i.e., 𝑀blueej /𝑀� < 0.05,
+finding no significant difference; see Supplemental Mate-
+rial; (v) the maximum mass is taken to be in the range
+1.70 𝑀� < 𝑀TOV < 3 𝑀�, note that the posterior lower bound
+is consistent with pulsar observations (Antoniadis et al. 2013;"
+"4 Nathanail, Most and Rezzolla"
+1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6
+MTOV [M�]
+"ti
+o
+n"
+2.326M�
+2.087M�
+Rezzolla + (2018)
+genetic algorithm
+"Figure 1. Uniform posterior from the analysis of Rezzolla et al.
+(2018) (magenta) and the posterior obtained with the multidimen-
+sional genetic algorithm (blue) discussed here. Indicated with ver-
+tical lines are the 1-𝜎 (dotted) and 2-𝜎 (dashed) values."
+"Cromartie et al. 2020); (vi) the energy radiated in GWs before
+the merger is constrained to be 0.035 . 𝑀 inspGW /𝑀� . 0.045
+(Zappa et al. 2018). Note that all of the priors discussed in
+points (i)–(vi) are uniform."
+"3. RESULTS
+Figure 1 provides a first important impression of the re-"
+"sults of the genetic-algorithm. In particular, shown with a
+magenta-shaded area is the maximum-mass estimate made
+by Rezzolla et al. (2018) and which is a simple uniform
+posterior for 𝑀TOV = 2.16"
+"+0.17
+−0.16 𝑀�. Shown instead with a"
+"blue-shaded area is the posterior distribution obtained with
+the genetic algorithm. The median of the distribution is
+𝑀TOV = 2.210"
+"+0.117
+−0.123 𝑀�, where the errors reported here are"
+"for 2-𝜎 uncertainty. Overall, this yields a lower bound of
+𝑀TOV > 2.087 𝑀� and an upper bound of 𝑀TOV < 2.326 𝑀�
+at 2-𝜎 level (vertical dashed lines), and thus in good agree-
+ment with massive-pulsar measurements (Antoniadis et al.
+2013; Cromartie et al. 2020) and previous estimates (Rez-
+zolla et al. 2018; Shibata et al. 2019). Interestingly, our
+results are in good agreement with the conclusions reached
+by Shao et al. (2020) and Fan et al. (2020), who have also
+considered the post-merger GW emission to deduce bounds
+on the maximum mass."
+"As a consistency check, we can use set of parameters that
+yield the maximum-mass distribution in Fig. 1, to estimate the
+GW energy lost both in the inspiral and in the post-merger.
+This is shown in the left panel of Fig. 2, where we re-
+port the posterior distributions for 𝑀 inspGW (black dotted line)
+and 𝑀postGW (black dashed line), as well as their sum, 𝑀"
+"tot
+GW"
+(black solid line). Also marked with a vertical lavender-
+"shaded is the upper limit estimated by Zappa et al. (2018),
+𝐸 totGW/𝑀𝑔 ≤ 0.045 𝑀�𝑐"
+"2, on the basis of a large number
+of NR simulations, with an associated uncertainty of 20%.
+A similar consistency is found in the right panel of Fig. 2,
+where we report the posterior of the total ejected mass consis-
+tent with the maximum-mass distribution in Fig. 1. Indicated
+with a green-shaded area are the constraints obtained from
+the kilonova observations of GW170817. More specifically,
+the width of the shaded area represents the standard deviation
+using various estimates for the total ejected mass 𝑀 totej esti-
+mated for GW170817 (Arcavi et al. 2017; Nicholl et al. 2017;
+Chornock et al. 2017; Cowperthwaite et al. 2017; Villar et al.
+2017; Drout et al. 2017; Kasen et al. 2017; Tanaka et al. 2017;
+Waxman et al. 2018; Coughlin et al. 2018). Clearly, also the
+ejected-mass distribution is in perfect agreement with obser-
+vational bounds when the maximum mass is below 2.326 𝑀�."
+"Given these results, it is natural to ask: does anything break
+down when larger maximum masses are considered? The
+positive answer to this question is contained in Fig. 3, whose
+panels are similar to those in Fig. 2, when however the genetic
+algorithm is forced to consider two specific values of the
+maximum mass, namely, 𝑀TOV = 2.4 𝑀� and 𝑀TOV = 2.5 𝑀�.
+Concentrating first on the left panel of Fig. 3, it is clear
+that when allowing for large maximum masses, the mass
+radiated in GWs after the merger, 𝑀postGW (red dashed line), is
+significantly larger than what NR simulations predict; this is
+true both for 𝑀TOV = 2.4 𝑀� and for 𝑀TOV = 2.5 𝑀�. This
+behaviour is due to the fact that remnants with a given 𝜒 will
+radiate more GWs if they are more massive [cf., Eq. (9)].
+Next, when considering the right panel of Fig. 3 it is also
+easy to realize that large maximum masses lead to a deficit
+in the ejected matter. This is simply due to the fact that
+considering large-mass stars inevitably reduces the portion of
+the budget available for the ejecta. We have confirmed that,
+even if (unrealistically) large additional angular momentum
+transport was assumed, these results remain unchanged for
+𝑀TOV & 2.5 𝑀�, (see Supplemental Material)."
+"In summary, while a value 𝑀TOV . 2.3 𝑀� is fully con-
+sistent with the GW emission from NR simulations and the
+observed ejected mass, a value 𝑀TOV & 2.5 𝑀� requires effi-
+ciencies in the GW emission that are well above the estimates
+from a large number of accurate NR simulations and, overall,
+leads to an under-production of ejected mass."
+"4. CONCLUSIONS
+We have carried out a systematic investigation to ascer-"
+"tain whether the tension on the maximum mass following
+the detections of GW170817 and GW190814 can in some
+way be resolved or at least attenuated. In particular, we have
+employed a genetic algorithm to sample through the multidi-
+mensional space of parameters that can be built on the basis of
+the astronomical observations (i.e., ejected mass in the vari-"
+GW170817 and GW190814: tension on the maximum mass 5
+"0.05 0.10 0.15 0.20 0.25 0.30
+M"
+"GW
+[M�]"
+"ti
+o
+n"
+"n
+NR upper limit
+on M tot"
+"M
+TOV
+≤ 2.326M�"
+"M insp
+GW"
+"Mpost
+GW"
+"M tot
+GW"
+0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08
+M totej [M�]
+"ti
+o
+n"
+M totej from GW170817
+kilonova
+"M
+TOV
+≤ 2.326M�"
+"Figure 2. Left panel: Posteriors for the mass radiated in GWs consistent with the distribution in Fig. 1; the lavender-shaded area reports
+the upper limit coming from NR simulations. Right panel: Posterior for the total ejected mass consistent with the distribution in Fig. 1; the
+green-shaded area reports the range estimated in the literature."
+"0.05 0.10 0.15 0.20 0.25 0.30
+M"
+"GW
+[M�]"
+"ti
+o
+n"
+"NR upper limit
+on M tot"
+"MTOV = 2.4M�
+MTOV = 2.5M�"
+0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08
+M totej [M�]
+"ti
+o
+n"
+"n
+M totej from GW170817"
+kilonova
+= 2.5M�
+= 2.4M�
+"Figure 3. Left panel: The same as in the left panel of Fig. 2, but when considering two fixed values for the maximum mass, i.e., 𝑀TOV = 2.4 𝑀�
+(orange) and 𝑀TOV = 2.5 𝑀� (red). Right panel: The same as in the right panel of Fig. 2, but for two fixed maximum-mass values."
+"ous components), GW observations (i.e., gravitational masses
+of the binary components), and of NR simulations (i.e., prop-
+erties of the remnant and efficiency of GW emission)."
+"The results of this investigation have allowed us to re-
+fine in a probabilistic manner the previous estimates of
+the maximum mass (Rezzolla et al. 2018), obtaining that
+𝑀TOV = 2.210"
+"+0.117
+−0.123 𝑀� within a 2-𝜎 confidence level. In"
+"this range, all of the physical quantities are in very good
+agreement with the estimates coming from the observations.
+By contrast, we find that considering maximum masses with
+𝑀TOV & 2.4 − 2.5 𝑀� requires efficiencies in the GW emis-
+sion well above the NR estimates and leads to a significant
+under-production of the ejected mass, well below the values
+expected from the observations. Although robust, our results"
+"can be strengthened in a number of ways. Improved post-
+merger modeling and long-term NR simulations (Fujibayashi
+et al. 2018) can help to narrow the uncertainties in the pa-
+rameter ranges for 𝜒 and 𝑗rem. Refined universal relations
+of uniformly rotating NSs including temperature dependence
+(Koliogiannis & Moustakidis 2020), will also help narrowing
+down the errors in [ and the upper limit of 𝜒. Such im-
+provements will be crucial to understand the viability of the
+maximum-mass constraint for 𝑀TOV . 2.3 𝑀�."
+"In light of these considerations, we conclude that the sec-
+ondary in GW190814 was most likely a BH at merger, al-
+though it may well have been a rotating NS at some stage
+during the evolution of the binary system."
+"6 Nathanail, Most and Rezzolla"
+"Acknowledgements. It is a pleasure to thank C. Ecker, J. Pa-
+penfort, and L. Weih for useful comments. Support comes in
+part also from “PHAROS”, COST Action CA16214 and the
+LOEWE-Program in HIC for FAIR. ERM gratefully acknowl-"
+"edges support from a joint fellowship at the Princeton Center
+for Theoretical Science, the Princeton Gravity Initiative and
+the Institute for Advanced Study."
+"Software: Scipy (Virtanen et al. 2020), Corner
+(Foreman-Mackey 2016),"
+REFERENCES
+"Antoniadis, J., Freire, P. C. C., Wex, N., et al. 2013, Science, 340,
+448"
+"Arcavi, I., Hosseinzadeh, G., Howell, D. A., et al. 2017, Nature,
+551, 64"
+"Bauswein, A., Just, O., Janka, H.-T., & Stergioulas, N. 2017,
+Astrophys. J. Lett., 850, L34"
+"Bernuzzi, S., Dietrich, T., Tichy, W., & Brügmann, B. 2014, Phys.
+Rev. D, 89, 104021"
+"Biswas, B., Nandi, R., Char, P., Bose, S., & Stergioulas, N. 2020,
+arXiv e-prints, arXiv:2010.02090"
+"Bovard, L., Martin, D., Guercilena, F., et al. 2017, Phys. Rev. D,
+96, 124005"
+"Bozzola, G., Espino, P. L., Lewin, C. D., & Paschalidis, V. 2019,
+European Physical Journal A, 55, 149"
+"Breu, C., & Rezzolla, L. 2016, Mon. Not. R. Astron. Soc., 459, 646
+Chornock, R., Berger, E., Kasen, D., et al. 2017, Astrophys. J."
+"Letters, 848, L19
+Coughlin, M. W., Dietrich, T., Doctor, Z., et al. 2018, Mon. Not. R."
+"Astron. Soc., 480, 3871
+Cowperthwaite, P. S., Berger, E., Villar, V. A., et al. 2017,"
+"Astrophys. J. Lett., 848, L17
+Cromartie, H. T., Fonseca, E., Ransom, S. M., et al. 2020, Nature"
+"Astronomy, 4, 72
+Demircik, T., Ecker, C., & Järvinen, M. 2020, arXiv e-prints,"
+"arXiv:2009.10731
+Drout, M. R., Piro, A. L., Shappee, B. J., et al. 2017, Science, 358,"
+"1570
+Ertl, T., Woosley, S. E., Sukhbold, T., & Janka, H. T. 2020,"
+"Astrophys. J., 890, 51
+Fan, Y.-Z., Jiang, J.-L., Tang, S.-P., Jin, Z.-P., & Wei, D.-M. 2020,"
+"Astrophys. J., 904, 119
+Fattoyev, F. J., Horowitz, C. J., Piekarewicz, J., & Reed, B. 2020,"
+"arXiv e-prints, arXiv:2007.03799
+Fernández, R., Tchekhovskoy, A., Quataert, E., Foucart, F., &"
+"Kasen, D. 2019, Mon. Not. R. Astron. Soc., 482, 3373
+Foreman-Mackey, D. 2016, Journal of Open Source Software, 1, 24
+Fromm, C. M., Younsi, Z., Baczko, A., et al. 2019, Astron."
+"Astrophys., 629, A4
+Fujibayashi, S., Kiuchi, K., Nishimura, N., Sekiguchi, Y., &"
+"Shibata, M. 2018, The Astrophysical Journal, 860, 64
+Gao, H., Ai, S.-K., Cao, Z.-J., et al. 2020, Frontiers of Physics, 15,"
+"Gill, R., Nathanail, A., & Rezzolla, L. 2019, Astrophys. J., 876, 139
+Godzieba, D. A., Radice, D., & Bernuzzi, S. 2020, arXiv e-prints,"
+"arXiv:2007.10999
+Hamidani, H., Kiuchi, K., & Ioka, K. 2020, Mon. Not. R. Astron."
+"Soc., 491, 3192
+Hanauske, M., Takami, K., Bovard, L., et al. 2017, Phys. Rev. D,"
+"96, 043004
+Kasen, D., Metzger, B., Barnes, J., Quataert, E., & Ramirez-Ruiz,"
+"E. 2017, Nature, 551, 80
+Kasliwal, M. M., Nakar, E., Singer, L. P., et al. 2017, Science, 358,"
+"1559
+Kastaun, W., Galeazzi, F., Alic, D., Rezzolla, L., & Font, J. A."
+"2013, Phys. Rev. D, 88, 021501
+Kinugawa, T., Nakamura, T., & Nakano, H. 2020, arXiv e-prints,"
+"arXiv:2007.13343
+Koeppel, S., Bovard, L., & Rezzolla, L. 2019, Astrophys. J. Lett.,"
+"872, L16
+Koliogiannis, P. S., & Moustakidis, C. C. 2020, arXiv e-prints,"
+"arXiv:2007.10424
+Lazzati, D., Ciolfi, R., & Perna, R. 2020, Astrophys. J., 898, 59
+Liu, B., & Lai, D. 2020, arXiv e-prints, arXiv:2009.10068
+Lu, W., Beniamini, P., & Bonnerot, C. 2020, arXiv e-prints,"
+"arXiv:2009.10082
+Margalit, B., & Metzger, B. D. 2017, Astrophys. J. Lett., 850, L19
+Most, E. R., Papenfort, L. J., Tootle, S., & Rezzolla, L. 2020a,"
+"arXiv e-prints, arXiv:2012.03896
+Most, E. R., Papenfort, L. J., Weih, L. R., & Rezzolla, L. 2020b,"
+"Mon. Not. R. Astron. Soc., 499, L82
+Nathanail, A., Gill, R., Porth, O., Fromm, C. M., & Rezzolla, L."
+"2020, Mon. Not. R. Astron. Soc., 495, 3780
+Nicholl, M., Berger, E., Kasen, D., et al. 2017, Astrophys. J."
+"Letters, 848, L18
+Poudel, A., Tichy, W., Brügmann, B., & Dietrich, T. 2020, Phys."
+"Rev. D, 102, 104014
+Radice, D., Perego, A., Hotokezaka, K., et al. 2018, Astrophys. J.,"
+"869, 130
+Rezzolla, L., Most, E. R., & Weih, L. R. 2018, Astrophys. J. Lett.,"
+"852, L25
+Safarzadeh, M., Ramirez-Ruiz, E., & Berger, E. 2020, arXiv"
+"e-prints, arXiv:2001.04502
+Sedrakian, A., Weber, F., & Li, J. J. 2020, Phys. Rev. D, 102,"
+041301
+"http://dx.doi.org/10.1126/science.1233232
+http://dx.doi.org/10.1126/science.1233232
+http://dx.doi.org/10.1038/nature24291
+http://dx.doi.org/10.1038/nature24291
+http://dx.doi.org/10.3847/2041-8213/aa9994
+http://dx.doi.org/10.1103/PhysRevD.89.104021
+http://dx.doi.org/10.1103/PhysRevD.89.104021
+http://dx.doi.org/10.1140/epja/i2019-12831-2
+http://dx.doi.org/10.1093/mnras/stw575
+http://dx.doi.org/10.3847/2041-8213/aa905c
+http://dx.doi.org/10.3847/2041-8213/aa905c
+http://dx.doi.org/10.1093/mnras/sty2174
+http://dx.doi.org/10.1093/mnras/sty2174
+http://dx.doi.org/10.3847/2041-8213/aa8fc7
+http://dx.doi.org/10.1038/s41550-019-0880-2
+http://dx.doi.org/10.1038/s41550-019-0880-2
+http://dx.doi.org/10.1126/science.aaq0049
+http://dx.doi.org/10.1126/science.aaq0049
+http://dx.doi.org/10.3847/1538-4357/ab6458
+http://dx.doi.org/10.3847/1538-4357/abbf4e
+http://dx.doi.org/10.1093/mnras/sty2932
+http://dx.doi.org/10.21105/joss.00024
+http://dx.doi.org/10.1051/0004-6361/201834724
+http://dx.doi.org/10.1051/0004-6361/201834724
+http://dx.doi.org/10.3847/1538-4357/aabafd
+http://dx.doi.org/10.1007/s11467-019-0945-9
+http://dx.doi.org/10.1007/s11467-019-0945-9
+http://dx.doi.org/10.3847/1538-4357/ab16da
+http://dx.doi.org/10.1093/mnras/stz3231
+http://dx.doi.org/10.1093/mnras/stz3231
+http://dx.doi.org/10.1103/PhysRevD.96.043004
+http://dx.doi.org/10.1103/PhysRevD.96.043004
+http://dx.doi.org/10.1038/nature24453
+http://dx.doi.org/10.1126/science.aap9455
+http://dx.doi.org/10.1126/science.aap9455
+http://dx.doi.org/10.1103/PhysRevD.88.021501
+http://dx.doi.org/10.3847/2041-8213/ab0210
+http://dx.doi.org/10.3847/2041-8213/ab0210
+http://dx.doi.org/10.3847/1538-4357/ab9a44
+http://dx.doi.org/10.3847/2041-8213/aa991c
+http://dx.doi.org/10.1093/mnrasl/slaa168
+http://dx.doi.org/10.1093/mnras/staa1454
+http://dx.doi.org/10.3847/2041-8213/aa9029
+http://dx.doi.org/10.3847/2041-8213/aa9029
+http://dx.doi.org/10.1103/PhysRevD.102.104014
+http://dx.doi.org/10.1103/PhysRevD.102.104014
+http://dx.doi.org/10.3847/1538-4357/aaf054
+http://dx.doi.org/10.3847/1538-4357/aaf054
+http://dx.doi.org/10.3847/2041-8213/aaa401
+http://dx.doi.org/10.3847/2041-8213/aaa401
+http://dx.doi.org/10.1103/PhysRevD.102.041301
+http://dx.doi.org/10.1103/PhysRevD.102.041301"
+"
+GW170817 and GW190814: tension on the maximum mass 7"
+"Sekiguchi, Y., Kiuchi, K., Kyutoku, K., & Shibata, M. 2015, Phys.
+Rev. D, 91, 064059"
+"Shao, D.-S., Tang, S.-P., Sheng, X., et al. 2020, Phys. Rev. D, 101,
+063029"
+"Shibata, M., Zhou, E., Kiuchi, K., & Fujibayashi, S. 2019, Phys.
+Rev. D, 100, 023015"
+"Siegel, D. M., & Metzger, B. D. 2017, Physical Review Letters,
+119, 231102"
+"Smartt, S., & Chen, T. e. a. 2017, Nature, 551, 75"
+"Tan, H., Noronha-Hostler, J., & Yunes, N. 2020, arXiv e-prints,
+arXiv:2006.16296"
+"Tanaka, M., Utsumi, Y., Mazzali, P. A., et al. 2017, Public. Astron.
+Soc. of Japan, 69, 102"
+"The LIGO Scientific Collaboration, & The Virgo Collaboration.
+2017, Phys. Rev. Lett., 119, 161101"
+"The LIGO Scientific Collaboration, the Virgo Collaboration,
+Abbott, B. P., et al. 2019, Physical Review X, 9, 011001"
+"The LIGO Scientific Collaboration, the Virgo Collaboration,
+Abbott, R., et al. 2020, Astrophys. J. Lett., 896, L44"
+"Timmes, F. X., Woosley, S. E., & Weaver, T. A. 1996, Astrophys.
+J., 457, 834"
+"Tsokaros, A., Ruiz, M., & Shapiro, S. L. 2020, arXiv e-prints,
+arXiv:2007.05526"
+"Villar, V. A., Guillochon, J., Berger, E., et al. 2017, Astrophys. J.
+Letters, 851, L21"
+"Virtanen, P., Gommers, R., Oliphant, T. E., et al. 2020, Nature
+Methods, 17, 261"
+"Waxman, E., Ofek, E., Kushnir, D., & Gal-Yam, A. 2018, Mon.
+Not. R. Astron. Soc., 481, 3423"
+"Weih, L. R., Most, E. R., & Rezzolla, L. 2018, Mon. Not. R.
+Astron. Soc., 473, L126"
+"Zappa, F., Bernuzzi, S., Radice, D., Perego, A., & Dietrich, T.
+2018, Physical Review Letters, 120, 111101"
+"Zevin, M., Spera, M., Berry, C. P. L., & Kalogera, V. 2020, arXiv
+e-prints, arXiv:2006.14573"
+"Zhang, N.-B., & Li, B.-A. 2020, Astrophys. J., 902, 38"
+"http://dx.doi.org/10.1103/PhysRevD.91.064059
+http://dx.doi.org/10.1103/PhysRevD.91.064059
+http://dx.doi.org/10.1103/PhysRevD.101.063029
+http://dx.doi.org/10.1103/PhysRevD.101.063029
+http://dx.doi.org/10.1103/PhysRevD.100.023015
+http://dx.doi.org/10.1103/PhysRevD.100.023015
+http://dx.doi.org/10.1103/PhysRevLett.119.231102
+http://dx.doi.org/10.1103/PhysRevLett.119.231102
+http://dx.doi.org/10.1038/nature24303
+http://dx.doi.org/10.1093/pasj/psx121
+http://dx.doi.org/10.1093/pasj/psx121
+http://dx.doi.org/10.1103/PhysRevLett.119.161101
+http://dx.doi.org/10.1103/PhysRevX.9.011001
+http://dx.doi.org/10.3847/2041-8213/ab960f
+http://dx.doi.org/10.1086/176778
+http://dx.doi.org/10.1086/176778
+http://dx.doi.org/10.3847/2041-8213/aa9c84
+http://dx.doi.org/10.3847/2041-8213/aa9c84
+http://dx.doi.org/10.1038/s41592-019-0686-2
+http://dx.doi.org/10.1038/s41592-019-0686-2
+http://dx.doi.org/10.1093/mnras/sty2441
+http://dx.doi.org/10.1093/mnras/sty2441
+http://dx.doi.org/10.1093/mnrasl/slx178
+http://dx.doi.org/10.1093/mnrasl/slx178
+http://dx.doi.org/10.1103/PhysRevLett.120.111101
+http://dx.doi.org/10.3847/1538-4357/abb470"
+"
+8 Nathanail, Most and Rezzolla"
+"SUPPLEMENTAL MATERIAL
+In what follows we provide additional information that complements the one provided in the main text. While the details"
+"illustrated below do not vary the conclusions drawn in the main text, they provide additional technical details on the genetic
+algorithm employed in our analysis. In addition, they help investigate how the results change when the parameters are varied
+beyond the (reasonable) ranges assumed so far."
+"For the solution of our multidimensional parametric problem the procedure we adopt is as follows (see also Fromm et al.
+2019; Nathanail et al. 2020, for additional information). We start by recalling that genetic algorithms are designed to generate
+high-quality solutions to problems of this type where a searching optimization is sought. The name follows from the operators of
+mutation, crossover and selection that are normally found in biological systems. Our choice of a genetic algorithm in place of a
+more traditional Bayesian analysis based on a Markov-Chain Monte Carlo approach is motivated mostly by the overall simplicity
+of our problem and the reduced computational costs that are associated with a genetic algorithm."
+"In practice, our algorithm samples through the parameter space of the ten free parameters. From those it computes the 𝑀 redej
+through Eqs. (3) and (5), 𝑀postGW through Eq. (10) and the specific angular momentum at collapse 𝑗coll via Eq. (1), using the
+sampled value of𝜒. Subsequently, Eqs. (7), (8), and (9) are solved to match the observed values of 𝑀𝑔 and 𝑀 totej within the errors,
+finding the best-fit values. The genetic algorithm employed here makes use of Python packages from the SciPY software library
+(Virtanen et al. 2020)."
+"As a corollary to the discussion made in the main text and relative to Figs. 1–3, we provide with the corner plots in Fig. 4
+information on the probability distribution functions of the various quantities involved in our analysis. More specifically, Fig.
+4 shows the corner plot relative to maximum-mass posterior shown in Fig. 1 and should therefore accompany the information
+presented in Fig. 2. On the other hand, Fig. 5 refers to the case when the genetic algorithm is forced to consider 𝑀TOV = 2.5 𝑀�.
+In this case, the maximum-mass is set to vary uniformly in the very small interval around 𝑀TOV = 2.5"
+"+0.0001
+−0.0001 𝑀�, leaving all the"
+"other parameters free to be adjusted till a best-fit is found. In this sense, the information in Fig. 5 complements what is reported in
+Fig. 3 and shows that all the posterior distributions are pushed to be very narrow at the edges of the allowed ranges. For instance,
+the dimensionless spin 𝜒 is narrowly peaked around its minimum value 1.1, the mass in the disk is much smaller and of the order
+of ' 0.035 𝑀�, while the blue and red ejecta are comparable and equal to ' 0.019 𝑀�."
+"Note that to avoid having a large number of small panels, we have limited ourselves either to the most salient ones, omitting
+those quantities for which the distributions are either almost constant or restricted to a very small region. More specifically, in
+Fig. 4 the values found are: b = 0.973+0.011−0.035, [ = 1.171"
+"+0.014
+−0.013, 𝑀"
+"dyn
+ej = 0.001"
+"+0.001
+−0.001 𝑀�, 𝑓disk = 0.437"
+"+0.061
+−0.209, and a = 0.243"
+"+0.005
+−0.000,"
+"which corresponds to 𝑞 = 0.719+0.136−0.006. We have also explored a modified scenario in which the blue ejecta are larger than
+inferred from observations. In particular, we have adjusted the upper bound on the blue ejecta from 𝑀blueej /𝑀� < 0.02 to
+𝑀blueej /𝑀� < 0.05. In this case, we find that the blue ejecta converge to a distribution with a median around ∼ 0.03 𝑀�, while the
+red ejecta component decreases to ∼ 0.02 𝑀�. At the same time, the changes in the posterior for the maximum mass are minute,
+i.e., 𝑀TOV = 2.192"
+"+0.125
+−0.092 𝑀�."
+"Finally, in Fig. 6 we provide information that is similar in content to that in Fig. 3, but when we allow for the dimensionless
+spin to attain even smaller values, i.e., 1.05 ≤ 𝜒 . 1.22. Note that in this case, the ejected mass for 𝑀TOV = 2.4 𝑀� is within the
+observational bounds, but the excess in radiated mass is more severe. The disagreement becomes even stronger for 𝑀TOV = 2.5 𝑀�."
+"As a concluding remark we note that the interpretation of the nature of GW190425 is likely unaffected by our findings on the
+maximum masses of neutron stars. While a BH-NS nature cannot be fully ruled out, the most plausible case of a NS-NS nature
+of the system is perfectly compatible with our findings on the maximum mass, as the initial masses in GW190425 are both well
+below the maximum-mass limit we have presented here (see also Most et al. 2020a, for a discussion on GW190425). On the other
+hand, an indirect impact that our results have on GW190425 is on whether the merger led to a prompt collapse (i.e., where the
+hypermassive neutron star collapses to a black hole either at or shortly after merger), or to a stable long lived remnant. Using the
+results of Koeppel et al. (2019) (but see also Bauswein et al. 2017), and given the values for the maximum mass found here, a
+prompt or delayed collapse scenario seems likely for GW190425."
+GW170817 and GW190814: tension on the maximum mass 9
+χ = 1.168+0.047−0.054
+"Mb,disk = 0.083
++0.108
+−0.034"
+"Mblueej = 0.016
++0.004
+−0.009"
+"M redej = 0.038
++0.028
+−0.019"
+= 2.210+0.116−0.123
+"j d
+is"
+"k
+/
+j r"
+"Mb,disk
+0.
+01"
+"0
+0.
+01"
+"5
+0.
+02"
+Mblueej
+M redej
+jdisk/jrem
+"jdisk/jrem = 0.328
++0.098
+−0.101"
+"Figure 4. Corner plot reporting the posterior distributions of the most important parameters in our analysis. Indicated with the two outermost
+vertical dashed lines are the corresponding 2-𝜎 values, while the labels on the diagonal cells report the average values (central vertical dashed
+line)."
+"10 Nathanail, Most and Rezzolla"
+χ = 1.111+0.088−0.001
+"Mb,disk = 0.035
++0.126
+−0.003"
+"Mblueej = 0.006
++0.012
+−0.001"
+"M redej = 0.017
++0.049
+−0.007"
+= 2.500+0.000−0.000
+"j d
+is"
+"k
+/
+j r"
+"Mb,disk
+0.
+01"
+"0
+0.
+01"
+"5
+0.
+02"
+Mblueej
+M redej
+jdisk/jrem
+"jdisk/jrem = 0.441
++0.046
+−0.306"
+Figure 5. Same as Fig. 4 but when the maximum mass is held fixed at the value 𝑀TOV = 2.5 𝑀� .
+GW170817 and GW190814: tension on the maximum mass 11
+"0.05 0.10 0.15 0.20 0.25 0.30
+M"
+"GW
+[M�]"
+"ti
+o
+n"
+"n
+NR upper limit
+on M tot"
+"MTOV = 2.4M�
+MTOV = 2.5M�"
+0.01 0.02 0.03 0.04 0.05 0.06 0.07 0.08
+M totej [M�]
+"ti
+o
+n"
+M totej from GW170817
+kilonova
+= 2.5M� MTOV = 2.4M�
+"Figure 6. The same as Fig. 3 but when we allow for the dimensionless spin to attain even smaller values, i.e., 1.05 ≤ 𝜒 . 1.22. Note that in
+this case disagreement in the radiated and ejected mass becomes even stronger for 𝑀TOV = 2.5 𝑀� ."
+"
+	1 Introduction
+	2 Framework for the genetic algorithm
+	3 Results
+	4 Conclusions"

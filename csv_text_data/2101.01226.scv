@@ -1,0 +1,1342 @@
+0
+Prepared for submission to JCAP
+TIFR/TH/20-47
+"Fast Flavor Oscillations of
+Astrophysical Neutrinos with
+1, 2, . . . ,∞ Crossings"
+Soumya Bhattacharyya ID and Basudeb Dasgupta ID
+"Tata Institute of Fundamental Research,
+Homi Bhabha Road, Mumbai 400005, India"
+"E-mail: soumyaquanta@gmail.com, bdasgupta@theory.tifr.res.in"
+"Abstract. In the early Universe, as well as in supernovae and merging neutron stars,
+neutrinos have such high densities that they affect each other and exhibit collective
+flavor oscillations. A crucial ingredient for fast collective flavor oscillations is that the
+electron lepton number (ELN) distribution changes its sign as a function of direction,
+i.e., has a zero crossing. We present a study in two dimensions and show how fast
+flavor oscillations depend on the ELN and its crossings. We show that a large number
+of crossings can inhibit flavor oscillations. This may be a natural self-limiting mecha-
+nism that stabilizes the flavor content of the dense neutrino gas in a vast majority of
+scenarios, especially the early Universe, where the angular distributions for all flavors
+are very similar and crossings occur mainly due to fluctuations."
+"https://orcid.org/0000-0001-5331-4597
+https://orcid.org/0000-0001-6714-0014
+mailto:soumyaquanta@gmail.com
+mailto:bdasgupta@theory.tifr.res.in"
+"
+Contents"
+1 Introduction 1
+"2 Set-up and Methods 3
+2.1 Equations of Motion 3
+2.2 ELNs with 1, 2, . . . ,∞ Crossings 5"
+"2.2.1 True vs. Apparent Dimensionality 6
+2.2.2 ELN Models 7"
+"2.3 Linear Stability Analysis 8
+2.4 EoM Solver 10
+2.5 Dispersion Relation Solver 11"
+"3 Results 11
+3.1 One Crossing 11
+3.2 Two Crossings 14
+3.3 Many Crossings 16"
+4 Summary 18
+A Error Estimate for Numerical Solutions 19
+1 Introduction
+"Astrophysical neutrinos are a valuable probe of fundamental physics and astrophysics.
+The focus of this paper is the so-called fast collective flavor evolution of neutrinos,
+which can have a dramatic effect in dense astrophysical environments, e.g., on the
+explosion of core-collapse supernovae, nucleosynthesis in supernovae and neutron star
+mergers, and perhaps for neutrinos in cosmology."
+"Neutrino oscillation in ordinary matter is governed through two frequency scales –
+one is the vacuum oscillation frequency, ωE = |∆m2|/(2E), related to the mass-squared
+difference between two different mass eigenstates, ∆m2 = m22−m21, and the other is the
+matter potential, λ ="
+"√
+2GFne, coming from the coherent forward scatterings of neutri-"
+"nos with electrons with possibly spatially varying density ne in the medium.
+1 Broadly,"
+"high density, λ � ωE, suppresses flavor mixing. As a result, large flavor conversion
+in ordinary matter can occur either after λ drops below ωE, whence ordinary neutrino
+oscillations ensue, or when these two frequency scales match, i.e., λ ≈ ωE, giving rise
+to the well known phenomenon of matter-enhanced oscillations [1, 2]. Thus one might
+think that neutrinos cannot oscillate deep inside stars or in the early Universe."
+"1The quantum mechanical amplitude of forward scattering interferes with free propagation and
+gives a potential for flavor oscillations. Momentum and number changing collisions do not produce
+interference effects."
+"Neutrino-neutrino scattering in a neutrino gas gives rise to a new scale, µ =√
+2GFnν , proportional to the neutrino density nν [3]. This new potential makes the"
+"flavor evolution nonlinear, allowing novel collective flavor oscillations in dense environ-
+ments. A salient feature of these collective oscillations is that neutrinos of different
+energies oscillate approximately at the same rate, i.e., the average ωE for synchronized
+oscillations [4],"
+"√
+ωEµ for bipolar or slow collective oscillations [5, 6], and as rapidly"
+"as µ for fast collective oscillations [7]. The slow variant of these collective oscillations
+was studied deeply starting from the mid-2000s, exposing a sequence of new effects
+such as swapping of the flavor-dependent spectra as well as momentum, space, and
+time-dependent flavor transformations [8–19]."
+"Fast flavor oscillations became a topic of wide interest only around 2015, starting
+with the influential paper by Sawyer [20], which pointed out that the angular distri-
+butions for the different neutrino flavors are different in the decoupling region in a
+supernova and that can cause oscillations with rate ∝ µ. This was followed by two
+crucial studies which developed theoretical understanding of fast oscillations in the
+linearized regime [21, 22]. The first elucidated an underlying instability, showing how
+it has little dependence on ωE [21], and the second clarified the role of homogeneity
+and stationarity, and showed that fast oscillations may occur for the the presumably
+realistic neutrino distributions inspired by state-of-the-art simulations [22]. Subse-
+quently, this subject has seen significant progress [23–32], and it appears that fast
+oscillations can occur in many environments [33–40] and drastically alter the flavor
+composition therein [41, 42]. In particular, they may lead to almost complete flavor
+depolarization [41, 42], limited by conservation of lepton asymmetry."
+"Properly understanding these new effects requires solving a set of coupled nonlin-
+ear partial integro-differential equations in a 3 (spatial) + 3 (momentum) + 1 (time)
+= 7 dimensional space, which has remained unachievable till date. As a result, most
+studies assume a high degree of symmetry and limit the flavor evolution to be along
+a single coordinate — be it temporal evolution of a homogeneous gas or the spatial
+evolution of a stationary dense neutrino gas. Previous experience with slow collective
+oscillations [16–19] suggests that such restrictions artificially exclude allowed modes of
+flavor evolution. Calculations in 1+1+1 dimensions are superior [41, 42], but as we will
+discuss in Sec. 2.2.1 they too are not fully satisfactory. While a calculation in 3+3+1
+dimensions remains the holy grail, going to at least 2+2+1 dimensions is necessary to
+satisfy the constraints on neutrino velocities, include fully self-consistent space-time
+evolution, and not artificially exclude allowed modes of flavor evolution."
+"In this paper, we present a study of fast flavor oscillations of a dense neutrino
+gas in 2+2+1 dimensions. Our study explores how the flavor evolution is related to
+the symmetries and the number of zero crossings of the electron lepton number (ELN)
+distribution, i.e., the difference of νe and ν̄e angular distributions; a more precise
+definition appears later. We perform detailed comparisons of the numerical results
+with those from a linearized analysis, finding excellent agreement. The main insights
+obtained from our study are that the flavor evolution inherits symmetries of the ELN,
+and why ELNs with a large number of zero crossings can in fact lead to a much weaker
+flavor instability."
+"The paper is organized as follows: Sec. 2.1 sets up the problem. Sec. 2.2 introduces
+the types of neutrino angular distributions that we consider in this study. In Secs. 2.3,
+2.4, and 2.5, we describe the analytical and numerical methods we use for solving the
+equations. In Sec. 3, we discuss our numerical and analytical results for all examples
+in a systematic way. In Sec. 4, we conclude with a brief summary."
+2 Set-up and Methods
+2.1 Equations of Motion
+"Consider an effective two-flavor framework with each neutrino being a superposition
+of the e and µ flavors. Neglecting momentum-changing collisions, the flavor evolution
+of the neutrinos at position ~x and time t, with momentum ~p ≈ E~v, is given by [43]"
+"(
+∂t + ~v · ~∂"
+")
+P[E,~v] = H[E,~v]× P[E,~v] . (2.1)"
+"We use the notation of Ref. [42]. The polarization vector P[E,~v] for each momentum
+labeled by (E,~v) encodes the flavor state.2 Antineutrinos are represented by P̄[E,~v].
+However, polarization vectors for antineutrinos behave as if they were polarization
+vectors for neutrinos with negative E, so it is convenient to define P[−E,~v] := −P̄[E,~v],
+where now the argument E in P[E,~v] takes values between −∞ to +∞. The overall
+minus sign is a notational foresight that makes Eq.(2.5) simpler."
+"Neutrino oscillations do not change the total occupation numbers of neutrinos
+(or antineutrinos), but only the difference between flavors. One defines P[E,~v] =
+g[E,~v] S[E,~v], with S[E,~v] having a unit length and"
+"g[E,~v] ="
+"{
++fνe [+E,~v]− fνµ [+E,~v] for E > 0
+−fν̄e [−E,~v] + fν̄µ [−E,~v] for E < 0"
+"being the normalization of the polarization vectors up to a sign. It is to be noted that
+the occupation numbers for neutrinos and antineutrinos are only defined at positive
+E, but together they are packaged into a single function g[E,~v] which spans over
+E ∈ (−∞,+∞). Typically one has an excess of νe over νµ (resp. ν̄e over ν̄µ) at any
+momentum, because the electron flavors can be preferentially produced via charged
+current processes. This means that g[E,~v] is positive (resp. negative) for neutrinos
+(resp. antineutrinos). If instead there is an excess of νµ over νe (resp. ν̄µ over ν̄e) it
+simply means that g[E,~v] becomes negative (resp. positive)."
+"2A few words about notation: Functional dependence will be denoted by square brackets [. . .],
+though dependence on space-time (~x, t) is implicit. We reserve the parenthesis (. . .) for grouping
+terms together or to denote vectors written as a tuple of their components. Sans-serif letters such
+as S represent three-component vectors in flavor space. Symbols in the usual italic with an arrow on
+top, e.g., ~x, represent three-dimensional vectors in real space. Later in the paper we will introduce
+matrices that are space-time tensors; these are written as bold symbols, e.g., Π, and their components
+as Πij with subscripts ij being indices that run over space and time. Angle brackets, i.e., 〈· · · 〉, will
+stand for spatial averaging over all spatial coordinates."
+"In the flavor basis, the orientation (0, 0,+1) corresponds to a purely electron
+flavor and (0, 0,−1) to a muon flavor. All neutrinos and antineutrinos start out as
+flavor eigenstates and the initial state of all Bloch vectors is chosen to be Sini[E,~v] =
+(0, 0,+1). In this convention, at any space-time point, the third component of the
+Bloch vector S[E,~v] is equal to twice the survival probability minus one."
+"The Bloch vector for the hamiltonian has the form H = Hvac + Hmat + Hself .
+Neutrino mass-mixing gives"
+"Hvac[E] = ±ωE (sin 2θ, 0, cos 2θ) , (2.3)"
+"with the plus (resp. minus) sign chosen for the normal (resp. inverted) mass ordering.
+Note that antineutrinos having been defined as neutrinos with negative E accounts
+for the sign-flip needed in the mass-mixing hamiltonian. Further, the effect of forward
+scattering on electrons in the background matter is encoded in"
+"Hmat = λ (0, 0, 1) , (2.4)"
+"Hself [~v] =
+√"
+"∫
+d2~v ′"
+"(2π)3
+(
+1− ~v · ~v ′"
+) ∫ +∞
+"−∞
+E ′2dE ′ g[E ′, ~v ′] S[E ′, ~v ′] (2.5)"
+"is the neutrino-neutrino interaction term that depends on the flavor states of other
+neutrinos and antineutrinos, and causes collective flavor oscillations. Note that the
+overall minus sign chosen in the definition the polarization vectors for antineutrinos
+has converted"
+"∫∞
+0
+E2dE (P− P̄) to"
+"∫ +∞
+−∞ E"
+"2dE g[E,~v] S[E,~v].
+We will consider astrophysical scenarios where the neutrino density is large, i.e.,"
+"µ � ωE, λ, and neglect the vacuum and the matter terms from the hamiltonian. In
+this limit, inspection of the above equations shows that the dependence of S[E,~v] on
+energy drops out.3 So, it makes sense to rewrite Eq.(2.1) as"
+"(
+∂t + ~v · ~∂"
+")
+S[~v] = µ0"
+"∫
+d2~v ′ (1− ~v · ~v ′)G[~v′] S[~v ′]× S[~v] , (2.6)"
+"where we note that S no longer depends on E but only on ~v, and the collective potential
+is some constant µ0 ="
+"√
+2GF nν over length and time scales of interest. We use µ"
+"−1
+0 = 1"
+"as our unit of distance.
+The function G[~v] is called the electron lepton number (ELN) distribution as a"
+"function the direction ~v [21],"
+"G[~v] =
+1"
+(2π)3 nν
+"E2dE
+(
+fνe [E,~v]− fν̄e [E,~v]− fνµ [E,~v] + fν̄µ [E,~v]"
+")
+(2.7a)"
+= Gνe [~v]−Gν̄e [~v]−Gνµ [~v] +Gν̄µ [~v] . (2.7b)
+"Here each term on the right hand side is the ratio of the number density of neutrinos
+or antineutrinos with that flavor and velocity ~v to the neutrino density nν ."
+"3Strictly speaking, one must keep ωE 6= 0 in Hvac; otherwise one can set the mass and flavor basis
+to be identical, once and for all, and there are no oscillations. Thus ωE affects the kickstarting of the
+oscillations, but the subsequent evolution very weakly [21, 23]. In practice, one imagines setting ωE
+(or an external perturbation used as its proxy) to zero immediately after the evolution begins."
+"Figure 1: Schematic representations of contributions to the ELN, with the four kinds
+angular distributions of the νe and ν̄e and thus different numbers of crossings."
+"2.2 ELNs with 1, 2, . . . ,∞ Crossings
+In a typical astrophysical scenario, where the ambient temperature is lower than the
+muon mass, there is no significant difference in the occupations for νµ and ν̄µ. Thus
+G[~v] is approximately equal to Gνe [~v] − Gν̄e [~v], and can be called the electron lepton
+number distribution. Integrating it over velocity, one finds"
+"∫
+d2~v G[~v] ="
+"nνe − nν̄e
+nν"
+", (2.8)"
+"which is the net lepton asymmetry in neutrinos.
+We now focus on a broad feature of this function G[~v] — the possibility that"
+"this function changes sign as a function of direction — a feature that is referred to
+as an ELN crossing. The reason we focus on this feature, is that it appears to be
+necessary (and perhaps sufficient) for causing fast flavor oscillations. A crossing can
+occur if Gνe [~v] and Gν̄e [~v] have different velocity dependence and are of a comparable
+magnitude. Broadly, one can think of four possible scenarios:"
+"• No crossing: If the density of νe far exceeds that of ν̄e, or vice versa, then one
+of the terms in G[~v] dominates and there is no crossing in the ELN. The function
+G[~v] remains positive or negative everywhere. This situation is shown as the
+top-left schematic in Fig. 1."
+"• One crossing: In the neutrino decoupling region in a SN, νe is expected to have
+a higher number density compared to ν̄e. However, ν̄e kinematically decouples at
+a smaller radius, and in the forward direction one may expect the ν̄e contribution
+to the ELN to exceed the νe [20], if there are directions along which the lepton
+asymmetry is not too large [22]. In this case, the function G[~v] is negative
+in the forward direction, but positive elsewhere, and there is a single crossing.
+Hydrodynamic fluctuations of the lepton asymmetry can allow asymmetry to
+be small along some direction(s) and ELN crossing(s) could occur [34–36]. As
+another example, in the disk of a neutron star merger [33, 38] (or if a quark-
+hadron phase transition occurs in a SN [44]) the number density of ν̄e can exceed
+that of νe, and all else remaining the same, a ν̄e excess in the radially outward
+direction is even more likely. This situation is shown as the top-right schematic
+in Fig. 1."
+"• Two crossings: If the ν̄e contributions to the ELN exceed the νe in the forward
+and backward directions, the function G[~v] is negative in the forward and back-
+ward directions, but positive in the directions tangential to the radial direction.
+A possible cause of larger ν̄e numbers in the backward direction, in addition to
+a forward excess as discussed above, could be that ν̄e have a larger cross sec-
+tion to backscatter off nuclei, thus creating a dominantly ν̄e back-flux [34]. This
+situation with two crossings is shown as the bottom-left schematic in Fig. 1."
+"• Many crossings: If the νe and ν̄e contributions to the ELN are almost equal
+but fluctuate independently, perhaps due hydrodynamic waves and instabilities,
+one would expect G[~v] to be changing sign frequently as a function of direction.
+In this scenario, the ELN has many crossings. This is likely in the convective
+layer of a SN [35–37], and perhaps in the early Universe [40]. A schematic of this
+situation is shown on the bottom-right in Fig. 1."
+2.2.1 True vs. Apparent Dimensionality
+"The figures in the schematic in Fig. 1 are best visualized as sections of the corresponding
+surfaces in the three-dimensional velocity space. However, studying fast flavor oscil-
+lation in three spatial dimensions is numerically challenging. Typically, one assumes
+that G[~v] is azimuthally symmetric, i.e., invariant to its rotations in velocity-space
+about the radially outward direction (here coinciding with x̂). This is the picture that
+has been adopted in almost all studies. Mathematically, this requires dropping vz and
+vy everywhere and setting ~v · ~∂ → vx∂x and ~v · ~v ′ → vx v′x in Eq. (2.6). Thus, in most
+studies, even when one solves the counterpart of Eq.(2.1) in some lower number of spa-
+tial dimensions, say d = 1 assuming azimuthal symmetry about the radially outward
+direction, what one has in mind is the higher dimensional version, say with D = 3,"
+"and the solution is assumed to be strictly symmetric with respect to the remaining
+D − d = 2 components of the velocity, vy and vz. In this approach vx does not have a
+unit magnitude, and one only requires |vx| < 1. Although it is prevalent and appealing
+as a modeling simplification, it is an uncontrolled approximation. In previous studies
+on slow collective oscillations [16–19], it was shown that additional instabilities can
+be generated by spontaneous symmetry breaking along the assumed-to-be-symmetric
+dimensions."
+"In this paper we will consider a neutrino gas in strictly two spatial dimensions, x
+and y, with velocities restricted to a two-dimensional plane, i.e., ~v = vxx̂ + vyŷ with
+v2x + v"
+"2
+y = 1. This should not be thought of as a projection of a three dimensional"
+"problem on to two dimensions, as described in the paragraph above. In this way, the
+velocity vector has a unit length and no instabilities are ignored by fiat. The downside
+is that we are solving a two-dimensional toy problem, and it may not be obvious how
+it applies to the three-dimensional real-world. Although our calculation in 2+2+1
+dimensions is the state-of-the-art, it should really be taken as a step towards more
+realistic studies in full 3+3+1 dimensions. Still, this set-up has its merits as discussed
+above, and we will find important insights by undertaking this calculation."
+2.2.2 ELN Models
+"In this strictly two-dimensional approach, the ELNs in the figure are functions of a
+single independent variable, say θ, and one writes G[~v] = G[θ], where vx = cos θ and
+vy = sin θ. In the remainder of our study, we consider three out of the four zero crossing
+scenarios shown in Fig.1. We ignore the case with no crossings because one finds no
+instabilities in that case.4 We further simplify our ELNs to be piecewise constant or
+sinusoidal, for concreteness, and consider"
+• Type I (single crossing): G[θ] =
+"{
+A−1
+2π
+, if vx = cos θ > 0"
+"1
+2π
+, if vx = cos θ < 0 ."
+• Type II (two crossings): G[θ] =
+"
+
+"
+"A−1
+2π
+, if vx = cos θ > 0 & vy = sin θ > 0"
+"1
+2π
+, if vx = cos θ < 0 & vy = sin θ > 0"
+"A−1
+2π
+, if vx = cos θ < 0 & vy = sin θ < 0"
+"1
+2π
+, if vx = cos θ > 0 & vy = sin θ < 0 ."
+"• Type III (many crossings): G[θ] = A
+2π"
++ c1 cosmθ + c2 sinmθ .
+"The above choices are made in a way such that G[θ] remains unchanged under
+vy → −vy for Type I, and a simultaneous exchange vy → −vy and vx → −vx in case
+of Type II. These choices are made to explore the dependence of the solution on the"
+"4One point of semantics before we proceed further: For a three-dimensional but azimuth-symmetric
+ELNs these correspond to one closed curve, two closed curves, and many closed curves worth of
+crossings. For our strictly two-dimensional ELNs we will continue to call the above ELNs as having
+one, two, or many crossings, though strictly speaking they have two, four, and twice as many crossings,
+respectively."
+"nature of symmetry of G[θ]. For Type III, m will be taken to be large and G[θ] can
+have O(m) number of zero crossings as a function of θ. In all these cases,"
+dθ G[θ] (2.9)
+denotes the lepton asymmetry.
+2.3 Linear Stability Analysis
+"Initially the transverse component of the Bloch vector is small, i.e., S⊥[vx, vy]� 1 [45],
+as the neutrinos start out as flavor pure states. We then write its space-time evolution
+to linear order as [21, 22]"
+"(∂t + vx∂x + vy∂y) S
+⊥[vx, vy] = i"
+"−1
+dv′xdv"
+"′
+y δ[v"
+"′ − 1]
+(
+1− vxvx′ − vyv′y"
+")
+G[v′x, v"
+"×
+(
+S⊥[v′x, v"
+"′
+y]− S"
+"⊥[vx, vy]
+)
+."
+(2.10)
+"where v =
+√
+v2x + v"
+"2
+y. This is a linear equation in S"
+"⊥. It is thus natural to decompose
+it in the Fourier basis,"
+"S⊥[vx, vy] =
+∑"
+"Q⊥~K,Ω[vx, vy]e
+i(Kxx+Kyy−Ωt) , (2.11)"
+"which gives a linear algebraic equation connecting Ω with ~K. Once this relationship
+Ω( ~K) is known, it gives a set of basis functions Q labelled by ( ~K,Ω) which can be
+linearly superposed to describe any solution of S⊥[vx, vy] in the linear regime."
+"Concretely, one finds the dispersion relation [21, 22, 46–52]"
+"D = detΠ[kx, ky, ω] = 0 , (2.12)"
+"Π[kx, ky, ω] = η +"
+"−1
+dvxdvy"
+"G[vx, vy]"
+"ω − vxkx − vyky
+δ[v − 1] W[vx, vy] . (2.13)"
+"If there is a solution that grows exponentially, e.g., Imω > 0, that solution is said
+to be unstable [47]. A more detailed classification can be found in Refs. [49, 50]. In
+Eq.(2.13) the following definitions have been used:"
+"1 0 0
+0 −1 0
+0 0 −1"
+"
+ , (2.14)"
+"W[vx, vy] ="
+"1 vx vy
+vx v"
+"2
+x vxvy"
+"vy vxvy v
+2
+y"
+"
+ , (2.15)"
+Table 1: Elements of φ for various types of ELNs
+ELN φtt φtx φty φxx φyy φxy γ2 γ1 γ0
+"Type I A
+π"
+"(2−A)
+4"
+"0 2A
+3π"
+"0 0 -7A
+2"
+"(A−2)2
+16"
+"9π3
+-
+A(A−2)2"
+"Type II A
+π"
+"0 0 2A
+3π"
+"A−2
+3π"
+"0 −8A
+2+4A−4
+9π2"
+"A(A2+4A−4)
+9π3"
+"Type III A 0 0 A
+2"
+"0 0 −3A
+2"
+"ω = Ω− φtt , (2.16a)
+kx = Kx − φtx , (2.16b)
+ky = Ky − φty , (2.16c)"
+wherein
+"−1
+dvxdvy G[vx, vy] δ[v − 1] W[vx, vy] . (2.17)"
+"Thus, in the linear regime, allowed solutions are given by Eq.(2.12), which upon
+after expanding gives"
+"− (Πty)
+2"
+"Πxx + 2ΠtxΠtyΠxy − Πtt (Πxy)
+2 − (Πtx)"
+"2
+Πyy + ΠttΠxxΠyy = 0 (2.18)"
+"For each pair (kx, ky) one needs to solve Eq.(2.18) for ω, whose imaginary part describes
+the growth of the flavor instabilities. Note that because the only dimensionful quantity
+in the problem is µ0, these are all fast instabilities, i.e., Imω ∝ µ0. In general, the
+above equation is transcendental and analytical solution is impossible. However, for
+(kx = 0, ky = 0), Eq.(2.18) becomes a simple cubic equation in ω0 = ω[kx = 0, ky = 0],"
+"ω30 + γ2ω
+2
+0 + γ1ω0 + γ0 = 0 , (2.19)"
+"γ2 = φtt − φxx − φyy , (2.20a)
+γ1 = (φtx)"
+"2
++ (φty)"
+"2 − φttφxx − (φxy)
+2 − φttφyy + φxxφyy , (2.20b)"
+"γ0 = − (φty)
+2
+φxx + 2φtxφtyφxy − φtt (φxy)"
+"2 − (φtx)
+2
+φyy + φttφxxφyy . (2.20c)"
+"We remind the reader that the ω here is not |∆m2|/(2E), but merely the zeroth
+component of the Fourier mode in Eq.(2.16a). The values of (γ0, γ1, γ2) and φij for our
+chosen Type I, II, and III neutrino angular distributions are listed in Table 1."
+2.4 EoM Solver
+"We developed our own numerical routines for solving Eq.(2.6). Our approach involves
+discretizing the spatial directions into Nx and Ny uniformly spaced bins, resulting in
+NxNy number of coupled nonlinear ODEs in time for each momentum mode labeled by
+its (vx, vy) pair. A periodic boundary condition in each spatial direction is assumed. We
+also discretize the velocity modes in one direction (either vx or vy) into Nvel uniformly
+spaced bins, and due to the restriction v = 1 the binning of the velocity modes in
+the other direction gets fixed resulting in total of (3× 2) NxNyNvel coupled nonlinear
+ODEs. The factor of 3 comes from the three components of the polarization vector
+and the factor of 2 comes from the fact that for each choice of vx one has two allowed
+choices of vy."
+"We solve the system equations in a 2D square box of area L× L, with L = 18 in
+units of µ−10 . We choose µ0 = 3π cm"
+"−1 for Type I ELNs, and for Type II ELNs we take
+either µ0 = 3π cm"
+"−1 or µ0 = 17π cm
+−1 which correspond to a neutrino number density"
+"ofO (1032) cm−3. Periodic boundary conditions are assumed on both spatial directions,
+i.e., on x, y ∈"
+")
+. This periodic boundary condition physically represents that"
+"we are treating this box as a part of a larger system. The finiteness of the box affects
+the smallest ∆~k we can distinguish in our calculation. We discretize x and y into
+Nx = Ny = 480 bins, enough to trigger as many Fourier modes as possible, and well"
+"above what is needed to trigger all unstable ~k modes, limited only by CPU hours. The
+velocity of outgoing neutrinos are in the range vx, vy ∈ (−1, 1) with Nvel = 32. In
+total, we solve a system of 6Nx × Ny × Nvel = 44236800 coupled nonlinear ODEs in
+time up to tfin = 3.5 in units of µ"
+"−1
+0 . The choices for Nx, Ny, Nvel are optimized to"
+"obtain sufficient precision and accuracy as shown in Appendix A.
+The initial conditions are that all Bloch vectors S[~v] are equal to (0, 0, 1), i.e., a"
+"flavor-pure state. Depending on the positive (or negative) sign of G[~v], the polarization
+vectors P[~v] = G[~v] S[~v] points along (or opposite to) the vertical in flavor space. For
+our chosen set of ELNs, as discussed in Sec. 2.2, this means that the P[~v] start with
+one, two, or many crossings5 as a function of θ. Normally Hvacω would start the flavor
+evolution by tilting the Bloch vectors away from their initial positions. However, for
+our calculations, we have set Hvacω and H"
+"mat to zero for numerical convenience, and
+instead provide an external perturbation of O(10−6) to both transverse components of
+the polarization vectors at (x = 0, y = 0) to kickstart the evolution."
+"The code is written in Python and uses the zvode solver, a variable-coefficient
+differential equation solver in Python, to solve the system of ODE as a function
+of time. This solver implements the backward differentiation formula for numerical
+integration. Our technique of converting a set of coupled nonlinear PDEs into ODEs
+allows easy use of existing ODE libraries and makes the numerical integration much
+faster. The spatial derivatives are computed using a Fast Fourier Transform employing
+Python’s scipy.fftpack.diff package."
+"5See the footnote in Sec. 2.2, clarifying what we mean by one, two, and many crossings in the
+context of our ELNs."
+– 10 –
+2.5 Dispersion Relation Solver
+"To understand the nature of the flavor evolution in the linear regime one needs to
+know the behavior of ω as a function of ~k, which we represent by its magnitude k and
+argument as β, i.e.,"
+"k =
+√
+k2x + k"
+"2
+y , (2.21)"
+"β = arctan
+(
+ky
+kx"
+")
+. (2.22)"
+"This ω[k, β] can only be obtained after solving the transcendental equation described
+by Eq.(2.18). This is not easy, even numerically, as one needs to scan over a large
+space spanned by (ω, k, β), and brute force root-finding is inefficient."
+"To speed up our root-finding, we use the method of iterative solving where we
+begin at a known solution (or initial guess) and then use it to propagate the solution
+further in (ω, k, β) space. As our initial guess we use the k = 0 solution, ω0, which for
+a given ELN can be determined easily from Eq.(2.19). This is simply the zero-mode
+solution that was advocated in Ref.[25], and even in the most general case with 3+3+1
+dimensions Eq.(2.19) is analytically tractable. Then we define a circular boundary of
+radius r, chosen to be sufficiently small and close to k = 0 point in the k − β plane.
+Using w0 as our initial guess we numerically solve Eq.(2.18) to calculate ω for different
+β directions within the region 0 < k < r in the k−β plane. Then we proceed to a new
+point on the boundary defined by r, where we already have a solution, to define another
+circle of radius r. At each new point within this new circular region we can start with
+previous solution as a starting guess, and find the updated solutions. Note that we
+choose r in a way such that the previous guess works reasonably well. Repeating this,
+we can find the solution on the entire k − β plane."
+"The roots of Eq.(2.18) are obtained by Python’s fsolve package which uses
+Powell’s conjugate direction method to find the local minima of a nonlinear equa-
+tion. The method requires an initial guess, but does not require differentiability of
+the underlying complex function because no derivatives are computed in order to find
+the solution. The integrals in Eq.(2.13) are evaluated using the numerical routine for
+adaptive quadrature implemented in Python’s quad solver."
+3 Results
+3.1 One Crossing
+"For our Type I ELNs, G[θ] has a reflection symmetry for vy = sin θ, i.e., G[θ] remains
+invariant under vy → −vy. This symmetry leads to a similar symmetry in the kx −
+ky plane, i.e., D[kx,−ky, ω] = D[kx, ky, ω]. This can be understood considering the
+interchange vy → −vy and ky → −ky in Eq.(2.13):"
+"Πij[kx, ky, ω]
+ky → −ky−−−−−→ ηij +"
+"−1
+dvxdvy"
+"G[vx, vy]"
+"ω − kxvx + kyvy
+δ[v − 1]Wij[vx, vy]"
+"vy → −vy−−−−−→ ±Πij[kx, ky, ω] ,
+(3.1)"
+– 11 –
+"Type I, A = 0"
+"β = π
+4"
+"β = π
+2"
+"β = 3π
+4"
+"β = 5π
+4"
+"β = 3π
+2"
+"β = 7π
+4"
+Im ω = 8
+Im ω = 6
+Im ω = 4
+Im ω = 2
+"k = 6
+k = 9"
+k = 13
+"0 6 12 18
+k"
+"Im
+ω
+[k
+,β
+]"
+"β= π2 ,
+3π
+2"
+"Type I, A 6= 0"
+"β = π
+4"
+"β = π
+2"
+"β = 3π
+4"
+"β = 5π
+4"
+"β = 3π
+2"
+"β = 7π
+4"
+Im ω = 8
+Im ω = 6
+Im ω = 4
+Im ω = 2
+A = 0.4
+"0 6 12 18
+k"
+"Im
+ω
+[k
+,β
+]"
+"Figure 2: Left: Angular variation of Imω with respect to β. Right : Radial variation
+of Imω with respect to k. The top plots are done with A = 0 for different values of k
+(left) and β (right) whereas the bottom ones with fixed k = 9 (left) and β = 0 (right)
+for A = 0.4 case. The continuous lines show results of the linear stability analysis,
+while the dotted points show the results from numerical solution of the full equations
+of motion. For comparison, the results for the A = 0 case are shown in blue dashed
+lines in the bottom panel plots."
+"where we have used the fact that G[vx, vy] = G[vx,−vy] in the last step. Eq.(3.1)
+basically says that Πij remains invariant under the above two operations up to a ±
+sign. The minus sign occurs only for Πty and Πxy while all others come with a plus
+sign. However, Πty and Πxy always come in pairs in Eq.(2.18), i.e., as (Πty)"
+"2
+, (Πxy)"
+"or ΠtyΠxy, which immediately says that D[kx, ky, ω], as well as the solution for Imω,
+remains invariant under ky → −ky."
+– 12 –
+Eq.(3.1) implies for k = 0 or (kx = ky = 0) mode:
+"Πty[0, 0, ω0] = 0 (3.2)"
+"and
+Πxy[0, 0, ω0] = 0 . (3.3)"
+"Eq.(3.2) and Eq.(3.3) help us to write the full dispersion relation in Eq.(2.18) as two
+separate equations:"
+"Πyy[0, 0, ω0] = 0 (3.4)"
+"Πtx[0, 0, ω0]Πtx[0, 0, ω0]− Πtt[0, 0, ω0]Πxx[0, 0, ω0] = 0 . (3.5)"
+"Eq.(3.4) implies ω0 = φyy which is a real solution. Eq.(3.5) can be simplified to obtain
+a quadratic equation in ω0 as,"
+ω20 + ω0
+"(
+φtt − φxx"
+")
+−
+(
+φttφxx − (φtx)"
+= 0 (3.6)
+The solutions determined by Eq.(3.6) can be complex only if
+"(
+φtt + φxx"
+)2 − 4 (φtx)2 < 0 . (3.7)
+"Eq.(3.6) can have complex solutions, in general, leading to the k = 0 mode becoming
+unstable for Type I cases. For instance, in our numerical examples with A = 0 (resp.
+A = 0.4) the LHS of Eq.(3.7) becomes −1 (resp. −0.6), and thus easily satisfies the
+above condition. Once we have the k = 0 solution, ω0, we can compute ω for other
+value of ~k using the iterative method described in Sec. 2.5. On the other hand, we can
+also numerically simulate Eq. (2.6) to obtain S[~v] as a function of (x, y, t). We then
+take spatial Fourier transforms of this solution, and ask how the amplitude of each
+~k mode changes with time. For some modes, we find the mode-amplitude increases
+exponentially, and we extract the imaginary part of ω(~k) from numerical data. These
+two methods give results in excellent agreement, as shown in Fig. 2."
+"For Type I ELNs, G[θ] is symmetric between the regions sin θ > 0 and sin θ < 0
+or in other words there is a vy → −vy symmetry. This gives rise to a similar symmetry
+in the angular variation of Imω with respect to β, i.e., Imω|ky>0 = Imω|ky<0 as can
+be seen in the top left panel plot of Fig.2. The radial variation of Imω with respect
+to k in the top right plot of Fig.2 clearly shows a much larger growth for the modes
+very close to k = 0, and then the growth rate decreases as a function of k for all
+β directions. The k = 0 mode being unstable for this case is understood from our
+analytical arguments. We find the decrease is much slower along the ky axis, about
+which there is a ky → −ky symmetry. Interestingly the position of the Fourier mode
+with the maximum linear growth rate is aligned along kx axis, as shown in the black
+starred point in top left plot of Fig. 2."
+"Even for A 6= 0 a similar kind of ky → −ky symmetry in the angular variation of
+Imω is shown in the bottom left plot of Fig. 2. The k = 0 mode is unstable for this"
+– 13 –
+"case as well. All the results for the radial and angular variation of Imω are similar
+to the A = 0 case with only an exception that the overall growth rate as well as the
+maximum growth rate decreases for larger (positive) A. This is seen in the bottom
+left panel of Fig. 2, where the position of the maximum growth rate is indicated by
+different starred points that correspond to specific choices of A, as indicated by the
+color code. This effect of non-zero lepton asymmetry also results in a faster decrease
+of Imω with larger k, as shown in bottom right plot of Fig. 2."
+3.2 Two Crossings
+"Type II ELNs have a symmetry under the joint operations vx → −vx and vy → −vy,
+for any value of A. This results in a D[−kx,−ky, ω] = D[kx, ky, ω] type of symmetry
+in kx − ky plane. This can be understood through"
+"Πij[kx, ky, ω]
+ky → −ky−−−−−→
+kx → −kx"
+"−1
+dvxdvy"
+"G[vx, vy]"
+"ω + kxvx + kyvy
+δ[v − 1]Wij[vx, vy]"
+"vy → −vy−−−−−→
+vx → −vx"
+"±Πij[kx, ky, ω] .
+(3.8)"
+"In the last step of Eq.(3.8), G[−vx,−vy] = G[vx, vy] has been used. Eq.(3.8) says
+that Πij remains invariant under the joint operations of kx → −kx and ky → −ky
+except a minus sign that only occurs for Πtx and Πty. But interestingly again they
+come in pairs in Eq.(2.18), such as (Πtx)"
+"2
+, (Πty)"
+"2
+or ΠtxΠty, leaving the dispersion"
+"relation as well as as the solution for Imω invariant under the above operations. An
+interesting special case occurs for Type II ELNs with A = 0 where now the dispersion
+relation can have two more symmetries. For example, D[−kx, ky, ω] = D[kx, ky, ω] and
+D[kx,−ky, ω] = D[kx, ky, ω] along with the previous one. These extra symmetries for
+A = 0 case can be easily understood using similar arguments as above."
+Eq.(3.8) for kx = ky = 0 gives
+"Πtx[0, 0, ω0] = 0 (3.9)"
+"and
+Πty[0, 0, ω0] = 0 . (3.10)"
+This further simplifies Eq.(2.18) into two separate equations:
+"Πtt[0, 0, ω0] = 0 (3.11)"
+"and
+Πxy[0, 0, ω0]Πxy[0, 0, ω0]− Πxx[0, 0, ω0]Πyy[0, 0, ω0] = 0 . (3.12)"
+"Eq.(3.11) implies ω0 = −φtt which is a real solution. Eq.(3.12) simplifies to give
+rise to a quadratic equation,"
+"ω20 − ω0
+(
+φxx + φyy"
+")
++
+(
+φxxφyy − (φxy)"
+= 0 . (3.13)
+– 14 –
+"Type II, A = 0"
+"β = π
+4"
+"β = π
+2"
+"β = 3π
+4"
+"β = 5π
+4"
+"β = 3π
+2"
+"β = 7π
+4Im ω = 8"
+Im ω = 6
+Im ω = 4
+Im ω = 2
+k = 18
+k = 22
+k = 30
+"0 20 40 60 80
+k"
+"Im
+ω
+[k
+,β
+]"
+"Type II, A 6= 0"
+"β = π
+4"
+"β = π
+2"
+"β = 3π
+4"
+"β = 5π
+4"
+"β = 3π
+2"
+"β = 7π
+4"
+Im ω = 8
+Im ω = 6
+Im ω = 4
+Im ω = 2
+A = 0.1
+"0 20 40 60 80
+k"
+"Im
+ω
+[k
+,β
+]"
+"Figure 3: Left: Angular variation of Imω with respect to β. Right : Radial variation
+of Imω with respect to k. The top plots are done with A = 0 for different values of k
+(left) and β (right) whereas the bottom ones with fixed k = 30 (left) and β = π"
+"2
+(right)"
+"for A = 0.1. In these plots the continuous lines represent the linear stability solution
+while the dotted points the solution of the full equation of motion. For comparison
+purpose the solution for A = 0 is also shown in green dashed lines in the bottom panel
+plots."
+The solutions of Eq.(3.13) are complex only if
+"(
+φxx − φyy"
+")2
++ 4
+(
+φxy
+)2
+< 0 . (3.14)"
+"The condition in Eq.(3.14) can never be fulfilled, as the LHS is a sum of two perfect
+squares, thus implying a stable zero-mode for Type II ELNs."
+"Fig. 3 shows the angular variation of Imω predicted by our previous analytical
+arguments for this case. The stability of k = 0 mode as shown in the radial variation"
+– 15 –
+"in top-right plot of Fig.3, confirms our analytical claim. Already one finds that having
+two crossings leads to less instability in some sense. Interestingly, the radial variation
+of Imω for this case shows an approximately Lorentzian shape as a function of k,
+i.e., large wavelength or small k modes are inert then the growth rate increases as we
+increase k with a maximum around k = 30− 40 and then starts to decrease as a result
+very small wavelength or very large k modes again become inert. The Lorentzian is
+much wider closer to the β = π/2 direction than at β = 0. The Fourier modes close
+to ky (β = π/2) axis have much larger growth rate compared to modes close to kx
+(β = 0) for this case. In contrast with the Type I case, the Fourier mode with the
+largest growth rate in this case lies along the ky axis (β ="
+"π
+2
+) about which there is a"
+"ky → −ky symmetry.
+For A 6= 0, the angular variation of Imω shown in the bottom left panel of"
+"Fig.3 shows a skewed symmetry. The non-zero value of lepton asymmetry breaks the
+symmetry along kx and ky axes keeping the symmetry along the diagonals intact and
+also tilts the overall angular distribution towards one of the diagonals. The non-zero
+value of A also shifts the position of the Fourier mode with the largest growth rate
+from the ky axis to along one of the diagonals. This plot also indicates that the Fourier
+modes along β = π/2 have a much larger growth rate compared to modes along β = 0
+direction but with an exception that in this case the overall growth of the system is
+suppressed compared to zero lepton asymmetry case. The k = 0 mode is stable in this
+case also, as shown in bottom right plot of Fig. 3. The same plot also indicates that
+Imω as a function of k for specific β direction shows a similar Lorentzian nature but
+it is slightly shifted towards k = 0 with lower width compared to A = 0 case. The
+diagonal symmetry, the shift in the position of the maximum of Imω and the decrease
+in overall growth of the system become more pronounced as we increase the value of
+lepton asymmetry."
+3.3 Many Crossings
+"Type III ELN corresponds to a scenario where, e.g., due to fluctuations of the neutrino
+distributions, the angular distributions of νe, νe are rapidly changing as a function of
+θ and their difference can go through large number of zero crossings. To mimic this
+scenario we considered the Type III G[θ] with m being quite large. We will show how
+the maximum growth of such systems depends on the number of zero crossings, closely
+related to m. To understand this let us consider Eq.(2.13) in terms of the angular
+variable θ and the k − β coordinates,"
+"Π[k, β, ω] = η +ψ[ω, k, β] = η +"
+"dθ f [θ, ω, k, β]G[θ] W[θ] , (3.15)"
+"where we have defined ψ[ω, k, β] as the matrix of integrals on the RHS. As before, but
+now explicitly in terms of θ, one has"
+"f [θ, ω, k, β] =
+1"
+"ω − k cos (θ − β)
+(3.16)"
+– 16 –
+"20 25 30 35 40
+m"
+"Numerical
+1
+m"
+fit (Analytical)
+"Figure 4: Im ω̃max as a function of the crossing number m is shown for G[θ] = 6 sinmθ.
+Analytical arguments show that Im ω̃max decreases as 1/m."
+W[θ] =
+"1 cos θ sin θ
+cos θ cos2 θ sin θ cos θ
+sin θ sin θ cos θ sin2 θ"
+"
+ . (3.17)"
+"Eq.(3.16) indicates that the integrands in each component of ψ[ω, k, β] has a saddle-
+point at say θ0[i, j]. In general, depending on Wij[θ], the stationary points θ0[i, j]
+will be shifted away from cos−1"
+"(
+Reω
+k"
+")
++ β, and will not be the same for the different"
+"(i, j) components. But from now on for convenience we will stop explicitly writing
+the functional dependence on i, j in θ0. Our objective, will be to compute the integral
+in Eq.(3.15) in the saddle-point approximation, and show how the Fourier mode with
+maximum growth, labeled by (ωmax, kmax, βmax), has smaller instability for larger m."
+"First we rewrite the ijth component of ψ[ωmax, kmax, βmax] in terms of the loga-
+rithm of its integrand as,"
+"ψij[ωmax, kmax, βmax] ="
+"dθ f [θ, ωmax, kmax, βmax]G[θ]Wij[θ] ="
+dθ exp[Fij[θ]] .
+"(3.18)
+We then expand Fij[θ] about its stationary point θ0 up to second order to obtain,"
+"Fij[θ] = Fij[θ0] + (θ − θ0)
+2 d"
+2Fij[θ]
+"∣∣∣∣
+θ=θ0"
+. (3.19)
+"Note Fij[θ] here is a complex function. Eq.(3.18) and Eq.(3.19) allow us to perform
+the saddle-point integral around θ0 to get"
+"ψij[ωmax, kmax, βmax] = f [θ0, ωmax, kmax, βmax]G[θ0]Wij[θ0]"
+"−d
+2Fij [θ]"
+"∣∣
+θ=θ0"
+. (3.20)
+– 17 –
+"Now, one can insert the expression of Type III ELN and use the large-m limit to write"
+"−
+d2Fij[θ]"
+"∣∣∣∣
+θ=θ0"
+"=
+m2
+(
+c21 + c"
+"A
+2π
+G[θ0]− A"
+"G[θ0]2
++O(m0) , (3.21)"
+"where c1,2 are the coefficients of the sin and cos terms in the Type III ELN. The O(m0)
+can be neglected for Type III ELNs using the fact that m is large. Eq.(3.21) allows us
+to approximately simplify Eq.(3.18) to"
+"ψij[ωmax, kmax, βmax] = G̃[θ0]
+Wij[θ0]"
+"mω̃max
+, (3.22)"
+G̃[θ0] =
+"(
+c21 + c"
+"A
+2π
+G[θ0]− A"
+")1/2 G
+2[θ0] , (3.23)"
+"and
+ω̃max = ωmax − kmax cos (θ0 − βmax) (3.24)"
+"is the complex growth rate for the mode (kmax, βmax). Note ω̃max in principle can
+have dependence on i, j indices via θ0 but as it appears only in the real part of ω̃max"
+"and in the limit θ0[i, j] for different i, j indices are close to cos
+−1
+("
+"Reωmax
+kmax"
+")
++ βmax or"
+"Re ω̃max ≈ 0, it can be ignored.
+Equation (3.22) shows that ω̃max, and thus ωmax, always appears multiplied by"
+"m. It is then obvious that Imωmax must scale as 1/m. We checked this behavior
+by numerically solving the dispersion relation and then locating the maximum of this
+solution in the k − β plane. For Type III ELN with A = 0, c1 = 1, c2 = 6, and m in
+the range 20− 40 for which the ELN has many zero crossings, this numerical result is
+shown as the blue continuous line in Fig. 4. The black dashed line is the best fit of that
+numerical data with a0"
+"m
++a1 where the fitted parameter values are (a0, a1) = (13.5, 0.0)."
+"This behavior clearly supports our analytical claim that a large number of crossings
+leads to the instability growth being hindered as 1/m. This is of course obtained with
+a very particular form of the Type III ELN, which is purely sinusoidal with a single m.
+Based on numerical experiments, we conjecture that growth rates with many crossings
+should be small in general, all else being equal. Generalizing the above analysis for an
+arbitrary ELN, say written using a sine and cosine series in θ, does not seem straight-
+forward."
+4 Summary
+"In this paper we explored, analytically and numerically, how the initial growth of flavor
+instabilities of a dense neutrino gas depends on the number of zero crossings in the
+ELN. Improving upon previous lower-dimensional studies, this is the first study in 2
+(space) + 2 (momentum) + 1 (time) dimensions. We developed our own code that
+solves for the flavor evolution of dense neutrinos. We also presented a new strategy to"
+– 18 –
+"solve the transcendental equations appearing in the dispersion relation for the linear
+evolution of such systems. With these new tools we explored the linear behavior by
+looking at the different radial and angular distributions of the dispersion relation in
+the k − β plane. Our main results are"
+"• The symmetries of the Imω in the k − β plane, its radial (i.e., vs. k) and
+angular (i.e., vs β) variation, the stability of the k = 0 mode, overall linear
+growth and the position of the Fourier mode with the highest growth rate, etc.,
+all have an intimate connection with the various symmetries of the neutrino
+angular distributions and one can analytically understand them in great detail.
+Figs. 2, 3, 4 show the exquisite match between growth rates predicted by linear
+stability analysis and fully numerical evaluation of the solutions. This matching
+and understanding over a variety of lepton asymmetries, A, shapes of ELNs,
+different wavelength k and directions β, shows the extraordinary power of linear
+theory and a testament to the fidelity of our numerics."
+"• ELNs with large number of zero crossings lead to a relatively smaller growth
+rate, essentially decreasing as 1/m where m is the number of crossings. We
+speculate that this may be important for many realistic environments where νe
+and ν̄e distributions are close to each other and crossings occur in the ELNs due
+to noise or fluctuations. It seems that the growth rates for such instabilities will
+be relatively suppressed."
+Acknowledgements
+"The work of B.D. is supported by the Dept. of Atomic Energy (Govt. of India) re-
+search project under Project Identification No. RTI 4002, the Dept. of Science and
+Technology (Govt. of India) through a Swarnajayanti Fellowship, and by the Max-
+Planck-Gesellschaft through a Max Planck Partner Group."
+A Error Estimate for Numerical Solutions
+"In Fig. 5 (left panel), we show the accuracy expected of our calculation. We check if
+the length of the polarization vectors remain fixed at unity or not. The error we incur
+on this is a lower bound on the error in our calculations. We find that our chosen
+discretization, Nx = Ny = 500 and Nv = 64, does as well as finer discretizations,
+incurring an error of O(10−10) at t ≈ 2 where the linear growth of the system ends.
+Even in the far nonlinear regime, the error remains well under 10−3. For illustration,
+here we have chosen a Type II ELNs with nonzero lepton asymmetry."
+"In Fig. 5 (right panel), we illustrate the precision to be expected of our numerical
+solutions of the equations of motion. We check for convergence by comparing the
+length of the spatially averaged version of the polarization vector perpendicular to
+the z-axis between two different discretizations: one with Nx = Ny = 500 and the
+other Nx = Ny = 1000. The computations are shown with Nvel = 64. Our results"
+– 19 –
+"0.0 0.5 1.0 1.5 2.0
+t"
+"S
+v
+x
+,v"
+Nvel = 64
+Nx = Ny = 500
+Nx = Ny = 1000
+"0.0 0.5 1.0 1.5 2.0
+t"
+"⊥ N
+s
+p
+="
+"⊥ N
+s
+p
+="
+"1
+0
+0
+0
+|〉"
+Nvel = 64
+"Figure 5: Left: Accuracy of our calculation, estimated by maximum departure of
+|S| from unity in the x − y plane, as a function of time t. Right: Precision of our
+calculation, estimated by convergence of 〈|S⊥|〉 with respect to our best discretization,
+i.e., (Nx = Ny = 1000), shown as a function of time t. In all these calculations, we
+choose Nvel = 64 and for these plots we show the mode {vx = 0.87, vy = 0.5}."
+"0 1 2 3
+t"
+"x = −L
+4"
+log10|S⊥|
+"0 1 2 3
+t"
+log10|S⊥|
+"0 1 2 3
+t"
+"x = L
+4"
+log10|S⊥|
+"0 1 2 3
+t"
+"y = −L
+4"
+log10|S⊥|
+"0 1 2 3
+t"
+log10|S⊥|
+"0 1 2 3
+t"
+"y = L
+4"
+log10|S⊥|
+"Figure 6: Top : Flavor evolution in the y − t plane obtained from the numerical
+solution of Eq.(2.6) for Type II ELNs with A = 0.1, shown at three different x positions.
+Bottom : Same in the x− t plane at three y positions. The color-coding in the colorbar
+depicts the log10 of the magnitude of S"
+"indicate that a discretization of Nx = Ny = 500 is at most O(10−8) off from yet finer
+discretizations in the linear regime which ends almost at t = 2. This result is also
+shown for the same velocity mode with the same choice of ELN."
+"For completeness, we show the flavor evolution on the x − t plane (resp. y − t"
+– 20 –
+"plane) at three y (resp. x) positions for the above-considered case in Fig. 6. Note the
+overall growth in flavor along y direction is much larger compared to x direction and it
+decreases from the center towards the edge of the box in either directions, as dictated
+by the fastest growing ~k mode. The box has been chosen to be much larger than the
+region where the solution is nontrivial; this is to avoid artifacts of the finiteness of the
+box."
+References
+"[1] L. Wolfenstein, Neutrino oscillations in matter, Phys. Rev. D 17 (1978) 2369."
+"[2] S. P. Mikheev and A. Yu. Smirnov, Resonance Oscillations of Neutrinos in Matter,
+Sov. Phys. Usp. 30 (1987) 759."
+"[3] J. T. Pantaleone, Neutrino oscillations at high densities, Phys. Lett. B 287 (1992) 128."
+"[4] V. A. Kostelecky and S. Samuel, Selfmaintained coherent oscillations in dense
+neutrino gases, Phys. Rev. D52 (1995) 621 [hep-ph/9506262]."
+"[5] S. Pastor, G. G. Raffelt and D. V. Semikoz, Physics of synchronized neutrino
+oscillations caused by selfinteractions, Phys. Rev. D65 (2002) 053011
+[hep-ph/0109035]."
+"[6] H. Duan, G. M. Fuller, J. Carlson and Y.-Z. Qian, Simulation of Coherent Non-Linear
+Neutrino Flavor Transformation in the Supernova Environment. 1. Correlated
+Neutrino Trajectories, Phys. Rev. D 74 (2006) 105014 [astro-ph/0606616]."
+"[7] R. Sawyer, Speed-up of neutrino transformations in a supernova environment, Phys.
+Rev. D 72 (2005) 045003 [hep-ph/0503013]."
+"[8] S. Hannestad, G. G. Raffelt, G. Sigl and Y. Y. Wong, Self-induced conversion in dense
+neutrino gases: Pendulum in flavour space, Phys. Rev. D 74 (2006) 105010
+[astro-ph/0608695]."
+"[9] G. G. Raffelt and A. Y. Smirnov, Self-induced spectral splits in supernova neutrino
+fluxes, Phys. Rev. D 76 (2007) 081301 [0705.1830]."
+"[10] G. L. Fogli, E. Lisi, A. Marrone and A. Mirizzi, Collective neutrino flavor transitions
+in supernovae and the role of trajectory averaging, JCAP 12 (2007) 010 [0707.1998]."
+"[11] A. Esteban-Pretel, S. Pastor, R. Tomas, G. G. Raffelt and G. Sigl, Decoherence in
+supernova neutrino transformations suppressed by deleptonization, Phys. Rev. D 76
+(2007) 125018 [0706.2498]."
+"[12] B. Dasgupta and A. Dighe, Collective three-flavor oscillations of supernova neutrinos,
+Phys. Rev. D 77 (2008) 113002 [0712.3798]."
+"[13] B. Dasgupta, A. Dighe, G. G. Raffelt and A. Y. Smirnov, Multiple Spectral Splits of
+Supernova Neutrinos, Phys. Rev. Lett. 103 (2009) 051105 [0904.3542]."
+"[14] H. Duan, G. M. Fuller and Y.-Z. Qian, Stepwise spectral swapping with three neutrino
+flavors, Phys. Rev. D 77 (2008) 085016 [0801.1363]."
+– 21 –
+"https://doi.org/10.1103/PhysRevD.17.2369
+https://doi.org/10.1070/PU1987v030n09ABEH002961
+https://doi.org/10.1016/0370-2693(92)91887-F
+https://doi.org/10.1103/PhysRevD.52.621
+https://arxiv.org/abs/hep-ph/9506262
+https://doi.org/10.1103/PhysRevD.65.053011
+https://arxiv.org/abs/hep-ph/0109035
+https://doi.org/10.1103/PhysRevD.74.105014
+https://arxiv.org/abs/astro-ph/0606616
+https://doi.org/10.1103/PhysRevD.72.045003
+https://doi.org/10.1103/PhysRevD.72.045003
+https://arxiv.org/abs/hep-ph/0503013
+https://doi.org/10.1103/PhysRevD.74.105010
+https://arxiv.org/abs/astro-ph/0608695
+https://doi.org/10.1103/PhysRevD.76.081301
+https://arxiv.org/abs/0705.1830
+https://doi.org/10.1088/1475-7516/2007/12/010
+https://arxiv.org/abs/0707.1998
+https://doi.org/10.1103/PhysRevD.76.125018
+https://doi.org/10.1103/PhysRevD.76.125018
+https://arxiv.org/abs/0706.2498
+https://doi.org/10.1103/PhysRevD.77.113002
+https://arxiv.org/abs/0712.3798
+https://doi.org/10.1103/PhysRevLett.103.051105
+https://arxiv.org/abs/0904.3542
+https://doi.org/10.1103/PhysRevD.77.085016
+https://arxiv.org/abs/0801.1363"
+"
+[15] B. Dasgupta, A. Dighe, A. Mirizzi and G. G. Raffelt, Spectral split in prompt
+supernova neutrino burst: Analytic three-flavor treatment, Phys. Rev. D77 (2008)
+113007 [0801.1660]."
+"[16] G. Raffelt, S. Sarikas and D. de Sousa Seixas, Axial Symmetry Breaking in
+Self-Induced Flavor Conversion of Supernova Neutrino Fluxes, Phys. Rev. Lett. 111
+(2013) 091101 [1305.7140]."
+"[17] G. Mangano, A. Mirizzi and N. Saviano, Damping the neutrino flavor pendulum by
+breaking homogeneity, Phys. Rev. D89 (2014) 073017 [1403.1892]."
+"[18] B. Dasgupta and A. Mirizzi, Temporal Instability Enables Neutrino Flavor
+Conversions Deep Inside Supernovae, Phys. Rev. D 92 (2015) 125030 [1509.03171]."
+"[19] S. Abbar and H. Duan, Neutrino flavor instabilities in a time-dependent supernova
+model, Phys. Lett. B 751 (2015) 43 [1509.01538]."
+"[20] R. F. Sawyer, Neutrino cloud instabilities just above the neutrino sphere of a
+supernova, Phys. Rev. Lett. 116 (2016) 081101 [1509.03323]."
+"[21] S. Chakraborty, R. S. Hansen, I. Izaguirre and G. Raffelt, Self-induced neutrino flavor
+conversion without flavor mixing, JCAP 03 (2016) 042 [1602.00698]."
+"[22] B. Dasgupta, A. Mirizzi and M. Sen, Fast neutrino flavor conversions near the
+supernova core with realistic flavor-dependent angular distributions, JCAP 02 (2017)
+019 [1609.00528]."
+"[23] B. Dasgupta and M. Sen, Fast Neutrino Flavor Conversion as Oscillations in a
+Quartic Potential, Phys. Rev. D 97 (2018) 023017 [1709.08671]."
+"[24] S. Abbar and H. Duan, Fast neutrino flavor conversion: roles of dense matter and
+spectrum crossing, Phys. Rev. D 98 (2018) 043014 [1712.07013]."
+"[25] B. Dasgupta, A. Mirizzi and M. Sen, Simple method of diagnosing fast flavor
+conversions of supernova neutrinos, Phys. Rev. D 98 (2018) 103001 [1807.03322]."
+"[26] F. Capozzi, B. Dasgupta, A. Mirizzi, M. Sen and G. Sigl, Collisional triggering of fast
+flavor conversions of supernova neutrinos, Phys. Rev. Lett. 122 (2019) 091101
+[1808.06618]."
+"[27] S. Abbar and M. C. Volpe, On Fast Neutrino Flavor Conversion Modes in the
+Nonlinear Regime, Phys. Lett. B 790 (2019) 545 [1811.04215]."
+"[28] F. Capozzi, G. Raffelt and T. Stirner, Fast Neutrino Flavor Conversion: Collective
+Motion vs. Decoherence, JCAP 09 (2019) 002 [1906.08794]."
+"[29] J. D. Martin, C. Yi and H. Duan, Dynamic fast flavor oscillation waves in dense
+neutrino gases, Phys. Lett. B800 (2020) 135088 [1909.05225]."
+"[30] L. Johns, H. Nagakura, G. M. Fuller and A. Burrows, Neutrino oscillations in
+supernovae: angular moments and fast instabilities, Phys. Rev. D 101 (2020) 043009
+[1910.05682]."
+"[31] F. Capozzi, M. Chakraborty, S. Chakraborty and M. Sen, Fast flavor conversions in
+supernovae: the rise of mu-tau neutrinos, 2005.14204."
+– 22 –
+"https://doi.org/10.1103/PhysRevD.77.113007
+https://doi.org/10.1103/PhysRevD.77.113007
+https://arxiv.org/abs/0801.1660
+https://doi.org/10.1103/PhysRevLett.111.091101
+https://doi.org/10.1103/PhysRevLett.111.091101
+https://arxiv.org/abs/1305.7140
+https://doi.org/10.1103/PhysRevD.89.073017
+https://arxiv.org/abs/1403.1892
+https://doi.org/10.1103/PhysRevD.92.125030
+https://arxiv.org/abs/1509.03171
+https://doi.org/10.1016/j.physletb.2015.10.019
+https://arxiv.org/abs/1509.01538
+https://doi.org/10.1103/PhysRevLett.116.081101
+https://arxiv.org/abs/1509.03323
+https://doi.org/10.1088/1475-7516/2016/03/042
+https://arxiv.org/abs/1602.00698
+https://doi.org/10.1088/1475-7516/2017/02/019
+https://doi.org/10.1088/1475-7516/2017/02/019
+https://arxiv.org/abs/1609.00528
+https://doi.org/10.1103/PhysRevD.97.023017
+https://arxiv.org/abs/1709.08671
+https://doi.org/10.1103/PhysRevD.98.043014
+https://arxiv.org/abs/1712.07013
+https://doi.org/10.1103/PhysRevD.98.103001
+https://arxiv.org/abs/1807.03322
+https://doi.org/10.1103/PhysRevLett.122.091101
+https://arxiv.org/abs/1808.06618
+https://doi.org/10.1016/j.physletb.2019.02.002
+https://arxiv.org/abs/1811.04215
+https://doi.org/10.1088/1475-7516/2019/09/002
+https://arxiv.org/abs/1906.08794
+https://doi.org/10.1016/j.physletb.2019.135088
+https://arxiv.org/abs/1909.05225
+https://doi.org/10.1103/PhysRevD.101.043009
+https://arxiv.org/abs/1910.05682
+https://arxiv.org/abs/2005.14204"
+"
+[32] L. Johns, H. Nagakura, G. M. Fuller and A. Burrows, Fast oscillations, collisionless
+relaxation, and spurious evolution of supernova neutrino flavor, Phys. Rev. D 102
+(2020) 103017 [2009.09024]."
+"[33] M.-R. Wu and I. Tamborra, Fast neutrino conversions: Ubiquitous in compact binary
+merger remnants, Phys. Rev. D 95 (2017) 103007 [1701.06580]."
+"[34] T. Morinaga, H. Nagakura, C. Kato and S. Yamada, Fast neutrino-flavor conversion
+in the preshock region of core-collapse supernovae, Phys. Rev. Res. 2 (2020) 012046
+[1909.13131]."
+"[35] M. Delfan Azari, S. Yamada, T. Morinaga, H. Nagakura, S. Furusawa, A. Harada
+et al., Fast collective neutrino oscillations inside the neutrino sphere in core-collapse
+supernovae, Phys. Rev. D 101 (2020) 023018 [1910.06176]."
+"[36] S. Abbar, H. Duan, K. Sumiyoshi, T. Takiwaki and M. C. Volpe, Fast Neutrino Flavor
+Conversion Modes in Multidimensional Core-collapse Supernova Models: the Role of
+the Asymmetric Neutrino Distributions, Phys. Rev. D 101 (2020) 043016
+[1911.01983]."
+"[37] R. Glas, H. T. Janka, F. Capozzi, M. Sen, B. Dasgupta, A. Mirizzi et al., Fast
+Neutrino Flavor Instability in the Neutron-star Convection Layer of Three-dimensional
+Supernova Models, Phys. Rev. D 101 (2020) 063001 [1912.00274]."
+"[38] M. George, M.-R. Wu, I. Tamborra, R. Ardevol-Pulpillo and H.-T. Janka, Fast
+neutrino flavor conversion, ejecta properties, and nucleosynthesis in newly-formed
+hypermassive remnants of neutron-star mergers, 2009.04046."
+"[39] S. Abbar, F. Capozzi, R. Glas, H. T. Janka and I. Tamborra, On the characteristics of
+fast neutrino flavor instabilities in three-dimensional core-collapse supernova models,
+2012.06594."
+"[40] R. S. Hansen, S. Shalgar and I. Tamborra, Neutrino flavor mixing breaks isotropy in
+the early universe, 2012.03948."
+"[41] S. Bhattacharyya and B. Dasgupta, Late-time behavior of fast neutrino oscillations,
+Phys. Rev. D 102 (2020) 063018 [2005.00459]."
+"[42] S. Bhattacharyya and B. Dasgupta, Fast Flavor Depolarization of Supernova
+Neutrinos, 2009.03337."
+"[43] G. Sigl and G. Raffelt, General kinetic description of relativistic mixed neutrinos,
+Nucl. Phys. B 406 (1993) 423."
+"[44] B. Dasgupta, T. Fischer, S. Horiuchi, M. Liebendorfer, A. Mirizzi, I. Sagert et al.,
+Detecting the QCD phase transition in the next Galactic supernova neutrino burst,
+Phys. Rev. D 81 (2010) 103005 [0912.2568]."
+"[45] A. Banerjee, A. Dighe and G. Raffelt, Linearized flavor-stability analysis of dense
+neutrino streams, Phys. Rev. D 84 (2011) 053013 [1107.2308]."
+"[46] I. Izaguirre, G. Raffelt and I. Tamborra, Fast Pairwise Conversion of Supernova
+Neutrinos: A Dispersion-Relation Approach, Phys. Rev. Lett. 118 (2017) 021101
+[1610.01612]."
+"[47] F. Capozzi, B. Dasgupta, E. Lisi, A. Marrone and A. Mirizzi, Fast flavor conversions"
+– 23 –
+"https://doi.org/10.1103/PhysRevD.102.103017
+https://doi.org/10.1103/PhysRevD.102.103017
+https://arxiv.org/abs/2009.09024
+https://doi.org/10.1103/PhysRevD.95.103007
+https://arxiv.org/abs/1701.06580
+https://doi.org/10.1103/PhysRevResearch.2.012046
+https://arxiv.org/abs/1909.13131
+https://doi.org/10.1103/PhysRevD.101.023018
+https://arxiv.org/abs/1910.06176
+https://doi.org/10.1103/PhysRevD.101.043016
+https://arxiv.org/abs/1911.01983
+https://doi.org/10.1103/PhysRevD.101.063001
+https://arxiv.org/abs/1912.00274
+https://arxiv.org/abs/2009.04046
+https://arxiv.org/abs/2012.06594
+https://arxiv.org/abs/2012.03948
+https://doi.org/10.1103/PhysRevD.102.063018
+https://arxiv.org/abs/2005.00459
+https://arxiv.org/abs/2009.03337
+https://doi.org/10.1016/0550-3213(93)90175-O
+https://doi.org/10.1103/PhysRevD.81.103005
+https://arxiv.org/abs/0912.2568
+https://doi.org/10.1103/PhysRevD.84.053013
+https://arxiv.org/abs/1107.2308
+https://doi.org/10.1103/PhysRevLett.118.021101
+https://arxiv.org/abs/1610.01612"
+"
+of supernova neutrinos: Classifying instabilities via dispersion relations, Phys. Rev. D
+96 (2017) 043016 [1706.03360]."
+"[48] T. Morinaga and S. Yamada, Linear stability analysis of collective neutrino
+oscillations without spurious modes, Phys. Rev. D 97 (2018) 023024 [1803.05913]."
+"[49] S. Airen, F. Capozzi, S. Chakraborty, B. Dasgupta, G. Raffelt and T. Stirner,
+Normal-mode Analysis for Collective Neutrino Oscillations, JCAP 12 (2018) 019
+[1809.09137]."
+"[50] C. Yi, L. Ma, J. D. Martin and H. Duan, Dispersion relation of the fast neutrino
+oscillation wave, Phys. Rev. D 99 (2019) 063005 [1901.01546]."
+"[51] M. Chakraborty and S. Chakraborty, Three flavor neutrino conversions in supernovae:
+slow \& fast instabilities, JCAP 01 (2020) 005 [1909.10420]."
+"[52] C. Doering, R. S. Hansen and M. Lindner, Stability of three neutrino flavor conversion
+in supernovae, JCAP 08 (2019) 003 [1905.03647]."
+– 24 –
+"https://doi.org/10.1103/PhysRevD.96.043016
+https://doi.org/10.1103/PhysRevD.96.043016
+https://arxiv.org/abs/1706.03360
+https://doi.org/10.1103/PhysRevD.97.023024
+https://arxiv.org/abs/1803.05913
+https://doi.org/10.1088/1475-7516/2018/12/019
+https://arxiv.org/abs/1809.09137
+https://doi.org/10.1103/PhysRevD.99.063005
+https://arxiv.org/abs/1901.01546
+https://doi.org/10.1088/1475-7516/2020/01/005
+https://arxiv.org/abs/1909.10420
+https://doi.org/10.1088/1475-7516/2019/08/003
+https://arxiv.org/abs/1905.03647"
+"	1 Introduction
+	2 Set-up and Methods
+	2.1 Equations of Motion
+	2.2 ELNs with 1,2,…, Crossings
+	2.2.1 True vs. Apparent Dimensionality
+	2.2.2 ELN Models"
+"	2.3 Linear Stability Analysis
+	2.4 EoM Solver
+	2.5 Dispersion Relation Solver"
+"	3 Results
+	3.1 One Crossing
+	3.2 Two Crossings
+	3.3 Many Crossings"
+"	4 Summary
+	A Error Estimate for Numerical Solutions"

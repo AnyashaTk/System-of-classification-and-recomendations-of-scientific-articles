@@ -1,0 +1,2500 @@
+0
+"MNRAS 000, 000–000 (0000) Preprint 7 January 2021 Compiled using MNRAS LATEX style file v3.0"
+"Predicting the Observability of Population III Stars with
+ELT-HARMONI via the Helium 1640 Å emission line"
+"Kearn Grisdale1?, Niranjan Thatte1, Julien Devriendt1, Miguel Pereira-Santaella1,2,
+Adrianne Slyz1, Taysun Kimm3 , Yohan Dubois4 and Sukyoung K. Yi3
+1 Sub-department of Astrophysics, University of Oxford, Keble Road, Oxford OX1 3RH
+2 Centro de Astrobiologá (CSIC-INTA), Ctra. de Ajalvir, Km 4, 28850, Torrejón de Ardoz, Madrid, Spain
+3 Department of Astronomy, Yonsei University, 50 Yonsei-ro, Seodaemun-gu, Seoul 03722, Republic of Korea
+4 Institut d’Astrophysique de Paris, UMR 7095, CNRS, UPMC Univ. Paris VI, 98 bis boulevard Arago, 75014 Paris, France"
+7 January 2021
+"ABSTRACT
+Population III (Pop. III) stars, as of yet, have not been detected, however as we move into
+the era of extremely large telescopes this is likely to change. One likely tracer for Pop. III
+stars is the HeIIλ1640 emission line, which will be detectable by the HARMONI spectro-
+graph on the European Extremely Large Telescope (ELT) over a broad range of redshifts
+(2 ≤ z ≤ 14). By post-processing galaxies from the cosmological, AMR-hydrodynamical
+simulation NEWHORIZON with theoretical spectral energy distributions (SED) for Pop. III
+stars and radiative transfer (i.e. the Yggdrasil Models and CLOUDY look-up tables respec-
+tively) we are able to compute the flux of HeIIλ1640 for individual galaxies. From mock 10
+hour observations of these galaxies we show that HARMONI will be able to detect Pop. III
+stars in galaxies up to z ∼ 10 provided Pop. III stars have a top heavy Initial Mass Function
+(IMF). Furthermore, we find that should Pop. III stars instead have an IMF similar to those
+of the Pop. I stars, the HeIIλ1640 line would only be observable for galaxies with Pop. III
+stellar masses in excess of 107 M�, average stellar age < 1Myr at z = 4. Finally, we are able
+to determine the minimal intrinsic flux required for HARMONI to detect Pop. III stars in a
+galaxy up to z = 10."
+Key words: Stars: Population III - cosmology: Observations - Galaxy: Structure
+1 INTRODUCTION
+"The very first stars in the Universe, known as Population III (Pop.
+III) stars, are believed to have been extremely massive (〈M?〉 ≥
+100 M�, e.g. see Schwarzschild & Spitzer 1953; Larson 1998;
+Bromm et al. 1999; Abel et al. 2000, and references within). These
+stars would have formed out of the primordial gas created during
+Big-Bang nucleosynthesis and as a result would have been chemi-
+cally pristine. During the course of their lifetimes these stars would
+have reionized the surround gas and, perhaps more importantly, cre-
+ated the first batch of elements heavier than lithium in their interi-
+ors (Ostriker & Gnedin 1996). Through feedback processes (i.e.
+winds and radiations) and eventual supernova phase, Pop. III stars
+heat and enrich their environment which has a direct impact on the
+further star formation (Omukai 1999; O’Shea et al. 2005). Due to
+this enrichment it is unlikely to find Pop. III stars at a low redshift
+(z ≤ 3, Johnson 2010). Furthermore, as a result of their (predicted)
+mass these stars would have relatively short lifetimes, on the or-
+der of 1-10 Myr (Schaerer 2002) and thus are only expected to be"
+? kearn.grisdale@physics.ox.ac.uk
+"found at high redshifts (z � 2). This first generation of stars there-
+fore determined the composition of future generations (Population
+II and I) and changed how gas throughout the Universe was able to
+cool i.e. allow for metal line cooling (Mackey et al. 2003)."
+"Due to their importance in determining the evolution of galax-
+ies and the intergalactic medium there have been a number of at-
+tempts to observe Pop. III stars. However, detections have proven
+difficult in part due to the short lifetime of Pop. III stars (assuming
+〈M?〉 ≥ 100 M�) which (assuming they were formed at z > 2,
+Dijkstra 2007; Nagao et al. 2008; Kashikawa et al. 2012), are not
+expected to still be around at z = 0. Furthermore, due to the en-
+riched metallicity of interstellar, circumgalactic and intergalactic
+mediums (ISM, CGM and IGM), by definition, the local Universe
+is no longer able to form new Pop. III stars. Detection of these stars
+therefore requires telescopes that are able to probe sufficiently high
+redshifts that Pop. III stars are either still forming and form a large
+fraction of the total star formation in the galaxy at that epoch."
+"When doubly ionised helium recombines and undergoes the
+n = 3 → 2 transition it produces a bright emission line at 1640 Å
+(HeIIλ1640). As a result of their (theoretical) high mass, Pop. III
+stars are predicted to produce a large number of photons with suf-"
+© 0000 The Authors
+2 Kearn Grisdale et al.
+"ficient energy (≥ 54.4 eV) to fully ionise helium in the surround-
+ing ISM and thus HeIIλ1640 could be a strong indicator, if not
+direct tracer, for such stars (Jimenez & Haiman 2006). Unfortu-
+nately, other objects such as Wolf-Rayet (WR) stars and Active
+Galactic Nuclei (AGN) also produce the HeIIλ1640 emission line
+(see Francis et al. 1991; Leitherer et al. 1995; Schaerer & Vacca
+1998; Cox 2000, and references within). With the aid of additional
+diagnostics it should be possible to distinguish between these dif-
+ferent sources. For example, the spectra of both AGN and WR stars
+would normally contain emission from C III and C IV (Leitherer
+et al. 1996; Reuland et al. 2007; Allen et al. 2008). Additionally,
+HeIIλ1640 produced by Pop. III stars is expected to be relatively
+narrow (< 700 km s−1) while lines from WR are expected to be
+significantly broader (> 800 km s−1, Leitherer et al. 1995; Cassata
+et al. 2013). A key diagnostic is the ratio of helium to hydrogen ion-
+ising photons, which depends on the hardness of the UV radiation
+field, and is directly connected to the stellar temperature, and there-
+fore, mass. As the HeIIλ1640 line is unable to ionise hydrogen, it
+is not heavily absorbed by the ISM (Woods & Gilfanov 2013) and
+therefore HeII emissions from high redshift galaxies should be de-
+tectable."
+"One possible detection of a galaxy containing Pop. III stars
+was made by Sobral et al. (2015) when looking for bright Lyman-α
+(Lyα) galaxies. The object they identified, designated “CR7”, had
+a strong–narrow HeIIλ1640 emission line. Furthermore they ruled
+out the possibility of WR stars or AGN and concluded that CR7
+is “the strongest candidate for a Pop. III-like stellar population”.
+With the help of additional observations, Bowler et al. (2017) found
+that CR7 is contaminated by the [OIII] λλ4959, 5007 doublet. They
+therefore argued that the detected HeIIλ1640 signal in CR7 is more
+likely to be from either a low-mass, narrow-line AGN or a young
+low-mass starburst (if binaries are included in the model)."
+"Despite the current difficulties faced by observations, new fa-
+cilities such as the European Extremely Large Telescope (ELT),
+with its 39 m diameter primary mirror, present a new opportuni-
+ties for the detection of Pop. III stars. The High Angular Reso-
+lution Monolithic Optical and Near-infrared Integral field spectro-
+graph (HARMONI), currently being built, will serve as the work-
+horse spectroscopic instrument on ELT and will provide spectra
+from 0.47 to 2.45µm (Thatte et al. 2014). This large wavelength
+range allows for the possibility that the HeIIλ1640 line will be de-
+tectable for 2 . z . 14. Furthermore the high spatial resolution of
+HARMONI may also provide details about the spatial distribution
+of Pop. III stars inside their host galaxies. When combined with
+the large (39 m) primary mirror of the ELT, HARMONI is ideally
+suited to detect Pop. III stars"
+"In this work we explore the possibility of detecting Pop. III
+stars with HARMONI. To achieve this we combine the numerical
+cosmological simulation: NEWHORIZON with the spectral synthe-
+sis code CLOUDY to generate mock spectra of galaxies, containing
+Pop. III stars for 3 . z . 10, which are “observed” using the
+HARMONI simulator HSIM. In addition we explore how the mass
+function of Pop. III stars will impact observations. The paper is
+organised as follows. In Section 2 we outline the process of gen-
+erating mock observations. We present our results in Section 3 and
+discuss their implications in Section 4. Section 5 summarises this
+work and its conclusions."
+2 METHOD
+2.1 NEWHORIZON
+2.1.1 Simulation Overview
+"Our source for mock “observable” galaxies is the NEWHORIZON
+simulation, a high spatial resolution (∆x ∼ 35 pc1), hydrodynam-
+ical, cosmological simulation run using the hydro+N -body, Adap-
+tive Mesh Refinement (AMR) code RAMSES (Teyssier 2002). Here
+we give a brief overview of the simulation but direct the reader to
+Dubois et al. (2020) for complete details (see also Park et al. 2019).
+NEWHORIZON is a re-simulation of a field environment spherical
+region with a radius of 10 Mpc comoving which has been extracted
+from the Horizon-AGN simulation (Dubois et al. 2014b; Kaviraj
+et al. 2017)."
+"NEWHORIZON started at a redshift of z = 45 and has cur-
+rently reached z ∼ 0.7 after 40 million CPU hours. To counter
+cosmological expansion, new levels of refinement are unlocked as
+the simulation progresses to keep the maximum resolution as close
+to 35 pc as possible. We give the actual resolution (∆xz) for each
+snapshot that we analyse in Table 1. The simulation assumes cos-
+mological parameters consistent with the WMAP-7 data (Komatsu
+et al. 2011), i.e. Hubble constant H0 = 70.4 km s−1 Mpc−1, to-
+tal mass density Ωm = 0.272, total baryon density Ωb = 0.0455,
+dark energy density ΩΛ = 0.728, amplitude of power spectrum
+σ8 = 0.809, and power spectral index ns = 0.967. Dark mat-
+ter is modelled as collisionless particles, with a mass resolution of
+106 M�. The simulation includes several important physical pro-
+cesses such as star formation, stellar feedback from star particles,
+AGN feedback from “black hole” sink particles, however it does
+not include explicit radiative transfer. Gas is able to cool to 1 K
+via a metal dependent collisional equilibrium model of radiative
+cooling (Sutherland & Dopita 1993; Rosen & Bregman 1995) in
+the presence of a uniform ultraviolet radiation field after the epoch
+of reionisation (i.e. z = 10, Haardt & Madau 1996). At high
+redshift, due to the lack of metals, cooling is primarily achieved
+via molecular hydrogen, however the simulation does not model
+molecular gas and consequently, this method of cooling has to be
+approximated. This is achieved by assuming an initial metallicity
+of Zinit = 10−3Z� (e.g. Wise et al. 2012)and using metal line
+cooling at all times."
+"Star formation occurs on a cell by cell basis when their gas
+number density ≥ 10 cm−3 and temperature < 2 × 104 K. Stars
+particles form according to a Schmidt law (Schmidt 1959) with the
+star formation efficiency per free-fall time determined by the local
+thermo-turbulent conditions of the ISM (Kimm et al. 2017). Each
+star particle an initial (or birth) mass of M? ≥ 104 M� and is
+assumed to represent a population of stars which follows a Chabrier
+Initial Mass Function (IMF, Chabrier 2005) with lower and upper
+mass cutoffs of 0.1 M� and 150 M� respectively. These particles
+in turn feed back gas (31% of M? with appropriate momentum,
+see Kimm & Cen 2014) into the ISM via supernovae explosions
+occurring 5 Myr after their formation."
+Cells where both gas and stellar densities are > 10 cm−3
+"can form black holes (sink particles), with an initial seed mass
+of 104 M�. These particles can then grow through Bondi–Hoyle–
+Lyttleton accretion (Bondi & Hoyle 1944; Hoyle & Lyttleton 1939)
+capped at the Eddington limit. Two models are employed to add
+feedback from AGN: radio and quasar mode. The choice of model"
+1 This is the linear size of the smallest cell.
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 3
+"is set by ratio of the gas accretion rate to the Eddington limit (see
+Dubois et al. 2012, to which we refer the reader for details), and in
+the jet mode case, the feedback efficiency depends on the spin of
+the black hole (Dubois et al. 2014a)."
+2.1.2 Selection of Galaxies
+"The NEWHORIZON galaxy catalogue contains hundreds of galax-
+ies at any given redshift (see Dubois et al. 2020). In order to identify
+ideal candidates for observations we reduce the sample of galaxies
+by only considering those for which M?,PopIII,tot/M?,tot ≥ 0.5.
+Here M?,PopIII,tot and M?,tot are the total mass in Pop. III stars
+and the total stellar mass of the galaxy respectively. Furthermore
+we require that the stellar half-mass radius for the Pop. III stars
+(R0.5,P3) be less than one kiloparsec for a galaxy to be considered.
+We determine whether or not a star particle is Pop. III by its metal-
+licity. If a particle has Zinit < Z < Zcrit we consider it to be a
+Pop. III particle, where Zcrit = 0.02Z�2(= 4 × 10−4) adopted
+from Zackrisson et al. (2011) (see also Bromm et al. 2001)."
+"The above criteria reduces the number of possible galaxies at
+any redshift to < 10. We make the final selection of fiducial galax-
+ies by selecting the galaxy at each redshift with the smallest mean
+age of Pop. III star particles. We present the properties of these se-
+lected galaxies in Table 1. We present two values for the Star For-
+mation Rate (SFR): Lifetime 〈SFR〉 and Final SFR. The former
+is the mean stellar mass formed per year since the galaxy started
+forming stars (i.e. the galaxy’s total stellar mass divided by the age
+of its oldest star) while the later provides the average over the last
+10 Myr of simulation run time (i.e. the stellar mass formed in the
+galaxy over the last 10 Myr divided by 10 Myr). As stated in §1
+the majority of the HeIIλ1640 emission line is expected to be pro-
+duced by massive stars which will have lifetimes on the order of
+1-10 Myr. We therefore adopt the upper age limit, i.e. 10 Myr, as
+our time frame for calculating the Final SFR. It is therefore ex-
+pected that galaxies with a larger Final SFR will be brighter in
+HeIIλ1640. A comparison of the two SFR values can provide in-
+sight into the current state of star formation in each galaxy, e.g. if
+the Lifetime 〈SFR〉 is greater that the Final SFR it suggests the
+galaxy is in a quiescent star formation phase."
+"All of the selected galaxies have 100% of their stellar mass in
+Pop. III stars. By calculating the mean (mass weighted) metallicity
+of the stars (〈Z?〉) in each galaxy, we find that the stars in our
+sample tend to have a metallicity of . 0.27Zcrit and with a small
+standard deviation around the mean (see Table 1). Finally we note
+that all stars in both G3 and G7 have Z? = Zinit."
+2.2 Modelling Stellar SEDs
+"As NEWHORIZON does not include explicit radiative transport, it
+is therefore necessary to post process the simulation to determine
+the spectrum of a given galaxy. This approach prevents us from
+drawing conclusions about how Pop. III stars will shape their en-
+vironment and effect galaxy evolution. However, post processing
+does present an advantage: the choice of model used for Pop. III
+stars can easily be changed without rerunning the simulation."
+"The Spectral Energy Distribution (SED) of a population of
+stars depends on its IMF. The shape of the IMF at high z is not yet
+constrained (Karlsson et al. 2013) and is therefore a free parame-
+ter to be explored. In this work we employ three IMFs for Pop. III"
+2 Throughout this work we adopt Z� = 0.02
+10�1 100 101 102
+M [M�]
+PopIII.1
+PopIII.2
+PopIII.K & PopII.K
+"Figure 1. Initial Mass Functions (IMFs) for the three different SED models
+used throughout this work, see §2.2 for details. Each IMF has been nor-
+malised so that the total mass of the stellar population is 105 M�."
+"stars. The first (PopIII.1) assumes that the stellar population has an
+extremely top-heavy IMF, given by"
+"Φ(M) ∝
+{
+M−α if 50 ≤M ≤ 500 M�,
+0,"
+"where α = 2.35 (see Salpeter 1955; Schaerer 2002). The second
+(PopIII.2) assumes a less extreme top-heavy IMF with a log-normal
+shape which is described by a characteristic mass ofMc = 10 M�,
+a dispersion of σ = 1 M� and wings extending from 1 to 500 M�
+(see Tumlinson 2006; Raiter et al. 2010, for details). The final IMF
+(PopIII.K) uses the universal Kroupa (Kroupa 2001) IMF, i.e."
+Φ(M) ∝
+"
+"
+"M−0.3 if M < 0.08 M�,
+M−1.3 if 0.08 ≤M < 0.5 M�,
+M−2.3 if 0.5 ≤M ≤ 100 M�,
+0."
+"All three IMFs are shown in Fig. 1, normalised for a 105 M� stel-
+lar population. We use the YGGDRASIL spectral synthesis code (see
+Zackrisson et al. 2011, for details) with the above IMFs to generate
+SEDs. The resulting SEDs, at four different stellar ages, are shown
+in Fig. 2. All three models assume that the stellar population creat-
+ing the SED has zero metallicity."
+"As the stellar population ages the SED evolves and the num-
+ber of photons produced per second with sufficient energy to ionise
+H, He, and He+ (E ≥ 13.6, 24.6 and 54.5 eV respectively) de-
+creases, shown in Fig. 3. All three of these models produces a
+large number of photons with energies > 54.5 eV at most ages.
+The exception being the PopIII.1 SED, which due to the extremely
+top-heavy nature of the IMF produces stars with short lifetimes
+(< 107 yr). Despite this we use PopIII.1 as our fiducial model
+for Pop. III stars as it is the model most likely to be observable.
+NEWHORIZON does not form individual stars but instead forms
+star particles which represent a cluster of gravitationally bound
+stars. We therefore assume that each star particle with Z ≤ Zcrit
+represents a stellar cluster containing only Pop. III stars and we
+discuss the validity of this assumption in §4.3."
+"As stated above, our selection criteria leads to all eight of our
+selected galaxies containing only Pop. III stars. However in princi-
+ple it is possible that we could have selected galaxies that contain
+non-Pop. III stars. In such a case additional CLOUDY simulations
+would be needed, which account of each particle’s metallicity and"
+"MNRAS 000, 000–000 (0000)"
+4 Kearn Grisdale et al.
+"al
+S
+F"
+"R
+〈Z
+〉"
+"M
+?
+,P"
+"o
+p
+I
+I
+I,"
+"t
+o
+t
+/
+M
+?
+,t
+o
+t
+〈t"
+"a
+g
+e
+,P"
+"o
+p
+I
+I
+I
+〉
+〈Z"
+"?
+〉/
+Z"
+"c
+r
+it"
+"σ
+Z
+?
+/
+Z"
+"c
+r
+it"
+"�
+y
+r−"
+"�
+y
+r−"
+"1
+1
+0
+−"
+"8
+7
+.1"
+"4
+2
+4
+.6"
+"4
+0
+.0"
+"8
+0
+.6"
+"4
+3
+.2"
+"2
+7
+.1"
+"1
+0
+.1"
+"5
+0
+.0"
+"4
+1
+.5"
+"1
+2
+.2"
+"9
+0
+.1"
+"1
+2
+9
+.9"
+"7
+0
+.0"
+"5
+0
+.0"
+"7
+0
+.6"
+"7
+3
+.7"
+"3
+3
+.9"
+"5
+0
+.2"
+"6
+0
+.0"
+"2
+1
+.7"
+"1
+4
+.1"
+"3
+3
+8
+.5"
+"1
+.5
+."
+"4
+0
+.0"
+"9
+3
+.4"
+"3
+9
+.9"
+"1
+0
+.3"
+"8
+2
+2
+.6"
+"0
+0
+.0"
+"0
+6
+0
+.7"
+"6
+9
+.0"
+"1
+2
+.9"
+"2
+7
+.0"
+"1
+0
+.0"
+"5
+0
+.0"
+"0
+2
+.8"
+"2
+9
+.7"
+"3
+3
+.8"
+"7
+0
+.0"
+"7
+0
+.1"
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 5
+"a non-Pop. II IMF. Fig. 2 and 3 (labelled as PopII.K) show an ex-
+ample of a SED and number of ionising photons produced by a
+stellar population following a Kroupa IMF with a metallicity of
+Z? = 0.02(= Z�)."
+"The IMF used by the simulation at run time sets the amount of
+momentum, gas and metals injected into the surrounding ISM via
+feedback and thus determines galactic evolution. As stated above,
+NEWHORIZON employs a Chabrier IMF and as a result of this work
+imposing a different IMFs in post-processing the self-consistency
+of the simulation is lost. We can not, therefore, use this simulation
+to explore how Pop. III stars following the PopIII.1, PopIII.2 or
+PopIII.K IMFs impact a galaxy’s structure, dynamics or evolu-
+tion. However, as their is no radiative transfer in NEWHORIZON
+and adding photons to the simulation in post processing does not
+change the gas dynamics we are still able to make predictions about
+the observability of Pop. III stars."
+2.3 Constructing Spectra
+"For each galaxy we extract a cube, with sides of 4 kpc, centred
+on the galaxy, this volume is divided into a uniform grid of cells
+with sides of ∆xz (see Table 1 for values at a given z). Each cell
+has its own unique gas properties (e.g. density, temperature and
+velocity) and associated star particles. To create an “observable”
+Spatial-Spectrum Data Cube (SSDC) of a galaxy we construct a
+spectrum for each cell (and hence star particles). Below we outline
+the method of its construction."
+2.3.1 CLOUDY Models
+"The HeIIλ1640 emission line is not produced directly by Pop. III
+stars but instead is the result of their radiation being reprocessed
+by the surrounding gas. To model these processes we employ the
+microphysics code CLOUDY (see Ferland et al. 2017, for full de-
+tails on CLOUDY). We assume that each star particle is at the cen-
+tre of a spherical gaseous cloud (of constant density) with a ra-
+dius ∆xz/2. CLOUDY is used to calculate the strength of emis-
+sions lines and the continuum at the outer edge of the cloud, i.e. out
+to a radius of ∆xz/2. In addition to the radiation field from stars
+we include a background radiation field. This field is designed to
+mimic the observed cosmic radio to X-ray background with con-
+tributions from the CMB, assumed to be a black body with a tem-
+perature of TCMB = 2.725(1 + z)K. To explore all possible en-
+vironments surrounding star particles we run a grid of CLOUDY
+models, at each redshift, z, varying: gas number density (n), stellar
+age (t?,age) and total luminosity of SED (Ltot). A full sweep of
+parameter space is completed for all three sets of SEDs (PopIII.1,
+PopIII.2 and PopIII.K) so that the impact of different IMFs can be
+explored."
+"All CLOUDY models with Pop. III IMFs use the primordial
+element abundances i.e. 76% of the gas (by mass) is hydrogen, with
+the remainder made up of Helium. As a result we set CLOUDY to
+only record line intensities for H and He lines in the wavelength
+range of interest (1000 ≤ λ ≤ 6600 Å), i.e. we assume that all Pop.
+III stars form from pristine gas and do not pollute their environment
+until they die."
+"There are a number of cells both in and surrounding our se-
+lected galaxies that contain no star particles. For these cells we run
+additional CLOUDY models using the background radiation field
+but without a radiation field from the stars. As a result the only pa-
+rameters varied in these CLOUDY simulations at a given z is n, as
+we let CLOUDY determine the equilibrium temperature."
+"1
+Å
+�"
+"1
+] t = 10"
+"4 yr
+PopIII.1"
+PopIII.2
+PopIII.K
+PopII.K
+H ionisation (13.6 eV)
+He 1st ionisation (24.6 eV)
+He 2nd ionisation (54.4 eV)
+"1
+Å
+�"
+"1
+] t = 10"
+"1041
+f"
+"s�
+1
+Å
+�"
+"1
+] t = 10"
+102 103 104 105 106
+� [Å]
+"1
+Å
+�"
+"1
+] t = 10"
+"Figure 2. SEDs for the PopIII.1, PopIII.2, PopIII.K and PopII.K IMFs (red,
+blue, black, and green solid lines respectively). Each panel shows the SEDs
+at a different age of the stellar population: t = 104, 105, 106 and 107 yr.
+The vertical dashed lines show the wavelengths at which He+, He and H
+are ionised (red, blue and grey respectively). Due to the top-heavy IMF, the
+SED for PopIII.1 becomes zero for t > 3.6 × 106 Myr. All SEDs are for
+a stellar population with a total mass of 105 M�"
+"We have compared the CLOUDY method described above with
+a simple analytical model (see Appendix A) and find good agree-
+ment."
+2.3.2 Constructing Spectra for Cells with Stars
+"If a cell has one or more star particle, a spectrum is calculated for
+each particle which are then summed to create a single spectrum for
+that cell. We create the spectrum for each star particle as follows.
+First, we select the SED which matches both the star particle’s age
+(t?,age) and the IMF of choice. When creating SEDs, YGGDRASIL"
+"MNRAS 000, 000–000 (0000)"
+6 Kearn Grisdale et al.
+"1048
+1049
+1050
+1051
+1052
+1053
+1054"
+"[p
+h
+o
+to"
+"n
+s
+s�"
+"1048
+1049
+1050
+1051
+1052
+1053
+1054"
+"h
+o
+to"
+"n
+s
+s�"
+104 105 106 107 108 109
+"t?,age [yr]"
+"1043
+1045
+1047
+1049
+1051
+1053"
+"h
+o
+to"
+"n
+s
+s�"
+PopIII.1
+PopIII.2
+PopIII.K
+PopII.K
+"Figure 3. Total number of: H (top), He (middle) and He+ (bottom)
+ionising photons per second (QH, QHe and QHe+ respectively) pro-
+duced by each SED model as function of stellar age (t?,age). In all 3
+panels, red, blue, black and green lines show the evolution of Q for
+PopIII.1, PopIII.2, PopIII.K and PopII.K SEDs. A stellar population
+with a total mass of 105 M� was assumed when calculating Q. NB: The
+y-axis of each panel is scaled to best show the difference between all fours
+IMFs. As a result of this choice, it appears that QH for PopIII.1 is parallel
+to PopIII.2 and PopIII.K or thatQH/QHe orQH/QHe+ is the same for
+each choice of IMF, however this is not the case. For example the latter ratio
+can vary by factor as large as ∼ 3.5 when comparing the different IMFs."
+"assumes the birth mass, MSED, of the stellar population which is
+combined with IMF to determine the shape and magnitude of the
+SED (i.e. the number of photons at each wavelength). Each star par-
+ticles in NEWHORIZON has a birth mass, M?,birth, which is rarely
+equal to MSED. It is therefore necessary to scale the magnitude of
+the SED from YGGDRASIL so that the correct value of Ltot can be
+passed to CLOUDY. This is calculated using"
+"Ltot =
+M?,birth
+MSED"
+"∫
+Lλdλ, (3)"
+"where Lλ is luminosity of the SED at each wavelength (λ).
+M?,birth therefore scales the magnitude of the SED while the
+choice of IMF and t?,age determine its shape for each particle."
+"YGGDRASIL only provides SEDs until the time at which the
+first supernova is expected for each SED (e.g. tSN = 106.5, 107.5"
+"and 108 Myr for PopIII.1, PopIII.2 and PopIII.K respectively)
+therefore if t?,age > tSN the star particle is marked as “dead”
+and does not contribute to the spectrum of its host cell. In prin-
+ciple “dead” particles will still contribute to luminosity of their"
+"host galaxy, either as cooling supernova remnants or as low mass
+(∼ 1 M�) Main Sequence stars in the case of PopIII.K. As this
+will not effect the HeIIλ1640 line, on which this work is focused,
+we have chosen not to include this contribution."
+"With t?,age and Ltot of the particle as well as the n of its
+host cell and the determination of Pop. II or Pop. III the particle is
+matched to an appropriate CLOUDY model. We take each line’s in-
+tensity (I0) from CLOUDY and assume that each line is a Gaussian,
+given by"
+"I(λ) = Inorme
+− (λ−λ0)"
+"2σ2 , (4)"
+"where λ0 is the rest wavelength of the line, σ sets the width of
+the function and Inorm is a normalisation constant to ensure that∫
+I(λ)dλ = I0. We assume that the Full Width Half Maximum"
+"(FWHM) of the Gaussian is set by the thermal motions of the gas,
+i.e.: FWHM = 2"
+"√
+2 ln 2∆vg,therm where"
+"∆vg,therm = λ0"
+"√
+kBTg
+mac2"
+"= σ, (5)"
+"here Tg is the gas temperature in the cell, ma is the mass of the
+element (hydrogen or helium) emitting the line, c is the speed of
+light and kB is the Boltzmann constant (Blundell & Blundell 2006)."
+"Once the shape and intensity of each emission line is known, it
+is added to the continuum emission (also given by CLOUDY) to cre-
+ate the entire spectrum for the particle. Finally the spectra from all
+star particles in a given cell are summed to give the total spectrum
+for that cell."
+2.3.3 Constructing Spectra for Cells Without Stars
+"Cells that have been identified as not containing a star particle are
+matched to an appropriate CLOUDY model (i.e. those only employ-
+ing a background radiation field, see §2.3.1) using just n. As with
+cells containing star particles, the spectrum of a cell without stars
+is constructed using line and continuum intensities from CLOUDY."
+2.3.4 Constructing Data Cubes
+"Next we modify the spectrum for each cell based on the turbulent
+motions of the gas within. This is achieved by convolving the spec-
+trum of a cell with a Gaussian whose width is given by the 3D ve-
+locity dispersion of the gas (σg,vel) i.e. the turbulent motions. We
+define σg,vel as"
+"√
+(σ2g,x + σ"
+"2
+g,y + σ"
+"2
+g,z)/3, where σg,x, σg,y and"
+"σg,z are the velocity dispersions of the three velocity components
+of a cell."
+"Next wavelength-dependant extinction, due to dust, along the
+line of sight is added to each cell’s spectrum. We achieve this by
+first calculating AV using"
+"AV = 1.086
+3fdΣZQλ
+4ρd
+√
+a1a2"
+"where Qλ = 1.5 is a constant extinction coefficient, ρd =
+4 g cm−3 is the typical density of a dust particle, fd = 0.1 is
+the fraction of gas-phase metals locked up in dust, ΣZ is the col-
+umn density of metals, a1 = 0.005µm is the smallest size of a
+dust grain and a2 = 1µm is the largest size of a dust grain (see
+Richardson et al. 2020, for full details of the method and discus-
+sion on choice of values). As ΣZ depends on the mass of metals
+along the line of sight between a given cell and the observer, a
+unique value is calculated and used for each cell. We combine AV
+with the dust extinction curve (E(λ)) found by Fitzpatrick (1999),"
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 7
+"assuming E(λ) = Aλ/AV , here Aλ is the wavelength specific ex-
+tinction. Thus intensities of each cell spectrum is given by"
+"IE(λ) = I(λ)10
+AV E(λ)"
+"−2.5 , (7)"
+"here I(λ) is the spectrum of a cell before extinction is applied and
+IE(λ) is the spectrum after extinction is applied. We do not include
+the extinction due to the gas within the cell we are currently consid-
+ering as this is applied by CLOUDY. As a result of the dependance
+on metallicity and that our choice galaxies have very low metallic-
+ity (see Table 1), both fd and ΣZ ∼ 0 for most cells and thus the
+impact of extinction is negligible, however it is included for com-
+pleteness. The above is a simple model of extinction and does not
+account for every process that is able to reduce the strength of an
+emission line. In order to fully capture every possible process a new
+series of simulations with full radiative transfer would be required
+where the path of each photon is taken into account (e.g. Laursen
+& Sommer-Larsen 2007) which is beyond the scope of the work
+presented here."
+"Before the spectra along the line of sight are combined we
+Doppler shift the spectrum based on the gas line of sight velocity
+(vg,los) using"
+"λo = λe(
+vg,los
+c"
+"+ 1), (8)"
+"where λo is the observed wavelength and λe is the emitted wave-
+length. This shift in wavelength should not be confused with the
+shift cause by placing each galaxy at the appropriate redshift, i.e.
+at this stage we treat the galaxy, its stellar and gaseous contents as
+if it is at z = 0. We then sum the intensities at each wavelength
+along the line of sight to create an SSDC of the simulated galaxy.
+Finally, we place the galaxy at the appropriate redshift by shifting
+the wavelength range (e.g. for G1 1640 Å → 18040 Å) and con-
+vert the luminosity of each spaxel into flux by accounting for the
+luminosity distance (i.e. dividing by 4πD2L)."
+2.4 Observing the Simulations: HSIM
+"We employ the HARMONI simulator HSIM (version 2.10) to pro-
+duce mock ELT observations of each SSDC. HSIM is a cube-in,
+cube-out simulator for HARMONI that replicates all known in-
+strumental effects, including the strongly wavelength-dependent
+adaptive optics (AO) point spread function (PSF) (Zieleniewski
+et al. 2015). It also includes thermal background from telescope
+and instrument, as well as night-sky emission lines and continuum
+(include lunar contributions), and telluric absorption. Instrumen-
+tal transmission, detector read noise, detector cross-talk, shot noise
+from all background sources is also modelled. HSIM also incorpo-
+rates the instrumental wavelength response (line spread function,
+or LSF), and the impact of spatial sampling for the chosen spaxel
+scale. The resulting data cube in FITS format is in units of
+electrons s−1. An associated variance cube is also produced. These
+can be used to analyse mock observations as if observed with HAR-
+MONI at the ELT. HSIM v2 is a completely re-coded version that
+adopts a follow-the-photons philosophy for the simulations, adding
+noise and background flux, and applying throughput losses in the
+same order as they occur along the sky, telescope and instrument
+light path (Pereira-Santaella & Thatte Prep)."
+"For our analysis we employ the HSIM settings outlined in Ta-
+ble 2 (unless otherwise stated). These settings are chosen to pro-
+vide the most sensitive observation, therefore the results presented
+in this work should be considered the best case. As the choice of
+grating is determined by the redshift of the observed object we give"
+Table 2. HSIM SETTINGS
+Parameter Settings
+"Exposure Time (s) 900
+Number of Exposures. 40
+Spatial Pixel Scale (mas), z ≥ 6 10x10
+Spatial Pixel Scale (mas), z < 6 20x20
+Adaptive Optics Mode LTAO
+Zenith seeing (”) 0.43
+Air Mass 1.3
+Moon Illumination 0.0
+Telescope Jitter sigma (mas) 3.0
+Telescope Temperature (K) 280
+Atmospheric Differential Refraction True
+Noise Seed 1.0"
+Table 3. Galaxy Luminosities in HeIIλ1640
+"Label L1640λ[1042erg s−1]
+PopIII.1 PopIII.2 PopIII.K"
+(1) (2) (3) (4)
+"G1 6.26 1.72 0.231
+G2 1.72 0.357 0.0411
+G3 1.39 0.365 0.0530
+G4 0.107 0.0485 0.0103
+G5 1.17 0.543 0.0923
+G6 0.502 0.124 0.0231
+G7 170 37.8 5.26
+G8 0.40 0.107 0.0210"
+"Notes: Column 1: galaxy label, Column 2: Total integrated
+Luminosity in the HeIIλ1640 emission line for the PopIII.1
+IMF, Column 3: Total integrated Luminosity in the HeIIλ1640
+emission line for the PopIII.2 IMF, Column 4: Total inte-
+grated Luminosity in the HeIIλ1640 emission line for the
+PopIII.K IMF."
+"the grating used for each galaxy in Table 1. We explored using the
+10x10 mas spaxels at all z but found that at z < 6 the HeIIλ1640
+signal was lost in the noise. We have therefore opted to use the
+20x20 mas spaxels for z < 6 as these are more sensitive than the
+10x10 mas spaxels."
+3 RESULTS
+3.1 NEWHORIZON Galaxies at 1640 Å
+"Due to our selection criteria, the galaxies in our sample all consist
+of a central high density region (Σgas & 103 M� pc−2), which
+has radius on the order of 100 parsecs. Additionally most galaxies
+also show some larger scale extended, but lower density structures
+(Σgas ∼ 102 M� pc−2), surrounding the central region (see the
+left column of Fig. 4). The stellar structure of the galaxies varies
+more than the gas structure (as shown by the contours in the left
+column of Fig. 4). That being said we do find a trend that as z
+decreases the stellar structures tends to become more extended."
+"MNRAS 000, 000–000 (0000)"
+8 Kearn Grisdale et al.
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G1, z = 10"
+"Σ
+g
+a
+s
+[M
+�"
+−1.0 −0.5 0.0 0.5 1.0
+Pre− HSIM
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+50 mas
+Post− HSIM
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G2, z = 9"
+"Σ
+g
+a
+s
+[M
+�"
+−1.0 −0.5 0.0 0.5 1.0
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+"50 mas
+102"
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G3, z = 8"
+"Σ
+g
+a
+s
+[M
+�"
+−1.0 −0.5 0.0 0.5 1.0
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+"50 mas
+102"
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G4, z = 7"
+"Σ
+g
+a
+s
+[M
+�"
+"−1.0 −0.5 0.0 0.5 1.0
+x [kpc]"
+"10−20
+F"
+−1.0 −0.5 0.0 0.5 1.0
+"50 mas
+101"
+"I1
+6
+4
+0"
+"Figure 4. Left: Gas surface density (Σgas) map. Middle: HeIIλ1640 Integrated line strength map before observation with HSIM. Right: HeIIλ1640 Inte-
+grated line strength map after observation with HSIM. The white contours show regions of the galaxy which have stellar surface densities of Σ? ≥ 1 and
+100 M� pc"
+"−2 (dashed and solid contours respectively). The cyan contours (middle & right) shows Σgas of ≥ 101.5 and 102.5 M� pc−2 (dashed and solid
+contours respectively). The aperture used for spectrum extraction in §3.1.2 are shown by the white circle shown in the right column. Each row shows the maps
+for one of the galaxies described in Table 1. The colour scales for each row is given on the far right, in the same order as the maps. The white bar in the
+bottom-left of each of the right hand side panels shows the size of a 50 mas region at a redshift of each galaxy. Due to the switch to the 20 mas spaxels for
+galaxies at z < 6 when observing with HSIM the there is a visible increase in size of the map pixels for G6, G7 and G8 in the right hand column. NB: only the
+PopIII.1 IMF is shown in this figure."
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 9
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G5, z = 6"
+"Σ
+g
+a
+s
+[M
+�"
+−1.0 −0.5 0.0 0.5 1.0
+Pre− HSIM
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+50 mas
+Post− HSIM
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G6, z = 5"
+"Σ
+g
+a
+s
+[M
+�"
+−1.0 −0.5 0.0 0.5 1.0
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+50 mas
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G7, z = 4"
+"Σ
+g
+a
+s
+[M
+�"
+−1.0 −0.5 0.0 0.5 1.0
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+"50 mas
+104"
+"−1.0 −0.5 0.0 0.5 1.0
+−1.0"
+"G8, z = 3"
+"Σ
+g
+a
+s
+[M
+�"
+"−1.0 −0.5 0.0 0.5 1.0
+x [kpc]"
+"1
+cm
+−"
+−1.0 −0.5 0.0 0.5 1.0
+"50 mas
+101"
+"I1
+6
+4
+0"
+Figure 4. Continued
+3.1.1 Flux Maps
+"Running each galaxy through our SSDC generation pipeline (us-
+ing the PopIII.1 IMF) we find that all eight galaxies produce a
+HeIIλ1640 emission line from which we are able to calculate the
+integrated HeIIλ1640 luminosity (L1640λ) which are given in the
+second column of Table 3 and the middle column of Fig. 4 respec-
+tively. The line strength is always greatest in regions of high gas and
+stellar density. Furthermore, (reassuringly) the HeIIλ1640 emission"
+"is only found in pixels containing stars and not being produced by
+the locations with only gas. In §2.1.2 we stated the expectation that
+galaxies with larger Final SFR will also have larger L1640λ, which
+in general we find to be the case by comparing columns 6 and 2
+of Tables 1 and 3 respectively. As a result of our selection criteria
+all of our galaxies are spatially very compact, especially in terms
+of their stellar structure. This results in the emission from these
+galaxies being found in only a handful of pixels. We have run our
+pipeline on more extended low redshift spiral galaxies and found"
+"MNRAS 000, 000–000 (0000)"
+10 Kearn Grisdale et al.
+1.796 1.798 1.800 1.802 1.804
+"1
+] G1, z = 10"
+"FWHM = 121.4± 0.5 km s−1
+Npeak/Ncont. = 5.87± 0.04
+Spaxel Scale : 10× 10"
+Observation
+Transmission
+Noisless Continuum
+"1.632 1.634 1.636 1.638 1.640
+0"
+"1
+]G2, z = 9"
+"FWHM = 126.5± 0.2 km s−1
+Npeak/Ncont. = 44.00± 1.34
+Spaxel Scale : 10× 10"
+1.479 1.480 1.481 1.482 1.483 1.484 1.485 1.486
+"1
+] G3, z = 8"
+"FWHM = 182.0± 0.6 km s−1
+Npeak/Ncont. = 8.58± 0.05
+Spaxel Scale : 10× 10"
+"1.304 1.305 1.306 1.307 1.308 1.309 1.310 1.311
+0"
+"1
+]G4, z = 7"
+Spaxel Scale : 10× 10
+"1.149 1.150 1.151 1.152 1.153 1.154 1.155
+0"
+"1
+] G5, z = 6"
+"FWHM = 80.7± 0.4 km s−1
+Npeak/Ncont. = 15.49± 0.07
+Spaxel Scale : 10× 10"
+"0.980 0.981 0.982 0.983 0.984 0.985
+0"
+"1
+]G6, z = 5"
+"FWHM = 150.8± 0.6 km s−1
+Npeak/Ncont. = 8.39± 0.03
+Spaxel Scale : 20× 20"
+0.813 0.814 0.815 0.816 0.817
+λ [µm]
+"G7, z = 4"
+"FWHM = 204.9± 0.3 km s−1
+Npeak/Ncont. = 20.50± 0.05
+Spaxel Scale : 20× 20"
+"0.6545 0.6550 0.6555 0.6560 0.6565 0.6570 0.6575 0.6580
+0"
+"1
+]G8, z = 3"
+"FWHM = 99.4± 0.8 km s−1
+Npeak/Ncont. = 4.42± 0.02
+Spaxel Scale : 20× 20"
+"Figure 5. Single Aperture Spectra for the eight fiducial galaxies (solid black line). The dashed-black line indicates the wavelength of the peak emission line
+prior to observations with HSIM. A fit to this emission line found in this spectrum is given by the magenta line, with the FWHM and peak to continuum ratio
+of the fit given in each panel. The green dashed line shows the fraction of light at a given wavelength reaching the detector. To demonstrate the impact of noise
+on Pop. III detectability we include the continuum extracted from the noiseless HSIM data cube (blue dashed line)."
+"that we are able to recover the full extent of these galaxies and their
+structure in flux maps."
+"After being “observed” with HSIM (right column of Fig. 4)
+we find that the HeIIλ1640 line is detectable in seven of the eight
+galaxies: G1, G2, G3, G5, G6, G7 and G8. We are unable to detect
+any signal from G4 after observations with HSIM, however given
+that galaxies at larger z are detectable we conclude that the lack of
+signal from this galaxy is due to its stellar mass and age combined
+with gas mass and morphology (see Table 1). These maps also show"
+"that, for the more extended galaxies, their morphology cannot be
+recovered."
+"It is worth noting that at z = 3 the HeIIλ1640 emission line
+is redshifted to the observed V band, a wavelength regime where
+the Laser Tomography Adaptive Optics (LTAO) correction is very
+poor, with Strehl ratios typically below 1%. While the PSF still has
+a small diffraction limited core, the fraction of the incident energy
+in the diffraction limited core is very small, with most of the light
+spread over a region of size ∼ 200 mas. Thus, only the strongest"
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 11
+"compact emission features from the galaxy are detected, resulting
+in the emission line only being seen in a single spaxel."
+3.1.2 Single Aperture Spectra
+"To each map we apply a circular mask centred on the galaxy (the
+mask is shown as a white circle in the right column of Fig. 4). By
+summing the spectrum of each spaxel within the mask we produce a
+single-aperture spectrum for each galaxy, (Fig. 5, black lines). Each
+galaxy uses a different size mask, where the size is set to maximise
+the signal to noise in resulting spectrum. In addition to the aperture
+we also calculate the variance for each spaxel at each wavelength
+and mask the signal from those with high variances (∼ 15× that
+of the minimum calculated for each observation), typically those
+wavelengths affected by strong sky emission lines or strong telluric
+absorption features."
+"For each spectrum we fit a Gaussian (magenta line in Fig. 5)
+to the strongest emission feature (i.e. the HeIIλ1640 emission line)
+and calculate its Full Width Half Maximum (FWHM) and the ra-
+tio of the emission line peak to continuum (Npeak/Ncont.). To en-
+sure that the emission line recovered is in fact the HeIIλ1640 line,
+we mark its pre-HSIM position in each panel (black dashed line).
+We present the recovered values for each galaxy in their respective
+panel in Fig. 5, which shows that the HeIIλ1640 line is detectable
+in seven of eight galaxies. As before, we find that the signal from
+Pop. III stars in G4 is lost in the noise and thus would not be de-
+tected by HARMONI."
+"Each panel of Fig. 5 shows the transmission curve (i.e. the
+fraction of light that reaches the detectors after traveling through
+the Earth’s atmosphere, the ELT and HARMONI) used by HSIM.
+From these curves we see that detection of HeIIλ1640 at certain
+redshifts will be more susceptible to noise and instrument effects
+than others. For example only ∼ 5% of the HeIIλ1640 light emit-
+ted by galaxies at z = 4, such as G7, will reach the detectors. To
+determine if the transmission curve is preventing a detection of G4,
+we artificially change the wavelength of the galaxy’s spectrum to
+that of a galaxy at z = 7.53 and re-observe it with HSIM in the
+H+K band. Unfortunately, the HeIIλ1640 line from G4 is still un-
+detectable and we therefore conclude that the intrinsic brightness
+of G4 is simply not sufficient for Pop. III stars to be detected."
+3.2 Impact of Luminosity Distance
+"In this work our “observed” galaxies have luminosity distances
+(DL) between ∼ 20 and ∼ 110 Gpc and while it is obvious that
+the luminosity of an object decreases asDL increases, it is not clear
+how DL will impact the observability of a given object. By artifi-
+cially placing one of our galaxies (G1) at different redshifts we are
+able to determine the role ofDL4 in measuring the line strength. As
+expected, moving G1 from z = 10 to z = 3 results in an (∼ 3×)
+increase of the line flux (F ) of the galaxy before observation while
+the ratio of the emission line peak to continuum (α) remains con-
+stant (see Fig. 6)."
+"When observing G1 with HSIM after moving it to smaller z we
+do not recover the systematic increase in F found before observa-
+tions (see Fig. 6); instead F tends to decrease with z. Furthermore,
+α is no longer constant, instead it varies with z. This is the result of"
+"3 To ensure that we are only testing the transmission curve we keep G4 at
+a luminosity distance equal to that of z = 7 galaxy.
+4 Changing DL also results in changes to the angular size of the galaxy."
+"F
+z
+/
+F
+z"
+"V + R
+Iz + J"
+1.80 1.64 1.48 1.31 1.15 0.98 0.82 0.66
+λ [µm]
+"345678910
+z"
+"α
+z
+/
+α
+z"
+Pre− HSIM Post− HSIM Noiseless
+"Figure 6. Top: Peak line strength of the HeIIλ1640 emission line (Fz) in
+G1 when the galaxy is moved to different redshifts (z). Bottom: Ratio of
+peak line strength to continuum (αz) when G1 is moved to different z. Red
+“x” and blue “+” show the values measured before and after observation
+with HSIM respectively. Green “Y” gives the value of Fz and αz when
+calculated from the HSIM data cube without noise. The values have been
+normalised to the value of Fz=10, i.e. the value at G1’s original redshift."
+"a combination of different factors: the post-HSIM line flux appears
+to decrease because the AO PSF has a substantially smaller fraction
+of the total energy enclosed in the PSF core as we move to shorter
+wavelengths (lower z). Thus, although the total line flux increases,
+the fraction of the flux within the extraction aperture drops even
+more markedly, resulting in a net decrease of line flux. In addition,
+variations in spectrograph throughput as a function of wavelength
+(mostly stemming from the grating’s efficiency curve) also play a
+role. One can understand the variation of line to continuum ratio
+by considering the AO PSF as having two components: one has the
+size of the diffraction core of the ELT , and the other is several hun-
+dred milli-arcseconds in size, close to the seeing disc. Depending
+on the structure of the galaxy’s line and continuum emission, differ-
+ent fractions of each couple into the extraction aperture at different
+wavelengths, as the ratio of the two components of the PSF change
+dramatically, by more than an order of magnitude (for full details
+we refer the reader to Zieleniewski et al. 2015; Pereira-Santaella &
+Thatte Prep)."
+"In short HARMONI (and thus the ELT) has a wavelength de-
+pendant instrumental response which produces a non-trivial depen-
+dance on z to the sensitivity of line fluxes. A full analysis of these
+different processes impacting observations is beyond the scope of
+the current work and we leave it for future studies. However, assum-
+ing that HSIM provides a reasonable representation of HARMONI,
+we conclude that the redshift of an object is not the determining
+factor in how bright that object will appear in observations."
+"MNRAS 000, 000–000 (0000)"
+12 Kearn Grisdale et al.
+3.3 Impact of IMF on Observability
+"The results in the previous sections (§3.1 & 3.2) assumed an
+extremely top-heavy IMF for Pop. III stars when applying our
+pipeline. However, as discussed in §1 the IMF of Pop. III stars is not
+yet constrained, and as discussed in §2.2, will determine whether
+Pop. III stars are detectable. In the following sections we explore
+how two additional IMFs (PopIII.2 and PopIII.K, see §2.2 and
+Fig. 2) impact the detection of our sample of simulated galaxies.
+We note that for the PopIII.2 and PopIII.K IMFs we find a gen-
+eral trend for L1640λ to increase with Final SFR is found."
+"When changing from PopIII.1 IMF to either the PopIII.2 or
+PopIII.K IMF only the SED of every star particle is changed. All
+other properties of the gas and star particles of our sample of galax-
+ies remain constant. Therefore any change in line strength must be
+a result of changing the IMF."
+3.3.1 PopIII.2 IMF
+"When employing the PopIII.2 IMF all eight galaxies produce an
+intrinsic HeIIλ1640 emission line before observations, (values of
+L1640λ are given in column 3 of Table 3). However these lines are
+significantly weaker, for example G2, when assuming the PopIII.1
+IMF has L1640λ ∼ 1.7 × 1042 erg s−1 but this falls to ∼ 3.6 ×
+1041 erg s−1 when using PopIII.2. In the cases of G6 and G3 this
+decrease in the intrinsic luminosity results in the galaxies no longer
+being detectable when observed with HARMONI (via HSIM)."
+"Unlike the other six galaxies, G3 and G4 increase their intrin-
+sic luminosity (i.e. L1640λ) when using the PopIII.2 IMF. This is
+a result of the “dead” star particle criteria when constructing the
+SSDC (see §2.3.2). For example, ∼ 37% of G4’s stellar popula-
+tion have t?,age > tSN when using PopIII.1, however this falls
+to ∼ 31% when using PopIII.2. These additional stars, though
+old are thus able to contribute additional ionising photons which
+increase the luminosity of the emission line."
+"Despite the PopIII.2 IMF reducing their intrinsic luminos-
+ity, galaxies G1, G2, G5 and G7 still produce a sufficient number
+of photons in the HeIIλ1640 emission line that after observation
+with HSIM the line is detected (see Fig. 7). In these four galax-
+ies the post-observation line strength has (as expected) also de-
+creased and in all but one case we find so too has Npeak/Ncont..
+In the case of G5, while the overall line strength has decreased,
+Npeak/Ncont. has increased (see text on Fig. 5 and 7). To explain
+this increase we looked at both the noiseless output from HSIM
+and the pre-observation spectra of G5 for both IMFs and find that
+when switching from PopIII.1 to PopIII.2 there is a decrease in
+the continuum strength. In the case of the former IMF the pre-
+observation continuum has magnitude of a few times that of the
+noise modelled by HSIM, while in the latter case the continuum
+has a magnitude approximately equal to the added noise which
+results in a much weaker post-observation continuum and hence
+larger Npeak/Ncont.."
+3.3.2 PopIII.K IMF
+"Finally we consider the PopIII.K IMF (see Eq. 2 and Fig. 1). As
+before when switching from the PopIII.1 to PopIII.2, we find
+a reduction in the pre-observation line strength of all our galax-
+ies when switching from PopIII.2 to PopIII.K, due to the lack
+of massive (> 100 M�) stars, for example, G2 when using this
+IMF has L1640λ ∼ 4.1 × 1040 erg s−1. The strength of emission
+lines in most galaxies is too weak to be detected after observations"
+"with HSIM with only G7 still producing a detectable line, shown
+in Fig. 8. Given that G7 is the brightest galaxy in our sample by
+more than an order of magnitude, independently of the choice of
+IMF and that when using the PopIII.K IMF it has a L1640 which
+is ∼ 3 times brighter than G1 with the PopIII.2 IMF (see Table 3)
+it is no surprise that this galaxy would be detectable with any of the
+three IMFs. However G7 appears to be a special case, as it not only
+has the largest stellar mass, average SFR and final SFR but it also
+appears to be the most chemically pristine galaxy (despite being at
+z ∼ 4) of our sample. We therefore conclude that if Pop. III stars do
+follow the same IMF as Pop. II and Pop. I stars (i.e. a Kroupa-like
+IMF) it is highly unlikely that we will be able to observe and detect
+them via this emission line, unless galaxies with a stellar mass of a
+few 107 M� and Z . 0.001Z� are common at z = 4."
+"It is worth noting that changing the observational setup, e.g.
+a longer exposure time or switching to the 20 mas pixels, does al-
+low for the detection of the HeIIλ1640 emission line from other
+galaxies in our sample such as G6."
+3.4 Distinguishing Different IMFs
+3.4.1 Using Hα to Determine the IMF
+"We now turn to the question of determining which of these IMFs
+is found in the Universe. One possible method for distinguishing
+between these three IMFs is comparing the relative strength of
+HeIIλ1640 and Hα (λ ∼ 6563 Å) emission lines. Unfortunately at
+the redshifts of interest for detecting Pop. III stars the Hα line does
+not fall within the wavelength range of HARMONI. As a result any
+comparison between Hα and HeIIλ1640 would require a coordi-
+nated approach using multiple observing facilities, e.g. observing
+the same object with both HARMONI on the ELT combined with
+observations with James Webb Space Telescope (JWST)."
+"HSIM is designed to mimic HARMONI and does not allow
+for mock-observations of emission lines outside of HARMONI’s
+wavelength range. We do not therefore produce mock-observations
+of Hα, instead our discussion here focuses on the pre-observation
+SSDCs centred on HeIIλ1640 and Hα.5. We take the SSDCs for all
+eight galaxies with each IMF, calculate single aperture, continuum
+subtracted, HeIIλ1640 and Hα spectra. By integrating over these
+the total luminosity of the HeIIλ1640 (LHeII) and Hα emission
+lines for each galaxy (with each IMF) is found. Fig. 9 shows how
+log (LHeII/LHα) varies for each galaxy as we change the IMF."
+"In general log (LHeII/LHα) decreases as we move
+from PopIII.1 to PopIII.K. We note that the change in
+log (LHeII/LHα) when moving from one IMF to another is not
+identical for each galaxy, i.e. G2 has the largest value when using
+the PopIII.1 IMF while G8 has its largest values when using the
+PopIII.2 IMF. To get an estimate of how this ratio varies with
+IMF, the mean value and the standard deviation are also plotted,
+again finding a trend of a decreasing value as the IMF moves
+from PopIII.1 to PopIII.K, i.e. we calculate the means and
+standard deviations to be −0.917 ± 0.412, −1.251 ± 0.348 and
+−1.556 ± 0.377. The mean value for a given IMF falls within the
+error bars of either of the other two, which is most likely the result
+of our limited data set (i.e. only 8 galaxies). It is possible as we
+expand the catalogue of mock observations that it will be easier to
+statistically separate the different IMFs using this ratio."
+"5 Our pipeline is able to produce SSDC centred on any line available in
+CLOUDY ."
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 13
+"1.796 1.798 1.800 1.802 1.804
+0"
+"1
+] G1, z = 10"
+"FWHM = 142.9± 0.7 km s−1
+Npeak/Ncont. = 5.27± 0.08
+Spaxel Scale : 10× 10"
+Observation
+Transmission
+Noisless Continuum
+"1.632 1.634 1.636 1.638 1.640
+0"
+"1
+]G2, z = 9"
+"FWHM = 151.2± 0.5 km s−1
+Npeak/Ncont. = 20.82± 0.74
+Spaxel Scale : 10× 10"
+1.149 1.150 1.151 1.152 1.153 1.154 1.155
+λ [µm]
+"1
+] G5, z = 6"
+"FWHM = 117.8± 0.2 km s−1
+Npeak/Ncont. = 21.96± 0.36
+Spaxel Scale : 10× 10"
+0.813 0.814 0.815 0.816 0.817
+"1
+]G7, z = 4"
+"FWHM = 222.8± 0.3 km s−1
+Npeak/Ncont. = 10.61± 0.02
+Spaxel Scale : 10× 10"
+"Figure 7. Same as Fig. 5 but for galaxies observed when using the PopIII.2 IMF. Only G1, G2, G5 and G7 are shown as these are the only galaxies that
+produce an observable emission line with this IMF."
+0.813 0.814 0.815 0.816 0.817
+λ [µm]
+"1
+] G7, z = 4"
+"FWHM = 204.1± 0.3 km s−1
+Npeak/Ncont. = 8.07± 0.03
+Spaxel Scale : 20× 20"
+Observation
+Transmission
+Noisless Continuum
+"Figure 8. Same as Fig. 5 but for galaxies observed when using the
+PopIII.K IMF. Only G7 is shown as it is the only galaxies that produce
+an observable emission line with this IMF."
+3.4.2 Using Lyα to Determine the IMF
+"Lyα (λ = 1215.67 Å) is often the brightest emission line from
+high-z galaxies, and it is likely that most targets observed with
+HARMONI will have been discovered through observations of
+their Lyα emission, with follow up observations in HeIIλ1640
+(Cooke et al. 2009). As HARMONI can observe the Lyα line for
+most Pop. III targets, it is interesting to simulate whether the flux of
+the Lyα emission can provide additional information to constrain
+the Pop III IMF, for example can the ratio of HeIIλ1640 to Lyα be
+used as an additional method for differentiating the IMF of Pop. III
+stars. One of the key advantages of Lyα over Hα is that the former
+falls within HARMONI’s wavelength range. This means for galax-
+ies at some redshifts (e.g. 3, 6 and 7) observations of both lines
+can be carried out simultaneously as both lines fall within the same"
+"PopIII.1 PopIII.2 PopIII.K
+IMFs"
+"eI
+I/
+L"
+"Figure 9. Ratio of the HeIIλ1640 and Hα luminosities for our eight sample
+galaxies. For each galaxy the ratio is shown when calculated for each of the
+three IMFs. The black points indicate the ratio of a given galaxy with a
+given IMF (see legend for details), while the red cross and error bars show
+the mean value and the standard deviation for each IMF."
+"grating setting. Sadly this is not true for all wavelengths and mul-
+tiple observations of a given target will still need to be carried out,
+but with the same instrument (HARMONI)."
+"Unfortunately, Lyα is a resonant line, and Lyα photons emit-
+ted from one part of the galaxy can be absorbed by gas in another"
+"MNRAS 000, 000–000 (0000)"
+14 Kearn Grisdale et al.
+"PopIII.1 PopIII.2 PopIII.K
+IMFs"
+"eI
+I/
+L"
+"L
+y
+α
+)"
+fLyα = 0.3
+fLyα = 0.1
+fLyα = 0.03
+"Figure 10. Same as Fig. 9, but showing the ratio of HeIIλ1640 to Lyα
+emissions. For each IMF the three different values of fLyα are given with
+the largest value on the left and the smallest on the right. These are also
+coloured to match the legend on the figure."
+"part of the galaxy, and removed from our line-of-sight. This results
+in asymmetric line profiles, which are commonly observed (e.g.
+see Fig. 3 of Sobral et al. 2015). Furthermore, the exact fraction of
+photons removed from our line-of-sight due to resonance effects is
+highly dependent on source geometry and kinematics, and cannot
+be quantified observationally which makes interpretation of obser-
+vations at high redshift difficult (Laursen & Sommer-Larsen 2007;
+Hoag et al. 2019). Additional complications arise to Lyα photons
+interacting with the IGM between the emitting galaxies and the
+observer. The reduction in Lyα photons by the IGM scattering is
+dependent upon the reionisation history and the shape of the Lyα
+emission line after resonant scattering with neutral hydrogen in the
+ISM and CGM. This can result in as little 10% of the photons be-
+ing transmitted through the IGM to observers (Dijkstra et al. 2007;
+Zheng et al. 2010; Dayal et al. 2011; Laursen et al. 2011). For a
+more complete discussion on the difficulties arising from the reso-
+nant nature of Lyα and how this is combatted in modern observa-
+tions we refer the reader to Dijkstra (2014) and reference within."
+"Modelling the above effects is beyond the scope of the current
+work. As the fraction of Lyα photons removed from our line of
+sight varies with the content of the IGM, we use 3 different values
+of fLyα (0.03, 0.1 and 0.3) to quantify the impact fLyα for a range
+of possible sight lines. We define fLyα as the ratio of Lyα photons
+escaping the galaxy along our line of sight to the number that would
+have been seen without any resonance effects, dust extinction, etc.
+The above values of fLyα are chosen to cover the range inferred
+from observations (Hayes et al. 2011; Blanc et al. 2011; Dijkstra &
+Jeeson-Daniel 2013) and simulations (Garel & et al. Prep)."
+"Our processing pipeline calculates the Lyα emission follow-
+ing the methods described above for the HeIIλ1640 emission line
+(see §2.2 & 2.3), however before observing the Lyα emission with
+HSIM we reduce its line strength by fLyα while keeping the contin-
+uum unchanged. While the Lyα emission line falls within the wave-
+length range covered by HARMONI for objects at 3 ≤ z ≤ 10,
+LTAO is not available to observe Lyα for z < 4.3 (i.e. observed"
+"PopIII.1 PopIII.2 PopIII.K
+IMFs"
+"eI
+I/
+L"
+"L
+y
+α
+)
+,"
+"P
+o
+st
+−"
+fLyα = 0.3
+fLyα = 0.1
+fLyα = 0.03
+"Figure 11. Same as Fig. 10, but showing the ratio of HeIIλ1640 to Lyα
+emissions after observation with HSIM. Only galaxies that produces an ob-
+servable HeIIλ1640 line are included. Due to the exclusion of G7 there are
+no detectable galaxies post observation for the PopIII.K IMF."
+"wavelengths shorter than ∼ 6500 Å). Therefore, we excluded G7
+and G8 from our post-observation analysis of Lyα. As the Lyα
+emission line is not the primary focus of this work and due to
+the simple order of magnitude model used to account for reso-
+nant effects we do not present our recovered emission line profiles
+as results, however we have included them in Appendix B for the
+reader’s convenience."
+"For each galaxy, with each IMF and choice of fLyα we cal-
+culate LLyα and thus log (LHeII/LLyα) from the SSDCs, see
+Fig. 10. For a given fLyα we find, as with the Hα ratio, that
+log (LHeII/LLyα) tends to decrease when moving from a very top
+heavy IMF to a standard Kroupa IMF. This trend is also seen in
+the mean and standard deviation calculated for each data set. For
+a given IMF there is a clear offset between log (LHeII/LLyα) cal-
+culated with fLyα = 0.3 and 0.03, this is entirely a result of the
+choice of fLyα."
+"Fig. 11 shows the recovered values of log (LHeII/LLyα) after
+the galaxies are observed with HSIM, however only galaxies that
+produce a post-HSIM detectable HeIIλ1640 emission line are in-
+cluded in this figure. The units of the spectra are converted from
+electrons per second to erg s−1 before the ratio is calculated. We
+again see the same trend of decreasing ratios as we move from
+PopIII.1 to PopIII.2 as well as the vertical displacement of points
+for a given IMF but different fLyα. As before we confirm that this
+displacement is purely the result of fLyα. The fact that our “ob-
+servations” are of very faint objects means that we are measuring
+lines close to the noise limit and thus the ratio for a given galaxy can
+be different after observation. We find a typical error on our ratios
+of ∼ 0.03. This is highlighted by large scatter for galaxies using
+PopIII.1 and fLyα = 0.03 compared to observations of the same
+objects with fLyα = 0.3, e.g. the Lyα emission line is almost com-
+pletely lost in noise for G6 when using PopIII.1 and fLyα = 0.03
+(see Fig. B1) and we find LHeII > LLyα."
+"As with Hα we are limited by the size of the data set when
+drawing definitive conclusions as to whether log (LHeII/LLyα) can"
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 15
+"be used to determine the actual IMF of Pop. III stars. That being
+said our results suggest that such a ratio would be a promising test,
+with one caveat: fLyα must be known. For example if we compare
+the pre-HSIM ratios for PopIII.1 and fLyα = 0.3 and PopIII.K
+and fLyα = 0.03 (which have mean values of−1.180±0.297 and
+−0.860 ± 0.299 respectively) they are consistent with each other.
+Likewise, “observation” of G7 with PopIII.K and fLyα = 0.03
+is consistent with the same galaxy using the PopIII.1 IMF and
+fLyα = 0.3 Therefore, in order for this ratio test to be used as a
+reliable method for determining the IMF of Pop III stars, further
+knowledge on fLyα would be required."
+4 DISCUSSION
+4.1 Other Source of the HeIIλ1640 emission Line
+"In this work we have focused on determining whether it will be
+possible to use HARMONI on the ELT to detect Pop. III stars using
+the HeIIλ1640 emission line, however these stars are not the only
+source of this line. As discussed in §1 other luminous objects are
+also capable of producing the HeIIλ1640 emission line (see also
+Table 8 of Cox 2000). It is therefore important to have diagnostics
+of this emission line that provide a determination as to the type of
+object producing the emission line."
+"For example, the HeIIλ1640 emission line from WR stars
+should produce a broad emission line (i.e. FWHMs> 800 km s−1,
+Leitherer et al. 1995; Cassata et al. 2013). We predict that Pop. III
+stars will produce HeIIλ1640 emission lines with 80 ≤ FWHM <
+225 km s−1 (see Fig. 5, 7 and 8). Therefore measuring the line
+width of any observed HeIIλ1640 lines provides a simple way to
+distinguish between WR and Pop. III stars."
+"Naively, one might expect that AGN emissions should pre-
+dominantly impact the centre of a given galaxy (Zeilik & Gregory
+1997). Therefore, a sufficiently bright extended source which is
+spatially resolved may allow us to distinguish between Pop. III
+stars and AGN. As shown by Fig. 4, the current sample of simu-
+lated galaxies are not spatially resolved and cannot be used to dis-
+tinguish between these two types of object. Recent observations
+(Reines et al. 2019) and the modelling of supermassive black holes
+in NEWHORIZON now indicate that AGN are not always centrally
+located. As a result spatial location and compactness alone is not
+enough to rule out the possibility of the signal being from an AGN
+and additional diagnostics are required."
+"Due to their SED, the spectra of AGN are able to produce
+both the NV doublet (λ = 1238.82 and 1242.80 Å) and OIII
+(1665.85 Å) emission lines (see appendix C) if the accreting gas is
+sufficiently metal rich. These lines should not be present in spectra
+from Pop. III stars in part due to the shape of the SED and because
+of the low metallicity of the surrounding gas. Therefore the pres-
+ence of these lines would be a strong indicator that the HeIIλ1640
+emission line is due to an AGN and not Pop. III stars. In future
+work we will make use of the AGN modelled in the NEWHORI-
+ZON simulation to explore how the presence of AGN will impact
+the ability of HARMONI to detect Pop. III stars."
+4.2 Detection Threshold
+"We now explore what determines the detectability of Pop. III stars
+in galaxies. The simplest answer is the total number of (young)
+Pop. III stars producing a large number of photons able to doubly
+ionise He and thus produce a strong HeIIλ1640 emission line, but"
+10−20 10−19 10−18 10−17 10−16
+"Fpeak [erg s
+−1 cm−2]"
+"ea
+k
+/
+F"
+"co
+n
+t."
+Detected
+Not Detected
+Boosted G4
+"20 40 60 80 100
+FWHM [km s−1]"
+"Figure 12. Comparison of pre-observation properties (Fpeak,
+Fpeak/Fcont. and line FWHM) of the HeIIλ1640 emission line for
+all galaxies (excluding G4 with the PopIII.K IMF). Galaxies with a
+detectable HeIIλ1640 emission line after observation with HSIM are shown
+by circles, while those that are not are marked by triangles. The single
+square point marks the values found for galaxy G4 after the brightness of
+each star particle is increased by a factor of ten. The black line links this
+’brightened’ G4 measurement to its original to aid in comparison."
+"how does this manifest in observations? By assuming an IMF that
+is even more top heavy than PopIII.1 we are are able to increase the
+luminosity of each star particle by a factor of ten. This in turn in-
+creases the magnitude of the SED for each particle. Alternatively,
+Mas-Ribas et al. (2016) found that if stochastic sampling of the
+IMF is properly accounted for and with the correct physical con-
+ditions, emission lines form Pop. III stars can be up to an order of
+magnitude brighter."
+"To explore the result of increasing the luminosity of star par-
+ticles it is useful to define two terms: Fpeak as the maximum value
+of the HeIIλ1640 emission line (before observation with HSIM) in
+the a single aperture spectrum similar to those shown in Fig. 5
+and Fcont. the estimated value of the continuum at same wave-
+length as Fpeak. For both quantities we take their values in units
+of spectral brightness (i.e. erg s−1 cm−2 Å"
+"−1
+arcsec−2) and mul-"
+"tiply this value by the spatial and spectral dimensions of a spaxel
+(e.g. 10 mas × 10 mas × 0.5 Å), thus both Fpeak and Fcont. are
+fluxes in units of erg s−1 cm−2. As both are in the same unit
+we are able to calculate the unit-less ratio of those two values:
+Fpeak/Fcont., which we use as one of our diagnostic tools."
+"Increasing the luminosity of each star particle, as expected,
+results in a brighter galaxy. For example, the change in the bright-
+ness of a single star particle’s SED by a factor of ten, increase
+their output from CLOUDY and thus the galaxy’s single aper-
+ture line brightness is larger (i.e. Fpeak increases), typically by
+a factor of a few. The exact increase in brightness depends on
+the star particles host cell’s gas density and can results in small
+variations in Fpeak/Fcont.. For G4 increasing its brightness by a
+factor of ten is sufficient to make the galaxy observable with the
+PopIII.1 IMF, in this case Fpeak is increased from 5.8× 10−20 to
+1.17−19 erg s−1 cm−2."
+"Fig. 12 further explores what determines the detectability of
+the Pop. III stars via the HeIIλ1640 emission line by comparing
+the (pre-observation values) of Fpeak, the emission line’s FWHM
+and Fpeak/Fcont. for all the galaxies. We find that Fpeak appears to
+be the most important factor in ensuring a line is detected. Indeed,
+both the ratio of Fpeak/Fcont. and the FWHM have little impact on
+the detectability of HeIIλ1640: i.e. both detected galaxies and un-
+detected galaxies have 5 . Fpeak/Fcont. . 80 and 19 .FWHM."
+"MNRAS 000, 000–000 (0000)"
+16 Kearn Grisdale et al.
+"120. G9, when using the PopIII.2 IMF, has the lowest value of
+Fpeak for a detected galaxy thus we use this galaxy to set our lower
+limit for detection, i.e. Fpeak > 10"
+"−19 erg s−1 cm−2. Further-
+more, during the brightness test above, G4 became detectable once
+Fpeak > 10"
+"−19 erg s−1 cm−2 despite a drop in Fpeak/Fcont., thus
+providing further support for Fpeak > 10"
+"−19 erg s−1 cm−2 being
+the detection threshold."
+"To remain self gravitating smaller galaxies must have small
+velocity dispersion (on the order of 100 km s−1). This leads to
+emission lines with smaller FWHM and thus the photons from the
+line are more concentrated, boosting Fpeak/Fcont. and leading to
+easier detections. So while the range of FWHM found for the high
+redshift galaxies in our sample does not seem to impact detectabil-
+ity, it is likely FWHM would play a role for galaxies with larger
+velocity dispersions."
+"Finally, when selecting galaxies from NEWHORIZON, we
+specifically selected compact objects with a high percentage of
+Pop. III stars (see §2.1.2) as this presented the best chance for
+successful observations. Given that (by design) the simulation pro-
+duces a volume that matches the average density of the Universe
+and as a result, at z = 0 the most massive halo produced in
+NEWHORIZON will have a mass on the order of ∼ 1013 M�.
+Therefore the galaxies formed in the simulation should represent
+the galaxies most likely to be in the Universe. Rarer and larger ob-
+jects such as the Virgo Cluster, with mass on the order of 1015 M�
+(Fouqué et al. 2001), will not be formed. From this, we infer that
+for a given sight line it is likely that at least one HeIIλ1640 bright,
+chemically pristine galaxy at 3 ≤ z ≤ 10 that meets the detection
+limits described above and our selection criteria will be found."
+4.3 Validity of Approach
+4.3.1 Post Processing vs. On The Fly
+"The primary goal of this work is to determine whether Pop. III stars
+will be detectable with HARMONI and the ELT. To achieve this
+it has been necessary to adopt several assumptions. For example,
+we employed a metallicity cut to determine (in post processing)
+whether or not a star particle is a Pop. III star. However, normally
+a proper primordial chemistry network is used to model Pop. III
+star formation (for example, see Glover 2007; Jappsen et al. 2009).
+If the goal of this work had been to model the formation of Pop.
+III stars and determine how they shaped the evolution of their host
+galaxy this would present a significant issue."
+"Furthermore such a study would require, in addition to the
+primordial chemical networks, that the feedback model employed
+in the simulation accounted for the top-heavy nature of the the-
+atrical Pop. III IMFs. We emphasis this is not our goal, and as a
+result, we are able to make use the pre-calculated SEDs from YG-
+GDRASIL to account for the presence (or lack of) metals in Pop.
+III stars. The impact of metals in the ISM surrounding these stars
+is accounted for with the, well tested, radiative transfer program
+CLOUDY. This approach affords us the flexibility of being able to
+change the SED of a Pop. III stars at the time of analysis, allow-
+ing for the testing of multiple IMFs, in a variety of environments
+(i.e. gas densities, metallicities, etc) without having to rerun an ex-
+tremely computationally expensive simulation. We therefore argue,
+the post-processing method used here is sufficient to provide a de-
+termination of Pop. III detectability with the ELT."
+4.3.2 Large Pop. III Stellar Clusters
+"This work assumed that Pop. III stars form in clusters with a total
+mass ≥ 104 M�. However, it is perhaps more likely that a single
+massive Pop. III star forms in a region and shuts down the local
+star formation via feedback. When this first star eventually under-
+goes a supernova it pollutes the local environment with metals and
+therefore the subsequent generation of stars will be too metal rich
+to be considered Pop. III (Ostriker & Gnedin 1996; Omukai 1999).
+In this scenario Pop. III stars are likely to be scattered throughout
+the galaxy and as a result fail to produce a strong enough emission
+line to be detected even with HARMONI and the ELT."
+"That being said, current work on the formation of 105 M�
+black holes in the high-z Universe provides a possible formation
+mechanism for clusters of Pop. III stars, as assumed in this work.
+One of the current methods for forming such black holes is “direct
+collapse” were gas clouds with masses of ∼ 105 M� collapse un-
+der gravity directly to a massive black hole (see Begelman et al.
+2006, and references within). These models require the gas to be
+pristine and unable to form H2 which prevents the gas from cool-
+ing to below 104 K. The lack of cooling stops the fragmentation
+into smaller clouds and instead a single massive black hole forms.
+We assert that by relaxing the no-H2 criteria the same arguments
+can be used to produce a cluster of Pop. III stars: the presence of
+H2 results in the collapsing pristine cloud fragmenting and forming
+multiple Pop. III stars (see Abel et al. 2000). This model requires
+that the star formation happens throughout the cloud on time scales
+on the order of the free-fall time, as feedback (supernovae and ultra-
+violet radiation) from just one massive Pop. III star could disperse
+the cloud or dissociate the H2. In essence, for a Pop. III cluster to
+be created, the star formation efficiency per free-fall time (�ff ) must
+be on the order of unity. At z = 0, giant molecular clouds shows
+�ff ranging from ∼ 10−4 to ∼ 2 (see Grisdale et al. 2019, and ref-
+erences within) and therefore finding clouds at high-z with �ff ∼ 1
+is plausible. Even if not the norm, galaxies where this type of Pop.
+III formation occurs are the ones most likely to be detected with
+30 + m class telescopes and therefore it is this kind of Pop. III star
+formation we focus in this work."
+"Using radiation hydrodynamic simulations Susa & Umemura
+(2006) explored the impact of one generation of Pop. III stars on
+subsequent generations. Finding that if a first generation Pop. III
+star has a mass of 120 M�, its ionising radiation creates a H2 shell.
+This shields H2 outside of the shell from the dissociating ultravio-
+let (UV) radiation produced by the star. As a result the star forma-
+tion of the second generation stars will not be effected by the first.
+Hasegawa et al. (2009) took this concept further, testing a range of
+different masses for the first generation Pop. III stars and found that
+star formation was only delayed if the first generation had a mass
+of . 25 M�, i.e. the ionising radiation was not sufficient to create
+a H2 shell. Given that both the PopIII.1 and PopIII.2 IMFs have
+a mean/characteristic stellar mass of & 100 M�, we argue that the
+star particles in this work could indeed form in this self-shielding
+regime and thus be a valid way of modelling Pop. III stars in cos-
+mological simulation."
+"Xu et al. (2016) showed that in the Renaissance Simulations
+not only did Pop. III stars formation occur down to z = 7.6 but also
+that galaxies could continue to form multiple generations of Pop.
+III stars. This occurs as a result of two factors: (i) the local and
+slow nature of metal enrichment and (ii) the delay of Pop. III star
+formation due to Lyman-Wemer radiation from surrounding metal-
+enriched star formation. Given all of the above, we argue that our"
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 17
+"assumption of Pop. III star clusters is not as reasonable as it might
+initially seem."
+"In this work we explored the detectability of Pop. III stars
+with HARMONI and the ELT assuming that they follow one of
+three specific IMFs (see §2.2 and Fig. 1). While we have attempted
+to choose three IMFs that bracket the current theories on Pop. III
+IMFs, it is possible that Pop. III stars actually follow very different
+IMFs. For example, all IMFs in this work assume a continuously
+sampled mass function however the IMF might be instead be sam-
+pled stochastically (see Mas-Ribas et al. 2016, for details). To prop-
+erly determine the IMF of Pop. III stars, all possible, or at least a
+significant range of, IMFs need to be considered and a catalogue of
+mock observations using methods such as those used in this work
+needs to be built up for comparison with observations."
+4.3.3 Are Hydro and CLOUDY Simulations Really Needed?
+"It could be argued that the methods used here are surplus to require-
+ment and that SED modelling could produce the same results. How-
+ever, this is only true to a limited extent and only because our cho-
+sen galaxies produce point-like sources when observed (see Fig. 4).
+Indeed as mentioned above (see §3.1.1) if we were to choose a more
+extended object, or one with a component of non-Pop. III stars,
+gas and stellar structures would become visible in integrated line
+strength maps both before and after observations. G6 demonstrates
+this (see Fig. 4): the region we extract of the simulation contains
+two galaxies connected by a reasonably dense (∼ 100 M� pc−2)
+gas bridge. However due to the lack of stars in this bridge it is not
+visible in HeIIλ1640 either before or after observations with HSIM.
+Furthermore, the HeIIλ1640 integrated line strength map (i.e. mid-
+dle panel of Fig. 4) shows that both of these galaxies have their
+HeIIλ1640 emissions spread out over more than 20 pixels, with the
+in-falling galaxy (top galaxy in the panel) having elongated emis-
+sion region which stretches over∼ 0.5 kpc yet once observed with
+HSIM both galaxy are reduced to just a handle of pixels. Indeed the
+previously elongated structure of the in-falling galaxy is completely
+lost (see the right panel for G6 on Fig. 4). An identical behaviour
+is seen in G7. The lack of extended objects can partly be explained
+by the AO technique employed by the HARMONI, as it provides
+improved contrast on compact objects but provides little to no im-
+provement to the detection of extend structures, such as those found
+in G6 and G7 (Davies & Kasper 2012). The AO, coupled with the
+decrease in like brightness in the extended regions (a result of the
+compact stellar structure of these early galaxies) provides an expla-
+nation as to why the extend regions and thus extended sources of
+HeIIλ1640 are unlikely to be detected."
+"The reader will remember that the spectrum recovered from
+the individual SSDCs for an individual galaxy are the result of hun-
+dreds or sometimes thousands6 of individual sources. The spectrum
+of each of these sources is determined by a number of factors in-
+cluding local gas density and the age of the star particle supplying
+photons, in short they are unique and combine to give each galaxy
+its own unique spectrum. Furthermore, the spectrum of each galaxy
+is shaped by its evolutionary history in the simulated universe of
+NEWHORIZON, which was designed to be a realistic model of our
+Universe (see Park et al. 2019; Dubois et al. 2020). Therefore the
+SSDCs and the spectrum produced after observation with HSIM are
+cosmologically constrained for a given IMF."
+"6 in our sample of eight galaxies the smallest has ∼ 60 star particles while
+our most massive has ∼ 6000!"
+"We argue the methods used in this work are the most realistic
+(i.e. cosmologically constrained) for the computational cost (i.e.
+without running full radiation-hydrodynamic simulation) and thus
+provide the closest mock observations of Pop. III stars in high z
+galaxies to real observations. Finally, the post processing pipeline
+used here can be applied to any number of simulated galaxies, with
+any choice of IMF to build up a catalogue of mock observations for
+comparison with real observations made with HARMONI at the
+ELT."
+"While the work presented here is focused on the detectability
+of HeIIλ1640 emission lines from Pop. III stars, the pipeline devel-
+oped for this work can be used in a variety of ways to prepare for
+30+ metre class telescopes, such as the ELT. For example, it would
+be possible to use cosmological simulations to identity regions at
+each z within the simulated volume that are capable of forming
+Pop. III stars and galaxies. These regions could be processed with
+our pipeline and mock observations could be carried out. Such work
+might allow us to determine how proximity to non-Pop. III galaxies
+effects the line flux of Pop. III galaxies."
+5 CONCLUSION
+"The existence of Population III (Pop. III) stars has not been ob-
+servationally confirmed up to now, although several attempts have
+been made, and some excellent candidates have been identified.
+Given their primordial composition with no heavy elements, Pop.
+III stars are expected to be substantially more massive, as well as
+have poor coupling between their constituent gas and the emitted
+radiation. Consequently, they should be much hotter, and have a
+much higher UV flux, capable of ionising not only Hydrogen but
+also Helium in the surrounding gas (H II region). The strength of
+the HeIIλ1640 is thus a good observational diagnostic for the pres-
+ence of Pop III stars, although the emission line will be faint due
+to the large luminosity distance of these very high redshift star
+forming regions. Starting with detailed cosmological simulations
+from the NEWHORIZON suite at a range of redshifts, and post-
+processing them with full radiative transfer and typical top heavy
+IMFs expected for Pop III stars, we have created self-consistent
+mock galaxies whose morphology, kinematics, line strengths and
+line-to-continuum ratios are representative of what Pop. III star
+dominated galaxies would exhibit at a range of redshifts. Then, us-
+ing HSIM, we simulated long (10 hour) observations of these mock
+galaxies with the world’s largest telescope, the ELT, and its AO-
+assisted, first-light, integral field spectrograph, HARMONI. The
+ELT’s huge collecting area, coupled with the exquisite spatial res-
+olution provided by HARMONI LTAO allows us to predict that the
+He II feature can be detected with good signal-to-noise from a sub-
+stantial fraction of the mock galaxies, spanning a wide range of
+redshifts. However, to be certain that the line indicates the presence
+of Pop III stars would require ancillary observations of the Hα line
+from these objects to measure the HeII to Hα ratio, probably using
+the JWST, given the high redshifts involved. Our key results are:"
+"(i) If Pop. III stars have a top heavy IMF, with a mean mass
+≥ 100 M� and a total mass of≥ 104 M� they will produce strong
+HeIIλ1640 emission. In the case of galaxies with a compact Pop.
+III stellar distribution this line will be observable with HARMONI
+at redshifts ranging from ten to three."
+"(ii) While most of our sample galaxies are in essence point
+sources some do have structure prior to observation with HSIM (e.g.
+G6 and G7). We find that the morphology of our galaxies is not re-
+coverable from observations of the HeIIλ1640 emission line. We"
+"MNRAS 000, 000–000 (0000)"
+18 Kearn Grisdale et al.
+"therefore advise that observations looking for Pop. III stars with
+HARMONI look for point-line sources rather than extended ob-
+jects."
+"(iii) If Pop. III stars follow an IMF similar to one found in cur-
+rent stellar populations, e.g. a Kroupa IMF, the galaxy will still
+produce a HeIIλ1640 emission line. However unless the emitting
+galaxy has a stellar mass of the order 107 M�, a very young stellar
+age and an average metallicity of . 0.001Z� this line will be too
+weak to be observed."
+"(iv) HeIIλ1640 emission lines is observable in our simula-
+tions over a wide range of redshifts, only if line’s peak flux is
+> 10−19erg s−1 cm−2 and if the emitting region is compact, i.e. a
+few tens of milliarcseconds across."
+"(v) Determining which theoretical IMF is close to the actual
+IMF is very likely possible by comparing the relative strength of
+other emission features, such as Hα and Lyα . However, this will
+involve combining observation programs and possibly different fa-
+cilities, such as the ELT (for Lyα and HeIIλ1640 emissions) and
+JWST (for Hα emissions). Furthermore, a sufficiently large data
+set will be required to allow for statistical analysis of the line ra-
+tios."
+"In future work we will explore how signals from other objects
+capable of producing the HeIIλ1640 emission line will impact de-
+tections of the Pop. III stars and how these signals can be disentan-
+gled."
+ACKNOWLEDGMENTS
+"We thank the referee for the constructive comments. KG and NT
+acknowledge support from the Science and Technology Facilities
+Council (grant ST/N002717/1), as part of the UK E-ELT Pro-
+gramme at the University of Oxford. KG, JD and AS acknowledge
+support from STFC through grant ST/S000488/1. The research
+of JD and AS is supported by Adrian Beecroft and STFC. MPS
+acknowledges support from the Comunidad de Madrid through
+Atracción de Talento Investigador Grant 2018-T1/TIC-11035 and
+STFC through grants ST/N000919/1 and ST/N002717/1. TK was
+supported in part by the Yonsei University Future-leading Research
+Initiative (RMS2-2019-22-0216) and in part by the National Re-
+search Foundation of Korea (No. 2017R1A5A1070354 and No.
+2018R1C1B5036146). SKY acknowledges support from the Ko-
+rean National Research Foundation (NRF-2017R1A2A05001116).
+We thank all members of the New Horizon collaboration, and more
+specifically Sugata Kaviraj and Marta Volonteri for valuable com-
+ments and suggestions.
+We thank Erik Zackrisson for fruitful and instructive guidance on
+the use of the Yggdrasil models. Calculations were performed with
+version 17.01 of CLOUDY (Ferland et al. 2017) and HSIM version
+210 (Pereira-Santaella & Thatte Prep)"
+DATA AVAILABILITY
+"The data underlying this article will be shared on reasonable re-
+quest to the corresponding author."
+REFERENCES
+"Abel T., Bryan G. L., Norman M. L., 2000, ApJ, 540, 38"
+"Allen M. G., Groves B. A., Dopita M. A., Sutherland R. S., Kewley L. J.,
+2008, ApJS, 178, 20"
+"Begelman M. C., Volonteri M., Rees M. J., 2006, MNRAS, 370, 289
+Blanc G. A., et al., 2011, ApJ, 736, 21
+Blundell S. J., Blundell K. M., 2006, Concepts in"
+"Thermal Physics, 1 edn. Oxford University Press,
+doi:https://global.oup.com/ukhe/product/concepts-in-thermal-physics-
+9780199562107?q=Concepts%20in%20Thermal%20Phyisc&lang=en&cc="
+"Bondi H., Hoyle F., 1944, MNRAS, 104, 273
+Bowler R., McLure R., Dunlop J., McLeod D., Stanway E., Eldridge J.,"
+"Jarvis M., 2017, MNRAS, 469, 448
+Bromm V., Coppi P. S., Larson R. B., 1999, ApJ, 527, L5
+Bromm V., Ferrara A., Coppi P. S., Larson R. B., 2001, MNRAS, 328, 969
+Cassata P., et al., 2013, A&A, 556, 23
+Chabrier G., 2005, ASSL, 327, 41
+Cooke J., et al., 2009, Astro2010: The Astronomy and Astrophysics"
+"Decadal Survey, 53
+Cox A. N., ed. 2000, Allen’s Astrophysical Quantities, 4 edn. AIP Press,"
+"https://www.springer.com/gb/book/9780387951898
+Davies R., Kasper M., 2012, Annual Review of Astronomy and Astro-"
+"physics, 50, 305
+Dayal P., Maselli A., Ferrara A., 2011, MNRAS, 410, 830
+Dijkstra Mark; Wyithe J. S. B., 2007, MNRAS, 379, 1589
+Dijkstra M., 2014, PASP, 31, 26
+Dijkstra M., Jeeson-Daniel A., 2013, MNRAS, 435, 3333
+Dijkstra M., Wyithe J. S. B., Haiman Z., 2007, MNRAS, 379, 253
+Dubois Y., Devriendt J., Slyz A., Teyssier R., 2012, MNRAS, 420, 2662
+Dubois Y., Volonteri M., Silk J., Devriendt J., Slyz A., 2014a, MNRAS,"
+"440, 2333
+Dubois Y., et al., 2014b, MNRAS, 444, 1453
+Dubois Y., et al., 2020, preprint, (https://arxiv.org/abs/2009.10578)
+Ferland G. J., et al., 2017, Revista Mexicana de Astronomia y Astrofisica,"
+"53, 385
+Fitzpatrick E., 1999, PASP, 111, 63
+Fouqué P., Solanes J. M., Sanchis T., Balkowski C., 2001, A&A, 375, 770
+Francis P. J., Hewett P. C., Foltz C. B., Chaffee F. H., Weymann R. J., Morris"
+"S. L., 1991, ApJ, 373, 465
+Garel T., et al. Prep
+Glover S. C. O.; Jappsen A. K., 2007, ApJ, 666, 1
+Grisdale K., Agertz O., Renaud F., Romeo A. B., Devriendt J., Slyz A.,"
+"2019, MNRAS, 486, 5482
+Haardt F., Madau P., 1996, ApJ, 461, 20
+Hao H., et al., 2014, MNRAS, 438, 1288
+Hasegawa K., Umemura M., Susa H., 2009, MNRAS, 395, 1280
+Hayes M., Schaerer D., Östlin G., Mas-Hesse J. M., Atek H., Kunth D.,"
+"2011, ApJ, 730, 13
+Hoag A., Treu T., Pentericci L., Amorin R., Bolzonella M., Bradač M.,"
+"Castellano M., Cullen F., 2019, MNRAS, 488, 706
+Hoyle F., Lyttleton R. A., 1939, Proceedings of the Cambridge Philosophi-"
+"cal Society, 35, 405
+Jappsen A.-K., Mac Low M.-M., Glover S. C. O., Klessen R. S., Kitsionas"
+"S., 2009, ApJ, 694, 1161
+Jimenez R., Haiman Z., 2006, Nature, 440, 501
+Johnson J. L., 2010, MNRAS, 404, 1425
+Karlsson T., Bromm V., Bland-Hawthorn J., 2013, Rev. Mod. Phy., 85, 809
+Kashikawa N., et al., 2012, ApJ, 761, 10
+Kaviraj S., et al., 2017, MNRAS, 467, 4739
+Kimm T., Cen R., 2014, ApJ, 788, 18
+Kimm T., Katz H., Haehnelt M., Rosdahl J., Devriendt J., Slyz A., 2017,"
+"MNRAS, 466, 4826
+Komatsu E., et al., 2011, ApJ Supplement, 192, 47
+Kroupa P., 2001, MNRAS, 322, 231
+Larson R. B., 1998, MNRAS, 301, 569
+Laursen P., Sommer-Larsen J., 2007, ApJ, 657, L69
+Laursen P., Sommer-Larsen J., Razoumov A. O., 2011, ApJ, 728, 16
+Leitherer C., Robert C., Heckman T. M., 1995, ApJ Supplement, 99, 173
+Leitherer C., Vacca W. D., Conti P. S., Filippenko A. V., Robert C., Sargent"
+"W. L. W., 1996, ApJ, 465, 717"
+"MNRAS 000, 000–000 (0000)"
+"http://dx.doi.org/10.1086/309295
+https://ui.adsabs.harvard.edu/abs/2000ApJ...540...39A/abstract
+http://dx.doi.org/10.1086/589652
+https://ui.adsabs.harvard.edu/abs/2008ApJS..178...20A/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2006.10467.x
+https://ui.adsabs.harvard.edu/abs/2006MNRAS.370..289B/abstract
+http://dx.doi.org/10.1088/0004-637X/736/1/31
+https://ui.adsabs.harvard.edu/abs/2011ApJ...736...31B/abstract
+http://dx.doi.org/https://global.oup.com/ukhe/product/concepts-in-thermal-physics-9780199562107?q=Concepts%20in%20Thermal%20Phyisc&lang=en&cc=
+http://dx.doi.org/https://global.oup.com/ukhe/product/concepts-in-thermal-physics-9780199562107?q=Concepts%20in%20Thermal%20Phyisc&lang=en&cc=
+http://dx.doi.org/10.1093/mnras/104.5.273
+http://dx.doi.org/10.1093/mnras/stx839
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.469..448B/abstract
+http://dx.doi.org/10.1086/312385
+https://ui.adsabs.harvard.edu/abs/1999ApJ...527L...5B/abstract
+http://dx.doi.org/10.1046/j.1365-8711.2001.04915.x
+http://adsabs.harvard.edu/abs/2001MNRAS.328..969B
+http://dx.doi.org/10.1051/0004-6361/201220969
+https://ui.adsabs.harvard.edu/abs/2013A%26A...556A..68C/abstract
+http://dx.doi.org/10.1007/978-1-4020-3407-7_5
+https://ui.adsabs.harvard.edu/abs/2005ASSL..327...41C/abstract
+http://adsabs.harvard.edu/abs/2009astro2010S..53C
+https://www.springer.com/gb/book/9780387951898
+http://dx.doi.org/10.1146/annurev-astro-081811-125447
+http://dx.doi.org/10.1146/annurev-astro-081811-125447
+https://ui.adsabs.harvard.edu/abs/2012ARA%26A..50..305D/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2010.17482.x
+https://ui.adsabs.harvard.edu/abs/2011MNRAS.410..830D/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2007.12039.x
+http://adsabs.harvard.edu/abs/2007MNRAS.379.1589D
+http://dx.doi.org/10.1017/pasa.2014.33
+https://ui.adsabs.harvard.edu/abs/2014PASA...31...40D/abstract
+http://dx.doi.org/10.1093/mnras/stt1520
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.435.3333D/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2007.11936.x
+https://ui.adsabs.harvard.edu/abs/2007MNRAS.379..253D/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2011.20236.x
+http://dx.doi.org/10.1093/mnras/stu425
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.440.2333D/abstract
+http://dx.doi.org/10.1093/mnras/stu1227
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.444.1453D/abstract
+https://ui.adsabs.harvard.edu/abs/2017RMxAA..53..385F/abstract
+http://dx.doi.org/10.1086/316293
+https://ui.adsabs.harvard.edu/abs/1999PASP..111...63F/abstract
+http://dx.doi.org/10.1051/0004-6361:20010833
+https://ui.adsabs.harvard.edu/abs/2001A%26A...375..770F/abstract
+http://dx.doi.org/10.1086/170066
+https://ui.adsabs.harvard.edu/abs/1991ApJ...373..465F/abstract
+http://dx.doi.org/10.1086/519445
+https://ui.adsabs.harvard.edu/abs/2007ApJ...666....1G/abstract
+http://dx.doi.org/10.1093/mnras/stz1201
+https://ui.adsabs.harvard.edu/abs/2019arXiv190200518G/abstract
+http://dx.doi.org/10.1086/177035
+http://dx.doi.org/10.1093/mnras/stt2274
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.438.1288H/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2009.14639.x
+https://ui.adsabs.harvard.edu/abs/2009MNRAS.395.1280H/abstract
+http://dx.doi.org/10.1088/0004-637X/730/1/8
+https://ui.adsabs.harvard.edu/abs/2011ApJ...730....8H/abstract
+http://dx.doi.org/10.1093/mnras/stz1768
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.488..706H/abstract
+http://dx.doi.org/10.1017/S0305004100021150
+http://dx.doi.org/10.1017/S0305004100021150
+http://adsabs.harvard.edu/abs/1939PCPS...35..405H
+http://dx.doi.org/10.1088/0004-637X/694/2/1161
+https://ui.adsabs.harvard.edu/abs/2009ApJ...694.1161J/abstract
+http://dx.doi.org/10.1038/nature04580
+https://ui.adsabs.harvard.edu/abs/2006Natur.440..501J/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2010.16351.x
+https://ui.adsabs.harvard.edu/abs/2010MNRAS.404.1425J/abstract
+http://dx.doi.org/10.1103/RevModPhys.85.809
+https://ui.adsabs.harvard.edu/abs/2013RvMP...85..809K/abstract
+http://dx.doi.org/10.1088/0004-637X/761/2/85
+http://adsabs.harvard.edu/abs/2012ApJ...761...85K
+http://dx.doi.org/10.1093/mnras/stx126
+http://adsabs.harvard.edu/abs/2017MNRAS.467.4739K
+http://dx.doi.org/2014ApJ...788..121K
+http://dx.doi.org/10.1093/mnras/stx052
+http://dx.doi.org/10.1088/0067-0049/192/2/18
+http://dx.doi.org/10.1046/j.1365-8711.2001.04022.x
+https://ui.adsabs.harvard.edu/abs/2001MNRAS.322..231K/abstract
+http://dx.doi.org/10.1046/j.1365-8711.1998.02045.x
+https://ui.adsabs.harvard.edu/abs/1998MNRAS.301..569L/abstract
+http://dx.doi.org/10.1086/513191
+https://ui.adsabs.harvard.edu/abs/2007ApJ...657L..69L/abstract
+http://dx.doi.org/10.1088/0004-637X/728/1/52
+https://ui.adsabs.harvard.edu/abs/2011ApJ...728...52L/abstract
+http://dx.doi.org/10.1086/192183
+http://cdsads.u-strasbg.fr/cgi-bin/nph-bib_query?1995ApJS...99..173L
+http://dx.doi.org/10.1086/177456
+https://ui.adsabs.harvard.edu/abs/1996ApJ...465..717L/abstract"
+"
+Pop. III Stars and HARMONI 19"
+"Mackey J., Bromm V., Hernquist L., 2003, ApJ, 586, 1
+Mas-Ribas L., Dijkstra M., Forero-Romero J. E., 2016, ApJ, 833, 12
+Nagao T., et al., 2008, ApJ, 680, 100
+O’Shea B. W., Abel T., Whalen D., Norman M. L., 2005, ApJ, 628, L5
+Omukai Kazuyuki; Nishi R. A., 1999, ApJ, 518, 64
+Osterbrock D. E., Ferland G. J., 2006, Astrophysics of Gaseous Nebulae"
+"and Active Galactic Nuclei, 2nd edn. University Science Books
+Ostriker J. P., Gnedin N. Y., 1996, ApJL, 472, L63
+Park M.-J., et al., 2019, ApJ, 883, 17
+Pereira-Santaella M., Thatte N., inPrep
+Raiter A., Schaerer D., Fosbury R. A. E., 2010, Astronomy & Astrophysics,"
+"523, A64
+Reines A., Condon J., Darling J., Greene J., 2019, preprint, 1909.04670
+Reuland M., et al., 2007, AJ, 133, 2607
+Richardson M. L. A., Routledge L., Thatte N. amd Tecza M., Houghton R."
+"C. W. abd Pereira-Santaella M., Rigopoulou D., 2020, MNRAS,
+Rosen A., Bregman J. N., 1995, ApJ, 440, 634
+Salpeter E. E., 1955, ApJ, 121, 161
+Schaerer D., 2002, A&A, 382, 28
+Schaerer D., Vacca W. D., 1998, ApJ, 497, 618
+Schmidt M., 1959, ApJ, 129, 243
+Schwarzschild M., Spitzer L., 1953, The Observatory, 73, 77
+Sobral D., Matthee J., Darvish B., Schaerer D., Mobasher B., Röttgering"
+"H., Santos S., Hemmati S., 2015, ApJ, 808, 14
+Strömgren B., 1939, ApJ, 89, 526
+Susa H., Umemura M., 2006, ApJ, 645, L93
+Sutherland R. S., Dopita M. A., 1993, ApJ Supplement, 88, 253
+Teyssier R., 2002, A&A, 385, 337
+Thatte N. A., et al., 2014, Proceedings of the SPIE, 9147, 11
+Tumlinson J., 2006, ApJ, 641, 1
+Wise J. H., Turk M. J., Norman M. L., Abel T., 2012, ApJ, 745, 10
+Woods T. E., Gilfanov M., 2013, MNRAS, 432, 1640
+Xu H., Norman M. L., O’Shea B. W., Wise J. H., 2016, ApJ, 823, 9
+Zackrisson E., Rydberg C.-E., Schaerer D., Ostlin G., Tuli M., 2011, ApJ,"
+"740, 15
+Zeilik M., Gregory S. A., 1997, Introductory Astronomy and Astrophysics,"
+"4 edn. Brooks/Cole
+Zheng Z., Cen R., Trac H., Miralda-Escudé J., 2010, ApJ, 716, 574
+Zieleniewski S., Thatte N., Kendrew S., Houghton R. C. W., Swinbank"
+"A. M., Tecza M., Clarke F., Fusco T., 2015, MNRAS, 453, 37543765"
+APPENDIX A: ANALYTICAL MODEL
+"Throughout this work we employ CLOUDY to carry out all radiative
+transfer calculations, however as we are using non-standard SEDs
+it is important to determine if the results from CLOUDY are reason-
+able. To this end, we run three CLOUDY simulations (one for each
+Pop. III SED) for a 104 year old star cluster with a total luminos-
+ity of Ltot = 1038erg s−1,7 embedded in a cloud with a uniform
+density of H and He (nH = 100 cm−3 and nHe = 10 cm−3). To
+compare the results of the CLOUDY tests we construct a simple an-
+alytical model to determine the expected strength of the HeIIλ1640
+line. In the following we outline this model and compare it to the
+results from CLOUDY ."
+A1 The Model
+"Similar to CLOUDY, we treat the stellar cluster as a single point-like
+source of radiation embedded within a cloud with three distinct re-
+gions: a He++ and H+ inner sphere, a surrounding shell consisting
+of He+ and H+ shell and an outer shell of He and H+, as shown"
+"7 This Ltot corresponds to star cluster masses of 1.7 × 102, 5.0 × 102
+and 3.0 × 103 M� for PopIII.1, PopIII.2 and PopIII.K SEDs respectively."
+Pipeline vs Analytical Module
+"He++, H+ sphere He+, H+ sphere He, H+ sphere"
+"Figure A1. Cartoon depicting the analytical model, described in §A1. The
+star represents the stellar cluster, while the dashed lines show the bound-
+aries, between the three regions (i.e. He++ & H+, He+ & H+ and He &
+H+) and the correspondingly coloured arrows represent the radius of each
+Strömgren sphere."
+"in Fig. A1. The distance from the star cluster to the outer boundary
+of each of these regions can be estimated as a Strömgren sphere
+(Strömgren 1939), which is given by:"
+"RSS,i ="
+"4πnineαB,i"
+")1/3
+, (A1)"
+"where Qi is the number of photons per second with sufficient en-
+ergy to ionise the chemical species i, ni is the number density of
+the species, αB,i is the recombination rate of the species and ne is
+the number density of electrons."
+"The HeIIλ1640 emission can only be produced (in our model)
+in the regions where He is ionised i.e. R ≤ RSS,He. We divide this
+region into concentric shells (of thickness dR) and calculate the
+flux emitted by each shell using:"
+"jλ1640 = γjλ4686nenHedR, (A2)"
+"where jλ4686 is the strength of the He line at 4686 Å and γ is the ra-
+tio of jλ1640 to jλ4686. Values for jλ4686 and γ are taken from col-
+umn 4 of Table 4.5 in Osterbrock & Ferland (2006). We adopt the
+simplification that the only ion that contributes to recombination is
+that of the species being considered, however the total number of
+available electrons needs to be considered therefore"
+"nH if RSS,He < R ≤ RSS,H,
+nH + nHe if RSS,He+ < R ≤ RSS,He,
+nH + 2nHe if R ≤ RSS,He+ ."
+"Finally, the total luminosity emitted at a given distance from
+the star cluster, L(≤ R), is calculated by summing the value of
+jλ1640 for each shell contained within R."
+A2 Model Comparison
+"A comparison of the L(≤ R) as calculated by the above model and
+CLOUDY is shown in Fig. A2 . We find that for most values of R
+the two methods agree with each other to within a factor ∼ 2. It
+is worth noting that for R . 0.5 pc the analytical model tends to
+have a lower L than CLOUDY , while the opposite is true at larger
+R, as summarised in the bottom panel of Fig. A2."
+"There are several differences between how CLOUDY and the
+model outlined above compute L(≤ R). The flattening seen in the
+CLOUDY model atR ∼ 4−5 pc corresponds to the radius as which"
+"MNRAS 000, 000–000 (0000)"
+"http://dx.doi.org/10.1086/367613
+https://ui.adsabs.harvard.edu/abs/2003ApJ...586....1M/abstract
+http://dx.doi.org/10.3847/1538-4357/833/1/65
+https://ui.adsabs.harvard.edu/abs/2016ApJ...833...65M/abstract
+http://dx.doi.org/10.1086/587888
+http://adsabs.harvard.edu/abs/2008ApJ...680..100N
+http://dx.doi.org/10.1086/432683
+https://ui.adsabs.harvard.edu/abs/2005ApJ...628L...5O/abstract
+http://dx.doi.org/1999ApJ...518...64O
+https://ui.adsabs.harvard.edu/abs/1999ApJ...518...64O/abstract
+http://dx.doi.org/10.1086/310375
+https://ui.adsabs.harvard.edu/abs/1996ApJ...472L..63O/abstract
+http://dx.doi.org/10.3847/1538-4357/ab3afe
+file:///Users/grisdale/Dropbox/Library.papers3/Files/80/8074F5EB-62F3-4733-9F71-01D1967C1B14.webarchive
+http://dx.doi.org/10.1051/0004-6361/201015236
+https://ui.adsabs.harvard.edu/abs/2010A%26A...523A..64R/abstract
+https://ui.adsabs.harvard.edu/abs/2019arXiv190904670R/abstract
+http://dx.doi.org/10.1086/516571
+https://ui.adsabs.harvard.edu/abs/2007AJ....133.2607R/abstract
+http://dx.doi.org/10.1093/mnras/staa2317
+http://dx.doi.org/10.1086/175303
+http://dx.doi.org/10.1086/145971
+https://ui.adsabs.harvard.edu/abs/1955ApJ...121..161S/abstract
+http://dx.doi.org/10.1051/0004-6361:20011619
+https://ui.adsabs.harvard.edu/abs/2002A%26A...382...28S/abstract
+http://dx.doi.org/10.1086/305487
+http://cdsads.u-strasbg.fr/cgi-bin/nph-bib_query?1998ApJ...497..618S
+http://dx.doi.org/10.1086/146614
+https://ui.adsabs.harvard.edu/abs/1953Obs....73...77S/abstract
+http://dx.doi.org/10.1088/0004-637X/808/2/139
+https://ui.adsabs.harvard.edu/abs/2015ApJ...808..139S/abstract
+http://dx.doi.org/10.1086/144074
+https://ui.adsabs.harvard.edu/abs/1939ApJ....89..526S/abstract
+http://dx.doi.org/10.1086/506275
+https://ui.adsabs.harvard.edu/abs/2006ApJ...645L..93S/abstract
+http://dx.doi.org/10.1086/191823
+http://dx.doi.org/10.1051/0004-6361:20011817
+https://ui.adsabs.harvard.edu/abs/2002A%26A...385..337T/abstract
+http://dx.doi.org/10.1117/12.2055436
+https://ui.adsabs.harvard.edu/abs/2014SPIE.9147E..25T/abstract
+http://dx.doi.org/10.1086/500383
+https://ui.adsabs.harvard.edu/abs/2006ApJ...641....1T/abstract
+http://dx.doi.org/10.1088/0004-637X/745/1/50
+https://ui.adsabs.harvard.edu/abs/2012ApJ...745...50W/abstract
+http://dx.doi.org/10.1093/mnras/stt586
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.432.1640W/abstract
+http://dx.doi.org/10.3847/0004-637X/823/2/140
+https://ui.adsabs.harvard.edu/abs/2016ApJ...823..140X/abstract
+http://dx.doi.org/10.1088/0004-637X/740/1/13
+https://ui.adsabs.harvard.edu/abs/2011ApJ...740...13Z/abstract
+http://dx.doi.org/10.1088/0004-637X/716/1/574
+https://ui.adsabs.harvard.edu/abs/2010ApJ...716..574Z/abstract
+http://dx.doi.org/10.1093/mnras/stv1860
+https://ui.adsabs.harvard.edu/abs/2015MNRAS.453.3754Z/abstract"
+"
+20 Kearn Grisdale et al."
+"R
+)
+[e"
+PopIII.1
+Cloudy Model
+Analytical Model
+"R
+)
+[e"
+PopIII.2
+Cloudy Model
+Analytical Model
+"R
+)
+[e"
+PopIII.K
+Cloudy Model
+Analytical Model
+10�1 100 101
+R [pc]
+"o
+d
+el
+/
+L"
+PopIII.1 PopIII.2 PopIII.K
+"Figure A2. Comparison of the luminosity (L(≤ R)) at a given radius
+(R) from a star cluster as predicted by the analytical model and CLOUDY
+simulations described in §A1. Shown are results for the PopIII.1, PopIII.2
+and PopIII.K SEDs (red, blue and Black lines in top 3 panels), with the
+CLOUDY values show in grey. The vertical dashed-green lines shows the
+He Strömgren radius calculated by the analytical method. The bottom panel
+shows the ratio of the analytical model and CLOUDY values for L(≤ R).
+The horizontal dashed-black line shows Lmodel = Lcloudy"
+"only ∼ 40 − 80% of He+ is ionised, i.e. Strömgren sphere calcu-
+lated by CLOUDY . The Strömgren sphere as calculated from the an-
+alytical model (shown in Fig. A2 by the green dashed line) is larger
+than the sphere calculated by CLOUDY . This difference in size of
+Strömgren sphere arises from CLOUDY taking into account cool-
+ing processes that are neglected in the analytical model as a result
+the latter assumes a constant temperature throughout the gas. Fur-
+thermore the analytical model assumes that hydrogen atoms have
+no impact on the number of photons available to create He+ and
+similarly for ions He+ have no impact on the number He+ ionising
+photons. In reality this is not the case and more complete treatment
+than that carried out in our model is need to completely account for
+the impact of different species."
+"Due to the overall agreement between our analytical model
+and CLOUDY in the above test case, we are confident that CLOUDY"
+"Table C1. Number of photons produced by each SED in Fig. C1 able
+to create H II, He II, He III, O IIII [1051photon s−1]"
+Species QAGN QPopIII.1 QPopIII.2 QPopIII.K QPopII.K
+"H I 211.8 93.4 34.4 5.6 0.42
+He I 73.8 61.8 21.0 3.3 0.82
+He II 15.8 11.4 2.1 0.21 5.1 × 10−5
+O III 15.5 10.7 2.0 0.19 4.9 × 10−5
+N V 3.2 0.80 0.13 0.011 1.1 × 10−9"
+"can be used as outlined in §2.3 to generate spectra for our simulated
+galaxies."
+APPENDIX B: Lyα EMISSION LINE PROFILES
+"For the reader’s convenience we provide the post-HSIM Lyα spectra
+of our simulated galaxies here. How these lines are produced and
+the significance of fLyα is outline in §3.4.2. In this work we only
+compare the Lyα emission lines with fLyα = 0.03, 0.1 and 0.3 to
+the HeIIλ1640 emission line, but here we include the emission line
+with fLyα = 1.0. In the following figures we only show galaxies at
+z > 4.3 (i.e. G7 and G8 are excluded) and for which we can detect
+a corresponding HeIIλ1640 emission line."
+APPENDIX C: THE SED OF AGN
+"The SED of an AGN can be approximated as broken power law
+given by"
+"f(λ) ∝
+{
+λ−0.278 if λ . 1200 Å,
+λ−1.339 if λ > 1200 Å,"
+"with a typically luminosity of ∼ 1012L� (see chapter 14 of Os-
+terbrock & Ferland 2006). The top panel of Fig. C1 compares the
+spectrum given by Eq. C1 with the SEDs used in this work for
+Pop. III stars with an age of 104 yr. For each SED we calculate the
+number of photons that would be able to ionise an atom (Qλ) with
+an ionising potential at λ (bottom panel of Fig. C1). Therefore by
+knowing the ionisation potential of an atom, Fig. C1 can be used
+to determine if an AGN or Pop. III stars should produce a stronger
+emission line."
+"Such an SED produces a large number photons (∼ 3 − 5 ×
+1053s−1) with sufficient energies to produce emission lines from
+the nitrogen V doublet found at λ = 1238.82 and 1242.80 Å or
+the oxygen III emission line at 1665.85 Å. Pop. III stars produce
+only ∼ 1 − 30% of the photons that AGN produce at these wave-
+lengths (see bottom panel of Fig. C1) and therefore any resulting
+nitrogen or oxygen emission lines from a Pop. III star cluster would
+be significantly weaker than those produced by AGN."
+"It is worth noting that the shape of the AGN SEDs is well
+constrained at all redshifts (Hao et al. 2014). As a results the values
+of Qλ may vary with z and therefore the impact of AGN on the
+detection of Pop. III stars will also vary with redshift."
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 21
+"1.330 1.332 1.334 1.336 1.338
+0"
+"1
+] FWHM [km s−1]"
+"87.6± 0.1
+87.6± 0.1
+87.8± 0.1
+87.7± 0.1"
+"G1, z = 10
+fLyα = 1.00"
+fLyα = 0.30
+fLyα = 0.10
+fLyα = 0.03
+Transmission
+"1.208 1.210 1.212 1.214 1.216
+0"
+"1
+]FWHM [km s−1]"
+"106.8± 0.1
+106.9± 0.1
+107.7± 0.1
+108.1± 0.2"
+"G2, z = 9"
+"1.096 1.098 1.100 1.102
+0"
+"1
+] FWHM [km s−1]"
+"130.6± 0.1
+130.8± 0.0
+132.1± 0.1
+131.4± 0.1"
+"G3, z = 8"
+0.851 0.852 0.853 0.854 0.855 0.856 0.857
+λ [µm]
+"1
+]FWHM [km s−1]"
+"147.3± 0.1
+149.4± 0.2
+150.9± 0.1
+163.9± 0.7"
+"G5, z = 6"
+0.726 0.727 0.728 0.729 0.730 0.731
+λ [µm]
+"1
+] FWHM [km s−1]"
+"116.6± 0.1
+117.3± 0.2
+98.1± 0.2
+82.5± 0.4"
+"G6, z = 5"
+"Figure B1. Single aperture Lyα spectra for the eight galaxies after observation wtih HSIM when the PopIII.1 IMF. For each galaxy we show the unaltered
+emission line (solid black line) as well as the emission line multiplied by fLyα with values of 0.3, 0.1 and 0.03 (solid blue, magenta, red lines respectively).
+The dashed-black line indicates the wavelength of the peak emission line prior to observation. The green dashed line shows the fraction of light at a given
+wavelength reaching the detector. Finally each panel states the measured Full Width Half Maximum (FWHM) of each value of fLyα (the colour of the text
+corresponding each line)."
+"MNRAS 000, 000–000 (0000)"
+22 Kearn Grisdale et al.
+"1.330 1.332 1.334 1.336 1.338 1.340
+0"
+"1
+] FWHM [km s−1]"
+"95.1± 0.1
+94.7± 0.1
+93.5± 0.1
+92.1± 0.1"
+"G1, z = 10
+fLyα = 1.00"
+fLyα = 0.30
+fLyα = 0.10
+fLyα = 0.03
+Transmission
+1.210 1.212 1.214 1.216
+λ [µm]
+"1
+]FWHM [km s−1]"
+"106.5± 0.1
+106.3± 0.1
+107.3± 0.1
+115.2± 0.2"
+"G2, z = 9"
+0.851 0.852 0.853 0.854 0.855 0.856 0.857
+λ [µm]
+"1
+] FWHM [km s−1]"
+"147.0± 0.1
+153.5± 0.2
+137.3± 0.3
+132.0± 0.8"
+"G5, z = 6"
+"Figure B2. The same as Fig. B1, but when the PopIII.2 IMF is used."
+"MNRAS 000, 000–000 (0000)"
+Pop. III Stars and HARMONI 23
+� [Å]
+"1025
+1028
+1031
+1034
+1037
+1040"
+"1
+Å
+�"
+t = 104 yr
+PopIII.1
+PopIII.2
+PopIII.K
+PopII.K
+H I (13.60 eV)
+He I (24.59 eV)
+He II (54.42 eV)
+O III (54.93 eV)
+N V (97.89 eV)
+102 103
+� [Å]
+"1045
+1046
+1047
+1048
+1049
+1050
+1051
+1052
+1053"
+"Q
+�
+[P"
+"h
+o
+to"
+"Figure C1. Comparison of the SED’s for PopIII.1, PopIII.2, PopIII.K and
+PopII.K with an assumed AGN SED. The vertical dashed line show the
+ionisation potential for H, He, He II, O III and N V (values are taken from
+Table 3.5 of Cox 2000)."
+"MNRAS 000, 000–000 (0000)"
+"
+	1 Introduction
+	2 Method
+	2.1 NewHorizon 
+	2.2 Modelling Stellar SEDs
+	2.3 Constructing Spectra
+	2.4 Observing the Simulations: hsim "
+"	3 Results
+	3.1 NewHorizon Galaxies at 1640Å
+	3.2 Impact of Luminosity Distance
+	3.3 Impact of IMF on Observability
+	3.4 Distinguishing Different IMFs"
+"	4 Discussion
+	4.1 Other Source of the HeII1640 emission Line
+	4.2 Detection Threshold
+	4.3 Validity of Approach"
+"	5 Conclusion
+	A Analytical Model
+	A1 The Model
+	A2 Model Comparison"
+"	B Ly Emission Line Profiles
+	C The SED of AGN"

@@ -1,0 +1,603 @@
+0
+"
+Bivariate Infinite Series Solution of Kepler's Equations"
+"
+Article"
+Bivariate Infinite Series Solution of Kepler’s Equations
+Daniele Tommasini
+"Applied Physics Department, School of Aeronautic and Space Engineering, Universidade de Vigo, As Lagoas s/n,
+Ourense, 32004 Spain"
+"Version April 8, 2021 submitted to Mathematics"
+"Abstract: A class of bivariate infinite series solutions of the elliptic and hyperbolic Kepler equations is
+described, adding to the handful of 1-D series that have been found throughout the centuries. This result
+is based on an iterative procedure for the analytical computation of all the higher-order partial derivatives
+of the eccentric anomaly with respect to the eccentricity e and mean anomaly M in a given base point
+(ec, Mc) of the (e, M) plane. Explicit examples of such bivariate infinite series are provided, corresponding
+to different choices of (ec, Mc), and their convergence is studied numerically. In particular, the polynomials
+that are obtained by truncating the infinite series up to the fifth degree reach high levels of accuracy in
+significantly large regions of the parameter space (e, M). Besides their theoretical interest, these series can
+be used for designing 2-D spline numerical algorithms for efficiently solving Kepler’s equations for all
+values of the eccentricity and mean anomaly."
+"Keywords: Elliptic Kepler equation; Hyperbolic Kepler equation; Orbital Mechanics; Astrodynamics;
+Celestial Mechanics"
+"Published in Mathematics 2021, 9(7), 785
+Published version available at https://doi.org/10.3390/math9070785"
+1. Introduction
+"In the Newtonian approximation, the time dependence of the relative position of two distant or
+spherically symmetric bodies that move in each other’s gravitational field can be written with explicit
+analytical formulas involving a finite number of terms only when the eccentricity, e, is equal to 0 or 1,
+corresponding to circular and parabolic orbits, respectively [1]. For 0 < e < 1 and for e > 1, such evolution
+can be obtained by solving for E one of the following two Kepler Equations (KEs) (see e.g. Chapter 4 of
+Ref. [1]),"
+"M = f (e, E) ="
+"{
+E− e sin E, for e < 1"
+"e sinh E− E, for e > 1
+, (1)"
+"where M and E are measures of the epoch and the angular position called the mean and the eccentric
+anomaly, respectively (for convenience, the same symbols are used here for the elliptic and hyperbolic
+anomalies, even though they are defined in different ways)."
+"For any given value of e, Equations (1) can be solved numerically for E by using a root-finding
+algorithm for the nonlinear equation f (e, E)−M = 0 (see Ref. [2] for an historical overview). In particular,
+efficient strategies based on Newton-Raphson iteration method or one its variants have been applied to
+the elliptic [3–12] and hyperbolic [13–16] KEs."
+"Moreover, a handful of infinite series solutions of Eqs. (1) have also been found throughout the
+centuries (see Chapter 3 in Ref. [2]). The solution for 0 < e < 1 has been written as an expansion in
+powers of e [17], or as an expansion in the basis functions sin(nM) with coefficients proportional to the"
+"Submitted to Mathematics, pages 1 – 12 www.mdpi.com/journal/mathematics"
+"http://www.mdpi.com
+https://doi.org/10.3390/math9070785
+http://www.mdpi.com/journal/mathematics"
+"
+Version April 8, 2021 submitted to Mathematics 2 of 12"
+"values Jn(e) of Bessel functions [18,19]. Levi-Civita [20,21] described a series in powers of the combination"
+"z = e exp(
+√"
+"1−e2)
+1+
+√"
+"1−e2
+. Finally, Stumpff found an infinite series expansion in powers of M [22]."
+"This article describes a class of solutions of KEs, Eqs. (1), in terms of bivariate infinite series in powers
+of both e and M,"
+"ck,q (e− ec)k(M−Mc)q, (2)"
+"with coefficients ck,q depending on the choice of the base values (ec, Mc). These solutions converge locally
+around (ec, Mc), and can be used to devise 2-D spline algorithms for the numerical computation of the
+eccentric anomaly E for every (e, M) [23], generalizing the 1-D spline methods that have been described
+recently [24,25]. Since they do not require the evaluation of transcendental functions in the generation
+procedure, splines based on polynomial expansions, such as the 1-D cubic spline of Refs. [24,25], or the
+2-D quintic spline of Ref. [23], which is based on the solutions presented here, are more convenient for
+numerical computations than expansions in terms of trigonometric functions."
+2. Methods
+Let the unknown exact solution of Equation (1) be
+"E = g(e, M). (3)"
+"If the analytical expression of the partial derivatives of g(e, M) were known, a bivariate Taylor expansion
+could be written for any choice of base values ec, Ec, Mc = f (ec, Ec), so that Equation (2) would be
+demonstrated with the coefficients given by"
+"ck,q =
+1"
+"[
+∂k+qg"
+"∂ek∂Mq
+(ec, Mc)"
+"]
+. (4)"
+"To obtain such derivatives, we notice that the definitions in Eqs. (1) and (3) imply the identity,"
+"E = g(e, f (e, E)). (5)"
+"In this expression, e and E are considered as the independent variables. Therefore, by taking the differential,
+we obtain,"
+"dE =
+∂g
+∂e"
+"(e, f (e, E))de +
+∂g
+∂M"
+"(e, f (e, E))
+["
+"∂ f
+∂e"
+"(e, E)de +
+∂ f
+∂E"
+"(e, E)dE
+]"
+"Since e and E are independent, the coefficients of dE and de must cancel separately. This condition
+can be used to obtain the partial derivatives of g. Taking also into account Eqs. (1) and (3), the cancellation
+of the coefficient of dE implies,"
+"(e, M) =
+1"
+"∂ f
+∂E (e, g(e, M))"
+"1− eC
+, (7)"
+"where we have defined the parameter λ and the functions C such that λ = 1 and C = cos g(e, M), for
+e < 1, or λ = −1 and C = cosh g(e, M), for e > 1. As it could be expected, Equation (7) coincides with the
+usual rule for the derivative of the inverse function when e is considered to be a fixed parameter [2,22].
+The cancellation of the coefficient of de in Equation (6) implies,"
+"(e, M) = −
+∂g
+∂M"
+"(e, M)
+∂ f
+∂e"
+"(e, g(e, M)) ≡
+S"
+"1− eC
+, (8)"
+"Version April 8, 2021 submitted to Mathematics 3 of 12"
+"with S defined as S = sin g(e, M), for e < 1, or S = sinh g(e, M), for e > 1. In the case of the elliptic KE,
+the result of Equation (8) was used in Ref. [19] to derive an expansion in the basis sin nM."
+"Eqs. (7) and (8), taken together with Eqs. (1) and (3), can be used for the iterative computation of
+all the higher order derivatives entering Equation (2) for e 6= 1. The calculations can be simplified by
+expressing all the derivatives in terms of only λ, S, and C, and using the following identities, which can be
+derived from the definitions of S and C and Eqs. (7) and (8),"
+"(e, M) =
+C S"
+"1− e C
+,"
+"(e, M) =
+λ C"
+"1− e C
+, (9)"
+"(e, M) = −
+λ S2"
+"1− e C
+,"
+"(e, M) = −
+S"
+"1− e C
+. (10)"
+"The second order derivatives can then be obtained by applying the operators ∂
+∂e and"
+"∂
+∂M and the rules"
+"of Eqs. (9) and (10) to the first order derivatives given in Eqs. (7) and (8). The result is,"
+"∂2g
+∂e2"
+"(e, M) =
+2 C S"
+"(1− e C)2
+−"
+λ e S3
+"(1− e C)3
+, (11)"
+"∂2g
+∂M2"
+"(e, M) = −
+λ e S"
+"(1− e C)3
+, (12)"
+"∂2g
+∂e∂M"
+"(e, M) =
+λ C"
+"(1− e C)2
+−"
+"(1− e C)3
+. (13)"
+"Similarly, the third order derivatives can be obtained by applying the operators ∂
+∂e and"
+"∂
+∂M and the"
+"rules of Eqs. (9) and (10) to the second order derivatives, Eqs. (11), (12), and (13). The result is,"
+"∂3g
+∂e3"
+"(e, M) =
+6 C2 S− 3 λ S3
+(1− e C)3"
+"−
+10 λ e C S3"
+"(1− e C)4
++"
+3 e2 S5
+"(1− e C)5
+, (14)"
+"∂3g
+∂M3"
+"(e, M) = −
+e C"
+"(1− e C)4
++"
+3 λ e2 S2
+"(1− e C)5
+, (15)"
+"∂3g
+∂e2∂M"
+"(e, M) =
+2 λ C2 − 2 S2
+(1− e C)3"
+"−
+7 e C S2"
+"(1− e C)4
++"
+3 λ e2 S4
+"(1− e C)5
+, (16)"
+"∂3g
+∂e∂M2"
+"(e, M) = −
+λ S"
+"(1− e C)3
+−"
+"4 λ e C S
+(1− e C)4"
+"+
+3 e2 S3"
+"(1− e C)5
+. (17)"
+"All the higher order derivatives can be obtained by iterating this procedure. These expressions are
+exact, but they depend on the unknown function g through S and C. Nevertheless, taken together with
+Equation (3), they can be used to compute 2-D Taylor series solutions of KEs. This can be done by choosing
+a pair of base values, ec and Ec, corresponding to Mc = f (ec, Ec). The values of the coefficients entering
+Eqs. (4) and (2) can then be computed by substituting λ = 1, S = sin Ec, C = cos Ec, for ec < 1, or λ = −1,
+S = sinh Ec, C = cosh Ec, for ec > 1, in the expressions for the derivatives of g, and by defining the zeroth"
+"order term ∂
+0g"
+"∂e0 M0
+(ec, Mc) = g(ec, Mc) = Ec. This procedure can be used to build a class of bivariate infinite"
+"series solutions of the elliptic and hyperbolic KEs, one for any given choice of base values. Three explicit
+examples will be given in Section 3."
+"The determination of the radius of convergence for the univariate series solutions of KEs has been a
+formidable mathematical problem (see Chapter 6 of Ref. [2]). In the case of the bivariate series of Equations"
+"Version April 8, 2021 submitted to Mathematics 4 of 12"
+"(2) and (4), the region of convergence in the (e, M) plane can be estimated numerically as discussed in
+section 3."
+"3. Examples, Discussion and Results"
+"In this section, three examples of bivariate infinite series solutions of KEs are given. They have been
+obtained from Eqs. (2) and (4) by applying the methods discussed in Section 2 for the computation of the
+derivatives of g, for three different choices of the base values (ec, Mc). All the non-vanishing terms up to
+fifth order are shown explicitly. Since g(e,−M) = −g(e, M), it is sufficient to solve KEs only for positive
+values of M. Moreover, for e < 1 the M domain can be reduced to the interval 0 ≤ M ≤ π, and then the
+solution for every M can be obtained by using the periodicity of f and g."
+"In all cases, it is convenient to define approximate solutions Sn obtained by truncating the infinite
+series of Equation (2) keeping only the terms with k + q ≤ n, so that"
+"Sn(e, M) =
+n"
+"n−k
+∑
+q=0"
+"ck,q (e− ec)k(M−Mc)q, (18)"
+"with coefficients given by Equation (4). The errors En of the approximate solutions Sn can then be evaluated
+in a self consistent way,"
+"En(e, M) = |Sn(e, M)− Sn(e, f (e, Sn(e, M)))|. (19)"
+"From a practical point of view, the convergence of the infinite series for certain values of (e, M) means
+that En(e, M) should tend to decrease for increasing n. This idea is used for obtaining an estimate of the
+region of convergence in the (e, M) parameter space by comparing the average errors for lower and higher
+values of n with the following condition,"
+"E1(e, M) + E2(e, M) + E3(e, M) >
+3
+2
+[E4(e, M) + E5(e, M)] . (20)"
+"A more refined criterion of convergence can be obtained by studying the scaling behavior of the
+solutions. For this purpose, every point of the (e, M) plane is expressed in terms of polar variables ρ, φ,
+defined as"
+"e = ec + ρ cos φ, M = Mc + ρ sin φ. (21)"
+"All the polynomials Sn(e, M) and their errors En(e, M) can then be thought of as functions of ρ and φ.
+For a given value of φ, these functions are one dimensional, depending only on ρ, which is a measure
+of the distance from the center (ec, Mc) in the (e, M) plane. Thus ρ can play a role similar to that of the
+embedding parameter q of the homotopy analysis method [26], with the difference that ρ will not be
+assumed to be smaller than 1. Actually, the parameters ρ and φ will only be used in the intermediate steps
+and will disappear from the final criteria of convergence."
+"If the bivariate series of Equations (2) and (4) converges in a certain point (e, M) along a fixed direction
+φ, the error of the Sn approximation can be written as"
+"En(ec + ρ cos φ, Mc + ρ sin φ) =
+ρn+1"
+(n + 1)!
+"∣∣∣∣∂n+1g∂ρn+1 (ec + ρ̄ cos φ, Mc + ρ̄ sin φ)
+∣∣∣∣ ≡ ρn+1(n + 1)! βn+1(φ, ρ), (22)"
+"where the derivative entering the definition of βn+1(φ, ρ) has to be computed for an unknown value
+ρ̄ ∈ [0, ρ]. By plotting the actual numerical errors En in a direction φ for a given base point (ec, Mc), it can
+be seen that the ρ dependence of βn+1 in the convergence region is usually much milder than that of the
+factor ρn+1. As an example, Fig. 1 shows such plots for the series centered around the point (ec, Mc) = (0, 0),"
+"Version April 8, 2021 submitted to Mathematics 5 of 12"
+"0.01 0.10 1.00
+ρ"
+"er
+ro
+r (
+ra
+d)"
+"1
+2
+3
+4
+5
+ρ=1.21"
+"Figure 1. Errors En(e, M) (in logarithmic scale) affecting the approximate polynomial solutions Sn(e, M)
+of KE for (ec, Mc) = (0, 0) along the diagonal line M = πe of the (e, M) plane (thus ρ ="
+"√
+1 + π2 e and"
+"tan φ = π). The Sn are obtained by truncating the infinite series of Equation (27) up to degree n, for
+n = 1, · · · , 5. The vertical magenta line at ρ = 1.21 corresponds to the limit below which convergence is
+obtained in this direction."
+"choosing the direction identified by the diagonal line M = πe (corresponding to tan φ = π). Along this
+line, the error E5 is at the level of arithmetic double precision (edouble = 2.23× 10−16) for e = Mπ . 0.0013.
+For almost all values of ρ < 1.21 (vertical magenta line in Fig. 1), corresponding to e < 0.367 and M < 1.15
+rad, the errors En decrease as n increases, as expected for a convergent series, except for the occasional
+inversion due to cancellations that occur in one of the Sn (S2 around ρ ∼ 1 in the figure). For ρ > 1.21, E1,
+E3, and E4 mix, and the series can be expected to diverge."
+"Similar results can be obtained for different directions φ and base points (ec, Mc). In general, the linear
+behavior of log En in the convergence region corresponds to En ∝ ρn+1 with a very good approximation,
+so that En1 and E"
+"(n1+1)/(n2+1)
+n2 scale with the same power of ρ. This behavior can be made more regular by"
+"averaging out the possible oscillations that occur in special directions for the individual En. This can be
+done by summing up different En with the corresponding scale exponent, as in the following combinations:"
+"E sc12 = (E
+3/2
+1 + E2)/2, (23)"
+"Version April 8, 2021 submitted to Mathematics 6 of 12"
+"which scales as ρ3, like E2 but with greater regularity;"
+"E sc123 = (E
+2
+1 + E"
+"4/3
+2 + E3)/3, (24)"
+"which scales as ρ4, like E3; and"
+"E sc,345 = (E
+3/2
+3 + E"
+"6/5
+4 + E5)/3, and E"
+"sc
+45 = (E"
+"6/5
+4 + E5)/2, (25)"
+"which scale as ρ6, like E5 but–again–with greater regularity. Equation (22) and these scaling laws are
+expected to hold only when the Taylor series converges. Therefore, two additional numerical criteria of
+convergence are given by the inequalities"
+"E sc345 < E
+sc
+12, and E"
+"sc
+45 < E"
+"sc
+123. (26)"
+"These conditions ensure that the errors not only tend to decrease for increasing n, but they also scale as
+expected when the series is convergent. For the solution based in (ec, Mc) = (0, 0) and evaluated along
+the diagonal direction M = πe, these conditions give the limiting value ρ = 1.21 shown in Fig. 1. By
+inspecting the figure it can be seen that the bounds of Equations (26) produce a reliable result in this case.
+Moreover, as shown in subsection 3.1, Equations (26) also reproduce the known radius of convergence
+of Lagrange series [2,17] in the limit where it can be compared with our bivariate series. The bounds
+of Equations (26) are usually more stringent than those obtained from Equation (20), but there may be
+special directions for which the opposite may be true. Hereafter, a conservative definition of the region of
+convergence will be used by imposing Equations (26) and Equation (20) at the same time."
+"3.1. Bivariate Infinite Series Solution of the Elliptic Kepler equation around ec = 0, Mc = 0"
+"Choosing ec = 0, Ec = 0, so that Mc = 0 rad, λc = 1, Sc = 0, Cc = 1, the series of Eqs. (2) and (4)
+becomes,"
+"E = M + eM + e2M + e3M−
+e
+6"
+"M3 + e4M−
+2
+3"
+e2M3 + · · · (27)
+"This case can be compared with Lagrange’s [17] and Stumpff’s [22] univariate series, which are,"
+"E = M + e sin M +
+e2"
+"2
+sin 2M−"
+"8
+[sin M− 3 sin(3M)] +"
+"6
+[−1 + 4 cos(2M)] sin(2M)+"
+"192
+[23 + 44 cos(2M) + 125 cos(4M)] sin(M) + · · · (Lagrange), (28)"
+"1− e
+−"
+"M3e
+3!(1− e)4"
+"+
+M5e(9e + 1)"
+"5!(1− e)7
++ · · · (Stumpff), (29)"
+"[see Ref. 2, Equation (3.25)]. It is easy to see that the Taylor expansions (up to fifth order) of Equations
+(28) and (29) around M = 0 and e = 0, respectively, coincide with the bivariate series of Equation (27). Of
+course, their expansions in a neighborhood of (ec, Mc) = (0, 0) have to coincide since all these series solve
+the same equation around the same point. However, the complete series are different from one another,
+and their numerical values will also be increasingly different for increasing distance from the base point
+(0, 0). As a consequence, their regions of convergence will also be different."
+"Fig. 2 shows the contour levels in the (e, M) plane of the error E5 affecting the fifth degree polynomial
+approximation, S5, as given by Equation (27). The error E5 is kept below ∼ 10−4 rad for e . 0.5 and
+M . π/2, and is reduced to the level ∼ 10−13 rad for e ∼ 0.01 and M ∼ π/1000. Moreover, the fifth"
+"Version April 8, 2021 submitted to Mathematics 7 of 12"
+0.001 0.010 0.100 1.000
+"M
+(r
+a
+d
+)"
+"Figure 2. Contour levels of the error E5(e, M) affecting the fifth degree polynomial approximation, Equation
+(27), as a function of the eccentricity e and the mean anomaly M (both in logarithmic scales). The continuous
+magenta curve marks the boundary of the region of convergence, as estimated with Equations (26) and
+Equation (20). The vertical dotted line represents the limit of the region of convergence for Lagrange’s
+univariate series."
+"order approximation reaches machine precision edouble = 2.23× 10−16 in an entire neighborhood of size
+∆e ∼ 2× 10−3, ∆M ∼ 3× 10−3 rad around the point (ec, Mc). The continuous magenta curve marks the
+boundary of the region of convergence of the bivariate series of Equation (27), as estimated with Equations
+(26) and Equation (20). This can be compared with the limit e < 0.6627434193 for the convergence of
+Lagrange’s univariate series (see page 26 of Ref. [2]), which is represented by a vertical dotted line in
+the figure. For M� 1, our limit for the convergence of the bivariate series agrees very well with that of
+Lagrange’s series, as it could be expected since in such regime the first terms of the Taylor expansion for
+sin M provide a very good approximation. Not surprisingly, for larger values of M the vertical dotted line
+separates from the magenta line, so that the region of convergence of the bivariate series is different from
+that of Lagrange."
+"Version April 8, 2021 submitted to Mathematics 8 of 12"
+"3.2. Bivariate Infinite Series Solution of the Elliptic Kepler Equation around ec = 12 , Mc =
+π−1"
+"Choosing ec = 12 , Ec =
+π
+2 , so that Mc ="
+"π−1
+2 , λc = 1, Sc = 1, Cc = 0, and defining δ = e− ec = e−"
+"and ∆ = M−Mc = M− π−12 , the series of Eqs. (2) and (4) becomes,"
+"2
++ ∆ + δ−"
+δ2 + 2δ ∆ + ∆2
+"4
++
+−3δ3 − 5δ2∆− δ ∆2 + ∆3"
+"+
+85δ4 + 244δ3∆ + 222δ2∆2 + 52δ ∆3 − 11∆4"
+"+
+37δ5 − 35δ4∆− 318δ3∆2 − 374δ2∆3 − 119δ ∆4 + 9∆5"
+"384
++ · · ·"
+"Fig. 3 shows the contour levels in the (e, M) plane of the error E5 affecting the fifth degree polynomial
+approximation, S5, as given by Equation (30). The continuous magenta curve marks the boundary of the
+region of convergence, as estimated with Equations (26) and Equation (20). It can be seen that the Taylor
+series based in the mid point ( 12 ,"
+"π−1
+2 ) converges in a significant part of the (e, M) plane. Moreover, the fifth"
+"degree polynomial reaches machine precision edouble in an elongated neighborhood of the point (
+1
+2 ,"
+"π−1
+2 )"
+"along a diagonal line crossing the entire e domain from (e = 0, M = 1.57 rad) to (e ' 1, M = 0.56 rad),
+with transverse size (along the M direction) ranging from ∼ 3× 10−3 rad close to the endpoints, to ∼ 10−2
+rad around the center (ec, Mc)."
+"3.3. Bivariate Infinite Series Solution of the Hyperbolic Kepler Equation around ec = 2, Mc = 0"
+"Choosing ec = 2, Ec = 0, so that Mc = 0, λc = −1, Sc = 0, Cc = 1, defining δ = e− ec = e− 2, the
+series of Eqs. (2) and (4) becomes,"
+"E = M−Mδ + Mδ2 −
+M3"
+"3
+−Mδ3 +"
+"7M3δ
+6"
+"+ Mδ4 −
+8M3δ2"
+"60
++ · · · , (31)"
+"where now E and M indicate the (dimensionless) hyperbolic anomalies.
+For the hyperbolic motion, the values of e and M can vary in infinite ranges, 1 < e < ∞, 0 < M < ∞"
+"(due to the symmetry for M→ −M). In Fig. 4, the contour levels in the (e, M) plane of the error E5 for the
+solution (31) have been drawn in the region e ≤ 4, M ≤ 2. This region has been chosen in such a way that
+the plot contains the magenta curve marking the boundary of the region of convergence, as estimated with
+Equations (26) and Equation (20). Moreover, the fifth degree polynomial reaches machine precision edouble
+in an entire neighborhood of size ∆e ∼ 8× 10−3, ∆M ∼ 2× 10−3, around the point (ec, Mc)."
+4. Conclusions
+"I described an analytical procedure for the exact computation of all the higher-order partial derivatives
+of the elliptic and hyperbolic eccentric anomalies with respect to both the eccentricity e and the mean
+anomaly M. Although such derivatives depend implicitly on the solution of KE, they can be computed
+explicitly by choosing a couple of base values ec and Ec for the eccentricity and the eccentric anomaly,
+so that the corresponding value Mc of the mean anomaly can be obtained without solving KE. For any
+such choice of (ec, Mc), an infinite Taylor series expansion in both M and e can then be written, which is
+expected to converge in a suitable neighborhood of (ec, Mc). A procedure for estimating the actual size of
+the region of convergence has also been given."
+"Three explicit examples of such series were then provided, two for the elliptic and one for the
+hyperbolic KE. Each of them, for fixed base point, turns out to converge in large parts of the (e, M) plane."
+"Version April 8, 2021 submitted to Mathematics 9 of 12"
+"0.00 0.25 0.50 0.75 1.00
+e"
+"M
+ (r
+ad"
+"Figure 3. Contour levels of the error E5 affecting the fifth degree polynomial approximation of Equation
+(30), as a function of the eccentricity e and the mean anomaly M. The continuous magenta curve marks the
+boundary of the region of convergence, as estimated with Equations (26) and Equation (20). (Notice that
+here the axes for e and M are linear.)"
+"Version April 8, 2021 submitted to Mathematics 10 of 12"
+"1 2 3 4
+e"
+"Figure 4. Contour levels of the error E5 affecting the fifth degree polynomial approximation of Equation
+(31), as a function of the eccentricity e and the mean anomaly M (both in logarithmic scale). The continuous
+magenta curve marks the boundary of the region of convergence, as estimated with Equations (26) and
+Equation (20)."
+"Version April 8, 2021 submitted to Mathematics 11 of 12"
+"For (e, M) close to (ec, Mc) within a range ∆e ∼ ∆M/π = O(10−3), the polynomial obtained by truncating
+the infinite series up to the fifth degree reaches an accuracy at the level of machine double precision.
+Further away from (ec, Mc), but still within the region of convergence, higher order terms should be
+introduced to maintain such an accuracy."
+"Since these new solutions converge locally around (ec, Mc), a suitable set of them, centered around
+different (ec, Mc) and truncated up to a certain degree, can be used to design an algorithm for the numerical
+computation of the function E(e, M) for every value of (e, M). The resulting polynomials will form a 2-D
+spline [23], generalizing the 1-D spline that has been proposed in Refs. [24,25] for solving KE for every M
+when e is fixed. This bivariate spline may be used for accelerating computations involving the repetitive
+solution of Kepler’s equation for several different values of e and M [23], as for exoplanet search [27,28] or
+for the implementation of Enke’s method [1]."
+5. Acknowledgments
+"I thank David N. Olivieri for discussions. This work was supported by grants 67I2-INTERREG, from
+Axencia Galega de Innovación, Xunta de Galicia, and FIS2017-83762-P from Ministerio de Economia,
+Industria y Competitividad, Spain."
+"1. Roy, A.E. Orbital Motion, 4 ed.; Institute of Physics Publishing, Bristol and Philadelphia, 2005.
+2. Colwell, P. Solving Kepler’s Equation Over Three Centuries; Willmann-Bell Inc., Richmond, VA, 1993.
+3. Danby, J.; Burkardt, T. The solution of Kepler’s equation, I. Celestial Mechanics 1983, 31, 95–107.
+4. Conway, B.A. An Improved Algorithm Due to Laguerre for the Solution of Kepler’s Equation. Celestial"
+"Mechanics 1986, 39, 199–211.
+5. Odell, A.W.; Gooding, R.H. Procedures for solving Kepler’s equation. Celestial Mechanics 1986, 38, 307–334."
+"doi:doi:0.1007/BF01238923.
+6. Charles, E.D.; Tatum, J.B. THE CONVERGENCE OF NEWTON–RAPHSON ITERATION WITH KEPLER’S"
+"EQUATION. Celestial Mechanics and Dynamical Astronomy 1998, 69, 357–372.
+7. Palacios, M. Kepler equation and accelerated Newton method. Journal of Computational and Applied Mathematics"
+"2002, 138, 335–346.
+8. Raposo-Pulido, V.; Pelaez, J. An efficient code to solve the Kepler equation. Elliptic case. MNRAS 2017,"
+"467, 1702–1713. doi:doi:10.1093/mnras/stx138.
+9. Fukushima, T. A Method Solving Kepler’s Equation without Transcendental Function Evaluations. Celestial"
+"Mechanics and Dynamical Astronomy 1997, 66, 309–319.
+10. Feinstein, S.; McLaughlin, C. Dynamic discretization method for solving Kepler’s equation. Celest. Mech. Dyn."
+"Astron. 2006, 96, 49–62. doi:10.1007/s10569-006-9019-8.
+11. Zechmeister, M. CORDIC-like method for solving Kepler’s equation. Astron. Astrophys. 2018, 619, A128."
+"doi:10.1051/0004-6361/201833162.
+12. Zechmeister, M. Solving Kepler’s equation with CORDIC double iterations. MNRAS 2021, 500, 109–117."
+"doi:10.1093/mnras/staa2441.
+13. Gooding, R.H.; Odell, A.W. The hyperbolic Kepler equation (and the elliptic equation revisited). Celestial"
+"Mechanics 1988, 44, 267–282. doi:doi:10.1007/BF01235540.
+14. Fukushima, T. A Method Solving Kepler’s Equation for Hyperbolic Case. Celestial Mechanics and Dynamical"
+"Astronomy 1997, 68, 121–137. doi:10.1023/A:1008254717126.
+15. Avendano, M.; Martín-Molina, V.; Ortigas-Galindo, J. Approximate solutions of the hyperbolic Kepler equation."
+"Celest. Mech. Dyn. Astron. 2015, 123, 435–451. doi:10.1007/s10569-015-9645-0.
+16. Raposo-Pulido, V.; Pelaez, J. An efficient code to solve the Kepler equation. Hyperbolic case. Astronomy and"
+"Astrophysics 2018, 619, A129. doi:doi:10.1051/0004-6361/201833563."
+"https://doi.org/doi:0.1007/BF01238923
+https://doi.org/doi:10.1093/mnras/stx138
+https://doi.org/10.1007/s10569-006-9019-8
+https://doi.org/10.1051/0004-6361/201833162
+https://doi.org/10.1093/mnras/staa2441
+https://doi.org/doi:10.1007/BF01235540
+https://doi.org/10.1023/A:1008254717126
+https://doi.org/10.1007/s10569-015-9645-0
+https://doi.org/doi:10.1051/0004-6361/201833563"
+"
+Version April 8, 2021 submitted to Mathematics 12 of 12"
+"17. Lagrange, J. Sur le problème de Kepler. Memoires de l’Academie Royale des Sciences (Berlin) 1771, 25, 204–233.
+18. Bessel, F. Ueber die Berechnung der wahren Anomalie in einer von der Parabel nicht sehr verscheidenen Bahn."
+"Monatliche Correspondenz zur Beforderung der Erd-und Himmels-Kunde herausgegeben von Freiherrn von Zach 1805,
+12, 197–207."
+"19. Fernande, S.D.S. Extension of the solution of kepler’s equation to high eccentricities. Celestial Mechanics and
+Dynamical Astronomy 1994, 58, 297–308."
+"20. Levi-Civita, T. Sopra la equazione di Kepler. Astronomische Nachrichten 1904, 164, 313–314.
+21. Levi-Civita, T. Sopra la equazione di Kepler. Rendiconti della Reale Accademia dei Lincei, Classe di scienze fisiche,"
+"matematiche e naturali E 1904, 13, 260–268.
+22. Stumpff, K. On the application of Lie-series to the problems of celestial mechanics. National Aeronautics and"
+"Space Administration 1968, Technical Note D-4460.
+23. Tommasini, D.; Olivieri, D.N. Univariate and Bivariate Quintic Spline Algorithms for Fast and Accurate"
+"Solution of the Elliptic Kepler Equation for All Values of the Eccentricity and Mean Anomaly (in preparation),
+2021."
+"24. Tommasini, D.; Olivieri, D.N. Fast Switch and Spline Scheme for Accurate Inversion of Nonlinear Functions:
+The New First Choice Solution to Kepler’s Equation. Applied Mathematics and Computation 2020, 364, 124677.
+doi:https://doi.org/10.1016/j.amc.2019.124677."
+"25. Tommasini, D.; Olivieri, D.N. Fast Switch and Spline Function Inversion Algorithm with Multistep
+Optimization and k-Vector Search for Solving Kepler’s Equation in Celestial Mechanics. Mathematics 2020,
+8(11), 2017. doi:10.3390/math8112017."
+"26. Liao, S. Beyond perturbation: introduction to the homotopy analysis method; Chapman and Hall/CRC, 2004.
+27. Makarov, V.V.; Veras, D. Chaotic Rotation and Evolution of Asteroids and Small Planets in High-eccentricity"
+"Orbits around White Dwarfs. The Astrophysical Journal 2019, 886:127, 1–7. doi:10.3847/1538-4357/ab4c95.
+28. Eastman, J.D.; Rodriguez, J.E.; Agol, E.; Stassun, K.G.; Beatty, T.G.; Vanderburg, A.; Gaudi, S.; Collins, K.A.;"
+"Luger, R. EXOFASTv2: A public, generalized, publication-quality exoplanet modeling code, 2019."
+"© 2021 by the author. Submitted to Mathematics for possible open access publication under the terms and conditions
+of the Creative Commons Attribution (CC BY) license (http://creativecommons.org/licenses/by/4.0/)."
+"https://doi.org/https://doi.org/10.1016/j.amc.2019.124677
+https://doi.org/10.3390/math8112017
+https://doi.org/10.3847/1538-4357/ab4c95
+http://creativecommons.org/licenses/by/4.0/."
+"	1 Introduction
+	2 Methods
+	3 Examples, Discussion and Results
+	3.1 Bivariate Infinite Series Solution of the Elliptic Kepler equation around ec=0, Mc=0
+	3.2 Bivariate Infinite Series Solution of the Elliptic Kepler Equation around ec=12, Mc=-12
+	3.3 Bivariate Infinite Series Solution of the Hyperbolic Kepler Equation around ec=2, Mc=0"
+"	4 Conclusions
+	5 Acknowledgments
+	References"

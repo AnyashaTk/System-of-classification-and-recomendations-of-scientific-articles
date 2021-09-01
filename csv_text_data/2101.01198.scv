@@ -1,0 +1,1692 @@
+0
+"MNRAS 000, 1–16 (0000) Preprint 6 January 2021 Compiled using MNRAS LATEX style file v3.0"
+"Mass accretion rates and multi-scale halo environment in
+cold and warm dark matter cosmologies"
+"Payaswinee Dhoke1?, Aseem Paranjape2†
+1 Dharampeth M. P. Deo Memorial Science College, North Ambazari Road, Nagpur 440033, India
+2 Inter-University Centre for Astronomy & Astrophysics, Ganeshkhind, Post Bag 4, Pune 411007, India"
+"ABSTRACT
+We study the evolving environment dependence of mass accretion by dark haloes in
+simulations of cold and warm dark matter (CDM and WDM) cosmologies. The latter
+allows us to probe the nature of halo growth at scales below the WDM half-mode mass,
+which form an extreme regime of nonlinear collisionless dynamics and offer an excellent
+test-bed for ideas relating to hierarchical growth. As environmental proxies, we use
+the local halo-centric matter density δ and tidal anisotropy α, as well as large-scale
+halo bias b1. Our analysis, while reproducing known trends for environment-dependent
+accretion in CDM, as well as the comparison between accretion in CDM and WDM,
+reveals several interesting new features. As expected from excursion set models, WDM
+haloes have higher specific accretion rates, dominated by the accretion of diffuse mass,
+as compared to CDM haloes. For low-mass WDM haloes, we find that the environment-
+dependence of both diffuse mass accretion as well as accretion by mergers is almost
+fully explained by α. For the other cases, δ plays at least a comparable role. We detect,
+for the first time, a significant and evolving assembly bias due to diffuse mass accretion
+for low-mass CDM and WDM haloes (after excluding splashback objects), with a z = 0
+strength higher than with almost all known secondary variables and largely explained
+by α. Our results place constraints on semi-analytical merger tree algorithms, which in
+turn could affect the predictions of galaxy evolution models based on them."
+"Key words: cosmology: theory, dark matter, large-scale structure of the Universe –
+methods: numerical"
+1 INTRODUCTION
+"The growth of gravitationally bound haloes of collisionless
+cold dark matter (CDM) through accretion and mergers is
+one of the primary physical processes of interest in the hi-
+erarchical structure formation paradigm. The stochasticity
+inherent in the initial cosmological seed fluctuations, coupled
+with the nonlinearity of gravitational evolution of a colli-
+sionless fluid, renders this problem analytically challenging,
+although considerable insights may be gained through simpli-
+fied models of structure formation (Bond et al. 1991; Lacey
+& Cole 1993; Musso & Sheth 2014). Since dark haloes are
+expected to be the cradles of galaxy formation and evolution
+(White & Rees 1978), understanding the evolving nature of
+halo mass accretion and its dependence on the local and
+large-scale environment of haloes is expected to yield impor-
+tant clues into corresponding correlations in the observed
+distribution and evolution of galaxies in the Universe."
+"The understanding that accretion rates in the late Uni-
+verse are sensitive to the shape of the initial power spectrum"
+"? E-mail: payas0906@gmail.com
+† E-mail: aseem@iucaa.in"
+"(Lacey & Cole 1993, see also below) suggests a useful tool
+for investigating the nature of mass accretion, in the form
+of CDM-like power spectra which are suppressed at small
+scales (large k), mimicking the effects of a thermally pro-
+duced warm dark matter (WDM) particle. The steep cut-off
+in power in such models creates an extreme situation where
+haloes forming close to the corresponding mass scale experi-
+ence dramatically enhanced growth, and haloes below this
+scale simply do not exist (e.g., Angulo et al. 2013). Simu-
+lations performed with WDM-like power spectra, therefore,
+offer ideal test-beds for the environment dependence of mass
+accretion: any physical model that purports to explain the
+nature of mass accretion in CDM must also do so for WDM,
+since the physics of a self-gravitating collisionless fluid is com-
+mon to both (Hahn & Paranjape 2014). Of course, WDM
+models are physically interesting in their own right, from the
+point of view of small-scale challenges for the CDM frame-
+work (see Bullock & Boylan-Kolchin 2017, for a review),
+although this is not the focus of the present work."
+"There has been considerable work to date studying mass
+accretion by haloes via mergers and smooth (or diffuse)
+accretion (Fakhouri & Ma 2010; Genel et al. 2010; Benson
+et al. 2013; Elahi et al. 2014), as well as its dependence on halo"
+© 0000 The Authors
+2 Dhoke & Paranjape
+"environment (defined typically in terms of halo-centric dark
+matter density using different smoothing schemes, see Genel
+et al. 2010; Fakhouri & Ma 2009, 2010; Maulbetsch et al.
+2007; Borzyszkowski et al. 2017; Lee et al. 2017, see also More
+et al. 2015). The overall understanding that has emerged
+from these studies, regardless of the exact choice of definition
+of halo-centric density, is that denser environments tend to
+promote mergers while underdense environments are more
+conducive to diffuse accretion. There are also stark differences
+between accretion in CDM and WDM, particularly at low
+mass, as expected from the discussion above, with low-mass
+WDM haloes accreting rapidly and primarily through diffuse
+accretion."
+"A related line of study is that of halo assembly bias
+or secondary bias, i.e., the correlation (at fixed halo mass)
+between secondary halo properties other than mass and halo-
+centric density (or bias) measured at cosmological scales
+(Sheth & Tormen 2004; Gao et al. 2005). Although assembly
+bias has been studied over a wide range of halo mass and
+redshift using many choices of secondary variables such as
+age (Sheth & Tormen 2004; Gao et al. 2005; Jing et al. 2007),
+concentration (Wechsler et al. 2006; Angulo et al. 2008),
+shape (Faltenbacher & White 2010; van Daalen et al. 2012),
+angular momentum or spin (Gao & White 2007) and veloc-
+ity dispersion structure (Faltenbacher & White 2010), the
+correlation between halo bias and mass accretion rate has
+thus far been limited to massive objects at z = 0 (Lazeyras
+et al. 2017). Moreover, recent work on assembly bias at z = 0
+has revealed the importance of the local tidal environment of
+haloes (Hahn et al. 2009; Borzyszkowski et al. 2017; Paran-
+jape et al. 2018) in explaining the assembly bias of many
+secondary variables, including concentration, spin, shape and
+velocity dispersion structure over a wide range of halo mass
+(Ramakrishnan et al. 2019, see also Han et al. 2019). It is
+therefore very interesting to ask whether the halo tidal envi-
+ronment plays a similar role in explaining any assembly bias
+trends with mass accretion."
+"In this work, we perform a detailed study of the nature
+of the environment dependence of mass accretion by haloes,
+segregated into contributions due to mergers and diffuse
+mass, as a function of redshift and for a range of halo masses.
+We will do so using N -body simulations of both CDM and
+WDM cosmologies; as mentioned above, the latter will allow
+us to better resolve the multi-scale environment dependence
+of mass accretion due to its sensitivity to the shape of the
+initial matter power spectrum. We will connect these results
+to the assembly bias literature by performing, for the first
+time, a comprehensive study of assembly bias due to mass
+accretion across cosmic time, along with its connection to
+the evolving local halo environment, for both CDM and
+WDM. Our results reproduce previously observed trends
+while extending these to new local environmental variables
+such as the tidal anisotropy, and are expected to place useful
+constraints on semi-analytical models of halo formation and
+growth (e.g., Somerville & Kolatt 1999; Parkinson et al. 2008;
+Jiang & van den Bosch 2014), which in turn form the bedrock
+of several semi-analytical models of galaxy formation and
+evolution (e.g., Benson & Bower 2010; Benson 2012; Barausse
+2012; Dayal et al. 2014; Birrer et al. 2014; Somerville et al.
+2015; Yung et al. 2019)."
+"The paper is organised as follows. We describe our simu-
+lations and analysis techniques in section 2. We present our
+results along with a discussion in section 3, with section 3.1
+focusing on environment-independent evolution, sections 3.2"
+"and 3.3 focusing on trends with local environment and sec-
+tion 3.4 devoted to assembly bias. We discuss some of these
+trends in the framework of the excursion set approach in
+section 4 and conclude with a summary of our main results
+in section 5. Throughout, the base-10 logarithm is denoted
+by ‘log’ and the natural logarithm by ‘ln’."
+2 SIMULATIONS AND TECHNIQUES
+"Here we describe our simulations and analysis tools for iden-
+tifying haloes and measuring their accretion rates and local
+as well as large-scale environments."
+2.1 Simulations
+"We have used N -body simulations of CDM and WDM per-
+formed using the tree-PM code gadget-2 (Springel 2005)1"
+"in a cubic, periodic box of comoving length 150h−1Mpc sam-
+pled with 10243 particles, corresponding to a particle mass
+mp = 2.4 × 108h−1M�, with a 20483 PM grid and comov-
+ing force resolution 4.9h−1kpc corresponding to 1/30 of the
+Lagrangian inter-particle spacing."
+"The CDM transfer function Tcdm(k) for generating initial
+conditions was computed using the code camb (Lewis et al.
+2000)2 with a spatially flat ΛCDM cosmology having total
+matter density parameter Ωm = 0.276, baryonic matter den-
+sity Ωb = 0.045, Hubble constant H0 = 100h kms"
+−1Mpc−1
+"with h = 0.7, primordial scalar spectral index ns = 0.961
+and r.m.s. linear fluctuations in spheres of radius 8h−1Mpc,
+σ8 = 0.811, consistent with the 7-year results of the Wilkin-
+son Microwave Anisotropy Probe (WMAP7, Komatsu et al.
+2011)."
+"For the WDM model, we additionally suppress small-
+scale power in the linear transfer function as appropriate for
+the free-streaming of a thermally produced WDM particle
+with mass mdm = 0.4 keV according to the fitting function
+of Bode et al. (2001) (with parameters taken from Viel et al.
+2005)"
+"Twdm(k) = Tcdm(k)
+[
+1 + (αk)"
+"2µ
+]−5/µ"
+with µ = 1.12 and
+"α ≡ 0.049
+("
+"Ωm
+0.25"
+")0.11(
+h"
+")1.22 (
+mdm
+1 keV"
+")−1.11
+h
+−1"
+"(2)
+The resulting “half-mode” mass-scale (c.f., e.g., Schneider
+et al. 2012) of Mhm ' 3 × 1011h−1M� is resolved with
+∼ 1200 particles (see below).3 Although a WDM particle with
+mdm = 0.4 keV is completely ruled out by Lyman-alpha forest
+observations as being the dominant component of dark matter
+(Viel et al. 2013; Iršič et al. 2017; Palanque-Delabrouille
+et al. 2020), it allows us to resolve the entire initial power
+spectrum up to the truncation scale with sufficient particles,
+thus providing a useful test-bed for studying mass accretion"
+"1 http://www.mpa-garching.mpg.de/gadget/
+2 http://camb.info
+3 The collisionless WDM fluid is assumed to be in the perfectly
+cold limit, i.e., we ignore the small thermal velocity dispersion of a
+real WDM fluid. This is expected to be accurate at the epochs of"
+"our interest, well after perturbations have been suppressed below
+the largest free-streaming scale in linear theory (Angulo et al."
+2013).
+"MNRAS 000, 1–16 (0000)"
+"http://www.mpa-garching.mpg.de/gadget/
+http://camb.info"
+"
+Mass accretion rates and environment 3"
+"and its environment dependence in the absence of small-scale
+perturbations."
+"Initial conditions for both CDM and WDM were gener-
+ated at z = 99 with the same random seed using 2nd order
+Lagrangian perturbation theory (Scoccimarro 1998) with the
+code music (Hahn & Abel 2011).4 Snapshots were stored
+starting from z = 12 to z = 0 at time intervals equally
+spaced in the scale factor with ∆a = 0.004615 (leading to
+201 snapshots), which provides sufficient time resolution for
+the accretion and merger analysis described below. The sim-
+ulations and analysis were performed on the Perseus and
+Pegasus clusters at IUCAA.5"
+2.2 Halo identification and masses
+"Haloes were identified using the code rockstar (Behroozi
+et al. 2013a)6 which implements a Friends-of-Friends algo-
+rithm in 6-dimensional phase space and provides information
+on gravitationally bound haloes as well as their substructure.
+Merger trees were constructed using the 201 snapshots in each
+simulation (CDM and WDM) using the code consistent-
+trees (Behroozi et al. 2013b).7 Since we wish to focus on
+the accretion rates of well-resolved haloes in this work, we
+exclude all subhaloes and further consider only those ob-
+jects for which the virial energy ratio η = 2T/|U | satisfies
+0.5 < η < 1.5, which mitigates the effects of unrelaxed
+objects and numerical artefacts (Bett et al. 2007)."
+"We further exclude splashback objects, which spatially
+mimic genuine haloes at the redshift of interest but have
+passed through a larger host in the past and hence are
+physically closer to subhaloes. We do so using the value
+of the ‘first accretion scale’ reported by consistent-trees,
+which records the earliest epoch at which the main progenitor
+of a given descendant passed through the virial radius of a
+larger object; we exclude all descendants whose first accretion
+scale is earlier than the epoch of interest.8 For completeness,
+we report that splashback haloes at z = 0 form . 6% (4.5%)
+by number of our low-mass halo populations in CDM (WDM)
+and . 0.7% of high-mass objects in either cosmology (see
+below for the corresponding mass ranges), with the fractions
+becoming vanishingly small at high redshifts."
+"Throughout, we will quote halo and progenitor masses
+using the mass definition Mvir as reported by rockstar.
+This corresponds to the bound mass contained in a halo-
+centric sphere of virial radius Rvir which encloses a density
+equal to ∆vir times the critical density of the Universe, where
+∆vir is the spherical collapse overdensity and is taken from
+the fitting function provided by Bryan & Norman (1998) (at
+z = 0, ∆vir ' 98 for our cosmology, while ∆vir → 18π2 ' 178
+at high-z during matter domination). Additionally, we use
+the rockstar values of M200b to infer the halo-centric radius
+R200b which encloses a density equal to 200 times the mean
+density of the Universe at each redshift; this will be useful
+when characterising local halo environments below."
+"4 https://www-n.oca.eu/ohahn/MUSIC/
+5 http://hpc.iucaa.in
+6 https://bitbucket.org/gfcstanford/rockstar
+7 https://bitbucket.org/pbehroozi/consistent-trees
+8 To avoid effects of numerical precision in comparing scale factor
+values, we define splashbacks as objects whose first accretion epoch"
+"is more than 100 Myr in the past of the epoch of interest. We
+have checked that varying this threshold by factor 2 on either side"
+makes no difference to our results.
+"Figure 1. Halo mass function: Dashed (solid) lines show the
+halo mass function in CDM (WDM) at z = 0.0 (thick curves) and"
+"z = 1.5 (thin curves) as a function of virial mass Mvir. The horizon-
+tal axis starts at Mvir = 1.4× 1010h−1M�, corresponding to a 60
+particle cut which we use for identifying progenitors. The first ver-"
+"tical dotted line from the left indicates Mvir = 1.2× 1011h−1M�
+or 500 particles, which we use as the threshold for identifying
+descendants at any redshift (see text for other criteria applied in"
+"selecting a clean halo sample). The low-mass and high-mass bins
+we use are indicated in blue and red colours, respectively, demar-
+cated by the remaining vertical lines and with the corresponding"
+"ranges mentioned in the labels. Highlights: In the WDM mass
+function, we clearly see the suppression of halo counts below the
+half-mode mass Mhm ' 3×1011h−1M�, and (at low redshift) the
+spurious upturn at very low masses due to numerical artefacts."
+"Figure 1 shows the mass functions for haloes in CDM
+(dashed) and WDM (solid) at z = 0 and z = 1.5. The vertical
+lines demarcate the mass bins we will use below; the lowest
+mass threshold corresponds to 500 particles and the mass
+functions in the low-mass (high-mass) bin we employ are
+coloured blue (red). The CDM mass function shows the well-
+studied power law rise towards low masses and exponential
+decline at high masses (Press & Schechter 1974; Bond et al.
+1991; Sheth & Tormen 1999; Tinker et al. 2008)."
+"The WDM mass function is identical to the CDM one
+at high masses for each redshift, but turns over around the
+half-mode mass (see above), leading to a suppression of halo
+abundances at low masses as expected from the lack of small-
+scale perturbations (Hahn & Paranjape 2014; see also Benson
+et al. 2013; Schneider et al. 2013). At masses smaller than
+∼ 1010.4h−1M�, however, we see an up-turn in the z = 0
+WDM mass function, which is a well-known consequence
+of numerical artefacts in the N -body technique applied to
+initial conditions with suppressed small-scale power (Wang
+& White 2007; Angulo et al. 2013; Lovell et al. 2014; Agarwal
+& Corasaniti 2015). Note that the virial cut of 0.5 < η < 1.5
+mentioned earlier already removes many spurious objects at
+masses close to the half-mode mass (Agarwal & Corasaniti
+2015); removing the lower-mass spurious objects would re-
+quire a more sophisticated study of the initial proto-patches"
+"MNRAS 000, 1–16 (0000)"
+"https://www-n.oca.eu/ohahn/MUSIC/
+http://hpc.iucaa.in
+https://bitbucket.org/gfcstanford/rockstar
+https://bitbucket.org/pbehroozi/consistent-trees"
+"
+4 Dhoke & Paranjape"
+"from which these objects evolve (Lovell et al. 2014), which
+we have not performed here."
+"Our choice of the lowest mass bin for descendant haloes
+is sufficiently far above the mass scale where spurious objects
+start becoming numerically relevant. We have checked this by
+applying the correction suggested by Schneider et al. (2013)
+by fitting a power law to the mass function below the up-turn
+scale (not displayed) and subtracting it from the measured
+mass function; the result agrees with the measured mass
+function in the mass bins of interest at better than ∼ 2% at
+all redshifts. Spurious objects therefore do not contribute to
+our chosen populations of descendant haloes at any redshift.
+However, when identifying progenitor haloes in the merger
+trees, we will employ a lower mass cut of 60 particles (the
+left edge of the horizontal axis in figure 1). This affects the
+quantification of mass accretion rates in the WDM case at
+low redshifts, by artificially enhancing the accretion due
+to mergers and correspondingly decreasing the accretion of
+diffuse mass. We return to this point below."
+2.3 Measuring specific mass accretion rates
+"For the analysis below, we use haloes in the two mass bins
+discussed above, all of which are well-resolved with more than
+500 particles. We used merger trees generated by consistent-
+trees to find all the progenitors of a given halo within the
+previous 2 dynamical times9 at any chosen redshift. The
+values of the dynamical time Tdyn and the redshift interval
+∆z ≡ zi− zf corresponding to 2Tdyn at different redshifts are
+given in table 1. Our snapshot resolution of ∆a ' 0.005 (see
+above) provides us with excellent sampling of the required
+∆z at all the redshifts we probe (see table 1)."
+"Throughout, we retain progenitors that are resolved
+with more than 60 particles (Mvir > 1.4 × 1010h−1M�).
+This leads to a different dynamic range in progenitor-to-
+descendant mass ratio χ for the low-mass (χ & 0.04) and
+high-mass bin (χ & 6× 10−5). To the extent that accretion
+rates are self-similar with mass (Fillmore & Goldreich 1984;
+Bertschinger 1985), this would lead to accretion by ‘mergers’
+being systematically enhanced in high-mass haloes simply
+because relatively low-mass objects are counted as progen-
+itors as compared to the low-mass bin. Provided accretion
+rates are accurately estimated without double-counting due
+to (artificial) fragmentation, however, the contribution to
+genuine mergers from very low mass ratios (say χ < 10−2)
+should be small (Genel et al. 2010). consistent-trees im-
+proves the consistency of progenitor/descendant assignment
+across time steps by solving differential equations for the
+expected locations of potential descendants (Behroozi et al.
+2013b), so that effects of artificial fragmentation are reduced.
+Also, since we define accretion rates over 2Tdyn, any residual
+effects of instantaneous fragmentation should typically be
+averaged over. Moreover, environmental trends have been
+found to be relatively insensitive to whether progenitors are
+defined using a fixed minimum particle count or minimum
+χ (Fakhouri & Ma 2010). We therefore proceed with our
+analysis using a fixed threshold of 60 particles on progenitor
+mass and comment below on analyses using other choices."
+9 We have repeated our main analysis for accretion rates calcu-
+"lated over 1 dynamical time and find qualitatively similar but
+noisier results. We therefore focus on results using accretion rates"
+over 2 dynamical times.
+"Table 1. Value of dynamical time Tdyn in Gyr, the redshift interval
+∆z corresponding to 2Tdyn in the past, and the corresponding"
+"number of simulation snapshots Nsnap tracked, at each redshift
+studied in this work."
+z 0.0 0.25 0.5 0.8 1.0 1.5 2.0
+Tdyn (Gyr) 3.14 2.55 2.08 1.67 1.46 1.08 0.83
+∆z (2Tdyn) 0.68 0.80 0.95 1.11 1.20 1.50 2.23
+Nsnap 89 70 57 47 42 34 32
+"We follow Fakhouri & Ma (2010) and divide the mass
+accreted by a halo into two parts: (i) via other resolved haloes
+as mergers and (ii) in the form of diffuse mass, which includes
+bound structures below the chosen mass resolution, actually
+unbound particles which may have been tidally stripped from
+other objects, or genuinely diffuse mass which has never been
+part of a bound structure earlier. In practice, we calculate
+the mass accreted in a given time interval zi > z > zf due to
+mergers as the total mass of all progenitors except the main
+progenitor. Correspondingly, diffuse mass accreted in the
+same time interval is the difference between the descendant
+halo’s mass and the total mass of all the progenitors. Finally,
+the total mass accreted in this time interval is the sum of
+the masses accreted via mergers and diffuse accretion, i.e.,
+the difference between the descendant halo’s mass and the
+mass of the main progenitor. Symbolically, if we define"
+"M0 : virial mass of descendant halo at z = zf ,
+Mj : virial mass of the j"
+"th progenitor halo at z = zi,
+M1 : virial mass of the main progenitor at z = zi,"
+"then the dimensionless specific accretion rates Γmer (merger),
+Γdif (diffuse) and Γtot (total) – where Γ ∼ d lnM/d ln a (e.g.,
+Diemer & Kravtsov 2014) – can be written as"
+Γmer ≡
+"(∑
+j≥2Mj"
+")
+M0(zi − zf)"
+"× (1 + zf) ,"
+Γdif ≡
+"(
+M0 −"
+"∑
+j≥1Mj"
+")
+M0(zi − zf)"
+"× (1 + zf) ,"
+"Γtot ≡
+(M0 −M1)
+M0(zi − zf)"
+× (1 + zf) . (3)
+"We have chosen a convention such that positive values of the
+rates correspond to increase in mass from zi to zf ."
+"Using the progenitors selected as above, we computed
+Γmer, Γdif and Γtot within the previous 2 dynamical times
+at seven redshifts z = 0.0, 0.25, 0.5, 0.8, 1.0, 1.5 and 2.0 for
+the CDM and WDM simulations.10 These rates are found
+to show distributions similar to those shown in Fakhouri
+& Ma (2010). Figure 2 shows the normalised probability
+distributions for Γdif (left panel) and Γmer (right panel) for
+z = 0 haloes in the low-mass (blue) and high-mass (red) bin,
+for CDM (dashed lines) and WDM (solid lines). Arrows in
+the left panel (with identical colour-coding and line styles)
+indicate the corresponding median values of Γdif . These"
+"10 As a check, we also explicitly calculated Γtot over 100 My,
+finding that these are within ∼ 10% of the values reported by
+consistent-trees. The differences are likely due to different"
+"choices of progenitor mass resolution between our values and the
+default settings of consistent-trees, and are not expected to"
+alter our conclusions qualitatively.
+"MNRAS 000, 1–16 (0000)"
+Mass accretion rates and environment 5
+"Figure 2. Accretion rate distributions: Histograms in the left (right) panel show the distributions of the specific mass accretion
+rates Γdif (Γmer) due to diffuse mass (mergers) at z = 0 (see equations 3). Dashed (solid) lines show results for CDM (WDM) haloes,"
+"with the red (blue) curves showing results for the high-mass (low-mass) bin. The legend in the left panel indicates the number of haloes
+that contributed to each mass bin, while the arrows mark the median values of Γdif for the respective distributions. Highlights: Low-mass"
+WDM haloes have the highest Γdif and lowest Γmer values on average.
+"arrows show that the median Γdif is the highest for WDM
+low-mass haloes. For the high-mass bin, CDM and WDM
+haloes show very similar distributions of the two accretion
+rates. Γmer is always positive except if there were no recent
+mergers, in which case Γmer = 0 exactly. Γdif can be negative
+if the total mass of progenitors is more than the mass of the
+descendant halo, which can happen due to tidal stripping; this
+is evidently a significant effect only for low-mass CDM haloes.
+Below, we will investigate in detail the redshift evolution and
+environmental trends of both Γdif and Γmer."
+"As mentioned earlier, the dominant presence of spuri-
+ous objects in the WDM simulation at low redshifts and
+masses . 1010.4h−1M� affects the measurement of WDM
+accretion rates. In particular, Γmer is overestimated and Γdif
+correspondingly underestimated due to the fact that mass
+is locked up in spuriously identified objects. However, the
+amount of mass in these low-mass spurious objects is not
+dramatically large. By integrating the measured and power-
+law-corrected (see section 2.2) mass functions, weighted by
+mass, over the range 60mp ≤ Mvir ≤ 500mp, we find that
+the contribution of spurious objects in this range is ' 40%
+by mass at z = 0 and falls to . 4% by z = 1.5. Moreover, we
+will see below that accretion due to mergers is subdominant
+in WDM in any case. We therefore tentatively conclude that,
+although the WDM merger accretion rates are likely to be
+systematically overestimated due to the presence of spuri-
+ous objects, accounting for this spurious contribution is not
+expected to alter any of our qualitative conclusions."
+"To assess the effects of the potential caveats discussed
+above, namely, the effect of a fixed particle threshold versus a
+threshold in mass ratio for defining progenitors, and the effect
+of spurious WDM haloes, we have repeated our entire analysis
+using two different selection criteria. In the first modification,
+we replaced the fixed cut of > 60 particles per progenitor with
+a lower threshold of > 30 particles, which should emphasize
+the effects of spurious WDM haloes. In the second, we used"
+"the 60 particle threshold for progenitors of the low-mass
+descendants, but a threshold of Mvir > 4.84 × 1011h−1M�
+for progenitors of high-mass descendants. This corresponds to
+χ ' 0.08 with respect to the median descendant mass in the
+high-mass bin, which is the same as the ratio between the 60
+particle threshold and the median mass of the low-mass bin,
+and should emphasize any differences between environmental
+trends due to the different progenitor selection. We find that
+all our qualitative results remain unchanged in each case,
+with only a few minor differences which we comment on later.
+This indicates that (a) the environmental trends we study
+are indeed insensitive to the choice of progenitor threshold
+mass and (b) spurious haloes in WDM do not affect the
+inference of the trends. All our results below will be quoted
+for the (more conservative) fixed threshold of > 60 particles
+per progenitor for each mass bin."
+2.4 Quantifying local halo environment
+"We quantify the local environment of haloes using scalars
+constructed from the smoothed halo-centric tidal tensor
+Tij(x) = ∂i∂jΨR(x), where the Newtonian potential ΨR
+satisfies the normalised Poisson equation ∇2ΨR = δR with
+δR being the halo-centric dark matter overdensity Gaussian-
+smoothed on comoving scale R. In practice, for any smooth-
+ing scale R, we invert the Poisson equation in Fourier space
+using cloud-in-cell (CIC) interpolation for the unsmoothed
+density on a 5123 grid. Namely, we Fourier transform the
+CIC overdensity to obtain δ(k), using which the tidal tensor"
+"is the inverse Fourier transform of (kikj/k
+2)δ(k)e−k"
+"2R2/2.
+As the two scalars of choice, we use the overdensity δR"
+"itself, and the tidal anisotropy αR introduced by Paranjape
+et al. (2018). If the eigenvalues of Tij are denoted λ1 ≤ λ2 ≤
+λ3, then we have"
+δR = λ1 + λ2 + λ3 (4)
+"MNRAS 000, 1–16 (0000)"
+6 Dhoke & Paranjape
+"Figure 3. Local tidal anisotropy: Normalised distributions of the tidal anisotropy α (equation 5) for low-mass (left panel) and
+high-mass (right panel) haloes in CDM (dashed curves) and WDM (solid curves) at four redshifts between 0 ≤ z ≤ 1.5 (indicated by
+colours). Vertical line in each panel indicates α = 0.5, with higher (lower) values corresponding to filamentary (node-like) environments.
+Highlights: Distributions for low-mass WDM haloes are systematically narrower than their CDM counterparts."
+"αR =
+√
+q2R/(1 + δR) (5)"
+"where q2R is the tidal shear (Heavens & Peacock 1988; Catelan
+& Theuns 1996) defined as,"
+"q
+2
+R ="
+"2
+[(λ3 − λ1)2 + (λ3 − λ2)2 + (λ2 − λ1)2] . (6)"
+"For the reasons discussed by Paranjape et al. (2018) and
+Ramakrishnan et al. (2019), we define the local halo environ-
+ment at scales R = 4R200b/"
+"√
+5 for each halo. (In practice,"
+"we first evaluate the tidal tensor on the grid for a fixed set
+of smoothing scales and then interpolate to the adaptive
+scale and spatial position corresponding to each halo.) This
+adaptive filtering choice maximises the correlation between
+the local halo tidal environment and large-scale halo bias,
+useful for studies of assembly bias. Hereafter, for brevity we
+will write α ≡ αR and δ ≡ δR."
+"A common approach to classifying cosmic web environ-
+ment is by counting the signs of the eigenvalues of the tidal
+tensor or density Hessian defined at some fixed smoothing
+scale; with the tidal tensor we would have (e.g., Hahn et al.
+2007) λ1 > 0 : node, λ1 < 0 and λ2 > 0 : filament, λ2 < 0
+and λ3 > 0 : sheet, λ3 < 0 : void. The use of α and δ
+provides an alternative, continuous definition of halo envi-
+ronment adapted to the halo size. These variables, although
+correlated, are not completely degenerate (Ramakrishnan
+et al. 2019, see also below). Such a continuous measure of
+environment is much better suited for studies of large-scale
+environmental correlations or assembly bias (Paranjape et al.
+2018; Ramakrishnan et al. 2019) as well as environmental
+trends in galaxy evolution (Zjupa et al. 2020)."
+"Physically, small values of the adaptively defined α cor-
+respond to isotropic environments (nodes), while large values
+correspond to very anisotropic environments (filaments). As
+discussed by Paranjape et al. (2018) and Paranjape (2020),
+the value α = 0.5 forms a rather sharp threshold separating"
+"haloes in node-like and filament-like environments. We have
+checked that this is true at all the redshifts we study in this
+work."
+"Figure 3 shows the distribution of α at four redshifts
+for CDM (dashed) and WDM (solid) haloes in the low-mass
+(left panel) and high-mass bin (right panel). The distribution
+of α at fixed redshift depends on halo mass, with massive
+haloes having preferentially lower values of α and low-mass
+haloes spanning a wide range of α. Haloes at higher redshifts
+also have preferentially lower values (as well as narrower
+distributions) of α, which is possibly mainly a consequence
+of mass resolution (since haloes at fixed mass are rarer in
+the past), but might also be partially reflecting a genuine
+evolution of the local cosmic web environment of haloes.
+Figure 4 is formatted identically to figure 3 and shows the
+corresponding distributions of δ. At fixed redshift, we see
+that the distributions for low-mass haloes have wider tails
+than for high-mass haloes, at both low and high density. At
+fixed mass, high-redshift haloes span substantially narrower
+ranges of δ than those at lower redshift. For both α and δ, the
+results for WDM and CDM at each redshift are very similar
+to each other for high-mass haloes, while the distributions
+for low-mass WDM haloes are narrower than their CDM
+counterparts (with the median δ also being systematically
+higher for WDM). This extends the results of Paranjape et al.
+(2018), who studied CDM haloes at z = 0, to significantly
+higher redshift as well as WDM cosmologies."
+2.5 Large-scale environment: halo bias
+"As an indicator of the large-scale halo environment, we es-
+timate the linear bias b1 for each halo using the technique
+outlined by Paranjape et al. (2018) and Paranjape & Alam
+(2020). This is essentially an object-by-object version of the
+usual cross-correlation definition of bias in Fourier space
+– Phm(k)/Pmm(k) – averaged over low-k modes using the
+weights discussed by Paranjape & Alam (2020), where Phm"
+"MNRAS 000, 1–16 (0000)"
+Mass accretion rates and environment 7
+"Figure 4. Local overdensity: Same as figure 3, showing results for halo-centric local overdensity δ (equation 4). Highlights: As with α,"
+"the distributions of δ for low-mass WDM haloes are systematically narrower than their CDM counterparts, and also have higher median
+values."
+"and Pmm are the halo-matter cross power spectrum and
+matter auto-power spectrum, respectively."
+"The box size of 150h−1Mpc leads to small-volume sys-
+tematic effects in the absolute value of b1 measured for each
+object, due to missing long-wavelength modes. Here, however,
+we are only interested in the correlation between b1 and other
+halo properties like accretion rates and halo environment.
+As demonstrated by Ramakrishnan et al. (2019), these cor-
+relations are relatively insensitive to volume effects and we
+therefore expect our results to be robust to such systematics."
+3 RESULTS AND DISCUSSION
+"We now turn to our main results, starting with the
+environment-independent evolution of mass accretion, fol-
+lowed by trends with local environment and finally assembly
+bias."
+3.1 Mass accretion: mergers vs. diffuse accretion
+"Figure 5 shows the evolving fraction fnomerge of haloes which
+do not accrete any mass through mergers in the last 2 dy-
+namical times (i.e., haloes without any secondary progenitor
+larger than the 60 particle threshold, having Γmer = 0), for
+CDM and WDM. High-mass CDM haloes essentially always
+had mergers, except at very low redshifts where a small
+fraction have evolved with Γmer = 0. At fixed mass, the
+value of fnomerge is always larger in WDM than in CDM.
+This can be easily understood as being due to the lack of
+small-scale structure and hence fewer low-mass bound struc-
+tures in WDM. In fact, we see that haloes in the low-mass
+WDM bin accrete mainly diffuse mass at all redshifts, with
+fnomerge & 0.9 at all z. This is consistent with corresponding
+results from Elahi et al. (2014)."
+"Figure 6 shows the evolution of the median Γdif and
+Γmer (left and middle panels, respectively) with the total
+accretion rate Γtot shown in the right panel. Error bars on the
+measurements were calculated by bootstrap sampling: at each"
+"Figure 5. Mergers versus diffuse accretion: Evolution with
+redshift of the fraction fnomerge of haloes with zero merger rate"
+in the previous 2 dynamical times. Results for the low-mass (high-
+"mass) bin are shown in blue (red), with the dashed (solid) curves
+showing results for CDM (WDM). Highlights: Low-mass WDM"
+"haloes accrete mainly diffuse mass at all epochs, while essentially
+every high-mass CDM halo has accreted some mass through merg-
+ers in the previous 2 dynamical times, except at very low redshift."
+"redshift and for each mass bin, the accretion rate data are
+sampled with repetition a number of times and the standard
+deviation in the median values of each sample gives the value
+of error. We see that WDM high-mass haloes have nearly
+the same total accretion rate as CDM high-mass haloes, at
+all epochs (consistent with the earlier results by Knebe et al.
+2002; Benson et al. 2013). WDM low-mass haloes, on the
+other hand, have higher total accretion rates than, both,"
+"MNRAS 000, 1–16 (0000)"
+8 Dhoke & Paranjape
+"Figure 6. Accretion history: Evolution with redshift of the median values of the specific accretion rates Γdif (left panel), Γmer(middle
+panel) and Γtot (right panel), for low-mass (blue) and high-mass (red) haloes in CDM (dashed) and WDM (solid). Error bars were
+calculated by bootstrap sampling at each redshift. Highlights: Γdif for low-mass WDM haloes is the highest of all categories. In the"
+"high-mass bin, although Γtot is nearly identical between CDM and WDM, the relative contribution to this total from mergers versus
+diffuse accretion is higher in CDM than in WDM."
+"CDM low-mass haloes and also WDM (and CDM) high-mass
+haloes."
+"Upon splitting the accretion rate between mergers and
+diffuse accretion, we see that diffuse accretion dominates the
+accretion budget at all redshifts, in each mass bin for both
+CDM and WDM. Comparing low-mass and high-mass results
+for diffuse accretion, in CDM we see that low-mass haloes
+have lower Γdif than high-mass haloes, while the opposite is
+true for WDM (see also figure 2). For accretion by mergers,
+on the other hand, high-mass haloes have higher Γmer than
+low-mass haloes in both CDM and WDM."
+"And, interestingly, while the high-mass total accretion
+rates in CDM and WDM are nearly identical, the relative con-
+tribution to this total from mergers versus diffuse accretion
+is higher in CDM than in WDM."
+"These results are all consistent with an overall picture in
+which the arrested growth of small-scale structure in WDM
+inhibits mass accretion through mergers, as compared to
+CDM. The fact that differences between WDM and CDM
+accretion rates are dramatic at low masses is not surprising,
+considering that our low-mass bin is at slightly smaller mass
+than the half-mode mass for our WDM cosmology (see sec-
+tion 4 for analytical insights into this behaviour). The fact
+that high-mass haloes also show differences between WDM
+and CDM can be attributed to the difference in available
+substructure for such haloes in the two cosmologies. In the
+following sections, we explore the relation between these
+accretion rates and the local environment of haloes."
+"3.2 Environments of haloes accreting with and
+without mergers"
+"To start with, we focus on whether the environmental vari-
+ables α and δ evolve differently on average for haloes that add
+mass with and without mergers, in both CDM and WDM
+cosmologies. Figure 7 shows the median α (left panel) and
+δ (right panel) for haloes having zero and non-zero merger
+rates in the low-mass (blue, cyan) and high-mass (red, or-
+ange) bins. The solid (dashed) lines show results for WDM
+(CDM). Error bars on the measurements were calculated"
+"by bootstrap sampling at each redshift. Several interesting
+trends are apparent, as we discuss next."
+"Overall, we see that the tidal environments of objects at
+any fixed mass are typically more anisotropic at later times,
+while most local densities evolve moderately or decrease at
+later times. This is broadly consistent with the growth of the
+cosmic web such that a larger fraction of haloes at fixed mass
+find themselves in filamentary or sheet-like environments at
+late times."
+"Comparing the trends for low-mass and high-mass ob-
+jects, we see for CDM that high-mass objects (dashed, warm
+colours) are in relatively denser and more isotropic environ-
+ments than low-mass objects (dashed, cool colours), at any
+redshift. This is fully consistent with the standard hierar-
+chical picture in which massive haloes are more clustered
+and dominate their tidal environments more than low-mass
+haloes."
+"In WDM, while massive haloes do live in more isotropic
+environments than their low-mass counterparts (solid warm
+versus solid cool in left panel), unlike CDM, now the low-
+mass haloes are in denser environments than high-mass ones
+(same in right panel, see also figure 4). These low-mass WDM
+environments are also more overdense than the corresponding
+low-mass CDM environments.11 We return to this point later."
+"We focus next on the high-mass bin where one might ex-
+pect similarities between CDM and WDM haloes (although
+see section 3.1). Indeed, we see that haloes with mergers oc-
+cupy nearly identical median density and tidal environments
+at all redshifts in CDM and WDM (compare the dashed
+versus solid orange curves in each panel). And, within er-
+rors, this is also true for haloes without recent mergers (red
+curves)."
+"These high-mass environments tend to be the most
+isotropic of all (c.f. figure 3) while having intermediate den-
+sities, at almost any redshift. Thus, most of the differences
+between high-mass CDM and WDM haloes are related to the"
+11 We have also checked that the median b1 values for various
+"halo categories are nearly identical between CDM and WDM, and
+conform to the usual expectation of low-mass objects being less"
+biased than high-mass ones.
+"MNRAS 000, 1–16 (0000)"
+Mass accretion rates and environment 9
+"Figure 7. Local environments with and without mergers: Evolution of median local tidal anisotropy α (left panel) and local
+overdensity δ (right panel) of haloes selected to have grown without mergers (blue, red) and with mergers (cyan, orange) in the previous
+2 dynamical times, for the low-mass (cooler colours) and high-mass (warmer colours) bin. Results for CDM (WDM) are shown using
+dashed (solid) curves. Error bars were calculated by bootstrap sampling at each redshift. Highlights: While most of these trends conform"
+"to expectations based on the preponderance of small-scale bound structures in CDM as compared to WDM, two trends are noteworthy:
+(i) low-mass CDM haloes growing without mergers are in slightly more anisotropic environments compared to other categories and (ii)
+low-mass WDM haloes are in denser environments than other categories (see also figure 4)."
+"lack of substructure and corresponding dominance of diffuse
+accretion in WDM seen in figure 6."
+"In the low-mass bin, the results are more nuanced, with
+several differences between zero and non-zero merger envi-
+ronments in CDM and WDM which can be summarized as
+follows:"
+"• The environments of low-mass CDM haloes with and
+without mergers have similar densities at all redshifts (dashed
+cyan versus dashed blue in the right panel), but are system-
+atically more anisotropic at low redshift for haloes without
+mergers at any redshift (same in the left panel). We discuss
+this further below.
+• In contrast, low-mass WDM haloes without mergers"
+"(solid blue) live in systematically less dense and more isotropic
+environments than those with mergers (solid cyan). This is
+sensible, since isolated, isotropic environments would allow
+diffuse accretion to dominate over mergers.
+• Low-mass WDM haloes without mergers (solid blue) live"
+"in more dense environments (with similar tidal anisotropy)
+than their CDM counterparts (dashed blue). This is consis-
+tent with an enhancement of diffuse accretion in WDM; the
+lack of substructure in WDM compared to CDM means that
+environments conducive to purely diffuse accretion (i.e., no
+recent mergers) can be denser in WDM than in CDM.
+• In contrast, low-mass WDM haloes with mergers (solid"
+"cyan) live in substantially more dense and more anisotropic
+environments than their CDM counterparts (dashed cyan).
+We discuss this below."
+"These low-mass results can be mostly understood keep-
+ing in mind the preponderance of small objects in WDM as
+compared to CDM, as well as the facts that a higher local
+tidal anisotropy would typically inhibit the accretion of dif-
+fuse mass (e.g., by redirecting local flows towards nodes; see
+Borzyszkowski et al. 2017), while higher densities would en-
+hance mergers. Some of these trends, however, deserve more"
+"careful consideration. For example, the CDM haloes without
+mergers are in more anisotropic environments than those
+with mergers, contrary to what is suggested by the argument
+above. Similarly, the higher anisotropy of low-mass WDM
+haloes with mergers as compared to their CDM counterparts
+is intriguing as well. On the other hand, the higher density
+of low-mass WDM haloes without mergers as compared to
+all other categories might be understood as being due to the
+substantially decreased occurrence of mergers in the smooth
+WDM cosmic web, with only the highest density environ-
+ments being capable of sustaining merger events. In the next
+section, we will explore in more detail the correlations be-
+tween environment and mass accretion rate, which will shed
+further light on the nature and origin of these trends."
+"3.3 Correlation between mass accretion rates and
+local halo environment"
+"To quantify the dependence of mass accretion rates on envi-
+ronment, in this section we study the evolving correlations
+between our environmental proxies α and δ, and the mass
+accretion rates due to diffuse accretion (Γdif) and mergers
+(Γmer)."
+"Following Ramakrishnan et al. (2019), we calculate
+Spearman rank correlation coefficients between the envi-
+ronmental variables and accretion rates; namely, in each
+mass bin and for every redshift, we calculate the coefficients
+α ↔ Γdif , δ ↔ Γdif , α ↔ Γmer, δ ↔ Γmer, as well as the
+coefficient α ↔ δ for reference (which was also studied by
+Ramakrishnan et al. 2019, for z = 0 CDM haloes). In order
+to assess which, if any, of the two environmental proxies is
+more important, we also compute conditional coefficients.
+For stochastic variables a, b and c, the coefficient between a
+and b, conditioned on c, is given by"
+(a↔ b)|c = (a↔ b)− (a↔ c)(b↔ c) . (7)
+"MNRAS 000, 1–16 (0000)"
+10 Dhoke & Paranjape
+"If the variables were Gaussian distributed with a joint dis-
+tribution that had the structure p(a, b, c) = p(a|c)p(b|c)p(c),
+then the variables a and b would be conditionally indepen-
+dent and we would have (a ↔ b)|c = 0 although (a ↔ b)
+need not be zero. We point the reader to Ramakrishnan et al.
+(2019) for a detailed justification for constructing conditional
+coefficients using equation (7) with Spearman rank coeffi-
+cients, even for variables that are not Gaussian distributed,
+as is the case here (see also below)."
+"Figure 8 (figure 9) shows the correlation coefficients
+for CDM (WDM). In each case, in the left (right) panel
+we display correlations between the environment and Γdif
+(Γmer) as a function of redshift."
+"12 Additionally, the left panel
+in each case also shows the evolving correlation (α ↔ δ).
+Results for the low-mass (high-mass) bin are displayed using
+cool (warm) colours. The solid curves show the primary
+correlations such as (α ↔ Γmer) while the dotted curves
+show conditional coefficients such as (α ↔ Γmer)|δ. Error
+bars on the measurements were calculated by bootstrap
+sampling at each redshift. This represents the first detailed
+study in the literature, of the evolving correlation between
+local environment and mass accretion rates in either CDM
+or WDM cosmologies."
+"We see that α and δ are always positively correlated
+for both CDM and WDM, with a strength that is relatively
+independent of halo mass and that only weakly depends on
+redshift and dark matter type. This extends the results of
+Ramakrishnan et al. (2019) (who studied CDM haloes at
+z = 0) to significantly higher redshift, as well as to WDM
+cosmologies. The remaining correlations, which depend only
+weakly on redshift, can be summarized as follows."
+• High-mass bin:
+"– For both CDM and WDM, we see a strong negative
+correlation (δ ↔ Γdif), and a weaker but significant positive
+correlation (δ ↔ Γmer), at all redshifts (solid orange).
+This is consistent with the expectation that overdense
+environments enhance mergers while underdense regions
+allow for more diffuse accretion (Fakhouri & Ma 2010)."
+"– The corresponding primary correlations (α ↔ Γdif)
+and (α ↔ Γmer) (solid red) are all negative, with mag-
+nitudes comparable to those in the case of δ, for both
+CDM and WDM. Interestingly, however, the conditional
+coefficient (α↔ Γdif)|δ (dotted red in left panels) for both
+CDM and WDM almost vanishes at all z, while the cor-
+responding conditional coefficient (α↔ Γmer)|δ does not
+vanish (dotted red in right panels).13 Thus, for high-mass
+haloes, α and δ are equally important for accretion via
+mergers, while δ almost completely explains the environ-
+ment dependence of diffuse accretion."
+• Low-mass bin:
+"– In low-mass CDM haloes, Γmer shows almost no cor-
+relation with either α or δ at any redshift, consistent with"
+"12 For this correlation analysis, we only evaluate Γmer using those
+haloes that had mergers in the previous 2 dynamical times, i.e.,"
+"objects having Γmer 6= 0. Γdif on the other hand, is evaluated
+using all haloes in the bin.
+13 When using a mass threshold Mvir > 4.84× 1011h−1M� for
+defining progenitors (see section 2.3), the high-mass negative (α↔
+Γmer) correlation becomes weaker, and in fact slightly positive at
+low redshift. This is the only qualitative difference we find between"
+different progenitor definitions.
+"similar weak correlations seen previously using other envi-
+ronmental proxies (c.f. figure 4 of Fakhouri & Ma 2010)."
+"– The situation changes in WDM: we now see positive
+correlations (α ↔ Γmer) and (δ ↔ Γmer), comparable in
+strength to each other and increasing at higher redshift.
+Moreover, at least at low redshift, we see that the condi-
+tional coefficient (δ ↔ Γmer)|α (dotted cyan) is close to
+zero. In fact, this is the case within errors at all z . 1.5.
+Thus, α mostly accounts for the environment dependence
+of Γmer at nearly all redshifts for low-mass WDM haloes,
+with Γmer being enhanced in more anisotropic tidal envi-
+ronments."
+"– For Γdif in low-mass CDM haloes, both (δ ↔ Γdif)
+and (α↔ Γdif) are negative, with comparable magnitudes
+(solid cyan and blue). Also, neither of the conditional
+coefficients (α↔ Γdif)|δ and (δ ↔ Γdif)|α is close to zero
+(dotted cyan and blue). Thus, both α and δ play a role for
+Γdif , consistent with the expectation that diffuse accretion
+should be more efficient far from crowded regions, i.e. in
+underdense, isotropic environments in CDM."
+"– For Γdif in low-mass WDM haloes, on the other
+hand, we see a stronger (α↔ Γdif) anticorrelation (solid
+blue), which almost completely explains the (δ ↔ Γdif)
+(solid cyan) anticorrelation, seen as the near-vanishing of
+(δ ↔ Γdif)|α (dotted cyan) at all redshifts. Thus, the envi-
+ronment dependence of Γdif in low-mass haloes is related to
+both α and δ for CDM and almost completely explained by
+α for WDM. The dominant role played by the tidal environ-
+ment for low-mass WDM haloes is consistent with previous
+simulation results (Angulo et al. 2013) which indicate that
+these objects form in a well-established tidal environment
+which can then further affect their mass accretion."
+"The nature of the environmental correlations discussed
+above reveals a complex interplay between mass accretion
+rates and local environment. While this is perhaps not sur-
+prising, considering the intimate connection between mass
+accretion in the halo outskirts and the internal structure of
+haloes (e.g., Diemer & Kravtsov 2014; More et al. 2015), our
+results above show several interesting aspects. In section 3.2,
+for example, we saw that low-mass WDM haloes with merg-
+ers live in systematically more anisotropic environments than
+their CDM counterparts, a trend consistent with the correla-
+tions seen above in which (α↔ Γmer) is positive for WDM
+but negative for CDM. This is counter-intuitive, consider-
+ing that accretion due to mergers is enhanced in overdense,
+isotropic environments in CDM, and one might expect this
+trend to be even more pronounced in WDM which has less
+small-scale structure available in all environments. Moreover,
+the small magnitude of (δ ↔ Γmer)|α for these low-mass
+WDM haloes shows that α, in fact, dominates the environ-
+mental trends for Γmer. This connection between mergers
+and the local tidal environment of low-mass WDM haloes
+deserves further study."
+"Another puzzling result from section 3.2 was that the
+environments of low-mass CDM haloes without mergers are
+more anisotropic than of those with mergers. In this case
+as well, the correlation results above do not particularly
+clarify the situation, since they are consistent with Γdif being
+enhanced in underdense, isotropic environments (with both
+δ and α playing comparable roles) and Γmer being nearly
+uncorrelated with environment. We have checked that these
+trends are not restricted to the median α alone; rather, the"
+"MNRAS 000, 1–16 (0000)"
+Mass accretion rates and environment 11
+"Figure 8. Correlations between accretion rates and local environment (CDM haloes): Spearman rank correlation coefficients
+between local environmental variables α, δ and specific accretion rates Γdif (left panel) and Γmer (right panel), as a function of redshift."
+"In each panel, cool (warm) colours indicate results for low-mass (high-mass) haloes. Solid curves show the correlations (Γ↔ α) (red, blue)
+and (Γ↔ δ) (orange, cyan) and, in the left panel, (α↔ δ) (brown, dark blue). Dotted curves show conditional coefficients (Γ↔ α)|δ and
+(Γ↔ δ)|α, calculated using equation (7). Highlights: (i) There are significant anti-correlations (Γdif ↔ δ) and (Γdif ↔ α) in both mass
+bins (left panel, solid curves). (ii) Γmer correlates positively (negatively) with δ (α) in the high-mass bin (right panel, solid orange and
+red), and does not correlate with either in the low-mass bin (right panel, solid cyan and blue). (iii) The conditional coefficient (Γdif ↔ α)|δ
+for high-mass haloes (left panel, dotted red) almost vanishes at all z, indicating that δ almost fully explains the environment dependence
+of diffuse accretion in high-mass CDM haloes."
+"Figure 9. Same as figure 8, for WDM haloes. Highlights: (i) The coefficient (Γmer ↔ α) for low-mass haloes is, surprisingly, positive
+(right panel, solid blue) and the corresponding conditional coefficient (Γmer ↔ δ)|α (right panel, dotted cyan) is close to zero. (ii) The
+conditional coefficient (Γdif ↔ δ)|α for low-mass haloes nearly vanishes (left panel, dotted cyan), even though the primary correlation
+(Γdif ↔ δ) (solid cyan) is significantly non-zero. The same is true for the conditional coefficient (Γdif ↔ α)|δ for high-mass haloes (left
+panel, dotted red). Thus, α (δ) almost completely explains the environment dependence of diffuse accretion for low-mass (high-mass)"
+WDM haloes.
+"entire distributions of α in such haloes are shifted relative
+to each other."
+"As a check on systematic errors due to our use of corre-
+lation coefficients and equation (7), we repeated the analysis
+by measuring the median accretion rates Γdif and Γmer in
+narrow bins of α and δ. The results, although noisy, are fully
+consistent with the conclusions above."
+3.4 Accretion rate assembly bias
+"In this section, we explore the nature of the correlations
+between mass accretion rate and the large-scale halo environ-
+ment (characterised by halo bias b1; see section 2.5) in fixed
+mass bins, also known as halo assembly bias or secondary
+bias."
+Previous studies have largely focused on secondary halo
+"MNRAS 000, 1–16 (0000)"
+12 Dhoke & Paranjape
+"variables such as age, concentration, shape, angular momen-
+tum and velocity dispersion structure (see the Introduction
+for references). To our knowledge, the only previous work
+that studied the assembly bias of mass accretion rates was
+by Lazeyras et al. (2017), who focused on the total mass
+accretion rates of high-mass CDM haloes at z = 0. Our
+analysis below therefore substantially extends these results
+in terms of halo mass, redshift range and dark matter type."
+"We define the assembly bias of mass accretion as the two
+correlations (b1 ↔ Γdif) and (b1 ↔ Γmer) measured using
+Spearman rank correlation coefficients in different mass bins
+for all redshifts. The results of Ramakrishnan et al. (2019)
+indicate that, at z = 0 in CDM, the assembly bias of each
+of the internal properties halo concentration, spin, shape
+and velocity dispersion can be mostly attributed to two
+fundamental correlations, one between b1 and α and the
+other between α and the halo internal property. Considering
+that there are relatively strong correlations between the mass
+accretion rates Γmer, Γdif and the local environmental proxies
+α and δ (see figures 8 and 9), it is interesting to ask (a) what
+is the overall strength of assembly bias with mass accretion
+rate in comparison to other internal halo properties, and (b)
+what role, if any, do the local environmental proxies play in
+explaining these trends?"
+"Figure 10 (figure 11) shows the results for CDM (WDM)
+haloes. As with figures 8 and 9, the left (right) panels show
+results for Γdif (Γmer), with the solid (dotted) curves show-
+ing primary (conditional) coefficients. Additionally, the left
+(right) panels show the correlation (b1 ↔ α) ((b1 ↔ δ)) for
+comparison."
+"Similarly to the results for (α ↔ δ) in figures 8 and 9,
+we see that the correlations (b1 ↔ α) and (b1 ↔ δ) are
+significantly positive, very similar across halo mass as well as
+between CDM and WDM, and evolve moderately between
+z = 2 and z = 0. The (b1 ↔ α) correlation at any redshift is
+∼ 50% larger than the corresponding (b1 ↔ δ) correlation, for
+both CDM and WDM. This extends the z = 0 CDM results
+of Paranjape et al. (2018) and Ramakrishnan et al. (2019)
+to significantly higher redshifts and to WDM cosmologies."
+"In the high-mass bin, the correlations (b1 ↔ Γdif) and
+(b1 ↔ Γmer) are relatively weak at nearly all redshifts for both
+CDM and WDM. The exception is at the highest redshift
+z = 2 for WDM, where (b1 ↔ Γdif) is negative while (b1 ↔
+Γmer) is positive, but with large errors. Overall, therefore,
+we conclude that high-mass objects in CDM and WDM do
+not show significant assembly bias for either mass accretion
+rate."
+"In the low-mass bin, we see more interesting results.
+Although the (b1 ↔ Γmer) correlation is essentially zero
+across all redshifts for both CDM and WDM, the same
+is not true for the (b1 ↔ Γdif) correlation, which remains
+significantly negative at nearly all redshifts, in both CDM
+and WDM. In fact, the strength of the correlation at z =
+0, namely |(b1 ↔ Γdif)| & 0.05 (0.1) for CDM (WDM), is
+amongst the strongest seen for any secondary variable at
+this halo mass (see, e.g., the middle panel of figure 2 in
+Ramakrishnan et al. 2019). The magnitude of the correlation
+is nearly constant with redshift for CDM while showing an
+increasing trend with time for WDM. Thus, the assembly bias
+of low-mass accretion rates, especially at low redshift, is a
+comparatively large effect, entirely driven by diffuse accretion."
+"More interestingly, the conditional coefficient (b1 ↔
+Γdif)|α for low-mass haloes is close to zero at all redshifts,
+for both CDM and WDM. (For CDM, the coefficient (b1 ↔"
+"Γdif)|δ also has a small magnitude, but is not as close to zero
+as (b1 ↔ Γdif)|α.)"
+"Thus, the local tidal anisotropy plays a key role in ex-
+plaining the accretion rate assembly bias of both CDM and
+WDM haloes, with local overdensity also playing a significant
+role in CDM. These findings are consistent with previous re-
+sults in the literature (e.g., Dalal et al. 2008; Hahn et al. 2009;
+Borzyszkowski et al. 2017) which show that low-mass haloes
+which are in the vicinity of massive haloes, and are hence
+highly clustered at large-scales while residing in anisotropic
+local tidal environments, show suppressed (diffuse) accretion
+rates."
+4 ANALYTICAL INSIGHTS
+"In this section, we discuss the numerical results presented
+above in the language of the excursion set approach (Bond
+et al. 1991; Lacey & Cole 1993, 1994; Bond & Myers 1996).
+Below, we briefly recapitulate the basic concepts underlying
+the excursion set approach and its modern variants, before
+discussing our results in this context."
+4.1 Recap of the excursion set (peaks) approach
+"In the excursion set framework, halo abundances, large-scale
+clustering and accretion rates are estimated by identifying
+and counting likely locations of virialisation identified in
+the initial stochastic density field (linearly extrapolated to
+present epoch). A key ingredient in the traditional excursion
+set approach is a choice of collapse threshold or ‘barrier’
+B which must be crossed by random walks in the linearly
+extrapolated density field δR as a function of Lagrangian
+smoothing scale R. The barrier B is usually adopted from
+spherical (Gunn & Gott 1972) or ellipsoidal (Sheth et al.
+2001) collapse models, and depends on the redshift z of
+interest and possibly additional stochastic variables (such
+as those related to tidal effects in the ellipsoidal model, see
+Castorina et al. 2016)."
+"The statistical properties of the random walks, on the
+other hand, are determined by the choice of initial matter
+power spectrum and a smoothing filter, which fixes the func-
+tional relation σ2(m) where σ2 is the variance of the linearly
+extrapolated density contrast smoothed on a Lagrangian
+scale corresponding to mass m ∼ R3. If a random walk
+first upcrosses the barrier B(z) at scale R(m) (starting from
+R→∞ or σ2 → 0), then a halo of mass m is declared to form
+at redshift z. While early work on the subject focused on a
+filter that is sharp in Fourier space (for reasons of analytical
+simplicity), later developments have shown how to efficiently
+analyze the effects of more realistic filters that are compact
+in real space and lead to random walks with correlated steps
+as R is varied (Musso & Sheth 2012; see also Bond et al. 1991;
+Zentner 2007; Paranjape et al. 2012). Finally, the recognition
+that the sites of virialisation are special (Sheth et al. 2001) –
+e.g., peaks in the linearly extrapolated density field (Bardeen
+et al. 1986) – leads to an ‘excursion set peaks’ approach
+(ESP, Paranjape & Sheth 2012; Appel & Jones 1990) which
+has been shown to agree with simulated halo mass functions
+and large-scale clustering in CDM cosmologies at the ∼ 10%
+level (Paranjape et al. 2013; Castorina et al. 2016)."
+"The ESP framework has also been studied in the context
+of WDM cosmologies by Hahn & Paranjape (2014, hereon,"
+"MNRAS 000, 1–16 (0000)"
+Mass accretion rates and environment 13
+"Figure 10. Accretion rate assembly bias (CDM haloes): Spearman rank correlation coefficients between large-scale halo bias b1
+and specific accretion rates Γdif (left panel) and Γmer (right panel) for low-mass (blue) and high-mass (red) CDM haloes, as a function of"
+"redshift. Solid curves show the correlations (Γ↔ b1) and, in the left [right] panel, green curves show (b1 ↔ α) [(b1 ↔ δ)], with light (dark)
+green for high-mass (low-mass) haloes. Dashed and dotted curves respectively show conditional coefficients (Γ↔ b1)|α and (Γ↔ b1)|δ,
+calculated using equation (7). Error bars were estimated using bootstrap sampling at each redshift. Highlights: There is a significant
+negative correlation (Γdif ↔ b1) for low-mass haloes at all redshifts (left panel, solid blue), which is largely explained by the (Γdif ↔ α)
+correlation (conditional coefficient shown by the dashed blue curve is close to zero)."
+"Figure 11. Same as figure 10, for WDM haloes. Highlights: There is a significant negative correlation (Γdif ↔ b1) for low-mass haloes
+(left panel, solid blue), which increases in magnitude at low redshift, is stronger than the corresponding correlation for CDM haloes and is"
+mostly explained by the (Γdif ↔ α) correlation (conditional coefficient shown by the dashed blue curve is close to zero).
+"HP14), who demonstrated that the suppression of small-
+scale power in these models is an excellent diagnostic tool for
+testing the assumptions underlying the excursion set (peaks)
+approach. In particular, HP14 argued that a single-barrier
+framework is insufficient to properly explain halo abundances
+due to small but systematic errors in the ellipsoidal collapse
+model (Monaco 1999; Giocoli et al. 2007; Ludlow et al. 2014),
+which become dramatically amplified in WDM models as
+compared to CDM. Here, however, we are interested in the
+prediction (Lacey & Cole 1993, 1994) that mass accretion
+rates are intimately connected with the slope of the initial
+power spectrum near the scales of interest, with steeper"
+"spectra leading to higher accretion rates. The consequences
+of the latter effect for WDM can be understood without
+delving into the details of any specific excursion set model
+and only depend on the correlated nature of the random
+walks, as we discuss next."
+4.2 Accretion rates in the ESP framework
+"In the following, in addition to the barrier B for linearly
+extrapolated density fluctuations and the σ(m) relation men-
+tioned above, we will need two more quantities from the
+excursion set lexicon. The first is the proto-halo ‘significance’"
+"MNRAS 000, 1–16 (0000)"
+14 Dhoke & Paranjape
+"ν(m, z) = δc(z)/σ(m), where δc(z) ∝ 1/D(z) is the collapse
+threshold from the spherical model, with D(z) being the lin-
+ear theory growth factor. The second is the typical peak curva-
+ture 〈x|ν 〉 at scale ν(m, z), where x = −∇2δR/"
+"√
+Var(∇2δR)"
+"(see figure 6 of Bardeen et al. 1986).
+As mentioned above, accretion rates in CDM and WDM"
+"are expected to be very different due to the comparative
+steepness of the initial matter power spectrum in WDM
+around the half-mode mass scale. To see what this implies,
+we must mainly keep in mind that the σ(m) relation becomes
+‘stretched out’ for a truncated power spectrum such as WDM,
+with σ(m) → a constant below the half-mode mass (see,
+e.g., figure 2 of HP14). In CDM, on the other hand, σ(m)
+continues to increase down to very small masses. A simple
+calculation now shows that the diffuse mass accretion rate
+can be written as (e.g., Lazeyras et al. 2017)"
+"Γ =
+d lnM"
+"d ln a
+="
+dB/d ln a
+d lnσ/d lnM
+"〈x|ν 〉
+|dB/d ln a|
+|d lnσ/d lnM |"
+"where the first line is a manipulation of variables and the
+second line relates the slope at barrier crossing, dB/dσ, to
+the peak curvature 〈x|ν 〉 (Musso & Sheth 2012; Paranjape
+& Sheth 2012), with γ being a spectral variable of order
+unity in both CDM and WDM (γ ' 0.5 for our cosmology)."
+"At high masses, for both CDM and WDM, 〈x|ν 〉 is large,
+σ is small and |d lnσ/d lnM | is finite. At masses smaller than
+the half-mode mass for WDM, 〈x|ν 〉 is smaller than at high
+masses, σ is constant and |d lnσ/d lnM | approaches zero.
+This last feature makes the accretion rates very high. At
+low masses for CDM, on the other hand, 〈x|ν 〉 is similar to
+that in WDM, σ is significantly larger than at high masses
+and |d lnσ/d lnM | is finite, so that low-mass CDM accretion
+rates remain small. This qualitatively explains the overall
+trends seen in the right panel of figure 6."
+"Quantitatively, in our high-mass bin at z = 0, for
+both CDM and WDM we have σ . 1.5, 〈x|ν 〉 & 3 and
+|d lnσ/d lnM | . 0.2. Assuming that the time dependence
+of the barrier is completely determined by δc(z), we also
+have |dB/d ln a| ∼ 1 at z = 0. Equation (8) then predicts
+high-mass accretion rates of Γ ∼ 0.5 at z = 0. In the low-
+mass bin, for CDM, we have σ ∼ 2.5, 〈x|ν 〉 ∼ 2.5 and
+|d lnσ/d lnM | . 0.15. For WDM, on the other hand, while
+σ and 〈x|ν 〉 are not very different from CDM for our cosmol-
+ogy and choice of mass bin, we have |d lnσ/d lnM | . 0.075,
+a factor 2 smaller than in CDM. Thus low-mass accretion
+rates at z = 0 are predicted to be about a factor 2 higher
+for our WDM low-mass bin than the corresponding CDM
+values, which agrees with the trend seen in the right panel
+of figure 6. The values predicted, Γ ∼ 0.5 (1.0) for CDM
+(WDM), are higher than the measured ones, which is per-
+haps not surprising considering the approximate nature of
+our calculation.14"
+"The discussion of environmental trends for mass ac-
+cretion rates requires a prediction of the cross-correlation
+between the slopes of random walks at barrier crossing and"
+14 We have also ignored the issue of mass reassignment discussed
+"by HP14, in which the σ(m) relation must effectively be modified
+for collapsed objects, with the effect becoming more prominent in"
+WDM at scales substantially smaller than the half-mode mass.
+"the values attained by these walks at larger smoothing scales.
+This is conceptually easiest for the density environment,
+which is the natural variable used in excursion set calcula-
+tions. Lazeyras et al. (2017) have applied such arguments to
+show that an overall assembly bias trend, in which slowly
+accreting haloes are strongly clustered as compared to rapid
+accretors, i.e. a negative correlation (b1 ↔ Γ), is a natu-
+ral prediction of the excursion set peaks framework. The
+distinction between diffuse accretion and that via mergers,
+on the other hand, requires a higher level of sophistication
+in the simultaneous prediction of continuous and discrete
+accretion rates, an aspect which excursion set models have
+only recently begun to explore (Musso & Sheth 2014). And
+the trends we have noted with tidal anisotropy α, especially
+the result that α largely explains low-mass assembly bias
+trends with mass accretion, are currently not predictable
+by any excursion set (peaks) model that we are aware of
+(although see Castorina et al. 2016, for some initial steps in
+this direction). We therefore defer a discussion of analytical
+predictions for the environment dependence of mass accre-
+tion to future work, where we hope to develop a versatile
+excursion set framework that can address these issues."
+5 SUMMARY & CONCLUSIONS
+"We have investigated the evolving correlations between mass
+accretion rates and environment in N -body simulations of
+CDM and WDM cosmologies. The latter are characterised
+by a strong suppression of small-scale power (we deliberately
+chose a somewhat extreme case with mdm = 0.4 keV), which
+creates dramatic differences in the nature of mass accretion
+between haloes smaller and larger than the half-mode mass
+scale."
+"While accretion rates in WDM models have been com-
+pared with their CDM counterparts previously in the liter-
+ature (Knebe et al. 2002; Benson et al. 2013; Elahi et al.
+2014; Khimey et al. 2020), and environmental trends of
+CDM accretion rates have also been studied before (see the
+Introduction), our analysis represents the first systematic
+comparison of environmental trends of accretion rates be-
+tween CDM and WDM haloes, at masses above and below
+the WDM half-mode mass, using multiple proxies for the
+local as well as large-scale environment, and over a wide
+range of redshift 2 ≥ z ≥ 0."
+"Most of our results (section 3) regarding the evolving
+nature and environment dependence of specific accretion
+rates due to mergers (Γmer) and diffuse mass (Γdif ; see equa-
+tions 3) can be understood in terms of the lack of small-scale
+structure below the half-mode mass scale in WDM, which
+affects not only the low-mass haloes but also the accretion
+histories of massive objects. We summarize these below and
+also highlight a few puzzling findings that deserve further
+study."
+Environment-independent trends:
+"• Specific accretion rates of low-mass CDM haloes are
+lower than those of high-mass CDM haloes, while low-mass
+WDM haloes have higher accretion rates than their high-mass
+counterparts (figure 6). This is a straightforward prediction of
+the excursion set approach with correlated steps (section 4).
+• Mass accretion in WDM haloes is dominated by Γdif ,"
+"consistent with previous work (Benson et al. 2013; Elahi et al.
+2014). Γdif (Γmer) in WDM haloes is also higher (lower) than"
+"MNRAS 000, 1–16 (0000)"
+Mass accretion rates and environment 15
+"that in CDM haloes of the same mass, as expected from the
+lack of small-scale bound structures in WDM."
+Trends with local environment:
+"• The evolving median local density and tidal anisotropy
+of haloes with and without mergers (figure 7) are also largely
+consistent with expectations based on the lack of small-
+scale structure in WDM. The only exceptions, which deserve
+further study, are"
+"– the environments of low-mass WDM haloes are denser
+than those of all other categories, and"
+"– the environments of low-mass CDM haloes without
+mergers are more anisotropic than of those with mergers."
+"• The correlations between environment and accretion
+rates in figures 8 and 9 add further detail to these results.
+For both CDM and WDM, at all redshifts in the high-mass
+bin,"
+"– there is a strong negative correlation between δ and
+Γdif , a weaker positive correlation between δ and Γmer,
+and comparable negative correlations between α and both
+Γdif and Γmer,"
+"– while α and δ are equally important for Γmer, δ almost
+completely explains the environment dependence of Γdif ."
+"• In the low-mass bin at all z, for CDM haloes, α and δ are
+equally important in explaining the environment dependence
+of Γdif and show no correlation with Γmer. In WDM, on the
+other hand, the environment dependence of both Γmer and
+Γdif is almost fully explained by α. In fact, the correlation
+(α↔ Γmer) is positive, which is counter-intuitive and deserves
+further study."
+"In summary, at all z, the local tidal anisotropy α plays a
+completely dominant role for both Γmer and Γdif in low-mass
+WDM haloes, and a bigger role than the local density δ for
+Γmer in high-mass haloes in both CDM and WDM. In contrast,
+δ plays the dominant role for Γdif in high-mass CDM haloes.
+In the other cases, δ and α play equally important roles."
+Assembly bias:
+"We defined assembly bias using the Spearman rank correla-
+tion coefficients (b1 ↔ Γdif) and (b1 ↔ Γmer) in each mass
+bin (c.f., Ramakrishnan et al. 2019). We find that the fol-
+lowing holds for both CDM and WDM haloes (figures 10
+and 11):"
+"• (b1 ↔ α) is always higher than (b1 ↔ δ) at any z. This
+extends the z = 0 CDM results of Paranjape et al. (2018) and
+Ramakrishnan et al. (2019) to higher redshifts and WDM
+cosmologies.
+• We detect assembly bias in the low-mass bin, driven"
+"entirely by Γdif , with a strength (b1 ↔ Γdif) at z = 0 that is
+the highest of nearly all known secondary variables for CDM
+and is higher in WDM than in CDM (solid blue curves in the
+left panels of figures 10 and 11, compare the middle panel of
+figure 2 in Ramakrishnan et al. 2019). In the high-mass bin,
+there is no significant assembly bias at any but the highest
+redshifts we study.
+• The tidal anisotropy α plays a dominant role in ex-"
+"plaining the low-mass assembly bias, especially for WDM
+haloes."
+"Our results place important constraints on (semi-) an-
+alytical excursion set models of halo formation and growth"
+"and, by extension, on galaxy evolution models built upon
+such approximate techniques (see the Introduction for refer-
+ences). As argued by HP14, any such model which purports
+to explain environmental trends of evolving haloes must logi-
+cally work equally well for CDM and WDM, since the physics
+of collisionless self-gravitating systems is common to both.
+As we have seen, however, the suppression of small-scale
+power in WDM leads to an intricate dependence of the mass
+accretion on local (and large-scale) halo environment, partic-
+ularly at masses smaller than the WDM half-mode mass. As
+with the mass function at these scales discussed by HP14,
+producing an accurate model of mass accretion with the
+correct environment dependence is likely to reveal interesting
+features of collisionless dynamics in the shell-crossed regime.
+It will be very interesting to confront our results above with
+excursion set models of mergers and mass accretion (Lacey
+& Cole 1994; Mitra et al. 2011; Musso & Sheth 2014), as well
+as excursion set-inspired semi-analytical algorithms tuned to
+reproduce CDM results (Somerville & Kolatt 1999; Parkin-
+son et al. 2008; Jiang & van den Bosch 2014). We leave this
+to future work."
+ACKNOWLEDGEMENTS
+"We thank Oliver Hahn and Sujatha Ramakrishnan for useful
+discussions. PD thanks IUCAA for hospitality and working
+facilities, Akhilesh Peshwe (Principal, DMPDM Science Col-
+lege) for his kind support, Isha Pahwa for useful discussions
+and Dhairyashil Jagadale for constant support and discussion.
+The research of AP is supported by the Associateship Scheme
+of ICTP, Trieste and the Ramanujan Fellowship awarded by
+the Department of Science and Technology, Government of
+India. This work used the open source computing packages
+NumPy (Van Der Walt et al. 2011),15 SciPy (Virtanen et al.
+2020)16 and the plotting software Veusz.17 We gratefully
+acknowledge the use of high performance computing facilities
+at IUCAA, Pune."
+DATA AVAILABILITY
+"The data underlying this work will be shared upon reasonable
+request to the authors."
+REFERENCES
+"Agarwal S., Corasaniti P. S., 2015, Phys. Rev. D, 91, 123509"
+"Angulo R. E., Baugh C. M., Lacey C. G., 2008, MNRAS, 387, 921"
+"Angulo R. E., Hahn O., Abel T., 2013, MNRAS, 434, 3337"
+"Appel L., Jones B. J. T., 1990, MNRAS, 245, 522"
+"Barausse E., 2012, MNRAS, 423, 2533"
+"Bardeen J. M., Bond J. R., Kaiser N., Szalay A. S., 1986, ApJ,"
+"304, 15"
+"Behroozi P. S., Wechsler R. H., Wu H.-Y., 2013a, ApJ, 762, 109"
+"Behroozi P. S., Wechsler R. H., Wu H.-Y., Busha M. T., Klypin"
+"A. A., Primack J. R., 2013b, ApJ, 763, 18"
+"Benson A. J., 2012, New A, 17, 175"
+"Benson A. J., Bower R., 2010, MNRAS, 405, 1573"
+"Benson A. J., et al., 2013, MNRAS, 428, 1774"
+"15 http://www.numpy.org
+16 http://www.scipy.org
+17 https://veusz.github.io/"
+"MNRAS 000, 1–16 (0000)"
+"http://dx.doi.org/10.1103/PhysRevD.91.123509
+https://ui.adsabs.harvard.edu/abs/2015PhRvD..91l3509A
+http://dx.doi.org/10.1111/j.1365-2966.2008.13304.x
+http://adsabs.harvard.edu/abs/2008MNRAS.387..921A
+http://dx.doi.org/10.1093/mnras/stt1246
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.434.3337A
+http://adsabs.harvard.edu/abs/1990MNRAS.245..522A
+http://dx.doi.org/10.1111/j.1365-2966.2012.21057.x
+https://ui.adsabs.harvard.edu/abs/2012MNRAS.423.2533B
+http://dx.doi.org/10.1086/164143
+http://adsabs.harvard.edu/abs/1986ApJ...304...15B
+http://dx.doi.org/10.1088/0004-637X/762/2/109
+https://ui.adsabs.harvard.edu/abs/2013ApJ...762..109B
+http://dx.doi.org/10.1088/0004-637X/763/1/18
+https://ui.adsabs.harvard.edu/abs/2013ApJ...763...18B
+http://dx.doi.org/10.1016/j.newast.2011.07.004
+https://ui.adsabs.harvard.edu/abs/2012NewA...17..175B
+http://dx.doi.org/10.1111/j.1365-2966.2010.16592.x
+https://ui.adsabs.harvard.edu/abs/2010MNRAS.405.1573B
+http://dx.doi.org/10.1093/mnras/sts159
+http://adsabs.harvard.edu/abs/2013MNRAS.428.1774B
+http://www.numpy.org
+http://www.scipy.org
+https://veusz.github.io/"
+"
+16 Dhoke & Paranjape"
+"Bertschinger E., 1985, ApJS, 58, 39"
+"Bett P., Eke V., Frenk C. S., Jenkins A., Helly J., Navarro J.,"
+"2007, MNRAS, 376, 215"
+"Birrer S., Lilly S., Amara A., Paranjape A., Refregier A., 2014,
+ApJ, 793, 12"
+"Bode P., Ostriker J. P., Turok N., 2001, ApJ, 556, 93"
+"Bond J. R., Myers S. T., 1996, ApJS, 103, 1"
+"Bond J. R., Cole S., Efstathiou G., Kaiser N., 1991, ApJ, 379, 440"
+"Borzyszkowski M., Porciani C., Romano-Dı́az E., Garaldi E., 2017,"
+"MNRAS, 469, 594"
+"Bryan G. L., Norman M. L., 1998, ApJ, 495, 80"
+"Bullock J. S., Boylan-Kolchin M., 2017, ARA&A, 55, 343"
+"Castorina E., Paranjape A., Hahn O., Sheth R. K., 2016, preprint,"
+(arXiv:1611.03619)
+"Catelan P., Theuns T., 1996, MNRAS, 282, 436"
+"Dalal N., White M., Bond J. R., Shirokov A., 2008, ApJ, 687, 12"
+"Dayal P., Ferrara A., Dunlop J. S., Pacucci F., 2014, MNRAS,
+445, 2545"
+"Diemer B., Kravtsov A. V., 2014, ApJ, 789, 1"
+"Elahi P. J., Mahdi H. S., Power C., Lewis G. F., 2014, MNRAS,"
+"444, 2333"
+"Fakhouri O., Ma C.-P., 2009, MNRAS, 394, 1825"
+"Fakhouri O., Ma C.-P., 2010, MNRAS, 401, 2245"
+"Faltenbacher A., White S. D. M., 2010, ApJ, 708, 469"
+"Fillmore J. A., Goldreich P., 1984, ApJ, 281, 9"
+"Gao L., White S. D. M., 2007, MNRAS, 377, L5"
+"Gao L., Springel V., White S. D. M., 2005, MNRAS, 363, L66"
+"Genel S., Bouché N., Naab T., Sternberg A., Genzel R., 2010, ApJ,
+719, 229"
+"Giocoli C., Moreno J., Sheth R. K., Tormen G., 2007, MNRAS,
+376, 977"
+"Gunn J. E., Gott III J. R., 1972, ApJ, 176, 1"
+"Hahn O., Abel T., 2011, MNRAS, 415, 2101"
+"Hahn O., Paranjape A., 2014, MNRAS, 438, 878"
+"Hahn O., Porciani C., Carollo C. M., Dekel A., 2007, MNRAS,
+375, 489"
+"Hahn O., Porciani C., Dekel A., Carollo C. M., 2009, MNRAS,"
+"398, 1742"
+"Han J., Li Y., Jing Y., Nishimichi T., Wang W., Jiang C., 2019,
+MNRAS, 482, 1900"
+"Heavens A., Peacock J., 1988, MNRAS, 232, 339"
+"Iršič V., et al., 2017, Phys. Rev. D, 96, 023522"
+"Jiang F., van den Bosch F. C., 2014, MNRAS, 440, 193"
+"Jing Y. P., Suto Y., Mo H. J., 2007, ApJ, 657, 664"
+"Khimey D., Bose S., Tacchella S., 2020, arXiv e-prints, p."
+arXiv:2010.10520
+"Knebe A., Devriendt J. E. G., Mahmood A., Silk J., 2002, MNRAS,
+329, 813"
+"Komatsu E., et al., 2011, ApJS, 192, 18"
+"Lacey C., Cole S., 1993, MNRAS, 262, 627"
+"Lacey C., Cole S., 1994, MNRAS, 271, 676"
+"Lazeyras T., Musso M., Schmidt F., 2017, J. Cosmology Astropart.
+Phys., 2017, 059"
+"Lee C. T., Primack J. R., Behroozi P., Rodŕıguez-Puebla A.,
+Hellinger D., Dekel A., 2017, MNRAS, 466, 3834"
+"Lewis A., Challinor A., Lasenby A., 2000, ApJ, 538, 473"
+"Lovell M. R., Frenk C. S., Eke V. R., Jenkins A., Gao L., Theuns
+T., 2014, MNRAS, 439, 300"
+"Ludlow A. D., Porciani C., Borzyszkowski M., 2014, Mon. Not.
+Roy. Astron. Soc., 445, 4110"
+"Maulbetsch C., Avila-Reese V., Coĺın P., Gottlöber S., Khalatyan"
+"A., Steinmetz M., 2007, ApJ, 654, 53"
+"Mitra S., Kulkarni G., Bagla J. S., Yadav J. K., 2011, Bulletin of
+the Astronomical Society of India, 39, 563"
+"Monaco P., 1999, in Giuricin G., Mezzetti M., Salucci P., eds,
+Astronomical Society of the Pacific Conference Series Vol."
+"176, Observational Cosmology: The Development of Galaxy
+Systems. p. 186"
+"More S., Diemer B., Kravtsov A. V., 2015, ApJ, 810, 36"
+"Musso M., Sheth R. K., 2012, MNRAS, 423, L102"
+"Musso M., Sheth R. K., 2014, MNRAS, 443, 1601"
+"Palanque-Delabrouille N., Yèche C., Schöneberg N., Lesgourgues
+J., Walther M., Chabanier S., Armengaud E., 2020, J. Cos-
+mology Astropart. Phys., 2020, 038"
+"Paranjape A., 2020, arXiv e-prints, p. arXiv:2006.13954"
+"Paranjape A., Alam S., 2020, MNRAS, 495, 3233
+Paranjape A., Sheth R. K., 2012, MNRAS, 426, 2789"
+"Paranjape A., Lam T. Y., Sheth R. K., 2012, MNRAS, 420, 1429
+Paranjape A., Sheth R. K., Desjacques V., 2013, MNRAS, 431,"
+"Paranjape A., Hahn O., Sheth R. K., 2018, MNRAS, 476, 3631
+Parkinson H., Cole S., Helly J., 2008, MNRAS, 383, 557"
+"Press W. H., Schechter P., 1974, ApJ, 187, 425"
+"Ramakrishnan S., Paranjape A., Hahn O., Sheth R. K., 2019,
+MNRAS, 489, 2977"
+"Schneider A., Smith R. E., Macciò A. V., Moore B., 2012, MNRAS,"
+"424, 684
+Schneider A., Smith R. E., Reed D., 2013, MNRAS, 433, 1573"
+"Scoccimarro R., 1998, MNRAS, 299, 1097"
+"Sheth R. K., Tormen G., 1999, MNRAS, 308, 119
+Sheth R. K., Tormen G., 2004, MNRAS, 350, 1385"
+"Sheth R. K., Mo H. J., Tormen G., 2001, MNRAS, 323, 1"
+"Somerville R. S., Kolatt T. S., 1999, MNRAS, 305, 1
+Somerville R. S., Popping G., Trager S. C., 2015, MNRAS, 453,"
+"4337
+Springel V., 2005, MNRAS, 364, 1105
+Tinker J., Kravtsov A. V., Klypin A., Abazajian K., Warren M.,"
+"Yepes G., Gottlöber S., Holz D. E., 2008, ApJ, 688, 709
+Van Der Walt S., Colbert S. C., Varoquaux G., 2011, preprint,"
+(arXiv:1102.1523)
+"Viel M., Lesgourgues J., Haehnelt M. G., Matarrese S., Riotto A.,
+2005, Phys. Rev. D, 71, 063534"
+"Viel M., Becker G. D., Bolton J. S., Haehnelt M. G., 2013,"
+"Phys. Rev. D, 88, 043502
+Virtanen P., et al., 2020, Nature Methods, 17, 261"
+"Wang J., White S. D. M., 2007, MNRAS, 380, 93
+Wechsler R. H., Zentner A. R., Bullock J. S., Kravtsov A. V.,"
+"Allgood B., 2006, ApJ, 652, 71"
+"White S. D. M., Rees M. J., 1978, MNRAS, 183, 341
+Yung L. Y. A., Somerville R. S., Popping G., Finkelstein S. L.,"
+"Ferguson H. C., Davé R., 2019, MNRAS, 490, 2855"
+"Zentner A. R., 2007, International Journal of Modern Physics D,
+16, 763"
+"Zjupa J., Paranjape A., Hahn O., Pakmor R., 2020, arXiv e-prints,"
+"p. arXiv:2009.03329
+van Daalen M. P., Angulo R. E., White S. D. M., 2012, MNRAS,"
+"424, 2954"
+"MNRAS 000, 1–16 (0000)"
+"http://dx.doi.org/10.1086/191028
+https://ui.adsabs.harvard.edu/abs/1985ApJS...58...39B
+http://dx.doi.org/10.1111/j.1365-2966.2007.11432.x
+https://ui.adsabs.harvard.edu/abs/2007MNRAS.376..215B
+http://dx.doi.org/10.1088/0004-637X/793/1/12
+https://ui.adsabs.harvard.edu/abs/2014ApJ...793...12B
+http://dx.doi.org/10.1086/321541
+http://adsabs.harvard.edu/abs/2001ApJ...556...93B
+http://dx.doi.org/10.1086/192267
+http://adsabs.harvard.edu/abs/1996ApJS..103....1B
+http://dx.doi.org/10.1086/170520
+http://adsabs.harvard.edu/abs/1991ApJ...379..440B
+http://dx.doi.org/10.1093/mnras/stx873
+http://adsabs.harvard.edu/abs/2017MNRAS.469..594B
+http://dx.doi.org/10.1086/305262
+http://adsabs.harvard.edu/abs/1998ApJ...495...80B
+http://dx.doi.org/10.1146/annurev-astro-091916-055313
+https://ui.adsabs.harvard.edu/abs/2017ARA&A..55..343B
+http://arxiv.org/abs/1611.03619
+http://dx.doi.org/10.1093/mnras/282.2.436
+https://ui.adsabs.harvard.edu/abs/1996MNRAS.282..436C
+http://dx.doi.org/10.1086/591512
+https://ui.adsabs.harvard.edu/abs/2008ApJ...687...12D
+http://dx.doi.org/10.1093/mnras/stu1848
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.445.2545D
+http://dx.doi.org/10.1088/0004-637X/789/1/1
+https://ui.adsabs.harvard.edu/abs/2014ApJ...789....1D
+http://dx.doi.org/10.1093/mnras/stu1614
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.444.2333E
+http://dx.doi.org/10.1111/j.1365-2966.2009.14480.x
+https://ui.adsabs.harvard.edu/abs/2009MNRAS.394.1825F
+http://dx.doi.org/10.1111/j.1365-2966.2009.15844.x
+https://ui.adsabs.harvard.edu/abs/2010MNRAS.401.2245F
+http://dx.doi.org/10.1088/0004-637X/708/1/469
+http://adsabs.harvard.edu/abs/2010ApJ...708..469F
+http://dx.doi.org/10.1111/j.1745-3933.2007.00292.x
+https://ui.adsabs.harvard.edu/#abs/2007MNRAS.377L...5G
+http://dx.doi.org/10.1111/j.1745-3933.2005.00084.x
+http://adsabs.harvard.edu/abs/2005MNRAS.363L..66G
+http://dx.doi.org/10.1088/0004-637X/719/1/229
+https://ui.adsabs.harvard.edu/abs/2010ApJ...719..229G
+http://adsabs.harvard.edu/abs/1972ApJ...176....1G
+http://dx.doi.org/10.1111/j.1365-2966.2011.18820.x
+http://adsabs.harvard.edu/abs/2011MNRAS.415.2101H
+http://dx.doi.org/10.1093/mnras/stt2256
+http://adsabs.harvard.edu/abs/2014MNRAS.438..878H
+http://dx.doi.org/10.1111/j.1365-2966.2006.11318.x
+https://ui.adsabs.harvard.edu/abs/2007MNRAS.375..489H
+http://dx.doi.org/10.1111/j.1365-2966.2009.15271.x
+https://ui.adsabs.harvard.edu/abs/2009MNRAS.398.1742H
+http://dx.doi.org/10.1093/mnras/sty2822
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.482.1900H
+http://dx.doi.org/10.1093/mnras/232.2.339
+https://ui.adsabs.harvard.edu/abs/1988MNRAS.232..339H
+http://dx.doi.org/10.1103/PhysRevD.96.023522
+https://ui.adsabs.harvard.edu/abs/2017PhRvD..96b3522I
+http://dx.doi.org/10.1093/mnras/stu280
+http://adsabs.harvard.edu/abs/2014MNRAS.440..193J
+http://dx.doi.org/10.1086/511130
+http://adsabs.harvard.edu/abs/2007ApJ...657..664J
+https://ui.adsabs.harvard.edu/abs/2020arXiv201010520K
+https://ui.adsabs.harvard.edu/abs/2020arXiv201010520K
+http://dx.doi.org/10.1046/j.1365-8711.2002.05017.x
+https://ui.adsabs.harvard.edu/abs/2002MNRAS.329..813K
+http://dx.doi.org/10.1088/0067-0049/192/2/18
+http://adsabs.harvard.edu/abs/2011ApJS..192...18K
+http://adsabs.harvard.edu/abs/1993MNRAS.262..627L
+http://adsabs.harvard.edu/abs/1994MNRAS.271..676L
+http://dx.doi.org/10.1088/1475-7516/2017/03/059
+http://dx.doi.org/10.1088/1475-7516/2017/03/059
+https://ui.adsabs.harvard.edu/abs/2017JCAP...03..059L
+http://dx.doi.org/10.1093/mnras/stw3348
+https://ui.adsabs.harvard.edu/abs/2017MNRAS.466.3834L
+http://dx.doi.org/10.1086/309179
+http://adsabs.harvard.edu/abs/2000ApJ...538..473L
+http://dx.doi.org/10.1093/mnras/stt2431
+https://ui.adsabs.harvard.edu/abs/2014MNRAS.439..300L
+http://dx.doi.org/10.1093/mnras/stu2021
+http://dx.doi.org/10.1093/mnras/stu2021
+http://dx.doi.org/10.1086/509706
+https://ui.adsabs.harvard.edu/abs/2007ApJ...654...53M
+https://ui.adsabs.harvard.edu/abs/2011BASI...39..563M
+http://dx.doi.org/10.1088/0004-637X/810/1/36
+https://ui.adsabs.harvard.edu/abs/2015ApJ...810...36M
+http://dx.doi.org/10.1111/j.1745-3933.2012.01266.x
+http://adsabs.harvard.edu/abs/2012MNRAS.423L.102M
+http://dx.doi.org/10.1093/mnras/stu1222
+http://adsabs.harvard.edu/abs/2014MNRAS.443.1601M
+http://dx.doi.org/10.1088/1475-7516/2020/04/038
+http://dx.doi.org/10.1088/1475-7516/2020/04/038
+https://ui.adsabs.harvard.edu/abs/2020JCAP...04..038P
+https://ui.adsabs.harvard.edu/abs/2020arXiv200613954P
+http://dx.doi.org/10.1093/mnras/staa1379
+https://ui.adsabs.harvard.edu/abs/2020MNRAS.495.3233P
+http://dx.doi.org/10.1111/j.1365-2966.2012.21911.x
+http://adsabs.harvard.edu/abs/2012MNRAS.426.2789P
+http://dx.doi.org/10.1093/mnras/stt267
+http://adsabs.harvard.edu/abs/2013MNRAS.431.1503P
+http://adsabs.harvard.edu/abs/2013MNRAS.431.1503P
+http://dx.doi.org/10.1093/mnras/sty496
+http://adsabs.harvard.edu/abs/2018MNRAS.476.3631P
+http://dx.doi.org/10.1111/j.1365-2966.2007.12517.x
+https://ui.adsabs.harvard.edu/abs/2008MNRAS.383..557P
+http://dx.doi.org/10.1086/152650
+http://dx.doi.org/10.1093/mnras/stz2344
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.489.2977R
+http://dx.doi.org/10.1111/j.1365-2966.2012.21252.x
+http://adsabs.harvard.edu/abs/2012MNRAS.424..684S
+http://dx.doi.org/10.1093/mnras/stt829
+https://ui.adsabs.harvard.edu/abs/2013MNRAS.433.1573S
+http://dx.doi.org/10.1046/j.1365-8711.1998.01845.x
+http://adsabs.harvard.edu/abs/1998MNRAS.299.1097S
+http://dx.doi.org/10.1046/j.1365-8711.1999.02692.x
+http://adsabs.harvard.edu/abs/1999MNRAS.308..119S
+http://dx.doi.org/10.1111/j.1365-2966.2004.07733.x
+http://adsabs.harvard.edu/abs/2004MNRAS.350.1385S
+http://dx.doi.org/10.1046/j.1365-8711.2001.04006.x
+http://adsabs.harvard.edu/abs/2001MNRAS.323....1S
+http://dx.doi.org/10.1046/j.1365-8711.1999.02154.x
+https://ui.adsabs.harvard.edu/abs/1999MNRAS.305....1S
+http://dx.doi.org/10.1093/mnras/stv1877
+https://ui.adsabs.harvard.edu/abs/2015MNRAS.453.4337S
+https://ui.adsabs.harvard.edu/abs/2015MNRAS.453.4337S
+http://dx.doi.org/10.1111/j.1365-2966.2005.09655.x
+https://ui.adsabs.harvard.edu/abs/2005MNRAS.364.1105S
+http://dx.doi.org/10.1086/591439
+http://adsabs.harvard.edu/abs/2008ApJ...688..709T
+http://arxiv.org/abs/1102.1523
+http://dx.doi.org/10.1103/PhysRevD.71.063534
+http://adsabs.harvard.edu/abs/2005PhRvD..71f3534V
+http://dx.doi.org/10.1103/PhysRevD.88.043502
+http://adsabs.harvard.edu/abs/2013PhRvD..88d3502V
+http://dx.doi.org/10.1038/s41592-019-0686-2
+https://rdcu.be/b08Wh
+http://dx.doi.org/10.1111/j.1365-2966.2007.12053.x
+https://ui.adsabs.harvard.edu/abs/2007MNRAS.380...93W
+http://dx.doi.org/10.1086/507120
+http://adsabs.harvard.edu/abs/2006ApJ...652...71W
+http://adsabs.harvard.edu/abs/1978MNRAS.183..341W
+http://dx.doi.org/10.1093/mnras/stz2755
+https://ui.adsabs.harvard.edu/abs/2019MNRAS.490.2855Y
+http://dx.doi.org/10.1142/S0218271807010511
+http://adsabs.harvard.edu/abs/2007IJMPD..16..763Z
+https://ui.adsabs.harvard.edu/abs/2020arXiv200903329Z/abstract
+http://dx.doi.org/10.1111/j.1365-2966.2012.21437.x
+http://adsabs.harvard.edu/abs/2012MNRAS.424.2954V"
+"	1 Introduction
+	2 Simulations and Techniques
+	2.1 Simulations
+	2.2 Halo identification and masses
+	2.3 Measuring specific mass accretion rates
+	2.4 Quantifying local halo environment
+	2.5 Large-scale environment: halo bias"
+"	3 Results and discussion
+	3.1 Mass accretion: mergers vs. diffuse accretion
+	3.2 Environments of haloes accreting with and without mergers
+	3.3 Correlation between mass accretion rates and local halo environment
+	3.4 Accretion rate assembly bias"
+"	4 Analytical insights
+	4.1 Recap of the excursion set (peaks) approach
+	4.2 Accretion rates in the ESP framework"
+	5 Summary & Conclusions

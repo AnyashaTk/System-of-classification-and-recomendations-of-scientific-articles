@@ -1,0 +1,881 @@
+0
+"Draft version January 6, 2021
+Typeset using LATEX twocolumn style in AASTeX62"
+Investigating the origin of the FIP effect with a shell turbulence model
+"Victor Réville,1 Alexis P. Rouillard,1 Marco Velli,2 Andrea Verdini,3 Éric Buchlin,4 Michaël Lavarra,1 and
+Nicolas Poirier1"
+"1IRAP, Université Toulouse III - Paul Sabatier, CNRS, CNES, Toulouse, France
+2UCLA Earth Planetary and Space Sciences Department, LA, CA, USA"
+"3Dipatimento di Fisica e Astronomia, Universitá di Firenze, Sesto Fiorentino, Italia
+4Université Paris-Saclay, CNRS, Institut d’Astrophysique Spatiale, 91405, Orsay, France"
+Submitted to Frontiers in Astronomy and Space Sciences
+ABSTRACT
+The enrichment of coronal loops and the slow solar wind with elements that have low First Ionisation
+"Potential, known as the FIP effect, has often been interpreted as the tracer of a common origin. A"
+current explanation for this FIP fractionation rests on the influence of ponderomotive forces and
+turbulent mixing acting at the top of the chromosphere. The implied wave transport and turbulence
+mechanisms are also key to wave-driven coronal heating and solar wind acceleration models. This work
+makes use of a shell turbulence model run on open and closed magnetic field lines of the solar corona
+"to investigate with a unified approach the influence of magnetic topology, turbulence amplitude and"
+dissipation on the FIP fractionation. We try in particular to assess whether there is a clear distinction
+between the FIP effect on closed and open field regions.
+"Keywords: turbulence, slow wind, FIP effect, transition region"
+1. INTRODUCTION
+The First Ionization Potential (FIP) effect is an en-
+"richment of heavy elements with low-FIP such as Fe,"
+Si and Mg compared with photospheric abundances. It
+was initially measured in the solar wind and Solar En-
+ergetic Particles (SEPs) and later inferred from spectro-
+"scopic observations of the corona (see Meyer 1985a,b;"
+Bochsler et al. 1986; Gloeckler & Geiss 1989; Feldman
+"1992, and references therein). The FIP bias, i.e. the ra-"
+"tio of coronal to photospheric abundances, is moreover"
+mass independent. This means that processes below the
+transition region are strongly affecting the hydrostatic
+"balance of the partially ionized chromosphere. Early on,"
+"explanations of the FIP effect involved diffusion, flows"
+or some sort of turbulent mixing in the chromosphere to
+"prevent any gravitational settling (see, e.g. Marsch et al."
+1995; Schwadron et al. 1999).
+Schwadron et al. (1999) favored the hypothesis of tur-
+bulent wave heating in the chromosphere as a way to
+both prevent a mass-dependant fractionation and to
+"obtain a low-FIP bias. Later on, Laming (2004) pro-"
+"posed the ponderomotive acceleration, i.e. the time av-"
+"eraged gradient of magnetic fluctuations, as the origin"
+of the FIP effect. The ponderomotive acceleration has
+this advantage that it may change sign and could ex-
+plain the inverse FIP effect observed in low-mass stars
+(Wood & Linsky 2010; Laming 2015). Both processes
+rely on Alfvén waves propagating parallel and anti-
+"parallel to the magnetic field, to trigger a turbulent cas-"
+cade through non-linear interactions and heating. These
+"wave populations naturally arise in coronal loops, where"
+"footpoints motions excite the loop on both ends, but"
+they are also expected in the open solar wind where re-
+flection on large scale gradients (Velli et al. 1989; Zhou &
+Matthaeus 1989) or compressible instabilities (Tenerani
+& Velli 2013; Shoda et al. 2018b; Réville et al. 2018) cre-
+ate an sunward component from a purely anti-sunward
+wave packet.
+The Ulysses spacecraft have shown clear composition
+differences between the fast and the slow wind compo-
+"nents, the slow wind showing FIP biases close to the"
+one observed in coronal loops (Geiss et al. 1995). Af-
+"ter all, decades of observations (Belcher & Davis 1971;"
+Tu & Marsch 1995; Bruno & Carbone 2013) and mod-
+eling of fluctuations in the solar wind have now brought
+compelling evidence that turbulence is likely to be a
+fundamental ingredient of coronal heating and solar
+"wind acceleration (see, e.g., Verdini & Velli 2007; Perez"
+& Chandran 2013; Shoda et al. 2018b; Réville et al.
+"http://orcid.org/0000-0002-2916-3837
+http://orcid.org/0000-0003-4039-5767
+http://orcid.org/0000-0002-2381-3106
+http://orcid.org/0000-0003-4380-4837
+http://orcid.org/0000-0003-4290-1897
+http://orcid.org/0000-0001-6216-6530
+http://orcid.org/0000-0002-1814-4673"
+"
+2 Réville et al."
+"2020b). Perturbations, or waves are also essential to pro-"
+vide the additional acceleration giving birth to the fast
+"wind (≥ 600 km/s), through the ponderomotive force
+(Alazraki & Couturier 1971; Belcher 1971; Jacques 1977;"
+Leer et al. 1982). The low-FIP bias of the slow wind is
+often understood as the proof that the it originates in
+"coronal loops, through exchange and magnetic reconfig-"
+"uration (or reconnection) in the low corona (see, e.g.,"
+"Antiochos et al. 2012). Yet, if turbulence is both re-"
+sponsible for the solar wind acceleration and the FIP
+"effect, can we rule out a scenario where FIP fractiona-"
+tion occurs in purely open regions?
+We investigate this question using a coupled modelling
+"approach. First, we extract unidimensional profiles of"
+open solar wind flux tubes and coronal loops using a
+multi-dimensional MHD code (Réville et al. 2020b). We
+then use the Shell-Atm code (Buchlin & Velli 2007;
+"Verdini et al. 2009) to compute the propagation, cas-"
+cade and dissipation of purely transverse perturbations
+of velocity and magnetic field along these profiles. We
+perform a parameter study where we vary the geom-
+"etry, the initial perturbation amplitude and the initial"
+"injection scale, and discuss their effect on the turbulence"
+properties in the chromosphere and transition region.
+We estimate the resulting FIP biases with an analytical
+fractionation model.
+2. BACKGROUND WIND AND TRANSITION
+REGION PROFILES
+"In this section, we describe the global MHD simulation"
+used to extract the different wind profiles later input
+in our turbulence model. The code itself is a global
+MHD solver based on PLUTO (Mignone et al. 2007)
+and our current implementation is described in details
+in Réville et al. (2020b) and Réville et al. (2020a). The
+main purpose of the global simulation is to provide a
+"realistic structure of the transition region, which plays"
+an essential part in the present work. We rely on a single
+"run, of a dipolar solar field of 5 G, which is typical of"
+"solar minimum configurations (see, e.g., DeRosa et al."
+"2012), and a uniform coronal heating prescribed with"
+the following function:
+Qh = Fh/H
+"(
+R�
+r"
+")2
+exp"
+"(
+−
+r −R�
+H"
+")
+, (1)"
+"where H = 1R�, and Fh = 10
+5 erg.cm−2s−1. The value"
+of Fh corresponds to the global energy output of the
+solar wind.
+The result of the simulation is shown in Figure 1. The
+left panel is a zoom on the transition region as a func-
+tion of height and latitude. Contrarily with previous
+"studies (Réville et al. 2020b,a), whose inner boundary"
+"Figure 1. Plasma temperature obtained with the global
+MHD model. On the left panel, we show the temperature
+profile as a function of latitude and height. The white line
+shows the contour T = 105 K, characterizing the location of
+the transition region. Blue lines and orange lines are open
+field lines (referred as CH for coronal holes), green and red
+lines are coronal loops (referred as LO). They are almost
+perfectly radial at this scale. On the right panel, we show
+an extended view of the solution and integrated field lines in
+the meridional plane up to 5R�. The black line on the right
+is the Alfvén surface."
+"was located at the base of the corona, we start the sim-"
+ulation at the photosphere with a temperature of 6000
+K. We initialize the simulation from a one dimensional
+profile of the solar atmosphere obtained with the 1D ver-
+sion of the code described in Réville et al. (2018) and
+the boundary conditions are identical to Réville et al.
+(2020b). We use a spherical grid with a radial reso-
+"lution that goes from 3 × 10−5R� to 0.3R� from the
+photosphere to 20 R�. There are 544 points in the ra-"
+dial and 512 in the latitudinal direction. The location
+of the transition region (TR) varies with the latitude
+and the temperature profiles. It is relatively constant
+"in coronal holes at around 1.003R�, i.e. 2000 km above"
+the photosphere. The minimum height corresponds to
+the highest coronal temperatures at the very edge of the
+helmet streamer. The height of the TR then increases
+"within the core of the streamer up to 1.007R�, accord-"
+ingly with lower coronal temperatures. These lower tem-
+peratures are likely due to increased density that result
+in increased cooling inside the loop (radiative losses are
+"proportional to the squared density in the model, see"
+Réville et al. 2020b). This structure has already been
+described in the work of Lionello et al. (2001) using a
+similar heating function.
+"The shock capturing ability of PLUTO, based on Rie-"
+"mann solvers, is essential to describe strong density and"
+FIP effect and turbulence in open and closed field region 3
+temperature gradients defining the transition region.
+Réville et al. (2020b) have developed an additional mod-
+"ule to propagate Alfvén waves in the corona. Yet, since"
+this module is based on a Wentzel-Krimers-Brillouin ap-
+"proximation, it is not suited for a precise description of"
+the transition region. To further study the role of turbu-
+"lence in the composition of the solar wind, we thus rely"
+"on the Shell-Atm code, which solves the non-linear"
+incompressible Alfvén wave equations on given profiles
+"along magnetic fields lines, neglecting magneto-acoustic"
+modes. We extracted four different solar wind profiles
+"from our 2.5D simulation, shown in Figure 1. In the fol-"
+"lowing section, we describe the Shell-Atm simulations"
+made from these profiles.
+3. SHELL TURBULENCE MODEL
+Shell-Atm is a low dimension fluid turbulence code
+based on the shell technique (see Giuliani & Carbone
+"1998; Nigro et al. 2004), that can model coronal loops"
+(Nigro et al. 2004; Buchlin & Velli 2007) and open so-
+lar wind solutions (Verdini et al. 2009). As fixed back-
+"ground profiles of flow speed, density and temperature,"
+we use the four profiles extracted from our global MHD
+simulation. They are shown in Figure 2. Cases identified
+with CH correspond to open field regions in Figure 1.
+The CH1 profile is well in the coronal hole of the north-
+ern hemisphere in the fast wind region. CH2 is located
+close to the streamer and thus in the slow wind region
+"of the simulation. LO cases are coronal loops, the LO1"
+case being at the open/close boundary with the mini-
+mum height of the transition region and LO2 being the
+"smallest loop, well inside the helmet streamer."
+Shell-Atm solves the reduced (incompressible) evo-
+"lution of Alfvénic fluctuations, i.e. two coupled equa-"
+tions for the evolution of the parallel and anti-parallel
+wave populations. The transverse components of the
+"fluctuations are discretized in the spectral space, start-"
+"ing from a scale k0, and then into 21 other shells at"
+"scales kn = 2
+nk0. We define z"
+"±
+n = δvn ∓ δbn/"
+"√
+µ0ρ the"
+"Elsässer perturbations at scale λn = λ02
+−n. The equa-"
+tions controlling the transport and dissipation of the z±
+fields are described in details in Buchlin & Velli (2007);
+Verdini et al. (2009). Non-linear interactions are oper-
+ated in triads following the model of Giuliani & Car-
+bone (1998). Dissipation in Shell-Atm is obtained via
+explicit resistivity and viscosity. We set the magnetic
+Prandtl number ν/η to unity and the Lundquist num-
+"ber S = LvA/η lies between 10
+6 in the chromosphere"
+and 108 in the corona. We write the heating per unit
+mass created by the cascade :
+"Qν/ρ =
+1"
+"νk2n(|z
++
+n |"
+"2 + |z−n |
+2). (2)"
+"Figure 2. Profiles of the Alfvén speed, flow speed (in dashed
+lines) and temperature for the four field lines extracted from
+the simulation, along the curvilinear abscissa s. For loops,
+we only show one side up to the apex. These profiles will be
+the source of the amplification and reflection (particularly
+in open regions) of perturbations, the latter leading to the
+creation of counter-propagating perturbations. Non-linear
+interactions between counter-propagating waves create the
+cascade and the dissipation at small scales."
+Transverse motions’ amplitude δv� is forced at the
+"base of the domain in the chromosphere over three shells,"
+"starting at the scale k3 = 8k0. The forcing uses random
+fluctuation phases that are reset over a correlation time"
+T∗ (see Buchlin & Velli 2007). This is akin to setting
+"a parallel frequency for the Alfvénic perturbations. T∗
+is chosen around a few hundreds seconds to follow ob-"
+servations of transverse motions in the corona (see the
+review of Nakariakov & Verwichte 2005).
+We chose to maintain the amplitude δv� at the lower
+"boundary, around 100 km above the photosphere, and on"
+"both boundaries for coronal loops configurations, using"
+the following condition:
+"z±n (t) = 2δv� − z
+∓
+n (t). (3)"
+This makes the inner boundary condition partially re-
+"flective, with a reflection coefficient being a function of"
+time and of the balance of inward and outward wave
+populations. Imposing a fully reflecting inner bound-
+4 Réville et al.
+ary conditions leads indeed to an increase of the base
+velocity perturbations up to unrealistic values.
+"Next, we define"
+"F± =
+1"
+"4
+ρ(v ± vA)"
+"[z±n |
+2, (4)"
+the energy flux of the perturbations at any given location
+"in the domain. For both coronal holes and loops cases,"
+we have the total energy injected per second and surface
+unit at a given time
+"Etot =FinA0 − FoutA1, (5)
+= (F+0 + F"
+"−
+0 )A0 − (F"
+"+
+1 + F"
+"−
+1 )A1, (6)"
+where the subscripts 0 and 1 denote the bottom and top
+of the computational domain respectively. In a statis-
+"tical steady state, we expect to have the losses in the"
+"volume compensating for the input energy, i.e.:"
+"〈Etot〉 ∼ 〈Hν〉+ 〈W 〉, (7)"
+"∫
+QνAexp ds, (8)"
+is the integrated turbulent heating in the domain and
+W is the work of the force exerted by the perturbations
+on the solar wind flow:
+"∫
+ρ (u · aw)Aexp ds. (9)"
+"The component of the ponderomotive acceleration aw
+along field lines can be written (Litwin & Rosner 1998;"
+"Laming 2004, 2009, 2012; Dahlburg et al. 2016):"
+"aw,s =
+∂"
+"[
+〈δE2〉
+2|B|2"
+"]
+, (10)"
+"where 〈δE〉 is the time averaged electric field due to the
+perturbations. Equation (10) also assumes that the ion"
+cyclotron frequency is much larger than the wave fre-
+"quency, which easily verified in the inner heliosphere for"
+typical Alfvén wave spectra and makes the force mass
+"independent. In the remainder of the text, we will re-"
+fer to equation (10) by ponderomotive force (per unit
+"mass and unit volume), or ponderomotive acceleration"
+indifferently.
+"As we consider one dimensional profile, we use the"
+"normalized area Aexp, which is unity at the base of all"
+"flux tubes, and we write equation (7) in erg.cm−2.s−1."
+Table 1 sums up all simulations made with the shell
+"model for this work. For each profile geometry, we ex-"
+plore three sets of turbulence parameters referred as
+"Table 1. Parameters and outputs for the Shell-Atm sim-
+ulations"
+"Cases δv� T∗ (s) L
+0
+inj 〈Hν〉 〈W 〉"
+(km/s) (s) (km) (105 cgs) (105 cgs)
+CH1 A 7 600 35000 0.84 0.49
+CH2 A 7 600 35000 1.8 1.0
+LO1 A 7 600 35000 20 -
+LO2 A 7 600 35000 10 -
+CH1 B 10 600 35000 3.1 1.6
+CH2 B 10 600 35000 4.6 2.9
+LO1 B 10 600 35000 26 -
+LO2 B 10 600 35000 21 -
+CH1 C 3 600 3500 1.2 0.081
+CH2 C 3 600 3500 1.2 0.092
+LO1 C 3 600 3500 2.6 -
+LO2 C 3 600 3500 2.3 -
+"cases A, B and C. In general, we chose the input pa-"
+rameters to create a turbulent heating close to what is
+observed in the (open) solar wind and as such used in the
+MHD described in section 2. We find that a transverse
+perturbation of δv� = 7 km/s yields heating rate close
+to 105 erg.cm−2.s−1 — the minimum value to power the
+"solar wind — in both coronal holes, which defines our"
+reference set of turbulent inputs: cases A. Cases B use a
+"higher forcing amplitude δv = 10 km/s, which logically"
+results in a higher heating rate. Both cases A and B
+"have the same injection scale L0inj = 35000 km, which"
+is the largest scale introduced in the system and cor-
+responds to the size of supergranules. Cases C are set
+"with a injection scale ten times lower, close to the size of"
+granules. To get the heating in the coronal holes at the
+"right order of magnitude, we had to decrease the input"
+"velocity perturbations to δv� = 3 km/s. All cases have
+the same correlation time T∗ = 600 s."
+"In Figure 3, we show some properties of the solutions"
+"of the shell model runs A for δv� = 7 km/s, T? = 600 s,"
+and L0inj = 2π/(8k0) = 35000 km. As the transverse
+"perturbations are forced over three shells, the actual"
+"rms amplitude of the forcing is δv∗ =
+√"
+"3× δv2� ∼ 12
+km/s. These parameters are close to the one used in"
+Verdini et al. (2019) for a typical coronal hole solu-
+tion. The results shown in Figure 3 and in Table 1 are
+obtained with a time average of the solution between
+"150000 and 200000 seconds, which represents around ten"
+Alfvén crossing times for the coronal holes profiles and
+more for the coronal loops. All simulations have reached
+a pseudo-steady state during the period. The top panel
+shows the outward and inward rms fluctuations z± as a
+function of the curvilinear abscissa s along the profile.
+FIP effect and turbulence in open and closed field region 5
+"Figure 3. Overview of shell simulations A with the same input parameters on the four geometries of coronal holes and loops.
+The top panel shows the time averaged rms fluctuations z±. For coronal loop cases, the curvilinear abscissa s is normalized
+by L the length of the loop and both boundaries are shown in log scale. The middle panel shows the heating obtained by
+dissipation at small scales Qν in black and compares it with a phenomenological form Qp. The last panel gives the spectra of
+the fluctuations (+ in plain lines, − in dashed lines) at various distances of the Sun. For open regions simulations, the blue,
+orange, green and red lines corresponds to r = 1.001, 1.01, 2.5 and 10R� respectively. For coronal loops, the blue and orange
+remain the same, while the green lines are the spectra at the apex of the loop."
+"For coronal loops, we show s/L in a logit scale, where"
+"L is the total length of the loop, to emphasize the be-"
+haviour in the chromosphere and the transition region
+at both boundaries.
+"In coronal holes simulations, one striking feature is the"
+regime difference between a mostly balanced turbulence
+"(z+ ∼ z−) below the transition region and an imbal-
+anced turbulence beyond. This can be seen also in the"
+"bottom panel of Figure 3, where the inward and out-"
+"ward spectra E±(kn) = (z
+±
+n )"
+2 are very comparable at
+"s = 1.001R� (in blue), with a cascade covering four or-"
+ders of magnitude and a spectral slope close to the usual
+"Kolmogorov index −5/3. Higher in the corona, the out-
+ward wave dominates clearly while keeping a−5/3 slope,
+while the inward component has a flatter spectrum with"
+"slope close to −1. In coronal loops, both populations
+are everywhere well represented and spectra seems per-"
+"haps closer to −1 slopes. In the middle panel of Figure
+3, we show the dissipation profile computed by the shell"
+"model. The plain black line is the true heating, while"
+the grey line corresponds to the so-called phenomeno-
+"logical heating, a proxy often used in large scale fluid"
+"models (see, e.g. Dmitruk et al. 2002; Verdini & Velli"
+2007; Chandran & Hollweg 2009; Shoda et al. 2018a;
+Réville et al. 2020b). It can be written:
+"Qp/ρ =
+1"
+|z+|2|z−|+ |z+||z−|2
+"2L0inj
+. (11)"
+"As said earlier, the total heating obtained in coronal"
+holes solution Hν is close to the input energy of the
+"global MHD simulations, itself chosen to provide enough"
+"power in the solar wind (see Table 1). Nevertheless, the"
+total heating increases as we go from a typical polar
+"coronal hole, to a slow denser wind around the streamer"
+"and to coronal loops. This is expected, and increased"
+heating in the low corona is one explanation for the
+"denser slower wind, which originates somewhere close"
+"to the loops. Interestingly, we see that the phenomeno-"
+6 Réville et al.
+"Figure 4. Ponderomotive acceleration for all cases of Table
+1 in the chromosphere and transition region. Top panel cor-
+responds to cases A, middle panel to cases B, with a higher
+input δv�, and bottom panel to cases C, with a lower am-
+plitude and higher injection scale. The Sun’s gravity pull is
+shown in black. The colored dots indicates the position of the
+transition region in the profiles. They are usually associated
+with a peak in the ponderomotive acceleration."
+logical heating is in general an overestimation of the
+true heating in the shell model (as already noted in Ver-
+"dini et al. 2019), except around the transition region."
+"It does, however, seems to be a reasonable estimate in"
+"imbalanced turbulence region, i.e. in the open coronal"
+wind regions.
+The properties of cases B are very similar to the one
+"of cases A, only with larger wave amplitudes and larger"
+"heating rates. For cases C, the wave amplitude is logi-"
+"cally smaller, and the cascade extent is also shorter as"
+we remain with a fixed value of the viscosity/resistivity
+"ν = η = 1011 cm2.s−1. In all cases, the dissipation starts"
+"to be significant for kn > 10
+4R−1�"
+4. PONDEROMOTIVE FORCE AND FIP
+FRACTIONATION
+The main objective of this work is to compare the
+effect of the turbulence properties on the FIP fraction-
+ation for different background configurations. Among
+the key parameter of the current FIP models is the pon-
+"deromotive force, or the wave pressure exerted by the"
+perturbations on the background flow. Figure 4 shows
+"the ponderomotive force obtained in all Table 1 cases,"
+"close to the inner boundary, in the chromosphere and"
+transition region. Let us first study the cases A of Ta-
+"ble 1, shown in Figure 4 in the top panel. The profile of"
+"aw,s has in all cases a similar shape, with a slow decrease"
+and a peak located around the transition region. The
+"TR peak, which is responsible for most of the FIP frac-"
+"tionation in the model that follows, has an interesting"
+"ordering. The LO2 profile, has usually the highest aver-"
+"aged ponderomotive acceleration and a higher peak, but"
+the maximum of the LO1 is usually of the order of the
+"coronal holes configuration peaks. Moreover, it seems"
+that the amplitude of the peak is a growing function of
+the height of the TR.
+"For cases B, we observe for the ponderomotive accel-"
+"eration essentially a shift up of all the curves, conserving"
+the hierarchy of the previous cases as a function of the
+"geometry. For most cases A and B, the strength of the"
+ponderomotive force is higher than the opposing gravity
+"of the Sun, around ∼ 2× 104 cm.s−2, shown in black in
+Figure 4. The amplitude of the ponderomotive force is"
+"thus significant, especially at the transition region and"
+Alfvén waves can have an influence on the coronal abun-
+"dances. For cases C, however, the first striking feature is"
+the net decrease of the ponderomotive acceleration be-
+low the Sun’s gravity pull. This means that although the
+turbulent heating is perfectly compatible with what is
+necessary to power the solar wind (compare especially
+"case CH1 A with CH1 C), this set of parameter will"
+likely not create a low-FIP bias through the pondero-
+"motive acceleration. In these last cases, the turbulence"
+"injection scale is 10 times smaller, i.e. the size of large"
+granules. The initial amplitude is logically lower as the
+"injection is made later in the cascade, which can explain"
+the lower gradient of magnetic fluctuations.
+We now compute the FIP fractionation created by the
+ponderomotive force in our models. We use for this the
+"derivation of Laming (2009), that read:"
+"ρcorj
+ρchrj"
+"(∫ zcor
+zchr"
+"ξjaw,sνeff
+νj,iv"
+")
+. (12)"
+"Here, ρj is the density of a given species j, ξj the ion-"
+ization fraction and
+"νeff =
+νj,iνj,n"
+"ξjνj,n + (1− ξj)νj,i
+, (13)"
+"where νj,i and νj,n are the collision frequencies of the"
+species j with ions and neutrals respectively. We use
+FIP effect and turbulence in open and closed field region 7
+"Figure 5. FIP biases according to equation (12) in the cases
+A (top panel), B (middle panel) and C (bottom panel) for
+usual minor ions. The integration is made between zchr =
+700 km and zchr = 7000km above the solar surface. The
+turbulent velocity entering equation (12) vT = 15 km/s is
+constant."
+the formulation of Schwadron et al. (1999) and Marsch
+et al. (1995) for the collision frequencies. The ioniza-
+"tion fraction ξj of each heavy ion is computed through
+an interpolation of Saha equilibria (Saha 1920, 1921)"
+"for T . 104 K and the CHIANTI database and the
+ChiantiPy interface (Dere et al. 1997) for T & 104 K.
+Finally, v2j = c"
+"2
+s,j+v"
+"2
+T is the (quadratic) sum of the ther-"
+mal speed and of a mass independent turbulent velocity
+"vT , which represent a wave turbulence heating and is"
+essential to avoid a mass dependant fractionation (see
+Schwadron et al. 1999).
+Figure 5 shows the resulting FIP biases obtained with
+equation (12) and a constant vT = 15 km/s. We repre-
+sent the minor ion density ratio between the low corona
+(7000 km above the photosphere) and the chromosphere
+"(700 km above the photosphere), taking the Oxygen as"
+a reference. The top and middle panel of Figure 5 shows
+"a clear low-FIP bias in cases A and B. Elements Fe, Mg,"
+"and Si, show bias up to a factor 10 or more compared"
+"Figure 6. Same as Figure 5 but using vT as in equation
+(14)."
+"with Oxygen, in the red case, i.e. the smallest coronal"
+loop. The profile of the FIP bias follows the hierarchy
+of the ponderomotive force amplitude shown in Figure
+"4. For CH1 and LO1 cases, the low-FIP bias is weak"
+"and roughly similar, while it is generally higher for the"
+"CH2 configuration. Finally, as intuited, cases C do not"
+show any clear FIP biases. This is a direct result of the
+much weaker ponderomotive force obtained with these
+"simulation parameters, and the heavy ion densities are"
+the same in coronal holes and coronal loops.
+"In Figure 6, we repeat the same exercise, but choosing"
+a turbulent velocity
+"√ ∑
+kn>kν"
+δv2n. (14)
+We only sum the shell components for kn > kν =
+"104R−1� , where dissipation is significant. The average"
+"amplitude of vT is around 8 km/s for cases A, 12 km/s"
+"for cases B, and 5 km/s for cases C. The choice of vT is"
+crucial to get FIP bias comparable with observations. It
+needs to be large enough to avoid the gravitational set-
+"tling, and thus the mass dependence of the abundances"
+"in the corona. However, if vT is too large, it will kill"
+8 Réville et al.
+the low-FIP bias. The low-FIP bias of cases A is thus
+"slightly enhanced, because the average turbulent veloc-"
+ity given by equation (14) is lower than the value used
+in Figure 5. The FIP bias of case B is quenched and
+cases C start to show enrichment in low-FIP elements.
+"Moreover, the hierarchy between the different magnetic"
+configurations is much less visible in Figure 6. CH2 cases
+"have for instance, properties very similar to LO1 cases."
+This shows that a very careful treatment of the turbu-
+lence is important to build FIP fractionation models.
+5. DISCUSSION
+"In this work, we have combined several models and"
+tools to assess the efficiency of the Alfvénic turbulence
+in enriching abundances of low-FIP elements in the low
+"corona. First, we used a global MHD model to get real-"
+istic profiles of the Alfvén speed and velocity gradients
+"in both coronal holes and coronal loops, starting from"
+the low chromosphere. They are indeed fundamental in
+"the amplification, reflection and non linear interaction"
+"of propagating Alfvén waves. Then, we took advantage"
+of the Shell-Atm code to compute the interaction be-
+"tween counter-propagating Alfvén waves, the turbulent"
+cascade and the dissipation. Our approach certainly
+"lacks self-consistency, as, for instance, the heating ob-"
+tained with the shell model is significantly larger in coro-
+nal loops than in coronal holes (at least for cases A and
+"B), while the MHD simulation has a much more ho-"
+"mogeneous heating. It is, however, the first time that"
+both coronal loops and coronal holes are treated with a
+shell turbulence model. This model solves the fully non-
+"linear incompressible Alfvén wave equations, including"
+the cascading process and the frequency dependant re-
+flections and interactions of Alfvén wave populations.
+This is an improvement in comparison with analytical
+"non-WKB approach of previous works (see Laming 2004,"
+"2009, 2012). Moreover, the dissipation is treated phys-"
+"ically at very high Lundquist numbers, which cannot"
+"be achieved in direct numerical simulations (see, e.g.,"
+Dahlburg et al. 2016).
+A few comments on the applicability of incompress-
+ible MHD to this problem are in order. Reduced MHD
+equations are derived assuming small gradients in the
+"guide field (or even constant B0, see Strauss 1976; Zank"
+"& Matthaeus 1992, 1993; Oughton et al. 2017) as well"
+"as in the density, conditions that are not verified in the"
+upper chromosphere and the transition region. The ex-
+cluded nonlinear couplings in the parallel and perpen-
+dicular directions (essentially compressible interactions)
+are responsible for the coupling of Alfvén waves to slow
+"and fast magneto-acoustic modes, leading to steepen-"
+"ing, shock formation and dissipation of slow magneto-"
+"acoustic modes and fast modes, and the refraction of"
+the latter downwards back to the chromosphere for large
+perpendicular wavenumbers. The parametric decay in-
+"stability (PDI), involving compressible processes, is also"
+excluded. The latter plays a role in the formation of
+the turbulent spectrum and the balance of inward and
+"outward Alfvén wave population, but is effective most"
+in the lower beta regions higher up in the corona (see
+Tenerani & Velli 2013; Shoda et al. 2018b; Réville et al.
+2018). As noted in Verdini et al. (2019); Shoda et al.
+"(2019), density fluctuations created by the PDI increase"
+the inward Alfvén waves amplitude and eventually in-
+crease the turbulent heating in the open wind regions.
+"Wave steepening, shocks and mode conversion, which"
+do create a cascade in the direction parallel to the mag-
+"netic field, have typical spectra ∝ k−2 and are thus likely
+to be a secondary dissipation channel in comparison with"
+"the dissipation in the perpendicular plane, with spectra"
+close to the Kolmogorov and Iroshnikov-Kraichnan phe-
+nomenology (see Figure 3). Alfvén wave coupling with
+magneto-acoustic modes may accelerate the perpendic-
+"ular cascade, but because we run the simulation until a"
+"pseudo steady-state is reached, this is likely not a strong"
+limitation of our approach. Numerous other modelers
+"have made similar approximations to our own, as for"
+example the studies by van Ballegooijen et al. (2011);
+Perez & Chandran (2013); van Ballegooijen & Asgari-
+"Targhi (2016, 2017); Chandran & Perez (2019). This"
+"study has no intention to be exhaustive, but we do ex-"
+amine a significant input parameter space in order to
+extract meaningful insights on the problem.
+"Our study shows that, assuming that turbulence is"
+the dominant factor in the coronal heating and solar
+"wind acceleration, a ponderomotive force can appear in"
+"the chromosphere and the transition region, and can be"
+strong enough to create a low-FIP bias. This depends
+however on the turbulence parameters. Injecting energy
+at the scales of super granules provide the wave am-
+plitude necessary for a low-FIP bias comparable with
+"observations (see, e.g. Feldman 1992). The force is re-"
+lated to the a amplification of the waves in the corona
+and the strong gradient that appears at the transition
+"region. Nevertheless, if the energy is injected at the"
+"scale of granules, the resulting ponderomotive accelera-"
+tion seems too weak to explain the observations. Recent
+works have debated of the right injection scale parame-
+ters (van Ballegooijen & Asgari-Targhi 2017; Chandran
+"& Perez 2019), and the amplitude of the ponderomotive"
+force could be a way of constraining solar wind turbu-
+lence models.
+A second result of this study is that the low-FIP bias
+"is not exclusive to coronal loops. Interestingly, we ob-"
+FIP effect and turbulence in open and closed field region 9
+tain significant low-FIP bias for open field configurations
+along the streamer (CH2). We also have usually little
+"FIP bias for the LO1 loop, i.e. the loop at the very edge"
+of the helmet streamer. This result might seem in op-
+"position with previous works, such as the one of Laming"
+"(2004, 2015). Their result is indeed the consequence of"
+"resonant Alfvén waves in the loops, likely triggered by"
+"reconnection, which amplify significantly the pondero-"
+motive acceleration. Injecting transverse motions from
+"the inner boundary, we do not observe such resonances,"
+and further studies are needed to compare the relative
+importance of different triggers. We do show however
+that resonances are not needed to obtain a low-FIP bias
+in coronal loops and open slow wind regions. This study
+"thus questions, anyhow, the necessity of interchange re-"
+connection to explain the composition of the slow solar
+"Finally, it is important to stress that our modelling of"
+"the solar chromosphere is very simple. We assume, fol-"
+"lowing Laming (2004, 2009) and writing equation (12),"
+"that proton drag, collisions and turbulent mixing, are"
+exactly compensating for the Sun’s gravity pull in the
+chromosphere. The actual balance of all these processes
+remains very hard to estimate. Shocks and compress-
+ible fluctuations are also believed to be significant in
+the chromosphere and even in the transition region (see
+"Carlsson et al. 2019, for a recent review) and are not ac-"
+counted for in the shell simulations. Ongoing works are
+"dedicated to build a compressible kinetic-fluid model, in-"
+cluding heavy ions populations with various charge state
+and their interactions with protons and waves.
+6. ACKNOWLEDGEMENT
+This research was funded by the ERC SLOW SOURCE
+project (SLOW SOURCE - DLV-819189). We thank M.
+Laming for very useful discussions. Numerical computa-
+tions were performed using GENCI grants A0080410133
+and A0070410293. This study has made use of the
+NASA Astrophysics Data System.
+REFERENCES
+"Alazraki, G., & Couturier, P. 1971, Astronomy and"
+"Astrophysics, 13, 380"
+"Antiochos, S. K., Linker, J. A., Lionello, R., et al. 2012,"
+"SSRv, 172, 169"
+"Belcher, J. W. 1971, ApJ, 168, 509"
+"Belcher, J. W., & Davis, Jr., L. 1971, J. Geophys. Res., 76,"
+"Bochsler, P., Geiss, J., & Kunz, S. 1986, SoPh, 103, 177"
+"Bruno, R., & Carbone, V. 2013, Living Reviews in Solar"
+"Physics, 10, 2"
+"Buchlin, E., & Velli, M. 2007, ApJ, 662, 701"
+"Carlsson, M., De Pontieu, B., & Hansteen, V. H. 2019,"
+"ARA&A, 57, 189"
+"Chandran, B. D. G., & Hollweg, J. V. 2009, The"
+"Astrophysical Journal, 707, 1659"
+"Chandran, B. D. G., & Perez, J. C. 2019, Journal of"
+"Plasma Physics, 85, 905850409"
+"Dahlburg, R. B., Laming, J. M., Taylor, B. D., &"
+"Obenschain, K. 2016, ApJ, 831, 160"
+"Dere, K. P., Landi, E., Mason, H. E., Monsignori Fossi,"
+"B. C., & Young, P. R. 1997, A&AS, 125"
+"DeRosa, M. L., Brun, A. S., & Hoeksema, J. T. 2012, ApJ,"
+"757, 96"
+"Dmitruk, P., Matthaeus, W. H., Milano, L. J., et al. 2002,"
+"ApJ, 575, 571"
+"Feldman, U. 1992, PhyS, 46, 202"
+"Geiss, J., Gloeckler, G., & von Steiger, R. 1995, SSRv, 72,"
+"Giuliani, P., & Carbone, V. 1998, in eprint"
+arXiv:chao-dyn/9807032
+"Gloeckler, G., & Geiss, J. 1989, in American Institute of"
+"Physics Conference Series, Vol. 183, Cosmic Abundances"
+"of Matter, ed. C. J. Waddington, 49"
+"Jacques, S. A. 1977, ApJ, 215, 942"
+"Laming, J. M. 2004, ApJ, 614, 1063"
+"—. 2009, ApJ, 695, 954"
+"—. 2012, ApJ, 744, 115"
+"—. 2015, Living Reviews in Solar Physics, 12, 2"
+"Leer, E., Holzer, T. E., & Fla, T. 1982, SSRv, 33, 161"
+"Lionello, R., Linker, J. A., & Mikić, Z. 2001, ApJ, 546, 542"
+"Litwin, C., & Rosner, R. 1998, ApJL, 506, L143"
+"Marsch, E., von Steiger, R., & Bochsler, P. 1995, A&A,"
+"301, 261"
+"Meyer, J. P. 1985a, ApJS, 57, 173"
+"—. 1985b, ApJS, 57, 151"
+"Mignone, A., Bodo, G., Massaglia, S., et al. 2007, ApJS,"
+"170, 228"
+"Nakariakov, V. M., & Verwichte, E. 2005, Living Reviews"
+"in Solar Physics, 2, 3"
+"Nigro, G., Malara, F., Carbone, V., & Veltri, P. 2004,"
+"PhRvL, 92, 194501"
+"Oughton, S., Matthaeus, W. H., & Dmitruk, P. 2017, ApJ,"
+"839, 2"
+"Perez, J. C., & Chandran, B. D. G. 2013, ApJ, 776, 124"
+"Réville, V., Tenerani, A., & Velli, M. 2018, ApJ, 866, 38"
+"http://dx.doi.org/10.1007/s11214-011-9795-7
+http://dx.doi.org/10.1086/151105
+http://dx.doi.org/10.1029/JA076i016p03534
+http://dx.doi.org/10.1029/JA076i016p03534
+http://dx.doi.org/10.1007/BF00154867
+http://dx.doi.org/10.12942/lrsp-2013-2
+http://dx.doi.org/10.12942/lrsp-2013-2
+http://dx.doi.org/10.1086/512765
+http://dx.doi.org/10.1146/annurev-astro-081817-052044
+http://dx.doi.org/10.1088/0004-637X/707/2/1659
+http://dx.doi.org/10.1088/0004-637X/707/2/1659
+http://dx.doi.org/10.1017/S0022377819000540
+http://dx.doi.org/10.1017/S0022377819000540
+http://dx.doi.org/10.3847/0004-637X/831/2/160
+http://dx.doi.org/10.1051/aas:1997368
+http://dx.doi.org/10.1088/0004-637X/757/1/96
+http://dx.doi.org/10.1088/0004-637X/757/1/96
+http://dx.doi.org/10.1086/341188
+http://dx.doi.org/10.1088/0031-8949/46/3/002
+http://dx.doi.org/10.1007/BF00768753
+http://dx.doi.org/10.1007/BF00768753
+http://dx.doi.org/10.1063/1.37985
+http://dx.doi.org/10.1063/1.37985
+http://dx.doi.org/10.1063/1.37985
+http://dx.doi.org/10.1086/155430
+http://dx.doi.org/10.1086/423780
+http://dx.doi.org/10.1088/0004-637X/695/2/954
+http://dx.doi.org/10.1088/0004-637X/744/2/115
+http://dx.doi.org/10.1007/lrsp-2015-2
+http://dx.doi.org/10.1007/BF00213253
+http://dx.doi.org/10.1086/318254
+http://dx.doi.org/10.1086/311656
+http://dx.doi.org/10.1086/191001
+http://dx.doi.org/10.1086/191000
+http://dx.doi.org/10.1086/513316
+http://dx.doi.org/10.1086/513316
+http://dx.doi.org/10.12942/lrsp-2005-3
+http://dx.doi.org/10.12942/lrsp-2005-3
+http://dx.doi.org/10.1103/PhysRevLett.92.194501
+http://dx.doi.org/10.3847/1538-4357/aa67e2
+http://dx.doi.org/10.3847/1538-4357/aa67e2
+http://dx.doi.org/10.1088/0004-637X/776/2/124
+http://dx.doi.org/10.3847/1538-4357/aadb8f"
+"
+10 Réville et al."
+"Réville, V., Velli, M., Rouillard, A. P., et al. 2020a, ApJL,"
+"895, L20"
+"Réville, V., Velli, M., Panasenco, O., et al. 2020b, ApJS,"
+"246, 24"
+"Saha, M. N. 1920, Nature, 105, 232"
+"—. 1921, Proceedings of the Royal Society of London Series"
+"A, 99, 135"
+"Schwadron, N. A., Fisk, L. A., & Zurbuchen, T. H. 1999,"
+"ApJ, 521, 859"
+"Shoda, M., Suzuki, T. K., Asgari-Targhi, M., & Yokoyama,"
+"T. 2019, ApJL, 880, L2"
+"Shoda, M., Yokoyama, T., & Suzuki, T. K. 2018a, ApJ,"
+"853, 190"
+"—. 2018b, ApJ, 860, 17"
+"Strauss, H. R. 1976, Physics of Fluids, 19, 134"
+"Tenerani, A., & Velli, M. 2013, Journal of Geophysical"
+"Research (Space Physics), 118, 7507"
+"Tu, C.-Y., & Marsch, E. 1995, SSRv, 73, 1"
+"van Ballegooijen, A. A., & Asgari-Targhi, M. 2016, ApJ,"
+"821, 106"
+"—. 2017, ApJ, 835, 10"
+"van Ballegooijen, A. A., Asgari-Targhi, M., Cranmer, S. R.,"
+"& DeLuca, E. E. 2011, ApJ, 736, 3"
+"Velli, M., Grappin, R., & Mangeney, A. 1989, Physical"
+"Review Letters, 63, 1807"
+"Verdini, A., Grappin, R., & Montagud-Camps, V. 2019,"
+"SoPh, 294, 65"
+"Verdini, A., & Velli, M. 2007, ApJ, 662, 669"
+"Verdini, A., Velli, M., & Buchlin, E. 2009, ApJL, 700, L39"
+"Wood, B. E., & Linsky, J. L. 2010, ApJ, 717, 1279"
+"Zank, G. P., & Matthaeus, W. H. 1992, Journal of Plasma"
+"Physics, 48, 85"
+"—. 1993, Physics of Fluids A, 5, 257"
+"Zhou, Y., & Matthaeus, W. H. 1989, Geophys. Res. Lett.,"
+"16, 755"
+"http://dx.doi.org/10.3847/2041-8213/ab911d
+http://dx.doi.org/10.3847/2041-8213/ab911d
+http://dx.doi.org/10.3847/1538-4365/ab4fef
+http://dx.doi.org/10.3847/1538-4365/ab4fef
+http://dx.doi.org/10.1038/105232b0
+http://dx.doi.org/10.1098/rspa.1921.0029
+http://dx.doi.org/10.1098/rspa.1921.0029
+http://dx.doi.org/10.1086/307575
+http://dx.doi.org/10.3847/2041-8213/ab2b45
+http://dx.doi.org/10.3847/1538-4357/aaa3e1
+http://dx.doi.org/10.3847/1538-4357/aaa3e1
+http://dx.doi.org/10.3847/1538-4357/aac218
+http://dx.doi.org/10.1063/1.861310
+http://dx.doi.org/10.1002/2013JA019293
+http://dx.doi.org/10.1002/2013JA019293
+http://dx.doi.org/10.1007/BF00748891
+http://dx.doi.org/10.3847/0004-637X/821/2/106
+http://dx.doi.org/10.3847/0004-637X/821/2/106
+http://dx.doi.org/10.3847/1538-4357/835/1/10
+http://dx.doi.org/10.1088/0004-637X/736/1/3
+http://dx.doi.org/10.1103/PhysRevLett.63.1807
+http://dx.doi.org/10.1103/PhysRevLett.63.1807
+http://dx.doi.org/10.1007/s11207-019-1458-y
+http://dx.doi.org/10.1086/510710
+http://dx.doi.org/10.1088/0004-637X/700/1/L39
+http://dx.doi.org/10.1088/0004-637X/717/2/1279
+http://dx.doi.org/10.1017/S002237780001638X
+http://dx.doi.org/10.1017/S002237780001638X
+http://dx.doi.org/10.1063/1.858780
+http://dx.doi.org/10.1029/GL016i007p00755
+http://dx.doi.org/10.1029/GL016i007p00755"
