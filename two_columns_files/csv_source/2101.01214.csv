@@ -1,0 +1,1115 @@
+text,space_num
+                                                                       Reconstructing Patchy Reionization with Deep Learning,71.0
+                                                                                              Eric Guzman1 and Joel Meyers1,94.0
+                                                           1,59.0
+"                                                               Department of Physics, Southern Methodist University, 3215 Daniel Ave, Dallas, TX 75275, USA",63.0
+"                                                                                                (Dated: August 23, 2021)",96.0
+                                                                  The precision anticipated from next-generation cosmic microwave background (CMB) surveys will,66.0
+                                                               create opportunities for characteristically new insights into cosmology. Secondary anisotropies of,63.0
+"                                                               the CMB will have an increased importance in forthcoming surveys, due both to the cosmological",63.0
+                                                               information they encode and the role they play in obscuring our view of the primary fluctuations.,63.0
+                                                               Quadratic estimators have become the standard tools for reconstructing the fields that distort the,63.0
+                                                               primary CMB and produce secondary anisotropies. While successful for lensing reconstruction with,63.0
+"                                                               current data, quadratic estimators will be sub-optimal for the reconstruction of lensing and other",63.0
+arXiv:2101.01214v2 [astro-ph.CO] 20 Aug 2021,0.0
+                                                               effects at the expected sensitivity of the upcoming CMB surveys. In this paper we describe a,63.0
+"                                                               convolutional neural network, ResUNet-CMB, that is capable of the simultaneous reconstruction",63.0
+"                                                               of two sources of secondary CMB anisotropies, gravitational lensing and patchy reionization. We",63.0
+                                                               show that the ResUNet-CMB network significantly outperforms the quadratic estimator at low noise,63.0
+                                                               levels and is not subject to the lensing-induced bias on the patchy reionization reconstruction that,63.0
+                                                               would be present with a straightforward application of the quadratic estimator.,63.0
+"                                                                  I.   INTRODUCTION                                coefficients, and cause the observed statistics to be non-",66.0
+                                                                                                                   stationary. This change to the statistics can be observed,115.0
+"                                                  Observations of the cosmic microwave background                  in the data, and thereby can be used to reconstruct the",50.0
+"                                               (CMB) have provided a wealth of cosmological informa-               field causing the distortion [25, 26].",47.0
+"                                               tion. The coming generation of CMB surveys, includ-                    The standard technique for reconstructing distortions",47.0
+"                                               ing those from Simons Observatory [1], CCAT-prime [2],              of the CMB fluctuations utilizes a quadratic estimator,",47.0
+"                                               CMB-S4 [3], PICO [4], and CMB-HD [5], will map the                  constructed from a weighted product of two factors of",47.0
+                                               CMB with unprecedented precision. In addition to pro-               CMB fluctuations [25]. The quadratic estimator has been,47.0
+                                               viding greater sensitivity to primary CMB intensity and             used to great success to detect the effects of gravita-,47.0
+"                                               polarization fluctuations, next generation observations             tional lensing at high significance with existing CMB sur-",47.0
+                                               will allow for much more precise measurements of sec-               veys [27–29]. While the quadratic estimator works well,47.0
+"                                               ondary CMB anisotropies [6].                                        with current data, it will be sub-optimal at the sensitivity",47.0
+                                                  Secondary anisotropies of the CMB are generated by               anticipated in the next generation of CMB surveys. One,50.0
+                                               interaction of CMB photons with structure which in-                 reason for this is that higher order effects of the sources of,47.0
+                                               tervenes between our telescopes and the surface of last             secondary anisotropies become too important to ignore in,47.0
+"                                               scattering. Prominent sources of secondary anisotropies             very high fidelity CMB maps, and use of the quadratic",47.0
+                                               include weak gravitational lensing by large-scale struc-            estimator results in an estimate of the distortion field,47.0
+                                               ture (see [7] for a review); the various manifestations             whose variance is limited by secondary anistropies rather,47.0
+"                                               of the Sunyaev-Zel’dovich effect [8–12], which describe             than by instrumental noise. This challenge can be over-",47.0
+"                                               Compton scattering of CMB photons with free electrons               come by using maximum likelihood estimators [30, 31] or",47.0
+                                               in galaxy clusters and the intergalactic medium; the in-            by iteratively removing the effects of the secondaries [32].,47.0
+"                                               tegrated Sachs-Wolfe [13] and Rees-Sciama effects [14],             Another limiting factor in the use of the quadratic esti-",47.0
+                                               characterizing how time-dependent gravitational poten-              mator is that the presence of more than one distortion,47.0
+                                               tials alter the energy of CMB photons; and the moving               field can lead to biases in the reconstructed fields. This,47.0
+"                                               lens effect [15], where the transverse motion of massive            bias can be avoided at the cost of increased variance with",47.0
+                                               objects imprints temperature fluctuations on the CMB.               the use of ‘bias-hardened’ estimators [33].,47.0
+                                               The sensitivity of upcoming experiments should allow                   One of the main motivations for an accurate recon-,47.0
+                                               some of these effects to be detected for the first time in          struction of the CMB lensing field is related to the search,47.0
+                                               the coming years [16–24]. These secondary anisotropies              for primordial gravitational waves. CMB polarization,47.0
+                                               act both as a source of cosmological information and as             can be split into curl-free E modes and divergence-free,47.0
+"                                               a source of confusion for the primary anisotropies.                 B modes, the latter of which are generated by primor-",47.0
+"                                                  Sources of secondary anisotropies can be reconstructed           dial gravitational waves, but not by density fluctuations",50.0
+"                                               due to the changes they imprint on the statistics of                at linear order [34, 35]. Gravitational lensing of the",47.0
+"                                               the primary CMB fluctuations. In particular, the pri-               CMB can convert E-mode polarization into B-mode po-",47.0
+"                                               mary CMB anisotropies are expected to be well described             larization, and these lensing-induced B modes act as a",47.0
+                                               by nearly Gaussian fluctuations that can be fully char-             source of confusion in searches for primordial gravita-,47.0
+"                                               acterized by their power spectra C` . Sources of sec-               tional waves [36, 37]. With an estimate of the lensing",47.0
+"                                               ondary anisotropies break rotational invariance, induce             field, it is possible to delens the CMB, thereby removing",47.0
+                                               off-diagonal correlations between the spherical harmonic            some of the lensing B modes enabling greater sensitivity,47.0
+avr_spaces,53.11864406779661
+                                                                                                                                   2,131.0
+to primordial gravitational waves [38–40].                   machine learning is capable of producing promising re-,0.0
+    Delensing the CMB is useful beyond the benefits it       sults for lensing reconstruction and delensing at noise,4.0
+provides for primordial gravitational wave searches [41].    levels where the quadratic estimator is sub-optimal [77].,0.0
+"For example, delensing the temperature and E-mode po-        The focus of this work is to extend the techniques of",0.0
+"larization leads to sharper peaks in the power spectra,      Ref. [77] to the simultaneous reconstruction of CMB lens-",0.0
+"allowing for a better determination of parameters which      ing and patchy reionization. As described above, recon-",0.0
+"impact peak positions [41, 42]. Delensing can also re-       structing patchy reionization in the presence of lensing",0.0
+duce the off-diagonal covariance induced by lensing [41]     is challenging due to the extra variance coming from,0.0
+and thereby improve the sensitivity of the CMB to other      lensing-induced B-mode polarization and by the bias,0.0
+"effects, such as primordial non-Gaussianity [43].            that can result from the sensitivity of the patchy reion-",0.0
+    In order to achieve the goals of next generation CMB     ization estimator to the effects of lensing. A main goal,4.0
+"surveys, delensing will be necessary (see e.g. [3, 44, 45]). of this work is to determine the extent to which machine",0.0
+"However, achieving the required delensing performance        learning is capable of surmounting these challenges.",0.0
+is not without challenges. Delensing algorithms that,0.0
+go beyond the quadratic estimator are under develop-,0.0
+"ment, but the implementations can be computationally                      II.    QUADRATIC ESTIMATOR",0.0
+"intensive [31, 46–48]. In the near-term, delensing the",0.0
+CMB using external tracers of the lensing field holds           In this section we will review the construction of the,0.0
+"promise [49], though at improved sensitivity, internal de-   quadratic estimator for CMB lensing [25] and for patchy",0.0
+"lensing, whereby the CMB is delensed using a map of          reionization [65]. The quadratic estimator has become",0.0
+the lensing field reconstructed from the observed CMB        the standard technique for lensing reconstruction with,0.0
+"map, will be necessary to achieve the best delensing per-    current data, though it will be sub-optimal with the high",0.0
+formance [32]. Internal delensing can lead to biases in      precision data expected from future CMB surveys [31].,0.0
+"the delensed CMB map, though these biases can be mit-        We will also discuss how the estimator for the spatial",0.0
+igated without much loss in sensitivity by splitting the     variation of the optical depth is biased in the presence of,0.0
+data appropriately [50].                                     lensing [73].,0.0
+"    Reionization, the process by which the neutral gas",4.0
+filling the Universe became ionized by the first stars,0.0
+"and galaxies between redshifts of about 20 and 6, was                      A.     Weak Gravitational Lensing",0.0
+a complex and non-uniform process [51–59]. The spa-,0.0
+tial variations or patchiness in the process of reioniza-       Cosmological structure which intervenes between our,0.0
+tion leads to effects on the observed CMB temperature        telescopes and the CMB surface of last scattering gen-,0.0
+and polarization [60–71]. Patchy reionization can pro-       erates gravitational potentials which deflect CMB pho-,0.0
+"duce B-mode polarization, either by the modulation of        tons [7]. In real space this effect can be understood",0.0
+E-mode polarization or by scattering of remote temper-       as a re-mapping of the unlensed CMB by a direction-,0.0
+"ature quadrupoles, and these secondary B modes can           dependent deflection angle,",0.0
+potentially act as a source of confusion in searches for,0.0
+"primordial gravitational waves [72].                                        T len (n̂) = T prim (n̂ + ∇φ(n̂)) ,",0.0
+"    Quadratic estimators have been designed to recon-          (Qlen ± iU len )(n̂) = (Qprim ± iU prim )(n̂ + ∇φ(n̂)) , (1)",4.0
+struct the spatial variations in optical depth that result,0.0
+"from patchy reionization [65, 66]. However, when ap-         where (T prim , Qprim , U prim ) are the primordial CMB",0.0
+"plied to maps of the lensed CMB, the patchy reioniza-        fields, φ is the lensing potential, n̂ is the line-of-sight",0.0
+"tion quadratic estimator will be biased by the effects of    direction, and the superscript ‘len’ refers to the lensed",0.0
+"lensing, since both effects lead to mode-coupling and the    field [25]. In harmonic space, lensing of the CMB induces",0.0
+"estimators are not independent [73]. In principle, the       mode-coupling, or correlation, between fluctuations of",0.0
+lensing estimator is also biased by the presence of patchy   different wavenumbers `1 6= `2 that is proportional to the,0.0
+"reionization, though the bias to the lensing estimate is     lensing potential φ. In the flat-sky approximation [25],",0.0
+expected to be small because the effects of patchy reion-                                                φ,0.0
+ization are much smaller than those of lensing. These                 X len (`1 )Y len (`2 )  CMB,0.0
+"                                                                                                    ∝ fXY   (`1 , `2 )φ(`) ,     (2)",100.0
+"biases can be mitigated with delensing, and they can be",0.0
+"                                                             where ` = `1 + `2 and (X, Y ) = (T, E, B). In this pa-",61.0
+essentially avoided with bias-hardening at the cost of a,0.0
+                                                             per we focus on the EB mode-coupling since the corre-,61.0
+small increase to the variance of the estimator [73]. So,0.0
+                                                             sponding estimator has the lowest variance for the noise,61.0
+"far, only upper limits on the effects of patchy reioniza-                                                               φ",0.0
+"tion exist [74, 75], though the effects may be detectable    levels we consider. For this case, the factor fXY             (`1 , `2 )",0.0
+in future data [76].                                         in Eq. (2) is defined as,0.0
+"    In this paper, we apply the techniques of machine             φ",4.0
+"                                                                fEB  (`1 , `2 ) = (` · `1 )C`EE",64.0
+                                                                                    ,84.0
+                                                                                                    − (` · `2 )C`BB,100.0
+                                                                                                                      ,118.0
+learning to reconstruct the effects of patchy reionization                                     1                  2,0.0
+in simulated CMB data. It has been shown recently that                                           × sin 2(ϕ(`1 ) − ϕ(`2 )) .      (3),0.0
+avr_spaces,11.764705882352942
+                                                                                                                                                           3,155.0
+"   The quadratic estimator provides a way of estimating                  and out of our line of sight. Next, Thomson scatter-",3.0
+any field leading to mode coupling by using a weighted                   ing of remote temperature quadrupoles on the free elec-,0.0
+product of pairs of observed CMB maps. The unbiased                      trons in ionized bubbles generates new polarization fluc-,0.0
+"minimum-variance EB quadratic estimator for the CMB                      tuations. Finally, the radial velocity of ionized bubbles",0.0
+gravitational lensing potential is given by [25]                         generates CMB temperature fluctuations through the ki-,0.0
+                                                                         netic Sunyaev-Zel’dovich effect.,73.0
+                             d2 `1 obs,29.0
+                       Z,23.0
+"               φ                                        φ                   For the purpose of this paper, we focus solely on the",15.0
+"φ̂EB (`) =   NEB   (`)             E (`1 )B obs (`2 )FEB    (`1 , `2 ) ,",0.0
+"                            (2π)2                                        screening effect of patchy reionization, since we are inter-",28.0
+                                                                   (4)   ested in the effect that can be reconstructed from obser-,67.0
+with                                                                     vations of CMB polarization alone. The scattering effect,0.0
+                                                                         results in new polarization that is not correlated with the,73.0
+                                       φ,39.0
+"                 φ                   fEB  (`1 , `2 )                     polarization generated at the surface of last scattering,",17.0
+"               FEB   (`1 , `2 ) =                    .             (5)",15.0
+"                                   C`EE,obs",35.0
+                                     1,37.0
+"                                            C`BB,obs",44.0
+                                                2,48.0
+                                                                         and the kinetic Sunyaev-Zel’dovich effect only produces,73.0
+                                                                         temperature fluctuations.,73.0
+The factor in front of Eq. (4) is an overall normalization                  The screening effect modulates the amplitude of the,0.0
+"factor defined as                                                        temperature and polarization anisotropies, scaling them",0.0
+                Z 2                                    −1              by a factor e−τ (n̂) . For the purpose of the simulations,16.0
+"      φ                d `1 φ                 φ                          described below, we first apply modulation followed by",6.0
+"    NEB (`) =                 f (`1 , `2 )FEB (`1 , `2 )       , (6)     lensing giving maps in real space according to",4.0
+                      (2π)2 EB,22.0
+which also gives the variance of the estimator. We define                                  T mod (n̂) = (T prim (n̂)e−τ (n̂) )len,0.0
+"each observed field as the lensed field plus noise,                        (Qmod ± iU mod )(n̂) = ((Qprim ± iU prim )(n̂)e−τ (n̂) )len ,",0.0
+                                                                                                                                                        (9),152.0
+"                 X obs (`) = X len (`) + N X (`) ,                 (7)",17.0
+                                                                         such that the superscript ’mod’ refers to maps that have,73.0
+"where X = (T, E, B) and N X (`) is the noise correspond-                 been first modulated by patchy reionization then lensed.",0.0
+"ing to field X, which we take to be a Gaussian random                    This is an idealized treatment of the two effects, which in",0.0
+field whose power spectrum is given by                                   reality cannot be so cleanly separated in time. We further,0.0
+                               2 2,31.0
+                                                                         assume for our simulations that the lensing and patchy,73.0
+"        C`T T,noise = ∆2T e`    θFWHM /(8 ln 2)",8.0
+"                                                ,                        reionization fields are uncorrelated, though in reality they",48.0
+"                                              2 2                        should exhibit some correlation, since they develop from",46.0
+"        C`EE,noise  =  C`BB,noise   =  ∆2P e` θFWHM /(8 ln 2) .    (8)",8.0
+                                                                         the same underlying density fluctuations.,73.0
+"   At the noise levels of future experiments, the lensing                   Following the formalism for the lensing quadratic esti-",3.0
+"quadratic estimator is sub-optimal, and maximum likeli-                  mator, an unbiased minimum variance EB estimator can",0.0
+"hood techniques or an iterative delensing procedure is                   be derived for τ (n̂) (see [65, 73] for the full derivation)",0.0
+necessary to produce the best estimate of the lensing                    which takes the form,0.0
+"field [31, 32]. The basic idea of the iterative technique                                           Z 2",0.0
+                                                                                                         d `1 obs,105.0
+                                                                                          τ,90.0
+is to first apply the quadratic estimator on the observed                τ̂EB (`) = NEB        (`)             E (`1 )B obs (`2 )FEB           τ,0.0
+"                                                                                                                                                 (`1 , `2 ) ,",145.0
+                                                                                                        (2π)2,104.0
+"maps, then use the resulting estimate of the lensing field                                                                                            (10)",0.0
+"to delens, next apply the quadratic estimator on the de-                 where like Eq. (6), the factor",0.0
+"lensed maps, delens again with the resulting estimate of",0.0
+"the residual lensing field, and iterate this procedure un-                                 Z",0.0
+                                                                                                   d2 `1 τ,99.0
+                                                                                                                                              −1,142.0
+                                                                               τ                                             τ,79.0
+"til convergence is achieved [32]. Simulations have shown                    NEB   (`) =                   f    (` 1 , ` 2 )F      (` 1 , ` 2 )     , (11)",0.0
+                                                                                                  (2π)2 EB                   EB,98.0
+that the iterative technique closely matches the perfor-,0.0
+"mance of the maximum likelihood estimator [31, 32].                      is a normalization that is equal to the variance of the esti-",0.0
+"                                                                         mator, with the mode coupling caused by patchy screen-",73.0
+                                                                         ing given by,73.0
+                   B.    Patchy Reionization,19.0
+                                                                             τ,77.0
+"                                                                                 (`1 , `2 ) = C`EE       − C`BB",81.0
+                                                                                                                 ,96.0
+                                                                           fEB                       1         2,75.0
+"                                                                                                                     sin 2(ϕ(`1 ) − ϕ(`2 )) , (12)",117.0
+   The inhomogeneous nature of the reionization epoch,3.0
+                                                                         and the filter is,73.0
+causes several observable impacts on the CMB [60–69].,0.0
+The patchiness of reionization leads to an anisotropic op-                                                            τ,0.0
+"                                                                                             τ                     fEB     (`1 , `2 )",93.0
+"tical depth whose effects on the CMB can be separated                                      FEB    (`1 , `2 ) =    EE,obs BB,obs",0.0
+                                                                                                                                           .          (13),139.0
+                                                                                                                C`1         C`2,112.0
+"into three categories: screening, scattering, and the ki-",0.0
+"netic Sunyaev-Zel’dovich effect.                                         In Eq. (10) and throughout the rest of the paper, the",0.0
+"   First, the variation of the optical depth on the sky,                 E obs , B obs are defined according to",3.0
+"τ (n̂), leads to a spatially dependent screening of CMB",0.0
+"fluctuations due to the scattering of CMB photons into                                      X obs (`) = X mod (`) + N X (`) ,                         (14)",0.0
+avr_spaces,37.76136363636363
+                                                                                                                             4,125.0
+with X and N X (`) as described below Eq. (7).                     Deep learning makes use of these neural networks by,0.0
+"   In the presence of lensing, the τ estimator is biased        using multiple successive layers of neurons, offering the",3.0
+by a spurious signal that results from the mode-coupling        ability to learn complex nonlinear relationships hidden,0.0
+induced by lensing. The amplitude of the bias is more           in sets of data. There is a significant computational cost,0.0
+"than an order of magnitude greater than the true patchy         in training deep learning networks, but once trained, the",0.0
+"reionization signal, and the bias remains significant even      networks are capable of very quickly making predictions",0.0
+after 98% of the lensing signal has been removed [73].          with very low resource requirements. When dealing with,0.0
+"The bias for the EB estimator can be calculated by how          image data in computer vision tasks, the convolutional",0.0
+much of the lensing mode-coupling is picked up by the           neural network (CNN) has become the dominant deep,0.0
+patchy reionization estimator [73]                              learning network design.,0.0
+                                                                   It is natural to ask whether deep learning can be,67.0
+                          d2 `1 φ                               usefully applied to cosmology. Maps of the content of,26.0
+                      Z,22.0
+               τ                            τ,15.0
+" βEB (`) =   NEB  (`)          f (`1 , `2 )FEB (`1 , `2 )φ(`) . the Universe (such as the CMB) are 2D or 3D images,",1.0
+                         (2π)2 EB,25.0
+                                                           (15) from which we can extract cosmological information us-,59.0
+"It is possible to construct a bias-hardened estimator that      ing CNNs. As a result, deep learning applications have a",0.0
+is insensitive to the effects of lensing and which does not     growing presence in cosmology. Some recent applications,0.0
+have significantly higher variance than the estimator de-       of deep learning to the CMB involving CNNs are full-sky,0.0
+"scribed above [73].                                             foreground removal [78], fast Wiener filtering [79], mass",0.0
+"   In addition to the bias, lensing also adds variance to       estimation of galaxy clusters [80, 81], and cosmic string",3.0
+the patchy reionization estimator by increasing the ob-         detection [82].,0.0
+served B-mode polarization power. A strategy to recon-             Cosmological structure along our line of sight leaves,0.0
+struct the screening effect of patchy reionization using        characteristic distortions imprinted in the observed CMB,0.0
+the tools above is therefore to first reconstruct the lens-     polarization maps resulting in secondary anisotropies,0.0
+"ing field, use that estimated lensing field to delens the       which can be identified and extracted by a CNN. These",0.0
+"CMB, and finally to reconstruct the patchy reionization         distortions are correlated over a range of scales, and so",0.0
+using a bias-hardened estimator. This procedure is dif-         the hierarchical feature extraction of the CNN is well-,0.0
+ficult to implement in practice and would lead to com-          suited to detect the impact of these distortions. In this,0.0
+"plicated noise properties in the resulting estimates. One       paper, we employ a particular type of CNN called a Res-",0.0
+of the main goals of this paper is to compare the perfor-       UNet to analyze secondary anisotropies of the CMB. This,0.0
+mance of an idealized version of the above procedure to         choice is motivated by the success of a ResUNet for flat-,0.0
+the results that can be obtained through machine learn-         sky CMB lensing reconstruction [77]. In the sections,0.0
+ing. We will show how our network is capable of making          that follow we discuss the ingredients that define a Res-,0.0
+"simultaneous estimates of a delensed polarization map, a        UNet, we describe the specific ResUNet architecture we",0.0
+"lensing map, and a patchy reionization map in a single          designed for simultaneous lensing and patchy reioniza-",0.0
+"step.                                                           tion reconstruction, and we specify how our network is",0.0
+                                                                implemented and trained.,64.0
+      III.  DEEP LEARNING NETWORK AND,6.0
+                        METHODS                                           B.    Residual U-Network (ResUNet),24.0
+"   In this section, we provide a brief introduction to ma-         Convolutional layers are the core of a CNN. Each neu-",3.0
+chine learning and its applications to image processing.        ron in a convolutional layer operates on a region of pixels,0.0
+We then discuss the design of the ResUNet-CMB archi-            of its input called the receptive field. In the first convolu-,0.0
+"tecture that we apply to the task of patchy reionization        tional layer of a network, the receptive field is completely",0.0
+reconstruction with simulated CMB maps.                         determined by the kernel size. The kernel size specifies,0.0
+                                                                the dimensions of the k × k filters which are slid across,64.0
+                                                                the input to extract features. Each filter is sensitive to a,64.0
+                                                                unique feature. Common choices for the kernel size use,64.0
+"               A.    Deep Neural Networks                       k = 3, 5, 7, ..., with odd numbers selected so symmetry",15.0
+                                                                about the central pixel can be maintained to reduce edge,64.0
+   Machine learning is a process whereby computers learn        effects. For more details about convolutional layers see,3.0
+the rules to complete tasks when provided a set of ex-          Ref. [83].,0.0
+"amples. In the past decade, artificial neural networks             By chaining together convolutional layers, neurons in",0.0
+"(ANNs) have become ubiquitous in machine learning, be-          each successive layer become connected to a larger re-",0.0
+ing applied to a wide range of problems. The method is          gion of the initial input layer thereby increasing the,0.0
+inspired by biological systems in that ANNs use neurons         size of each consecutive receptive field. The progres-,0.0
+as the building blocks. These neurons are grouped into          sive increase in receptive field size of each convolutional,0.0
+layers and carry out tensor operations.                         layer makes the network sensitive to high-level features of,0.0
+avr_spaces,11.754098360655737
+                                                                                                                                                              5,158.0
+            Convolutional Layer,12.0
+            Dropout Layer,12.0
+                                                                                                                                                   κbiased,147.0
+            SELU Activation,12.0
+            Batch Normalization,12.0
+            Upsample Layer,12.0
+       ||   Concatenation                                                                                                                     8,7.0
+                                                                                                                                              12,142.0
+                                                                                                                                         ×,137.0
+                                                                                                                                       12,135.0
+                                                             Convolution Block                                                            8,61.0
+                                                                                                                             64 64 1,125.0
+      Qobs U obs,6.0
+                                                                                                                                                   τ biased,147.0
+                                                                                                 ||,97.0
+                                    8,36.0
+                                   12                                                                                   8,35.0
+                                                                                                                        12                    8,120.0
+                                                                                                                                              12,142.0
+                                  ×                                                                                 ×                    ×,34.0
+                              8,30.0
+                              12                                                                                   8,30.0
+                                                                                                                   12                   8,115.0
+                                                                                                                                       12,135.0
+                   64 64 64                                                                                64 64             64 64 1,19.0
+                                                                                                                                                   E biased,147.0
+                                                                      ||,70.0
+                                                      64,54.0
+                                                  ×                                                   8,50.0
+                                                                                                      12,102.0
+                                                 64                                             ×,49.0
+                                   128 128 128                                  128 128         8,35.0
+                                                                                64 × 64        12                                             8,80.0
+                                                                                          64                                             ×,90.0
+                                                                                                                                              12,142.0
+                                                                                                                                        8,136.0
+                                                                                                                                       12,135.0
+                                                                                                                             64 64 1,125.0
+                                            32 × 32,44.0
+                                                                           64,75.0
+                                                                      ×,70.0
+                                                       256           64,55.0
+                                                               128,63.0
+"FIG. 1. ResUNet-CMB architecture with residual connections excluded for clarity1 . The input images, (Qobs ,U obs ) are",0.0
+concatenated along the channel dimension. Convolutional layers are labeled with the number of filters they contain. The final,0.0
+"images, (κbiased ,τ biased ,E biased ), are the output of the final batch normalization layer of each branch. The network has 5,292,367",0.0
+"total parameters and 5,287,113 trainable parameters. The receptive field size when ignoring residual and skip connections is",0.0
+101 × 101 pixels for each output. Widths of layers are chosen for visual clarity and are not to scale.,0.0
+"larger scales. For tasks involving images, using a CNN is                                  phase, relevant features for the reconstruction of the out-",0.0
+beneficial since mapping a neuron directly to every pixel                                  put are learned by each convolutional layer and increase,0.0
+"would be computationally intractable.                                                      in complexity, becoming more abstract in deeper layers",0.0
+   Convolutional autoencoders are a type of CNN that                                       of the network. The output of each convolution is called,3.0
+take a tensor for input and produce an identically sized                                   a feature map since it is a tensor made of encoded fea-,0.0
+"one for output. When used with image data, the tensor                                      tures. The feature maps are continuously down-sampled",0.0
+"takes a shape of (image height, image width, number of                                     at regular intervals lowering their dimensionality until a",0.0
+"channels). For example, if we have a 128 × 128 pixel                                       set minimum size is reached. This down-sampling helps",0.0
+"RGB image, then the input tensor shape would be (128,                                      increase the receptive field with respect to the input im-",0.0
+"128, 3) where the red, green, and blue pixel values each                                   age while also reducing the propagation of unnecessary",0.0
+represent a different channel. Employed with supervised                                    information.,0.0
+"learning, convolutional autoencoders are able to learn a",0.0
+nonlinear mapping between the input and output space.,0.0
+                                                                                           1,91.0
+   There are two primary components in a convolutional                                         Graphic made with publicly available code from https://,3.0
+"autoencoder, the encoder and decoder. In the encoding                                          github.com/HarisIqbal88/PlotNeuralNet.",0.0
+avr_spaces,53.59090909090909
+                                                                                                                        6,120.0
+   The decoder takes the features learned in the last             A schematic representation of the ResUNet-CMB ar-,3.0
+"layer of the encoder, the minimum representation, and         chitecture is shown in Fig. 1 where the residual connec-",0.0
+learns how to combine them to achieve the desired out-        tions were left out for clarity. The network is made up of,0.0
+put. Starting from the minimum representation which is        a series of convolution blocks. We define a convolution,0.0
+"an abstract base, it is up-sampled while detail is added      block as consisting of four components in the following or-",0.0
+"through consecutive convolutional layers. The final re-       der: dropout layer, convolutional layer, activation layer,",0.0
+sult is an output image with the same height and width        and batch normalization layer. The convolutional layer,0.0
+as the initial input to the network.                          is set with a kernel size of 5 × 5 and ’same’ padding. For,0.0
+   Some localization information is lost through down-        the activation we use the Scaled Exponential Linear Unit,3.0
+"sampling. To combat this, the outputs of some layers          (SELU) function [93]. The dropout layer, with a dropout",0.0
+"in the encoder phase can be concatenated with those of        rate of 0.3 which we found to be the optimal value, is",0.0
+the same size in the decoder. The concatenations are          necessary to prevent the network from over-fitting. The,0.0
+with respect to the channel dimension and are called          dropout layer is omitted from the first convolution block,0.0
+skip connections. As the output is reconstructed from         in the network in order to prevent the irretrievable loss,0.0
+"the minimum representation, the skip connections pro-         of initial information.",0.0
+vide high resolution information just after up-sampling.,0.0
+These skip connections in combination with a convolu-             The final block of each branch in the decoder phase,0.0
+tional autoencoder were introduced for the purpose of         differs from the others in that the activation function is,0.0
+"biomedical segmentation, and the resulting architecture       switched to a linear one. Down-sampling in the encoder",0.0
+is called a U-Net [84]. The encoding phase and decoding       phase is achieved by setting the stride to 2 in the convo-,0.0
+phase in the U-Net often mirror each other in both depth      lutional layer. The stride refers to the number of pixels,0.0
+and the locations at which up- or down-sampling occur.        between applications of the filter to the input image. A,0.0
+"As a result, this type of network is often presented in a     dedicated up-sampling layer with nearest-neighbor inter-",0.0
+"U-shape, hence its name.                                      polation was used for the decoding phase and was placed",0.0
+   As the network grows deeper by stacking convolutional      before the dropout layer to reduce the production of vi-,3.0
+"layers, it has been shown that performance and accuracy       sual artifacts [94].",0.0
+"of the network decreases [85–87]. Residual connections,",0.0
+                                                                  Skip connections occur every three convolution blocks,66.0
+which take the input of a convolutional layer and add,0.0
+                                                              in the encoder and concatenate along the channel di-,62.0
+it element-wise to the output of a subsequent convolu-,0.0
+                                                              mension. Residual connections connect every two con-,62.0
+"tional layer, allow more layers to be added to the network",0.0
+                                                              volution blocks. The first residual connection takes the,62.0
+without degrading performance by helping to propagate,0.0
+"                                                              (Qobs , U obs ) input layer and adds it element-wise to the",62.0
+parameter corrections to earlier layers and information,0.0
+                                                              batch normalization output of the second block. The,62.0
+"to latter ones, through direct identity paths [86, 88, 89].",0.0
+                                                              next connection is from the output of the second block,62.0
+Their use can help improve network training and results.,0.0
+                                                              to that of the fourth block. The connections continue this,62.0
+Adding residual and skip connections to a convolutional,0.0
+                                                              pattern until the final two blocks of the decoder where,62.0
+autoencoder yields an architecture called a ResUNet [90–,0.0
+                                                              no residual connections are used.,62.0
+92].,0.0
+"                                                                  In both the encoding and decoding phases, some resid-",66.0
+                                                              ual connections occur between convolution blocks with,62.0
+     C.    Network Architecture (ResUNet-CMB),5.0
+                                                              different input and output tensor dimensions. For such,62.0
+"                                                              residual connections, a convolutional layer with linear ac-",62.0
+   We focus here on the application of a ResUNet de-          tivation and appropriate stride and number of filters is,3.0
+signed to reconstruct the effects of patchy reionization      inserted into the connection in order to reconcile the ten-,0.0
+on the CMB polarization in the presence of lensing. Af-       sor dimensions. If there is a difference in the image size,0.0
+"ter training, the ResUNet takes as input maps of the          between blocks in the decoder phase, a dedicated upsam-",0.0
+"observed Q and U polarization (Qobs , U obs ) and pro-        pling layer is used in addition to the convolutional layer.",0.0
+"duces map-level estimates of the lensing convergence, the     We found adding a batch normalization layer in every",0.0
+"patchy reionization, and the primordial E-mode polariza-      residual connection improved our results by lowering val-",0.0
+"tion (κ, τ, E prim ).                                         idation loss for all three outputs. In residual connections",0.0
+"   We use a modified version of the architecture defined in   containing a convolutional layer, the batch normalization",3.0
+Ref. [77] which was shown to work in reconstructing the       is placed after the convolutional layer.,0.0
+lensing convergence map and therefore provided an ideal,0.0
+starting point from which to build upon. Implementation,0.0
+"of our network, which we call ResUNet-CMB, was done",0.0
+with the Keras package of TensorFlow 2.02 .,0.0
+ 2 The code for ResUNet-CMB and the data pipeline used can be    found at https://github.com/EEmGuzman/resunet-cmb.,1.0
+avr_spaces,14.73913043478261
+                                                                                                                               7,127.0
+                     D.   Data Pipeline                          ResUNet-CMB predictions are made by feeding in,21.0
+"                                                              (Qobs , U obs ) from the prediction set as input to the fully",62.0
+   The publicly available CAMB3 software is used to pro-      trained network. The input maps are also standardized,3.0
+duce the primordial CMB and lensing power spec-               according to Eq. (16) with the mean and standard devi-,0.0
+tra [95].      A cosmology with parameters of H0 =            ation from the prediction set. Making a single prediction,0.0
+"67.9 km s−1 Mpc−1 , Ωb h2 = 0.0222, Ωc h2 = 0.118,            of (κ, τ, E prim ) regardless of noise level, takes approxi-",0.0
+"ns = 0.962, τ = 0.0943, and As = 2.21×10−9 was chosen         mately 0.021 seconds on average.",0.0
+since it allows a comparison with results from Ref. [77].        The ResUNet-CMB predictions are post-processed to,0.0
+We take the patchy reionization spectrum C`τ τ to match       rescale the outputs to physically meaningful values. This,0.0
+the τ̄ = 0.058 model of Ref. [76].                            must be done because the network is trained on standard-,0.0
+"   Using the theory power spectra from CAMB and a mod-        ized maps, so the predictions made on the fully trained",3.0
+"ified version of Orphics4 , seven different maps are pro-     network will also be standardized. To perform the rescal-",0.0
+"duced as Gaussian random fields: lensing convergence          ing, we rearrange Eq. (16) to solve for X using the mean",0.0
+"κ ≡ 21 ∇2 φ, patchy reionization τ , primordial E-mode po-    and standard deviation from the training set (since with",0.0
+"larization E prim , primordial Q and U polarization Qprim     real data we would not have a priori knowledge of the",0.0
+"and U prim , and observed Q and U polarization Qobs and       true (κ, τ, E prim ) maps).",0.0
+U obs . To obtain the observed polarization maps we use,0.0
+"Eq. (14), where the primordial maps (Qprim , U prim ) are",0.0
+                                                                                           E.    Training,91.0
+"first modulated by τ , then lensed with κ, and finally",0.0
+summed with a noise map as in Eq. (9).,0.0
+   Each map is 128×128 pixels and covers a 5◦ ×5◦ patch          For each instrument noise level a separate network was,3.0
+of sky. A cosine taper of 1.5◦ was applied to all maps to     trained. We chose to use a batch size of 32 to train the,0.0
+reduce edge effects. Instrument noise was implemented         networks. The initial learning rate was set to 0.25 and,0.0
+"at the levels of ∆T = 0.0 µK-arcmin, 0.2 µK-arcmin,           decayed by a factor of 0.5 if after three epochs there was",0.0
+                                                     √,53.0
+"1 µK-arcmin, and 2 µK-arcmin assuming ∆P = 2∆T .              no improvement in validation loss. Individual learning",0.0
+We used θFWHM = 1.40 for the cases of 1 µK-arcmin             rate decay of each trainable parameter was achieved by,0.0
+"and 2 µK-arcmin, but θFWHM = 1.00 for the 0.2 µK-             using the Adam optimizer with the TensorFlow default",0.0
+"arcmin case, the latter of which was chosen to make direct    parameters [97]. If there was no improvement in the vali-",0.0
+comparison with the results of Ref. [73].                     dation loss after 10 consecutive epochs then training was,0.0
+"   For each noise level, 70000 sets of seven maps were pro-   stopped and the best network saved. Training the noise-",3.0
+duced with the random seed set to 1225 with the python        less network using a training split of 56000 sets of maps,0.0
+NumPy package. In approximately 20% of the maps se-           took an average of 10 hours on a single Nvidia Tesla V100,0.0
+"lected at random, we set both κ and τ to zero. We found       32GB.",0.0
+that including these ‘null maps’ (meaning no lensing or,0.0
+"modulation applied to (Qprim , U prim )) in training helps",0.0
+the network generalize and prevents it from predicting                                   IV.     RESULTS,0.0
+the presence of a signal when none is present in test data.,0.0
+"In addition to the set of 70000, we also produce a sep-          In this section we examine the performance of the",0.0
+"arate collection of 7000 sets of maps, which we call the      ResUNet-CMB network.                  We analyze maps, power",0.0
+"prediction set, on which most analysis of ResUNet-CMB         spectra, and reconstruction noise curves as evaluation",0.0
+"predictions was conducted. No null maps were included         metrics. As described in Section III D, we feed in",0.0
+"in the prediction set.                                        the inputs (Qobs , U obs ) from the prediction data set",0.0
+   The 70000 maps were split in a 80:10:10 ratio for train-   to the fully trained network which produces output,3.0
+"ing, validation, and test sets. Similar to what was done in   maps (κ, τ, E prim ). The output maps are biased, and",0.0
+"Ref. [96], all maps in the training, validation and test sets so we refer to the direct outputs of the network as",0.0
+"are standardized with respect to values from the training     (κbiased , τ biased , E biased ); we address how to treat the bias",0.0
+set according to                                              later in this section.,0.0
+                                             ,45.0
+                              X − X Training,30.0
+               XProcessed =                    .        (16),15.0
+                                 σTraining                                                   A.    Maps,33.0
+Here X represents a single unprocessed map from any,0.0
+data set. The mean and standard deviation are calcu-             Figure 2 shows a single prediction for each of,0.0
+"lated for each map type over the full training set.           (κbiased , τ biased , E biased ) from the fully trained ResUNet-",0.0
+                                                              CMB network for the noiseless and 1 µK-arcmin case. We,62.0
+                                                              highlight these results since they allow for partial com-,62.0
+                                                              parison to results from Ref. [77]. Our ResUNet-CMB,62.0
+ 3 https://camb.info                                          network was able to reconstruct some of the largest scale,1.0
+ 4 https://github.com/msyriac/orphics                         features of τ (n̂) despite the fact that the impact of patchy,1.0
+avr_spaces,10.793650793650794
+                                                                                                                                         8,137.0
+                                                  Noiseless                                        1 µK-arcmin,50.0
+                                           biased                                              biased,43.0
+            True τ             Predicted τ                  Residual               Predicted τ                 Residual,12.0
+                                                                                                                                   0.015,131.0
+   ◦                                                                                                                               0.010,3.0
+ 4,1.0
+                                                                                                                                   0.005,131.0
+                                                                                                                                   0.000,131.0
+ 2◦,1.0
+                                                                                                                                   −0.005,131.0
+                                                                                                                                   −0.010,131.0
+   ◦                                                                                                                               −0.015,3.0
+ 0,1.0
+            True κ             Predicted κbiased            Residual               Predicted κbiased           Residual,12.0
+                                                                                                                                   0.3,131.0
+ 4 ◦                                                                                                                               0.2,1.0
+                                                                                                                                   0.1,131.0
+                                                                                                                                   0.0,131.0
+ 2◦,1.0
+                                                                                                                                   −0.1,131.0
+                                                                                                                                   −0.2,131.0
+ 0 ◦                                                                                                                               −0.3,1.0
+            True E            Predicted E biased            Residual               Predicted E biased          Residual         µK,12.0
+                                                                                                                                   15,131.0
+ 4◦,1.0
+                                                                                                                                   10,131.0
+                                                                                                                                   5,131.0
+                                                                                                                                   0,131.0
+ 2◦                                                                                                                                −5,1.0
+                                                                                                                                   −10,131.0
+                                                                                                                                   −15,131.0
+ 0◦,1.0
+     0◦     2◦       4◦    0◦        2◦       4◦     0◦      2◦       4◦      0◦         2◦       4◦   0◦        2◦        4◦,5.0
+FIG. 2. Sample ResUNet-CMB predictions from fully trained networks for two noise levels compared to the true maps. The,0.0
+predicted maps shown here have not been rescaled as in Eq. (18) and thus have a multiplicative bias. Residual maps are,0.0
+calculated as the true map minus the predicted map.,0.0
+reionization on the CMB polarization is orders of mag-                                      B.     Power Spectra,0.0
+nitude smaller than lensing for the chosen cosmological,0.0
+"parameters. The noiseless κbiased and E biased are lack-                 Next, we compare the recovered pseudo-power spectra",0.0
+ing features on only the smallest scales as can be seen in           from the ResUNet-CMB prediction at each noise level,0.0
+the residual maps which show the difference between the              to the truth power spectrum for each map. In Fig. 3,0.0
+predicted and truth maps.                                                                                 biased biased,0.0
+                                                                     we show a naively corrected hC`τ           τ,69.0
+                                                                                                                        i pseudo-power,120.0
+                                                                     spectrum for each noise level. To get the spectra we,69.0
+"      With an increase in noise, all predictions degrade with        calculate the auto-power spectrum of each τ biased map",6.0
+κbiased and τ biased seeing the largest change. The pri-             from the prediction set and average the results to find,0.0
+                                                                          biased biased,74.0
+mary E-mode polarization is still faithfully reconstructed           hC`τ        τ,0.0
+                                                                                        i. We then make a simple correction for,88.0
+on most scales despite increasing instrument noise. The              power loss due to the window applied to each map by,0.0
+1 µK-arcmin reconstruction of τ biased has residual power            dividing the spectra by the mean of the squared cosine,0.0
+that is about 18% higher for ` < 840 than that of the                taper. The true input spectrum is the window-corrected,0.0
+"noiseless reconstruction of τ biased , where the residual            average pseudo-power spectra of the noiseless truth maps",0.0
+power is defined as the power spectrum of the true map               τ (n̂) in the prediction set.,0.0
+"minus the predicted map. There is a larger fractional                    As expected, reconstruction of τ by the ResUNet-CMB",0.0
+increase in the residual power for κbiased with the addi-            network is best at low ` (large angular scales) and de-,0.0
+"tion of noise, especially in the range 56 < ` < 1500. The            grades on small scales. As we increase instrumental noise,",0.0
+predictions of E biased are most affected by noise on small          the fidelity of the reconstruction worsens on all scales.,0.0
+"scales, and the increase in the residual power peaks at              There is a larger decrease in the reconstructed power",0.0
+about ` = 2900 when comparing the noiseless and 1 µK-                when going from the noiseless case to 1 µK-arcmin than,0.0
+arcmin predictions.                                                  there is between 1 µK-arcmin and 2 µK-arcmin.,0.0
+avr_spaces,43.875
+                                                                                                                                                                                            9,188.0
+                      10−5,22.0
+                      10−6,22.0
+                                                                                           `(` + 1)C`EE /(2π) [µK2 ],91.0
+                                                                                                                        101,120.0
+`(` + 1)C`τ τ /(2π),0.0
+                      10−7,22.0
+                      10−8,22.0
+                                                                                                                        100,120.0
+                      10−9,22.0
+                      10−10          True Spectrum:   Input τ                                                                                True Spectrum:   Input Primordial E,22.0
+                      10   −11       ResUNet-CMB:     Noiseless                                                        10−1                  ResUNet-CMB:     Noiseless,22.0
+                                     ResUNet-CMB:     0.2 µK-arcmin                                                                          ResUNet-CMB:     0.2 µK-arcmin,37.0
+                      10−12          ResUNet-CMB:     1 µK-arcmin                                                                            ResUNet-CMB:     1 µK-arcmin,22.0
+                                     ResUNet-CMB:     2 µK-arcmin                                                                            ResUNet-CMB:     2 µK-arcmin,37.0
+                      10−13                                                                                            10−2,22.0
+                                 0   500      1000        1500        2000   2500   3000                                      0   500     1000     1500        2000      2500      3000,33.0
+                                                                 `                                                                                        `,65.0
+FIG. 3. Power spectra of the optical depth fluctuation maps                                FIG. 5. Power spectra of the primordial E-mode polarization,0.0
+τ biased predicted by ResUNet-CMB for each of four noise lev-                              maps E biased predicted by ResUNet-CMB for each of four,0.0
+els averaged over the 7000 realizations included in the pre-                               noise levels averaged over the 7000 realizations included in,0.0
+"diction set, compared to the averaged power spectrum of the                                the prediction set, compared to the averaged power spectrum",0.0
+true patchy reionization maps (black dashed-dot).                                          of the true primordial E modes (black dashed-dot).,0.0
+                      10−7                                                                 noise. We find the noiseless E-mode power spectrum,22.0
+                                                                                           recovery to be greater than about 98% for the ` range,91.0
+                                                                                           of 170 < ` < 1400. At about ` = 3000 we find E-,91.0
+                      10−8,22.0
+"                                                                                           mode recovery of around 86%. At higher noise levels,",91.0
+                                                                                           the predicted primordial E-mode spectrum falls signifi-,91.0
+C`κκ                  10−9                                                                 cantly below the input spectrum on small angular scales.,0.0
+                                                                                           The impact of noise on the reconstruction of E modes is,91.0
+                      10−10          True Spectrum:   Input κ                              smaller than that for κ and τ on all scales.,22.0
+                                     ResUNet-CMB:     Noiseless                               We note that the results for our ResUNet-CMB lensing,37.0
+                                     ResUNet-CMB:     0.2 µK-arcmin,37.0
+                                     ResUNet-CMB:     1 µK-arcmin,37.0
+                                                                                           reconstruction match well with what is found in Ref. [77].,91.0
+"                      10−11                                                                However, we find that our reconstructed E-mode power",22.0
+                                     ResUNet-CMB:     2 µK-arcmin,37.0
+                                                                                           is closer to the input spectrum on all scales than what,91.0
+                                 0   500      1000        1500        2000   2500   3000,33.0
+"                                                                                           was found in Ref. [77], though we have not been able to",91.0
+                                                                 `,65.0
+                                                                                           identify the cause of this difference.,91.0
+FIG. 4. Power spectra of the lensing convergence maps κbiased,0.0
+predicted by ResUNet-CMB for each of four noise levels aver-                                                                                  C.    Noise,0.0
+"aged over the 7000 realizations included in the prediction set,",0.0
+compared to the averaged power spectrum of the true lensing,0.0
+convergence maps (black dashed-dot).                                                          We can also compare the results of the ResUNet-CMB,0.0
+                                                                                           network to the standard quadratic estimator. In order,91.0
+"                                                                                           to do so, we need to define the reconstruction noise of",91.0
+                                                                                           the deep learning results. The ResUNet-CMB prediction,91.0
+"   Figure 4 and Fig. 5 show the power spectra for the                                      of the modulation field, after post-processing, is a biased",3.0
+"ResUNet-CMB reconstructions, κbiased and E biased , re-                                    result τ biased . Before calculating the reconstruction noise",0.0
+"spectively. For the κbiased spectra, the reconstruction                                    we first need to address this bias. Following treatment of",0.0
+"quickly worsens with increasing instrument noise, espe-                                    the bias to the reconstructed lensing field from Ref. [77],",0.0
+cially on small angular scales. Of the three ResUNet-                                      we define a quantity,0.0
+"CMB outputs, κ sees the strongest scale dependence in",0.0
+                                                                                                                                       #−1,135.0
+its deviation from the input spectrum.,0.0
+"                                                                                                                     ""        biased",117.0
+                                                                                                                       hC`τ τ        i,119.0
+"   The reconstructed primordial E-mode map gives re-                                                           A` =                        ,        (17)",3.0
+                                                                                                                         hC`τ τ i,121.0
+sults closer to the input than both the τ and κ ResUNet-,0.0
+CMB estimates across the entire range of scales we con-                                    where h· · · i represents the average over the entire predic-,0.0
+"sider. This is not surprising, given that on the scales we                                 tion set. The quantity A` is used to rescale the biased",0.0
+consider the primordial E-mode polarization does not dif-                                  output to recover an unbiased estimate of the optical,0.0
+fer a great deal from the modulated and lensed E-mode                                      depth fluctuations,0.0
+"polarization, the latter of which is just a linear combi-",0.0
+nation of the input Q and U maps in the absence of                                                                                      τ̂ (`) = A` τ biased (`) .                        (18),0.0
+avr_spaces,39.61971830985915
+                                                                                                                                                                            10,172.0
+                      10−1                                                         Noiseless                          10−1                                  0.2 µK-arcmin,22.0
+`(` + 1)N`τ τ /(2π)                                                                             `(` + 1)N`τ τ /(2π),0.0
+                      10−3                                                                                            10−3,22.0
+                      10−5                                                                                            10−5,22.0
+                                   Theory C`τ τ,35.0
+                      10−7         Lensing bias to QE                                                                 10−7,22.0
+                                   ResUNet-CMB N`τ τ,35.0
+                                   QE N`τ τ : Lensed CMB,35.0
+                      10−9                                                                                            10−9,22.0
+                                   QE N`τ τ : Iteratively Delensed and Descreened CMB,35.0
+                             0      500           1000              1500          2000     2500                              0   500      1000       1500      2000      2500,29.0
+                                                            `                                                                                    `,60.0
+                       103                                                      1 µK-arcmin                            103                                   2 µK-arcmin,23.0
+                       101                                                                                             101,23.0
+`(` + 1)N`τ τ /(2π)                                                                             `(` + 1)N`τ τ /(2π),0.0
+                      10−1                                                                                            10−1,22.0
+                      10−3                                                                                            10−3,22.0
+                      10−5                                                                                            10−5,22.0
+                      10−7                                                                                            10−7,22.0
+                      10−9                                                                                            10−9,22.0
+                             0      500           1000              1500          2000     2500                              0   500      1000       1500      2000      2500,29.0
+                                                            `                                                                                    `,60.0
+"FIG. 6. Reconstruction noise power spectra of ResUNet-CMB normalized prediction τ̂ as defined in Eq. (19) (blue), standard",0.0
+"quadratic estimator using lensed CMB spectra (QE; dashed red), and a quadratic estimator using iteratively delensed and",0.0
+descreened CMB spectra (QE; dotted red). The expected lensing bias to the EB quadratic estimator for τ (Eq. (15)) is plotted,0.0
+in cyan where it is positive and coral where negative.,0.0
+Estimates on real data using ResUNet-CMB would also                                                                  The iteratively delensed and descreened estimate of,0.0
+require rescaling by the same quantity A` . The unbi-                                                             the patchy reionization reconstruction noise was calcu-,0.0
+"ased estimate τ̂ can be directly compared to the unbiased                                                         lated as follows. First, we calculate the effects of patchy",0.0
+estimate from the quadratic estimator discussed in Sec-                                                           reionization on the CMB polarization spectra. We use,0.0
+tion II. The reconstruction noise spectrum can then be                                                            these screened spectra to calculate an estimate of the,0.0
+"defined in a way analogous to the definition in Ref. [77],                                                        lensing reconstruction noise using the iterative EB es-",0.0
+                                                                                                                  timator [32]. The B-mode polarization from the patchy,114.0
+"                                    N`τ τ = hC`τ̂ τ̂ i − hC`τ τ i ,                      (19)                     reionization acts as an effective source of noise for lensing",36.0
+"                                                                                                                  reconstruction, thereby increasing the lensing reconstruc-",114.0
+where we have used,0.0
+                                                                                                                  tion noise as compared to a case without patchy reion-,114.0
+                                                         biased biased,57.0
+                                 hC`τ̂ τ̂ i = A2` hC`τ          τ,33.0
+                                                                           i.            (20)                     ization. We use the resulting lensing reconstruction noise,75.0
+                                                                                                                  to compute delensed CMB spectra according to Ref. [41].,114.0
+It is this definition of the reconstruction noise that we                                                         The resulting delensed CMB spectra were used in the es-,0.0
+will compare to the quadratic estimator.                                                                          timate of the patchy reionization reconstruction noise us-,0.0
+"   We calculate the reconstruction noise of the EB                                                                ing the EB estimator, with the residual lensing B-mode",3.0
+quadratic estimator using Eq. (11) (with `max = 6100).                                                            polarization acting as a source of noise for the patchy,0.0
+"As discussed in Section II, the variance of the EB es-                                                            reionization reconstruction. If we had stopped the pro-",0.0
+"timator is increased in the presence of lensing, due to                                                           cedure at this point, we would find that ResUNet-CMB",0.0
+the B-mode polarization induced by lensing. We there-                                                             outperformed this delensed quadratic estimator in the,0.0
+"fore consider two versions of the quadratic estimator: one                                                        low noise cases we considered. However, a lower patchy",0.0
+"for which we used lensed CMB spectra, and another for                                                             reionization reconstruction noise can be achieved by it-",0.0
+which we employ an iterative delensing and descreening                                                            eratively ‘descreening’ the CMB to remove the best es-,0.0
+procedure to the CMB spectra.,0.0
+avr_spaces,26.22222222222222
+                                                                                                                                                                  11,162.0
+                                 True Spectrum: Input τ                     Noiseless                                                               0.2 µK-arcmin,33.0
+                            0    QE: C`τ̂ τ̂,28.0
+                       10                                                                                      100,23.0
+                                 ResUNet-CMB: C`τ̂ τ̂,33.0
+`(` + 1)C`τ τ /(2π)                                                                     `(` + 1)C`τ τ /(2π),0.0
+                                 Lensing bias to QE,33.0
+                      10−2                                                                                    10−2,22.0
+                      10−4                                                                                    10−4,22.0
+                      10−6                                                                                    10−6,22.0
+                      10−8                                                                                    10−8,22.0
+                                500     1000      1500        2000   2500    3000                                    500   1000   1500       2000   2500   3000,32.0
+                                                          `                                                                              `,58.0
+                                                                     1 µK-arcmin                               101                                   2 µK-arcmin,69.0
+                       100,23.0
+                                                                                                              10−1,110.0
+`(` + 1)C`τ τ /(2π)                                                                     `(` + 1)C`τ τ /(2π),0.0
+                      10−2,22.0
+                                                                                                              10−3,110.0
+                      10−4,22.0
+                                                                                                              10−5,110.0
+                      10−6                                                                                    10−7,22.0
+                      10−8                                                                                    10−9,22.0
+                                500     1000      1500        2000   2500    3000                                    500   1000   1500       2000   2500   3000,32.0
+                                                          `                                                                              `,58.0
+FIG. 7. Power spectra of the patchy τ field reconstructed by ResUNet-CMB (blue) and the quadratic estimator (QE; red),0.0
+computed from reconstructed maps that are averaged over a set of 7000 simulations with a fixed lensing convergence and patchy,0.0
+"reionization field, compared with the true input τ signal power spectrum (black dash-dot) and the expected lensing bias to the",0.0
+"quadratic estimator (cyan dashed where the bias is positive, coral dashed where the bias is negative). The sharp features in the",0.0
+power spectra are dependent on the random seeds chosen for the simulations. The quadratic estimator spectra were calculated,0.0
+"from maps with no cosine taper applied, and we perform a mean-field subtraction on the estimate, τ̂ .",0.0
+timate of the effects of patchy reionization on the polar-                                           sulting from the maximum likelihood estimate of simul-,0.0
+"ization, in a procedure analogous to delensing [98]. We                                              taneous lensing and patchy reionization reconstruction,",0.0
+"performed this iterative EB descreening estimate, then                                               though the latter has not been demonstrated explicitly.",0.0
+"used the residual effects of patchy reionization on the                                                 In addition to the extra variance due to lensing, the",0.0
+polarization spectra to compute an improved estimate of                                              quadratic estimator also exhibits a bias to the reconstruc-,0.0
+the lensing reconstruction noise using the iterative EB                                              tion of the patchy reionization in the presence of lensing.,0.0
+estimator. This resulted in a lower lensing reconstruc-                                              We calculate this bias according to Eq. (15). The bias-,0.0
+tion noise which was then used to calculate an improved                                              hardened estimator from Ref. [73] has only a percent-level,0.0
+estimate of delensed spectra. We iterated this procedure                                             increase in variance compared to the standard estima-,0.0
+"of iterative EB lensing reconstruction and delensing fol-                                            tor, and so we present the reconstruction noise computed",0.0
+lowed by iterative EB patchy reionization reconstruction                                             from the standard estimator.,0.0
+and descreening followed by iterative EB lensing recon-,0.0
+"struction and delensing, etc., to convergence. The output                                               Figure 6 shows the patchy reionization reconstruc-",0.0
+after convergence of this procedure was used as our es-                                              tion noise power spectra for the quadratic estimator and,0.0
+timate of ‘Iteratively Delensed and Descreened’ patchy                                               the normalized ResUNet-CMB predictions for each noise,0.0
+reionization reconstruction noise. Since the results of it-                                          level. We also include in each panel the theoretical patchy,0.0
+erative delensing closely match the performance of the                                               reionization power spectrum and the bias on the standard,0.0
+"maximum likelihood lensing estimator [31, 32], it should                                             quadratic estimator due to lensing. For all four noise lev-",0.0
+"be expected that the iterative delensing and descreening                                             els shown, the ResUNet-CMB predictions have a lower",0.0
+procedure provides a good approximation of the noise re-                                             reconstruction noise than the quadratic estimator using,0.0
+                                                                                                     lensed spectra in the range 200 < ` < 1000. The range,101.0
+avr_spaces,22.471698113207548
+                                                                                                                                           12,139.0
+         0.6                                                  Noiseless                                                     0.2 µK-arcmin,9.0
+                                                                                  0.4,82.0
+         0.4,9.0
+                                                                                  0.2,82.0
+ r(`)    0.2,1.0
+                                                                          r(`),74.0
+         0.0                                                                      0.0,9.0
+        −0.2             QE: τ τ̂              ResUNet-CMB: τ τ̂,8.0
+                         QE: κτ̂               ResUNet-CMB: κτ̂,25.0
+                                                                                 −0.2,81.0
+               0   500   1000       1500       2000    2500        3000                 0   500   1000    1500       2000    2500   3000,15.0
+                                           `                                                                     `,43.0
+         0.1                                            1 µK-arcmin                                                          2 µK-arcmin,9.0
+                                                                                  0.0,82.0
+         0.0,9.0
+                                                                                 −0.1,81.0
+ r(`)   −0.1                                                              r(`),1.0
+                                                                                 −0.2,81.0
+        −0.2,8.0
+                                                                                 −0.3,81.0
+        −0.3,8.0
+               0   500   1000       1500       2000    2500        3000                 0   500   1000    1500       2000    2500   3000,15.0
+                                           `                                                                     `,43.0
+FIG. 8. Correlation coefficients of estimates of the patchy reionization field τ̂ from the standard quadratic estimator (QE),0.0
+"with the true patchy reionization field τ (blue) and the lensing convergence field κ (coral), and those from the ResUNet-CMB",0.0
+"network with τ (cyan) and κ (red), all averaged over 7000 simulations. The simulations for the quadratic estimator did not use",0.0
+a cosine taper nor mean-field subtraction.,0.0
+of angular scales where ResUNet-CMB outperforms the                                                      D.   Bias,0.0
+standard quadratic estimator grows as the noise level,0.0
+decreases. The ResUNet-CMB N`τ τ matches well with                             In Fig. 7 we show the reconstructed patchy reioniza-,0.0
+the reconstruction noise of the quadratic estimator using                   tion power spectrum from ResUNet-CMB and from the,0.0
+iteratively delensed and descreened CMB spectra for a                       standard quadratic estimator for each noise level. We im-,0.0
+"large ` range for all four noise levels. The top two panels                 plement the EB quadratic estimator for τ as in Eq. (10),",0.0
+demonstrate that the patchy reconstruction noise from                       by using Symlens5 . The results are computed by aver-,0.0
+ResUNet-CMB is also smaller than the bias due to lens-                      aging over a set of 7000 simulated CMB maps with fixed,0.0
+ing that is expected in the standard quadratic estimator                    κ and τ maps; the random seed for κ was set to 133,0.0
+"over a wide range of scales, and this range is wider at                     and for τ to 180. As expected, the quadratic estimator",0.0
+lower noise. This behavior indicates that the ResUNet-                      C`τ̂ τ̂ matches well with the lensing bias computed from,0.0
+CMB network learns to reconstruct the patchy τ field in                     Eq. (15). The ResUNet-CMB estimator on the other,0.0
+a way that mitigates both the extra variance and the bias                   hand follows more closely the input signal power spec-,0.0
+"due to lensing. The ResUNet-CMB network is therefore                        trum, which is most easily seen for the low noise cases. At",0.0
+able to successfully reconstruct both the lensing conver-                   low noise the ResUNet-CMB predictions deviate from the,0.0
+"gence and patchy reionization fields simultaneously in a                    input spectrum at small angular scales (` & 1500), and",0.0
+way that is nearly optimal.                                                 for higher noise deviations appear even at larger scales.,0.0
+                                                                               To confirm that the ResUNet-CMB architecture is,79.0
+                                                                            truly sensitive to the input τ and is not producing a,76.0
+                                                                             5   https://github.com/simonsobs/symlens,77.0
+avr_spaces,25.040816326530614
+                                                                                                                                                                     13,165.0
+spurious signal due to lensing or an artifact of the pro-,0.0
+"cedure, we calculate the correlation coefficients of each                                    10−5                                                     Null Test",0.0
+reconstruction according to,0.0
+                                                                                             10−7,93.0
+                                                                       `(` + 1)C`τ τ /(2π),71.0
+                                                                                                                                      Theory,134.0
+                                    hC`Z τ̂ i                                                                                         ResUNet-CMB:   Noiseless,36.0
+"                  rZ τ̂ (`) = q                       ,        (21)                                                                   ResUNet-CMB:   0.2 µK-arcmin",18.0
+                                  hC`ZZ ihC`τ̂ τ̂ i                                          10−9                                     ResUNet-CMB:   1 µK-arcmin,34.0
+                                                                                                                                      ResUNet-CMB:   2 µK-arcmin,134.0
+"where Z = κ, τ . In Fig. 8 we compare the correlation co-                                    10−11",0.0
+efficients of the ResUNet-CMB predictions to those of the,0.0
+standard quadratic estimator. Note that our definition of                                    10−13,0.0
+the correlation coefficient in Eq. (21) includes in the de-,0.0
+nominator the reconstruction noise on the patchy reion-                                              0   500        1000   1500       2000   2500        3000,0.0
+"ization field, and therefore these coefficients are always                                                                        `",0.0
+less than unity. It can clearly be seen that for all noise,0.0
+"levels and on almost all scales, the standard quadratic es-            FIG. 9. Null test showing the average power spectra of the",0.0
+timator produces an estimate for the optical depth per-                patchy reionization field τ biased predicted from fully trained,0.0
+turbation τ̂ which is more strongly correlated with the                ResUNet-CMB networks on a data set of 7000 simulations,0.0
+lensing convergence κ than it is with the true patchy                  with κ and τ set to zero. The results of this figure should be,0.0
+reionization signal τ . The ResUNet-CMB estimate τ̂ has                compared to those in Fig. 3. The theoretical patchy reioniza-,0.0
+a larger correlation with the true patchy τ signal and                 tion spectrum that is used elsewhere in this work has been,0.0
+"smaller correlation with κ than does the quadratic esti-               included in this plot (black dash-dot) to ease comparison, but",0.0
+"mator for nearly all scales at each noise level.                       for the null test shown in this figure, the true C`τ τ vanishes.",0.0
+"   Furthermore, the ResUNet-CMB patchy reionization",3.0
+estimate is more strongly correlated with the true signal,0.0
+"than with the lensing convergence on large scales, con-                in the null test is five to seven orders of magnitude smaller",0.0
+siderably so at low noise levels. While the quadratic esti-            than the spectrum with patchy reionization included.,0.0
+"mator is dominated by the κ signal on almost all scales,                  We found that the ResUNet-CMB network was much",0.0
+the ResUNet-CMB estimator appears to exhibit a lensing                 less successful on this null test when trained without in-,0.0
+"bias only on small scales for the two lowest noise levels,             cluding unlensed and unmodulated maps in the training",0.0
+"and a reduced bias for the largest noise cases shown.                  set. In that case, the model tended to predict the pres-",0.0
+   For ` > 2000 in the 1 µK-arcmin and 2 µK-arcmin                     ence of a patchy reionization signal with power spectra,3.0
+"cases, the near zero positive correlation between τ̂ and               not much smaller than those shown in Fig. 3, even when",0.0
+the true patchy τ signal indicate ResUNet-CMB is unable                no modulation was present in the maps. The inclusion,0.0
+to provide an accurate patchy reionization reconstruction              of some unlensed and unmodulated polarization maps in,0.0
+on small scales at these noise levels. This might also ex-             the data set during training prevents a spurious signal,0.0
+plain similarity of the reconstructed patchy reionization              from being reconstructed when lensing and patchy reion-,0.0
+spectra on small scales for these noise levels seen in Fig. 3.         ization are absent.,0.0
+                                                                                                               V.     CONCLUSION,111.0
+                         E.   Null Test,25.0
+                                                                          In this paper we described the construction of a deep,74.0
+   As a final check on the results of the ResUNet-CMB                  learning network designed to reconstruct effects which,3.0
+"network, we perform a null test to ensure that no patchy               alter the statistics of CMB fluctuations, the ResUNet-",0.0
+reionization signal is reconstructed when none is present              CMB. We showed that this network is capable of the,0.0
+"in the maps. We implement this test by making pre-                     simultaneous reconstruction of a lensing map, a patchy",0.0
+"dictions of (κ, τ, E prim ) with the fully trained networks            reionization map, and a delensed and descreened po-",0.0
+when the unlensed and unmodulated polarization maps                    larization map. The reconstruction of patchy reioniza-,0.0
+"(Qprim , U prim ) (plus noise) are passed as the input. In             tion provided by ResUNet-CMB drastically reduced the",0.0
+                                          biased biased,42.0
+"Fig. 9, we plot the power spectra hC`τ          τ",0.0
+                                                        i for each     lensing-induced bias present in the standard quadratic,56.0
+"noise level that results from this null test. The spectra              estimator, and it nearly matched the variance of an op-",0.0
+in Fig. 9 should be compared to the analogous spectra                  timal iteratively delensed and descreened reconstruction,0.0
+shown in Fig. 3 where the patchy reionization signal was               scheme over a wide range of angular scales.,0.0
+present. We find that ResUNet-CMB reconstructs spec-                      While the results from ResUNet-CMB are quite,0.0
+         biased biased,9.0
+tra hC`τ       τ,0.0
+"                       i that are much smaller for the null test       promising, we confirm the conclusion of other studies",23.0
+"than when a signal is present, especially on large angular             that with CMB polarization data alone, we are likely to",0.0
+scales where the reconstruction is most successful.          In the,0.0
+                                                     biased biased,53.0
+                                                                       be able to achieve only a statistical detection of the ef-,71.0
+"noiseless case, the reconstructed spectrum hC`τ             τ",0.0
+                                                                   i   fects of patchy reionization [73]. The success of ResUNet-,67.0
+avr_spaces,18.014705882352942
+                                                                                                                       14,119.0
+"CMB on the simultaneous reconstruction of two sources        across all outputs, thereby improving all reconstructions.",0.0
+of secondary CMB fluctuations serves as a demonstration      The success of this change in our network prompts fur-,0.0
+that machine learning tools can be usefully applied to the   ther questions about whether similar changes would be,0.0
+data expected from the next generation of CMB surveys.       beneficial to other machine learning applications. When,0.0
+"   The ResUNet-CMB network shows promising results,          training the network, we included in the training set some",3.0
+though improvements can still be made. The results of        maps which had both lensing and patchy reionization set,0.0
+the network slightly under-performed idealized predic-       to zero. We found this to be necessary for the trained net-,0.0
+"tions for (κ, τ, E) at very low noise levels, especially on  work to successfully pass the null test for patchy reioniza-",0.0
+small scales. In Ref. [77] it is suggested that the recon-   tion reconstruction. Without the null maps in the train-,0.0
+"struction of high-` modes is limited by the signal-to-noise  ing set, we found that the network returned non-zero es-",0.0
+"ratio at those small scales. For the case of patchy reion-   timates for the patchy reionization signal, even when no",0.0
+ization this issue is of particular importance since its ef- patchy reionization was present in the maps of the test,0.0
+fects are much smaller than lensing. This problem can        set. This procedure of including a subset of maps with,0.0
+potentially be partially mitigated by using higher resolu-   varying conditions into the training set can be explored,0.0
+"tion maps to include smaller physical scales, which should   for further possible improvements to the network. The",0.0
+improve the reconstruction on all scales. Accommodat-        potential benefits of this modified subset training method,0.0
+ing maps of a different resolution requires extensive re-    should not be understated. Not only were the impacts,0.0
+"structuring of the network to ensure that features on all    to the quality of the reconstructions minimal, the change",0.0
+scales are being properly analyzed by the network while      to the training also fixed a problem in the predictions of,0.0
+ensuring VRAM constraints are not exceeded. Another          the trained network without requiring any modification,0.0
+avenue to consider would be to first train the network on    to the architecture.,0.0
+"patchy reionization maps with a magnified signal, then          We did not explore the generalization of our predic-",0.0
+slowly decrease the signal magnitude until the fiducial      tions to maps generated with different cosmological pa-,0.0
+"amplitude is reached. This method, used in Ref. [99]         rameters. Further tests are required to determine how",0.0
+"for a different purpose, could help with the reconstruc-     well the network is able to reconstruct patchy reioniza-",0.0
+"tion on scales dominated by noise. On the other hand,        tion and lensing in CMB maps generated assuming dif-",0.0
+the noise levels where significant gains seem possible are   ferent cosmologies. The success of the modified subset,0.0
+much lower than those of currently planned CMB sur-          training provides a positive indication that a similar tech-,0.0
+"veys, meaning that optimization in that very low noise       nique could be applied to improve the generalization ca-",0.0
+regime may not lead to much practical improvement with       pability of the network without much negative impact to,0.0
+forthcoming data.                                            the results.,0.0
+   One extension to our work that could improve patchy,3.0
+                                                                In order to be useful for constraining cosmological pa-,64.0
+reionization reconstruction is to consider a broader set of,0.0
+"                                                             rameters, the predictions made by any estimator need to",61.0
+input maps. One simple addition is to include CMB tem-,0.0
+                                                             be incorporated into a framework that is capable of rig-,61.0
+perature maps in addition to polarization. More realistic,0.0
+"                                                             orously quantifying uncertainties. Once trained, making",61.0
+simulations would also include correlations between the,0.0
+                                                             predictions with ResUNet-CMB is very computationally,61.0
+"patchy reionization field and the matter density, leading",0.0
+"                                                             efficient, and so the network provides good candidate to",61.0
+"to correlations with the lensing field, galaxy counts, or",0.0
+                                                             be included in a Monte Carlo exploration of posteriors.,61.0
+other tracers of structure. If such correlations were in-,0.0
+                                                             Another possibility would be to incorporate ResUNet-,61.0
+"cluded, one could also consider adding maps of the cos-",0.0
+                                                             CMB into a Bayesian framework like that described in,61.0
+"mic infrared background, surveys of galaxies, or 21-cm",0.0
+                                                             Ref. [47].,61.0
+"intensity maps, the addition of which has been shown",0.0
+to improve patchy reionization reconstruction by other          Our results act as a proof of concept that machine,0.0
+means [100–102].                                             learning is capable of the simultaneous reconstruction of,0.0
+   Another extension of our work would be treat more re-     two fields that lead to the distortion of the statistics of,3.0
+"alistic simulations, for example by adding astrophysical     CMB fluctuations. It is natural to ask whether machine",0.0
+foregrounds or anisotropic noise. Applications of ma-        learning can also be usefully applied to the reconstruction,0.0
+"chine learning to simulated foregrounds on the full sky      of other sources of secondary CMB fluctuations, perhaps",0.0
+are already showing promising results [78]. Addressing       by including additional maps as input. The ResUNet-,0.0
+the complications presented by more realistic simulations    CMB network described here is a useful model for such,0.0
+"is a necessary step if machine learning is to be usefully    exploration, since new architecture aimed at similar tasks",0.0
+applied to the data collected by upcoming CMB surveys.       can easily be constructed by simply modifying the inputs,0.0
+   We found a few modifications of standard machine          and outputs of the publicly available network.,3.0
+learning techniques to be beneficial for our purposes. We       The work presented here adds to the list of examples,0.0
+included a batch normalization layer in all of our residual  that show machine learning is likely to play a positive,0.0
+"connections, contrary to the standard implementation of      role in the future of cosmology, especially when applied",0.0
+"residual connections [86, 88]. We found that the inclusion   to the wealth of new data expected from forthcoming",0.0
+of the batch normalization layer lowered validation loss     cosmological surveys.,0.0
+avr_spaces,10.628571428571428
+                                                                                                                           15,123.0
+                 ACKNOWLEDGMENTS                               is supported by the US Department of Energy under,17.0
+                                                               grant no. DE-SC0010129. Computations were carried out,63.0
+"   The authors would like to thank Alex van Engelen            on ManeFrame II, a shared high-performance computing",3.0
+and Marius Millea for helpful conversations. This work         cluster at Southern Methodist University.,0.0
+"  [1] Simons Observatory Collaboration, P. Ade et al.,               CMB S4 Era,” Phys. Rev. D 96 no. 12, (2017) 123509,",2.0
+      “The Simons Observatory: Science goals and                     arXiv:1707.04102 [astro-ph.CO].,6.0
+"      forecasts,” JCAP 02 (2019) 056, arXiv:1808.07445          [18] A.-S. Deutsch, M. C. Johnson, M. Münchmeyer, and",6.0
+"      [astro-ph.CO].                                                 A. Terrana, “Polarized Sunyaev Zel’dovich",6.0
+"  [2] M. Aravena et al., “The CCAT-Prime Submillimeter               tomography,” JCAP 04 (2018) 034,",2.0
+"      Observatory,” arXiv:1909.02587 [astro-ph.IM].                  arXiv:1705.08907 [astro-ph.CO].",6.0
+"  [3] CMB-S4 Collaboration, K. N. Abazajian et al.,             [19] A.-S. Deutsch, E. Dimastrogiovanni, M. C. Johnson,",2.0
+"      “CMB-S4 Science Book, First Edition,”                          M. Münchmeyer, and A. Terrana, “Reconstruction of",6.0
+      arXiv:1610.02743 [astro-ph.CO].                                the remote dipole and quadrupole fields from the,6.0
+"  [4] NASA PICO Collaboration, S. Hanany et al.,                     kinetic Sunyaev Zel’dovich and polarized Sunyaev",2.0
+"      “PICO: Probe of Inflation and Cosmic Origins,”                 Zel’dovich effects,” Phys. Rev. D 98 no. 12, (2018)",6.0
+"      arXiv:1902.10541 [astro-ph.IM].                                123501, arXiv:1707.08129 [astro-ph.CO].",6.0
+"  [5] N. Sehgal et al., “CMB-HD: An Ultra-Deep,                 [20] J. Meyers, P. D. Meerburg, A. van Engelen, and",2.0
+"      High-Resolution Millimeter-Wave Survey Over Half               N. Battaglia, “Beyond CMB cosmic variance limits on",6.0
+"      the Sky,” arXiv:1906.10134 [astro-ph.CO].                      reionization with the polarized Sunyaev-Zel’dovich",6.0
+"  [6] N. Aghanim, S. Majumdar, and J. Silk, “Secondary               effect,” Phys. Rev. D 97 no. 10, (2018) 103505,",2.0
+"      anisotropies of the CMB,” Rept. Prog. Phys. 71 (2008)          arXiv:1710.01708 [astro-ph.CO].",6.0
+"      066902, arXiv:0711.0518 [astro-ph].                       [21] K. M. Smith, M. S. Madhavacheril, M. Münchmeyer,",6.0
+"  [7] A. Lewis and A. Challinor, “Weak gravitational                 S. Ferraro, U. Giri, and M. C. Johnson, “KSZ",2.0
+"      lensing of the CMB,” Phys. Rept. 429 (2006) 1–65,              tomography and the bispectrum,” arXiv:1810.13423",6.0
+      arXiv:astro-ph/0601594.                                        [astro-ph.CO].,6.0
+"  [8] Ya. B. Zeldovich and R. A. Sunyaev, “The Interaction      [22] S. C. Hotinli, J. Meyers, N. Dalal, A. H. Jaffe, M. C.",2.0
+"      of Matter and Radiation in a Hot-Model Universe,”              Johnson, J. B. Mertens, M. Münchmeyer, K. M. Smith,",6.0
+"      Astrophys. Space Sci. 4 (1969) 301–316.                        and A. van Engelen, “Transverse Velocities with the",6.0
+"  [9] R. A. Sunyaev and Ya. B. Zeldovich, “The Interaction           Moving Lens Effect,” Phys. Rev. Lett. 123 no. 6,",2.0
+"      of matter and radiation in the hot model of the                (2019) 061301, arXiv:1812.03167 [astro-ph.CO].",6.0
+"      universe,” Astrophys. Space Sci. 7 (1970) 20–30.          [23] S. Yasini, N. Mirzatuny, and E. Pierpaoli, “Pairwise",6.0
+" [10] R. A. Sunyaev and Ya. B. Zeldovich, “The                       Transverse Velocity Measurement with the",1.0
+"      Observations of relic radiation as a test of the nature        Rees–Sciama Effect,” Astrophys. J. Lett. 873 no. 2,",6.0
+"      of X-Ray radiation from the clusters of galaxies,”             (2019) L23, arXiv:1812.04241 [astro-ph.CO].",6.0
+"      Comments Astrophys. Space Phys. 4 (1972) 173–178.         [24] S. C. Hotinli, M. C. Johnson, and J. Meyers, “Optimal",6.0
+" [11] R. A. Sunyaev and Ya. B. Zeldovich, “Microwave                 filters for the moving lens effect,” arXiv:2006.03060",1.0
+      background radiation as a probe of the contemporary            [astro-ph.CO].,6.0
+"      structure and history of the universe,” Ann. Rev.         [25] W. Hu and T. Okamoto, “Mass reconstruction with",6.0
+"      Astron. Astrophys. 18 (1980) 537–560.                          cmb polarization,” Astrophys. J. 574 (2002) 566–574,",6.0
+" [12] S. Y. Sazonov and R. A. Sunyaev, “Microwave                    arXiv:astro-ph/0111606.",1.0
+"      polarization in the direction of galaxy clusters induced  [26] T. Okamoto and W. Hu, “CMB lensing reconstruction",6.0
+"      by the CMB quadrupole anisotropy,” Mon. Not. Roy.              on the full sky,” Phys. Rev. D67 (2003) 083002,",6.0
+"      Astron. Soc. 310 (1999) 765–772,                               arXiv:astro-ph/0301031 [astro-ph].",6.0
+"      arXiv:astro-ph/9903287 [astro-ph].                        [27] Planck Collaboration, N. Aghanim et al., “Planck",6.0
+" [13] R. K. Sachs and A. M. Wolfe, “Perturbations of a               2018 results. VIII. Gravitational lensing,” Astron.",1.0
+"      Cosmological Model and Angular Variations of the               Astrophys. 641 (2020) A8, arXiv:1807.06210",6.0
+"      Microwave Background,” ApJ 147 (Jan., 1967) 73.                [astro-ph.CO].",6.0
+" [14] M. J. Rees and D. W. Sciama, “Large-scale Density         [28] W. Wu et al., “A Measurement of the Cosmic",1.0
+"      Inhomogeneities in the Universe,” Nature 217 (Feb.,            Microwave Background Lensing Potential and Power",6.0
+      1968) 511–516.                                                 Spectrum from 500 deg2 of SPTpol Temperature and,6.0
+" [15] M. Birkinshaw and S. F. Gull, “A test for transverse           Polarization Data,” Astrophys. J. 884 (2019) 70,",1.0
+"      motions of clusters of galaxies,” Nature 302 (Mar.,            arXiv:1905.05777 [astro-ph.CO].",6.0
+"      1983) 315–317.                                            [29] O. Darwish et al., “The Atacama Cosmology",6.0
+" [16] K. M. Smith and S. Ferraro, “Detecting Patchy                  Telescope: A CMB lensing mass map over 2100 square",1.0
+"      Reionization in the Cosmic Microwave Background,”              degrees of sky and its cross-correlation with",6.0
+"      Phys. Rev. Lett. 119 no. 2, (2017) 021301,                     BOSS-CMASS galaxies,” arXiv:2004.01139",6.0
+      arXiv:1607.01769 [astro-ph.CO].                                [astro-ph.CO].,6.0
+" [17] T. Louis, E. F. Bunn, B. Wandelt, and J. Silk,            [30] C. M. Hirata and U. Seljak, “Analyzing weak lensing",1.0
+      “Measuring Polarized Emission in Clusters in the               of the cosmic microwave background using the,6.0
+avr_spaces,7.540983606557377
+                                                                                                                         16,121.0
+"     likelihood function,” Phys. Rev. D67 (2003) 043001,     [47] M. Millea, E. Anderes, and B. D. Wandelt, “Bayesian",5.0
+     arXiv:astro-ph/0209489 [astro-ph].                           delensing delight: sampling-based inference of the,5.0
+"[31] C. M. Hirata and U. Seljak, “Reconstruction of lensing       primordial CMB and gravitational lensing,”",0.0
+"     from the cosmic microwave background polarization,”          arXiv:2002.00965 [astro-ph.CO].",5.0
+"     Phys. Rev. D 68 (2003) 083002,                          [48] P. Diego-Palazuelos, P. Vielva, E. Martı́nez-González,",5.0
+"     arXiv:astro-ph/0306354.                                      and R. Barreiro, “Comparison of delensing",5.0
+"[32] K. M. Smith, D. Hanson, M. LoVerde, C. M. Hirata,            methodologies and assessment of the delensing",0.0
+"     and O. Zahn, “Delensing CMB Polarization with                capabilities of future experiments,” arXiv:2006.12935",5.0
+"     External Datasets,” JCAP 06 (2012) 014,                      [astro-ph.CO].",5.0
+"     arXiv:1010.0048 [astro-ph.CO].                          [49] B. D. Sherwin and M. Schmittfull, “Delensing the",5.0
+"[33] T. Namikawa, D. Hanson, and R. Takahashi,                    CMB with the Cosmic Infrared Background,” Phys.",0.0
+"     “Bias-Hardened CMB Lensing,” Mon. Not. Roy.                  Rev. D 92 no. 4, (2015) 043005, arXiv:1502.05356",5.0
+"     Astron. Soc. 431 (2013) 609–620, arXiv:1209.0091             [astro-ph.CO].",5.0
+"     [astro-ph.CO].                                          [50] N. Sehgal, M. S. Madhavacheril, B. Sherwin, and",5.0
+"[34] M. Kamionkowski, A. Kosowsky, and A. Stebbins,               A. van Engelen, “Internal Delensing of Cosmic",0.0
+"     “Statistics of cosmic microwave background                   Microwave Background Acoustic Peaks,” Phys. Rev. D",5.0
+"     polarization,” Phys. Rev. D 55 (1997) 7368–7388,             95 no. 10, (2017) 103512, arXiv:1612.03898",5.0
+     arXiv:astro-ph/9611125.                                      [astro-ph.CO].,5.0
+"[35] U. Seljak and M. Zaldarriaga, “Signature of gravity     [51] R. Barkana and A. Loeb, “In the beginning: The First",0.0
+"     waves in polarization of the microwave background,”          sources of light and the reionization of the Universe,”",5.0
+"     Phys. Rev. Lett. 78 (1997) 2054–2057,                        Phys. Rept. 349 (2001) 125–238,",5.0
+     arXiv:astro-ph/9609169.                                      arXiv:astro-ph/0010468.,5.0
+"[36] M. Zaldarriaga and U. Seljak, “Gravitational lensing    [52] J. B. Wyithe and A. Loeb, “Reionization of hydrogen",0.0
+"     effect on cosmic microwave background polarization,”         and helium by early stars and quasars,” Astrophys. J.",5.0
+"     Phys. Rev. D 58 (1998) 023003,                               586 (2003) 693–708, arXiv:astro-ph/0209056.",5.0
+"     arXiv:astro-ph/9803150.                                 [53] R. Barkana and A. Loeb, “Unusually large fluctuations",5.0
+"[37] A. Lewis, A. Challinor, and N. Turok, “Analysis of           in the statistics of galaxy formation at high redshift,”",0.0
+"     CMB polarization on an incomplete sky,” Phys. Rev.           Astrophys. J. 609 (2004) 474–481,",5.0
+"     D 65 (2002) 023505, arXiv:astro-ph/0106536.                  arXiv:astro-ph/0310338.",5.0
+"[38] L. Knox and Y.-S. Song, “A Limit on the detectability   [54] S. Furlanetto, M. Zaldarriaga, and L. Hernquist, “The",0.0
+"     of the energy scale of inflation,” Phys. Rev. Lett. 89       Growth of HII regions during reionization,” Astrophys.",5.0
+"     (2002) 011303, arXiv:astro-ph/0202286.                       J. 613 (2004) 1–15, arXiv:astro-ph/0403697.",5.0
+"[39] M. Kesden, A. Cooray, and M. Kamionkowski,              [55] M. McQuinn, A. Lidz, O. Zahn, S. Dutta,",0.0
+"     “Separation of gravitational wave and cosmic shear           L. Hernquist, and M. Zaldarriaga, “The Morphology of",5.0
+"     contributions to cosmic microwave background                 HII Regions during Reionization,” Mon. Not. Roy.",5.0
+"     polarization,” Phys. Rev. Lett. 89 (2002) 011304,            Astron. Soc. 377 (2007) 1043–1063,",5.0
+     arXiv:astro-ph/0202434.                                      arXiv:astro-ph/0610094.,5.0
+"[40] U. Seljak and C. M. Hirata, “Gravitational lensing as a [56] A. Mesinger and S. Furlanetto, “Efficient Simulations",0.0
+"     contaminant of the gravity wave signal in CMB,” Phys.        of Early Structure Formation and Reionization,”",5.0
+"     Rev. D 69 (2004) 043005, arXiv:astro-ph/0310163.             Astrophys. J. 669 (2007) 663, arXiv:0704.0946",5.0
+"[41] D. Green, J. Meyers, and A. van Engelen, “CMB                [astro-ph].",0.0
+"     Delensing Beyond the B Modes,” JCAP 1712 no. 12,        [57] N. Battaglia, H. Trac, R. Cen, and A. Loeb,",5.0
+"     (2017) 005, arXiv:1609.08143 [astro-ph.CO].                  “Reionization on Large Scales I: A Parametric Model",5.0
+"[42] D. Baumann, D. Green, J. Meyers, and B. Wallisch,            Constructed from Radiation-Hydrodynamic",0.0
+"     “Phases of New Physics in the CMB,” JCAP 01                  Simulations,” Astrophys. J. 776 (2013) 81,",5.0
+"     (2016) 007, arXiv:1508.06342 [astro-ph.CO].                  arXiv:1211.2821 [astro-ph.CO].",5.0
+"[43] W. R. Coulton, P. D. Meerburg, D. G. Baker,             [58] S. Mitra, T. R. Choudhury, and A. Ferrara, “Cosmic",0.0
+"     S. Hotinli, A. J. Duivenvoorden, and A. van Engelen,         reionization after Planck II: contribution from",5.0
+"     “Minimizing gravitational lensing contributions to the       quasars,” Mon. Not. Roy. Astron. Soc. 473 no. 1,",5.0
+"     primordial bispectrum covariance,” Phys. Rev. D 101          (2018) 1416–1425, arXiv:1606.02719 [astro-ph.CO].",5.0
+"     no. 12, (2020) 123504, arXiv:1912.07619                 [59] P. Dayal and A. Ferrara, “Early galaxy formation and",5.0
+"     [astro-ph.CO].                                               its large-scale effects,” Phys. Rept. 780-782 (2018)",5.0
+"[44] K. Abazajian et al., “CMB-S4 Science Case, Reference         1–64, arXiv:1809.09136 [astro-ph.GA].",0.0
+"     Design, and Project Plan,” arXiv:1907.04473             [60] W. Hu, “Reionization revisited: secondary cmb",5.0
+"     [astro-ph.IM].                                               anisotropies and polarization,” Astrophys. J. 529",5.0
+"[45] CMB-S4 Collaboration, K. Abazajian et al.,                   (2000) 12, arXiv:astro-ph/9907103.",0.0
+"     “CMB-S4: Forecasting Constraints on Primordial          [61] M. G. Santos, A. Cooray, Z. Haiman, L. Knox, and",5.0
+"     Gravitational Waves,” arXiv:2008.12619                       C.-P. Ma, “Small - scale CMB temperature and",5.0
+"     [astro-ph.CO].                                               polarization anisotropies due to patchy reionization,”",5.0
+"[46] M. Millea, E. Anderes, and B. D. Wandelt, “Bayesian          Astrophys. J. 598 (2003) 756–766,",0.0
+"     delensing of CMB temperature and polarization,”              arXiv:astro-ph/0305471.",5.0
+"     Phys. Rev. D 100 no. 2, (2019) 023509,                  [62] O. Zahn, M. Zaldarriaga, L. Hernquist, and",5.0
+"     arXiv:1708.06753 [astro-ph.CO].                              M. McQuinn, “The Influence of non-uniform",5.0
+"                                                                  reionization on the CMB,” Astrophys. J. 630 (2005)",66.0
+avr_spaces,6.393939393939394
+                                                                                                                       17,119.0
+"     657–666, arXiv:astro-ph/0503166.                        [77] J. Caldeira, W. Wu, B. Nord, C. Avestruz, S. Trivedi,",5.0
+"[63] M. McQuinn, S. R. Furlanetto, L. Hernquist, O. Zahn,         and K. Story, “DeepCMB: Lensing Reconstruction of",0.0
+"     and M. Zaldarriaga, “The Kinetic Sunyaev-Zel’dovich          the Cosmic Microwave Background with Deep Neural",5.0
+"     effect from reionization,” Astrophys. J. 630 (2005)          Networks,” Astron. Comput. 28 (2019) 100307,",5.0
+"     643–656, arXiv:astro-ph/0504189.                             arXiv:1810.01483 [astro-ph.CO].",5.0
+"[64] O. Dore, G. Holder, M. Alvarez, I. T. Iliev,            [78] M. A. Petroff, G. E. Addison, C. L. Bennett, and J. L.",0.0
+"     G. Mellema, U.-L. Pen, and P. R. Shapiro, “The               Weiland, “Full-sky Cosmic Microwave Background",5.0
+"     Signature of Patchy Reionization in the Polarization         Foreground Cleaning Using Machine Learning,”",5.0
+"     Anisotropy of the CMB,” Phys. Rev. D 76 (2007)               arXiv:2004.11507 [astro-ph.CO].",5.0
+"     043002, arXiv:astro-ph/0701784.                         [79] M. Münchmeyer and K. M. Smith, “Fast Wiener",5.0
+"[65] C. Dvorkin and K. M. Smith, “Reconstructing Patchy           filtering of CMB maps with Neural Networks,”",0.0
+     Reionization from the Cosmic Microwave                       arXiv:1905.05846 [astro-ph.CO].,5.0
+"     Background,” Phys. Rev. D 79 (2009) 043003,             [80] N. Gupta and C. Reichardt, “Mass Estimation of",5.0
+     arXiv:0812.1566 [astro-ph].                                  Galaxy Clusters with Deep Learning II: CMB Cluster,5.0
+"[66] C. Dvorkin, W. Hu, and K. M. Smith, “B-mode CMB              Lensing,” arXiv:2005.13985 [astro-ph.CO].",0.0
+"     Polarization from Patchy Screening during               [81] N. Gupta and C. L. Reichardt, “Mass Estimation of",5.0
+"     Reionization,” Phys. Rev. D 79 (2009) 107302,                Galaxy Clusters with Deep Learning I:",5.0
+"     arXiv:0902.4413 [astro-ph.CO].                               Sunyaev-Zel’dovich Effect,” Astrophys. J. 900 no. 2,",5.0
+"[67] N. Battaglia, A. Natarajan, H. Trac, R. Cen, and             (2020) 110, arXiv:2003.06135 [astro-ph.CO].",0.0
+"     A. Loeb, “Reionization on Large Scales III: Predictions [82] R. Ciuca, O. F. Hernández, and M. Wolman, “A",5.0
+     for Low-` Cosmic Microwave Background Polarization           Convolutional Neural Network For Cosmic String,5.0
+"     and High-` Kinetic Sunyaev-Zel’dovich Observables,”          Detection in CMB Temperature Maps,” Mon. Not.",5.0
+"     Astrophys. J. 776 (2013) 83, arXiv:1211.2832                 Roy. Astron. Soc. 485 (2019) 1377, arXiv:1708.08878",5.0
+     [astro-ph.CO].                                               [astro-ph.CO].,5.0
+"[68] H. Park, P. R. Shapiro, E. Komatsu, I. T. Iliev,        [83] V. Dumoulin and F. Visin, “A guide to convolution",0.0
+"     K. Ahn, and G. Mellema, “The Kinetic                         arithmetic for deep learning,” arXiv:1603.07285",5.0
+     Sunyaev-Zel’dovich effect as a probe of the physics of       [stat.ML].,5.0
+"     cosmic reionization: the effect of self-regulated       [84] O. Ronneberger, P. Fischer, and T. Brox, “U-net:",5.0
+"     reionization,” Astrophys. J. 769 (2013) 93,                  Convolutional networks for biomedical image",5.0
+"     arXiv:1301.3607 [astro-ph.CO].                               segmentation,” arXiv:1505.04597 [cs.CV].",5.0
+"[69] M. A. Alvarez, “The Kinetic Sunyaev–Zel’dovich          [85] K. He and J. Sun, “Convolutional neural networks at",0.0
+"     Effect From Reionization: Simulated Full-sky Maps at         constrained time cost,” arXiv:1412.1710 [cs.CV].",5.0
+"     Arcminute Resolution,” Astrophys. J. 824 no. 2,         [86] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual",5.0
+"     (2016) 118, arXiv:1511.02846 [astro-ph.CO].                  learning for image recognition,” arXiv:1512.03385",5.0
+"[70] S. Paul, S. Mukherjee, and T. R. Choudhury,                  [cs.CV].",0.0
+"     “Inevitable imprints of patchy reionization on the      [87] R. K. Srivastava, K. Greff, and J. Schmidhuber,",5.0
+"     cosmic microwave background anisotropy,” Mon. Not.           “Highway networks,” arXiv:1505.00387 [cs.LG].",5.0
+"     Roy. Astron. Soc. 500 no. 1, (2020) 232–246,            [88] K. He, X. Zhang, S. Ren, and J. Sun, “Identity",5.0
+"     arXiv:2005.05327 [astro-ph.CO].                              mappings in deep residual networks,”",5.0
+"[71] T. R. Choudhury, S. Mukherjee, and S. Paul, “CMB             arXiv:1603.05027 [cs.CV].",0.0
+"     constraints on a physical model of reionization,”       [89] D. Balduzzi, M. Frean, L. Leary, J. Lewis, K. W.-D.",5.0
+"     arXiv:2007.03705 [astro-ph.CO].                              Ma, and B. McWilliams, “The shattered gradients",5.0
+"[72] S. Mukherjee, S. Paul, and T. R. Choudhury, “Is              problem: If resnets are the answer, then what is the",0.0
+"     patchy reionization an obstacle in detecting the             question?,” arXiv:1702.08591 [cs.NE].",5.0
+"     primordial gravitational wave signal?,” Mon. Not. Roy.  [90] B. Kayalibay, G. Jensen, and P. van der Smagt,",5.0
+"     Astron. Soc. 486 no. 2, (2019) 2042–2049,                    “Cnn-based segmentation of medical imaging data,”",5.0
+"     arXiv:1903.01994 [astro-ph.CO].                              CoRR abs/1701.03056 (2017) , arXiv:1701.03056.",5.0
+"[73] M. Su, A. P. Yadav, M. McQuinn, J. Yoo, and                  http://arxiv.org/abs/1701.03056.",0.0
+"     M. Zaldarriaga, “An Improved Forecast of Patchy         [91] F. Milletari, N. Navab, and S. Ahmadi, “V-net: Fully",5.0
+"     Reionization Reconstruction with CMB,”                       convolutional neural networks for volumetric medical",5.0
+"     arXiv:1106.4313 [astro-ph.CO].                               image segmentation,” CoRR abs/1606.04797 (2016)",5.0
+"[74] V. Gluscevic, M. Kamionkowski, and D. Hanson,                , arXiv:1606.04797.",0.0
+     “Patchy Screening of the Cosmic Microwave                    http://arxiv.org/abs/1606.04797.,5.0
+"     Background by Inhomogeneous Reionization,” Phys.        [92] Z. Zhang, Q. Liu, and Y. Wang, “Road extraction by",5.0
+"     Rev. D 87 no. 4, (2013) 047303, arXiv:1210.5507              deep residual u-net,” IEEE Geoscience and Remote",5.0
+"     [astro-ph.CO].                                               Sensing Letters 15 no. 5, (May, 2018) 749–753.",5.0
+"[75] T. Namikawa, “Constraints on Patchy Reionization             http://dx.doi.org/10.1109/LGRS.2018.2802944.",0.0
+"     from Planck CMB Temperature Trispectrum,” Phys.         [93] G. Klambauer, T. Unterthiner, A. Mayr, and",5.0
+"     Rev. D 97 no. 6, (2018) 063505, arXiv:1711.00058             S. Hochreiter, “Self-normalizing neural networks,”",5.0
+     [astro-ph.CO].                                               arXiv:1706.02515 [cs.LG].,5.0
+"[76] A. Roy, A. Lapi, D. Spergel, and C. Baccigalupi,        [94] A. Odena, V. Dumoulin, and C. Olah, “Deconvolution",0.0
+"     “Observing patchy reionization with future CMB               and checkerboard artifacts,” Distill (2016) .",5.0
+"     polarization experiments,” JCAP 05 (2018) 014,               http://distill.pub/2016/deconv-checkerboard.",5.0
+     arXiv:1801.02393 [astro-ph.CO].,5.0
+avr_spaces,5.590909090909091
+                                                                                                                    18,116.0
+"[95] A. Lewis, A. Challinor, and A. Lasenby, “Efficient     [99] R. Ciuca and O. F. Hernández, “Information Theoretic",0.0
+     computation of CMB anisotropies in closed FRW               Bounds on Cosmic String Detection in CMB Maps,5.0
+"     models,” Astrophys. J. 538 (2000) 473–476,                  with Noise,” Mon. Not. Roy. Astron. Soc. 492 no. 1,",5.0
+"     arXiv:astro-ph/9911177.                                     (2020) 1329–1334, arXiv:1911.06378 [astro-ph.CO].",5.0
+"[96] J. Chardin, G. Uhlrich, D. Aubert, N. Deparis,        [100] C. Feng and G. Holder, “Detecting Electron Density",0.0
+"     N. Gillet, P. Ocvirk, and J. Lewis, “A deep learning        Fluctuations from Cosmic Microwave Background",5.0
+"     model to emulate simulations of cosmic reionization,”       Polarization using a Bispectrum Approach,” Phys.",5.0
+"     Mon. Not. Roy. Astron. Soc. 490 no. 1, (2019)               Rev. D 97 no. 12, (2018) 123523, arXiv:1801.05396",5.0
+"     1055–1065, arXiv:1905.06958 [astro-ph.CO].                  [astro-ph.CO].",5.0
+"[97] D. P. Kingma and J. Ba, “Adam: A method for           [101] C. Feng and G. Holder, “Searching for patchy",0.0
+"     stochastic optimization,” arXiv:1412.6980 [cs.LG].          reionization from cosmic microwave background with",5.0
+"[98] P. D. Meerburg, J. Meyers, K. M. Smith, and A. van          hybrid quadratic estimators,” Phys. Rev. D 99 no. 12,",0.0
+"     Engelen, “Reconstructing CMB fluctuations and the           (2019) 123502, arXiv:1808.01592 [astro-ph.CO].",5.0
+"     mean reionization optical depth,” Phys. Rev. D 95     [102] S. C. Hotinli and M. C. Johnson, “Reconstructing",5.0
+"     no. 12, (2017) 123538, arXiv:1701.06992                     large scales at cosmic dawn,” arXiv:2012.09851",5.0
+     [astro-ph.CO].                                              [astro-ph.CO].,5.0
+avr_spaces,9.777777777777779

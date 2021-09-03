@@ -1,0 +1,9207 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"Draft version August 5, 2020",7,SFCC0800,,28,28
+Typeset using L,7,SFRM0800,,15,15
+A,5,CMR6,,1,1
+TEX,7,SFRM0800,,3,3
+twocolumn,7,SFBX0800,,9,9
+style in AASTeX63,7,SFRM0800,,17,17
+"0
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+"g
+u",10,Times-Roman,,3,1
+A,14,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+4,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+"A
+G",14,Times-Roman,,3,1
+.,5,Times-Roman,,1,1
+"h
+p",10,Times-Roman,,3,1
+-,6,Times-Roman,,1,1
+o,10,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+t,5,Times-Roman,,1,1
+s,7,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"2
+v
+8
+1
+0
+0
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+0
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+"Connecting Optical Morphology, Environment, and H",9,SFBX1000,,49,49
+I,8,SFBX0900,,1,1
+"Mass Fraction for Low-Redshift Galaxies
+Using Deep Learning",9,SFBX1000,,59,39
+1,5,SFRM0600,,1,1
+"Department of Physics & Astronomy, Johns Hopkins University, 3400 N. Charles Street, Baltimore, MD 21218, USA",7,SFTI0800,,109,109
+2,5,SFRM0600,,1,1
+"Space Telescope Science Institute, 3700 San Martin Drive, Baltimore, MD 21218, USA",7,SFTI0800,,82,82
+John F. Wu,8,SFCC0900,,10,10
+"1, 2",5,SFCC0600,,4,4
+ABSTRACT,9,SFRM1000,,8,8
+"A galaxy’s morphological features encode details about its gas content, star formation history, and
+feedback processes, which play important roles in regulating its growth and evolution. We use deep
+convolutional neural networks (CNNs) to learn a galaxy’s optical morphological information in order
+to estimate its neutral atomic hydrogen (H",9,SFRM1000,,341,99
+I,8,SFRM0900,,1,1
+) content directly from SDSS,9,SFRM1000,,28,28
+gri,9,CMMI10,,3,3
+"image cutouts. We are
+able to accurately predict a galaxy’s logarithmic H",9,SFRM1000,,73,51
+I,8,SFRM0900,,1,1
+"mass fraction,",9,SFRM1000,,14,14
+M ≡,9,CMSY10,,3,3
+log(,9,CMR10,,4,4
+M,9,CMMI10,,1,1
+HI,6,CMR7,,2,2
+/M,9,CMMI10,,2,2
+,6,CMMI7,,0,0
+),9,CMR10,,1,1
+", by training a",9,SFRM1000,,15,15
+"CNN on galaxies in the ALFALFA 40% sample. Using pattern recognition (PR), we remove galaxies
+with unreliable",9,SFRM1000,,109,93
+M,9,CMSY10,,1,1
+"estimates. We test CNN predictions on the ALFALFA 100%, xGASS, and NIBLES
+catalogs, and ﬁnd that the CNN consistently outperforms previous estimators. The H",9,SFRM1000,,156,82
+I,8,SFRM0900,,1,1
+"-morphology
+connection learned by the CNN appears to be constant in low- to intermediate-density galaxy environ-
+ments, but it breaks down in the highest-density environments. We also use a visualization algorithm,
+Gradient-weighted Class Activation Maps (Grad-CAM), to determine which morphological features
+are associated with low or high gas content. These results demonstrate that CNNs are powerful tools
+for understanding the connections between optical morphology and other properties, as well as for
+probing other variables, in a quantitative and interpretable manner.",9,SFRM1000,,575,101
+Keywords:,9,SFTI1000,,9,9
+"Galaxies, Galaxy evolution, Galaxy processes, Galaxy environments, Astronomy data anal-",9,SFRM1000,,87,87
+"ysis, Astronomy data visualization",9,SFRM1000,,34,34
+1.,8,SFRM0900,,2,2
+INTRODUCTION,9,SFRM1000,,12,12
+Neutral atomic hydrogen (H,9,SFRM1000,,26,26
+I,8,SFRM0900,,1,1
+") is the dominant com-
+ponent of cool gas in the interstellar medium (ISM)
+for low-redshift galaxies (e.g., Saintonge et al. 2017).
+Although neutral gas is crucial for understanding how
+galaxies evolve and grow over cosmic timescales, H",9,SFRM1000,,236,56
+I,8,SFRM0900,,1,1
+is diﬃcult to detect in extragalactic sources because of,9,SFRM1000,,56,56
+"its weak 21-cm emission line. This observational chal-
+lenge has been partially mitigated by large H",9,SFRM1000,,100,54
+I,8,SFRM0900,,1,1
+"surveys
+such as the H",9,SFRM1000,,21,13
+I,8,SFRM0900,,1,1
+"Parkes All Sky Survey (HIPASS; Barnes
+et al. 2001), the Arecibo Legacy Fast ALFA Survey
+(ALFALFA; Giovanelli et al. 2005), and the GALEX
+Arecibo SDSS Survey (GASS; Catinella et al. 2010),
+which have taken a census of the brightest H",9,SFRM1000,,232,50
+I,8,SFRM0900,,1,1
+"sources
+in the local Universe. New radio telescopes such as
+MeerKAT, ASKAP (Australian Square Kilometre Ar-
+ray Pathﬁnder), and eventually the SKA will allow us to",9,SFRM1000,,163,55
+measure H,9,SFRM1000,,9,9
+I,8,SFRM0900,,1,1
+at much lower masses (,9,SFRM1000,,22,22
+M,9,CMMI10,,1,1
+HI,6,CMR7,,2,2
+) and at higher,9,SFRM1000,,15,15
+"redshifts; see, e.g., Looking at the Distant Universe with
+the MeerKAT Array (LADUMA; Blyth et al. 2016),
+MeerKAT International GHz Tiered Extragalactic Ex-
+ploration (MIGHTEE; Jarvis et al. 2016), Wide-ﬁeld
+ASKAP L-Band Legacy All-sky Blind surveY (WAL-
+LABY; Koribalski et al. 2020), and Deep Investigation
+of Neutral Gas Origins (DINGO).",9,SFRM1000,,340,58
+1,6,SFRM0700,,1,1
+Small and incomplete H,9,SFRM1000,,22,22
+I,8,SFRM0900,,1,1
+"samples currently limit our
+ability to study gas properties in typical galaxies beyond",9,SFRM1000,,86,58
+z,9,CMMI10,,1,1
+≈,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+. Since H,9,SFRM1000,,9,9
+I,8,SFRM0900,,1,1
+"is so important to galaxy evolution
+but challenging to measure, astronomers have devised
+proxies for estimating galaxies’ gas content. For exam-
+ple, Kannappan (2004) proposed “photometric” gas frac-
+tions, leveraging the valuable connection between global
+gas content and optical properties. Zhang et al. (2009)
+tightened the relationship by accounting for",9,SFRM1000,,357,56
+i,9,CMMI10,,1,1
+"-band sur-
+face brightness in addition to",9,SFRM1000,,41,30
+g,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+r,9,CMMI10,,1,1
+color. More com-,9,SFRM1000,,16,16
+plicated heuristics and machine learning models have,9,SFRM1000,,52,52
+"also been used (e.g., Teimoorinia et al. 2017; Raﬁefer-",9,SFRM1000,,55,55
+jfwu@jhu.edu,7,SFRM0800,,12,12
+1,5,SFRM0600,,1,1
+https://dingo-survey.org/,7,SFRM0800,,25,25
+2,9,SFRM1000,,1,1
+"antsoa et al. 2018), although these estimators become
+more diﬃcult to interpret as the number of parameters
+increases. Indeed, computer vision algorithms seem to
+perform spectacularly well at predicting galaxy proper-
+ties directly from optical imaging (e.g., Dieleman et al.
+2015; Huertas-Company et al. 2019; Morningstar et al.
+2019; Pasquet et al. 2019; Wu & Boada 2019), but be-
+cause these models often have millions of parameters,
+it can be diﬃcult to understand what makes them so
+successful.",9,SFRM1000,,499,57
+"We train a deep convolutional neural network (CNN)
+to directly predict the logarithm of the H",9,SFRM1000,,93,50
+I,8,SFRM0900,,1,1
+"mass frac-
+tion,",9,SFRM1000,,16,10
+M ≡,9,CMSY10,,3,3
+log(,9,CMR10,,4,4
+M,9,CMMI10,,1,1
+HI,6,CMR7,,2,2
+/M,9,CMMI10,,2,2
+,6,CMMI7,,0,0
+),9,CMR10,,1,1
+", using three-band optical im-
+age cutouts from the Sloan Digital Sky Survey (SDSS).
+After demonstrating that our trained model can predict",9,SFRM1000,,139,54
+M,9,CMSY10,,1,1
+to within 0.23 dex for,9,SFRM1000,,22,22
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+", we test the CNN on in-
+dependent data sets and examine which factors result",9,SFRM1000,,77,52
+"in poor predictions. We use the same CNN method to
+distinguish ALFALFA detections from non-detections,
+and estimate a galaxy’s likelihood of detection in an
+ALFALFA-like survey from its",9,SFRM1000,,185,53
+gri,9,CMMI10,,3,3
+"imaging. Using this
+pattern recognition system, we evaluate only the ro-
+bust predictions on test data sets again and compare
+to results in the literature. We investigate how the rela-
+tionship between optical imaging and H",9,SFRM1000,,223,58
+I,8,SFRM0900,,1,1
+"content varies
+with galaxy environment. We also use the Grad-CAM
+algorithm to localize image features that the CNN as-
+sociates with high or low gas mass fraction in order to
+visually interpret which morphological features are rele-
+vant to machine learning predictions; it essentially tells
+us which parts of the image the CNN is looking at in
+order to determine the gas mass fraction (see, e.g., Peek
+& Burkhart 2019).",9,SFRM1000,,420,58
+"The paper is structured as follows. We describe the
+H",9,SFRM1000,,53,51
+I,8,SFRM0900,,1,1
+"catalogs and optical imaging in Section 2, and ex-
+plain some details of the CNNs in Section 3.
+In Sec-
+tion 4, we present our results showing that a CNN
+trained on ALFALFA can accurately recover",9,SFRM1000,,195,50
+M,9,CMSY10,,1,1
+", and",9,SFRM1000,,5,5
+"report test results on independent data sets.
+In Sec-
+tion 5, we use pattern recognition to identify galax-
+ies that are expected to be detected by an ALFALFA-
+like survey, and in Section 6 we compare our results
+to other",9,SFRM1000,,221,53
+M,9,CMSY10,,1,1
+"estimators in the literature. In Section 7,
+we quantify the impact of environmental eﬀects and
+study how the connection between H",9,SFRM1000,,129,50
+I,8,SFRM0900,,1,1
+"content and op-
+tical morphology breaks down in the most overdense
+environments.
+In Section 8, we discuss and interpret
+the morphological features that a CNN “sees” in order",9,SFRM1000,,173,53
+"to distinguish gas-rich systems from gas-poor galaxies.
+We discuss future prospects in Section 9, and report
+our conclusions in Section 10.
+In the Appendix, we
+present comparisons between CNNs and simpler ma-",9,SFRM1000,,208,55
+"chine learning models and tests of CNN performance
+when artiﬁcial sources are added to the input images.
+Throughout this paper, we assume a cosmology with",9,SFRM1000,,154,53
+H,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+= 70 km s,9,CMR10,,9,9
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+Mpc,9,CMR10,,3,3
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+",",9,SFRM1000,,1,1
+Ω,9,CMR10,,1,1
+m,6,CMMI7,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+3,9,CMR10,,1,1
+",",9,SFRM1000,,1,1
+Ω,9,CMR10,,1,1
+Λ,6,CMR7,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+7,9,CMR10,,1,1
+". All
+of the code used in our analysis is publicly available at
+https://github.com/jwuphysics/HI-convnets.",9,SFRM1000,,106,57
+2.,8,SFRM0900,,2,2
+DATA,9,SFRM1000,,4,4
+We make use of four H,9,SFRM1000,,21,21
+I,8,SFRM0900,,1,1
+data sets in our analysis:,9,SFRM1000,,26,26
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+",",9,SFRM1000,,1,1
+α,9,CMMI10,,1,1
+".100, NIBLES, and the xGASS representative
+sample. Because these data sets have diﬀerent selection
+criteria, they are useful for testing our CNN methods on
+galaxy samples with varying H",9,SFRM1000,,185,56
+I,8,SFRM0900,,1,1
+"mass fraction distribu-
+tions. In Figure 1, we show the cumulative distribution
+functions of",9,SFRM1000,,92,55
+M,9,CMSY10,,1,1
+", the logarithmic H",9,SFRM1000,,19,19
+I,8,SFRM0900,,1,1
+"mass fraction. The
+catalogs’ stellar and H",9,SFRM1000,,42,23
+I,8,SFRM0900,,1,1
+"properties are also summarized
+in Table 1. We describe the data sets and our selection",9,SFRM1000,,86,55
+criteria in greater detail below.,9,SFRM1000,,33,33
+SDSS imaging,8,SFTI0900,,12,12
+—,8,SFRM0900,,1,1
+"The ALFALFA, NIBLES, and xGASS
+data sets have publically available catalogs of optical
+counterparts. We obtain",9,SFRM1000,,110,55
+gri,9,CMMI10,,3,3
+"imaging from the SDSS
+DR14 (Abolfathi et al. 2018) SkyServer using the Im-
+age Cutout service",9,SFRM1000,,93,52
+2,6,SFRM0700,,1,1
+"queried via a custom Python script.
+The conversion of",9,SFRM1000,,53,35
+gri,9,CMMI10,,3,3
+"imaging to RGB channels is a
+modiﬁed version of the Lupton et al. (2004) algorithm,
+as described on the SkyServer website.",9,SFRM1000,,122,54
+3,6,SFRM0700,,1,1
+"Downloaded
+JPG images have",9,SFRM1000,,26,15
+224,9,CMR10,,3,3
+×,9,CMSY10,,1,1
+224,9,CMR10,,3,3
+"pixels at the native SDSS
+pixel scale (0.396",9,SFRM1000,,44,25
+,6,CMSY7,,0,0
+pixel,9,SFRM1000,,5,5
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+"), which corresponds to angu-
+lar sizes of",9,SFRM1000,,42,29
+1,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+48,9,CMR10,,2,2
+,6,CMSY7,,0,0
+×,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+48,9,CMR10,,2,2
+,6,CMSY7,,0,0
+.,9,SFRM1000,,1,1
+Stellar masses,8,SFTI0900,,14,14
+—,8,SFRM0900,,1,1
+"In order to compute gas mass fractions,
+H",9,SFRM1000,,41,39
+I,8,SFRM0900,,1,1
+"detections are crossmatched with galaxies in the
+SDSS DR7 MPA-JHU value-added catalog (Kauﬀmann
+et al. 2003; Brinchmann et al. 2004; Tremonti et al. 2004;
+Salim et al. 2007). All stellar mass estimates assume
+a Chabrier (2003) initial mass function. ALFALFA is
+crossmatched on the basis of",9,SFRM1000,,289,58
+PhotoObjID,9,SFTT1000,,10,10
+(,9,SFRM1000,,1,1
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+) or a,9,SFRM1000,,6,6
+1,9,SFRM1000,,1,1
+,6,CMSY7,,0,0
+search radius (,9,SFRM1000,,15,15
+α,9,CMMI10,,1,1
+".100). The xGASS and NIBLES cat-
+alogs already include crossmatched stellar masses. We
+keep only the galaxies with valid stellar mass estimates.",9,SFRM1000,,144,57
+2.1.,9,SFRM1000,,4,4
+ALFALFA,9,SFTI1000,,7,7
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"The Arecibo Legacy Fast ALFA (ALFALFA) survey
+is a",9,SFRM1000,,50,45
+z,9,CMMI10,,1,1
+≤,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+06,9,CMR10,,2,2
+blind search for H,9,SFRM1000,,18,18
+I,8,SFRM0900,,1,1
+"at high Galactic
+latitudes (Giovanelli et al. 2005). The ALFALFA",9,SFRM1000,,64,47
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+catalog covers 40% (2800 deg,9,SFRM1000,,28,28
+2,6,CMR7,,1,1
+") of the full survey area
+(Haynes et al. 2011); most of these detections (12,468",9,SFRM1000,,80,54
+sources) lie within the SDSS footprint. Our sample in-,9,SFRM1000,,54,54
+2,5,SFRM0600,,1,1
+http://skyserver.sdss.org/dr14/en/help/docs/api.aspx,7,SFRM0800,,52,52
+3,5,SFRM0600,,1,1
+https://www.sdss.org/dr14/imaging/jpg-images-on-skyserver/,7,SFRM0800,,58,58
+3,9,SFRM1000,,1,1
+Table 1.,8,SFBX0900,,8,8
+H,8,SFRM0900,,1,1
+I,7,SFRM0800,,1,1
+data sets,8,SFRM0900,,9,9
+Data set,8,SFRM0900,,8,8
+a,9,SFTI1000,,1,1
+N,8,CMMI9,,1,1
+log(,8,CMR9,,4,4
+M,8,CMMI9,,1,1
+HI,5,CMR6,,2,2
+/M,8,CMMI9,,2,2
+,5,CMSY6,,0,0
+),8,CMR9,,1,1
+log(,8,CMR9,,4,4
+M,8,CMMI9,,1,1
+,5,CMMI6,,0,0
+/M,8,CMMI9,,2,2
+,5,CMSY6,,0,0
+),8,CMR9,,1,1
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+0.16,8,SFRM0900,,4,4
+0.50,8,SFRM0900,,4,4
+0.84,8,SFRM0900,,4,4
+0.16,8,SFRM0900,,4,4
+0.50,8,SFRM0900,,4,4
+0.84,8,SFRM0900,,4,4
+0.16,8,SFRM0900,,4,4
+0.50,8,SFRM0900,,4,4
+0.84,8,SFRM0900,,4,4
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+A,8,SFRM0900,,1,1
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+B,8,SFRM0900,,1,1
+α,8,CMMI9,,1,1
+".100
+NIBLES",8,SFRM0900,,11,6
+xGASS,8,SFRM0900,,5,5
+"7128
+4644
+6087
+899",8,SFRM0900,,18,4
+1179,8,SFRM0900,,4,4
+9,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"21
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"21
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"22
+8",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+54,8,CMR9,,2,2
+8,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+68,8,CMR9,,2,2
+9,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"71
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"68
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"67
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+18,8,CMR9,,2,2
+9,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+27,8,CMR9,,2,2
+10,8,CMR9,,2,2
+.,8,CMMI9,,1,1
+"06
+10",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+"02
+10",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+"03
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+73,8,CMR9,,2,2
+9,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+84,8,CMR9,,2,2
+8,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"71
+8",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"73
+8",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"62
+8",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+52,8,CMR9,,2,2
+9,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+52,8,CMR9,,2,2
+9,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"56
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"41
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"38
+9",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+62,8,CMR9,,2,2
+10,8,CMR9,,2,2
+.,8,CMMI9,,1,1
+"41
+10",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+"07
+10",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+"24
+10",8,CMR9,,5,2
+.,8,CMMI9,,1,1
+68,8,CMR9,,2,2
+10,8,CMR9,,2,2
+.,8,CMMI9,,1,1
+30,8,CMR9,,2,2
+10,8,CMR9,,2,2
+.,8,CMMI9,,1,1
+95,8,CMR9,,2,2
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+15,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"52
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"68
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+25,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"26
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+70,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"37
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+"28
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+75,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+1,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+19,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+"50
+0",8,CMR9,,4,2
+.,8,CMMI9,,1,1
+29,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+1,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+78,8,CMR9,,2,2
+b,9,SFTI1000,,1,1
+−,8,CMSY9,,1,1
+1,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+11,8,CMR9,,2,2
+−,8,CMSY9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+27,8,CMR9,,2,2
+Note,8,SFCC0900,,4,4
+"— For each data set, we show the number of galaxies (",8,SFRM0900,,53,53
+N,8,CMMI9,,1,1
+") after crossmatching to SDSS,
+performing all cuts, and removing sources in common with other catalogs. We report 0.16,
+0.50 (median), and 0.84 quantile values for the H",8,SFRM0900,,169,88
+I,7,SFRM0800,,1,1
+"mass, stellar mass, and gas mass fraction.",8,SFRM0900,,42,42
+a,8,CMMI9,,1,1
+We have removed overlaps between the,8,SFRM0900,,36,36
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"A,",8,SFRM0900,,2,2
+α,8,CMMI9,,1,1
+".100, NIBLES, and xGASS samples.",8,SFRM0900,,32,32
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"B
+is a subset of",8,SFRM0900,,16,14
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+A.,8,SFRM0900,,2,2
+b,8,CMMI9,,1,1
+The xGASS catalog includes upper limits on,8,SFRM0900,,42,42
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+(see text for details).,8,SFRM0900,,23,23
+"4,797 galaxies with valid",9,SFRM1000,,25,25
+M,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+", SFR, gas metallicity, and
+spectroscopic redshift measurements.",9,SFRM1000,,64,36
+2.2.,9,SFRM1000,,4,4
+ALFALFA,9,SFTI1000,,7,7
+α,9,CMMI10,,1,1
+.100,9,SFTI1000,,4,4
+The,9,SFRM1000,,3,3
+α,9,CMMI10,,1,1
+".100 catalog contains 31,502 extragalactic
+sources across the full ALFALFA sky (Haynes et al.
+2018). A large fraction of these sources do not over-
+lap with the SDSS footprint, and a signiﬁcant subset of",9,SFRM1000,,203,55
+α,9,CMMI10,,1,1
+.100 is already catalogued in,9,SFRM1000,,29,29
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+". Since there is no
+public combined catalog for",9,SFRM1000,,47,27
+α,9,CMMI10,,1,1
+".100 with SDSS identiﬁers,
+we perform a custom crossmatching exercise. We cross-
+match sources in the ALFALFA Spring sky to the SDSS
+MPA-JHU catalog using a 1",9,SFRM1000,,158,53
+,6,CMSY7,,0,0
+"radius, exclude systems
+with other H",9,SFRM1000,,36,23
+I,8,SFRM0900,,1,1
+counterparts within a 1.9,9,SFRM1000,,25,25
+,6,CMSY7,,0,0
+"radius (to avoid
+ALFALFA source blending), and exclude SDSS galaxies
+with neighboring optical sources within a 55",9,SFRM1000,,113,51
+,6,CMSY7,,0,0
+"radius (to
+avoid ﬁber collisions). Since we will primarily be using",9,SFRM1000,,67,56
+α,9,CMMI10,,1,1
+".100 as an independent test data set, we also remove
+duplicates of",9,SFRM1000,,66,52
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A and xGASS sources in,9,SFRM1000,,22,22
+α,9,CMMI10,,1,1
+.100 via an-,9,SFRM1000,,12,12
+other positional crossmatch (with search radius of 1,9,SFRM1000,,52,52
+,6,CMSY7,,0,0
+").
+These selection criteria leave 6,087 galaxies in the",9,SFRM1000,,55,52
+α,9,CMMI10,,1,1
+".100
+catalog. Among the H",9,SFRM1000,,25,20
+I,8,SFRM0900,,1,1
+"catalogs, the",9,SFRM1000,,13,13
+α.,9,CMMI10,,2,2
+100,9,CMR10,,3,3
+"sample has
+the highest gas mass fractions (Figure 1).",9,SFRM1000,,53,42
+2.3.,9,SFRM1000,,4,4
+NIBLES,9,SFTI1000,,6,6
+"The Nançay Interstellar Baryons Legacy Extragalac-
+tic Survey (NIBLES) catalog of H",9,SFRM1000,,83,50
+I,8,SFRM0900,,1,1
+"detections con-
+tains 1,864 low-redshift galaxies with heterogeneous ab-
+solute",9,SFRM1000,,79,56
+z,9,CMMI10,,1,1
+-band magnitudes (van Driel et al. 2016). The,9,SFRM1000,,45,45
+NIBLES sample is characterized by a wide range of stel-,9,SFRM1000,,55,55
+lar masses and intermediate values of,9,SFRM1000,,37,37
+M,9,CMSY10,,1,1
+relative to,9,SFRM1000,,11,11
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"and xGASS (Table 1). We remove systems with
+very low (",9,SFRM1000,,54,43
+<,9,CMMI10,,1,1
+10,9,CMR10,,2,2
+8,6,CMR7,,1,1
+M,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+") or unavailable MPA-JHU stellar
+mass estimates. We visually inspect the SDSS image",9,SFRM1000,,83,50
+Figure 1.,8,SFBX0900,,9,9
+H,8,SFRM0900,,1,1
+I,7,SFRM0800,,1,1
+"mass fraction cumulative distribution func-
+tions for the ALFALFA parent samples, xGASS representa-
+tive sample, and NIBLES SDSS-crossmatched sample.",8,SFRM0900,,149,55
+"cludes rare, high-mass H",9,SFRM1000,,24,24
+I,8,SFRM0900,,1,1
+"systems that are not necessar-
+ily representative of the probed cosmic volume. There
+also exists a nearly volume-limited ALFALFA subsample
+at",9,SFRM1000,,141,53
+z,9,CMMI10,,1,1
+≤,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+", but we are interested in training our CNN
+with the larger data set. We select sources with",9,SFRM1000,,92,48
+"OCcode
+= I",9,SFTT1000,,10,6
+in order to retain,9,SFRM1000,,18,18
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"detections with SDSS coun-
+terparts, and we drop all sources with duplicate matches",9,SFRM1000,,83,56
+to DR7 identiﬁers. This cut reduces the number of H,9,SFRM1000,,51,51
+I,8,SFRM0900,,1,1
+"sources to 11,739. We create the",9,SFRM1000,,32,32
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A catalog, which
+contains 7,399 galaxies with valid stellar mass estimates,
+and the",9,SFRM1000,,83,58
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"B catalog, a subset of",9,SFRM1000,,22,22
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A containing,9,SFRM1000,,12,12
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5",6,DejaVuSans,,35,3
+log(,9,DejaVuSans,,4,4
+M,9,DejaVuSans-Oblique,,1,1
+HI,6,DejaVuSans,,2,2
+/,9,DejaVuSans,,1,1
+M,9,DejaVuSans-Oblique,,1,1
+),9,DejaVuSans,,1,1
+"0.0
+0.2
+0.4
+0.6
+0.8
+1.0",6,DejaVuSans,,23,3
+C,6,DejaVuSans,,1,1
+u,5,DejaVuSans,,1,1
+m,8,DejaVuSans,,1,1
+u,5,DejaVuSans,,1,1
+l,2,DejaVuSans,,1,1
+a,5,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+i,2,DejaVuSans,,1,1
+v,5,DejaVuSans,,1,1
+e,5,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+f,3,DejaVuSans,,1,1
+r,3,DejaVuSans,,1,1
+a,5,DejaVuSans,,1,1
+c,4,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+i,2,DejaVuSans,,1,1
+o,5,DejaVuSans,,1,1
+n,5,DejaVuSans,,1,1
+".100
+.40A
+NIBLES
+xGASS",9,DejaVuSans,,22,6
+4,9,SFRM1000,,1,1
+"cutouts and eliminate sources with no apparent opti-
+cal counterpart near the center, those with only a point
+source in the center, and those signiﬁcantly corrupted
+by imaging artifacts, leaving 941 galaxies. Finally, we
+also remove sources that overlap with ALFALFA and/or
+xGASS. There are 899 remaining galaxies in the cleaned
+NIBLES data set.",9,SFRM1000,,345,56
+"We implement and optimize our deep convolutional
+neural network using",9,SFRM1000,,69,48
+fastai,9,SFTT1000,,6,6
+"(Howard & Gugger 2020),
+which is built on",9,SFRM1000,,41,23
+PyTorch,9,SFTT1000,,7,7
+". All choices of CNN hyperpa-
+rameters or tweaks have been empirically tuned in order
+to optimize training. Performance is primarily quanti-
+ﬁed by the root mean squared error (RMSE) metric,
+which also serves as our loss function:",9,SFRM1000,,230,55
+2.4.,9,SFRM1000,,4,4
+xGASS representative sample,9,SFTI1000,,27,27
+ALFALFA detections tend to be the most H,9,SFRM1000,,40,40
+I,8,SFRM0900,,1,1
+"-rich
+systems in the local Universe, and diﬀer from the ma-
+jority of galaxies found in optical surveys. We use the
+extended GALEX Arecibo SDSS Survey representative
+sample (xGASS; Catinella et al. 2018) in order to repeat
+our analysis on galaxies with more typical star forma-
+tion and gas properties. xGASS consists of 1,179 galax-
+ies with stellar masses between",9,SFRM1000,,365,56
+9,9,CMR10,,1,1
+≤,9,CMSY10,,1,1
+log(,9,CMR10,,4,4
+M,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+/M,9,CMMI10,,2,2
+,6,CMSY7,,0,0
+),9,CMR10,,1,1
+≤,9,CMSY10,,1,1
+11,9,CMR10,,2,2
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+in the redshift range,9,SFRM1000,,21,21
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+01,9,CMR10,,2,2
+≤,9,CMSY10,,1,1
+z,9,CMMI10,,1,1
+≤,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+". It is evident from
+Figure 1 that xGASS galaxies are the most gas-poor of
+our three samples, in part due to their relatively high
+stellar masses (Table 1). All xGASS systems have an-
+cillary SDSS photometry and spectroscopy. The sample
+spans a range of galaxy morphologies, from passive el-
+lipticals to starbursting mergers, and is complete down
+to",9,SFRM1000,,350,55
+M ≈ −,9,CMSY10,,5,5
+1,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+70,9,CMR10,,2,2
+for galaxies with,9,SFRM1000,,17,17
+log(,9,CMR10,,4,4
+M,9,CMMI10,,1,1
+,6,CMMI7,,0,0
+/M,9,CMMI10,,2,2
+,6,CMSY7,,0,0
+),9,CMR10,,1,1
+≥,9,CMSY10,,1,1
+9,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+7,9,CMR10,,1,1
+".
+The most gas-poor members of the xGASS sample only
+have",9,SFRM1000,,57,50
+5,9,CMR10,,1,1
+σ,9,CMMI10,,1,1
+upper limits on,9,SFRM1000,,15,15
+M,9,CMMI10,,1,1
+HI,6,CMR7,,2,2
+"available. However, we
+include them in our sample because the more massive
+systems have been observed to similar",9,SFRM1000,,112,51
+M,9,CMSY10,,1,1
+"completeness,
+and the entire sample has a common gas mass limit",9,SFRM1000,,63,49
+log(,9,CMR10,,4,4
+M,9,CMMI10,,1,1
+HI,6,CMR7,,2,2
+/M,9,CMMI10,,2,2
+,6,CMSY7,,0,0
+) = 8,9,CMR10,,5,5
+.,9,SFRM1000,,1,1
+3.,8,SFRM0900,,2,2
+METHODOLOGY: DEEP NEURAL NETWORKS,9,SFRM1000,,33,33
+We optimize deep CNNs in order to predict the H,9,SFRM1000,,47,47
+I,8,SFRM0900,,1,1
+"mass fraction directly from three-band SDSS images,
+i.e., arrays of",9,SFRM1000,,67,51
+3,9,CMR10,,1,1
+×,9,CMSY10,,1,1
+224,9,CMR10,,3,3
+×,9,CMSY10,,1,1
+224,9,CMR10,,3,3
+"pixels. Because the goal
+is to estimate",9,SFRM1000,,39,24
+M,9,CMSY10,,1,1
+", a scalar quantity, we are optimizing
+the CNN to solve a regression task rather than a classi-",9,SFRM1000,,95,56
+"ﬁcation problem (although in later sections we will also
+use CNNs for classiﬁcation). Training a neural network
+requires several steps, which can brieﬂy described as fol-
+lows. The CNN ingests a batch of images and outputs
+predictions (",9,SFRM1000,,236,58
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+") one batch at a time. These pre-
+dictions are compared to their ground truth values (i.e.,",9,SFRM1000,,91,57
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+) via the,9,SFRM1000,,9,9
+loss function,9,SFTI1000,,13,13
+", which measures the level of
+discrepancy. CNN model parameters are then updated
+using an optimization algorithm that minimizes the loss.
+This process iterates until all samples in the training",9,SFRM1000,,193,56
+"set have been used (signaling the end of an epoch), at",9,SFRM1000,,54,54
+"which point the loss can be reported for the validation
+set, and the training loop repeated. The optimization
+details are very similar to the training routine described
+in Appendix A of Wu & Boada (2019).",9,SFRM1000,,204,58
+,9,CMEX10,,0,0
+RMSE,9,CMR10,,4,4
+≡,9,CMSY10,,1,1
+|M,9,CMSY10,,2,2
+pred,6,CMR7,,4,4
+− M,9,CMSY10,,3,3
+true,6,CMR7,,4,4
+|,9,CMSY10,,1,1
+2,6,CMR7,,1,1
+,9,CMSY10,,0,0
+.,9,CMMI10,,1,1
+(1),9,SFRM1000,,3,3
+"Another important metric of performance is the linear
+regression slope between",9,SFRM1000,,78,53
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+and,9,SFRM1000,,3,3
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+". A slope of
+unity indicates that there is no regression bias, and a
+shallower slope generally signiﬁes that the CNN suﬀers
+from loss of predictive power (regression attenuation).",9,SFRM1000,,179,55
+4,6,SFRM0700,,1,1
+"Other works characterize the scatter using the stan-
+dard deviation of the diﬀerence between predictions and",9,SFRM1000,,108,55
+"truths, which is systematically lower than the RMSE if",9,SFRM1000,,54,54
+there is non-zero mean error (or oﬀset).,9,SFRM1000,,40,40
+"We use the xresnet family of CNN architectures, which
+are enhanced versions of the original residual neural net-
+works (He et al. 2015, 2018). Our 34-layer xresnets are
+further modiﬁed such that the usual Rectiﬁed Linear
+Unit (ReLU) activation functions are replaced with Mish
+(Misra 2019), and simple self-attention layers are added
+after convolutions in the residual blocks (Zhang et al.
+2018). We train each model from scratch, as no pre-
+trained CNN with this architecture is available. In order
+to iteratively update the CNN’s weights, we use a com-
+bined Rectiﬁed Adam (Liu et al. 2019) and LookAhead
+(Zhang et al. 2019) optimizer. Weight decay with a co-
+eﬃcient of",9,SFRM1000,,672,58
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+01,9,CMR10,,2,2
+"is applied to all trainable layers except
+batch normalization layers (Goyal et al. 2017); note that
+we use true weight decay rather than the L2 norm (see
+Loshchilov & Hutter 2017 for details).",9,SFRM1000,,192,57
+"It is typical to evaluate deep learning models using
+a validation set drawn from the same distribution as
+If the model performs well on the
+the training set.",9,SFRM1000,,157,52
+"training data but fails to perform well on the valida-
+tion data, then it is a sign that the model suﬀers from
+overﬁtting. We randomly split the data by 80%/20% for
+training/validation sets, unless otherwise noted.",9,SFRM1000,,214,55
+"We train batches of 64 images at a time using a
+Nvidia P100 graphics processing unit (GPU). The learn-
+ing rate is scheduled according to the “one-cycle” policy
+for 40 epochs (using the default hyperparameters set by",9,SFRM1000,,216,57
+fastai,9,SFTT1000,,6,6
+"; Smith 2018), we set a maximum learning rate of
+0.01. Dihedral group operations are randomly applied to",9,SFRM1000,,104,55
+images in order to augment the training set by a factor,9,SFRM1000,,55,55
+4,5,SFRM0600,,1,1
+"A slope of zero and an RMSE equal to the inherent scatter can
+be achieved by always predicting the validation sample’s mean.",7,SFRM0800,,124,62
+5,9,SFRM1000,,1,1
+exists a strong relationship between the H,9,SFRM1000,,42,42
+I,8,SFRM0900,,1,1
+"content and
+the morphological information learned by a CNN from
+SDSS",9,SFRM1000,,68,51
+gri,9,CMMI10,,3,3
+image cutouts.,9,SFRM1000,,14,14
+We repeat the exercise using the smaller,9,SFRM1000,,40,40
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"B sam-
+ple, and ﬁnd very similar results (RMSE",9,SFRM1000,,46,39
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+235,9,CMR10,,3,3
+"dex),
+even though",9,SFRM1000,,17,11
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A is larger than,9,SFRM1000,,16,16
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"B by 54%. When
+we examine the standard deviation of",9,SFRM1000,,51,36
+M,9,CMSY10,,1,1
+"for both sub-
+samples, we ﬁnd that",9,SFRM1000,,34,20
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A has much larger scatter
+(",9,SFRM1000,,27,25
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+68,9,CMR10,,2,2
+dex) than,9,SFRM1000,,9,9
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+B (,9,SFRM1000,,3,3
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+50,9,CMR10,,2,2
+"dex). The broader selec-
+tion criteria for subsample A allows galaxies with poorer
+constraints on SFR or metallicity, which also means that
+galaxies with uncommon morphological or H",9,SFRM1000,,181,57
+I,8,SFRM0900,,1,1
+"proper-
+ties are included. Therefore, it is not surprising that the
+smaller",9,SFRM1000,,75,59
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"B subsample, which contains fewer outliers,
+produces similar results to the larger",9,SFRM1000,,82,43
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A subsample.,9,SFRM1000,,12,12
+5,6,SFRM0700,,1,1
+4.2.,9,SFRM1000,,4,4
+Dependence on galaxy properties,9,SFTI1000,,31,31
+We ﬁnd that a trained CNN can accurately recover,9,SFRM1000,,48,48
+M,9,CMSY10,,1,1
+from optical imaging for the,9,SFRM1000,,28,28
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"data set. No system-
+atic biases are present, although incorrect predictions
+tend to be scattered toward the center of the",9,SFRM1000,,122,55
+M,9,CMSY10,,1,1
+"distri-
+bution rather than toward the extrema. Generally, the
+CNN tends to overpredict gas mass fractions for low-",9,SFRM1000,,114,53
+M,9,CMSY10,,1,1
+galaxies.,9,SFRM1000,,9,9
+We examine trends between,9,SFRM1000,,25,25
+∆,9,CMR10,,1,1
+M ≡ M,9,CMSY10,,5,5
+pred,6,CMR7,,4,4
+− M,9,CMSY10,,3,3
+true,6,CMR7,,4,4
+"and other physical properties of galaxies. For example,
+it may be that the CNN tends to under- or overpre-
+dict",9,SFRM1000,,111,55
+M,9,CMSY10,,1,1
+"based on some image feature that also corre-
+lates with other galaxy properties. However, we ﬁnd
+that",9,SFRM1000,,101,51
+∆,9,CMR10,,1,1
+M,9,CMSY10,,1,1
+"does not vary systematically with any other
+property, and nor does the amount of scatter in",9,SFRM1000,,91,47
+∆,9,CMR10,,1,1
+M,9,CMSY10,,1,1
+".
+The only trend that we ﬁnd is a negative correlation
+between",9,SFRM1000,,62,52
+∆,9,CMR10,,1,1
+M,9,CMSY10,,1,1
+and,9,SFRM1000,,3,3
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+", which is expected when the
+regression slope is less than unity. In Figure 3, we show
+trends between",9,SFRM1000,,101,57
+∆,9,CMR10,,1,1
+M,9,CMSY10,,1,1
+and,9,SFRM1000,,3,3
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+", redshift, stellar mass,
+SFR, and gas metallicity for the",9,SFRM1000,,58,32
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"B validation data
+set (959 H",9,SFRM1000,,28,17
+I,8,SFRM0900,,1,1
+sources).,9,SFRM1000,,9,9
+∆,9,CMR10,,1,1
+M,9,CMSY10,,1,1
+also does not correlate with,9,SFRM1000,,28,28
+"speciﬁc SFR, 4000 Å break strength, or the",9,SFRM1000,,42,42
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"environ-
+mental parameter (discussed in Section 7).",9,SFRM1000,,51,42
+4.3.,9,SFRM1000,,4,4
+Testing on,9,SFTI1000,,10,10
+α,9,CMMI10,,1,1
+".100, NIBLES, and xGASS",9,SFTI1000,,23,23
+We use the CNN trained on,9,SFRM1000,,25,25
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A to estimate,9,SFRM1000,,13,13
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+for galaxies in the,9,SFRM1000,,19,19
+α,9,CMMI10,,1,1
+".100, NIBLES, and xGASS test data
+sets. In the ﬁrst set of entries in Table 2, we report our
+results for each data set. We list the RMSE, slope,",9,SFRM1000,,144,58
+σ,9,CMMI10,,1,1
+",
+and mean oﬀset in order to quantify performance, al-",9,SFRM1000,,54,52
+5,5,SFRM0600,,1,1
+Training a CNN on the,7,SFRM0800,,21,21
+α.,7,CMMI8,,2,2
+40,7,CMR8,,2,2
+"A sample leads to better validation
+performance than training on the full",7,SFRM0800,,73,37
+α,7,CMMI8,,1,1
+.100 sample (RMSE,7,SFRM0800,,17,17
+"=
+0",7,CMR8,,3,1
+.,7,CMMI8,,1,1
+25,7,CMR8,,2,2
+dex). This is likely because the,7,SFRM0800,,32,32
+α.,7,CMMI8,,2,2
+40,7,CMR8,,2,2
+"A catalog (Haynes et al.
+2011) is more cleanly matched to SDSS than our custom cross-
+matching of",7,SFRM0800,,97,60
+α,7,CMMI8,,1,1
+.100 to SDSS sources (Haynes et al. 2018).,7,SFRM0800,,42,42
+Figure 2.,8,SFBX0900,,9,9
+CNN-predicted logarithmic H,8,SFRM0900,,27,27
+I,7,SFRM0800,,1,1
+"mass fraction
+(",8,SFRM0900,,15,13
+M,8,CMSY9,,1,1
+pred,5,CMR6,,4,4
+) plotted against measured values (,8,SFRM0900,,35,35
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+) for the,8,SFRM0900,,9,9
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"A validation subsample. The RMSE loss (in units of
+dex) and the linear regression slope are shown.",8,SFRM0900,,98,50
+"of eight and to force the CNN to learn such symmetries.
+The same transformations are applied during test-time
+augmentation to the validation data. We always report
+RMSE performance for the validation or test set.",9,SFRM1000,,212,55
+We also consider simpler models for regressing,9,SFRM1000,,46,46
+M,9,CMSY10,,1,1
+"based on the image data. These other regression models
+are tested in the Appendix A. Traditional statistical or
+classical machine learning methods are unable to rep-
+resent morphological features using pixels as features,
+while CNNs are designed to encode image shapes, pat-
+terns, and textures over multiple scales in a translation-
+and rotation-invariant way. In Appendix B, we demon-
+strate that CNN predictions do not change signiﬁcantly",9,SFRM1000,,441,58
+"if the input images are injected with artiﬁcial point
+sources, which reveals that the CNN has learned a ro-
+bust representation of galaxy morphology. Thus, we
+continue our analysis and discussion using the CNN re-
+sults.",9,SFRM1000,,220,54
+4.,8,SFRM0900,,2,2
+RESULTS,9,SFRM1000,,7,7
+4.1.,9,SFRM1000,,4,4
+Training on,9,SFTI1000,,11,11
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+We train a deep CNN using 80% of the,9,SFRM1000,,36,36
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A data set,
+and evaluate its performance using the remaining 20%",9,SFRM1000,,64,52
+validation data set. The optimized model can predict,9,SFRM1000,,52,52
+M,9,CMSY10,,1,1
+to within RMSE,9,SFRM1000,,14,14
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+235,9,CMR10,,3,3
+"dex. In Figure 2, we show that
+the predicted and true values of H",9,SFRM1000,,65,34
+I,8,SFRM0900,,1,1
+"mass fraction agree
+over two orders of magnitude in",9,SFRM1000,,51,31
+M,9,CMSY10,,1,1
+", and that the slope
+is close to unity. Our results demonstrate that there",9,SFRM1000,,74,53
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5
+2.0",5,DejaVuSans,,39,3
+true,5,DejaVuSans,,4,4
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5
+2.0",5,DejaVuSans,,39,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+Train: .40A (80%)Valid: .40A (20%)RMSE = 0.235Slope = 0.830,7,DejaVuSans,,59,59
+6,9,SFRM1000,,1,1
+Figure 3.,8,SFBX0900,,9,9
+Comparisons between logarithmic H,8,SFRM0900,,33,33
+I,7,SFRM0800,,1,1
+"mass
+fraction residuals (",8,SFRM0900,,25,20
+∆,8,CMR9,,1,1
+M,8,CMSY9,,1,1
+) and observed H,8,SFRM0900,,16,16
+I,7,SFRM0800,,1,1
+"mass fraction, red-
+shift, stellar mass, SFR, and gas metallicity. Only the",8,SFRM0900,,75,55
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"B
+validation data are shown. Aside from an anti-correlation in",8,SFRM0900,,62,60
+∆,8,CMR9,,1,1
+M,8,CMSY9,,1,1
+vs,8,SFRM0900,,2,2
+M,8,CMMI9,,1,1
+true,5,CMR6,,4,4
+", which appears because the linear regression
+slope is shallower than unity, no correlation between residu-
+als and other galaxy properties is observed.",8,SFRM0900,,152,61
+"though we primarily rely on the ﬁrst two metrics. CNN
+predictions are also shown in Figure 4.",9,SFRM1000,,93,53
+4.3.1.,9,SFRM1000,,6,6
+α,8,CMMI9,,1,1
+.100 results,8,SFTI0900,,12,12
+"By construction, our",9,SFRM1000,,20,20
+α,9,CMMI10,,1,1
+".100 test sample does not over-
+lap with",9,SFRM1000,,40,31
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+", so it can be used as an independent test
+for the trained CNN. In the top panel of Figure 4, we
+show a scatter plot of",9,SFRM1000,,119,53
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+against,9,SFRM1000,,7,7
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+for,9,SFRM1000,,3,3
+α,9,CMMI10,,1,1
+".100.
+Overall, we ﬁnd that the CNN recovers",9,SFRM1000,,43,37
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"accurately
+to within 0.30 dex. The performance is weaker than the",9,SFRM1000,,65,54
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+validation sample (RMSE,9,SFRM1000,,23,23
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+235,9,CMR10,,3,3
+"dex), which im-",9,SFRM1000,,15,15
+"plies that the CNN is unable to perfectly generalize to
+the",9,SFRM1000,,59,55
+α,9,CMMI10,,1,1
+".100 catalog. However, we note that our custom
+crossmatch of",9,SFRM1000,,60,46
+α,9,CMMI10,,1,1
+".100 to SDSS counterparts is diﬀerent
+from the published",9,SFRM1000,,56,37
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"crossmatch to SDSS counter-
+parts (Haynes et al. 2011), and that disparate selection
+eﬀects may cause issues in generalization as well. One
+consequence of the imperfect crossmatching is that sev-
+eral sources apparently have implausibly high gas mass
+fractions. When 43 sources with",9,SFRM1000,,282,56
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+2,9,CMR10,,1,1
+"are removed
+from the",9,SFRM1000,,20,11
+α,9,CMMI10,,1,1
+".100 sample, we ﬁnd that the test performance",9,SFRM1000,,45,45
+is RMSE,9,SFRM1000,,7,7
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+23,9,CMR10,,2,2
+"dex, which is in agreement with our",9,SFRM1000,,35,35
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"training sample. We will discuss the impacts of
+additional selection eﬀects in Section 6.",9,SFRM1000,,89,47
+4.3.2.,9,SFRM1000,,6,6
+NIBLES results,8,SFTI0900,,14,14
+Figure 4.,8,SFBX0900,,9,9
+CNN-predicted logarithmic H,8,SFRM0900,,27,27
+I,7,SFRM0800,,1,1
+"mass fraction
+(",8,SFRM0900,,15,13
+M,8,CMSY9,,1,1
+pred,5,CMR6,,4,4
+) plotted against measured values (,8,SFRM0900,,35,35
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+) for the,8,SFRM0900,,9,9
+α,8,CMMI9,,1,1
+".100, NIBLES, and xGASS test samples.",8,SFRM0900,,37,37
+The NIBLES catalog presents another opportunity to,9,SFRM1000,,50,50
+test our CNN trained on,9,SFRM1000,,23,23
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A. While the two samples,9,SFRM1000,,24,24
+"have comparable stellar mass distributions, NIBLES
+extends to signiﬁcantly lower gas mass fractions than",9,SFRM1000,,104,53
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+". We ﬁnd that the CNN is generally able to re-
+cover",9,SFRM1000,,52,46
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+to within,9,SFRM1000,,9,9
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+37,9,CMR10,,2,2
+dex (see center panel of,9,SFRM1000,,24,24
+"1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0",4,DejaVuSans,,23,3
+true,5,DejaVuSans,,4,4
+"1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0.00
+
+0.01
+
+0.02
+
+0.03
+
+0.04
+
+0.05
+
+0.06",4,DejaVuSans,,998,4
+Redshift,7,DejaVuSans,,8,8
+"1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8.5
+
+9.0
+
+9.5
+
+10.0
+
+10.5",4,DejaVuSans,,983,4
+log(,7,DejaVuSans,,4,4
+M,7,DejaVuSans-Oblique,,1,1
+/,7,DejaVuSans,,1,1
+M,7,DejaVuSans-Oblique,,1,1
+),7,DejaVuSans,,1,1
+"1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8.2
+
+8.4
+
+8.6
+
+8.8
+
+9.0
+
+9.2",4,DejaVuSans,,986,3
+12 + log(O/H),7,DejaVuSans,,13,13
+"1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.5
+
+1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0",4,DejaVuSans,,986,3
+log(SFR/,7,DejaVuSans,,8,8
+M,7,DejaVuSans-Oblique,,1,1
+yr,7,DejaVuSans,,2,2
+1,5,DejaVuSans,,1,1
+),7,DejaVuSans,,1,1
+"1.0
+
+0.5
+
+0.0
+
+0.5
+
+1.0",4,DejaVuSans,,23,3
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5
+2.0",6,DejaVuSans,,39,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+RMSE = 0.297Slope = 0.733.100,9,DejaVuSans,,29,29
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5",6,DejaVuSans,,27,3
+"1.0
+1.5
+2.0",6,DejaVuSans,,11,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+RMSE = 0.370Slope = 0.839NIBLES,9,DejaVuSans,,31,31
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5
+2.0",6,DejaVuSans,,39,3
+true,5,DejaVuSans,,4,4
+"2.5
+2.0",6,DejaVuSans,,7,3
+"1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5
+2.0",6,DejaVuSans,,31,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+RMSE = 0.625Slope = 0.472xGASS,9,DejaVuSans,,30,30
+Figure 4). We note that,9,SFRM1000,,23,23
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+"estimates for NIBLES
+are systematically high by about 0.14 dex (Table 2).
+Our results are consistent with previous ﬁndings that
+ALFALFA H",9,SFRM1000,,137,53
+I,8,SFRM0900,,1,1
+ﬂuxes are about,9,SFRM1000,,15,15
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+16,9,CMR10,,2,2
+"dex (45%) higher
+than NIBLES measurements for the overlapping sample
+(possibly due to a combination of ﬂux calibration dif-
+ferences and multi-beam ﬂux reconstruction; van Driel
+et al. 2016). If we rescale H",9,SFRM1000,,207,54
+I,8,SFRM0900,,1,1
+masses by the,9,SFRM1000,,13,13
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+16,9,CMR10,,2,2
+"dex
+systematic oﬀset, then we ﬁnd that the CNN’s predic-
+tions are in better agreement with NIBLES measure-
+ments (RMSE",9,SFRM1000,,119,52
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+34,9,CMR10,,2,2
+dex).,9,SFRM1000,,5,5
+4.3.3.,9,SFRM1000,,6,6
+xGASS results,8,SFTI0900,,13,13
+"The xGASS representative galaxy sample contains a
+considerable number of massive elliptical galaxies with
+little gas content (see Table 1). For these gas-poor sys-
+tems, the CNN tends to overpredict",9,SFRM1000,,198,57
+M,9,CMSY10,,1,1
+because it has,9,SFRM1000,,14,14
+been trained on,9,SFRM1000,,15,15
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A, which comprises mostly H",9,SFRM1000,,27,27
+I,8,SFRM0900,,1,1
+"-
+rich, star-forming galaxies. We observe that the CNN
+does not output values below",9,SFRM1000,,83,52
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+≈ −,9,CMSY10,,3,3
+1,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+3,9,CMR10,,1,1
+"for xGASS
+(although this does not appear to be a severe problem
+for NIBLES). As a result, our metrics indicate that the
+RMSE is large and the slope is too ﬂat, as shown in the
+bottom panel of Figure 4. Therefore, the CNN is un-
+able to generalize to",9,SFRM1000,,249,55
+out-of-distribution,9,SFTI1000,,19,19
+"galaxies such as
+massive, gas-poor systems in xGASS.",9,SFRM1000,,52,35
+5.,8,SFRM0900,,2,2
+"PATTERN RECOGNITION FOR
+OUT-OF-DISTRIBUTION SAMPLES",9,SFRM1000,,51,27
+5.1.,9,SFRM1000,,4,4
+Out-of-distribution samples,9,SFTI1000,,27,27
+"The trained CNN is capable of making accurate pre-
+dictions where the training and test set distributions of",9,SFRM1000,,108,57
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"overlap. For example, over 95% of the",9,SFRM1000,,37,37
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A
+training sample have",9,SFRM1000,,22,20
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+", and it is evident
+from Figure 4 that the CNN’s predictions for xGASS
+are more accurate for higher values of",9,SFRM1000,,109,50
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+". How-
+ever, for galaxies without measured H",9,SFRM1000,,44,37
+I,8,SFRM0900,,1,1
+"masses, it is",9,SFRM1000,,13,13
+not known,9,SFRM1000,,9,9
+a priori,9,SFTI1000,,8,8
+whether a galaxy’s,9,SFRM1000,,18,18
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"is within
+the distribution of the training sample, and we must
+consider whether a galaxy is out-of-distribution in the
+input space (image data) rather than the target space
+(",9,SFRM1000,,174,55
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"). A CNN (or any regression algorithm) is essen-
+tially a mapping between the input and output space,
+so it is feasible that the out-of-distribution",9,SFRM1000,,148,52
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"can
+be related to out-of-distribution galaxy images. For the
+rest of the paper, we will consider",9,SFRM1000,,96,56
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A detections to
+be “in-distribution” and ALFALFA non-detections to be",9,SFRM1000,,69,53
+“out-of-distribution” for the trained CNN.,9,SFRM1000,,42,42
+"A neural network can be trained to recognize patterns
+in order to classify galaxies as in- or out-of-distribution
+(Hopﬁeld 1987; Bishop 1995; Kinney et al. 1996). Pat-
+tern recognition (PR) algorithms have been used exten-",9,SFRM1000,,222,59
+7,9,SFRM1000,,1,1
+"sively in astronomy (e.g., Zhu et al. 2014; Teimoorinia
+et al. 2017; Caldeira et al. 2019; Ćiprijanović et al. 2020),
+and they can supplement other machine learning estima-
+tors by classifying whether an input is representative of
+a training distribution. One such example is presented
+by Teimoorinia et al. (2017), where a shallow neural
+network is trained to distinguish ALFALFA H",9,SFRM1000,,382,61
+I,8,SFRM0900,,1,1
+"detec-
+tions from non-detections. Their method relies on 15
+galaxy parameters derived from SDSS spectroscopy and
+photometry. However, one of the restrictions with this
+approach is that it necessitates spectroscopic observa-
+tions and ancillary data in order to make predictions.
+Our method only requires an image of the galaxy. We
+proceed by training a CNN PR algorithm based on opti-
+cal imaging in order to distinguish ALFALFA detections
+from non-detections.",9,SFRM1000,,460,55
+5.2.,9,SFRM1000,,4,4
+Pattern recognition with a CNN,9,SFTI1000,,30,30
+We obtain,9,SFRM1000,,9,9
+gri,9,CMMI10,,3,3
+imaging for a sample of,9,SFRM1000,,23,23
+z <,9,CMMI10,,3,3
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+06,9,CMR10,,2,2
+"SDSS
+galaxies that are located in the ALFALFA footprint
+but are undetected in the",9,SFRM1000,,81,50
+α,9,CMMI10,,1,1
+".100 catalog. To ensure a
+clean sample of ALFALFA non-detections, we impose
+the same selection cuts used for",9,SFRM1000,,108,49
+α,9,CMMI10,,1,1
+".100 (Section 2.2), and
+remove all galaxies with neighboring H",9,SFRM1000,,62,38
+I,8,SFRM0900,,1,1
+"sources within
+an Arecibo beam radius. We randomly select 7,399 AL-
+FALFA non-detections from this parent sample to en-
+force balanced classes with",9,SFRM1000,,147,52
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A detections.,9,SFRM1000,,13,13
+"We train a CNN PR algorithm using exactly the same
+architecture as before, except that the ﬁnal layer now
+predicts two outputs. After applying a sigmoid func-
+tion, these two outputs represent the probabilities of
+detection (",9,SFRM1000,,225,54
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+) and non-detection (,9,SFRM1000,,21,21
+1,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+") in an
+ALFALFA-like survey. The",9,SFRM1000,,32,24
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A sample serves as
+ground truths for the ALFALFA detection category, and
+the non-detection sample serves as ground truths for the
+non-detection category. We use the same optimization
+routine as before, except that cross-entropy loss is used
+as the optimization function since the objective now is",9,SFRM1000,,296,57
+"binary classiﬁcation. We also apply label smoothing
+with",9,SFRM1000,,56,51
+,9,CMMI10,,0,0
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+", so that optimized values of",9,SFRM1000,,29,29
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"gravitate
+toward 0.05 and 0.95 for non-detections and detections,
+respectively (see, e.g., Müller et al. 2019). We optimize
+the CNN using the same hyperparameters discussed in
+Section 3.",9,SFRM1000,,186,57
+5.3.,9,SFRM1000,,4,4
+PR results,9,SFTI1000,,10,10
+"In the top and bottom panels of Figure 5, we show the
+distributions of",9,SFRM1000,,70,53
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+for the,9,SFRM1000,,7,7
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A and ALFALFA non-,9,SFRM1000,,18,18
+"detection samples, i.e., the training subsamples. Their",9,SFRM1000,,55,55
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+distributions are strongly peaked at,9,SFRM1000,,36,36
+∼,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+95,9,CMR10,,2,2
+and,9,SFRM1000,,3,3
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+", respectively,
+indicating that the CNN robustly
+identiﬁes",9,SFRM1000,,58,32
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A detections solely using optical imag-
+ing. The trained PR is able to distinguish ALFALFA",9,SFRM1000,,90,50
+8,9,SFRM1000,,1,1
+Figure 5.,8,SFBX0900,,9,9
+Pattern recognition probability (,8,SFRM0900,,33,33
+p,8,CMMI9,,1,1
+CNN,5,CMR6,,3,3
+") distribu-
+tions for diﬀerent galaxy samples. The",8,SFRM0900,,50,38
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"A and ALFALFA
+non-detections samples are used to train the CNN, while the",8,SFRM0900,,73,59
+α,8,CMMI9,,1,1
+".100, NIBLES, and xGASS are test galaxy samples.",8,SFRM0900,,48,48
+"detections from non-detections with 93% accuracy and
+AUC",9,SFRM1000,,56,52
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+93,9,CMR10,,2,2
+"(area under the curve for the receiver op-
+erating characteristic).",9,SFRM1000,,67,42
+6,6,SFRM0700,,1,1
+We examine the,9,SFRM1000,,14,14
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+distributions for the,9,SFRM1000,,21,21
+α,9,CMMI10,,1,1
+".100,
+NIBLES, and xGASS samples, which are also shown
+in Figure 5. As expected, the",9,SFRM1000,,83,47
+α,9,CMMI10,,1,1
+".100 galaxies are pre-
+dominantly characterized by high values of",9,SFRM1000,,65,42
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+". Most
+galaxies in the NIBLES sample are also at",9,SFRM1000,,48,41
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+≈,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+95,9,CMR10,,2,2
+"and would be detected by an ALFALFA-like survey.
+The xGASS representative galaxy sample, conversely,
+is characterized mostly by low values of",9,SFRM1000,,141,51
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+", although
+there is a small fraction with high",9,SFRM1000,,46,35
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+". Our results
+verify that the gas mass fraction estimates suﬀered from
+out-of-distribution error when evaluated on the xGASS",9,SFRM1000,,124,56
+"sample, but did not encounter the same issue for the",9,SFRM1000,,52,52
+α,9,CMMI10,,1,1
+.100 and NIBLES samples.,9,SFRM1000,,24,24
+5.4.,9,SFRM1000,,4,4
+Combining,9,SFTI1000,,9,9
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+and,9,SFTI1000,,3,3
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"We can use the CNN PR results to assess the relia-
+bility of",9,SFRM1000,,60,50
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+"on the test data. We consider various
+threshold values of",9,SFRM1000,,57,37
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+to separate detections from,9,SFRM1000,,27,27
+non-detections.,9,SFRM1000,,15,15
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+"represents a natural deci-
+sion boundary, although in practice we may ﬁnd that
+other values are better. For example, we have trained
+the CNN PR using an equal ratio of detected and unde-
+tected galaxies, but the ALFALFA survey only detects
+about",9,SFRM1000,,245,53
+20%,9,CMR10,,3,3
+"of typical galaxies in the low-redshift Uni-
+verse (Catinella et al. 2010), which may imply that a
+higher value of",9,SFRM1000,,114,53
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"is desirable for rejecting false de-
+tections in typical massive galaxy samples.",9,SFRM1000,,80,43
+"In Table 2, we present CNN regression results for all
+H",9,SFRM1000,,55,53
+I,8,SFRM0900,,1,1
+"data sets using several choices of PR decision bound-
+ary. For the ALFALFA data sets, we ﬁnd that diﬀerent
+cuts in",9,SFRM1000,,114,53
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"does not signiﬁcantly impact regression
+performance (as characterized by, e.g., RMSE). This
+is expected because the ALFALFA samples should not
+contain out-of-distribution examples, and thus the PR
+cuts will not strongly aﬀect the results.",9,SFRM1000,,238,53
+7,6,SFRM0700,,1,1
+"For NIBLES,",9,SFRM1000,,11,11
+performance modestly improves as the,9,SFRM1000,,36,36
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"threshold
+increases from zero (eﬀectively the same as no cut) to",9,SFRM1000,,64,54
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+",",9,SFRM1000,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+8,9,CMR10,,1,1
+", and",9,SFRM1000,,5,5
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+. We ﬁnd that strict,9,SFRM1000,,20,20
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"cuts remove
+gas-poor (e.g.,",9,SFRM1000,,27,15
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+<,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+) NIBLES systems for which,9,SFRM1000,,26,26
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+"is systematically overestimated. The most dra-
+matic improvement is seen in xGASS, for which a PR
+cut of",9,SFRM1000,,104,50
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+"removes nearly three quarters of the
+sample.
+Increasing the",9,SFRM1000,,59,36
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"threshold further reﬁnes
+the CNN performance; the RMSE,",9,SFRM1000,,55,30
+σ,9,CMMI10,,1,1
+", and mean oﬀset
+decrease, and the slope increases. For",9,SFRM1000,,55,38
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+", the
+xGASS test set RMSE (",9,SFRM1000,,27,21
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+24,9,CMR10,,2,2
+"dex) is comparable to that
+of the",9,SFRM1000,,33,26
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A training set (,9,SFRM1000,,16,16
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+23,9,CMR10,,2,2
+dex).,9,SFRM1000,,5,5
+A larger threshold for,9,SFRM1000,,22,22
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+"enforces higher purity of
+ALFALFA-like galaxies. We recommend that",9,SFRM1000,,66,40
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+"be used for typical massive galaxy samples similar
+to the xGASS representative sample. However, purity
+comes at the cost of completeness, and we note that
+diﬀerent science goals may call for a diﬀerent balance
+between complete versus clean samples. For optically
+selected samples, we ﬁnd that a",9,SFRM1000,,294,54
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+"threshold
+can robustly remove H",9,SFRM1000,,31,21
+I,8,SFRM0900,,1,1
+non-detections.,9,SFRM1000,,15,15
+6.,8,SFRM0900,,2,2
+A COMPARISON OF,9,SFRM1000,,15,15
+M,9,CMSY10,,1,1
+ESTIMATORS,9,SFRM1000,,10,10
+6.1.,9,SFRM1000,,4,4
+Colors and morphological parameters,9,SFTI1000,,35,35
+"Many works have studied the correlations between
+galaxy properties and their H",9,SFRM1000,,78,48
+I,8,SFRM0900,,1,1
+"content. Kannap-
+pan (2004) ﬁnds that optical and near-infrared colors",9,SFRM1000,,70,53
+6,5,SFRM0600,,1,1
+The receiver operating characteristic (ROC) curve evaluates a,7,SFRM0800,,61,61
+"model’s performance at all classiﬁcation decision boundaries.
+Generally, the false positive rate is plotted against the true pos-
+itive rate, such that the expected area under the curve (AUC)
+is 0.5 for a completely random model with balanced classes, and
+the AUC",7,SFRM0800,,263,67
+= 1,7,CMR8,,3,3
+for a perfectly accurate and precise model.,7,SFRM0800,,43,43
+7,5,SFRM0600,,1,1
+There is a subtle eﬀect with the,7,SFRM0800,,32,32
+α.,7,CMMI8,,2,2
+100,7,CMR8,,3,3
+"test set that causes the
+RMSE to slightly",7,SFRM0800,,41,24
+increase,7,SFTI0800,,8,8
+as we restrict,7,SFRM0800,,14,14
+p,7,CMMI8,,1,1
+CNN,5,CMR6,,3,3
+"to higher values.
+Galaxies labeled with lower",7,SFRM0800,,45,27
+p,7,CMMI8,,1,1
+CNN,5,CMR6,,3,3
+generally have moderate H,7,SFRM0800,,25,25
+I,6,SFRM0700,,1,1
+"properties (i.e., they are near the mode of the",7,SFRM0800,,47,47
+M,7,CMSY8,,1,1
+true,5,CMR6,,4,4
+"distribu-
+tion), whereas sources labeled with higher values of",7,SFRM0800,,62,52
+p,7,CMMI8,,1,1
+CNN,5,CMR6,,3,3
+"might
+be extremely H",7,SFRM0800,,20,14
+I,6,SFRM0700,,1,1
+"-rich (i.e., they have a broader distribution of",7,SFRM0800,,48,48
+M,7,CMSY8,,1,1
+true,5,CMR6,,4,4
+). The end result is a,7,SFRM0800,,22,22
+<,7,CMMI8,,1,1
+0,7,CMR8,,1,1
+.,7,CMMI8,,1,1
+01,7,CMR8,,2,2
+"dex increase as we shift the
+decision boundary from",7,SFRM0800,,51,28
+p,7,CMMI8,,1,1
+CNN,5,CMR6,,3,3
+>,7,CMMI8,,1,1
+0,7,CMR8,,1,1
+.,7,CMMI8,,1,1
+5,7,CMR8,,1,1
+to,7,SFRM0800,,2,2
+0,7,CMR8,,1,1
+.,7,CMMI8,,1,1
+9,7,CMR8,,1,1
+.,7,SFRM0800,,1,1
+"0.0
+
+0.2
+
+0.4",6,DejaVuSans,,13,3
+.40A,9,DejaVuSans,,4,4
+"0.0
+
+0.2
+
+0.4",6,DejaVuSans,,13,3
+.100,9,DejaVuSans,,4,4
+"0.0
+
+0.2
+
+0.4",6,DejaVuSans,,13,3
+F,4,DejaVuSans,,1,1
+r,3,DejaVuSans,,1,1
+a,4,DejaVuSans,,1,1
+c,4,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+i,2,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+n,5,DejaVuSans,,1,1
+NIBLES,9,DejaVuSans,,6,6
+"0.0
+
+0.2
+
+0.4",6,DejaVuSans,,13,3
+xGASS,9,DejaVuSans,,5,5
+"0.0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.0",6,DejaVuSans,,28,3
+p,8,DejaVuSans-Oblique,,1,1
+CNN,5,DejaVuSans,,3,3
+"0.0
+
+0.2
+
+0.4",6,DejaVuSans,,13,3
+ALFALFA non-detections,9,DejaVuSans,,22,22
+9,9,SFRM1000,,1,1
+Figure 6.,8,SFBX0900,,9,9
+Comparison of,8,SFRM0900,,13,13
+M,8,CMSY9,,1,1
+pred,5,CMR6,,4,4
+versus,8,SFRM0900,,6,6
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+for our CNN trained on,8,SFRM0900,,22,22
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"A (blue circles) and the fully connected neural
+network presented (pink crosses; Teimoorinia et al. 2017). We show results for the",8,SFRM0900,,130,82
+α,8,CMMI9,,1,1
+".100 (top), NIBLES (middle), and xGASS
+(bottom) samples, using a selection of",8,SFRM0900,,77,38
+p,8,CMMI9,,1,1
+CNN,5,CMR6,,3,3
+>,8,CMMI9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+9,8,CMR9,,1,1
+(left) or,8,SFRM0900,,9,9
+C,8,CMMI9,,1,1
+fgas,5,CMR6,,4,4
+>,8,CMMI9,,1,1
+0,8,CMR9,,1,1
+.,8,CMMI9,,1,1
+5,8,CMR9,,1,1
+(right). Performance metrics are listed in each panel.,8,SFRM0900,,54,54
+"1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5",6,DejaVuSans,,27,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+.100,7,DejaVuSans,,4,4
+p,7,DejaVuSans-Oblique,,1,1
+CNN,5,DejaVuSans,,3,3
+>0.9,7,DejaVuSans,,4,4
+CNN (this work)RMSE = 0.202Slope = 0.840Teimoorinia+17RMSE = 0.267Slope = 0.824,6,DejaVuSans,,79,79
+.100,7,DejaVuSans,,4,4
+C,7,DejaVuSans-Oblique,,1,1
+fgas,5,DejaVuSans,,4,4
+>0.5,7,DejaVuSans,,4,4
+CNN (this work)RMSE = 0.184Slope = 0.834Teimoorinia+17RMSE = 0.240Slope = 0.831,6,DejaVuSans,,79,79
+"1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5",6,DejaVuSans,,27,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+NIBLES,7,DejaVuSans,,6,6
+p,7,DejaVuSans-Oblique,,1,1
+CNN,5,DejaVuSans,,3,3
+>0.9,7,DejaVuSans,,4,4
+CNN (this work)RMSE = 0.289Slope = 0.809Teimoorinia+17RMSE = 0.317Slope = 0.774,6,DejaVuSans,,79,79
+NIBLES,7,DejaVuSans,,6,6
+C,7,DejaVuSans-Oblique,,1,1
+fgas,5,DejaVuSans,,4,4
+>0.5,7,DejaVuSans,,4,4
+CNN (this work)RMSE = 0.288Slope = 0.751Teimoorinia+17RMSE = 0.311Slope = 0.773,6,DejaVuSans,,79,79
+"1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5",6,DejaVuSans,,27,3
+true,5,DejaVuSans,,4,4
+"1.5
+1.0
+0.5",6,DejaVuSans,,11,3
+"0.0
+0.5
+1.0
+1.5",6,DejaVuSans,,15,3
+p,3,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+xGASS,7,DejaVuSans,,5,5
+p,7,DejaVuSans-Oblique,,1,1
+CNN,5,DejaVuSans,,3,3
+>0.9,7,DejaVuSans,,4,4
+"CNN (this work)RMSE = 0.222Slope = 0.739Teimoorinia+17RMSE = 0.283Slope = 0.722
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5",6,DejaVuSans,,215,79
+true,5,DejaVuSans,,4,4
+xGASS,7,DejaVuSans,,5,5
+C,7,DejaVuSans-Oblique,,1,1
+fgas,5,DejaVuSans,,4,4
+>0.5,7,DejaVuSans,,4,4
+CNN (this work)RMSE = 0.232Slope = 0.714Teimoorinia+17RMSE = 0.258Slope = 0.713,6,DejaVuSans,,79,79
+10,9,SFRM1000,,2,2
+Table 2.,8,SFBX0900,,8,8
+Combined pattern recognition and,8,SFRM0900,,32,32
+M,8,CMSY9,,1,1
+pred,5,CMR6,,4,4
+results,8,SFRM0900,,7,7
+PR cut,6,SFRM0700,,6,6
+Data set,6,SFRM0700,,8,8
+N,6,CMMI7,,1,1
+RMSE,6,SFRM0700,,4,4
+Slope,6,SFRM0700,,5,5
+σ,6,CMMI7,,1,1
+Oﬀset,6,SFRM0700,,5,5
+None,6,SFRM0700,,4,4
+p,6,CMMI7,,1,1
+CNN,4,CMR5,,3,3
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+5,6,CMR7,,1,1
+p,6,CMMI7,,1,1
+CNN,4,CMR5,,3,3
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+8,6,CMR7,,1,1
+p,6,CMMI7,,1,1
+CNN,4,CMR5,,3,3
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+9,6,CMR7,,1,1
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+"7128
+6087
+899
+1179
+6674
+5249
+767
+326
+6004
+4454
+663
+217
+5319
+3787
+572
+143",6,SFRM0700,,72,4
+(dex),6,SFRM0700,,5,5
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"2335
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2975
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3705
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6254
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2320
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3043
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3566
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3237
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2334
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3123
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3508
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2755
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2322
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3107
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3435
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2449,6,CMR7,,4,4
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"8427
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7325
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8395
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"4724
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8429
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7192
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8518
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6423
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8434
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7084
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8586
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6882
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8468
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7116
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8703
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+7486,6,CMR7,,4,4
+(dex),6,SFRM0700,,5,5
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"2318
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"0285
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2974,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0076
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"1438
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3416
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"4558
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"4284
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2302
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"0291
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+3042,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0086
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"1499
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3238
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"1314
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2962
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2316
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"0293
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+3122,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0077
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"1506
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3170
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"0706
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2669
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"0290
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2304
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+3107,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0085
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"1451
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3116
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"0667
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2365,6,CMR7,,4,4
+Note,6,SFCC0700,,4,4
+"— The scatter can be quantiﬁed using the RMSE or standard devia-
+tion (",6,SFRM0700,,71,64
+σ,6,CMMI7,,1,1
+") metrics, where lower is better. We also list the regression slope
+(closer to unity is better) and average oﬀset (closer to zero is better).
+All data sets are independent from each other, such that",6,SFRM0700,,198,73
+N,6,CMMI7,,1,1
+"is sometimes
+smaller than the sample sizes listed in Table 1.",6,SFRM0700,,61,48
+"are connected to gas-to-stellar mass fraction, and re-
+ports a relationship between",9,SFRM1000,,83,54
+u,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+K,9,CMMI10,,1,1
+and,9,SFRM1000,,3,3
+M,9,CMSY10,,1,1
+with only,9,SFRM1000,,9,9
+σ,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+37,9,CMR10,,2,2
+dex scatter. Zhang et al. (2009) use,9,SFRM1000,,36,36
+i,9,CMMI10,,1,1
+"-band sur-
+face brightness,",9,SFRM1000,,27,16
+µ,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+", in addition to",9,SFRM1000,,16,16
+g,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+r,9,CMMI10,,1,1
+color to predict,9,SFRM1000,,16,16
+M,9,CMSY10,,1,1
+". They ﬁnd that the best-ﬁt relation reduces the scat-
+ter to",9,SFRM1000,,61,54
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+31,9,CMR10,,2,2
+"dex. Other morphological parameters have
+been shown to tighten the relationship between galaxy
+colors and",9,SFRM1000,,105,53
+M,9,CMSY10,,1,1
+", such as stellar mass surface density and
+axial ratios, which reduce",9,SFRM1000,,69,42
+σ,9,CMMI10,,1,1
+∼,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+30,9,CMR10,,2,2
+"dex (e.g., Catinella
+et al. 2010; Huang et al. 2012; Li et al. 2012; Catinella
+et al. 2013; Eckert et al. 2015).",9,SFRM1000,,112,57
+"Teimoorinia et al. (2017) extend the Zhang et al.
+(2009) linear method by ﬁtting a quadratic estimator
+to the inputs. They report a best ﬁt of",9,SFRM1000,,142,52
+σ,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+22,9,CMR10,,2,2
+dex,9,SFRM1000,,3,3
+"on the training data; however, this estimator is unable
+to generalize well to gas-poor samples such as GASS.
+Conversely, Catinella et al. (2010) predict",9,SFRM1000,,152,55
+M,9,CMSY10,,1,1
+"for the
+GASS sample using UV-optical colors and stellar mass
+surface density, but their method begins to systemati-
+cally fail in the gas-rich regime of very blue galaxies. The
+lack of generalizability suggests that more robust esti-
+mators are needed, and that pattern recognition should
+be used to exclude galaxies that yield poor predictions
+(e.g., Catinella et al. 2013).",9,SFRM1000,,375,60
+6.2.,9,SFRM1000,,4,4
+Machine learning methods,9,SFTI1000,,24,24
+"Machine learning has recently become more popu-
+lar for constructing powerful and ﬂexible",9,SFRM1000,,89,47
+M,9,CMSY10,,1,1
+"estima-
+tors. Raﬁeferantsoa et al. (2018) estimate gas mass frac-",9,SFRM1000,,65,57
+"tion for observed and simulated galaxy samples by us-
+ing a variety of machine learning algorithms, such as
+random forests, gradient-boosted trees, and deep neu-
+ral networks. Their algorithms can achieve RMSE",9,SFRM1000,,209,53
+"=
+0",9,CMR10,,3,1
+.,9,CMMI10,,1,1
+25,9,CMR10,,2,2
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+3,9,CMR10,,1,1
+"dex when trained trained on real data (us-
+ing photometric and environmental parameters as in-
+put features), but the estimators are unable to accu-
+rately predict",9,SFRM1000,,163,53
+M,9,CMSY10,,1,1
+"when trained on simulated data (see
+also Andrianomena et al. 2020). We also train classical
+machine learning algorithms to model three-color",9,SFRM1000,,140,55
+"im-
+age",9,SFTI1000,,7,3
+"inputs, and demonstrate that they predict",9,SFRM1000,,41,41
+M,9,CMSY10,,1,1
+"to
+RMSE",9,SFRM1000,,7,4
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+31,9,CMR10,,2,2
+dex for,9,SFRM1000,,7,7
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A (Appendix A).,9,SFRM1000,,15,15
+"Teimoorinia et al. (2017) show that a fully connected
+neural network (FCNN) can be used to estimate",9,SFRM1000,,99,53
+M,9,CMSY10,,1,1
+to,9,SFRM1000,,2,2
+σ,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+22,9,CMR10,,2,2
+"dex on independent test sets when trained us-
+ing 15 galaxy properties. Although several of these input
+features are known to individually covary with",9,SFRM1000,,150,57
+M,9,CMSY10,,1,1
+", the",9,SFRM1000,,5,5
+"non-linear combination of these properties processed by
+a shallow neural network is able to robustly outperform
+traditional regression methods (see Ellison et al. 2016
+for details on the network architecture). They ﬁnd that",9,SFRM1000,,223,55
+g,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+r,9,CMMI10,,1,1
+color and,9,SFRM1000,,9,9
+µ,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+"are the most important parameters
+for regression (similar to previous results), and that a
+galaxy’s bulge-to-total fraction also plays a role in gov-
+erning",9,SFRM1000,,156,58
+M,9,CMSY10,,1,1
+". Teimoorinia et al. (2017) also present a pat-
+tern recognition method for rejecting galaxies that are
+not representative of the training sample and tend to
+be incorrectly predicted. The authors combine the PR
+probability and the epistemic uncertainty determined
+from an ensemble of neural network predictions,",9,SFRM1000,,311,55
+σ,9,CMMI10,,1,1
+ﬁtN,6,CMR7,,3,3
+", to
+form",9,SFRM1000,,9,4
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+", which parameterizes the robustness of their",9,SFRM1000,,45,45
+M,9,CMSY10,,1,1
+"prediction. Teimoorinia et al. (2017) have publically
+released",9,SFRM1000,,62,53
+M,9,CMSY10,,1,1
+and,9,SFRM1000,,3,3
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+"estimates for a sample of over
+500,000 SDSS galaxies.",9,SFRM1000,,53,30
+6.3.,9,SFRM1000,,4,4
+Comparison to Teimoorinia et al. (2017),9,SFTI1000,,39,39
+The FCNN by Teimoorinia et al. (2017) predicts,9,SFRM1000,,46,46
+M,9,CMSY10,,1,1
+"with remarkably low scatter. Because their method out-
+performs previous photometric gas fraction techniques
+(e.g., Kannappan 2004; Zhang et al. 2009), their results
+serve as a valuable baseline for comparison to our work.
+In order to make a fair comparison with their results,
+we ﬁrst crossmatch our data to their catalogs using a
+1",9,SFRM1000,,333,56
+,6,CMSY7,,0,0
+"radius. This process removes a non-trivial fraction
+of the test set before any PR cuts are made; after cross-
+matching, 67% of",9,SFRM1000,,126,57
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A, 87% of",9,SFRM1000,,9,9
+α,9,CMMI10,,1,1
+".100, 18% of NIBLES,
+and 86% of xGASS remain.",9,SFRM1000,,45,24
+"In Figure 7, we show",9,SFRM1000,,20,20
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+versus,9,SFRM1000,,6,6
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+scatter plots,9,SFRM1000,,13,13
+"comparing our predictions with Teimoorinia et al. (2017)
+results. Overall, we ﬁnd that the CNN outperforms the
+FCNN according in terms of scatter and slope. Using a
+conservative threshold of",9,SFRM1000,,190,56
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+", we observe that",9,SFRM1000,,17,17
+11,9,SFRM1000,,2,2
+Figure 7.,8,SFBX0900,,9,9
+Comparison of results using our CNN method (,8,SFRM0900,,44,44
+blue,8,SFTI0900,,4,4
+) and a fully connected neural network (,8,SFRM0900,,40,40
+red,8,SFTI0900,,3,3
+"; Teimoorinia et al.
+2017) for ALFALFA, xGASS, and NIBLES galaxies crossmatched with the Teimoorinia et al. (2017) catalog. We show the
+RMSE for test subsamples selected using various choices of pattern recognition (",8,SFRM0900,,216,114
+C,8,CMMI9,,1,1
+fgas,5,CMR6,,4,4
+and,8,SFRM0900,,3,3
+p,8,CMMI9,,1,1
+CNN,5,CMR6,,3,3
+") or no cut at all; in every case
+the CNN recovers",8,SFRM0900,,50,33
+M,8,CMSY9,,1,1
+"with lower scatter. The number of galaxies in each test set is shown in at the bottom of each bar plot.
+Detailed comparisons with additional metrics are provided in Table 3.",8,SFRM0900,,173,103
+the CNN predicts,9,SFRM1000,,16,16
+M,9,CMSY10,,1,1
+to RMSE,9,SFRM1000,,7,7
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+20,9,CMR10,,2,2
+dex for,9,SFRM1000,,7,7
+α,9,CMMI10,,1,1
+".100,",9,SFRM1000,,5,5
+"compared to 0.27 dex for the FCNN. If we instead ap-
+ply",9,SFRM1000,,56,52
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+"to both the CNN and Teimoorinia et al.
+(2017) results, we ﬁnd RMSE",9,SFRM1000,,66,38
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+18,9,CMR10,,2,2
+and,9,SFRM1000,,3,3
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+24,9,CMR10,,2,2
+"dex, re-
+spectively, for",9,SFRM1000,,24,15
+α,9,CMMI10,,1,1
+".100. Both methods give comparable
+results for the crossmatched NIBLES catalog (RMSE",9,SFRM1000,,84,49
+"=
+0",9,CMR10,,3,1
+.,9,CMMI10,,1,1
+29,9,CMR10,,2,2
+"dex for the CNN, and",9,SFRM1000,,20,20
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+31,9,CMR10,,2,2
+"dex for the FCNN). For
+xGASS, we ﬁnd that the CNN predictions are robust us-
+ing either",9,SFRM1000,,87,53
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+(RMSE,9,SFRM1000,,5,5
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+22,9,CMR10,,2,2
+dex) or,9,SFRM1000,,7,7
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+(RMSE,9,SFRM1000,,5,5
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+23,9,CMR10,,2,2
+"dex), whereas the FCNN performs better
+using the latter (",9,SFRM1000,,57,38
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+26,9,CMR10,,2,2
+dex).,9,SFRM1000,,5,5
+"In Table 3, we provide detailed comparisons of our re-
+sults with those published by Teimoorinia et al. (2017).
+We test diﬀerent",9,SFRM1000,,128,56
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+and,9,SFRM1000,,3,3
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+"thresholds in addi-
+tion to the",9,SFRM1000,,31,19
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+"threshold recommended by
+Teimoorinia et al. (2017). For all data sets, the CNN
+performs extremely well under the",9,SFRM1000,,112,53
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+and,9,SFRM1000,,3,3
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+"se-
+lection criteria. However, it is diﬃcult to compare the
+CNN and FCNN results for",9,SFRM1000,,84,55
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+"thresholds higher than
+0.5. For example, a",9,SFRM1000,,42,22
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+"cut removes all NIBLES
+and xGASS galaxies and only leaves a few galaxies in al-",9,SFRM1000,,79,56
+pha.40 (,9,SFRM1000,,8,8
+N,9,CMMI10,,1,1
+= 29,9,CMR10,,4,4
+) and alpha.100 (,9,SFRM1000,,17,17
+34,9,CMR10,,2,2
+"). Even with a more
+moderate cut (",9,SFRM1000,,34,19
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+7,9,CMR10,,1,1
+"), the sample size is small for
+NIBLES (",9,SFRM1000,,40,31
+44,9,CMR10,,2,2
+) and xGASS (,9,SFRM1000,,13,13
+53,9,CMR10,,2,2
+"). Therefore, our conclu-
+sions are based on the",9,SFRM1000,,48,25
+C,9,CMMI10,,1,1
+fgas,6,CMR7,,4,4
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+decision boundary.,9,SFRM1000,,18,18
+"We primarily quantify our results using the RMSE
+scatter. However, previous works often report",9,SFRM1000,,94,48
+σ,9,CMMI10,,1,1
+"when
+discussing scatter (Zhang et al. 2009; Teimoorinia et al.
+2017). When there is no mean oﬀset between",9,SFRM1000,,105,57
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+and,9,SFRM1000,,3,3
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+",",9,SFRM1000,,1,1
+σ,9,CMMI10,,1,1
+"is comparable to the RMSE. However,
+the RMSE will more heavily penalize predictions when",9,SFRM1000,,88,52
+"there is an oﬀset, such as the 0.14 dex oﬀset in H",9,SFRM1000,,50,50
+I,8,SFRM0900,,1,1
+mass,9,SFRM1000,,4,4
+"between NIBLES and ALFALFA, or the",9,SFRM1000,,34,34
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+20,9,CMR10,,2,2
+"dex sys-
+tematic overpredictions for H",9,SFRM1000,,38,29
+I,8,SFRM0900,,1,1
+"-poor galaxies in xGASS
+(prior to applying PR cuts). We recommend using",9,SFRM1000,,71,47
+σ,9,CMMI10,,1,1
+for comparison only when the mean oﬀset is small com-,9,SFRM1000,,53,53
+pared to the scatter.,9,SFRM1000,,21,21
+8,6,SFRM0700,,1,1
+"Nevertheless, we ﬁnd that the
+CNN consistently outperforms the FCNN according to
+both RMSE and",9,SFRM1000,,94,50
+σ,9,CMMI10,,1,1
+.,9,SFRM1000,,1,1
+"It is intriguing that the CNN results are signiﬁcantly
+improved after crossmatching with the Teimoorinia et al.
+(2017) catalog (i.e., comparing RMSE in Tables 2 and
+3). Although we previously ﬁnd RMSE",9,SFRM1000,,200,56
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+30,9,CMR10,,2,2
+"dex for
+the",9,SFRM1000,,11,7
+α,9,CMMI10,,1,1
+".100 test set, we now report RMSE",9,SFRM1000,,33,33
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+20,9,CMR10,,2,2
+"dex, in
+part because the sources with unrealistic",9,SFRM1000,,49,41
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"values
+identiﬁed in Section 4.3.1 have have been removed. Sub-
+stantial improvements are also evident for the other data
+sets. This discrepancy is most likely due to selection
+criteria introduced by Teimoorinia et al. (2017), which
+can remove galaxies with uncertain physical properties.
+A similar selection eﬀect accounts for why",9,SFRM1000,,330,57
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"B has
+smaller intrinsic scatter in",9,SFRM1000,,34,28
+M,9,CMSY10,,1,1
+than,9,SFRM1000,,4,4
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A. Teimoorinia
+et al. (2017) restrict their analysis to galaxies with mag-
+nitudes in all SDSS bands, redshifts, sizes, morpho-
+logical measurements, and environmental parameters.
+Galaxies with all 15 properties are characterized by",9,SFRM1000,,232,59
+"higher signal-to-noise observations and are more likely
+to have secure H",9,SFRM1000,,72,55
+I,8,SFRM0900,,1,1
+"and stellar mass measurements. The
+omitted galaxies tend to be redder and therefore more
+likely to contribute error and scatter. We conclude that
+the combination of selection criteria introduced during",9,SFRM1000,,201,56
+8,5,SFRM0600,,1,1
+"It is worth noting that Teimoorinia et al. (2017) systematically
+predict lower",7,SFRM0800,,78,64
+M,7,CMSY8,,1,1
+"than we do, which causes negative oﬀsets in
+their ALFALFA predictions relative to",7,SFRM0800,,81,43
+M,7,CMSY8,,1,1
+true,5,CMR6,,4,4
+". Equivalently, our
+NIBLES and xGASS predictions have positive oﬀsets relative to",7,SFRM0800,,81,61
+M,7,CMSY8,,1,1
+true,5,CMR6,,4,4
+". The systematic oﬀset between our CNN and their FCNN
+predictions is likely due to their strict exclusion of galaxies with
+neighboring H",7,SFRM0800,,136,68
+I,6,SFRM0700,,1,1
+"sources, which leads to a 0.14 dex diﬀerence in",7,SFRM0800,,47,47
+M,7,CMSY8,,1,1
+true,5,CMR6,,4,4
+between their clean and contaminated samples.,7,SFRM0800,,45,45
+n,4,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+,3,DejaVuSans,,0,0
+c,3,DejaVuSans,,1,1
+u,4,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+8,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+9,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+7,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+9,4,DejaVuSans,,1,1
+n,4,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+,3,DejaVuSans,,0,0
+c,3,DejaVuSans,,1,1
+u,4,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+8,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+9,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+7,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+9,4,DejaVuSans,,1,1
+n,4,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+,3,DejaVuSans,,0,0
+c,3,DejaVuSans,,1,1
+u,4,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+8,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+9,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+7,4,DejaVuSans,,1,1
+n,4,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+,3,DejaVuSans,,0,0
+c,3,DejaVuSans,,1,1
+u,4,DejaVuSans,,1,1
+t,3,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+8,4,DejaVuSans,,1,1
+p,4,DejaVuSans-Oblique,,1,1
+C,3,DejaVuSans,,1,1
+NN,3,DejaVuSans,,2,2
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+9,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+5,4,DejaVuSans,,1,1
+C,4,DejaVuSans-Oblique,,1,1
+f,2,DejaVuSans,,1,1
+g,2,DejaVuSans,,1,1
+a,2,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+>,4,DejaVuSans,,1,1
+0,4,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+7,4,DejaVuSans,,1,1
+"0.00
+
+0.05
+
+0.10
+
+0.15
+
+0.20
+
+0.25
+
+0.30
+
+0.35
+
+0.40",3,DejaVuSans,,52,4
+R,3,DejaVuSans,,1,1
+M,4,DejaVuSans,,1,1
+S,3,DejaVuSans,,1,1
+E,3,DejaVuSans,,1,1
+,1,DejaVuSans,,0,0
+(,2,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+x,3,DejaVuSans,,1,1
+),2,DejaVuSans,,1,1
+47984409382332633399160629512443873694312635981720341581371169910344101226216810720353,4,DejaVuSans-Bold,,86,86
+0,3,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+1970,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2640,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1960,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2630,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1940,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2620,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1940,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2640,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1870,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2460,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1720,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2320,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1730,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2240,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1980,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2690,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1970,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2660,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1980,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2630,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2020,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2670,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1840,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2400,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1710,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2360,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1550,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2360,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2990,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3620,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2910,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3520,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2870,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3250,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2890,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3170,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2880,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3110,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2740,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2580,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+634,3,DejaVuSans,,3,3
+,1,DejaVuSans,,0,0
+0,3,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+675,3,DejaVuSans,,3,3
+,1,DejaVuSans,,0,0
+0,3,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+3240,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3830,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2650,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+3190,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2220,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2830,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2320,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+2580,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+1760,3,DejaVuSans,,4,4
+.,1,DejaVuSans,,1,1
+221,3,DejaVuSans,,3,3
+.40A.100NIBLESxGASS,5,DejaVuSans,,19,19
+"CNN (this work)
+Teimoorinia+ 17",6,DejaVuSans,,31,15
+12,9,SFRM1000,,2,2
+Table 3.,8,SFBX0900,,8,8
+Comparison of CNN and FCNN Results,8,SFRM0900,,34,34
+PR cut,6,SFRM0700,,6,6
+Data set,6,SFRM0700,,8,8
+N,6,CMMI7,,1,1
+CNN (this work),6,SFRM0700,,15,15
+FCNN (Teimoorinia et al. 2017),6,SFRM0700,,30,30
+RMSE (dex),6,SFRM0700,,10,10
+Slope,6,SFRM0700,,5,5
+σ,6,CMMI7,,1,1
+(dex),6,SFRM0700,,5,5
+Oﬀset,6,SFRM0700,,5,5
+RMSE (dex),6,SFRM0700,,10,10
+Slope,6,SFRM0700,,5,5
+σ,6,CMMI7,,1,1
+(dex),6,SFRM0700,,5,5
+Oﬀset,6,SFRM0700,,5,5
+None,6,SFRM0700,,4,4
+p,6,CMMI7,,1,1
+CNN,4,CMR5,,3,3
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+5,6,CMR7,,1,1
+p,6,CMMI7,,1,1
+CNN,4,CMR5,,3,3
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+8,6,CMR7,,1,1
+p,6,CMMI7,,1,1
+CNN,4,CMR5,,3,3
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+9,6,CMR7,,1,1
+C,6,CMMI7,,1,1
+fgas,4,CMR5,,4,4
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+5,6,CMR7,,1,1
+C,6,CMMI7,,1,1
+fgas,4,CMR5,,4,4
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+7,6,CMR7,,1,1
+C,6,CMMI7,,1,1
+fgas,4,CMR5,,4,4
+>,6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+9,6,CMR7,,1,1
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+".100
+NIBLES
+xGASS",6,SFRM0700,,17,6
+α,6,CMMI7,,1,1
+.40A,6,SFRM0700,,4,4
+α,6,CMMI7,,1,1
+.100,6,SFRM0700,,4,4
+"4798
+5124
+158
+1012
+4409
+4387
+137
+262
+3823
+3694
+116
+168
+3263
+3126
+99
+107
+3399
+3598
+103
+203
+1606
+1720
+44
+53
+29
+34",6,SFRM0700,,111,4
+"0.1967
+0.1975
+0.2988
+0.6338
+0.1958
+0.1968
+0.2909
+0.3235
+0.1938
+0.1980
+0.2869
+0.2645
+0.1944
+0.2021
+0.2895
+0.2216
+0.1869
+0.1838
+0.2876
+0.2317
+0.1725
+0.1706",6,SFBX0700,,153,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+2744,6,CMR7,,4,4
+"0.1758
+0.1730
+0.1555",6,SFBX0700,,20,6
+"0.8524
+0.8462
+0.7890
+0.4584
+0.8531
+0.8473
+0.7898
+0.6221
+0.8574
+0.8440
+0.7981
+0.6602
+0.8589
+0.8405
+0.8090
+0.7392
+0.8306
+0.8344",6,SFBX0700,,125,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+7507,6,CMR7,,4,4
+"0.7138
+0.8142",6,SFBX0700,,13,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"8238
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+5946,6,CMR7,,4,4
+"0.7999
+0.6614
+0.7549",6,SFBX0700,,20,6
+"0.1953
+0.1971
+0.2791
+0.4258
+0.1942
+0.1963
+0.2739
+0.2953
+0.1922
+0.1974
+0.2760
+0.2568
+0.1927
+0.2015
+0.2822
+0.2098
+0.1863
+0.1837
+0.2692
+0.2189
+0.1725
+0.1707
+0.2532
+0.1589",6,SFBX0700,,167,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"1735
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+1524,6,CMR7,,4,4
+"0.0238
+0.0125",6,SFBX0700,,13,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+1090,6,CMR7,,4,4
+"0.4697
+0.0247
+0.0138",6,SFBX0700,,20,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"1009
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+1333,6,CMR7,,4,4
+"0.0250
+0.0160",6,SFBX0700,,13,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0826
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+0665,6,CMR7,,4,4
+"0.0261
+0.0160",6,SFBX0700,,13,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0706
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+0742,6,CMR7,,4,4
+"0.0157
+0.0063",6,SFBX0700,,13,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"1044
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+0777,6,CMR7,,4,4
+"0.0039
+-0.0009",6,SFBX0700,,14,7
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"1124
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+1124,6,CMR7,,4,4
+"-0.0290
+-0.0405",6,SFBX0700,,15,7
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"2637
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2688
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3622
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6751
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2626
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2660
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3518
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3829
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2617
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2634
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3252
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3185
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2638
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2665
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3167
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2826
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2460
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2404
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"3113
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2577
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2321
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2356,6,CMR7,,4,4
+0.2577,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"2208
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"2236
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2358,6,CMR7,,4,4
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"8317
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8243
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7194
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"4098
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8297
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8267
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7208
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"5796
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8343
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8263
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7361
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6566
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8340
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8239
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7737
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"7222
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"8179
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+8311,6,CMR7,,4,4
+0.7734,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"7127
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+7968,6,CMR7,,4,4
+"0.8318
+0.7070",6,SFBX0700,,13,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"7494
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6599
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+7454,6,CMR7,,4,4
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+2556,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0647
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2574,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0775,6,CMR7,,4,4
+0.1060,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"3474
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"4793
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"4758
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2548,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0636
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2550,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0758,6,CMR7,,4,4
+0.0815,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"3435
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+3649,6,CMR7,,4,4
+0.1182,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+2530,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0672
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2521,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0765,6,CMR7,,4,4
+0.0509,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+3226,6,CMR7,,4,4
+0.0283,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"3182
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2552,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0670
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2548,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0783,6,CMR7,,4,4
+0.0234,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"3174
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2835,6,CMR7,,4,4
+0.0145,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+2347,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0738
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2243,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0867,6,CMR7,,4,4
+0.0476,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"3091
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2581,6,CMR7,,4,4
+0.0112,6,SFBX0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+2083,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"1025
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2074,6,CMR7,,4,4
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+1119,6,CMR7,,4,4
+-0.0109,6,SFBX0700,,7,7
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"2605
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2134,6,CMR7,,4,4
+"-0.0640
+0.1666",6,SFBX0700,,14,7
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+1523,6,CMR7,,4,4
+0.1446,6,SFBX0700,,6,6
+−,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+1879,6,CMR7,,4,4
+Note,6,SFCC0700,,4,4
+— We compare,6,SFRM0700,,12,12
+M,6,CMSY7,,1,1
+pred,4,CMR5,,4,4
+"from this work and from the fully connected neural network trained by Teimoorinia et al. (2017) using
+all data sets and several choices of pattern recognition cuts. In order to facilitate an equal comparison, only galaxies with matches
+in the Teimoorinia et al. (2017) catalog are evaluated. Bolded values indicate superior performance for a given combination of PR
+cut, data set, and metric.",6,SFRM0700,,392,133
+"the comparison with Teimoorinia et al. (2017) explains
+the major improvement in our CNN predictions.",9,SFRM1000,,100,54
+7.,8,SFRM0900,,2,2
+THE IMPACT OF ENVIRONMENT,9,SFRM1000,,25,25
+The morphology and H,9,SFRM1000,,20,20
+I,8,SFRM0900,,1,1
+"properties of a galaxy are
+strongly sensitive to its surrounding environment (e.g.,
+Serra et al. 2012; Jones et al. 2016). If a CNN can accu-",9,SFRM1000,,141,57
+"rately learn a connection between galaxy optical imaging
+and",9,SFRM1000,,60,56
+M,9,CMSY10,,1,1
+"when trained only on systems in clustered envi-
+ronments but fails to accurately estimate H",9,SFRM1000,,91,47
+I,8,SFRM0900,,1,1
+"content for
+a test sample of isolated galaxies (or vice versa), then it
+may be a sign that the distribution of galaxy morpholo-
+gies has shifted. In essence, we wish to probe whether
+the H",9,SFRM1000,,188,59
+I,8,SFRM0900,,1,1
+"-morphology relation learned by the CNN co-
+varies with environment.",9,SFRM1000,,68,43
+7.1.,9,SFRM1000,,4,4
+Galaxy overdensity,9,SFTI1000,,18,18
+In order to quantitatively investigate the impacts of,9,SFRM1000,,53,53
+"environment, we parameterize the environment using
+the projected galaxy density (e.g., Cooper et al. 2008):",9,SFRM1000,,107,56
+Σ,9,CMR10,,1,1
+5,6,CMR7,,1,1
+=,9,CMR10,,1,1
+3,9,CMR10,,1,1
+πD,9,CMMI10,,2,2
+"2
+5",6,CMR7,,3,1
+",",9,CMMI10,,1,1
+Figure 8.,8,SFBX0900,,9,9
+"Thick black lines show histogram distributions
+of normalized galaxy overdensity for the",8,SFRM0900,,87,46
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"sample. Dot-
+ted and dashed vertical lines in both panels represent the
+20th and 80th percentile values for",8,SFRM0900,,107,58
+δ,8,CMMI9,,1,1
+5,5,CMR6,,1,1
+", respectively. We also
+show the parent",8,SFRM0900,,39,23
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"sample in light gray (prior to optical
+crossmatching with the SDSS catalog).",8,SFRM0900,,76,38
+where,9,SFRM1000,,5,5
+D,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"is the projected physical distance to each
+galaxy’s ﬁfth-nearest neighbor (including its own optical
+counterpart). We use neighboring galaxies in the NASA-",9,SFRM1000,,155,57
+(2),9,SFRM1000,,3,3
+"Sloan Atlas (version 1.0.1; Blanton et al. 2011) within a
+velocity window of",9,SFRM1000,,76,57
+±,9,CMSY10,,1,1
+1000 km s,9,CMR10,,9,9
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+in order to compute,9,SFRM1000,,19,19
+Σ,9,CMR10,,1,1
+5,6,CMR7,,1,1
+for each H,9,SFRM1000,,10,10
+I,8,SFRM0900,,1,1
+source. We enforce a,9,SFRM1000,,20,20
+D >,9,CMMI10,,3,3
+10,9,CMR10,,2,2
+"Mpc dis-
+tance cut in order to prevent contamination or biases
+from the Local Group. Following Cooper et al. (2008),
+we divide",9,SFRM1000,,126,53
+Σ,9,CMR10,,1,1
+5,6,CMR7,,1,1
+"by its median over a sliding redshift box-
+car window of size",9,SFRM1000,,61,42
+∆,9,CMR10,,1,1
+z,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+02,9,CMR10,,2,2
+", which removes redshift
+dependence. The ﬁnal result is a normalized overdensity
+parameter,",9,SFRM1000,,91,55
+1 +,9,CMR10,,3,3
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+". In Figure 8, we show the distribution
+of",9,SFRM1000,,42,39
+log(1 +,9,CMR10,,7,7
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+),9,CMR10,,1,1
+for our,9,SFRM1000,,7,7
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"sample crossmatched with
+spectroscopically conﬁrmed SDSS optical counterparts
+(we also show the full",9,SFRM1000,,100,52
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"sample in gray). It is appar-
+ent that the optical-H",9,SFRM1000,,52,29
+I,8,SFRM0900,,1,1
+crossmatching exercise removes,9,SFRM1000,,30,30
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"systems in the lowest-density environments. In Fig-
+ure 9, we provide examples of SDSS image cutouts for
+ALFALFA galaxies at various environmental densities.
+We select 80% of the higher-",9,SFRM1000,,186,52
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+galaxies for training,9,SFRM1000,,21,21
+and set aside the remaining 20% (with lower,9,SFRM1000,,43,43
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+") for
+validation.
+In other words, we test whether a CNN
+trained on galaxies in higher-density environments can
+accurately predict the H",9,SFRM1000,,135,54
+I,8,SFRM0900,,1,1
+"content of galaxies in lower-
+density environments. If this turns out to be the case,
+all else unchanged, then the environment does not sig-
+niﬁcantly impact the connection between H",9,SFRM1000,,182,55
+I,8,SFRM0900,,1,1
+"richness
+and optical imaging learned by the CNN. We also split
+the sample such that the 80% with lower",9,SFRM1000,,102,53
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"is used for
+training, and the 20% with higher",9,SFRM1000,,45,33
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"is used for valida-
+tion. As a baseline comparison, we test the case where
+the training and validation set are randomly split (but
+trained in the same manner otherwise).",9,SFRM1000,,169,55
+9,6,SFRM0700,,1,1
+"We repeat tests
+ﬁve times for each training/validation split, and report
+the RMSE average and standard deviation in Table 4.",9,SFRM1000,,124,56
+Our initial tests suggest that the galaxy H,9,SFRM1000,,43,43
+I,8,SFRM0900,,1,1
+"-
+morphology connection",9,SFRM1000,,23,21
+varies signiﬁcantly,9,SFTI1000,,19,19
+"with envi-
+ronment. We ﬁnd that a CNN trained only on galaxies in
+overdense environments and validated on systems in un-
+derdense environments performs better than the inverse.
+Surprisingly, the CNN validated on lower-",9,SFRM1000,,218,55
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+systems,9,SFRM1000,,7,7
+"even outperforms the randomized baseline. However,
+this eﬀect is fully explained by the validation scatter in",9,SFRM1000,,109,58
+M,9,CMSY10,,1,1
+when we select subsamples by a range in,9,SFRM1000,,39,39
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+". When
+we compare the CNN performance normalized by the
+inherent scatter of the validation subsample (the right-
+most column in Table 4), it becomes apparent that the
+CNN validated on higher-",9,SFRM1000,,191,56
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+environments still performs,9,SFRM1000,,27,27
+9,5,SFRM0600,,1,1
+"For each environmental test run, a 34-layer xresnet is trained
+for 10 epochs using a learning rate of 0.03, batch size of 32,
+weight decay of",7,SFRM0800,,141,62
+10,7,CMR8,,2,2
+−,5,CMSY6,,1,1
+4,5,CMR6,,1,1
+", and the validation subsample is evaluated
+using test-time augmentation. These hyperparameters have been
+chosen to best optimize the CNN in a smaller number of training
+epochs so that we can run multiple tests quickly.",7,SFRM0800,,219,63
+13,9,SFRM1000,,2,2
+"signiﬁcantly worse than those validated on random or
+lower-",9,SFRM1000,,59,52
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"environments. We conclude that the CNN is
+able to generalize predictions in a way that yields good
+performance in underdense environments when exposed
+to galaxies in more overdense environments (relative to
+randomized validation subsamples), yet the opposite is
+not true.",9,SFRM1000,,271,56
+"These results can be interpreted as evidence that the
+H",9,SFRM1000,,55,53
+I,8,SFRM0900,,1,1
+"-morphology connection is controlled by diﬀerent
+physical mechanisms in the highest-",9,SFRM1000,,84,48
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"environments.
+Galaxies residing in clusters are subject to ram pres-
+sure stripping, tidal forces, galaxy-galaxy interactions,
+and other eﬀects that can leave morphological imprints
+and also depress their gas content (e.g., Chung et al.
+2009; Fabello et al. 2012). By training on subsamples
+of galaxies characterized by relatively lower-density sur-
+roundings, a CNN is unlikely to learn about the morpho-",9,SFRM1000,,405,58
+logical cues associated with extreme physics of clustered,9,SFRM1000,,57,57
+"environments, and therefore our experiment is able to
+distinguish between “typical” and “overdense” modes of
+the H",9,SFRM1000,,114,54
+I,8,SFRM0900,,1,1
+"-morphology connection. It is also worth noting
+that these tests may not even capture the full extent of
+the environmental eﬀects, as the 3.8",9,SFRM1000,,141,56
+,6,CMSY7,,0,0
+"Arecibo beam may
+cause overestimation of H",9,SFRM1000,,42,25
+I,8,SFRM0900,,1,1
+"mass or misidentiﬁcation of
+optical counterparts in groups and clusters (e.g., Serra
+et al. 2015; Stevens et al. 2019). Such errors may ar-
+tiﬁcially boost H",9,SFRM1000,,157,56
+I,8,SFRM0900,,1,1
+"content and thereby ameliorate the
+CNN’s performance in high-density environments.",9,SFRM1000,,82,47
+7.2.,9,SFRM1000,,4,4
+The overdensity transition regime,9,SFTI1000,,33,33
+"We observe a stark diﬀerence in CNN performance
+across diﬀerent density regimes, but it is unlikely that
+there is a sharp transition in environmental eﬀects. Gas
+mass fraction is known to depend on a satellite galaxy’s
+distance toward the center of its group or cluster host
+(e.g., Brown et al. 2017). “Pre-processing” in only mod-
+erately overdense environments can also depress galax-",9,SFRM1000,,386,56
+"ies’ gas masses (Odekon et al. 2016). We probe the grad-
+ual onset of environmental eﬀects by repeating the anal-
+ysis in Section 7.1 and reserving 20% of the galaxies for
+validation based on their",9,SFRM1000,,197,57
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+". We show the normalized
+RMSE as a function of the validation set",9,SFRM1000,,65,40
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"in Figure 10.
+For example, one of the validation data sets in",9,SFRM1000,,61,47
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A
+comprises galaxies with",9,SFRM1000,,25,23
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+values in the,9,SFRM1000,,13,13
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+1,9,CMR10,,1,1
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+3,9,CMR10,,1,1
+"quantile
+range, and the training set would consist of the remain-
+der of the sample. The central validation",9,SFRM1000,,107,56
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+quantile is,9,SFRM1000,,11,11
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+2,9,CMR10,,1,1
+", corresponding to a value of",9,SFRM1000,,29,29
+log(1 +,9,CMR10,,7,7
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+) =,9,CMR10,,3,3
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+20,9,CMR10,,2,2
+"),",9,SFRM1000,,2,2
+and the normalized RMSE is approximately,9,SFRM1000,,40,40
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+40,9,CMR10,,2,2
+±,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+01,9,CMR10,,2,2
+.,9,SFRM1000,,1,1
+We ﬁnd that the H,9,SFRM1000,,17,17
+I,8,SFRM0900,,1,1
+"-morphology relation transitions
+to a diﬀerent “mode” at high",9,SFRM1000,,61,32
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+". For low-density envi-
+ronments, a CNN is able to leverage the morphological
+information learned in intermediate- and high-density",9,SFRM1000,,131,53
+14,9,SFRM1000,,2,2
+Table 4.,8,SFBX0900,,8,8
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+A results split by environment,8,SFRM0900,,30,30
+Training,6,SFRM0700,,8,8
+Validation Validation,6,SFRM0700,,21,21
+σ,6,CMMI7,,1,1
+Validation RMSE Normalized RMSE,6,SFRM0700,,31,31
+N,6,CMMI7,,1,1
+= 5922,6,CMR7,,6,6
+N,6,CMMI7,,1,1
+= 1477,6,CMR7,,6,6
+(dex),6,SFRM0700,,5,5
+(dex),6,SFRM0700,,5,5
+[0,6,CMR7,,2,2
+.,6,CMMI7,,1,1
+2,6,CMR7,,1,1
+",",6,CMMI7,,1,1
+1,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0)
+[0",6,CMR7,,5,2
+",",6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+8),6,CMR7,,2,2
+Random,6,SFRM0700,,6,6
+[0,6,CMR7,,2,2
+",",6,CMMI7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"2)
+[0",6,CMR7,,5,2
+.,6,CMMI7,,1,1
+8,6,CMR7,,1,1
+",",6,CMMI7,,1,1
+1,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0),6,CMR7,,2,2
+Random,6,SFRM0700,,6,6
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"5241
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+"6706
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+6036,6,CMR7,,4,4
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+2184,6,CMR7,,4,4
+±,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0022
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+3269,6,CMR7,,4,4
+±,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0066
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+2557,6,CMR7,,4,4
+±,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0094,6,CMR7,,4,4
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+4167,6,CMR7,,4,4
+±,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0042
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+4874,6,CMR7,,4,4
+±,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+"0098
+0",6,CMR7,,6,4
+.,6,CMMI7,,1,1
+4237,6,CMR7,,4,4
+±,6,CMSY7,,1,1
+0,6,CMR7,,1,1
+.,6,CMMI7,,1,1
+0156,6,CMR7,,4,4
+Note,6,SFCC0700,,4,4
+"— Comparison of CNN performance using diﬀerent training/validation splits
+for",6,SFRM0700,,77,73
+α.,6,CMMI7,,2,2
+40,6,CMR7,,2,2
+"A. The training and validation subsamples are either randomly selected
+or separated by",6,SFRM0700,,86,70
+δ,6,CMMI7,,1,1
+5,4,CMR5,,1,1
+"quantile according to an 80%/20% ratio in the given quantile
+range.",6,SFRM0700,,67,60
+"regimes and accurately predict the gas mass fraction di-
+rectly from imaging. For high-density environments, a
+CNN is not able to generalize information learned from
+low- and intermediate-density regimes as well, and the
+normalized RMSE increases signiﬁcantly. A physical ex-",9,SFRM1000,,275,56
+"planation for this transition is the growing importance
+of ram pressure stripping, tidal forces, and other gas de-
+pletion eﬀects in overdense environments. We determine
+that these eﬀects become increasingly signiﬁcant at",9,SFRM1000,,221,58
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+8,9,CMR10,,1,1
+quantile in,9,SFRM1000,,11,11
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+for,9,SFRM1000,,3,3
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A, corresponding to a normalized
+overdensity of",9,SFRM1000,,47,32
+log(1 +,9,CMR10,,7,7
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+),9,CMR10,,1,1
+≥,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+; for lower values of,9,SFRM1000,,21,21
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+",
+the physics that govern this H",9,SFRM1000,,32,30
+I,8,SFRM0900,,1,1
+"-morphology relation are
+constant.",9,SFRM1000,,34,24
+8.,8,SFRM0900,,2,2
+INTERPRETING MORPHOLOGICAL,9,SFRM1000,,26,26
+FEATURES,9,SFRM1000,,8,8
+"Deep learning models often contain millions of train-
+able parameters, which makes them diﬃcult to inter-
+pret compared to classical statistical or smaller ma-
+chine learning models.
+For this reason, deep neu-
+ral networks are often viewed as opaque systems that
+cannot be trusted.
+Indeed, there are many cases in
+which deep learning algorithms make high-conﬁdence
+predictions while failing spectacularly; e.g., when a
+CNN is confronted with adversarial examples, out-of-",9,SFRM1000,,471,53
+"distribution predictions, or domain adaptation problems
+(e.g., Amodei et al. 2016).
+In Section 4.3, we exam-
+ined how a CNN trained on ALFALFA could not be
+used to make predictions for xGASS without pattern
+recognition, because the two galaxy populations have
+diﬀerent distributions of physical properties. Alterna-
+tively, poor generalization across domains can occur if
+the training and test data sets are systematically dif-
+ferent, e.g.,
+if the training data comprises images of
+simulated galaxies while the test set solely comprises",9,SFRM1000,,537,55
+"images of observed galaxies (e.g., Raﬁeferantsoa et al.",9,SFRM1000,,55,55
+"2018; Andrianomena et al. 2020). In Section 7, we ex-
+ploited these failure modes in order to probe how galaxy
+environment impacts the learned H",9,SFRM1000,,144,56
+I,8,SFRM0900,,1,1
+"-morphology rela-
+tion. However, other unknown factors may cause CNNs",9,SFRM1000,,69,51
+"to perform poorly. Therefore, it is critical to investigate
+whether or not trained CNNs make sensible predictions
+in line with our physical intuition.",9,SFRM1000,,150,59
+"It is possible to decipher deep CNNs by examining
+which parts of an image are most relevant for making",9,SFRM1000,,102,52
+certain predictions. This method of localizing image,9,SFRM1000,,52,52
+features is generally known as,9,SFRM1000,,30,30
+input attribution,9,SFTI1000,,17,17
+", because
+output predictions can be directly attributed to pixels
+from the input images. Input attribution methods such
+as saliency maps and class activation maps (Simonyan
+et al. 2013; Zhou et al. 2016) are useful for identifying
+the image features that a trained CNN “looks at” in or-
+der to make its predictions. Other methods can also pro-
+vide valuable insights, such as by visualizing the learned
+convolutional layers in optimzied CNNs (e.g., Zeiler &
+Fergus 2013).",9,SFRM1000,,471,58
+8.1.,9,SFRM1000,,4,4
+Grad-CAM,9,SFTI1000,,8,8
+"To interpret our results, we make use of the Gradient-
+weighted Class Activation Map (Grad-CAM) visualiza-
+tion algorithm (Selvaraju et al. 2017). Grad-CAM is an
+input attribution tool that highlights the activated “neu-
+rons” in a trained CNN corresponding to the pixels in
+an input image that are most important for predicting
+a designated class. These visual explanations enable us",9,SFRM1000,,384,58
+"to directly attribute output predictions to input mor-
+phological features represented as pixels.
+In order to
+use this algorithm, we reformulate our gas mass fraction
+regression problem to a binary classiﬁcation problem.",9,SFRM1000,,220,56
+"We train a CNN to classify gas-rich and gas-poor
+galaxies in the",9,SFRM1000,,64,48
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A sample. We deﬁne low-,9,SFRM1000,,23,23
+M,9,CMSY10,,1,1
+"(gas-
+poor) and high-",9,SFRM1000,,21,15
+M,9,CMSY10,,1,1
+(gas-rich) as,9,SFRM1000,,13,13
+M,9,CMSY10,,1,1
+<,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+"(1,327 ob-
+jects) and",9,SFRM1000,,21,10
+M,9,CMSY10,,1,1
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+"(1,922 objects) respectively, so that
+the two classes are well-separated. According to this
+classiﬁcation, some star-forming galaxies are labeled as",9,SFRM1000,,148,56
+"“gas-poor,” so this scheme is only appropriate for the",9,SFRM1000,,54,54
+H,9,SFRM1000,,1,1
+I,8,SFRM0900,,1,1
+-rich ALFALFA sample.,9,SFRM1000,,21,21
+"We also use a simple CNN for visualization purposes.
+Our previous architecture (34-layer xresnet) contains
+many pooling layers that each decrease the resolution",9,SFRM1000,,160,53
+15,9,SFRM1000,,2,2
+Figure 9.,8,SFBX0900,,9,9
+Example SDSS images of,8,SFRM0900,,22,22
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"A galaxy image cutouts in diﬀerent environmental regimes. Each row depicts ﬁve
+galaxies with environmental overdensity closest to the value indicated on the left. The example galaxies range from below 10th
+percentile to over 90th percentile in",8,SFRM0900,,243,126
+log(1 +,8,CMR9,,7,7
+δ,8,CMMI9,,1,1
+5,5,CMR6,,1,1
+),8,CMR9,,1,1
+.,8,SFRM0900,,1,1
+AGC 732656AGC 332876AGC 232459AGC 191900AGC 213528,6,DejaVuSans,,50,50
+l,2,DejaVuSans,,1,1
+o,5,DejaVuSans,,1,1
+g,5,DejaVuSans,,1,1
+(,3,DejaVuSans,,1,1
+1,5,DejaVuSans,,1,1
++,7,DejaVuSans,,1,1
+5,3,DejaVuSans,,1,1
+),3,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+=,7,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+0,5,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+5,5,DejaVuSans,,1,1
+AGC 5573AGC 243940AGC 182942AGC 258417AGC 203857,6,DejaVuSans,,48,48
+l,2,DejaVuSans,,1,1
+o,5,DejaVuSans,,1,1
+g,5,DejaVuSans,,1,1
+(,3,DejaVuSans,,1,1
+1,5,DejaVuSans,,1,1
++,7,DejaVuSans,,1,1
+5,3,DejaVuSans,,1,1
+),3,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+=,7,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+0,5,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+1,5,DejaVuSans,,1,1
+AGC 205250AGC 184203AGC 205133AGC 215142AGC 332402,6,DejaVuSans,,50,50
+l,2,DejaVuSans,,1,1
+o,5,DejaVuSans,,1,1
+g,5,DejaVuSans,,1,1
+(,3,DejaVuSans,,1,1
+1,5,DejaVuSans,,1,1
++,7,DejaVuSans,,1,1
+5,3,DejaVuSans,,1,1
+),3,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+=,7,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+0,5,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+2,5,DejaVuSans,,1,1
+AGC 724540AGC 220384AGC 203003AGC 733423AGC 230546,6,DejaVuSans,,50,50
+l,2,DejaVuSans,,1,1
+o,5,DejaVuSans,,1,1
+g,5,DejaVuSans,,1,1
+(,3,DejaVuSans,,1,1
+1,5,DejaVuSans,,1,1
++,7,DejaVuSans,,1,1
+5,3,DejaVuSans,,1,1
+),3,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+=,7,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+0,5,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+6,5,DejaVuSans,,1,1
+AGC 723109AGC 731404AGC 170951AGC 332810AGC 9396,6,DejaVuSans,,48,48
+l,2,DejaVuSans,,1,1
+o,5,DejaVuSans,,1,1
+g,5,DejaVuSans,,1,1
+(,3,DejaVuSans,,1,1
+1,5,DejaVuSans,,1,1
++,7,DejaVuSans,,1,1
+5,3,DejaVuSans,,1,1
+),3,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+=,7,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+1,5,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+3,5,DejaVuSans,,1,1
+16,9,SFRM1000,,2,2
+Figure 10.,8,SFBX0900,,10,10
+"CNN validation performance across diﬀerent
+environmental densities shown in black markers and error
+bars. The performance is the RMSE normalized by the in-
+herent scatter in",8,SFRM0900,,173,56
+M,8,CMSY9,,1,1
+for the validation set; we show the mean,8,SFRM0900,,40,40
+"and standard deviation for ﬁve tests. Each validation set is
+constructed from a 20% range in",8,SFRM0900,,92,60
+δ,8,CMMI9,,1,1
+5,5,CMR6,,1,1
+", and the corresponding
+central",8,SFRM0900,,31,23
+log(1 +,8,CMR9,,7,7
+δ,8,CMMI9,,1,1
+5,5,CMR6,,1,1
+),8,CMR9,,1,1
+"value is shown at the top. Validation
+results from randomly drawn subsamples are shown in red.",8,SFRM0900,,94,56
+"by a factor of two, such that the ﬁnal Grad-CAM result
+is a",9,SFRM1000,,59,54
+7,9,CMR10,,1,1
+×,9,CMSY10,,1,1
+7,9,CMR10,,1,1
+"pixel feature map. Instead, we use a shallower
+CNN that consists of a basic CNN stem and two resid-
+ual blocks containing two convolutional layers each (see,
+e.g., Howard & Gugger 2020). The ﬁnal convolutional
+layer outputs a",9,SFRM1000,,225,57
+56,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+56,9,CMR10,,2,2
+"pixel feature map. We use the
+same optimization methods as in Section 3, except that
+we train for only 10 epochs (at which point we reach
+convergence) and optimize using cross entropy loss with",9,SFRM1000,,193,55
+,9,CMMI10,,0,0
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+label smoothing. The shallow network classiﬁes,9,SFRM1000,,46,46
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A galaxies by gas richness with 98% accuracy.,9,SFRM1000,,45,45
+8.2.,9,SFRM1000,,4,4
+The most important morphological features,9,SFTI1000,,41,41
+"The trained CNN outputs probabilities for each pre-
+dicted class for an input image. Grad-CAM can be used
+to highlight the most important morphological features",9,SFRM1000,,160,54
+"used for making correct and incorrect predictions, and
+both sets of image features are valuable for understand-
+ing what the CNN has learned. The association between
+blue stellar populations at the edge of a galaxy’s star-
+forming disk and a high-",9,SFRM1000,,247,56
+M,9,CMSY10,,1,1
+"classiﬁcation, for example,
+strengthens our conﬁdence in trained CNN. Examples of
+the galaxy image cutout, low-",9,SFRM1000,,111,53
+M,9,CMSY10,,1,1
+"features, and high-",9,SFRM1000,,19,19
+M,9,CMSY10,,1,1
+"features are shown in Figure 11. Below, we list the most
+commonly observed results.",9,SFRM1000,,83,56
+1. H,9,SFRM1000,,4,4
+II,8,SFRM0900,,2,2
+"regions, often indicated by bright, blue, com-",9,SFRM1000,,46,46
+"pact features, and spiral arms, usually signify that
+a galaxy has high gas mass fraction.",9,SFRM1000,,89,52
+"2. Red central regions due to older stellar popula-
+tions tend to be associated with low",9,SFRM1000,,88,51
+M,9,CMSY10,,1,1
+". However,",9,SFRM1000,,10,10
+"red stellar populations can sometimes be conﬂated
+with dust.",9,SFRM1000,,60,49
+"3. If the ﬂocculent outer regions of a galaxy are blue,
+then the CNN tends to predict that it is gas-rich,
+but if the outer regions are populated with redder
+stars (e.g., panel d of Figure 11), then the galaxy
+is more often predicted to be gas-poor (e.g., Koop-
+mann & Kenney 2004).",9,SFRM1000,,282,55
+"4. Nearby objects in the ﬁeld of view, even ones that
+are clearly background or foreground objects, are
+often considered by the CNN. They may be high-
+lighted as evidence for low or high",9,SFRM1000,,186,53
+M,9,CMSY10,,1,1
+"depending
+on their relative color to the main system; how-
+ever, their contributions to the overall prediction
+are usually subdominant. In Appendix B, we ver-",9,SFRM1000,,158,51
+"ify that artiﬁcial point sources are generally unim-
+portant for the CNN’s decision-making process.",9,SFRM1000,,99,52
+8.3.,9,SFRM1000,,4,4
+The value of single-band imaging,9,SFTI1000,,32,32
+"It is clear that the CNN relies on color information
+to identify gas-rich or gas-poor regions. Galaxy mor-
+phology is another useful, albeit subdominant, parame-
+ter for estimating gas mass fraction (e.g., Zhang et al.
+2009; Eckert et al. 2015; Teimoorinia et al. 2017). How-
+ever, morphological features often covary with color be-
+cause galaxy structures are linked to their stellar pop-
+ulations. Therefore, we aim to identify the most cru-
+cial morphological features using monochromatic imag-
+ing, i.e., single-channel image cutouts with summed",9,SFRM1000,,549,56
+g,9,CMMI10,,1,1
+",",9,SFRM1000,,1,1
+r,9,CMMI10,,1,1
+", and",9,SFRM1000,,5,5
+i,9,CMMI10,,1,1
+"ﬂux. We ﬁrst verify that this is possible
+by repeating the regression analysis in Section 4 using
+single-band imaging for",9,SFRM1000,,121,55
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A, and recover",9,SFRM1000,,14,14
+M,9,CMSY10,,1,1
+"to within
+RMSE",9,SFRM1000,,14,9
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+29,9,CMR10,,2,2
+"dex. We also note that CNNs have had
+some success predicting other gas-phase metallicity from
+single-band imaging (see Section 5.3 of Wu & Boada
+2019).",9,SFRM1000,,151,56
+"We train a CNN to classify gas-rich and gas-poor
+galaxies using monochromatic imaging. The data set,
+model, and optimization steps are otherwise the same
+as described in the previous section. We ﬁnd that the
+shallow CNN is able to classify monochromatic",9,SFRM1000,,253,53
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A
+galaxies to over 90% accuracy.",9,SFRM1000,,32,30
+"In Figure 11, we show Grad-CAM results on single-
+band imaging. By examining the highlighted activations
+on monochromatic images, we are able to discern the
+morphological indicators of gas richness. We ﬁnd that",9,SFRM1000,,210,54
+the CNN inspects the outskirts of galaxies and highlights,9,SFRM1000,,57,57
+"point source-like objects when identifying gas-rich fea-
+tures. Many of these compact features are star-forming
+knots in spiral arms or the extended disk, but the CNN
+also takes background sources into consideration (e.g.,",9,SFRM1000,,222,56
+"0.0
+0.2
+0.4
+0.6
+0.8
+1.0",5,DejaVuSans,,23,3
+Validation,6,DejaVuSans,,10,10
+5,4,DejaVuSans,,1,1
+central quantile,6,DejaVuSans,,16,16
+"0.38
+0.40
+0.42
+0.44
+0.46
+0.48
+0.50
+0.52",5,DejaVuSans,,39,4
+V,4,DejaVuSans,,1,1
+a,4,DejaVuSans,,1,1
+li,1,DejaVuSans,,2,2
+d,4,DejaVuSans,,1,1
+a,4,DejaVuSans,,1,1
+t,2,DejaVuSans,,1,1
+i,1,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+n,4,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+R,4,DejaVuSans,,1,1
+M,5,DejaVuSans,,1,1
+S,4,DejaVuSans,,1,1
+E,4,DejaVuSans,,1,1
+,2,DejaVuSans,,0,0
+(,2,DejaVuSans,,1,1
+n,4,DejaVuSans,,1,1
+o,4,DejaVuSans,,1,1
+r,2,DejaVuSans,,1,1
+m,6,DejaVuSans,,1,1
+a,4,DejaVuSans,,1,1
+li,1,DejaVuSans,,2,2
+z,3,DejaVuSans,,1,1
+e,4,DejaVuSans,,1,1
+d,4,DejaVuSans,,1,1
+),2,DejaVuSans,,1,1
+0,7,DejaVuSans,,1,1
+.,5,DejaVuSans,,1,1
+380,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+200,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+090,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+020,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+130,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+240,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+360,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+500,7,DejaVuSans,,3,3
+.,5,DejaVuSans,,1,1
+77,7,DejaVuSans,,2,2
+.40A,13,DejaVuSans,,4,4
+17,9,SFRM1000,,2,2
+Figure 11.,8,SFBX0900,,10,10
+"Grad-CAM heatmaps shown for SDSS images using trained CNNs. Each panel shows, from left to right, the SDSS",8,SFRM0900,,106,106
+gri,8,CMMI9,,3,3
+"image cutout, the heatmap of activations corresponding to gas-poor features, and the heatmap of activations corresponding
+to gas-rich features. Grad-CAM heatmaps are shown for for",8,SFRM0900,,179,121
+gri,8,CMMI9,,3,3
+"color input images (upper) and monochromatic input images
+(lower). Gas-poor/gas-rich labels are bolded for ground truth values, and CNN probabilities are provided for each class. The
+image contrast has been reduced for visualization purposes.",8,SFRM0900,,242,124
+"panel c). Grad-CAM also reveals that the CNN focuses
+on galaxy centers when identifying gas-poor features in
+monochromatic imaging. We surmise that it is relying
+the central surface brightness to recognize whether a
+galaxy is gas-poor; surprisingly, it is able to leverage",9,SFRM1000,,272,56
+"this information even though no distance information is
+provided.",9,SFRM1000,,65,55
+9.,8,SFRM0900,,2,2
+DEEPER IMAGING AND FUTURE SURVEYS,9,SFRM1000,,33,33
+"Future optical-wavelength surveys will oﬀer deeper
+imaging data sets useful for characterizing the gas prop-
+erties of galaxies. We obtain",9,SFRM1000,,138,57
+grZ,9,CMMI10,,3,3
+"imaging from the DESI
+Legacy Imaging Surveys DR8 (Legacy Survey; Dey et al.
+2019) in order to compare with our previous results. Us-
+ing the online interface",9,SFRM1000,,157,56
+10,6,SFRM0700,,2,2
+", we query",9,SFRM1000,,10,10
+448,9,CMR10,,3,3
+×,9,CMSY10,,1,1
+448,9,CMR10,,3,3
+pixel JPG,9,SFRM1000,,9,9
+cutouts at the native,9,SFRM1000,,21,21
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+262,9,CMR10,,3,3
+,6,CMSY7,,0,0
+pixel,9,CMR10,,5,5
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+scale for both the,9,SFRM1000,,18,18
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+and xGASS samples (again using optical counter-,9,SFRM1000,,47,47
+10,5,SFRM0600,,2,2
+https://legacysurvey.org/viewer,7,SFRM0800,,31,31
+"part coordinates for the former). Legacy Survey imag-
+ing is deeper than that of SDSS by about two magni-
+tudes, and has higher angular resolution (although it
+remains seeing-limited). Deep optical imaging is partic-
+ularly critical for identifying low-surface brightness fea-",9,SFRM1000,,276,59
+"tures in galaxies with complex star formation histories
+or recent gas accretion (e.g., Duc et al. 2015; Geréb et al.
+2016; Hagen et al. 2016).",9,SFRM1000,,142,60
+"Using Legacy Survey imaging, and the same train-
+ing methodology as described in Section 3, we ﬁnd
+similar results for",9,SFRM1000,,118,49
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A as before. Our early results
+are promising and suggest that deeper optical imag-
+ing may be useful for improving",9,SFRM1000,,114,51
+M,9,CMSY10,,1,1
+predictions.,9,SFRM1000,,12,12
+11,6,SFRM0700,,2,2
+It is,9,SFRM1000,,5,5
+11,5,SFRM0600,,2,2
+It is diﬃcult to directly compare the two imaging data sets:,7,SFRM0800,,60,60
+"Legacy Survey image cutouts have an expanded ﬁeld-of-view
+(1.96",7,SFRM0800,,63,57
+,5,CMSY6,,0,0
+) compared to SDSS imaging (1.48,7,SFRM0800,,32,32
+,5,CMSY6,,0,0
+"), and the use of",7,SFRM0800,,17,17
+Z,7,CMMI8,,1,1
+rather than,7,SFRM0800,,11,11
+i,7,CMMI8,,1,1
+"-band imaging in the reddest channel may also aﬀect
+CNN performance.",7,SFRM0800,,68,51
+18,9,SFRM1000,,2,2
+"also worth noting that the Legacy Survey DR8 imaging
+suﬀers from some imaging issues, such as pixel bleed,
+sky subtraction, and inconsistent zero-points in diﬀer-
+ent bands, which may prevent the model from learning
+as much as it can. These eﬀects must be remedied if
+we want to maximize scientiﬁc gains through the com-
+bination of deep learning and wide-ﬁeld optical/near-
+infrared surveys (e.g., the Vera C. Rubin Observatory
+(VRO) Legacy Survey of Space and Time (LSST), Ivezić
+et al. 2019; and the",9,SFRM1000,,502,55
+Nancy Grace Roman Space Telescope,9,SFTI1000,,33,33
+(,9,SFRM1000,,1,1
+RST,9,SFTI1000,,3,3
+", formerly",9,SFRM1000,,10,10
+WFIRST,9,SFTI1000,,6,6
+; Spergel et al. 2015).,9,SFRM1000,,23,23
+Current H,9,SFRM1000,,9,9
+I,8,SFRM0900,,1,1
+"surveys are mostly mass-limited, but
+SKA precursor surveys such as DINGO and LADUMA
+will be much more sensitive to gas-poor galaxy popu-
+lations. These new surveys will allow us to construct
+data sets similar to the xGASS representative sample or
+the volume-limited RESOLVE survey (REsolved Spec-",9,SFRM1000,,296,55
+"troscopy Of a Local VolumE; e.g., Stark et al. 2016),
+except with orders of magnitude more detections at the
+same H",9,SFRM1000,,115,54
+I,8,SFRM0900,,1,1
+"mass threshold.
+In the future, we may be
+able to take deep H",9,SFRM1000,,60,24
+I,8,SFRM0900,,1,1
+"21-cm line observations of some
+small patch of sky, and then use deep optical imaging in
+overlapping portions in order to generate",9,SFRM1000,,130,56
+M,9,CMSY10,,1,1
+"predictions
+for galaxies across the entire optical survey area (e.g.,
+Domínguez Sánchez et al. 2019; Khan et al. 2019). The
+methods introduced in this paper may also allow us to
+probe the redshift evolution of the overdensity transition
+regime (Section 7) or evolution of the most relevant mor-
+phological features associated with gas richness over cos-
+mic timescales (Section 8). These tantalizing prospects
+can be realized, but only if the co-evolving H",9,SFRM1000,,456,58
+I,8,SFRM0900,,1,1
+"and stel-
+lar mass functions (e.g., Lemonias et al. 2013) and their
+eﬀects on the priors baked into the trained CNN model
+are taken into account (e.g., by sampling according to a
+known distribution; Buda et al. 2017). Moreover, cosmic
+variance eﬀects for deep H",9,SFRM1000,,261,57
+I,8,SFRM0900,,1,1
+"surveys need to be consid-
+ered (e.g., Moster et al. 2011). Finally, it is imperative
+to deploy robust pattern recognition algorithms in or-",9,SFRM1000,,140,58
+"der to safeguard against out-of-distribution errors and
+gauge the reliability of machine learning predictions.",9,SFRM1000,,110,55
+10.,8,SFRM0900,,3,3
+CONCLUSIONS,9,SFRM1000,,11,11
+"In this work, we have found that deep CNNs can pre-
+dict a galaxy’s H",9,SFRM1000,,69,51
+I,8,SFRM0900,,1,1
+mass fraction (,9,SFRM1000,,15,15
+M,9,CMSY10,,1,1
+) solely from,9,SFRM1000,,13,13
+gri,9,CMMI10,,3,3
+imaging to within RMSE,9,SFRM1000,,22,22
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+23,9,CMR10,,2,2
+dex for the,9,SFRM1000,,11,11
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A sam-
+ple, demonstrating that there is a strong connection be-",9,SFRM1000,,63,56
+tween galaxy morphology and H,9,SFRM1000,,29,29
+I,8,SFRM0900,,1,1
+content. We have,9,SFRM1000,,16,16
+"also trained a CNN for pattern recognition (PR), e.g.,
+determining whether a galaxy is likely to be detected by
+an ALFALFA-like survey based on its optical imaging.
+The combined regression and PR results generalize well",9,SFRM1000,,219,56
+"to new test data sets, and our experiments indicate that
+PR threshold of",9,SFRM1000,,72,56
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+"is best-suited for optically
+selected galaxy samples. We ﬁnd that the CNN consis-
+tently outperforms previous machine learning methods
+on matched test data; using a",9,SFRM1000,,164,52
+p,9,CMMI10,,1,1
+CNN,6,CMR7,,3,3
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+9,9,CMR10,,1,1
+"PR cut, we
+report RMSE",9,SFRM1000,,22,11
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+20,9,CMR10,,2,2
+dex scatter for,9,SFRM1000,,15,15
+α,9,CMMI10,,1,1
+".100,",9,SFRM1000,,5,5
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+29,9,CMR10,,2,2
+"dex
+scatter for NIBLES, and",9,SFRM1000,,27,23
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+22,9,CMR10,,2,2
+"dex scatter for xGASS.
+Our methodology can be augmented with deeper imag-
+ing or larger and more diverse galaxy samples. With
+the advent of next-generation H",9,SFRM1000,,157,51
+I,8,SFRM0900,,1,1
+"21-cm emission line
+surveys with the SKA precursor telescopes, and LSST
+and the",9,SFRM1000,,79,51
+Roman Space Telescope,9,SFTI1000,,21,21
+"on the horizon, it will
+soon be possible to generate enormous CNN-predicted
+H",9,SFRM1000,,77,51
+I,8,SFRM0900,,1,1
+catalogs.,9,SFRM1000,,9,9
+"We are able to the probe the environmental depen-
+dence of the H",9,SFRM1000,,64,49
+I,8,SFRM0900,,1,1
+"-morphology relation by independently
+training and validating CNNs using subsamples strati-",9,SFRM1000,,91,53
+"ﬁed by galaxy overdensity (i.e.,",9,SFRM1000,,32,32
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+", the normalized pro-",9,SFRM1000,,21,21
+"jected density). For high-density environments, a CNN
+trained on lower-",9,SFRM1000,,71,53
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+"examples is unable to accurately es-
+timate",9,SFRM1000,,43,36
+M,9,CMSY10,,1,1
+"from optical imaging. However, if the val-
+idation set comprises galaxies in low- or intermediate-
+density environments, then a CNN has no trouble pre-
+dicting",9,SFRM1000,,159,55
+M,9,CMSY10,,1,1
+". We propose that in the most overdense envi-
+ronments,",9,SFRM1000,,55,45
+log(1+,9,CMR10,,6,6
+δ,9,CMMI10,,1,1
+5,6,CMR7,,1,1
+),9,CMR10,,1,1
+,9,MSAM10,,0,0
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+for,9,SFRM1000,,3,3
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A, physical processes
+such as ram pressure stripping, tidal interactions, and
+other gas depletion eﬀects are responsible for “break-
+ing down” the H",9,SFRM1000,,148,55
+I,8,SFRM0900,,1,1
+"-morphology relation observed in less
+dense environments.",9,SFRM1000,,57,37
+"We have also reformulated the problem of estimat-
+ing",9,SFRM1000,,53,49
+M,9,CMSY10,,1,1
+"as a binary classiﬁcation task in order to better
+understand how CNNs are able to distinguish gas-poor
+from gas-rich systems. We use Gradient-weighted Class
+Activation Maps (Grad-CAM) to localize the optical fea-
+tures that are most important for predicting whether or
+not a galaxy is gas-rich. Bright star-forming regions
+and clumpy blue features usually imply high",9,SFRM1000,,366,55
+M,9,CMSY10,,1,1
+", while
+central red bulges and older stellar populations at large",9,SFRM1000,,65,57
+radii often indicate low,9,SFRM1000,,24,24
+M,9,CMSY10,,1,1
+". The CNN successfully dis-
+tinguishes gas-rich and gas-poor galaxies with",9,SFRM1000,,74,46
+>,9,CMMI10,,1,1
+90%,9,CMR10,,3,3
+"ac-
+curacy using single-band optical images, implying that
+it is able to identify purely morphological features for
+estimating gas content.",9,SFRM1000,,139,56
+"We have highlighted several ways that deep learning
+and computer vision can be useful for understanding
+galaxy evolution. Apart from predicting",9,SFRM1000,,143,51
+M,9,CMSY10,,1,1
+"and the
+gas fraction’s reliability directly from optical imaging,
+CNNs can also be used to gauge the impact of co-",9,SFRM1000,,114,57
+"varying galaxy properties such as environmental over-
+density. These methods are visually interpretable and
+provide key insights into the physical processes and stel-
+lar/ISM structures that are most closely connected to
+the H",9,SFRM1000,,226,58
+I,8,SFRM0900,,1,1
+properties in galaxies.,9,SFRM1000,,23,23
+19,9,SFRM1000,,2,2
+Figure 12.,8,SFBX0900,,10,10
+Comparison of diﬀerent regression models for estimating,8,SFRM0900,,55,55
+M,8,CMSY9,,1,1
+using the ALFALFA,8,SFRM0900,,17,17
+α.,8,CMMI9,,2,2
+40,8,CMR9,,2,2
+"A validation sample (top)
+and the NIBLES test sample (bottom). Each panel shows",8,SFRM0900,,79,53
+M,8,CMSY9,,1,1
+pred,5,CMR6,,4,4
+plotted against,8,SFRM0900,,15,15
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+"for a linear model trained on block-
+reduced images (left), a linear model trained on PCA-processed images (center-left), a random forest model trained on the
+PCA-processed images (center-right), and a CNN trained on the original images (right).",8,SFRM0900,,245,121
+APPENDIX,9,SFRM1000,,8,8
+A.,8,SFRM0900,,2,2
+COMPARING CNNS TO SIMPLER MODELS,9,SFRM1000,,32,32
+"Classical machine learning algorithms and statistical methods are not well-suited for operating on image data because
+they are not invariant to translation, scaling, or rotation. In other words, individual pixels may represent to diﬀerent
+galaxy features for diﬀerent images, and any model that treats a pixel as a static feature will not perform well in
+computer vision problems. CNNs are able to encode optimized representations of galaxy features through convolution",9,SFRM1000,,469,120
+"operations, which largely do not depend on the feature’s absolute location within an image. Moreover, these invariances
+can be learned via redundant convolutional ﬁlters by employing data augmentation (such as shifts, rotations, and crops;
+e.g., Dieleman et al. 2015).",9,SFRM1000,,268,119
+Our data set consists of SDSS image cutouts centered on the optical sources of various H,9,SFRM1000,,88,88
+I,8,SFRM0900,,1,1
+"catalog members.
+Although the galaxies are still observed at diﬀerent position angles and inclinations, and have diﬀerent physical scales
+because they span",9,SFRM1000,,155,120
+0,9,CMR10,,1,1
+≤,9,CMSY10,,1,1
+z,9,CMMI10,,1,1
+≤,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+06,9,CMR10,,2,2
+", the galaxies’ central regions always occupy the center pixels. For this reason, it may
+be possible to use simple models, rather than a CNN, in order to estimate the H",9,SFRM1000,,168,88
+I,8,SFRM0900,,1,1
+mass fraction. We use the,9,SFRM1000,,25,25
+sklearn,9,SFTT1000,,7,7
+Python package to pre-process and ﬁt our data.,9,SFRM1000,,46,46
+The image data are represented as arrays with,9,SFRM1000,,45,45
+3,9,CMR10,,1,1
+×,9,CMSY10,,1,1
+224,9,CMR10,,3,3
+×,9,CMSY10,,1,1
+224,9,CMR10,,3,3
+elements. Most simple regression models are ill-equipped,9,SFRM1000,,56,56
+to handle,9,SFRM1000,,9,9
+150,9,CMR10,,3,3
+",",9,CMMI10,,1,1
+528,9,CMR10,,3,3
+"inputs at a time, so we use either one of two methods to lower the dimensionality of the input data.",9,SFRM1000,,100,100
+The ﬁrst method is to block-reduce each training image using a,9,SFRM1000,,62,62
+7,9,CMR10,,1,1
+×,9,CMSY10,,1,1
+7,9,CMR10,,1,1
+"kernel (also known as average binning or pooling),
+resulting in a",9,SFRM1000,,65,50
+3,9,CMR10,,1,1
+×,9,CMSY10,,1,1
+32,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+32,9,CMR10,,2,2
+"-shaped input. Each block-reduced array is then ﬂattened into a one-dimensional vector, so
+that the independent variables can be written as a",9,SFRM1000,,141,90
+N,9,CMMI10,,1,1
+×,9,CMSY10,,1,1
+3,9,CMR10,,1,1
+",",9,CMMI10,,1,1
+072,9,CMR10,,3,3
+"matrix, where",9,SFRM1000,,13,13
+N,9,CMMI10,,1,1
+"is the number of galaxies in the training
+set. The second method is to use a principal components analysis (PCA) on the training set, where only the top",9,SFRM1000,,152,110
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+"2.5
+2.0
+1.5
+1.0
+0.5
+0.0
+0.5
+1.0
+1.5
+2.0",4,DejaVuSans,,39,3
+p,2,DejaVuSans,,1,1
+r,1,DejaVuSans,,1,1
+e,2,DejaVuSans,,1,1
+d,2,DejaVuSans,,1,1
+.40A,8,DejaVuSans,,4,4
+LinearRMSE = 0.44,5,DejaVuSans,,17,17
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+PCA + LinearRMSE = 0.31,5,DejaVuSans,,23,23
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+PCA + RFRMSE = 0.31,5,DejaVuSans,,19,19
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+CNNRMSE = 0.23,5,DejaVuSans,,14,14
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+"2.5
+2.0
+1.5
+1.0",4,DejaVuSans,,15,3
+0.5,4,DejaVuSans,,3,3
+"0.0
+0.5
+1.0
+1.5
+2.0",4,DejaVuSans,,19,3
+p,2,DejaVuSans,,1,1
+r,1,DejaVuSans,,1,1
+e,2,DejaVuSans,,1,1
+d,2,DejaVuSans,,1,1
+NIBLES,8,DejaVuSans,,6,6
+LinearRMSE = 0.57,5,DejaVuSans,,17,17
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+PCA + LinearRMSE = 0.45,5,DejaVuSans,,23,23
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+PCA + RFRMSE = 0.41,5,DejaVuSans,,19,19
+"2
+1
+0
+1
+2",4,DejaVuSans,,9,1
+true,4,DejaVuSans,,4,4
+CNNRMSE = 0.37,5,DejaVuSans,,14,14
+20,9,SFRM1000,,2,2
+Figure 13.,8,SFBX0900,,10,10
+"Examples of artiﬁcial point source injection for AGC 9340 (upper), AGC 226075 (center), and AGC 220910 (lower).
+For each row, starting from left to right, we show images with six artiﬁcial red sources, green sources, and blue sources. The
+right-most panel in each row compares the original",8,SFRM0900,,289,126
+M,8,CMSY9,,1,1
+pred,5,CMR6,,4,4
+(dashed vertical line) and,8,SFRM0900,,26,26
+M,8,CMSY9,,1,1
+true,5,CMR6,,4,4
+"(solid vertical line) to histograms of
+100 simulations for each injected source color (red, green, and blue).",8,SFRM0900,,109,70
+16 components are ﬂattened and saved. The PCA-processed independent variables can be written as a,9,SFRM1000,,97,97
+16,9,CMR10,,2,2
+×,9,CMSY10,,1,1
+150,9,CMR10,,3,3
+",",9,CMMI10,,1,1
+528,9,CMR10,,3,3
+matrix.,9,SFRM1000,,7,7
+"After reducing the dimensionality of the training inputs, we select one of two algorithms for statistical regression.
+The ﬁrst algorithm is an ordinary least-squares regression to ﬁt a low-order polynomial model. In practice we ﬁnd that
+a linear model always outperforms a quadratic model, so only linear regression results are included in this discussion.
+The linear regression model requires 3,073 trainable parameters for block-reduced images, and 17 trainable parameters
+for PCA-processed images. The second algorithm is a random forest (RF), which bootstraps (i.e., samples with",9,SFRM1000,,583,119
+"replacement) 100 random decision tree estimators. The RF regression model is optimized according to the mean
+squared error loss.",9,SFRM1000,,128,108
+"In Figure 12, we compare diﬀerent models trained on 80% of",9,SFRM1000,,58,58
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+A and validated on the remaining 20% for,9,SFRM1000,,40,40
+α.,9,CMMI10,,2,2
+40,9,CMR10,,2,2
+"A
+(left) and for the entire NIBLES test set (right). All model predictions are impacted by the 0.16 dex systematic oﬀset
+in H",9,SFRM1000,,125,118
+I,8,SFRM0900,,1,1
+"mass between NIBLES and ALFALFA (van Driel et al. 2016). The linear models ﬁt to block-reduced images do
+not perform well, as indicated by high scatter. PCA-processed data provide better results than block-reduced images,
+although overall performance is still modest. Ultimately, CNNs outperform all of the simpler models that we test in
+terms of slope and scatter.",9,SFRM1000,,365,116
+B.,8,SFRM0900,,2,2
+ROBUSTNESS TO PERTURBATIONS,9,SFRM1000,,27,27
+"A concern with CNNs and deep learning algorithms is whether or not their predictions can be signiﬁcantly swayed by
+image noise or other perturbations. For example, galaxy images with foreground stars or other faint background sources
+should not cause predictions to vary wildly (unless they are located in regions where the CNN ascribes high importance,
+which we can probe using Grad-CAM; see Section 8). To test our method’s performance when small changes are added
+to the images, we randomly add colored point sources (resembling artiﬁcial stars) to three representative galaxy images,",9,SFRM1000,,587,120
+21,9,SFRM1000,,2,2
+and allow the CNN to infer,9,SFRM1000,,26,26
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+". Speciﬁcally, we add six artiﬁcial sources (two-dimensional circular Gaussian proﬁles
+with a 5-pixel radius, all of which are red, green, or blue) to random locations in the original image. Figure 13 shows
+examples of the three galaxy images with injected artiﬁcial sources. 100 trials are run for each of the three colors, and
+we compare these perturbed predictions to the original estimate (",9,SFRM1000,,394,121
+M,9,CMSY10,,1,1
+pred,6,CMR7,,4,4
+) and the ground truth (,9,SFRM1000,,24,24
+M,9,CMSY10,,1,1
+true,6,CMR7,,4,4
+"). We ﬁnd the
+CNN is able to make generalized predictions that does not depend on the injected point sources; the typical scatter
+due to these injected sources is much smaller (",9,SFRM1000,,177,115
+<,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+.,9,CMMI10,,1,1
+05,9,CMR10,,2,2
+"dex) than the overall RMSE. Thus, we conclude that our trained
+CNNs are robust to perturbations such as artiﬁcial point sources.",9,SFRM1000,,128,65
+REFERENCES,9,SFRM1000,,10,10
+"Abolfathi, B., Aguado, D. S., Aguilar, G., et al. 2018,",8,SFRM0900,,55,55
+"Domínguez Sánchez, H., Huertas-Company, M., Bernardi,",8,SFRM0900,,53,53
+"ApJS, 235, 42",8,SFRM0900,,13,13
+"M., et al. 2019, MNRAS, 484, 93",8,SFRM0900,,31,31
+"Amodei, D., Olah, C., Steinhardt, J., et al. 2016, arXiv",8,SFRM0900,,56,56
+"Duc, P.-A., Cuillandre, J.-C., Karabal, E., et al. 2015,",8,SFRM0900,,56,56
+"Andrianomena, S., Raﬁeferantsoa, M., & Davé, R. 2020,",8,SFRM0900,,53,53
+"Eckert, K. D., Kannappan, S. J., Stark, D. V., et al. 2015,",8,SFRM0900,,59,59
+"Barnes, D. G., Staveley-Smith, L., de Blok, W. J. G., et al.",8,SFRM0900,,60,60
+"Ellison, S. L., Teimoorinia, H., Rosario, D. J., & Mendel,",8,SFRM0900,,58,58
+"MNRAS, 446, 120",8,SFRM0900,,15,15
+"ApJ, 810, 166",8,SFRM0900,,13,13
+"e-prints, arXiv:1606.06565",8,SFRM0900,,26,26
+"MNRAS, 492, 5743",8,SFRM0900,,16,16
+"2001, MNRAS, 322, 486",8,SFRM0900,,21,21
+"Bishop, C. M. 1995, Neural Networks for Pattern",8,SFRM0900,,47,47
+"Recognition (USA: Oxford University Press, Inc.)",8,SFRM0900,,48,48
+"Blanton, M. R., Kazin, E., Muna, D., Weaver, B. A., &",8,SFRM0900,,53,53
+"Price-Whelan, A. 2011, AJ, 142, 31",8,SFRM0900,,34,34
+"Blyth, S., Baker, A. J., Holwerda, B., et al. 2016, in",8,SFRM0900,,54,54
+"Proceedings of MeerKAT Science: On the Pathway to the
+SKA. 25-27 May, 4",8,SFRM0900,,71,53
+"Brinchmann, J., Charlot, S., White, S. D. M., et al. 2004,",8,SFRM0900,,58,58
+"Brown, T., Catinella, B., Cortese, L., et al. 2017, MNRAS,",8,SFRM0900,,58,58
+"MNRAS, 351, 1151",8,SFRM0900,,16,16
+"466, 1275",8,SFRM0900,,9,9
+"Buda, M., Maki, A., & Mazurowski, M. A. 2017, arXiv",8,SFRM0900,,51,51
+"e-prints, arXiv:1710.05381",8,SFRM0900,,26,26
+"Caldeira, J., Wu, W. L. K., Nord, B., et al. 2019,",8,SFRM0900,,50,50
+"Astronomy and Computing, 28, 100307",8,SFRM0900,,35,35
+"Catinella, B., Schiminovich, D., Kauﬀmann, G., et al. 2010,",8,SFRM0900,,59,59
+"J. T. 2016, MNRAS, 455, 370",8,SFRM0900,,27,27
+"Fabello, S., Kauﬀmann, G., Catinella, B., et al. 2012,",8,SFRM0900,,54,54
+"MNRAS, 427, 2841",8,SFRM0900,,16,16
+"Geréb, K., Catinella, B., Cortese, L., et al. 2016, MNRAS,",8,SFRM0900,,58,58
+"Giovanelli, R., Haynes, M. P., Kent, B. R., et al. 2005, AJ,",8,SFRM0900,,60,60
+"Goyal, P., Dollár, P., Girshick, R., et al. 2017, arXiv",8,SFRM0900,,55,55
+"e-prints, arXiv:1706.02677",8,SFRM0900,,26,26
+"Hagen, L. M. Z., Seibert, M., Hagen, A., et al. 2016, ApJ,",8,SFRM0900,,58,58
+"Haynes, M. P., Giovanelli, R., Martin, A. M., et al. 2011,",8,SFRM0900,,58,58
+"462, 382",8,SFRM0900,,8,8
+"130, 2598",8,SFRM0900,,9,9
+"826, 210",8,SFRM0900,,8,8
+"AJ, 142, 170",8,SFRM0900,,12,12
+"861, 49",8,SFRM0900,,7,7
+"Haynes, M. P., Giovanelli, R., Kent, B. R., et al. 2018, ApJ,",8,SFRM0900,,61,61
+"He, K., Zhang, X., Ren, S., & Sun, J. 2015, arXiv e-prints,",8,SFRM0900,,59,59
+"Catinella, B., Schiminovich, D., Cortese, L., et al. 2013,",8,SFRM0900,,58,58
+"He, T., Zhang, Z., Zhang, H., et al. 2018, arXiv e-prints,",8,SFRM0900,,58,58
+"Catinella, B., Saintonge, A., Janowiecki, S., et al. 2018,",8,SFRM0900,,58,58
+"Hopﬁeld, J. J. 1987, Proceedings of the National Academy",8,SFRM0900,,56,56
+arXiv:1512.03385,8,SFRM0900,,16,16
+arXiv:1812.01187,8,SFRM0900,,16,16
+"of Science, 84, 8429",8,SFRM0900,,20,20
+"MNRAS, 403, 683",8,SFRM0900,,15,15
+"MNRAS, 436, 34",8,SFRM0900,,14,14
+"MNRAS, 476, 875",8,SFRM0900,,15,15
+"Chabrier, G. 2003, PASP, 115, 763",8,SFRM0900,,33,33
+"Howard, J., & Gugger, S. 2020, arXiv e-prints,",8,SFRM0900,,46,46
+"Chung, A., van Gorkom, J. H., Kenney, J. D. P., Crowl, H.,",8,SFRM0900,,58,58
+arXiv:2002.04688,8,SFRM0900,,16,16
+"& Vollmer, B. 2009, AJ, 138, 1741",8,SFRM0900,,33,33
+"Huang, S., Haynes, M. P., Giovanelli, R., & Brinchmann, J.",8,SFRM0900,,58,58
+"Ćiprijanović, A., Snyder, G. F., Nord, B., & Peek, J. E. G.",8,SFRM0900,,59,59
+"2012, ApJ, 756, 113",8,SFRM0900,,19,19
+"2020, Astronomy and Computing, 32, 100390",8,SFRM0900,,41,41
+"Huertas-Company, M., Rodriguez-Gomez, V., Nelson, D.,",8,SFRM0900,,53,53
+"Cooper, M. C., Newman, J. A., Weiner, B. J., et al. 2008,",8,SFRM0900,,57,57
+"et al. 2019, MNRAS, 489, 1859",8,SFRM0900,,29,29
+"MNRAS, 383, 1058",8,SFRM0900,,16,16
+"Hunter, J. D. 2007, Computing in Science and Engineering,",8,SFRM0900,,57,57
+"Dey, A., Schlegel, D. J., Lang, D., et al. 2019, AJ, 157, 168",8,SFRM0900,,61,61
+"Dieleman, S., Willett, K. W., & Dambre, J. 2015, MNRAS,",8,SFRM0900,,55,55
+"Ivezić, Ž., Kahn, S. M., Tyson, J. A., et al. 2019, ApJ, 873,",8,SFRM0900,,61,61
+"450, 1441",8,SFRM0900,,9,9
+"9, 90",8,SFRM0900,,5,5
+111,8,SFRM0900,,3,3
+22,9,SFRM1000,,2,2
+"Jarvis, M., Taylor, R., Agudo, I., et al. 2016, in Proceedings
+of MeerKAT Science: On the Pathway to the SKA. 25-27
+May, 6",8,SFRM0900,,122,62
+"Peek, J. E. G., & Burkhart, B. 2019, ApJL, 882, L12
+Raﬁeferantsoa, M., Andrianomena, S., & Davé, R. 2018,",8,SFRM0900,,105,53
+"Jones, M. G., Papastergis, E., Haynes, M. P., & Giovanelli,",8,SFRM0900,,59,59
+"Saintonge, A., Catinella, B., Tacconi, L. J., et al. 2017,",8,SFRM0900,,58,58
+"MNRAS, 479, 4509",8,SFRM0900,,16,16
+"ApJS, 233, 22",8,SFRM0900,,13,13
+"R. 2016, MNRAS, 457, 4393",8,SFRM0900,,25,25
+"Kannappan, S. J. 2004, ApJL, 611, L89",8,SFRM0900,,37,37
+"Kauﬀmann, G., Heckman, T. M., White, S. D. M., et al.",8,SFRM0900,,53,53
+267,8,SFRM0900,,3,3
+"Salim, S., Rich, R. M., Charlot, S., et al. 2007, ApJS, 173,",8,SFRM0900,,60,60
+"Khan, A., Huerta, E. A., Wang, S., et al. 2019, Physics",8,SFRM0900,,55,55
+"Kinney, A. L., Calzetti, D., Bohlin, R. C., et al. 1996, ApJ,",8,SFRM0900,,61,61
+"2003, MNRAS, 341, 33",8,SFRM0900,,20,20
+"Letters B, 795, 248",8,SFRM0900,,19,19
+"467, 38",8,SFRM0900,,7,7
+"Koopmann, R. A., & Kenney, J. D. P. 2004, ApJ, 613, 866",8,SFRM0900,,55,55
+"Koribalski, B. S., Staveley-Smith, L., Westmeier, T., et al.",8,SFRM0900,,60,60
+"2020, arXiv e-prints, arXiv:2002.07311",8,SFRM0900,,38,38
+"Lemonias, J. J., Schiminovich, D., Catinella, B., Heckman,",8,SFRM0900,,58,58
+"T. M., & Moran, S. M. 2013, ApJ, 776, 74",8,SFRM0900,,40,40
+"Li, C., Kauﬀmann, G., Fu, J., et al. 2012, MNRAS, 424,",8,SFRM0900,,54,54
+"Liu, L., Jiang, H., He, P., et al. 2019, arXiv e-prints,",8,SFRM0900,,56,56
+"Loshchilov, I., & Hutter, F. 2017, arXiv e-prints,",8,SFRM0900,,50,50
+1471,8,SFRM0900,,4,4
+arXiv:1908.03265,8,SFRM0900,,16,16
+arXiv:1711.05101,8,SFRM0900,,16,16
+"116, 133",8,SFRM0900,,8,8
+"Lupton, R., Blanton, M. R., Fekete, G., et al. 2004, PASP,",8,SFRM0900,,58,58
+"McKinney, W. 2010, in Proceedings of the 9th Python in",8,SFRM0900,,54,54
+"Science Conference, ed. S. van der Walt & J. Millman, 51
+– 56",8,SFRM0900,,61,56
+"Misra, D. 2019, arXiv e-prints, arXiv:1908.08681",8,SFRM0900,,48,48
+"Selvaraju, R. R., Cogswell, M., Das, A., et al. 2017, in 2017",8,SFRM0900,,61,61
+"IEEE International Conference on Computer Vision
+(ICCV), 618–626",8,SFRM0900,,64,48
+"Serra, P., Oosterloo, T., Morganti, R., et al. 2012, MNRAS,",8,SFRM0900,,59,59
+"Serra, P., Koribalski, B., Kilborn, V., et al. 2015, MNRAS,",8,SFRM0900,,59,59
+"422, 1835",8,SFRM0900,,9,9
+"452, 2680",8,SFRM0900,,9,9
+"Simonyan, K., Vedaldi, A., & Zisserman, A. 2013, arXiv",8,SFRM0900,,54,54
+"e-prints, arXiv:1312.6034",8,SFRM0900,,25,25
+"Smith, L. N. 2018, arXiv e-prints, arXiv:1803.09820",8,SFRM0900,,51,51
+"Spergel, D., Gehrels, N., Baltay, C., et al. 2015, arXiv",8,SFRM0900,,56,56
+"e-prints, arXiv:1503.03757",8,SFRM0900,,26,26
+"Stark, D. V., Kannappan, S. J., Eckert, K. D., et al. 2016,",8,SFRM0900,,59,59
+"Stevens, A. R. H., Diemer, B., Lagos, C. d. P., et al. 2019,",8,SFRM0900,,60,60
+"ApJ, 832, 126",8,SFRM0900,,13,13
+"MNRAS, 483, 5334",8,SFRM0900,,16,16
+"MNRAS, 464, 3796",8,SFRM0900,,16,16
+"2004, ApJ, 613, 898",8,SFRM0900,,19,19
+"Teimoorinia, H., Ellison, S. L., & Patton, D. R. 2017,",8,SFRM0900,,54,54
+"Tremonti, C. A., Heckman, T. M., Kauﬀmann, G., et al.",8,SFRM0900,,53,53
+"van der Walt, S., Colbert, S. C., & Varoquaux, G. 2011,",8,SFRM0900,,55,55
+"Computing in Science and Engineering, 13, 22",8,SFRM0900,,44,44
+"van Driel, W., Butcher, Z., Schneider, S., et al. 2016, A&A,",8,SFRM0900,,60,60
+"Morningstar, W. R., Perreault Levasseur, L., Hezaveh,",8,SFRM0900,,53,53
+"595, A118",8,SFRM0900,,9,9
+"Y. D., et al. 2019, ApJ, 883, 14",8,SFRM0900,,32,32
+"Virtanen, P., Gommers, R., Oliphant, T. E., et al. 2019,",8,SFRM0900,,56,56
+"Moster, B. P., Somerville, R. S., Newman, J. A., & Rix,",8,SFRM0900,,55,55
+"arXiv e-prints, arXiv:1907.10121",8,SFRM0900,,32,32
+"H.-W. 2011, ApJ, 731, 113",8,SFRM0900,,25,25
+"Müller, R., Kornblith, S., & Hinton, G. 2019, arXiv",8,SFRM0900,,51,51
+"e-prints, arXiv:1906.02629",8,SFRM0900,,26,26
+"Wu, J. F., & Boada, S. 2019, MNRAS, 484, 4683
+Zeiler, M. D., & Fergus, R. 2013, arXiv e-prints,",8,SFRM0900,,95,49
+arXiv:1311.2901,8,SFRM0900,,15,15
+"Odekon, M. C., Koopmann, R. A., Haynes, M. P., et al.",8,SFRM0900,,53,53
+"Zhang, H., Goodfellow, I., Metaxas, D., & Odena, A. 2018,",8,SFRM0900,,57,57
+"arXiv e-prints, arXiv:1805.08318",8,SFRM0900,,32,32
+"Pasquet, J., Bertin, E., Treyer, M., Arnouts, S., & Fouchez,",8,SFRM0900,,60,60
+"Zhang, M. R., Lucas, J., Hinton, G., & Ba, J. 2019, arXiv",8,SFRM0900,,57,57
+"2016, ApJ, 824, 110",8,SFRM0900,,19,19
+"D. 2019, A&A, 621, A26",8,SFRM0900,,22,22
+"Paszke, A., Gross, S., Massa, F., et al. 2019, in Advances in",8,SFRM0900,,61,61
+"Neural Information Processing Systems 32, ed.
+H. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché
+Buc, E. Fox, & R. Garnett (Curran Associates, Inc.),
+8024–8035",8,SFRM0900,,162,53
+"Pedregosa, F., Varoquaux, G., Gramfort, A., et al. 2011,",8,SFRM0900,,56,56
+"Journal of Machine Learning Research, 12, 2825",8,SFRM0900,,46,46
+"e-prints, arXiv:1907.08610",8,SFRM0900,,26,26
+"Zhang, W., Li, C., Kauﬀmann, G., et al. 2009, MNRAS,",8,SFRM0900,,52,52
+"Zhou, B., Khosla, A., Lapedriza, A., Oliva, A., & Torralba,
+A. 2016, in 2016 IEEE Conference on Computer Vision
+and Pattern Recognition (CVPR), 2921–2929",8,SFRM0900,,153,59
+"Zhu, W. W., Berndsen, A., Madsen, E. C., et al. 2014, ApJ,",8,SFRM0900,,58,58
+"397, 1243",8,SFRM0900,,9,9
+"781, 117",8,SFRM0900,,8,8
+Software:,11,SFTI1200,,9,9
+"Numpy (van der Walt et al. 2011), scikit-learn (Pedregosa et al. 2011), Scipy (Virtanen et al. 2019),
+matplotlib (Hunter 2007), Pandas (McKinney 2010), Pytorch (Paszke et al. 2019), Fastai (https://github.com/fastai/
+fastai)",9,SFRM1000,,224,114
+23,9,SFRM1000,,2,2
+ACKNOWLEDGMENTS,9,SFRM1000,,15,15
+"The author would like to thank the anonymous referee for useful and detailed comments that have signiﬁcantly
+improved this manuscript. The author would like to thank Josh Peek for suggesting the idea of using CNNs to probe
+galaxy environments and many other useful discussions. The author also thanks Luke Leisman and Mike Jones for
+helpful conversations regarding the ALFALFA data. The author acknowledges support from the National Science
+Foundation under grants NSF AST-1517908 and NSF AST-1616177, and also thanks the Pascal Institute for their
+hospitality (The Self-organised Star Formation Process program). This research was supported by the Munich Institute
+for Astro- and Particle Physics (MIAPP) which is funded by the Deutsche Forschungsgemeinschaft (DFG, German
+Research Foundation) under Germany’s Excellence Strategy - EXC-2094 - 390783311. This work made use of Google
+Colab and Google Compute Engine.",9,SFRM1000,,916,116
+"Funding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Depart-",9,SFRM1000,,113,113
+"ment of Energy Oﬃce of Science, and the Participating Institutions. SDSS-IV acknowledges support and resources
+from the Center for High-Performance Computing at the University of Utah. The SDSS web site is www.sdss.org.",9,SFRM1000,,219,110
+"SDSS-IV is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS
+Collaboration including the Brazilian Participation Group, the Carnegie Institution for Science, Carnegie Mellon
+University, the Chilean Participation Group, the French Participation Group, Harvard-Smithsonian Center for As-
+trophysics, Instituto de Astrofísica de Canarias, The Johns Hopkins University, Kavli Institute for the Physics and
+Mathematics of the Universe (IPMU) / University of Tokyo, the Korean Participation Group, Lawrence Berkeley
+National Laboratory, Leibniz Institut für Astrophysik Potsdam (AIP), Max-Planck-Institut für Astronomie (MPIA
+Heidelberg), Max-Planck-Institut für Astrophysik (MPA Garching), Max-Planck-Institut für Extraterrestrische Physik
+(MPE), National Astronomical Observatories of China, New Mexico State University, New York University, University
+of Notre Dame, Observatário Nacional / MCTI, The Ohio State University, Pennsylvania State University, Shanghai
+Astronomical Observatory, United Kingdom Participation Group, Universidad Nacional Autónoma de México, Univer-
+sity of Arizona, University of Colorado Boulder, University of Oxford, University of Portsmouth, University of Utah,
+University of Virginia, University of Washington, University of Wisconsin, Vanderbilt University, and Yale University.",9,SFRM1000,,1353,118

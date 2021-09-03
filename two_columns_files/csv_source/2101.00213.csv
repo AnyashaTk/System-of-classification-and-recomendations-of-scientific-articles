@@ -1,0 +1,815 @@
+text,space_num
+"                                               MNRAS 000, 1–12 (2020)                                                 Preprint 26 March 2021               Compiled using MNRAS LATEX style file v3.0",47.0
+                                               3D Simulations of Oxygen Shell Burning with and without Magnetic Fields,47.0
+"                                               Vishnu Varma1★ and Bernhard Müller1,2 †",47.0
+"                                               1   School of Physics and Astronomy, 10 College Walk, Monash University, Clayton, VIC 3800, Australia",47.0
+                                               2   ARC Centre of Excellence for Gravitational Wave Discovery – OzGrav,47.0
+                                               Accepted XXX. Received YYY; in original form ZZZ,47.0
+arXiv:2101.00213v2 [astro-ph.SR] 25 Mar 2021,0.0
+                                               ABSTRACT,47.0
+                                               We present a first 3D magnetohydrodynamic (MHD) simulation of convective oxygen and neon shell burning in a non-rotating,47.0
+                                               18 𝑀 star shortly before core collapse to study the generation of magnetic fields in supernova progenitors. We also run a purely,47.0
+                                               hydrodynamic control simulation to gauge the impact of the magnetic fields on the convective flow and on convective boundary,47.0
+"                                               mixing. After about 17 convective turnover times, the magnetic field is approaching saturation levels in the oxygen shell with",47.0
+"                                               an average field strength of ∼1010 G, and does not reach kinetic equipartition. The field remains dominated by small to medium",47.0
+"                                               scales, and the dipole field strength at the base of the oxygen shell is only 109 G. The angle-averaged diagonal components of the",47.0
+"                                               Maxwell stress tensor mirror those of the Reynolds stress tensor, but are about one order of magnitude smaller. The shear flow",47.0
+"                                               at the oxygen-neon shell interface creates relatively strong fields parallel to the convective boundary, which noticeably inhibit",47.0
+                                               the turbulent entrainment of neon into the oxygen shell. The reduced ingestion of neon lowers the nuclear energy generation rate,47.0
+"                                               in the oxygen shell and thereby slightly slows down the convective flow. Aside from this indirect effect, we find that magnetic",47.0
+                                               fields do not appreciably alter the flow inside the oxygen shell. We discuss the implications of our results for the subsequent,47.0
+"                                               core-collapse supernova and stress the need for longer simulations, resolution studies, and an investigation of non-ideal effects",47.0
+                                               for a better understanding of magnetic fields in supernova progenitors.,47.0
+                                               Key words: stars: massive – stars: magnetic fields – stars:interiors – MHD – convection – turbulence,47.0
+                                               1 INTRODUCTION                                                                  Müller & Janka 2015; Müller 2016; Müller et al. 2017; Müller 2020;,47.0
+"                                                                                                                               Bollig et al. 2020). In perturbation-aided explosions, the moderately",127.0
+                                               Rigorous three-dimensional (3D) simulations of neutrino-driven,47.0
+                                                                                                                               subsonic solenoidal velocity perturbation in active convective shells,127.0
+                                               core-collapse supernovae have become highly successful in recent,47.0
+                                                                                                                               at the pre-collapse stage with Mach numbers of order ∼0.1 (Collins,127.0
+"                                               years (e.g., Melson et al. 2015; Lentz et al. 2015; Takiwaki et al.",47.0
+                                                                                                                               et al. 2018) are transformed into strong density and pressure pertur-,127.0
+"                                               2014; Burrows et al. 2019), and have made clear headway in explain-",47.0
+                                                                                                                               bations at the shock (Müller & Janka 2015; Takahashi & Yamada,127.0
+                                               ing the properties of supernova explosions and the compact objects,47.0
+"                                                                                                                               2014; Takahashi et al. 2016; Abdikamalov & Foglizzo 2020), and ef-",127.0
+                                               born in these events (Müller et al. 2017; Müller et al. 2019; Burrows,47.0
+                                                                                                                               fectively strengthen the violent non-radial flow behind the shock that,127.0
+                                               et al. 2020; Powell & Müller 2020; Bollig et al. 2020; Müller 2020).,47.0
+                                                                                                                               develops due to convective instability (Herant et al. 1994; Burrows,127.0
+                                               The latest 3D models are able to reproduce a range of explosion en-,47.0
+"                                                                                                                               et al. 1995; Janka & Müller 1995, 1996) and the standing accretion",127.0
+"                                               ergies up to 1051 erg (Bollig et al. 2020), and yield neutron star birth",47.0
+"                                                                                                                               shock instability (Blondin et al. 2003; Foglizzo et al. 2007), thereby",127.0
+"                                               masses, kicks, and spins largely compatible with the population of",47.0
+                                                                                                                               supporting neutrino-driven shock revival.,127.0
+                                               observed young pulsars (Müller et al. 2019; Burrows et al. 2020).,47.0
+"                                                  A number of ingredients have contributed, or have the potential                 The discovery of perturbation-aided explosions has greatly en-",50.0
+"                                               to contribute, to make modern neutrino-driven explosion models                  hanced interest in multi-dimensional models of late convective burn-",47.0
+                                               more robust. Various microphysical effects such as reduced neutrino             ing stages in massive stars. Several studies have by now followed the,47.0
+                                               scattering opacities due to nucleon strangeness (Melson et al. 2015)            immediate pre-collapse phase of silicon and/or oxygen shell burning,47.0
+                                               and nucleon correlations at high densities (Horowitz et al. 2017;               to collapse in 3D (Couch et al. 2015; Müller 2016; Müller et al. 2016;,47.0
+"                                               Bollig et al. 2017; Burrows et al. 2018), muonisation (Bollig et al.            Müller et al. 2019; Yoshida et al. 2019; Yadav et al. 2020; McNeill",47.0
+"                                               2017), and large effective nucleon masses (Yasin et al. 2020) can be            & Müller 2020; Yoshida et al. 2020). In addition, there has been a",47.0
+"                                               conducive to neutrino-driven shock revival.                                     long-standing strand of research since the 1990s (e.g., Bazan & Ar-",47.0
+"                                                  In addition, a particularly important turning point has been the             nett 1994; Bazán & Arnett 1997; Meakin & Arnett 2006, 2007b,a;",50.0
+"                                               advent of 3D progenitor models and the recognition that aspheric-               Müller et al. 2016; Jones et al. 2017; Cristini et al. 2017, 2019) into",47.0
+                                               ities seeded prior to collapse can precipitate “perturbation-aided”             the detailed behaviour of stellar convection during advanced burning,47.0
+                                               neutrino-driven explosions (Couch & Ott 2013; Couch et al. 2015;                stages with a view to the secular impact of 3D effects not captured,47.0
+                                                                                                                               by spherically symmetric stellar evolution models based on mixing-,127.0
+                                                                                                                               length theory (Biermann 1932; Böhm-Vitense 1958). The details of,127.0
+                                               ★ E-mail: vishnu.rvejayan@monash.edu                                            convective boundary mixing by processes such as quasi-steady turbu-,47.0
+                                               † E-mail: bernhard.mueller@monash.edu                                           lent entrainment (Fernando 1991; Strang & Fernando 2001; Meakin,47.0
+                                               © 2020 The Authors,47.0
+avr_spaces,62.111111111111114
+2       Varma & Müller,0.0
+"& Arnett 2007b) or violent shell mergers (Mocák et al. 2018; Ya-          tion over secular time scales, 3D stellar hydrodynamics, supernova",0.0
+"dav et al. 2020) have received particular attention for their potential   modelling, and local simulations, and also addresses aspects like field",0.0
+to alter the core structure of massive stars and hence affect the dy-     burial (Viganò et al. 2013; Torres-Forné et al. 2016) and the long-,0.0
+namics and final nucleosynthesis yields of the subsequent supernova       time evolution of magnetic fields (Aguilera et al. 2008; De Grandis,0.0
+explosion.                                                                et al. 2020). Significant obstacles need to be overcome until one can,0.0
+   Three-dimensional simulations of convection during advanced            construct a pipeline from 3D progenitor models to 3D supernova sim-,3.0
+"burning stages have so far largely disregarded two important aspects      ulations and beyond. However, 3D MHD simulations of convective",0.0
+of real stars – rotation and magnetic fields. The effects of rotation     burning can already address meaningful questions despite the com-,0.0
+"have been touched upon by the seminal work of Kuhlen et al. (2003),       plexity of the overall problem. As in the purely hydrodynamic case,",0.0
+but more recent studies (Arnett & Meakin 2010; Chatzopoulos et al.        the first step must be to understand the principles governing mag-,0.0
+2016) have been limited to axisymmetry (2D). Magnetohydrody-              netohydrodynamic convection during the late burning stages based,0.0
+"namic (MHD) simulations of convection, while common and mature            on somewhat idealised simulations that are broadly representative of",0.0
+"in the context of the Sun (for a review see, e.g., Charbonneau 2014)      the conditions in convective cores and shells of massive stars.",0.0
+"have yet to be performed for advanced burning stages of massive              In this study, we present a first simulation of magnetoconvection",0.0
+stars.                                                                    during the final phase of oxygen shell burning using the ideal MHD,0.0
+"   Simulations of magnetoconvection during the late burning stages,       approximation. In the tradition of semi-idealised models of late-stage",3.0
+"both in rotating and non-rotating stars, are a big desideratum for sev-   convection, we use a setup that falls within the typical range of con-",0.0
+"eral reasons. Even in slowly rotating massive stars, magnetic fields      ditions in the interiors of massive stars in terms of convective Mach",0.0
+may have a non-negligible impact on the dynamics of neutrino-driven       number and shell geometry (for an overview see Collins et al. 2018),0.0
+"explosions (Obergaulinger et al. 2014; Müller & Varma 2020), and          and is not designed as a fully self-consistent model of any one partic-",0.0
+although efficient field amplification processes operate in the super-    ular star. This simulation constitutes a first step beyond effective 1D,0.0
+"nova core (Endeve et al. 2012; Müller & Varma 2020), it stands to         prescriptions in stellar evolution models to predict the magnetic field",0.0
+"reason that memory of the initial fields may not be lost entirely, es-    strength and geometry encountered in the inner shells of massive stars",0.0
+pecially for strong fields in the progenitor and early explosions. A      at the pre-supernova stage. We also compare to a corresponding non-,0.0
+"better understanding of the interplay between convection, rotation,       magnetic model of oxygen shell convection to gauge the feedback",0.0
+and magnetic fields in supernova progenitors is even more critical        of magnetic fields on the convective flow with a particular view to,0.0
+"for the magnetorotational explosion scenario (e.g., Burrows et al.        two important issues. First, the efficiency of the “perturbation-aided”",0.0
+2007; Winteler et al. 2012; Mösta et al. 2014; Mösta et al. 2018;         neutrino-driven mechanism depends critically on the magnitude of,0.0
+"Obergaulinger & Aloy 2020a,b; Kuroda et al. 2020; Aloy & Ober-            the convective velocities during shell burning, and it is important",0.0
+"gaulinger 2020), which probably explains rare, unusually energetic        to determine whether magnetic fields can significantly slow down",0.0
+"“hypernovae” with energies of up to ∼1052 erg. Again, even though         convective motions as suggested by some recent simulations of solar",0.0
+"the requisite strong magnetic fields may be generated after collapse by   convection (Hotta et al. 2015). Second, magnetic fields could quanti-",0.0
+"amplification processes like the magnetorotational insstability (Bal-     tatively or qualitatively affect shell growth by turbulent entrainment,",0.0
+bus & Hawley 1991; Akiyama et al. 2003) or an 𝛼-Ω dynamo in the           which has been consistently seen in all recent 3D hydrodynamics,0.0
+proto-neutron star (Duncan & Thompson 1992; Thompson & Duncan             simulations of late-stage convection in massive stars.,0.0
+"1993; Raynaud et al. 2020), a robust understanding of magnetic fields        Our paper is structured as follows. In Section 2, we describe the",0.0
+"during late burning is indispensable for reliable hypernova models on     numerical methods, progenitor model, and initial conditions used in",0.0
+"several heads. For sufficiently strong seed fields in the progenitor, the our study and discuss the potential role of non-ideal effects . The",0.0
+initial field strengths and geometry could have a significant impact      results of the simulations are presented in Section 3. We first focus,0.0
+on the development of magnetorotational explosions after collapse         on the strength and geometry of the emerging magnetic field and then,0.0
+"(Bugli et al. 2020; Aloy & Obergaulinger 2020). Furthermore, our          analyse the impact of magnetic fields on the flow, and in particular",0.0
+understanding of evolutionary pathways towards hypernova explo-           on entrainment at shell boundaries. We summarize our results and,0.0
+sions (Woosley & Heger 2006; Yoon & Langer 2005; Yoon et al.              discuss their implications in Section 4.,0.0
+"2010; Cantiello et al. 2007; Aguilera-Dena et al. 2018, 2020) is in-",0.0
+timately connected with the effects of magnetic fields on angular,0.0
+momentum transport in stellar interiors (Spruit 2002; Heger et al.,0.0
+                                                                          2 NUMERICAL METHODS AND SIMULATION SETUP,74.0
+2005; Fuller et al. 2019; Takahashi & Langer 2020).,0.0
+   Beyond the impact of magnetic fields on the pre-supernova evo-         We simulate oxygen and neon shell burning with and without mag-,3.0
+"lution and the supernova itself, the interplay of convection, rotation,   netic fields in a non-rotating 18 𝑀 solar-metallicity star calculated",0.0
+and magnetic fields is obviously relevant to the origin of neutron        using the stellar evolution code Kepler (Weaver et al. 1978; Woosley,0.0
+star magnetic fields as well. It still remains to be explained what       et al. 2002; Heger & Woosley 2010). The same progenitor model has,0.0
+"shapes the distribution of magnetic fields among young pulsars, and       previously been used in the shell convection simulation of Müller",0.0
+why some neutron stars are born as magnetars with extraordinarily         et al. (2016). The structure of the stellar evolution model at the time,0.0
+strong dipole fields of up to 1015 G (Olausen & Kaspi 2014; Tau-          of mapping to 3D is illustrated in Figure 1. The model contains,0.0
+ris et al. 2015; Kaspi & Beloborodov 2017; Enoto et al. 2019). Are        two active convective shells with sufficiently short turnover times to,0.0
+these strong fields of fossil origin (Ferrario & Wickramasinghe 2005;     make time-explicit simulations feasible. The oxygen shell extends,0.0
+"Ferrario et al. 2009; Schneider et al. 2020) or generated by dynamo       from 1.75 𝑀 to 2.25 𝑀 in enclosed mass and from 3, 400 km to",0.0
+"action during or after the supernova (Duncan & Thompson 1992;             7, 900 km in radius, immediately followed further out by the neon",0.0
+"Thompson & Duncan 1993)? Naturally, 3D MHD simulations of the             shell out to 3.53 𝑀 in mass and 27, 000 km in radius.",0.0
+late burning stages cannot comprehensively answer all of these ques-         For our 3D simulations we employ the Newtonian magnetohy-,0.0
+tions. In order to connect to observable magnetic fields of neutron       drodynamic (MHD) version of the CoCoNuT code as described,0.0
+"stars, an integrated approach is required that combines stellar evolu-    in Müller & Varma (2020). The MHD equations are solved in",0.0
+"MNRAS 000, 1–12 (2020)",0.0
+avr_spaces,1.2575757575757576
+                                                                                                                                Simulations of Oxygen Shell Burning                             3,128.0
+"                     1.0                                                                                           is the damping time scale for divergence cleaning, and 𝜖¤nuc and 𝑋¤ 𝑖",21.0
+                                  4        16          24              32,34.0
+                                   He         O           Mg              S                                        are energy and mass fraction source terms from nuclear reactions.,35.0
+                                  12       20          28              36,34.0
+                                     C        Ne          Si              Ar                                       This system conserves the volume integral of a modified total energy,37.0
+"                     0.8                                                                                           density 𝑒,                                        ˆ",21.0
+"                                                                                                                            ˆ which also contains the cleaning field 𝜓,",124.0
+  mass fraction Xi,2.0
+                                                                                                                                ,122.0
+                                                                                                                              𝑣2     𝐵2 + 𝜓ˆ 2,126.0
+"                     0.6                                                                                           𝑒ˆ = 𝜌 𝜖 +      +           ,                                              (7)",21.0
+                                                                                                                              2        8𝜋,126.0
+                     0.4                                                                                           where 𝜖 is the mass-specific internal energy. Note that the energy,21.0
+                                                                                                                   equation differs from that in Tricco et al. (2016) because we imple-,115.0
+                                                                                                                   ment divergence cleaninng on a Eulerian grid and do not advect 𝜓,115.0
+                     0.2                                                                                           with the flow unlike in their smoothed particle hydrodynamics ap-,21.0
+"                                                                                                                   proach. If translated to the Eulerian form of the MHD equations, the",115.0
+                                                                                                                   approach of Tricco et al. (2016) would give rise to an extra advection,115.0
+                     0.0,21.0
+"                                                                                                                   term in the evolution equation for 𝜓, which then requires an addi-",115.0
+                     109                                                                      12,21.0
+                                                                                                                   tional term in the energy equation to ensure energy conservation. In,115.0
+"                                                                                                                   our Eulerian approach, these extra terms are not needed.",115.0
+                     108                                                                      10,21.0
+                                                                                                                      Viscosity and resistivity are not included explicitly in the ideal,118.0
+                                                                                                   s [kb/nuclon],99.0
+"                     107                                                                                           MHD approximation, and only enter through the discretisation of the",21.0
+ ρ [g cm−3],1.0
+                                                                                              8,94.0
+                                  ρ,34.0
+"                                                                                                                   MHD equations, specifically the spatial reconstruction, the computa-",115.0
+                          6,26.0
+"                     10           s                                                                                tion of the Riemann fluxes, and the update of the conserved quantities",21.0
+                                                                                              6,94.0
+                                                                                                                   in the case of reconstruct-solve-average schemes. 1 While this “im-,115.0
+                     105                                                                                           plicit large-eddy simulation” (ILES) approach is well-established for,21.0
+                                                                                              4,94.0
+"                                                                                                                   hydrodynamic turbulence (Grinstein et al. 2007), the magnetohy-",115.0
+                     104,21.0
+                                                                                              2                    drodynamic case is more complicated because the behaviour in the,94.0
+                     103                                                                                           relevant astrophysical regime of low (kinematic) viscosity 𝜈 and resis-,21.0
+                                                                                              0                    tivity 𝜂 may still depend on the magnetic Prandtl number Pm = 𝜈/𝜂.,94.0
+                              1            2                   3                     4                             Different from the regime later encountered in the supernova core,30.0
+"                                                    m [M ]                                                         where Pm  1, oxygen shell burning is characterised by magnetic",52.0
+                                                                                                                   Prandtl numbers slightly below unity (Pm ∼ 0.2). With an effective,115.0
+                                                                                                                   Prandtl number of Pm ∼ 1 in the ILES approach (Federrath et al.,115.0
+"Figure 1. Profiles of selected mass fractions 𝑋𝑖 (top), density 𝜌, and specific                                    2011), there is a potential concern that spurious small-scale dynamo",0.0
+entropy 𝑠 in the 18 𝑀 Kepler stellar evolution model at the time of mapping                                        amplification might arise due to the overestimation of the magnetic,0.0
+"to CoCoNuT. The boundaries of the simulated domain are indicated by                                                Prandtl number, or that saturation field strengths might be too high.",0.0
+dashed vertical lines. Note subtle differences to Figure 1 in Müller et al.                                        The debate about the magnetic Prandtl number dependence in MHD,0.0
+"(2016), which shows the same stellar evolution model at the onset of collapse.",0.0
+                                                                                                                   turbulence is ongoing with insights from theory and simulations,115.0
+"                                                                                                                   (e.g., Schekochihin et al. 2004, 2007; Iskakov et al. 2007; Branden-",115.0
+spherical polar coordinates using the HLLC (Harten-Lax-van Leer-                                                   burg 2011; Pietarila Graham et al. 2010; Sahoo et al. 2011; Thaler &,0.0
+"Contact) Riemann solver (Gurski 2004; Miyoshi & Kusano 2005).                                                      Spruit 2015; Seshasayanan et al. 2017), astrophysical observations",0.0
+"The divergence-free condition ∇ · B = 0 is maintained using a mod-                                                 (e.g., Christensen et al. 2009), and laboratory experiments (Pétrélis",0.0
+"ification of the original hyperbolic divergence cleaning scheme of                                                 et al. 2007; Monchaux et al. 2007). There is, at the very least, the pos-",0.0
+Dedner et al. (2002) that allows for a variable cleaning speed while                                               sibility of robust small-scale dynamo action and saturation governed,0.0
+still maintaining total energy conservation using an idea similar to                                               by balance between the inertial terms and Lorentz force terms down,0.0
+"Tricco et al. (2016). Compared to the original cleaning method, we                                                 to the low values of Pm ∼ 5 × 10−6 in liquid sodium experiments",0.0
+"rescale the Lagrange multiplier 𝜓 to 𝜓ˆ = 𝜓/𝑐 h , where the cleaning                                               (Pétrélis et al. 2007; Monchaux et al. 2007), provided that both the hy-",0.0
+speed 𝑐 h is chosen to be the fast magnetosonic speed. Details of this                                             drodynamic and magnetic Reynolds number are sufficiently high. An,0.0
+"approach and differences to Tricco et al. (2016) are discussed in Ap-                                              ILES approach that places the simulation into a “universal”, strongly",0.0
+"pendix A. The extended system of MHD equations for the density 𝜌,                                                  magnetised regime (Beresnyak 2019) thus appears plausible. More-",0.0
+"velocity v, magnetic field B, the total energy density 𝑒,",0.0
+"                                                       ˆ mass fractions                                            over, even if the ILES approach were only to provide upper limits for",55.0
+"𝑋𝑖 , and the rescaled Lagrange multiplier 𝜓ˆ reads,                                                                magnetic fields and their effects on the flow, meaningful conclusions",0.0
+                                                                                                                   can still be drawn in the context of shell convection simulations.,115.0
+"                                    𝜕𝑡 𝜌 + ∇ · 𝜌v                           =   0,                      (1)",36.0
+                                                 ,43.0
+                                      BB                                                 (∇ · B)B,38.0
+"                𝜕𝑡 (𝜌v) + ∇ · 𝜌vv −       + 𝑃t I                            =   𝜌g −              ,(2)",16.0
+                                      4𝜋                                                    4𝜋                     1,38.0
+"                                                                                                                    For an attempt to quantify the numerical diffusivities, see, e.g., Rembi-",18.0
+                                B(v · B)−𝑐 h 𝜓B,32.0
+"                                             ˆ                                                                     asz et al. (2017). One should emphasise, however, that that the concepts of",45.0
+"       𝜕𝑡 𝑒ˆ + ∇ · (𝑒 + 𝑃t )u −                                             =   𝜌g · v + 𝜌 𝜖¤nuc , (3)",7.0
+                                      4𝜋                                                                           numerical and physical viscosity/resistivity must be carefully distinguished.,38.0
+"                                                                                                                   For one thing, the numerical viscosity and resistivity are problem-dependent",115.0
+                  𝜕𝑡 B + ∇ · (vB − Bv) + ∇(𝑐 h 𝜓),18.0
+"                                                ˆ                           =   0,                      (4)",48.0
+                                                                                                                   as stressed by Rembiasz et al. (2017). In the case of higher-order recon-,115.0
+"                                                   𝜕𝑡 𝜓ˆ + 𝑐 h ∇ · B        =   −𝜓/𝜏,",51.0
+"                                                                                   ˆ                    (5)        struction schemes, they are also scale-dependent (and hence more akin to",83.0
+"                                         𝜕𝑡 (𝜌𝑋𝑖 ) + ∇ · (𝜌𝑋𝑖 v)            =   𝜌 𝑋¤ 𝑖 ,                (6)        higher-order hyperdiffusivities), and they are affected by discrete switches in",41.0
+"                                                                                                                   the reconstruction scheme and Riemann solver. Because of these subtleties,",115.0
+"where g is the gravitational acceleration, 𝑃t is the total pressure,                                               the determination of the effective (magnetic) Reynolds number of a simulation",0.0
+"I is the Kronecker tensor, 𝑐 h is the hyperbolic cleaning speed, 𝜏                                                 is non-trivial (see Section 2.1.2 of Müller 2020).",0.0
+"                                                                                                                                                                      MNRAS 000, 1–12 (2020)",166.0
+avr_spaces,51.8021978021978
+4      Varma & Müller,0.0
+   The nuclear source terms are calculated with the 19-species nu-,3.0
+clear reaction network of Weaver et al. (1978). Neutrino cooling is,0.0
+"ignored, since it becomes subdominant in the late pre-collapse phase",0.0
+as the contraction of the shells speeds up nuclear burning.                                           1011,0.0
+                                                                            Magnetic Field Strength [G],76.0
+   The simulations are conducted on a grid with 400 × 128 × 256,3.0
+"zones in radius 𝑟, colatitude 𝜃, and longitude 𝜑 with an exponential",0.0
+grid in 𝑟 and uniform spacing in 𝜃 and 𝜑. To reduce computational,0.0
+"costs, we excise the non-convective inner core up to 3000 km and                                      1010",0.0
+replace the excised core with a point mass. The grid extends to a,0.0
+"radius of 50, 000 km and includes a small part of the silicon shell, the",0.0
+"entire convective oxygen and neon shells, the non-convective carbon",0.0
+"shell, and parts of the helium shell. Simulations that include the entire                                 109",0.0
+"iron core and silicon shell are of course desirable in future, but the                                                                              Maximum B-field",0.0
+treatment of nuclear quasi-equilibrium in these regions is delicate and                                                                             Average B-field,0.0
+"motivates simulations in a shellular domain instead, with a sufficient",0.0
+“buffer” region between the convectively active shells and the inner                                         0   100   200   300      400     500       600     700,0.0
+boundary of the grid. Due to the significant buoyancy jump between                                                                 Time [s],0.0
+"the silicon shell and the oxygen shell, the flow in the convective shell",0.0
+is largely decoupled from that in the non-convective buffer region.,0.0
+                                                                                  Figure 2. Evolution of the volume-averaged (solid) and maximum (dashed),82.0
+Hydrodynamic waves excited at the convective boundary and Alfvén,0.0
+                                                                                  magnetic field strength within the oxygen shell.,82.0
+waves along field lines threading both regions can introduce some,0.0
+"coupling, but these are excited by the active convective shell and not",0.0
+in the convectively quiet buffer region. No physical flux of waves                Thelen & Cattaneo 2000; Rempel 2014; Käpylä et al. 2020). Since,0.0
+"into the oxygen region from below is expected. Moreover, there is                 our domain boundaries are separated from the convective regions",0.0
+"no strong excitation of waves at the convective boundary in the first             by shell interfaces with significant buoyancy jumps, we opt for the",0.0
+place because of the low convective Mach number of the flow. It                   simplest choice of boundary conditions and merely fix the magnetic,0.0
+turns out that coupling by Alfvén waves can be neglected even more                fields in the ghost zones to their initial values for a homogeneous,0.0
+safely than coupling by internal gravity waves because of the Alfvén              vertical magnetic field. We argue that due to the buffer regions at,0.0
+"number of the flow; as we shall see the Alfvén number always stays                our radial boundaries, and the lack of rotational shear, our choice of",0.0
+well below unity.                                                                 magnetic boundary conditions should not have a significant impact,0.0
+   In order to investigate the impact of magnetic fields on late-                 on the dynamically relevant regions of the star.,3.0
+"stage oxygen shell convection, we run a purely hydrodynamic, non-",0.0
+magnetic simulation and an MHD simulation. In the MHD simu-,0.0
+"lation, we impose a homogeneous magnetic field with 𝐵 𝑧 = 108 G",0.0
+parallel to the grid axis as initial conditions. We implement reflect-            3 RESULTS,0.0
+"ing and periodic boundary conditions in 𝜃 and 𝜑, respectively. For",0.0
+                                                                                  3.1 Evolution of the Magnetic Field,82.0
+the hydrodynamic variables we use hydrostatic extrapolation (Müller,0.0
+"2020) at the inner and outer boundary, and impose strictly vanish-                Both the magnetised and non-magnetised model were run for over 12",0.0
+"ing advective fluxes at the inner boundary. Different from Müller                 minutes of physical time, which corresponds to about 17 convective",0.0
+"et al. (2016), we do not contract the inner boundary to follow the                turnover times. Very soon after convection develops in the oxygen",0.0
+"contraction and collapse of the core. This means that our models                  shell, the turbulent convective flow starts to rapidly amplify the mag-",0.0
+will not (and are not intended to) provide an accurate representa-                netic fields in this region. To illustrate the growth of the magnetic field,0.0
+tion of the pre-collapse state of the particular 18𝑀 star that we                 we show the root-mean-square (RMS) average and maximum value,0.0
+"are simulating. We would expect, e.g., that for the particular 18𝑀                of the magnetic field in the oxygen shell in Figure 2.The magnetic",0.0
+"model, the burning rate and hence the convective velocities would                 field, which we initialised at 108 G, is amplified by over two orders",0.0
+increase until the onset of collapse (Müller et al. 2016) due to the              of magnitude to over 1010 G on average within the shell due to con-,0.0
+contraction of the convective oxygen shell. As a consequence of ac-               vective and turbulent motions. The average magnetic field strength,0.0
+"celerating convection and flux compression, the magnetic fields will              in the shell is still increasing at the end of the simulation, but the",0.0
+"likely also be somewhat higher at the onset of collapse. The model                growth rate has slowed down, likely indicating that the model is ap-",0.0
+is rather meant to reveal the physical principles governing late-stage            proaching some level of magnetic field saturation. While we cannot,0.0
+"magnetoconvection in massive stars, and to be representative of the               with certainty extrapolate the growth dynamics without simulating",0.0
+"typical conditions in oxygen burning shells with the understanding                longer, it appears likely that RMS saturation field strength will settle",0.0
+that there are significant variations in convective Mach number and               somewhere around ≈2 × 1010 G.,0.0
+"shell geometry at the onset of collapse (Collins et al. 2018), which                 A closer look reveals that the magnetic field is not amplified ho-",0.0
+will also be reflected in the magnetic field strengths in the interiors           mogeneously throughout the convective region. The convective ed-,0.0
+"of supernova progenitors.                                                         dies push the magnetic field lines against the convective boundaries,",0.0
+   The inner and outer boundary conditions for the magnetic fields                where the fields are then more strongly amplified by shear flows. This,3.0
+"are less trivial. In simulations of magnetoconvection in the Sun,                 is visualised in Figures 3a and 3b, where both magnetic pressure and",0.0
+"various choices such as vertical boundary conditions (𝐵 𝑥 = 𝐵 𝑦 = 0),             magnetic field strengths appear concentrated at the convective bound-",0.0
+"radial boundary conditions (𝐵 𝜃 = 𝐵 𝜑 = 0), vanishing tangential                  ary. The maximum magnetic field strength shown in Figure 2 (dashed",0.0
+"electric fields or currents, perfect-conductor boundary conditions,               line) therefore essentially mirrors the field at the inner boundary of",0.0
+"or extrapolation to a potential solution have been employed (e.g.,                the oxygen shell (not to be confused with the inner grid boundary).",0.0
+"MNRAS 000, 1–12 (2020)",0.0
+avr_spaces,4.840579710144928
+                                                                                                                    Simulations of Oxygen Shell Burning                                         5,116.0
+      (a)                                                                 1.80                           (b),6.0
+                                                                                                                                                                          10.9,170.0
+"                                                     12,000km             2.55",53.0
+                                                                                                                                                                          10.4,170.0
+                                                                                                                                                                              Magnetic Field Strength [G],174.0
+                                                                          3.30,74.0
+                                                                          4.05                                                                                            9.9,74.0
+                                      3000km                                                                                                                              9.4,38.0
+                                                                          4.80,74.0
+                                                                          5.55   log101/                                                                                  8.9,74.0
+                                                                          6.30                                                                                            8.4,74.0
+                                                                          7.05                                                                                            7.9,74.0
+                                                                          7.80                                                                                            7.4,74.0
+                                                                          8.55                                                                                            6.9,74.0
+      (c)                                                               400                              (d),6.0
+                                                                                                                                                                          0.48,170.0
+                                                                        300,72.0
+                                                                                                                                                                          0.42,170.0
+                                                                        200,72.0
+                                                                                                                                                                          0.36,170.0
+                                                                              Radial Velocity [km/s]                                                                          Silicon Mass Fraction,78.0
+                                                                        100,72.0
+                                                                        0                                                                                                 0.30,72.0
+                                                                          100                                                                                             0.24,74.0
+                                                                          200                                                                                             0.18,74.0
+                                                                          300                                                                                             0.12,74.0
+                                                                          400                                                                                             0.06,74.0
+                                                                          500,74.0
+                                                                                                                                                                          0.00,170.0
+"Figure 3. Snapshots of the equatorial plane in the MHD simulation at a time of 500 s, showing the inner part of the domain from the inner boundary at a radius",0.0
+"of 3000 km out to 12, 000 km. The plotted part of the domain corresponds to the range 1.67 M − 2.54 M in mass coordinate.",0.0
+"    The panels display a) the ratio of magnetic to thermal pressure (i.e., inverse plasma-𝛽), b) the magnitude of the magnetic field strength, c) the radial velocity",4.0
+                                                                  and d) the silicon mass fraction.,66.0
+"We observe a very quick rise in magnetic field strength at the bound-                                  magnitude smaller than the RMS average radial magnetic field, aside",0.0
+"ary at the beginning of the simulation between 20-50 s once the                                        from the first radial zone of our grid, where the dipole component",0.0
+convective flow is fully developed. The rate of growth of the max-                                     is comparable to the total radial magnetic field. This behaviour at,0.0
+imum magnetic field strength after this increases at approximately                                     the grid boundary is likely an artefact of our choice of homogeneous,0.0
+"the same rate as the average magnetic field strength.                                                  magnetic fields at the inner boundary. In general, however, the mag-",0.0
+"  To characterise the geometric structure of the magnetic field, we                                    netic fields in the convective zones appear dominated by higher-order",2.0
+"show a radial profile of the dipole of the radial magnetic field compo-                                multipoles. Disregarding the dipole fields at the inner boundary, the",0.0
+nent2 𝐵𝑟 at the end of the simulation at ≈ 725 s (Figure 4). The dipole                                dipole magnetic field of ≈109 G or below lies in the upper range,0.0
+magnetic field in the convective regions is approximately an order of                                  of observed dipole magnetic fields of white dwarfs (Ferrario et al.,0.0
+"                                                                                                       2015), which have often been taken as best estimates for the dipole",103.0
+                                                                                                       fields in the cores of massive stars.,103.0
+"2  Strictly speaking, the most rigorous way to extract the dipole component of",0.0
+the magnetic field would use a poloidal-toroidal decomposition B = ∇ × [ ∇ ×,0.0
+( Pr) ] + ∇ × ( Tr) where the scalar functions P and T describe the poloidal,0.0
+"and toroidal parts of the field, and consider all components 𝐵𝑟 , 𝐵 𝜃 , and 𝐵 𝜑                        toroidal decomposition cannot be reduced to a straightforward projection onto",0.0
+"arising from the ℓ = 1 component of the poloidal scalar P. Since the poloidal-                         vector spherical harmonics, this analysis is left to future papers.",0.0
+"                                                                                                                                                        MNRAS 000, 1–12 (2020)",152.0
+avr_spaces,60.98076923076923
+      6                             Varma & Müller,6.0
+"                                                                                  Br, = 1 contribution                                                                             Rrr",82.0
+"                          1010                                                    Br, RMS average                                  1021                                            R +R",26.0
+                                                                                                                                                                                   Mrr,179.0
+                                                                                                                                   1020                                            M +M,131.0
+Magnetic Field Strength [G],0.0
+                                                                                                             Stress [g cm 1 s 2],109.0
+                                                                                                                                   1019,131.0
+                              109                                                                                                  1018,30.0
+                                                                                                                                   1017,131.0
+                                                                                                                                   1016,131.0
+                              108                                                                                                  1015,30.0
+                                               2.0          2.5        3.0           3.5         4.0                                      2.0          2.5        3.0        3.5     4.0,47.0
+                                                             Enclosed mass [M ]                                                                         Enclosed mass [M ],61.0
+                                                                                                                Figure 6. The radial (solid) and non-radial (dashed) diagonal components of,112.0
+      Figure 4. The angle-averaged root-mean-square (RMS) value (black) and,6.0
+                                                                                                                the Reynolds stress tensor 𝑅𝑖 𝑗 (black) and Maxwell tensor 𝑀𝑖 𝑗 (red) for the,112.0
+      the dipole component (red) of the radial magnetic field component 𝐵𝑟 as a,6.0
+                                                                                                                MHD convection model at 725 s as a function of enclosed mass.,112.0
+      function of mass coordinate at a time of 725 s. Note that the magnetic field,6.0
+"      strength drops dramatically inside the thin, convectively stable buffer region",6.0
+"      below the oxygen shell, but exhibits a peak in the first radial zone, which is",6.0
+"                                                                                                                ℓ = 1 dipole contribution, caused by our choice of homogeneous",112.0
+      merely a numerical artefact due to imperfect boundary conditions.,6.0
+                                                                                                                magnetic fields as an initial condition. It takes several convective,112.0
+                                                                                                                turnovers before this contribution is no longer dominant. Through-,112.0
+"                              1017                                                                              out the evolution, the spectrum shows a broad plateau at small ℓ and a",30.0
+"                                                                                                                Kolmogorov-like slope at intermediate ℓ, which can be more clearly",112.0
+                                                                                                                distinguished at late times when the first break in the spectrum has,112.0
+                              1016                                                                              moved towards lower ℓ. High-resolution studies are desirable to ex-,30.0
+                                                                                                                tend the inertial range and confirm the development of a Kolmogorov,112.0
+                                                                                                                spectrum at intermediate wave numbers. The break in the spectrum,112.0
+                              1015                                                                              moves towards smaller wave numbers and the peak of the spectrum,30.0
+                                                                                                                shifts to larger scales from ℓ ≈ 12 to ℓ ≈ 7. Simulations of field,112.0
+    M [G2]                                                                                                      amplification by a small-scale dynamo in isotropic turbulence often,4.0
+                                          77.34s                                                                exhibit a Kazantsev spectrum with power-law index 𝑘 −3/2 on large,42.0
+                              1014        274.60s,30.0
+                                          420.75s                                                               scales. Our spectra show a distinctly flatter slope below the spectral,42.0
+"                                          547.95s                                                               speak, indicating that field amplification is subtly different from the",42.0
+                              1013        636.18s                                                               standard picture of turbulent dynamo amplification.,30.0
+                                          724.30s                                                                  This is borne out by a closer look at the magnetic field distribu-,42.0
+                                          k 3/2                                                                 tion within the convective region. Somewhat similar to our recent,42.0
+                                          k 5/3,42.0
+                              1012100                                  101,30.0
+                                                                                                                simulation of field amplification by neutrino-driven convection in,112.0
+"                                                                                                                core-collapse supernovae (Müller & Varma 2020), field amplifica-",112.0
+                                                                                                                tion does not happen homogeneously throughout the convective re-,112.0
+                                                                                                                gion and appears to be predominantly driven by shear flows at the,112.0
+"      Figure 5. Power 𝑀  ˆ 2 in different multipoles ℓ of the radial field component                            convective boundaries. To illustrate this, we compare the spherically-",6.0
+                           ℓ,27.0
+      of the magnetic field in the oxygen shell at different times. Dotted lines show                           averaged diagonal components of the kinetic (Reynolds) and mag-,6.0
+      the slopes of Kolmogorov (𝑘 −5/3 ) and Kazantsev (𝑘 3/2 ) spectra. The low-                               netic (Maxwell) stress tensors 𝑅𝑖 𝑗 and 𝑀𝑖 𝑗 in the MHD model at the,6.0
+      wavenumber part of the spectrum is always distinctly flatter than a Kazantsev                             final time-step of the simulation at ≈725 s (Figure 6). 𝑅𝑖 𝑗 and 𝑀𝑖 𝑗,6.0
+"      spectrum; at intermediate ℓ, we see a Kolmogorov-like spectrum with a break                               are computed as",6.0
+      around ℓ = 30 to a steeper slope in the dissipation range.,6.0
+"                                                                                                                                                𝑅𝑖 𝑗     =   h𝜌𝑣 𝑖 𝑣 𝑗 i,                  (9)",144.0
+                                                                                                                                                              1,158.0
+"        To further illustrate the small-scale nature of the magnetic field                                                                      𝑀𝑖 𝑗     =      h𝐵𝑖 𝐵 𝑗 i,              (10)",8.0
+                                                                                                                                                             8𝜋,157.0
+"      within the oxygen shell, we show angular power spectra, 𝑀ˆ ℓ of the",6.0
+      radial field strength at different times as a function of the spherical                                   where angled brackets denote volume-weighted averages.3 The mag-,6.0
+      harmonics degree ℓ inside the oxygen shell at a radius of ≈5000km                                         netic fields clearly remain well below equipartition with the total,6.0
+"      (Figure 5). 𝑀ˆ ℓ is computed as:                                                                          turbulent kinetic energy, and appear to converge to saturation levels",6.0
+                                                             ℓ ∫                2,61.0
+                                                          1 ∑︁    ∗,58.0
+"                                        𝑀ˆ ℓ         =           𝑌ℓ𝑚 (𝜃, 𝜑)𝐵𝑟 dΩ .                     (8)      3",40.0
+                                                         8𝜋                                                       Note that no explicit decomposition of the velocity field into fluctuating,57.0
+                                                           𝑚=−ℓ,59.0
+                                                                                                                components and a spherically averaged background state is required since the,112.0
+"                          Very early in the simulation, the spectrum shows a significant                        background state is hydrostatic.",26.0
+"      MNRAS 000, 1–12 (2020)",6.0
+avr_spaces,58.59722222222222
+                                                                                                  Simulations of Oxygen Shell Burning                          7,98.0
+"about one order of magnitude below, although longer simulations",0.0
+will be required to confirm this. The non-radial diagonal compo-                           3.0,0.0
+nents 𝑅 𝜃 𝜃 + 𝑅 𝜑 𝜑 and 𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑 are generally higher than the,0.0
+respective radial components 𝑅𝑟𝑟 and 𝑀𝑟𝑟 . Throughout most of,0.0
+"the domain, the Maxwell stresses are considerably smaller than the                         2.5",0.0
+"Reynolds stresses, but it is noteworthy that the profile of the non-",0.0
+                                                                                           2.0,91.0
+                                                                               Ekin[1047erg],79.0
+"radial components of 𝑀𝑖 𝑗 runs largely parallel to those of 𝑅𝑖 𝑗 , just",0.0
+with a difference of slightly more than an order of magnitude. Peaks,0.0
+of the magnetic stresses at the shell interfaces suggest that field                        1.5,0.0
+amplification is driven by shear flow at the convective boundaries.,0.0
+                                                                                           1.0,91.0
+Convective motions then transport the magnetic field into the interior,0.0
+of the convective regions and also generate radial field components.,0.0
+The humps of 𝑀𝑟𝑟 within the convection zones are less pronounced,0.0
+"than in 𝑅𝑟𝑟 , which indicates that little amplification by convective                      0.5                           Er(MHD)                Er(Hydro)",0.0
+"updrafts and downdrafts takes place within the convection region.                                                        E , (MHD)              E , (Hydro)",0.0
+"   At the outer boundaries of the oxygen and neon shell, we ob-                            0.00   100   200       300 400 500                600 700",3.0
+serve rough equipartition between 𝑅𝑟𝑟 and 𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑 . The fact                                                   Time [s],0.0
+that the growth of the field slows down once the model approaches,0.0
+𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑 ≈ 𝑅𝑟𝑟 suggests that this “partial equipartition” may de-,0.0
+"termine the saturation field strength, but the very different behaviour          Figure 7. Evolution of the total radial (solid) and non-radial (dashed) con-",0.0
+at the inner boundary with 𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑  𝑅𝑟𝑟 argues against this. It           vective kinetic energy within the oxygen shell for the purely hydrodynamic,0.0
+"is plausible, though, that the saturation field strength is (or rather will      (purple) and MHD (black) model, respectively.",0.0
+be) determined at the boundary. Linear stability analysis of the mag-,0.0
+netised Kelvin-Helmholtz instability (e.g. Chandrasekhar 1961; Sen,0.0
+                                                                                 where 𝑟 − and 𝑟 + are the inner and outer radii of the oxygen shell. We,81.0
+1963; Fejer 1964; Miura & Pritchett 1982; Frank et al. 1996; Kep-,0.0
+                                                                                 compute the inner and outer shell radii 𝑟 − and 𝑟 + as the midpoints of,81.0
+"pens et al. 1999; Ryu et al. 2000; Obergaulinger, M. et al. 2010; Liu",0.0
+"                                                                                 the steep, entropy slope between the oxygen shell and the silicon and",81.0
+"et al. 2018) shows that shear instability, which is critical for efficiently",0.0
+"                                                                                 neon shells below and above. Due to shell growth by entrainment, 𝑟 −",81.0
+"generating small-scale fields, are suppressed by magnetic fields par-",0.0
+                                                                                 and 𝑟 + are time-dependent (Figure 8a).,81.0
+allel to the direction of the shear flow as long as the Alfvén number,0.0
+                                                                                    For both models most of the turbulent kinetic energy is in the,84.0
+is smaller than two. With kinetic fields well below equipartition,0.0
+                                                                                 non-radial direction. This is different from the rough equipartition,81.0
+"(cp. Figure 6), our models fall into the regime of low Alfvén number;",0.0
+"                                                                                 𝐸𝑟 ≈ 𝐸 𝜃 , 𝜑 seen in many simulations of buoyancy-driven convection",81.0
+hence the generation of non-radial fields at the boundaries may be,0.0
+"                                                                                 (Arnett et al. 2009). There is, however, no firm physical principle",81.0
+self-limiting as a result of the stabilising impact of magnetic fields on,0.0
+                                                                                 that dictates such equipartition; indeed a shell burning simulation of,81.0
+the Kelvin-Helmholtz instability. A naive application of the principle,0.0
+                                                                                 the same 18 𝑀 progenitor with the Prometheus code also showed,81.0
+of marginal stability would suggest saturation occurs once the Alfvén,0.0
+                                                                                 significantly more kinetic energy in non-radial motions (Müller et al.,81.0
+velocity at the boundary equals the shear velocity jump across the,0.0
+"                                                                                 2016). Ultimately, the high ratio 𝐸 𝜃 , 𝜑 /𝐸𝑟 merely indicates that the",81.0
+"shell interface, which would imply 𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑 ≈ 𝑅 𝜃 𝜃 + 𝑅 𝜑 𝜑 . Our",0.0
+                                                                                 fully developed flow happens to predominantly select eddies with,81.0
+simulation suggests that saturation probably occurs at significantly,0.0
+                                                                                 larger extent in the horizontal than in the vertical direction. 4,81.0
+"smaller values, and a more quantitative analysis of the saturation",0.0
+"                                                                                    Discounting stochastic variations, the radial component 𝐸𝑟 of the",84.0
+mechanism will clearly be required in future to elucidate the relation,0.0
+                                                                                 turbulent kinetic energy for both the hydrodynamic and MHD model,81.0
+between the shear velocity (and possibly the width of the shear layer),0.0
+"                                                                                 are similar until the final ≈300 s, at which point they start to devi-",81.0
+and the saturation field strength.,0.0
+                                                                                 ate more significantly. Clearer differences appear in the non-radial,81.0
+"                                                                                 component 𝐸 𝜃 , 𝜑 , with the hydro model showing irregular episodic",81.0
+3.2 Impact of Magnetic Fields on Convective Boundary Mixing                      bursts in kinetic energy which are not mirrored in the MHD model.,0.0
+                                                                                 Since the only difference in the setup of the two runs is the presence,81.0
+"The slowing growth of the magnetic field indicates that feedback                 or absence of magnetic fields, this points to feedback of the magnetic",0.0
+"effects on the flow should become important during the later phase               field on the flow as the underlying reason, unless the variations are",0.0
+of the simulation. It is particularly interesting to consider the effect         purely stochastic. Closer examination suggests that feedback of the,0.0
+"of the strong fields tangential to the oxygen-neon shell interface               magnetic field on the flow is the more likely explanation, and the",0.0
+"on convective boundary mixing, though we also consider potential                 nature of this feedback will become more apparent as we analyse",0.0
+effects on the flow in the interior of the convective regions.                   convective boundary mixing in the models.,0.0
+"   To this end, we compare the MHD model to a purely hydrodynamic                   To this end, we first consider the evolution of the boundaries 𝑟 −",3.0
+simulation of oxygen and neon shell convection. Figure 7 compares                and 𝑟 + of the oxygen shell and the total oxygen shell mass 𝑀O . For,0.0
+"the total kinetic energy in convective motions in the oxygen shell               computing the oxygen shell mass, we take the (small) deviation of the",0.0
+between the models. The radial and non-radial components 𝐸𝑟 and                  boundaries from spherical symmetry into account more accurately,0.0
+"𝐸 𝜃 , 𝜑 of the kinetic energy are defined as                                     than when computing 𝑟 − and 𝑟 + , and integrate the mass contained",0.0
+                              1,30.0
+                                   ∫                                             in cells within the entropy range 3.8-5.2 𝑘 B /nucleon. As shown by,35.0
+"                   𝐸𝑟 =                  𝜌𝑣 𝑟2 d𝑉,                 (11)",19.0
+                              2,30.0
+                               𝑟− ≤𝑟 ≤𝑟+,31.0
+"                                   ∫                                             4  In the low-Mach number regime, the anelastic condition ∇ · (𝜌v) ≈ 0 im-",35.0
+                              1,30.0
+"                 𝐸𝜃,𝜑 =                  𝜌(𝑣 2𝜃 + 𝑣 2𝜑 ) d𝑉,       (12)          plies a relation between the aspect ratio of convective cells and the horizontal",17.0
+                              2,30.0
+                               𝑟− ≤𝑟 ≤𝑟+                                         and vertical kinetic energy of any mode.,31.0
+"                                                                                                                                    MNRAS 000, 1–12 (2020)",132.0
+avr_spaces,27.384615384615383
+8                  Varma & Müller,0.0
+                             9       (a)                                                         (b)                                                        0.54,29.0
+                             8,29.0
+                                                                                                                                                            0.53,156.0
+                                                                                                                                                                       O-shell mass [M ],167.0
+                             7,29.0
+            Radius [108cm],12.0
+                             6                                                                                                                              0.52,29.0
+                             5                                                                                                                              0.51,29.0
+                                                                                     Hydro,85.0
+                             4                                                       MHD,29.0
+                                                                                                                                                            0.50,156.0
+           0.0014                    (c)                                                         (d)                                                        7.0,11.0
+                                                                                                                                                               Energy generation rate[1046erg/s],159.0
+           0.0012                                                                                                                                           6.5,11.0
+           0.0010                                                                                                                                           6.0,11.0
+                                                                                                                                                            5.5,156.0
+M [M /s],0.0
+           0.0008,11.0
+                                                                                                                                                            5.0,156.0
+           0.0006,11.0
+                                                                                                                                                            4.5,156.0
+           0.0004,11.0
+                                                                                                                                                            4.0,156.0
+           0.0002                                                                                                                                           3.5,11.0
+           0.0000                                                                                                                                           3.0,11.0
+                                 0         100   200   300      400     500   600   700      0         100   200   300      400     500    600     700,33.0
+                                                             Time [s]                                                    Time [s],61.0
+Figure 8. Effects of entrainment on the oxygen shell for both the MHD model (black) and the equivalent purely hydrodynamic model (purple). The panels show,0.0
+"                                                                                                              ¤ into the oxygen shell, and d) the volume-integrated",110.0
+"a) the inner and outer oxygen shell radii, b) the total mass within the oxygen shell, c) the entrainment rate 𝑀",0.0
+nuclear energy generation rate throughout the shell..,0.0
+"Figure 8 (panels a and b), the oxygen shell in the non-magnetic model                        effect of magnetic fields on entrainment. Our simulations qualita-",0.0
+"grows slightly, but perceptibly faster without magnetic fields than in                       tively illustrate such an effect, but models at higher resolution are",0.0
+"the MHD model, starting at a simulation time of about 300 s. The                             of course desirable to more reliably quantify the impact of magnetic",0.0
+presence of relatively strong magnetic fields in the boundary layer                          fields on turbulent entrainment. The resolution requirements for ac-,0.0
+apparently reduces entrainment in line with the inhibiting effect of                         curate entrainment rates are hard to quantify. Findings from extant,0.0
+magnetic fields parallel to the flow on shear instabilities discussed in                     numerical studies of the magnetised Kelvin-Helmholtz instability,0.0
+"Section 3.1.                                                                                 (e.g., Keppens et al. 1999) cannot be easily transferred because of",0.0
+"                                                                                             important physical differences (e.g., the lack of buoyant stabilisation",93.0
+   The entrainment rate 𝑀¤ = d𝑀O /d𝑡 (Figure 8c) is only slightly                            of the boundary). In purely hydrodynamic simulations of entrain-,3.0
+"higher in the purely hydrodynamic model most of the time, but the                            ment during oxygen shell burning, resolving the shear layer between",0.0
+"entrainment rate exhibits occasional spikes, which do not occur in                           the oxygen and neon shell with ≈15-22 radial zones as in our model",0.0
+"the MHD model. We note that these spikes in 𝑀¤ occur at around                               was found to be sufficient for quantitatively credible, but not fully",0.0
+the same times as the bursts in non-radial kinetic energy (Figure 7).                        converged results (Müller et al. 2016).,0.0
+It appears that the stabilisation of the boundary by magnetic fields,0.0
+"mostly suppresses rarer, but more powerful entrainment events that                             The different entrainment rate also explains long-term, time-",0.0
+mix bigger lumps of material into the oxygen shell. A comparison                             averaged differences in convective kinetic energy between the two,0.0
+with the shell burning simulations of Müller et al. (2016) provides                          simulations. The convective kinetic energy is determined by the total,0.0
+"confidence that this effect is robust. Because Müller et al. (2016)                          nuclear energy generation rate, which is shown in Figure 8d. Both",0.0
+"contract the inner boundary condition, convection grows more vig-                            models show an overall trend downwards over time in nuclear energy",0.0
+"orous with time and their entrainment rates are higher, adding about                         generation, which can be ascribed to a slight thermal expansion of the",0.0
+"0.05 𝑀 to the oxygen shell within 300 s. Their resolution test (Fig-                         shell and the depletion of fuel. After about 200 s, the purely hydrody-",0.0
+"ure 20 in Müller et al. 2016) only showed variations of 0.004 𝑀                              namics model exhibits a higher energy generation rate, which persists",0.0
+in the entrained mass between different runs of the same progeni-                            until the end of the simulations and becomes more pronounced. The,0.0
+"tor model. In our simulations, the oxygen shell only grows by about                          higher energy generation rate in the non-magnetic model is indeed",0.0
+"0.03 𝑀 from 300 s to 700 s (i.e, when the magnetic field does not                            mirrored by a stronger decrease in the neon mass on the grid (Fig-",0.0
+"grow substantially any more), yet we find a difference in shell growth                       ure 9) of about the right amount to explain the average difference in",0.0
+"of about 0.01 𝑀 between the magnetic and non-magnetic model. It                              energy generation rate at late times. We note, however, that the strong",0.0
+therefore seems likely that there is indeed an appreciable systematic                        episodic entrainment events in the purely hydrodynamic model are,0.0
+"MNRAS 000, 1–12 (2020)",0.0
+avr_spaces,30.983870967741936
+                                                                                        Simulations of Oxygen Shell Burning                         9,88.0
+                                                                 Hydro      by the inhibiting effect of non-radial magnetic fields on shear insta-,65.0
+"                                                                 MHD        bilities at shell boundaries, which appear to be the primary driver of",65.0
+        0.335                                                               field amplification.,8.0
+                                                                               We find that magnetic fields do not have an appreciable effect,79.0
+"                                                                            on the interior flow inside the oxygen shell, but observe a moderate",76.0
+        0.330                                                               reduction of turbulent entrainment at the oxygen-neon shell bound-,8.0
+Mass [M ],0.0
+                                                                            ary in the presence of magnetic fields. Magnetic fields appear to,76.0
+"                                                                            suppress stronger episodic entrainment events, although they do not",76.0
+        0.325                                                               quench entrainment completely. Through the reduced entrainment,8.0
+"                                                                            rate, magnetic fields also indirectly affect the dynamics inside the",76.0
+                                                                            convective region slightly because they reduce the energy release,76.0
+"                                                                            through the dissociation of ingested neon, which results in slightly",76.0
+        0.320                                                               smaller convective velocities in the MHD model.,8.0
+                                                                               Our findings have important implications for core-collapse su-,79.0
+                                                                            pernova modelling. We predict initial fields in the oxygen shell of,76.0
+            0   100     200     300      400     500    600     700         non-rotating progenitors that are significantly stronger than assumed,12.0
+                                      Time [s]                              in our recent simulation of a neutrino-driven explosion aided by,38.0
+                                                                            dynamo-generated magnetic fields (Müller & Varma 2020). With rel-,76.0
+"  Figure 9. Total mass of neon in the entire computational domain for the   atively strong seed-fields, there is likely less of a delay until magnetic",2.0
+  purely hydrodynamic simulation (purple) and the MHD simulation (black).   fields can contribute the additional “boost” to neutrino heating and,2.0
+                                                                            purely hydrodynamic instabilities seen in Müller & Varma (2020).,76.0
+                                                                            This should further contribute to the robustness of the neutrino-,76.0
+  not associated with an immediate increase in nuclear energy gen-          driven mechanism for non-rotating and slowly-rotating massive stars.,2.0
+  eration rate. This is mainly because the energy release from the          Our simulations also suggest that the perturbation-aided mechanism,2.0
+  dissociation of the entrained neon is delayed and spread out in time      (Couch & Ott 2013; Müller & Janka 2015) will not be substantially,2.0
+  as the entrained material is diluted and eventually mixed down to         affected by the inclusion of magnetic fields. Since magnetic fields do,2.0
+  regions of sufficiently high temperature.                                 not become strong enough to substantially alter the bulk flow inside,2.0
+"     The overall effect of magnetic fields on the bulk flow is rather       the convective region, the convective velocities and eddy scales as",5.0
+  modest. We do not see a similarly strong quenching of the convective      the key parameters for perturbation-aided explosions remain largely,2.0
+  flow by magnetic fields as in recent MHD simulations of the solar         unchanged.,2.0
+"  convection zone (Hotta et al. 2015), who reported a reduction of             The implications of our results for neutron star magnetic fields",2.0
+"  convective velocities by up to 50% at the base of the convection zone.    are more difficult to evaluate since the observable fields will, to a",2.0
+"  Such an effect is not expected as long as the magnetic fields stay well   large degree, be set by processes during and after the supernova and",2.0
+  below kinetic equipartition in the interior of convective shells as in    cannot be simply extrapolated from the progenitor stage by magnetic,2.0
+"  our MHD simulation. Longer simulations will be required to confirm        flux conservation. That said, dipole fields of order 109 G at the base",2.0
+  that magnetic fields during late shell burning stages indeed remain       of the oxygen shell – which is likely to end up as the neutron star,2.0
+  “weak” by comparison and do not appreciably influence the bulk            surface region – are not in overt conflict with dipole fields of order,2.0
+  dynamics of convection.                                                   1013 G in many young pulsars inside supernova remnants (Enoto,2.0
+"                                                                            et al. 2019). However, considering the relatively strong small-scale",76.0
+"                                                                            fields of ∼1010 G with peak values over 1011 G, it may prove diffi-",76.0
+                                                                            cult to produce neutron stars without strong small-scale fields at the,76.0
+  4 CONCLUSIONS,2.0
+                                                                            surface. There is a clear need for an integrated approach towards the,76.0
+  We investigated the amplification and saturation of magnetic fields       evolution of magnetic fields from the progenitor phase through the,2.0
+  during convective oxygen shell burning and the backreaction of the        supernova and into the compact remnant phase in order to fully grasp,2.0
+  field on the convective flow by conducting a 3D MHD simulation and        the implications of the current simulations.,2.0
+"  a purely hydrodynamic simulation of an 18 𝑀 progenitor shortly be-           Evidently, further follow-up studies are also needed on the final",2.0
+  fore core collapse. The simulations were run for about 12 minutes of      evolutionary phases of supernova progenitors. Longer simulations,2.0
+"  physical time (corresponding to about 17 convective turnover times),      and resolution studies will be required to better address issues like",2.0
+"  at which point field amplification has slowed down considerably,          the saturation field strength, the saturation mechanism, and the impact",2.0
+  though a quasi-stationary state has not yet been fully established.       of magnetic fields on turbulent entrainment. Full models that include,2.0
+     The magnetic field in the oxygen shell is amplified to ∼1010 G         the core and self-consistently follow the evolution of the star to,5.0
+  and dominated by small-to-medium-scale structures with angular            collapse will be required to generate accurate 3D initial conditions,2.0
+  wavenumber ℓ ∼ 7. The dipole component is considerably smaller            for supernova simulations. The critical issue of non-ideal effects and,2.0
+  with ∼109 G near the inner boundary of the oxygen shell and less fur-     the behaviour of turbulent magnetoconvection for magnetic Prandtl,2.0
+  ther outside. The profiles of the radial and non-radial diagonal com-     numbers slightly smaller than one at very high Reynolds numbers,2.0
+  ponents 𝑀𝑟𝑟 and 𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑 of the Maxwell stress tensor mirror         deserves particular consideration. Some findings of our “optimistic”,2.0
+"  the corresponding components 𝑅𝑟𝑟 and 𝑅 𝜃 𝜃 + 𝑅 𝜑 𝜑 of the Reynolds        approach based on the ideal MHD approximation should, however,",2.0
+"  stress tensor, but remain about an order of magnitude smaller, i.e.,      prove robust, such as the modest effect of magnetic fields on the",2.0
+"  kinetic equipartition is not reached. However, 𝑀 𝜃 𝜃 + 𝑀 𝜑 𝜑 can ap-      convective bulk flow and hence the reliability of purely hydrodynamic",2.0
+  proach or exceed the radial component 𝑅𝑟𝑟 at the convective bound-        models (Couch et al. 2015; Müller et al. 2016; Yadav et al. 2020;,2.0
+  aries. The saturation mechanism for field amplification needs to be       Müller 2020; Fields & Couch 2020) and even 1D mixing-length,2.0
+"  studied in more detail, but we speculate that saturation is mediated      theory (Collins et al. 2018) to predict pre-collapse perturbations",2.0
+"                                                                                                                           MNRAS 000, 1–12 (2020)",123.0
+avr_spaces,25.80597014925373
+10        Varma & Müller,0.0
+"in supernova progenitors. Future 3D simulations will also have to            solves a slightly modified system of equations,",0.0
+address rotation and its interplay with convection and magnetic fields.,0.0
+"                                                                                                            𝜕𝑡 𝜌 + ∇ · 𝜌v      =    0,                    (A6)",108.0
+                                                                                                                          ,101.0
+                                                                                                              BB                          (∇ · B)B,110.0
+"                                                                                  𝜕𝑡 (𝜌v) + ∇ · 𝜌vv −              + 𝑃t I      =    𝜌g −            ,     (A7)",82.0
+                                                                                                               4𝜋                             4𝜋,111.0
+                                                                                                                          ,97.0
+                                                                                                                 B(v · B)                     B · ∇(𝑐 h 𝜓),113.0
+                                                                                                                                                        ˆ,152.0
+ACKNOWLEDGEMENTS                                                                  𝜕𝑡 𝑒 + ∇ · (𝑒 + 𝑃t )u −                      =    𝜌g · v −              (A8),0.0
+"                                                                                                                                                           ,",155.0
+                                                                                                                   4𝜋                             4𝜋,115.0
+"We thank A. Heger for fruitful conversations. BM was supported by                   𝜕𝑡 B + ∇ · (vB − Bv) + ∇(𝑐 h 𝜓),     ˆ     =    0,                    (A9)",0.0
+"ARC Future Fellowship FT160100035. We acknowledge computer                                                 𝜕𝑡 𝜓ˆ + 𝑐 h ∇ · B   =    −𝜓/𝜏,",0.0
+                                                                                                                                       ˆ                 (A10),135.0
+time allocations from NCMAS (project fh6) and ASTAC. This re-,0.0
+search was undertaken with the assistance of resources and services          It is evident that rescaling the cleaning field does not alter the charac-,0.0
+"from the National Computational Infrastructure (NCI), which is sup-          teristic structure of the system, but the more symmetric formulation",0.0
+ported by the Australian Government. It was supported by resources           of Equations (A9) and (A10) with identical dimensions for 𝜓ˆ and B,0.0
+provided by the Pawsey Supercomputing Centre with funding from               allows us to explicitly cast the energy equation in conservation form.,0.0
+the Australian Government and the Government of Western Australia.           The term 𝑐 h ∇ · B in Equation (A10) gives a contribution (denoted by,0.0
+                                                                             a subscript “h”) to the time derivative of the energy associated with,77.0
+"                                                                             the cleaning field,",77.0
+                                                                                            ,77.0
+                                                                               𝜕 ( 𝜓ˆ 2 /2),79.0
+                                                                                                  = −𝑐 h 𝜓∇,98.0
+                                                                                                         ˆ · B.                                          (A11),105.0
+                                                                                    𝜕𝑡         h,84.0
+DATA AVAILABILITY,0.0
+"                                                                             Because of the rescaling of the cleaning field, no time derivative of",77.0
+"The data underlying this article will be shared on reasonable request        the cleaning speed 𝑐 h appears, which is critical for writing the energy",0.0
+"to the authors, subject to considerations of intellectual property law.      equation in a manifestly conservative form. Adding Equations (A8)",0.0
+                                                                             and (A11) yields,77.0
+                                                                                                                      ,90.0
+                                                                                                           B(v · B)                  B · ∇(𝑐 h 𝜓),107.0
+                                                                                                                                               ˆ + 𝑐 h 𝜓∇,143.0
+                                                                                                                                                       ˆ ·B,151.0
+"                                                                             𝜕𝑡 𝑒ˆ + ∇ · (𝑒 + 𝑃t )u −                    = 𝜌g · v −                          ,",77.0
+                                                                                                                4𝜋                              4𝜋,112.0
+APPENDIX A: ENERGY-CONSERVING FORMULATION                                                                                                                (A12),0.0
+OF HYPERBOLIC DIVERGENCE CLEANING,0.0
+                                                                             where 𝑒ˆ = 𝜌(𝜖 + 𝑣 2 /2) + (𝐵2 + 𝜓ˆ 2 )/(8𝜋). The cleaning terms on the,77.0
+The original extended generalised Lagrange multiplier formulation            right-hand side can be written as a divergence and hence absorbed,0.0
+"of the MHD equations of Dedner et al. (2002) reads (without non-             in the energy flux,",0.0
+adiabatic energy source/sink terms and the advection equations for                                                             ,0.0
+"the mass fractions),                                                                                        B(v · B) − 𝑐 h 𝜓Bˆ",0.0
+                                                                             𝜕𝑡 𝑒ˆ + ∇ · (𝑒 + 𝑃t )u −                             = 𝜌g · v.              (A13),77.0
+                                                                                                                     4𝜋,117.0
+"                             𝜕𝑡 𝜌 + ∇ · 𝜌v      =    0,                 (A1)",29.0
+"                                                                           As noted by Tricco et al. (2016), the damping term for the cleaning",21.0
+                               BB                          (∇ · B)B,31.0
+"       𝜕𝑡 (𝜌v) + ∇ · 𝜌vv −          + 𝑃t I      =    𝜌g −            , (A2)  field will effectively add to dissipation into thermal energy in such",7.0
+"                               4𝜋                              4𝜋            an approach, but they found the additional dissipation insignificant",31.0
+                                          ,17.0
+                                 B(v · B)                      B · ∇𝜓        in practice compared to other sources of numerical dissipation.,33.0
+"      𝜕𝑡 𝑒 + ∇ · (𝑒 + 𝑃t )u −                   =    𝜌g · v −         , (A3)",6.0
+                                     4𝜋                          4𝜋,37.0
+"              𝜕𝑡 B + ∇ · (vB − Bv) + ∇𝜓         =    0,                 (A4)",14.0
+                            𝜕𝑡 𝜓 + 𝑐2h ∇ · B    =    −𝜓/𝜏.              (A5) REFERENCES,28.0
+"                                                                           Abdikamalov E., Foglizzo T., 2020, MNRAS, 493, 3496",15.0
+"where 𝑒 = 𝜌 𝜖 + 𝑣 2 /2 + 𝐵2 /(8𝜋) is the standard expression for the         Aguilera-Dena D. R., Langer N., Moriya T. J., Schootemeĳer A., 2018, ApJ,",0.0
+"total internal, kinetic, and magnetic energy of the fluid. This system             858, 115",0.0
+"                                                                             Aguilera-Dena D. R., Langer N., Antoniadis J., Müller B., 2020, ApJ, 901,",77.0
+includes an extra source term −B · ∇𝜓/(4𝜋) in the energy equation.,0.0
+                                                                                   114,83.0
+"To ensure total energy conservation, one must also take into account",0.0
+"                                                                             Aguilera D. N., Pons J. A., Miralles J. A., 2008, A&A, 486, 255",77.0
+"the energy carried by the cleaning field 𝜓, which can be worked out          Akiyama S., Wheeler J. C., Meier D. L., Lichtenstadt I. Meier D. L., Licht-",0.0
+"as 𝑒 𝜓 = 𝜓 2 /(8𝜋𝑐2h ) (Tricco & Price 2012). Tricco et al. (2016) noted           enstadt 2003, ApJ, 584, 954",0.0
+"that that the original system of equations (A1–A5) of Dedner et al.          Aloy M.-Á., Obergaulinger M., 2020, Monthly Notices of the Royal Astro-",0.0
+"(2002) no longer guarantees total energy conservation if a variable                nomical Society, 500, 4365",0.0
+"cleaning speed is used. 5 They show that total energy conservation is        Arnett W. D., Meakin C., 2010, in Cunha K., Spite M., Barbuy B., eds, IAU",0.0
+"recovered if one introduces a rescaled cleaning field 𝜓ˆ = 𝜓/𝑐 h and               Symposium Vol. 265, Chemical Abundances in the Universe: Connecting",0.0
+"                                                                                   First Stars to Planets. pp 106–110, doi:10.1017/S174392131000030X",83.0
+"                                                                             Arnett D., Meakin C., Young P. A., 2009, ApJ, 690, 1715",77.0
+"                                                                             Balbus S. A., Hawley J. F., 1991, ApJ, 376, 214",77.0
+"                                                                             Bazan G., Arnett D., 1994, ApJ, 433, L41",77.0
+"5 In addition, energy conservation is also violated if one reformulates the  Bazán G., Arnett D., 1997, Nuclear Phys. A, 621, 607",0.0
+"equation for 𝜓 using a convective derivative, d𝜓/d𝑡 + 𝑐h2 ∇ · B = −𝜓/𝜏,      Beresnyak A., 2019, Living Reviews in Computational Astrophysics, 5, 2",0.0
+"which can be rectified by including an additional source term in the energy  Biermann L., 1932, Z. Astrophys., 5, 117",0.0
+"equation (Tricco & Price 2012). This problem is immaterial, however, as long Blondin J. M., Mezzacappa A., DeMarino C., 2003, ApJ, 584, 971",0.0
+"as 𝜓 is not advected with the fluid in a Eulerian formulation.               Böhm-Vitense E., 1958, Z. Astrophys., 46, 108",0.0
+"MNRAS 000, 1–12 (2020)",0.0
+avr_spaces,44.19767441860465
+                                                                                            Simulations of Oxygen Shell Burning                          11,92.0
+"Bollig R., Janka H.-T., Lohs A., Martínez-Pinedo G., Horowitz C. J., Melson    Kaspi V. M., Beloborodov A. M., 2017, ARA&A, 55, 261",0.0
+"    T., 2017, Physical Review Letters, 119, 242702                             Keppens R., Tóth G., Westermann R. H. J., Goedbloed J. P., 1999, Journal of",4.0
+"Bollig R., Yadav N., Kresse D., Janka H. T., Mueller B., Heger A., 2020,           Plasma Physics, 61, 1",0.0
+"    arXiv e-prints, arXiv:2010.10506                                           Kuhlen M., Woosley W. E., Glatzmaier G. A., 2003, in Turcotte S., Keller",4.0
+"Brandenburg A., 2011, ApJ, 741, 92                                                 S. C., Cavallo R. M., eds, Astronomical Society of the Pacific Conference",0.0
+"Bugli M., Guilet J., Obergaulinger M., Cerdá-Durán P., Aloy M. A., 2020,           Series Vol. 293, 3D Stellar Evolution. p. 147",0.0
+"    MNRAS, 492, 58                                                             Kuroda T., Arcones A., Takiwaki T., Kotake K., 2020, ApJ, 896, 102",4.0
+"Burrows A., Hayes J., Fryxell B. A., 1995, ApJ, 450, 830                       Lentz E. J., et al., 2015, ApJ, 807, L31",0.0
+"Burrows A., Dessart L., Livne E., Ott C. D., Murphy J., 2007, ApJ, 664, 416    Liu Y., Chen Z. H., Zhang H. H., Lin Z. Y., 2018, Physics of Fluids, 30,",0.0
+"Burrows A., Vartanyan D., Dolence J. C., Skinner M. A., Radice D., 2018,           044102",0.0
+"    Space Science Reviews, 214, 33                                             McNeill L. O., Müller B., 2020, MNRAS, 497, 4644",4.0
+"Burrows A., Radice D., Vartanyan D., 2019, MNRAS, 485, 3153                    Meakin C. A., Arnett D., 2006, ApJ, 637, L53",0.0
+"Burrows A., Radice D., Vartanyan D., Nagakura H., Skinner M. A., Dolence       Meakin C. A., Arnett D., 2007a, ApJ, 665, 690",0.0
+"    J. C., 2020, MNRAS, 491, 2715                                              Meakin C. A., Arnett D., 2007b, ApJ, 667, 448",4.0
+"Cantiello M., Yoon S. C., Langer N., Livio M., 2007, A&A, 465, L29             Melson T., Janka H.-T., Bollig R., Hanke F., Marek A., Müller B., 2015, ApJ,",0.0
+"Chandrasekhar S., 1961, Hydrodynamic and Hydromagnetic Stability.                  808, L42",0.0
+"    Clarendon, Oxford                                                          Miura A., Pritchett P. L., 1982, J. Geophys. Res., 87, 7431",4.0
+"Charbonneau P., 2014, ARA&A, 52, 251                                           Miyoshi T., Kusano K., 2005, Journal of Computational Physics, 208, 315",0.0
+"Chatzopoulos E., Couch S. M., Arnett W. D., Timmes F. X., 2016, ApJ, 822,      Mocák M., Meakin C., Campbell S. W., Arnett W. D., 2018, Monthly Notices",0.0
+"    61                                                                             of the Royal Astronomical Society, 481, 2918",4.0
+"Christensen U. R., Holzwarth V., Reiners A., 2009, Nature, 457, 167            Monchaux R., et al., 2007, Phys. Rev. Lett., 98, 044502",0.0
+"Collins C., Müller B., Heger A., 2018, MNRAS, 473, 1695                        Mösta P., et al., 2014, Astrophysical Journal Letters, 785, 29",0.0
+"Couch S. M., Ott C. D., 2013, ApJ, 778, L7                                     Mösta P., Roberts L. F., Halevi G., Ott C. D., Lippuner J., Haas R., Schnetter",0.0
+"Couch S. M., Chatzopoulos E., Arnett W. D., Timmes F. X., 2015, ApJ, 808,          E., 2018, ApJ, 864, 171",0.0
+"    L21                                                                        Müller B., 2016, Publ. Astron. Soc. Australia, 33, e048",4.0
+"Cristini A., Meakin C., Hirschi R., Arnett D., Georgy C., Viallet M., Walk-    Müller B., 2020, Living Reviews in Computational Astrophysics, 6, 3",0.0
+"    ington I., 2017, MNRAS, 471, 279                                           Müller B., Janka H.-T., 2015, MNRAS, 448, 2141",4.0
+"Cristini A., Hirschi R., Meakin C., Arnett D., Georgy C., Walkington I., 2019, Müller B., Varma V., 2020, MNRAS, 498, L109",0.0
+"    MNRAS, 484, 4645                                                           Müller B., Viallet M., Heger A., Janka H.-T., 2016, ApJ, 833, 124",4.0
+"De Grandis D., Turolla R., Wood T. S., Zane S., Taverna R., Gourgouliatos      Müller B., Melson T., Heger A., Janka H.-T., 2017, MNRAS, 472, 491",0.0
+"    K. N., 2020, ApJ, 903, 40                                                  Müller B., et al., 2019, MNRAS, 484, 3307",4.0
+"Dedner A., Kemm F., Kröner D., Munz C. D., Schnitzer T., Wesenberg M.,         Obergaulinger M., Aloy M.-Á., 2020a, MNRAS, 492, 4613",0.0
+"    2002, Journal of Computational Physics, 175, 645                           Obergaulinger M., Aloy M.-Á., 2020b, arXiv e-prints, arXiv:2008.07205",4.0
+"Duncan R. C., Thompson C., 1992, ApJ, 392, L9                                  Obergaulinger, M. Aloy, M. A. Müller, E. 2010, A&A, 515, A30",0.0
+"Endeve E., Cardall C. Y., Budiardja R. D., Beck S. W., Bejnood A., Toedte      Obergaulinger M., Janka H.-T., Aloy M. A., 2014, MNRAS, 445, 3169",0.0
+"    R. J., Mezzacappa A., Blondin J. M., 2012, ApJ, 751, 26                    Olausen S. A., Kaspi V. M., 2014, ApJS, 212, 6",4.0
+"Enoto T., Kisaka S., Shibata S., 2019, Reports on Progress in Physics, 82,     Pétrélis F., Mordant N., Fauve S., 2007, Geophysical and Astrophysical Fluid",0.0
+"    106901                                                                         Dynamics, 101, 289",4.0
+"Federrath C., Chabrier G., Schober J., Banerjee R., Klessen R. S., Schleicher  Pietarila Graham J., Cameron R., Schüssler M., 2010, ApJ, 714, 1606",0.0
+"    D. R. G., 2011, Phys. Rev. Lett., 107, 114504                              Powell J., Müller B., 2020, MNRAS, 494, 4665",4.0
+"Fejer J. A., 1964, Physics of Fluids, 7, 499                                   Raynaud R., Guilet J., Janka H.-T., Gastine T., 2020, Science Advances, 6,",0.0
+"Fernando H. J. S., 1991, Annual Review of Fluid Mechanics, 23, 455                 eaay2732",0.0
+"Ferrario L., Wickramasinghe D. T., 2005, MNRAS, 356, 615                       Rembiasz T., Obergaulinger M., Cerdá-Durán P., Aloy M.-Á., Müller E.,",0.0
+"Ferrario L., Pringle J. E., Tout C. A., Wickramasinghe D. T., 2009, MNRAS,         2017, ApJS, 230, 18",0.0
+"    400, L71                                                                   Rempel M., 2014, Astrophysical Journal, 789, 132",4.0
+"Ferrario L., de Martino D., Gänsicke B. T., 2015, Space Sci. Rev., 191, 111    Ryu D., Jones T. W., Frank A., 2000, ApJ, 545, 475",0.0
+"Fields C. E., Couch S. M., 2020, ApJ, 901, 33                                  Sahoo G., Perlekar P., Pandit R., 2011, New Journal of Physics, 13, 013036",0.0
+"Foglizzo T., Galletti P., Scheck L., Janka H.-T., 2007, ApJ, 654, 1006         Schekochihin A. A., Cowley S. C., Maron J. L., McWilliams J. C., 2004,",0.0
+"Frank A., Jones T. W., Ryu D., Gaalaas J. B., 1996, ApJ, 460, 777                  Phys. Rev. Lett., 92, 054502",0.0
+"Fuller J., Piro A. L., Jermyn A. S., 2019, MNRAS, 485, 3661                    Schekochihin A. A., Iskakov A. B., Cowley S. C., McWilliams J. C., Proctor",0.0
+"Grinstein F., Margolin L., Rider W., 2007, Implicit Large Eddy Simulation -        M. R. E., Yousef T. A., 2007, New Journal of Physics, 9, 300",0.0
+"    Computing Turbulent Fluid Dynamics. Cambridge University Press             Schneider F. R. N., Ohlmann S. T., Podsiadlowski P., Röpke F. K., Balbus",4.0
+"Gurski K. F., 2004, SIAM Journal on Scientific Computing, 25, 2165                 S. A., Pakmor R., 2020, MNRAS, 495, 2796",0.0
+"Heger A., Woosley S. E., 2010, Astrophysical Journal, 724, 341                 Sen A. K., 1963, Physics of Fluids, 6, 1154",0.0
+"Heger A., Woosley S. E., Spruit H. C., 2005, ApJ, 626, 350                     Seshasayanan K., Gallet B., Alexakis A., 2017, Phys. Rev. Lett., 119, 204503",0.0
+"Herant M., Benz W., Hix W. R., Fryer C. L., Colgate S. A., 1994, ApJ, 435,     Spruit H. C., 2002, A&A, 381, 923",0.0
+"    339                                                                        Strang E. J., Fernando H. J. S., 2001, Journal of Fluid Mechanics, 428, 349",4.0
+"Horowitz C. J., Caballero O. L., Lin Z., O’Connor E., Schwenk A., 2017,        Takahashi K., Langer N., 2020, arXiv e-prints, arXiv:2010.13909",0.0
+"    Phys. Rev. C, 95, 025801                                                   Takahashi K., Yamada S., 2014, ApJ, 794, 162",4.0
+"Hotta H., Rempel M., Yokoyama T., 2015, ApJ, 803, 42                           Takahashi K., Iwakami W., Yamamoto Y., Yamada S., 2016, ApJ, 831, 75",0.0
+"Iskakov A. B., Schekochihin A. A., Cowley S. C., McWilliams J. C., Proctor     Takiwaki T., Kotake K., Suwa Y., 2014, ApJ, 786, 83",0.0
+"    M. R. E., 2007, Phys. Rev. Lett., 98, 208501                               Tauris T. M., et al., 2015, in Advancing Astrophysics with the Square Kilo-",4.0
+"Janka H.-T., Müller E., 1995, ApJ, 448, L109                                       metre Array (AASKA14). p. 39 (arXiv:1501.00005)",0.0
+"Janka H.-T., Müller E., 1996, A&A, 306, 167                                    Thaler I., Spruit H. C., 2015, A&A, 578, A54",0.0
+"Jones S., Andrassy R., Sandalski S., Davis A., Woodward P., Herwig F., 2017,   Thelen J. C., Cattaneo F., 2000, MNRAS, 315, 13",0.0
+"    MNRAS, 465, 2991                                                           Thompson C., Duncan R. C., 1993, ApJ, 408, 194",4.0
+"Käpylä P. J., Gent F. A., Olspert N., Käpylä M. J., Brandenburg A., 2020,      Torres-Forné A., Cerdá-Durán P., Pons J. A., Font J. A., 2016, MNRAS, 456,",0.0
+"    Geophys. Astrophys. Fluid Dyn., 114, 8                                         3813",4.0
+"                                                                                                                                  MNRAS 000, 1–12 (2020)",130.0
+avr_spaces,4.366197183098592
+12        Varma & Müller,0.0
+"Tricco T. S., Price D. J., 2012, Journal of Computational Physics, 231, 7214",0.0
+"Tricco T. S., Price D. J., Bate M. R., 2016, Journal of Computational Physics,",0.0
+"    322, 326",4.0
+"Viganò D., Rea N., Pons J. A., Perna R., Aguilera D. N., Miralles J. A., 2013,",0.0
+"    MNRAS, 434, 123",4.0
+"Weaver T. A., Zimmerman G. B., Woosley S. E., 1978, ApJ, 225, 1021",0.0
+"Winteler C., Käppeli R., Perego A., Arcones A., Vasset N., Nishimura N.,",0.0
+"    Liebendörfer M., Thielemann F. K., 2012, Astrophysical Journal Letters,",4.0
+"    750, 22",4.0
+"Woosley S. E., Heger A., 2006, ApJ, 637, 914",0.0
+"Woosley S. E., Heger A., Weaver T. A., 2002, Rev. Mod. Phys., 74, 1015",0.0
+"Yadav N., Müller B., Janka H. T., Melson T., Heger A., 2020, ApJ, 890, 94",0.0
+"Yasin H., Schäfer S., Arcones A., Schwenk A., 2020, Phys. Rev. Lett., 124,",0.0
+    092701,4.0
+"Yoon S. C., Langer N., 2005, A&A, 443, 643",0.0
+"Yoon S. C., Woosley S. E., Langer N., 2010, ApJ, 725, 940",0.0
+"Yoshida T., Takiwaki T., Kotake K., Takahashi K., Nakamura K., Umeda H.,",0.0
+"    2019, ApJ, 881, 16",4.0
+"Yoshida T., Takiwaki T., Kotake K., Takahashi K., Nakamura K., Umeda H.,",0.0
+"    2020, arXiv e-prints, arXiv:2012.13261",4.0
+This paper has been typeset from a TEX/LATEX file prepared by the author.,0.0
+"MNRAS 000, 1–12 (2020)",0.0
+avr_spaces,1.1666666666666667

@@ -1,0 +1,66 @@
+text,space_num
+                                              Astronomy & Astrophysics manuscript no. pera_etal                                                                                 ©ESO 2021,46.0
+"                                              April 9, 2021",46.0
+                                                    pyUPMASK: An improved unsupervised clustering algorithm,52.0
+"                                                                      M. S. Pera1 , G. I. Perren1 , A. Moitinho2 , H. D. Navone3, 4 , and R. A. Vazquez5",70.0
+                                                    1,52.0
+"                                                        Instituto de Astrofísica de La Plata (IALP-CONICET), 1900 La Plata, Argentina",56.0
+                                                        e-mail: msolpera@gmail.com,56.0
+                                                    2,52.0
+"                                                        CENTRA, Faculdade de Ciências, Universidade de Lisboa, Ed. C8, Campo Grande, 1749-016 Lisboa, Portugal",56.0
+                                                    3,52.0
+"                                                        Facultad de Ciencias Exactas, Ingeniería y Agrimensura (UNR), 2000 Rosario, Argentina",56.0
+                                                    4,52.0
+"                                                        Instituto de Física de Rosario (CONICET-UNR), 2000 Rosario, Argentina,",56.0
+                                                    5,52.0
+"                                                        Facultad de Ciencias Astronómicas y Geofísicas (UNLP-IALP-CONICET), 1900 La Plata, Argentina",56.0
+"                                                    Received December 28, 2020; accepted March 25, 2021",52.0
+arXiv:2101.01660v3 [astro-ph.GA] 8 Apr 2021,0.0
+                                                                                                                ABSTRACT,112.0
+"                                                    Aims. We present pyUPMASK, an unsupervised clustering method for stellar clusters that builds upon the original UPMASK package.",52.0
+                                                    The general approach of this method makes it plausible to be applied to analyses that deal with binary classes of any kind as long as,52.0
+                                                    the fundamental hypotheses are met. The code is written entirely in Python and is made available through a public repository.,52.0
+                                                    Methods. The core of the algorithm follows the method developed in UPMASK but introduces several key enhancements. These,52.0
+"                                                    enhancements not only make pyUPMASK more general, they also improve its performance considerably.",52.0
+                                                    Results. We thoroughly tested the performance of pyUPMASK on 600 synthetic clusters affected by varying degrees of contamination,52.0
+"                                                    by field stars. To assess the performance, we employed six different statistical metrics that measure the accuracy of probabilistic",52.0
+                                                    classification.,52.0
+"                                                    Conclusions. Our results show that pyUPMASK is better performant than UPMASK for every statistical performance metric, while",52.0
+                                                    still managing to be many times faster.,52.0
+                                                    Key words. open clusters and associations: general – methods: data analysis – methods: statistical – open clusters and associations:,52.0
+                                                    individual: NGC2516,52.0
+                                              1. Introduction                                                           probabilities was presented (Balaguer-Núñez et al. 2020)1 . More,46.0
+                                                                                                                        references regarding membership estimation methods can be,120.0
+"                                                                                                                        found in Krone-Martins & Moitinho (2014, henceforth KMM14)",120.0
+                                              Galactic open clusters are of great importance for the study of,46.0
+                                                                                                                        and Perren et al. (2015).,120.0
+"                                              the Galaxy’s chemical evolution, structure, and dynamics; these",46.0
+                                              sources also provide test beds for astrophysical codes that model             The Unsupervised Photometric Membership Assignment in,46.0
+"                                              the evolution of stars. Located largely on the disk of the Milky          Stellar Clusters algorithm (UPMASK), originally presented in",46.0
+"                                              Way, analyses of open clusters is severely hindered by the pres-          KMM14, has the advantage of being not only nonparametric,",46.0
+"                                              ence of contaminating field stars, located in the foreground and          but also unsupervised. This means that no a priori selection of",46.0
+"                                              background of the object of interest. These stars are projected           field stars is required to serve as a comparison model, which",46.0
+                                              on the observed field of view and end up deeply mixed with the            is generally the case in the previously mentioned methods. Al-,46.0
+                                              cluster members. The process of disentangling these two classes           though UPMASK was motivated by the need of assigning clus-,46.0
+"                                              of elements, of members from nonmembers (i.e., field stars), can          ter memberships from photometric data, KMM14 had pointed",46.0
+                                              be referred to as “decontamination”. A proper decontamination             out that the method is general and could be easily applied to,46.0
+                                              of the cluster region is a key previous step to the analysis of           other data types and clusters of objects. Recent examples of,46.0
+"                                              the cluster sequence in search of fundamental parameters (e.g.,           UPMASK used on proper motions (and parallax data) can be",46.0
+"                                              metallicity, age, distance and extinction) that characterize the          found in Cantat-Gaudin et al. (2018a), Cantat-Gaudin et al.",46.0
+"                                              open cluster. This analysis, which is often performed in photo-           (2018b), Cantat-Gaudin et al. (2019), Carrera et al. (2019), and",46.0
+"                                              metric space, requires a sequence that is as complete as possible,        Yontan et al. (2019). In the six years since its publication, the",46.0
+                                              but also as free of contaminating field stars (nonmembers) as             KMM14 article has been referenced almost 50 times; this work,46.0
+                                              possible. The goal of a decontamination algorithm is to obtain a          has also been applied to stellar proper motions and to study clus-,46.0
+"                                              subset of stars that fulfills both these conditions simultaneously.       ters of galaxies, which indicates a wide adoption by the astro-",46.0
+                                                                                                                        physical community.,120.0
+"                                                  Over the years, a handful of decontamination algorithms                   In this work we present an improved version of the original",50.0
+"                                              have been presented in the stellar cluster literature. Most of these      UPMASK algorithm, which we call pyUPMASK because it is",46.0
+                                              are variations of the Vasilevskis-Sanders method (Vasilevskis             written entirely in Python. We believe this new package can be,46.0
+"                                              et al. 1958; Sanders 1971) applied over proper motions, which             of great use, particularly with the advent of the recent early data",46.0
+"                                              are generally considered to be much better member discrimina-             release 3 (eDR3, Gaia Collaboration et al. 2020) of the Gaia",46.0
+                                              tors than photometry. Nonparametric approaches have also been,46.0
+                                              developed (Cabrera-Cano & Alfaro 1990; Javakhishvili et al.               1,46.0
+                                                                                                                          Clusterix      2.0:     http://clusterix.cab.inta-csic.es/,122.0
+                                              2006) and even an interactive tool to determine membership                clusterix/,46.0
+"                                                                                                                                                                  Article number, page 1 of 14",162.0
+avr_spaces,56.215384615384615

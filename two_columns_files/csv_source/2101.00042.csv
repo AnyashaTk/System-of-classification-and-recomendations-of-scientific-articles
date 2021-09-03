@@ -1,0 +1,926 @@
+text,space_num
+"                                                 Draft version January 5, 2021",49.0
+                                                 Typeset using LATEX twocolumn style in AASTeX63,49.0
+                                                                      Metastable Helium Absorptions with 3D Hydrodynamics and,70.0
+                                                                                   Self-Consistent Photochemistry I:,83.0
+"                                                                   WASP-69b, Dimensionality, XUV Flux Level, Spectral Types, and Flares",67.0
+"                                                                                                       Lile Wang1 , Fei Dai2",103.0
+                                                                                                             ABSTRACT,109.0
+                                                                                            ∗,92.0
+arXiv:2101.00042v1 [astro-ph.EP] 31 Dec 2020,0.0
+                                                            The metastable Helium (He ) lines near 10830 Å are ideal probes of atmospheric erosion–a common,60.0
+                                                         phenomenon of close-in exoplanet evolution. A handful of exoplanet observations yielded well-resolved,57.0
+"                                                         He∗ absorption features in transits, yet they were mostly analyzed with 1D isothermal models prescrib-",57.0
+                                                         ing mass-loss rates. This work devises 3D hydrodynamics co-evolved with ray-tracing radiative transfer,57.0
+                                                         and non-equilibrium thermochemsitry. Starting from the observed stellar/planetary properties with,57.0
+"                                                         reasonable assumptions about the host’s high energy irradiation, we predict from first principle the",57.0
+"                                                         mass loss rate, the temperature and ionization profiles, and 3D outflow kinematics. Our simulations",57.0
+                                                         well reproduce the observed He∗ line profiles and light curves of WASP-69b. We further investigate the,57.0
+                                                         dependence of He∗ observables on simulation conditions and host radiation. The key findings are: (1),57.0
+                                                         Simulations reveal a photoevaporative outflow (∼ 0.5 M⊕ Gyr−1 ) for WASP-69b without a prominent,57.0
+"                                                         comet-like tail, consistent with the symmetric transit shape (Vissapragada et al. 2020). (2) 3D sim-",57.0
+"                                                         ulations are mandatory for hydrodynamic features, including Coriolis force, advection, and kinematic",57.0
+                                                         line broadening. (3) EUV (> 13.6 eV) photons dominate photoevaporative outflows and populate He∗,57.0
+                                                         via recombination; FUV is also detrimental by destroying He∗ ; X-ray plays a secondary role. (4) K,57.0
+"                                                         stars hit the sweet spot of EUV/FUV balance for He∗ line observation, while G and M stars are also",57.0
+                                                         worthy targets. (5) Stellar flars create characteristic responses in the He∗ line profiles.,57.0
+                                                         Keywords: planets and satellites: atmospheres — planets and satellites: composition — planets and,57.0
+                                                                   satellites: physical evolution — method: numerical,67.0
+"                                                                    1. INTRODUCTION                                  is heavily contaminated by geocoronal emission, and in-",68.0
+                                                  One of the most exciting discoveries in exoplanetary               terstellar absorption saturating the very center of the,50.0
+"                                               sciences in recent years is that the radii of sub-Neptune             line (e.g. Ehrenreich et al. 2015). Moreover, one has to",47.0
+                                               planets have a bimodal distribution (Fulton et al. 2017).             go space to observe this UV transition. These effects,47.0
+                                               The prevailing explanation is the atmospheric erosion by              significantly limit the number of systems for which we,47.0
+"                                               either photoevaporation (e.g. Owen & Wu 2013, 2017)                   can study Lyα transits.",47.0
+"                                               or core-powered mass loss (Ginzburg et al. 2018; Gupta                   Besides Lyα , helium lines are emerging as promis-",47.0
+"                                               & Schlichting 2019, 2020). In any case, the promi-                    ing outflow indicators. The 23 S state of helium is often",47.0
+"                                               nence of the radius gap implies that atmospheric ero-                 called the “metastable state” (He∗ hereafter), because",47.0
+                                               sion is probably a stage of evolution that close-in exo-              the 23 S→ 11 S transition is a magnetic dipole process,47.0
+                                               planets very commonly go through. Since the discovery                 with a slow spontaneous decay rate of A ' 1.3×10−3 s−1,47.0
+"                                               of the Lyman α (Lyα hereafter) transit of hot Jupiter                 (Drake 1971, 2006). Meanwhile, the transition between",47.0
+"                                               HD209458 b (Vidal-Madjar et al. 2003), Lyα has been a                 the lower 23 S and the upper 23 PJ states of helium con-",47.0
+"                                               workhorse for studying atmospheric erosion (e.g. Lecave-              sists of three lines with A > 107 s−1 , whose wavelengths",47.0
+"                                               lier Des Etangs et al. 2010; Kulow et al. 2014). How-                 in vacuum are 10832.08 Å (for the J = 0 upper state),",47.0
+"                                               ever, Lyα has some unavoidable limitations, namely, it                10833.24 Å (J = 1), and 10833.33 Å (J = 2) respec-",47.0
+                                                                                                                     tively. These lines are often referred to as “He i 10830 Å,117.0
+"                                                                                                                     lines” or the “metastable helium lines”, as they are ra-",117.0
+"                                                 1   Center for Computational Astrophysics, Flatiron Institute,      diatively decoupled from the ground state. The abun-",49.0
+"                                                     New York, NY 10010; lwang@flatironinstitute.org",53.0
+                                                 2,49.0
+"                                                                                                                     dance of helium, the absence of geocoronal or intersteal-",117.0
+"                                                     Division of Geological and Planetary Sciences,",53.0
+"                                                     California Institute of Technology, Pasadena, CA 91125",53.0
+"                                                                                                                     lar containmination, the longevity of metastable state,",117.0
+                                                                                                                     and observability from the ground together enabled the,117.0
+avr_spaces,60.72222222222222
+ 2,1.0
+He∗ lines as an excellent probe of ionized flows in various   profile characterized by a longer-than-expected egress,0.0
+"scenarios of astrophysics, including quasars (e.g. Leighly    that could be caused by a comet-like tail associated with",0.0
+"et al. 2011), stellar atmospheres and outflows (see Ed-       the mass loss. However, Vissapragada et al. (2020) sug-",0.0
+"wards et al. 2003, and references to the article), and T      gests a symmetric shape of transit using better-sampled",0.0
+Tauri stars (Kwan et al. 2007).                               light curves with higher precision and signal-to-noise ra-,0.0
+"   Over the years, researchers have proposed the He∗          tio (SNR). Another interesting point about WASP-69b",3.0
+lines as a tracer of mass loss of close-in exoplanets (Sea-   is the apparent temporal variability of the He∗ transit,0.0
+ger & Sasselov 2000; Turner et al. 2016; Oklopčić & Hi-     depth seen in Nortmann et al. (2018). We will try to un-,0.0
+rata 2018). It was the secure detection of Spake et al.       derstand these observations of WASP-69b in the frame-,0.0
+"(2018) that revitalized interest in this unique transi-       work of our 3D hydrodynamic simulations. Afterwards,",0.0
+"tion. At the time of writing this paper, several close-in     we will use WASP-69 as a fiducial case to investigate",0.0
+"exoplanets have transmission He∗ line profiles resolved       the impact of dimensionality, XUV flux level, and host",0.0
+by ground-based spectrographs (e.g. Allart et al. 2018;       spectral types on the observables of the He∗ lines.,0.0
+Nortmann et al. 2018; Salz et al. 2018; Kirk et al. 2020;        This paper is structured as follows. §2 describes our,0.0
+"Ninan et al. 2020). More recently, Vissapragada et al.        methods of numerical simulations and synthetic obser-",0.0
+"(2020) custom made a narrow band filter specifically for      vations. In §3, we present a fiducial model of WASP-69b",0.0
+the He∗ transitions on the diffuser-based photometric         that well reproduces all current observations. Based on,0.0
+"system on Palomar/WIRC. The resultant precise light           this model, §4 studies how various system parameters",0.0
+curves of the He∗ is complementary to the line profiles       impact the rate of photoevaporation and He∗ observ-,0.0
+from the near-infradred spectrographs. A lot of infor-        ables. §5 explores the possibility that stellar flare may,0.0
+mation about atmospheric outflow is hiding in these line      cause the observed temporal variability of WASP-69b.,0.0
+profiles and light curves waiting to be interpreted. The      §6 summarizes the findings of this paper.,0.0
+models that are commonly used in the literature to inter-,0.0
+                                                                                    2. METHODS,84.0
+pret these He∗ observations are 1D spherical symmetric,0.0
+models that are isothermal (Oklopčić & Hirata 2018;                              2.1. Basic Setup,0.0
+"Oklopčić 2019; Palle et al. 2020), or have prescribed          We conceptually divided a planet into four regions:",0.0
+"heating efficiency (Lampón et al. 2020). The model           (1) a dense core, (2) a convective inner atmosphere, (3)",0.0
+"is widely recognized for its simplicity and effectiveness,    a quasi-isothermal outer atmosphere with equilibrium",0.0
+"however it has to prescribe, rather than predict, a mass      temperature Teq and (4) an outflowing region irradiated",0.0
+loss rate or a temperature profile.                           by high energy photons (e.g. Rafikov 2006; Ginzburg,0.0
+"   In this work, we build upon our previous model that        et al. 2016; Owen & Wu 2016). The equilibrium tem-",3.0
+"conducts hydrodynamics, self-consistent thermochem-           perature Teq satisfies,",0.0
+"istry, and ray-tracing radiative transfer to study the",0.0
+                                                                                         1/4 ,84.0
+photoevaporation of sub-Neptune planets (Wang & Dai                                    L∗           a −1/2,0.0
+"                                                                       Teq ' 886 K                             ,     (1)",71.0
+"2018, WD18 hereafter). We have streamlined the code                                    L         0.1 AU",0.0
+so that it is sufficiently fast to run in 3D to fully capture,0.0
+"                                                              where L∗ is the bolometric luminosity of the star, and",62.0
+"outflow dynamics, and added various processes that are",0.0
+                                                              a is the semi-major axis of the planetary orbit. Our,62.0
+relevant to the (de)population of He∗ . We will show,0.0
+"                                                              simulations will focus on regions (3) and (4), whereas",62.0
+in this paper that using the observed stellar/planetary,0.0
+                                                              the structure of regions (1) and (2) provide the correct,62.0
+properties and making reasonable estimate of the high,0.0
+                                                              boundary conditions crucial for correctly reproducing,62.0
+energy spectral energy distribution (SED) about the,0.0
+                                                              the measured mass and radius of the planet. We re-,62.0
+"host star, our model can predict mass loss rate, the tem-",0.0
+                                                              fer the reader to Appendix A for the details of how we,62.0
+"perature profile, the ionization states, and synthesize the",0.0
+                                                              set up the internal structures of our planet and resultant,62.0
+observed He∗ line observables from first principles.,0.0
+                                                              boundary conditions for our simulations.,62.0
+"   In this first work of a series, we focus on WASP-69b,",3.0
+                                                                 We characterize the high energy radiation spectral en-,65.0
+which is one of the first detections of He∗ line absorption,0.0
+                                                              ergy distribution (SED) of the host star with 5 differ-,62.0
+with well-resolved line profile (Nortmann et al. 2018).,0.0
+                                                              ent characteristic energy bins: (1) hν = 2 eV for in-,62.0
+Acknowledging the many limitations of a 1D isother-,0.0
+"                                                              frared, optical and near ultraviolet (NUV) photons, (2)",62.0
+"mal model, Nortmann et al. (2018) did not tie their He∗",0.0
+                                                              hν = 7 eV for “soft” far ultraviolet (FUV) photons that,62.0
+line observation with a theoretical model. Instead they,0.0
+"                                                              can photoionize He∗ , (3) hν = 12 eV for the Lyman-",62.0
+"only reported what the data showed directly. Notably,",0.0
+                                                              Werner band FUV photons that can photodissociate,62.0
+Nortmann et al. (2018) reported an asymmetric transit,0.0
+"                                                              molecular hydrogen, (4) hν = 20 eV for “soft” extreme",62.0
+avr_spaces,17.64864864864865
+                                                                                                                           3,123.0
+ultraviolet (soft EUV) photons that can ionize hydrogen      2019; Müller et al. 2019). This helps to greatly speed,0.0
+"but not helium, (5) hν = 40 eV for hard EUV photons          up our model.",0.0
+"that ionize hydrogen and helium, and (6) hν = 3 keV",0.0
+for the X-ray.                                                         2.3. He∗ in non-LTE Thermochemistry,0.0
+   Our simulation combines ray-tracing radiative trans-,3.0
+"fer, real-time non-equilibrium thermochemistry, and full       Our simulation includes a non-local-thermodynamic-",0.0
+hydrodynamics calculations (based on a higher order          equilibrium reaction network that coevolves with the hy-,0.0
+Godunov hydrodynamic solver Athena++; Stone et al.           drodynamics (see WD18 for detail). With the addition,0.0
+2020). The simulation is mostly based on our WD18            of the metastable state of neutral helium and all relevant,0.0
+work with a few modifications and improvements added         reactions that populate and de-populate this state (see,0.0
+for the higher dimensionality and the inclusion of He∗ .     Oklopčić & Hirata 2018 and references therein). Our,0.0
+                                                             reaction network now has 26 thermochemical “species”,61.0
+"                                                             (24 chemical species in WD18, He∗ , and internal energy",61.0
+         2.2. Geometry and Boundary Conditions,9.0
+"                                                             density) and 135 reactions such as ionization, recom-",61.0
+"   The density distribution, temperature profile and the     bination, collisional (de-)excitation, photodissociation,",3.0
+dynamics of outflowing atmosphere all play a part in         and cooling and heating processes. The ordinary differ-,0.0
+the He∗ observables. To capture the outflow dynamics         ential equations (ODEs) of the thermochemical network,0.0
+"accurately, simulations should include the gravity of the    were solved efficiently using the semi-implicit method",0.0
+star and the planet and the effects of orbital motion:       specially optimized for the graphics processing units,0.0
+"the centrifugal and Coriolis forces. Therefore, 3D simu-     (GPUs). The resultant efficiency allows us to coevolve",0.0
+"lations are required. Given its short orbital period and     the hydrodynamics with the thermodynamics, rather",0.0
+"observed radial velocities (Anderson et al. 2014), we as-    than including thermodynamics as a post-processing",0.0
+"sume that WASP-69b is tidally locked and circularized.       step that is often done in the literature. Again, we refer",0.0
+Our simulation is run in a co-rotating frame centered        interested readers to WD18 for more details.,0.0
+on the planet. We adopt a spherical polar coordinate,0.0
+"(r, θ, φ) with θ = 0 pointing towards the host star and",0.0
+                                                                              2.4. Synthetic Observations,78.0
+φ = 0 pointing in the direction of orbital motion.,0.0
+"   The mesh covers the domain (r, θ, φ) ∈ [rin , rout ] ⊗      We synthesize both the transmission line profiles",3.0
+"[0, π] ⊗ [0, π]. Planet-specific radial boundaries rin and   (Nortmann et al. 2018) and the narrow-band light curves",0.0
+rout usually extend from the the base of the quasi-          (Vissapragada et al. 2020) of He∗ transitions using our,0.0
+isothermal layer to a relatively large radii (150 R⊕ in this simulations. At each wavelength λ and a particular or-,0.0
+"case) such that the density/opacity drops low enough.        bital phase, the optical depth along a line of sight (LoS",0.0
+"The radial grids are placed logarithmically to strategi-     hereafter) is given by,",0.0
+"cally capture the steep change of density, while latitu-                    Z",0.0
+dinal and azimuthal grids are spaced evenly. Reflecting         τ (λ; Φ) =     |dx| n(He∗ ; x; Φ),0.0
+"boundary conditions are enforced at the r = rin , φ = 0",0.0
+                                                                                  X                                      (2),82.0
+"and φ = π boundaries, while the r = rout boundary is                            ×    σi [λ; n̂LoS · v(x; Φ), T (x; Φ)] .",0.0
+"an outflowing boundary. The θ = 0, θ = π boundaries                                i",0.0
+are polar wedges to avoid coordinate singularity. The,0.0
+"whole mesh, with its polar axis always pointing towards      where we have transformed from our planet-centered co-",0.0
+"the host star, co-rotates with the orbital motion and the    ordinate systems in the simulations to a star-centered",0.0
+rotation of the tidally-locked planet.                       coordinate system for the synthetic observations. Thus,0.0
+"   In a 3D spherical polar mesh, the grids near the po-      x and v are the position and velocity vector measured",3.0
+lar axis are narrow in the azimuthal direction (δxφ '        from the host star. The integration goes along the des-,0.0
+"rcc sin θcc δφ; subscripts “cc” stand for “cell center”).    ignated LoS, and the summation index i runs over He∗ ’s",0.0
+This can result in highly non-unitary aspect ratios          three lines with different upper state quantum number,0.0
+"(δxθ ' rcc δθ), and a stringent Courant-Friedrichs-Lewy      J. The cross-section σi is assumed to be a Voigt profile",0.0
+"(CFL) condition. We thus introduce an adaptive “mesh         which convolves the intrinsic Lorentz profile (γ = A/4π,",0.0
+coarsening” technique for the azimuthal grids near the       A = 1.0216 × 107 s−1 ; see Drake 2006) with a Gaussian,0.0
+"poles. Without any violations of conservation laws, the      profile from thermal broadening at temperature T (x).",0.0
+effective aspect ratio of the high-latitude zones become     This Voigt profile is shifted by the local bulk velocity,0.0
+close to one and the timestep constraints imposed by         including orbital motion and outflow kinematics and the,0.0
+CFL condition is not as severe (see also Nakamura et al.     projection onto the LoS n̂LoS · v(x).,0.0
+avr_spaces,8.39655172413793
+ 4,1.0
+   This integration is performed for all relevant LoS that                Table 1. Properties of the fiducial model for WASP-69b,3.0
+originate from the surface of the host star:,0.0
+                                                                                             Item                              Value,93.0
+                                Z,32.0
+                                                                          Simulation domain,74.0
+"                (λ; Φ) = 1 − dΣ Se−τ (λ;Φ) ,                     (3)     Radial range                                11.37 ≤ (r/R⊕ ) ≤ 150",16.0
+                                                                          Latitudinal range                                         0≤θ≤π,74.0
+                                                                          Azimuthal range                                           0≤φ≤π,74.0
+"where (λ) is the relative extinction at wavelength    R            λ,    Resolution (Nlog r × Nθ × Nφ )                       144 × 128 × 64",0.0
+S(λ) is the normalized surface brightness ( dΣS(λ) =,0.0
+1) of the star after accounting for limb darkening and                    Planet interior†,0.0
+stellar rotation. The integral runs through the entire                    Mrcb                                                       82.6 M⊕,0.0
+                                                                          hreff i                                                     11.8 R⊕,74.0
+projected stellar surface.,0.0
+   (λ; Φ) is the absorption line profile as a function of                Radiation flux [photon cm    −2,3.0
+                                                                                                          s−1 ],106.0
+wavelength and orbital phase (time). We mimic what                        2 eV (IR/optical)                                         6.4 × 1019,0.0
+observers often do in He∗ observations i.e. time aver-                    7 eV (Soft FUV)                                             6 × 1015,0.0
+                                                                          12 eV (LW)                                                  1 × 1012,74.0
+aging (λ; Φ) over the entire transit event from nominal                  20 eV (Soft EUV) ‡                                          5 × 1012,0.0
+ingress to egress (tii through tiii )1 . The outcome ∆(λ)                40 eV (Hard EUV) ‡                                          3 × 1013,0.0
+is a line profile of excess absorption to be compared with                3 keV (X-ray) ‡                                           1.2 × 1012,0.0
+observations directly.,0.0
+                                                                          Initial abundances [nX /nH ],74.0
+   We report a number of summary      R        statistics including       H2                                                               0.5,3.0
+"the equivalent widths hWλ i ≡ ∆(λ) dλ, the radial ve-                    He                                                               0.1",0.0
+locity shift of the absorption peak ∆vpeak and the full-                  H2 O                                                     1.8 × 10−4,0.0
+width-half-maximum (FWHM) of the absorption line                          CO                                                       1.4 × 10−4,0.0
+                                                                          S                                                        2.8 × 10−5,74.0
+profile. These summary statistics help us to compare                      Si                                                       1.7 × 10−6,0.0
+between models and observations efficiently and are less                  Gr                                                       1.0 × 10−7,0.0
+"prone to measurement uncertainty, bad pixels and other",0.0
+instrumental effects.                                                     Dust/PAH properties,0.0
+                                                                          σdust /H (Effective specific cross section)          8 × 10−22 cm2,74.0
+"   Finally, we integrated (λ; Φ) multiplied by a filter",3.0
+bandpass function over λ. The result is a transit light                  Note— †: See Appendix A; Thomson opacity is used for hreff i.,0.0
+                                                                          ‡: The inferred values of fluxes in Nortmann et al. (2018) for WASP-,74.0
+"curve near the He∗ transitions. In this work, we use                      69b are 2.6 × 1013 ph cm−2 s−1 for EUV (represented by hν = 40 eV",0.0
+the bandpass function provided by Vissapragada et al.                     photons) and 0.5 × 1012 ph cm−2 s−1 for X-ray (represented by hν =,0.0
+                                                                          3 keV photons),74.0
+(2020) for a direct comparison with their results.,0.0
+           3. FIDUCIAL MODEL OF WASP-69b,11.0
+"   In this section, we will show how we arrived at a fidu-",3.0
+cial model that gives rather remarkable agreement with                      We set up our simulations to match the reported sys-,0.0
+the observed He∗ line profiles (Nortmann et al. 2018)                    tem properties of WASP-69b (Anderson et al. 2014).,0.0
+"and light curves (Vissapragada et al. 2020). We note                     The host star is K star with M∗ = 0.826 M , R∗ =",0.0
+that our 3D hydrodynamic model is not fast enough 2                      0.813 R and Teff = 4715 K. WASP-69b has a circu-,0.0
+for a full exploration of the parameter space with tech-                 lar orbit with semi-major axis a = 0.04525 AU. The,0.0
+niques such Markov Chain Monte Carlo or even simple                      equilibrium temperature is estimated using Eqn. 1,0.0
+gradient descent. Instead we had to rely on the reported                 Teq = 965 K. The planet has an optical transit radius of,0.0
+system parameters and making reasonable assumption                       Rp ' 1.057 RJup and a mass of Mp ' 0.26 MJup from,0.0
+as well as hand tuning the high energy SED of the host                   radial velocity follow-ups. Details of the fiducial model,0.0
+"star. We will see shortly, without much tuning, we can                   are presented in Table 1.",0.0
+arrive at a fiducial model that fits various observations                   The interior of our WASP-69b model is set up as de-,0.0
+"of WASP-69b very well.                                                   scribed in Appendix A. The core size, the equation of",0.0
+                                                                         state and other details of the interior of a giant planet is,73.0
+                                                                         still subject to a lot of uncertainties even in the case of,73.0
+"   1 Following the conventions, in this paper, we use ti and tii for the Jupiter (see e.g. Wahl et al. 2017). However, the details",3.0
+"     start/end of the ingress, and tiii and tiv for those of the egress. of the interior should not affect the outflowing region",5.0
+"   2 Even with a GPU-accelerated infrastructures, each simulation",3.0
+                                                                         of the envelope which is what we are interested in this,73.0
+     takes about 5 hours on one computation node with 40 CPU cores,5.0
+     (Intel Skylake) and 4 GPUs (Nvidia Tesla V100) on the Popeye-       work. We set the inner boundary of our simulation at,5.0
+     Simons Computing Cluster.                                           11.37 R⊕ so that we capture several scale heights be-,5.0
+avr_spaces,19.075757575757574
+                                                                                                                      5,118.0
+low the optical transit radius hreff i ' Rp at 1.057 RJup .  disperses the planet atmosphere at a mass-loss rate of,0.0
+The outer boundary is located at 150 R⊕ . For simplic-       Ṁ ' 5.5×10−10 M⊕ yr−1 . Since we assumed a constant,0.0
+"ity, we assumed an atmospheric metallicity often seen        high energy radiation output from the host star, the",0.0
+in protoplanetary disk (WD18) which is slightly below        mass-loss rates and the hydrodynamic/thermodynamic,0.0
+solar value (Table 1). We will explore any metallicity       profiles remain nearly constant after reaching the quasi-,0.0
+dependence in a future work.                                 steady state. We also note that we did not put in any,0.0
+"   Optical and infrared fluxes, represented by the hν =      stellar wind from the host star, as the current wind-",3.0
+"2 eV photon energy bin, are calculated using the host        less model fits the data reasonably well and is preferred",0.0
+star radius and effective temperature. For the high en-      by Occam’s Razor. However in a companion paper on,0.0
+"ergy photons, more uncertainties are involved depend-        WASP-107 we will show that stellar winds may generate",0.0
+ing on the age/activity of the host star; while direct       Kelvin-Helmholtz instability that leads to fluctuations of,0.0
+measurements are also lacking. We note that WASP-            a photoevporative outflow.,0.0
+69 is moderately active indicated by the Ca ii H and            Which mechanisms control the population of the He∗,0.0
+               0,15.0
+"K lines log RH,K    = −4.54 (Anderson et al. 2014). As       state? The bottom row in Figure 2 compares the rates of",0.0
+"we will see later in §4.2, the He∗ absorption line pro-      different (de-)population processes along the two partic-",0.0
+file depends critically on the shares taken by various       ular streamlines (thickened curves in Figure 1). We com-,0.0
+"high-energy radiation bins. After gaining intuition on       pute the rate of ionization, recombination, spontaneous",0.0
+"how each energy bin affects the He∗ line profiles (again     decay, collisional excitation and de-excitation as well as",0.0
+"§4.2), we varied the high energy SED of WASP-69 un-          an advection attenuation term |v · ∇n(He∗ )|. Along the",0.0
+"til we achieved a reasonable agreement with both the         representative streamline presented by the left column,",0.0
+line profile and light curve measurements. The resul-        the abundance of He∗ is determined by the relatively stiff,0.0
+tant high energy SED is quite typical of a K5 star when      balance between the recombination (He+ + e− → He∗ ),0.0
+compared to observational constraint of FUV and EUV          and the collisional de-excitation at small radii . 30 R⊕ .,0.0
+flux of the MUSCLES survey (France et al. 2016; Young-       As expected these two processes are efficient at higher,0.0
+blood et al. 2016; Loyd et al. 2016; Youngblood et al.       densities consistent with the law of mass action. Pho-,0.0
+"2017), the X-ray flux according to Gudel (1992), and the     toionization of He∗ by soft FUV starts to take over the",0.0
+more comprehensive compilation of Oklopčić (2019).         destruction channel of He∗ where the density of free elec-,0.0
+                                                             trons declines at higher altitudes. The other channels,61.0
+     3.1. A Photoevaporative Outflow on WASP-69b             have negligible importance: e.g. collisional excitation,5.0
+"   Before analyzing our simulations, we ensured that         from 11 S to the metastable state is more than five orders",3.0
+quasi-steady states have been achieved. This usually         of magnitude slower than recombination. On the right,0.0
+"involved running the simulations for many dynamical          column of Figure 2, we show an interesting streamline",0.0
+"timescales, specifically we set tsim & 30 τdyn . The dy-     that crosses in the shadow of the planet. The number",0.0
+namical timescale τdyn is estimated by the sound cross-      density of He∗ soars in the shadow because the photoion-,0.0
+ing time of the Bondi radius:                                ization of He∗ by soft FUV vanishes here.,0.0
+                                                −3/2        Beneath the base of the photoevaporative outflow,31.0
+"         GMp             3          Mp         T             (r . 13 R⊕ ), the temperature gradient between the",9.0
+τdyn ∼         ∼ 1.2 × 10 s ×                              .,0.0
+          c3s                     10 M⊕      104 K           day-side and the night-side generates a slow ”zonal” cir-,10.0
+                                                         (4),57.0
+"                                                             culation (∼ 0.1 km s−1 ). However, this region has lit-",61.0
+"Here, cs is the sound speed. For a typical T = 104 K",0.0
+                                                             tle observational effect on the overall He∗∗ observables,61.0
+"outflow we see for WASP-69b, τdyn ∼ 104 s. More-",0.0
+                                                             which are mostly controlled by the much more extended,61.0
+"over, we also check explicitly if the simulation has settled",0.0
+                                                             low density regions of the outflowing atmosphere. We,61.0
+down to a quasi-steady state by comparing key hydrody-,0.0
+                                                             will return to this point shortly. Moving to higher alti-,61.0
+namic/thermodynamic properties in neighboring dump,0.0
+"                                                             tude, this day-night advection continues, amounting to",61.0
+files.,0.0
+                                                             a 2 − 3km s−1 blueshift at about 20 − 40 R⊕ . Going fur-,61.0
+   Our fiducial model for WASP-69b shows clear signs,3.0
+"                                                             ther away from the planet, the Coriolis effect starts to",61.0
+"of a photoevaporative outflow. In Figure 1, we show",0.0
+                                                             shape the outflow streamlines into spiral curves result-,61.0
+"2D slices of the density, temperature and LOS velocity",0.0
+                                                             ing in blueshifts on the leading edge and redshifts on,61.0
+distributions of our 3D simulations looking down the,0.0
+                                                             the trailing edge. Considering that the outflow is still,61.0
+North pole of the planet. We see a T & 104 K hot,0.0
+"                                                             primarily radial, increments in the latitudinal velocity",61.0
+ionized supersonic outflow originating at a wind base of,0.0
+                                                             |∆vθ | after traveling through a radial distance ∆r can,61.0
+r ' 13 R⊕ which eventually accelerates to ∼ 23 km s−1,0.0
+when leaving the domain of our simulation. This outflow,0.0
+avr_spaces,15.82857142857143
+    6,4.0
+ vK,1.0
+ΩK,0.0
+   Figure 1. Profiles of the simulation for WASP-69b (fiducial model 69-0) in its quasi-steady-state. Stellar radiation comes,3.0
+"   from the left of the plot, and the orbital angular velocity ΩK points out of the paper plane; the Keplerian motion of the",3.0
+"   plaent is upwards vK . Colormaps show the mass density ρ (upper left panel), temperature T (upper middle), line-of-sight",3.0
+"   velocity vLoS (upper right; the value is measured at mid-transit), He∗ number density n(He∗ ) (lower left), inverse timescale of",3.0
+"   recombination He∗ formation (defined as formation rate normalized by n(He∗ ); lower middle), and free electron number density",3.0
+   n(e− ) (lower right). White streamlines (projected to the orbital plane) are overlaid on each panel; two neighbor streamlines,3.0
+   are separated in such a way that they are ∆θ = π/16 apart when they reach the outer radial boundary (r = 150 R⊕ ). The heavy,3.0
+   streamline are the reference lines on which the profiles are plotted in Figure 2). Black solid lines indicate the sonic surface.,3.0
+"   be estimated by,                                                     This estimation is confirmed by the velocity profile in",3.0
+                                                                        the top panels of Figure 2: if we compare the val-,72.0
+"                                                                        ues at r ' 40 R⊕ and r ' 100 R⊕ , the difference in",72.0
+                               Z                                        vLoS (approximately equals to vθ for this streamline) is,31.0
+"           ∆vθ ∼ 2 cos φ ΩK       dt vr ' 2 cos φ ΩK ∆r                 ∆vLoS ∼ 11 km s−1 , and eq. (5) yields ∼ 10.8 km s−1 .",11.0
+                                            1/2                       This effect re-distributes He∗ atoms in the velocity space,40.0
+                ' 2.3 km s   −1,16.0
+                                 cos φ,33.0
+                                          M∗,42.0
+                                                             (5)        and broadens the observed He∗ line profiles as we will,61.0
+                                          M                             see shortly.,42.0
+                                               ,40.0
+                          a      −3/2    ∆r,21.0
+                   ×                               .,19.0
+                       0.05 AU            10 R⊕,23.0
+avr_spaces,20.555555555555557
+                                                                                                                                    7,132.0
+Figure 2. Key quantities of our fiducial model for WASP-69b (Model 69-0) along the two reference streamlines (plotted as,0.0
+the heavy streamlines in Figure 1). The top abscissa is the radial coordinate r corresponding to the curve length along the,0.0
+"streamline on the bottom abscissa. The top panels contain the profiles of scaled mass density ρr2 , temperature T , velocity",0.0
+magnitude |v| and the line-of-sight velocity vLoS . Dashed part of the vLoS curve indicate negative values. The middle panels,0.0
+present the abundances of free electrons (relative to total hydrogen nucleus density nH ) and helium in different forms (relative to,0.0
+the total helium nucleus density nHe ; note that n(He∗ ) is multiplied by 105 for clarity). Inverse timescales of He∗ formation (in,0.0
+solid curves; note that the collisional excitation rate is multiplied by 105 ) and destruction (in dashed curves) processes are shown,0.0
+"in the bottom panels. In all panels, the vertical dotted line indicates the sonic critical point, and the vertical dash-dotted",0.0
+line shows the location of Roche radius.,0.0
+           3.2. Comparison with Observations                            based on fitting Gaussians to the observed line profiles;,11.0
+"   Figure 3 shows our synthetic observations of both the                however, as we argued in the previous section, kinematic",3.0
+line profiles and light curves of WASP-69b (Nortmann                    shift of the outflow introduces significant distortion of,0.0
+et al. 2018; Vissapragada et al. 2020). We have binned                  the spectral shape. Instead of fitting Gaussian to our,0.0
+"the light curve data from Vissapragada et al. (2020)                    line profile, we compared our simulations directly to the",0.0
+for better clarity and the uncertainty represents the                   line profile itself which shows great agreement. We also,0.0
+standard deviation within each phase bin. Our fiducial                  use a different way to measure the blueshift: we report,0.0
+model of WASP-69 seems to fit both the spectroscopic                    the blueshift of the peak absorption relative to a line-,0.0
+and photometric observations well simultaneously. In                    ratio-weighted average of the rest-frame line center for,0.0
+"particular, the synthetic line profile reproduced the sub-              the two longer wavelength transistions that are usually",0.0
+"tle blueshift of the peak absorption, the overall line                  blended together.",0.0
+"depth, and the relative ratio between the lines of this                    Nortmann et al. (2018) hinted at the possibility of a",0.0
+"triplet. Numerically, Nortmann et al. (2018) reported a                 comet-like tail trailing behind WASP-69b. The basis of",0.0
+net blueshift of −3.58 ± 0.23 km s−1 . This blueshift was               their suggestion is that additional He∗ absorption can,0.0
+avr_spaces,5.84
+8,0.0
+                                                                                                               also introduce significant distortion to He∗ line profile,111.0
+Time-averaged Excess Absorption,0.0
+                                   0.00,35.0
+                                                                                                               (see our Companion paper on WASP-107b for strong,111.0
+                                                                                                               comet-like tail generated by strong stellar wind in that,111.0
+"                                  −0.01                                                                        system). Here in the case of WASP-69b, our fiducial",34.0
+                                                                                                               model produces a good fit the resolved line profile (Nort-,111.0
+                                  −0.02                                                                        mann et al. 2018) while it does not need to invoke a,34.0
+                                               Fiducial                                                        prominent comet-like tail.,47.0
+                                  −0.03        Convergence Test                                                   Another point we would like to emphasize is that a sig-,34.0
+                                               2D Test                                                         nificant part of the He∗ absorption for WASP-69 seems,47.0
+                                               1D Test,47.0
+"                                  −0.04                                                                        to be produced by an extended, optically thin (τ < 1)",34.0
+                                               Observation,47.0
+                                                                                                               outer layer of the photoevaporative outflow. In Fig-,111.0
+"                                      1.0     1.5      2.0      2.5     3.0    3.5       4.0      4.5   5.0    ure 4, we show the mid-transit extinction (1 − exp−τ )",38.0
+                                                                 (λ/Å) − 10830,65.0
+                                                                                                               at three different wavelengths near the He∗ transitions.,111.0
+                                  1.005                                                                        The outer regions (10s of R⊕ ) contribute significantly,34.0
+                                                                                                               to the overall extinction thanks to their extended area,111.0
+                                  1.000,34.0
+                                                                                                               and the slow decrease of He∗ number density in the out-,111.0
+"                                                                                                               flow. Because of the unsaturated optical depth, the line",111.0
+                                  0.995,34.0
+                                                                                                               ratios between the He∗ triplet are close to 1 : 3 : 5,111.0
+                                                                       Core Only,71.0
+"Flux                              0.990                                                                        i.e. their quantum degeneracies. More accurately, the",0.0
+                                                                       Observation,71.0
+                                                                                                               line ratios are close to 1 : 8 as the longer two lines are,111.0
+                                  0.985                                                                        blended by kinematics and thermal broadening. This,34.0
+                                                                                                               suggests that the line ratios between the He∗ triplet can,111.0
+                                  0.980                                                                        be a diagnostic of the number density in the outflow.,34.0
+                                                                                                               If most of the He∗ absorption is due to higher-density,111.0
+                                  0.975,34.0
+"                                      −0.06    −0.04         −0.02     0.00       0.02         0.04     0.06   region where one of the line may saturate first, the line",38.0
+                                                                      ∆t/day                                   ratio will deviate from the quantum degeneracy ratio;,70.0
+                                                                                                               this would tell us about the density of the outflow re-,111.0
+Figure 3. The observed and synthesized line profiles and                                                       gion in a model-independent way (see also discussions in,0.0
+light curves for WASP-69b. We include the results of our,0.0
+                                                                                                               Salz et al. 2018). This does not seem to be the case for,111.0
+"fiducial model (3D), 2D test, 1D test and a convergence test",0.0
+"(same as fiducial but much higher grid resolution) (§2.1) as                                                   WASP-69b, as most He∗ absorption happens in lower",0.0
+different line styles. Note that the curves for some test mod-                                                 density regions.,0.0
+"els overlap the fiducial curve and cannot be distinguished.                                                       It is worth noting that, due to heavy computational",0.0
+"The upper panel presents the time-averaged excess absorp-                                                      cost of our 3D simulations, we could not afford to nu-",0.0
+tion transmission spectra or the resolved line profile (eq. 3;                                                 merically fit the data with multiple simulation runs.,0.0
+"time-averaged from the end of ingress through the begin of                                                     Instead, our fiducial model serves as a validation our",0.0
+egress). Three vertical dotted lines indicate the three cen-,0.0
+                                                                                                               self-consistent 3D hydrodynamic simulations: with rea-,111.0
+tral wavelengths of He∗ triplet. The lower panel compares,0.0
+the synthesized light curve with the observations and a hy-                                                    sonable assumptions of the planetary/stellar properties,0.0
+"pothetical planet that does not have any atmospheres. We                                                       and high energy SED, we can at least qualitatively re-",0.0
+"have rebinned the light curve data in Nortmann et al. (2018).                                                  produce the various He∗ observables. That said, the",0.0
+The four vertical dotted lines indicate the ingress and egress.                                                degree to which our simulation agrees with observations,0.0
+                                                                                                               is quite encouraging if not remarkable. After this vali-,111.0
+"still be seen ∼ 20 min after the nominal egress of the                                                         dation of model, we stand at a position to perturb our",0.0
+"planet. The higher precision, better temporally sam-                                                           fiducial model and investigate how the He∗ observables",0.0
+pled photometric data from Vissapragada et al. (2020)                                                          are impacted by various factors that control the under-,0.0
+nontheless favors a symmetric transit. The symmetric                                                           lying photoevaporative outflow and He∗ population in,0.0
+transit shape (lower panel of Figure 3) does not sup-                                                          the following section.,0.0
+port an extended comet-like tail. Our simulation seems,0.0
+"to be more consistent with Vissapragada et al. (2020),                                                                       4. PARAMETRIC STUDY",0.0
+the photoevaporative outflow of WASP-69b in our fidu-,0.0
+                                                                                                                 How do the photoevaporative outflow and the resul-,113.0
+cial model is largely symmetric between the leading and,0.0
+                                                                                                               tant He∗ observables depend on key parameters in our,111.0
+"trailing edge, hence it produces a more symmetric tran-",0.0
+"                                                                                                               simulations? In this section, we explore the impact of",111.0
+sit shape. We note that an extended comet-like tail will,0.0
+"                                                                                                               simulation dimensionality, XUV flux levels, host star",111.0
+avr_spaces,45.125
+                                                                                                                               9,127.0
+  ΩK,2.0
+      vK,6.0
+    Star,4.0
+"Figure 4. Extinction [1 − exp(−τ )] for Model 69-0 at three representative wavelengths (λ/Å) ∈ {10832.5, 10833.2, 10833.7}",0.0
+"near the He∗ transitions. The profiles are measured at mid-transit (viz., all LoS are parallel to the star-planet line) and in a",0.0
+frame centered around the planet. The white dashed circles indicate the projected host star (with reported stellar radius and,0.0
+"orbital inclination). The directions of orbit motion (vK ), orbital angular momentum vector (ΩK ), and the direction to the host",0.0
+star are indicated at the lower-left corner of the whole figure.,0.0
+"spectral type, and planet surface gravity. This is done               tifies that the photoevaporative outflow on WASP-69b",0.0
+by perturbing validated fiducial model in these parame-               is largely symmetric between the leading and trailing,0.0
+"ters. Before that, we did a further convergence test. We              edge. Again see our companion paper on WASP-107b",0.0
+reran the fiducial model with a much finer simulation                 for how this symmetry is broken by the inclusion of stel-,0.0
+grid of Nlog r × Nθ × Nφ = 192 × 192 × 128 (versus the                lar winds.,0.0
+"fiducial model, Nlog r × Nθ × Nφ = 144 × 128 × 64). The                  The three models from 1D through 3D have almost",0.0
+resultant He∗ observables in the convergence test are                 identical equivalent width (hWλ i ∼ 3.1 Å) and light,0.0
+almost identical (Figure 3) to the much faster fiducial               curves. This stresses the importance of spectrally re-,0.0
+model. This gives us confidence that the adopted spa-                 solving the He∗ line profiles which are seen to vary,0.0
+tial grid is fine enough to resolve the photoevaporative              the most between dimensions. The mass-loss rate are,0.0
+outflow on WASP-69b.                                                  again quite similar between 3D and 2D models at about,0.0
+                                                                      Ṁ ' 5.5×10−10 M⊕ yr−1 . The mass-loss rate in our 1D,70.0
+                    4.1. Dimensionality,20.0
+                                                                      model is off (Ṁ ' 6.9 × 10−10 M⊕ yr−1 ) because it as-,70.0
+"   To test how our model depends on the spatial dimen-                sumes perfect spherical symmetry. However, the stream-",3.0
+"sions of the simulations, we ran a 2D model with ax-                  lines in Figure 1 are clearly non-radial. We also compare",0.0
+isymmetry (about the φ axis i.e. Nφ = 1) while keep                   our results with that from a 1D isothermal model (Ok-,0.0
+all system parameters the same as the fiducial model.                 lopčić & Hirata 2018; Vissapragada et al. 2020) of,0.0
+The Coriolis forces is not captured in this 2D simula-                   9.5 × 10−10 M⊕ yr−1 (' 3 × 10−3 MJup Gyr−1 ) at,0.0
+tion while stellar gravity and orbital centrifugal forces             an assumed temperature of 12000K. The results are in,0.0
+are still involved. A reference 1D spherical symmetric                rough agreement with differences arising from more care-,0.0
+"model is also implemented using the θ = π/2, φ = π/2                  ful treatment of the hydrodynamics, thermodynamics",0.0
+radial line and removing the θ and φ components of the                and radiative transfer.,0.0
+velocity.,0.0
+   Figure 3 compares the synthesized line profiles and                                 4.2. XUV Flux Intensity,3.0
+light curves with all three dimensionality models. The                   Photoevaporative outflows are driven by high energy,0.0
+"1D spherically symmetric model suffers from the loss of               radiation from the host star. Moreover, the population",0.0
+all non-radial kinematic information. It is clearly incon-            of He∗ states are also controlled by the critical balance,0.0
+sistent with the observed line profile with no blueshift              high energy photons of different energy bins. We exam-,0.0
+and limited kinematic broadening. The 2D axisymmet-                   ine the impact of high energy radiation in each energy,0.0
+ric test is able to capture the day-night advection. It               bin by perturbing the fidual model. The amount of high,0.0
+shows good agreement with the observed line profile.                  energy radiation a star outputs is variable depending,0.0
+"The 3D fiducial model further modifies the line profile               on the evolution stage, activity and spectral types of",0.0
+by including the Coriolis force. In this case of WASP-                the host star. Direct measurements are also lacking as,0.0
+"69b such a modification is quite subtle, which again tes-             the XUV measurements have to be performed in space.",0.0
+avr_spaces,6.777777777777778
+10,0.0
+     Table 2. Radiation fluxes for different model host,5.0
+                                                                      Time-averaged Excess Absorption,70.0
+     stars based on the fiducial model of WASP-69b                                                       0.00,5.0
+      Star     F20        F15        F13        F13        F13                                          −0.01,6.0
+      type   (2 eV)     (7 eV)     (12 eV)    (20 eV)    (40 eV),6.0
+      F         2.8    1.6 × 104      4.7        4.0      2.0                                           −0.02        69-0,6.0
+      G         1.4     8 × 102       2.4        2.0      2.5,6.0
+                                                                                                                     69-1,117.0
+      M        0.11       0.6         0.1       0.12      0.36,6.0
+                                                                                                        −0.03        69-2,104.0
+"     Note—For simplicity, FN (hν) ≡ F (hν)/(10N cm−2 s−1 ), cal-                                                     69-3",5.0
+      ibrated for the value at the planet orbit without any extinc-                                                  69-4,6.0
+      tion.                                                                                             −0.04,6.0
+                                                                                                                     69-5,117.0
+                                                                                                                     69-6,117.0
+                                                                                                        −0.05,104.0
+                                                                                                             1.0    1.5      2.0      2.5     3.0    3.5       4.0      4.5   5.0,109.0
+                                                                                                                                       (λ/Å) − 10830,135.0
+                                                                                                        1.005,104.0
+                                                                                                        1.000,104.0
+                                                                                                        0.995,104.0
+                                                                                                        0.990,104.0
+                                                                                                                                             Core Only,141.0
+                                                                      Flux                                                                   Observation,70.0
+                                                                                                        0.985,104.0
+                                                                                                        0.980,104.0
+                                                                                                        0.975,104.0
+                                                                                                        0.970,104.0
+                                                                                                            −0.06    −0.04         −0.02     0.00       0.02         0.04     0.06,108.0
+                                                                                                                                            ∆t/day,140.0
+Figure 5. Spectral energy distributions of the incidenting,0.0
+"high-energy photon fluxes, for the models with Type F, G,             Figure 6. Similar to Figure 3 but for the models 69-0",0.0
+"K and M host stars (Models 69-F, 69-G, fiducial model 69-0,           through 69-6 in Table 3. The fiducial model 69-0 is also",0.0
+"and 69-M), presented in dashed lines. Diamonds overplotted            included for reference.",0.0
+on the dashed lines mark the exact energy of incident pho-,0.0
+"tons in the simulations (as represetatives of the correspond-         the “typical” host star conditions. More specifically, the",0.0
+"ing energy bands; see §2.3). For reference, the model spectra         relative abundance of He∗ is suppressed by soft FUV be-",0.0
+"of stellar spectral types A7, G2, K6 and M1.5 (based on               cause it photoionizes the He∗ states, thus significantly",0.0
+the compilation in Oklopčić 2019) are shown in solid curves.        reducing its population and the He∗ absorption depth.,0.0
+Vertical dotted lines mark the boundary between different,0.0
+"                                                                      In Model 69-1 (×10 soft FUV flux), the over-all mass-",70.0
+energy bands: “Hard EUV” for hν > 24.6 eV photons that,0.0
+can ionize helium; “Soft EUV” for 13.6 < (hν/eV) < 24.6               loss rate is enhanced by a few percent thanks to ex-,0.0
+photons that can ionize hydrogen ; “LW” (short for Lyman-             tra energy deposited into the atmosphere. However the,0.0
+Werner) for 11.2 < (hν/eV) < 13.6 photons that can pho-               stronger soft FUV flux significantly lowered the number,0.0
+todissociate H2 ; “Soft FUV” for hν < 7 eV photons.                   density of He∗ at a larger radial extent (r & 20 R⊕ ).,0.0
+                                                                      The He∗ line profile depth and the light curve depth,70.0
+"Therefore, in our Models 69-1 to 69-5 (soft FUV for 69-               are both reduced by about a factor of two (3.16 Å to",0.0
+"1, LW for 69-2, soft EUV for 69-3, hard EUV for 69-4,                 1.75 Å). The line width also decreased (FWHM from",0.0
+"X-ray for 69-5), we bump up the flux level in each high               17.3 Å down to 14.0 Å) because the high-altitude region",0.0
+energy bin by a whole order of magnitude to reflect the               with a higher velocity dispersion contribute less to the,0.0
+intrinsic variation in high energy flux level. We summa-              He∗ extinction.,0.0
+rize key He∗ observables in Table 3; we also show the                   In Model 69-2 (×10 LW flux) the He∗ observables,0.0
+synthetic line profiles and light curves in Figure 6 and              are mostly unaltered from the fiducial model. This is,0.0
+the relative abundance of He∗ as a function of radius in              because the LW band is intrinsically narrow thus only,0.0
+Figure 8.                                                             amount to a very small fraction of the overall high en-,0.0
+"   The He∗ line profiles are controlled mainly by the FUV             ergy radiation flux. Moreover, most molecular H2 are",3.0
+(adverse effect) and the EUV bands (positive effect);                 already dissociated at the ∼ 104 K in our simulations.,0.0
+the LW and X-ray bands only play minor roles under,0.0
+avr_spaces,38.75409836065574
+                                                                                                                                                                                11,176.0
+"                                                              Table 3. Results of various models, based on the fiducial model for WASP-69b",62.0
+                                                                                                                                                         †,153.0
+                                                     Model                        Description                           Ṁ                hWλ i        ∆vpeak     FWHM∗,53.0
+                                                                                                                   −9           −1         −2,115.0
+                                                                                                                 (10    M⊕ yr        )   (10    Å)   (km s−1 )   (km s−1 ),113.0
+                                                     69-0                         3D Fiducial                           0.55               3.16         −2.1        17.3,53.0
+                                                     69-0-2D            2D Test (fiducial parameters)                   0.56               3.10         −2.0        16.6,53.0
+                                                     69-0-1D            1D Test (fiducial parameters)                   0.69               3.14         0.07        16.2,53.0
+                                                     69-1             10× Flux for soft FUV (hν = 7 eV)                 0.61               1.75         −1.7        14.0,53.0
+                                                     69-2               10× Flux for LW (hν = 12 eV)                    0.56               3.18         −2.1        17.4,53.0
+                                                     69-3         10× Flux for soft EUV (hν = 20 eV)                    0.66               4.13         −2.4        24.2,53.0
+                                                     69-4         10× Flux for hard EUV (hν = 40 eV)                    2.50               5.62         −3.8        48.1,53.0
+                                                     69-5              10× Flux for X-ray (hν = 3 keV)                  0.55               3.12         −2.0        17.6,53.0
+                                                     69-6             1/2 Planet mass (Mp = 41.3 M⊕ )                   0.93               4.25         −2.1        17.2,53.0
+                                                     69-F              Fiducial Model with F-type host                  0.70               0.04         −0.8         9.0,53.0
+                                                     69-G              Fiducial Model with G-type host                  0.64               0.51         −1.5        10.3,53.0
+                                                     69-M              Fiducial Model with M-type host                  0.05               1.40         −0.6        12.9,53.0
+                                                 Note—The values are time averages taken over the last 15 τdyn of the simulations. Fluctuations are,49.0
+                                                  negligible for all models in the table.,50.0
+"                                                  †: Shifts (postive values for redshifts and vice versa) of the right-hand-side peaks in the velocity space,",50.0
+                                                  compared to the line-ratio-averaged line center of λ = 10833.29 Å.,50.0
+                                                  ∗: Full-width half-maximum of the longer-wavelength peak in the velocity space.,50.0
+                                   0.005,35.0
+Time-averaged Excess Absorption,0.0
+                                   0.000,35.0
+                                  −0.005,34.0
+                                  −0.010,34.0
+                                  −0.015,34.0
+                                  −0.020,34.0
+                                  −0.025,34.0
+                                                69-0,48.0
+                                  −0.030        69-F,34.0
+                                                69-G,48.0
+                                  −0.035,34.0
+                                                69-M,48.0
+                                  −0.040,34.0
+                                        1.0    1.5      2.0      2.5       3.0    3.5      4.0      4.5   5.0,40.0
+                                                                  (λ/Å) − 10830,66.0
+                                   1.005,35.0
+                                   1.000,35.0
+                                   0.995,35.0
+                                                                          Core Only                                    Figure 8. Relative abundance profiles of He∗ (relateive to,74.0
+Flux                               0.990,0.0
+"                                                                          Observation                                  total helium nucleus density nHe ), measured along the ra-",74.0
+"                                                                                                                       dial line with θ = π/4, φ = 0 in each simulation domain,",119.0
+                                   0.985                                                                               for models described in Table 3. The upper panel shows,35.0
+"                                                                                                                       models 69-0 and 69-1 through 69-6, while the lower panel",119.0
+                                   0.980                                                                               specifically compares the results of different types of host,35.0
+"                                                                                                                       stars (Model 69-0 for the K star WASP-69, and Models 69-",119.0
+"                                   0.975                                                                               F, 69-G and 69-M for F, G, M stars respectively).",35.0
+                                       −0.06    −0.04         −0.02       0.00      0.02         0.04     0.06,39.0
+                                                                        ∆t/day,72.0
+"                                                                                                                         At higher EUV fluxes (Model 69-3 and 69-4), the much",121.0
+"Figure 7. Similar to Figures 3 and 6, but presenting the                                                               faster outflows not only bring more He∗ into the exo-",0.0
+"models 69-F, 69-G, and 69-M for different host star spectral",0.0
+                                                                                                                       sphere but also spread them out in velocity space effec-,119.0
+types in Table 3. Note fiducial model 69-0 is a K star.,0.0
+                                                                                                                       tively broadening the line profiles. This confirms our,119.0
+avr_spaces,55.56666666666667
+ 12,1.0
+earlier picture that EUV flux are most effective in driv- equivalent width of He∗ in the transmission spectrum,0.0
+ing photoevaporative outflows (WD18).                     only decline by a factor of 2 (3.16 to 1.4 Å). Again this,0.0
+"   Finally, X-ray seems to play a secondary role in pho-  is because its much weaker soft FUV flux allows pro-",3.0
+toevaporation and He∗ observables. Model 69-5 (×10        portionally more He∗ to exist in the outflow (Figure 8).,0.0
+"X-ray flux) has very similar observables as the fiducial  G-star represents some middle ground, its ∼ 130 times",0.0
+"model. Although X-rays photons are very energetic,        higher soft FUV flux suppress the equivalent width He∗",0.0
+they also have much smaller cross sections than EUV       by a factor of 6.,0.0
+"photons. As a result, X-ray penetrate deeper into the at-    In summary, our findings suggest that K-star planet",0.0
+mosphere where collisional processes and dust particles   hosts are indeed favorable targets for He∗ observations,0.0
+quickly convert the X-ray energies to infrared radiation  consistent with the suggestion of Oklopčić (2019). The,0.0
+"that escapes easily. This limits the heating potential of high-energy SED, nonetheless, is expected to change sig-",0.0
+X-ray. We reached a similar conclusion in WD18.           nificantly as a function of host star age and activity level.,0.0
+                                                          The suppression factor of He∗ around G and M type,58.0
+                 4.3. Host Spectral Type                  stars are often only a factor of a few. We encourage,17.0
+                                                          observers to keep them in their target list particularly,58.0
+"   Among the handful of reported He∗ detections, 4",3.0
+                                                          the young and active ones. We also predict that there,58.0
+out of 6 are planets around K-type hosts (Spake et al.,0.0
+                                                          will be more reports of He∗ detection around G and M,58.0
+2018; Venzmer & Bothmer 2018; Allart et al. 2018; Salz,0.0
+                                                          type hosts soon. Another important point we would like,58.0
+et al. 2018; Ninan et al. 2020; Alonso-Floriano et al.,0.0
+                                                          to stress is that the depth of He∗ line profile can not,58.0
+"2019). Oklopčić (2019) confirmed that K-stars, at least",0.0
+                                                          be translated to the underlying mass loss rate without,58.0
+"in 1D isothermal models, may be at the sweet spot of",0.0
+                                                          knowing the high energy SED of the host star. In other,58.0
+FUV/EUV flux balance that best promote the He∗ pop-,0.0
+"                                                          words, measuring the XUV SED of the host star directly",58.0
+ulation and thus observablity. This section re-evaluates,0.0
+                                                          is crucial for correctly interpreting the He∗ observations.,58.0
+such a claim with our 3D hydrodynamic simulation cou-,0.0
+pled with self-consistent thermodynamics and radiative                        4.4. Surface gravity,0.0
+transfer.,0.0
+"   We set up three additional models 69-F, 69-G, and 69-     The mass-loss rate of photoevaporation depends quite",3.0
+"M, whose luminosities in different high energy bins emu-  strong on the depth of gravitational potential well of",0.0
+"late typical F-type, G-type, and M-type main-sequence     the planet. A shallower potential allows faster outflow",0.0
+stars based on the compilation of Oklopčić 2019. We     with the same high energy irradiation. In Model 69-,0.0
+remind the reader the fiducial model 69-0 has a K-star    6 we adjusted the planet interior such that the planet,0.0
+SED. The flux in each high energy bin is summarized       mass is reduced by half while keeping the transit radius,0.0
+"in Table 2). Broadly speaking, F-type and G-type stars    the same. This effectively lowers the surface gravity of",0.0
+output similar levels of soft and hard EUV fluxes as      the planet by a factor of two. The mass loss rate in,0.0
+"K-type stars, however their FUV luminosities are signif-  Model 69-6 increases to Ṁ ' 9.3×10−10 M⊕ yr−1 which",0.0
+icantly higher by a factor of ∼ 3000 and ∼ 130 respec-    is ∼ 70 % larger than the fiducial model. This larger,0.0
+"tively. For a typical M star, fluxes in all high energy   mass loss rate can be decomposed into an increase in",0.0
+bands are lower by about one order of magnitude.          the terminal outflow velocity by ∼ 10 % and an increase,0.0
+   He∗ observables of these models are summarized in      of the outflow density by ∼ 60 %.,3.0
+Table 3 for their mass-loss rates and a few key diagnos-     The He∗ line profile depth responds to this increase of,0.0
+"tics etc. We show the line profiles and light curves in   mass loss rate sub-linearly. In Figure 6, the line profile",0.0
+"Figure 6 and the radial distribution of He∗ in Figure 8.  has ∼ 40 % larger depth than that in the fiducial model,",0.0
+With a soft FUV flux ∼ 3000 times higher than our fidu-   while the equivalent width increases by about ∼ 30 %.,0.0
+"cial model, F-type stars significantly suppress the popu- However, the He∗ line profile maintains a similar mor-",0.0
+lation and observability of He∗ with an equivalent width  phology with the peak velocity shift and the FWHM,0.0
+"reduced by almost two orders of magnitude (3.16 to 0.04   unchanged from the fiducial model (Table 3). In short,",0.0
+"Å). However, the mass loss rate of the photoevaporative  puffier, low surface gravity planets are more likely to",0.0
+"outflow is similar to that of the fiducial model. Again,  undergo strong photoevaporative mass loss and should",0.0
+photoevaporation is driven mostly by EUV which have       prove great target for He∗ observations.,0.0
+similar flux levels between F and K stars. On the other,0.0
+"hand, for a typical M star host, whose higher energy            5. VARIABILITY AND STELLAR FLARES",0.0
+"flux levels are weaker in all bands, the mass loss rate      During one of the transit of WASP-69b in Nortmann",0.0
+"is reduced by one order of magnitude. Nonetheless, the    et al. (2018), the He∗ line profile experienced a ∼ 30%",0.0
+avr_spaces,9.682539682539682
+                                                                                                                                                                                     13,181.0
+                                                                                          102                                drop in magnitude that lasted for about 20 minutes.,90.0
+                0.150,16.0
+"                                                                                                                             This variability could well be instrumental in origin, but",125.0
+                                                                                                   Flux/[Fiducial Flux],99.0
+                0.125,16.0
+                                                                                                                             here we explore an alternative explanation that it is gen-,125.0
+                0.100                                                                                                        erated by a stellar flare on the host star.,16.0
+ hWλ i/Å                                                                                 101,1.0
+                0.075,16.0
+                                                                                                                                Solar/stellar flares are associated with the surface,128.0
+                                                                                                                             magnetic activity of the host star. Their amplitudes,125.0
+                0.050                                                                                                        can range below a percent to even orders of magnitude,16.0
+"                0.025                                                                                                        in extreme cases (“superflares” Günther et al. 2020, and",16.0
+                                                                                          100                                references therein). The sudden rise of luminosity is of-,90.0
+                                                                   Flare (10×)                                               ten followed by exponential decays to nominal flux level,67.0
+                      6,22.0
+                                                                   Flare (100×)                                              on minutes or hours timescale. To investigate the con-,67.0
+Ṁ /(10−9 M⊕ yr−1 ),0.0
+                                                                   Averaged Fiducial,67.0
+"                                                                                                                             sequences of flaring events on He∗ observables, we first",125.0
+                      4,22.0
+                                                                                                                             inject a simple flare model in which fluxes across all en-,125.0
+                                                                                                                             ergy bands energy bands increase by a factor 10 and 100,125.0
+                      2                                                                                                      times which then quickly decay to the quiescent state,22.0
+                                                                                                                             exponentially with a timescale of 500 s.,125.0
+                      0                                                                                                         The temporal response of our fiducial model to these,22.0
+                                                                                                                             flares are shown in Figure 9. Independent of the energy,125.0
+                      10−3           10−2            10−1             100              101,22.0
+                                               (t − tflare )/day,47.0
+"                                                                                                                             injected, the common mode of response is as follows. Be-",125.0
+                                                                                                                             fore the dynamics of the outflowing atmosphere can fully,125.0
+"Figure 9. Temporal variation of the two models (based on                                                                     respond to the flares, the photoionization of He∗ by soft",0.0
+Model 69-0) with flares that increase all high-energy radia-                                                                 FUV photons reduces the number density of He∗ and,0.0
+tion by 10 and 100 times uniformly (§5). The top panel                                                                       cause a significant decrease in the equivalent width. It,0.0
+shows the equivalent widths of the metastable helium ab-                                                                     is only after the dynamical timescale t − tflare ∼ τdyn ∼,0.0
+"sorption by solid curves. The two dashed lines, which should                                                                 hours that the flare-generated surge of photoevaporative",0.0
+"read the right ordinate, indicate the evolution of radiation",0.0
+                                                                                                                             mass-loss reach the higher altitudes where most of He∗,125.0
+fluxes in all energy bands. The mass-loss rates are shown,0.0
+"in the lower panel. Time-averaged values for the fiducial                                                                    absorption occurs. As a result, the equivalent width of",0.0
+model are also plotted for reference.                                                                                        He∗ increases after the first hour or so and remains high,0.0
+                                                                                                                             for several hours. Looking at the mass-loss rate across,125.0
+                                                                                             103,93.0
+                                                                                                                             the outer boundary of the simulation (lower panel of,125.0
+"             1.00                                                                                                            Figure 9), it experiences several oscillations on dynam-",13.0
+                                                                                                                             ical timescales as the systems response to the increased,125.0
+                                                                                                    Relative Soft FUV Flux,100.0
+             0.99,13.0
+                                                                                                                             flux from the flare. The equivalent width (and other,125.0
+                                                                                             102,93.0
+             0.98,13.0
+                             10× Soft FUV Flare                                                                              observables) however are the spatially integrated quan-,29.0
+Flux         0.97,0.0
+"                             100× Soft FUV Flare                                                                             tities, thus it effectively smears out most of these oscil-",29.0
+                             1000× Soft FUV Flare                                                                            lations and has a much smoother variation (upper panel,29.0
+                                                                                             101,93.0
+             0.96                                                                                                            of Figure 9). Comparing with variability seen in WASP-,13.0
+"                                                                                                                             69b (Nortmann et al. 2018), a flare that simultaneously",125.0
+             0.95                                                           Fiducial,13.0
+                                                                            Core Only,76.0
+                                                                                                                             raises all high energy radiation does not appear to be a,125.0
+                                                                                             100,93.0
+             0.94                                                                                                            good explanation. This is because it should be observed,13.0
+                −0.06        −0.04     −0.02        0.00       0.02         0.04        0.06,16.0
+                                                                                                                             as a decrease followed by an increase of He∗ absorption,125.0
+                                                  ∆t/day,50.0
+                                                                                                                             rather than the decrease only in the observations (Nort-,125.0
+"Figure 10. Slimilar to the lower panel of Figure 3, showing                                                                  mann et al. 2018).",0.0
+the light curves following soft-FUV-only flares that start                                                                      We therefore explore a different flare model in which,0.0
+at mid-transit (∆t = 0) and terminating after 0.5 hr. Differ-                                                                only the soft FUV band. We do not have observational,0.0
+ent flare intensities are indicated by colors. The light curves                                                              support that flares of this kind exist. We explore this,0.0
+"in solid lines should read the left ordinate, while the dashed                                                               rather contrived scenario just out of curiosity. Remem-",0.0
+lines are the flare shapes and should be read with the right,0.0
+                                                                                                                             ber from §4.2 that the soft FUV primarily suppresses the,125.0
+ordinate. Soft-FUV-only destroys He∗ while does not sig-,0.0
+"nificantly perturb the photoevaporative outflow, thus only",0.0
+                                                                                                                             He∗ abundance by photoionization without significantly,125.0
+produces a decrease in He∗ line depth that is seen in WASP-                                                                  changing the overall kinematics. A soft-FUV-only flare,0.0
+"69b. Nontheless, we do not believe this is the explanation                                                                   may produce the observed decrease of He∗ line depths.",0.0
+"for the observed variability (see §5 for detail).                                                                            We setup three extra simulation runs, again based on the",0.0
+avr_spaces,54.23170731707317
+ 14,1.0
+fiducial model of WASP-69b. We put in soft FUV flares         are needed for producing correct line profile including,0.0
+"(10, 100 and 1000 times the nominal value) that start at      the line ratios, kinematic broadening and the overall",0.0
+the middle of the transits and last for 30 min. In Fig-       blueshift. We found that EUV photons are most effi-,0.0
+"ure 10, we can see that the light curves respond to these     cient in driving the photoevaporation dynamics and in",0.0
+soft-FUV-only flares quickly. In order to reproduce the       producing He+ as the progenitors of recombination ex-,0.0
+"∼30% variation, a soft FUV flare between 10 − 100×            citation of He∗ . The soft FUV photons that can ionize",0.0
+the nominal level is required. This should be readily         He∗ often play an adverse effect on the He∗ observabil-,0.0
+"observable in the Ca ii H, K lines of the CARMENES            ity. X-ray photons, having much lower interaction cross",0.0
+"spectra in Nortmann et al. (2018). Nevertheless, en-          section, are of secondary importance. Surface gravity",0.0
+hanced activity was not observed in the spectra during        also determines the effectiveness of photoevaporative,0.0
+or preceding the observed light curve variation (private      outflows with puffier planets experiencing significantly,0.0
+"communications, Nortmann). Afterall, stellar flares do        stronger outflows, but the response of He* equivalent",0.0
+not seem to be a viable explanation of the temporal           width is sub-linear.,0.0
+variability seen the He∗ line profiles of Nortmann et al.        K-stars are at a sweet spot of FUV/EUV balance that,0.0
+(2018); instrumental effect is perhaps a better solution.     maximize the detectability of He∗ lines. F or earlier type,0.0
+                                                              stars have excessive FUV fluxes that suppresses the He∗,62.0
+                                                              lines by orders of magnitude. G and M dwarfs represent,62.0
+                      6. SUMMARY                              a middle ground: He∗ lines should still be observable,22.0
+                                                              particularly for the younger and more active ones. In,62.0
+"   In this work, we simulate the ionized mass loss of         any case, the depth He∗ line profiles cannot be translated",3.0
+close-in exoplanets and the metastable helium absorp-         to a mass-loss rate without knowing the host star high,0.0
+tion during the planetary transit. We produce synthetic       energy SED.,0.0
+spectrally resolved line profiles and the light curves in a      We also investigated whether stellar flares could ex-,0.0
+narrow filter band around the He∗ transitions. Dynam-,0.0
+                                                              plain some of the temporal variability of WASP-69b,62.0
+ics of such synthesis requires 3D hydrodynamic simula-        (Nortmann et al. 2018). We found that a flare which,0.0
+tions of photoevaporating planetary atmospheres; non-         enhances all high energy radiations initially suppresses,0.0
+equilibrium thermochemistry and ray-tracing radiative         He∗ lines due to FUV fluxes ionizing the He∗ before the,0.0
+transfer are co-evolved with the hydrodynamics. The           whole system can adjust to higher mass-loss state af-,0.0
+processes that populate and depopulate the metastable         ter some dynamical timescales (usually hour-timescale).,0.0
+state of neutral helium are included in a thermochemical      This characteristic shape is not consistent with the ob-,0.0
+network and solved efficiently on GPUs.                       served temporal variability of WASP-69b which only,0.0
+   With reasonable assumptions about the system pa-           shows a decline of He∗ line depth before returing to nom-,3.0
+"rameters and high energy SED of WASP-69, we find a            inal levels. Stellar flares are unlikely to be the explana-",0.0
+plausible model that launches a photoevaporative out-,0.0
+                                                              tion for this type of variability.,62.0
+flow with a mass-loss rate of Ṁ ' 5.5 × 10−10 M⊕ yr−1 .,0.0
+The model yields a spectrum and a light curve that are,0.0
+in remarkable agreement with the observations in terms           This work is supported by the Center for Computa-,0.0
+"equivalent width, line-ratios, blueshift and line broad-      tional Astrophysics of the Flatiron Institute, and the",0.0
+ening (Nortmann et al. 2018; Vissapragada et al. 2020).       Division of Geological and Planetary Sciences of the,0.0
+"Inside this outflow, metastable helium is formed almost       California Institute of Technology. L. Wang acknowl-",0.0
+solely by recombination. Its destruction is mainly due to     edges the computing resources provided by the Simons,0.0
+collisional de-excitation at small radii where the density    Foundation and the San Diego Supercomputer Center.,0.0
+is high and photoionization by FUV photons at outer           We thank our colleagues (alphabetical order): Philip,0.0
+"lower-density regions.                                        Armitage, Zhuo Chen, Jeremy Goodman, Xiao Hu,",0.0
+"   With this fiducial model of WASP-69b, we investi-          Heather Knutson, Mordecai Mac-Low, Jessica Spake,",3.0
+"gated how the photoevaporative outflow and He∗ ob-            Kengo Tomida, Songhu Wang, Andrew Youdin, and",0.0
+"servables depend on various input parameters. 3D sim-         Michael Zhang, for helpful discussions and comments.",0.0
+ulations are crucial for capturing the full hydrodynam-       We especially thank Shreyas Vissapragada for detailed,0.0
+ics including Coriolis force and advection. These effects     suggestions and discussions.,0.0
+                                                        APPENDIX,56.0
+avr_spaces,7.37037037037037
+                                                                                                                                         15,137.0
+                          A. CORES AND INTERAL ATMOSPHERES OF MODEL PLANETS,26.0
+  Gas giants like WASP-69b may have degenerate hydrogen and helium in their interior. We adopt the equations of,2.0
+"state (EoS hereafter) tabulated by Miguel et al. (2016), which describe the behaviors of hydrogen and helium over",0.0
+"wide ranges of pressure and temperature, from the degenerate states to ideal gases. Those tabulated EoS present the",0.0
+density and entropy of hydrogen and helium as functions of temperature and density. The combined EoS for a mixture,0.0
+"of hydrogen and helium at a fixed atom number fraction xH is given by solving the equation for xp,H (the partial",0.0
+"pressure of hydrogen),",0.0
+"                                                    mH xH               ρH (p xp,H , T )",52.0
+"                                                                  =                          ,                                       (A1)",66.0
+"                                               mHe (1 − xH )         ρHe [p(1 − xp,H ), T ]",47.0
+"in which p is the total pressure, T is the temperature, mH and mHe are the atomic masses of hydrogen and helium",0.0
+"respectively, and ρH , ρHe are interpolated from the EoS tables. The overall density then reads ρ = ρH + ρHe . The",0.0
+"entropy density s of the materials is also calculated, so that we can obtain the adiabatic gradient,",0.0
+                                                                ,54.0
+                                                         ∂ ln p            (∂ ln s/∂ ln p)T,57.0
+                                              ∇ad ≡                   =−                       .                                     (A2),46.0
+                                                         ∂ ln T s          (∂ ln s/∂ ln T )p,57.0
+Note that the entropy of mixing does not affect these derivatives.,0.0
+  The spherical symmetric isentropic hydrostatics are calculated by solving a boundary value problem for the set of,2.0
+ordinary differential equations:,0.0
+                                                                                            ,90.0
+                                 dp        GM ρ        dM                    dT              T       dp,33.0
+"                                     =− 2 ,                   = 4πr2 ρ ,          = ∇ad                 .                            (A3)",37.0
+                                 dr          r          dr                    dr              p      dr,33.0
+"where M denotes the mass enclosed by radius r. Specifying the boundary conditions (pc , Tc ) as the “eigenvalues”,",0.0
+we can integrate these ODEs from a the boundary of a dense solid core with radius rc and given mass Mc up to,0.0
+the radiative-convective boundary r = rrcb . At rrcb the temperature approaches the equilibrium temperature of the,0.0
+quasi-isothermal layer T = Teq . Thus the convective inner atmosphere is smoothly connected to an quasi-isothermal,0.0
+"outer atmosphere whose density profile obeys (µ is the dimensional mean molecular mass),",0.0
+                                                                                        ,60.0
+                                                                  GMrcb µ  rrcb,66.0
+                                            ρ = ρrcb exp                              −1         .                                   (A4),44.0
+                                                                 rrcb kB Teq      r,65.0
+"The density profile is then used to calculate the effective transiting radius,",0.0
+                                                     ,53.0
+                                                        1,56.0
+                                                          Z   rcut         h             i1/2,58.0
+"                                           hreff i =               db 2πb 1 − e−τ (b)              ,                                 (A5)",43.0
+                                                       π    0,55.0
+"where rcut is an arbitrary cutoff size (to calculate the effective transiting radius in the broad optical band, we use",0.0
+"rcut = 100 R⊕ ), τ (b) is the optical depth along the LoS at impact parameter b,",0.0
+                                                            Z rcut,60.0
+"                                                   τ (b) ≡           dz σn|r=√b2 +z2 ,                                               (A6)",51.0
+                                                               −rcut,63.0
+"n is the number density of the extinction particle, and σ is the extinction cross section per particle. The eigenvalues",0.0
+"(pc , Tc ) are searched iteratively until both Mrcb and hreff i match the observed the mass Mp and optical transiting",0.0
+"radius Rp of the planet being simulated. In all models discussed in this paper, for simplicity, we assume that there is",0.0
+"no rocky cores rc = 0, Mc = 0. This assumption hardly affects the properties of the upper atmosphere. We also use κ",0.0
+of the Thomson scattering to estimate calculate hreff i. We have also tested other plausible values of opacity (e.g. the,0.0
+"optical κ for rdust = 5 Å very small grains with 10−4 dust-to-gas mass ratio), and the hreff i varies by only ∼ 2% under",0.0
+the same boundary conditions. Again the specific choice of opacity hardly affects the upper atmosphere.,0.0
+                                                            REFERENCES,60.0
+"Allart, R., Bourrier, V., Lovis, C., et al. 2018, Science, 362,            Alonso-Floriano, F. J., Snellen, I. A. G., Czesla, S., et al.",0.0
+"  1384, doi: 10.1126/science.aat5879                                         2019, A&A, 629, A110,",2.0
+                                                                             doi: 10.1051/0004-6361/201935979,77.0
+avr_spaces,27.228070175438596
+ 16,1.0
+"Anderson, D. R., Collier Cameron, A., Delrez, L., et al.     Ninan, J. P., Stefansson, G., Mahadevan, S., et al. 2020,",0.0
+"  2014, MNRAS, 445, 1114, doi: 10.1093/mnras/stu1737           ApJ, 894, 97, doi: 10.3847/1538-4357/ab8559",2.0
+"Drake, G. 2006, High Precision Calculations for Helium       Nortmann, L., Pallé, E., Salz, M., et al. 2018, Science, 362,",0.0
+"  (Springer Science+Business Media, Inc., New York), 199       1388, doi: 10.1126/science.aat5348",2.0
+"Drake, G. W. 1971, PhRvA, 3, 908,                            Oklopčić, A. 2019, ApJ, 881, 133,",0.0
+  doi: 10.1103/PhysRevA.3.908                                  doi: 10.3847/1538-4357/ab2f7f,2.0
+"Edwards, S., Fischer, W., Kwan, J., Hillenbrand , L., &",0.0
+"                                                             Oklopčić, A., & Hirata, C. M. 2018, ApJL, 855, L11,",61.0
+"  Dupree, A. K. 2003, ApJL, 599, L41, doi: 10.1086/381077",2.0
+                                                               doi: 10.3847/2041-8213/aaada9,63.0
+"Ehrenreich, D., Bourrier, V., Wheatley, P. J., et al. 2015,",0.0
+"                                                             Owen, J. E., & Wu, Y. 2013, ApJ, 775, 105,",61.0
+"  Nature, 522, 459, doi: 10.1038/nature14501",2.0
+                                                               doi: 10.1088/0004-637X/775/2/105,63.0
+"France, K., Loyd, R. O. P., Youngblood, A., et al. 2016,",0.0
+"  ApJ, 820, 89, doi: 10.3847/0004-637X/820/2/89              —. 2016, ApJ, 817, 107, doi: 10.3847/0004-637X/817/2/107",2.0
+"Fulton, B. J., Petigura, E. A., Howard, A. W., et al. 2017,  —. 2017, ApJ, 847, 29, doi: 10.3847/1538-4357/aa890a",0.0
+"  AJ, 154, 109, doi: 10.3847/1538-3881/aa80eb                Palle, E., Nortmann, L., Casasayas-Barris, N., et al. 2020,",2.0
+"Ginzburg, S., Schlichting, H. E., & Sari, R. 2016, ApJ, 825,   A&A, 638, A61, doi: 10.1051/0004-6361/202037719",0.0
+"  29, doi: 10.3847/0004-637X/825/1/29                        Rafikov, R. R. 2006, ApJ, 648, 666, doi: 10.1086/505695",2.0
+"—. 2018, MNRAS, 476, 759, doi: 10.1093/mnras/sty290          Salz, M., Czesla, S., Schneider, P. C., et al. 2018, A&A,",0.0
+"Gudel, M. 1992, A&A, 264, L31                                  620, A97, doi: 10.1051/0004-6361/201833694",0.0
+"Günther, M. N., Zhan, Z., Seager, S., et al. 2020, AJ, 159, Seager, S., & Sasselov, D. D. 2000, ApJ, 537, 916,",0.0
+"  60, doi: 10.3847/1538-3881/ab5d3a                            doi: 10.1086/309088",2.0
+"Gupta, A., & Schlichting, H. E. 2019, MNRAS, 487, 24,        Spake, J. J., Sing, D. K., Evans, T. M., et al. 2018, Nature,",0.0
+"  doi: 10.1093/mnras/stz1230                                   557, 68, doi: 10.1038/s41586-018-0067-5",2.0
+"—. 2020, MNRAS, 493, 792, doi: 10.1093/mnras/staa315",0.0
+"                                                             Stone, J. M., Tomida, K., White, C. J., & Felker, K. G.",61.0
+"Kirk, J., Alam, M. K., López-Morales, M., & Zeng, L. 2020,",0.0
+"                                                               2020, arXiv e-prints, arXiv:2005.06651.",63.0
+"  AJ, 159, 115, doi: 10.3847/1538-3881/ab6e66",2.0
+                                                               https://arxiv.org/abs/2005.06651,63.0
+"Kulow, J. R., France, K., Linsky, J., & Loyd, R. O. P. 2014,",0.0
+"                                                             Turner, J. D., Christie, D., Arras, P., Johnson, R. E., &",61.0
+"  ApJ, 786, 132, doi: 10.1088/0004-637X/786/2/132",2.0
+"                                                               Schmidt, C. 2016, MNRAS, 458, 3880,",63.0
+"Kwan, J., Edwards, S., & Fischer, W. 2007, ApJ, 657, 897,",0.0
+                                                               doi: 10.1093/mnras/stw556,63.0
+  doi: 10.1086/511057,2.0
+"Lampón, M., López-Puertas, M., Lara, L. M., et al. 2020,   Venzmer, M. S., & Bothmer, V. 2018, A&A, 611, A36,",0.0
+"  A&A, 636, A13, doi: 10.1051/0004-6361/201937175              doi: 10.1051/0004-6361/201731831",2.0
+"Lecavelier Des Etangs, A., Ehrenreich, D., Vidal-Madjar,     Vidal-Madjar, A., Lecavelier des Etangs, A., Désert, J. M.,",0.0
+"  A., et al. 2010, A&A, 514, A72,                              et al. 2003, Nature, 422, 143, doi: 10.1038/nature01448",2.0
+"  doi: 10.1051/0004-6361/200913347                           Vissapragada, S., Knutson, H. A., Jovanovic, N., et al.",2.0
+"Leighly, K. M., Dietrich, M., & Barber, S. 2011, ApJ, 728,     2020, AJ, 159, 278, doi: 10.3847/1538-3881/ab8e34",0.0
+"  94, doi: 10.1088/0004-637X/728/2/94                        Wahl, S. M., Hubbard, W. B., Militzer, B., et al. 2017,",2.0
+"Loyd, R. O. P., France, K., Youngblood, A., et al. 2016,       Geophys. Res. Lett., 44, 4649,",0.0
+"  ApJ, 824, 102, doi: 10.3847/0004-637X/824/2/102              doi: 10.1002/2017GL073160",2.0
+"Miguel, Y., Guillot, T., & Fayon, L. 2016, A&A, 596, A114,   Wang, L., & Dai, F. 2018, ApJ, 860, 175,",0.0
+  doi: 10.1051/0004-6361/201629732                             doi: 10.3847/1538-4357/aac1c0,2.0
+"Müller, B., Tauris, T. M., Heger, A., et al. 2019, MNRAS,   Youngblood, A., France, K., Loyd, R. O. P., et al. 2016,",0.0
+"  484, 3307, doi: 10.1093/mnras/stz216                         ApJ, 824, 101, doi: 10.3847/0004-637X/824/2/101",2.0
+"Nakamura, K., Takiwaki, T., & Kotake, K. 2019, PASJ, 71,",0.0
+"                                                             —. 2017, ApJ, 843, 31, doi: 10.3847/1538-4357/aa76dd",61.0
+"  98, doi: 10.1093/pasj/psz080",2.0
+avr_spaces,12.736842105263158

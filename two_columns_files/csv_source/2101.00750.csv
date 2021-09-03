@@ -1,0 +1,562 @@
+text,space_num
+"                                                 Draft version January 14, 2021",49.0
+                                                 Typeset using LATEX preprint2 style in AASTeX62,49.0
+                                                             Correction to the photometric magnitudes of the Gaia Early Data Release 3,61.0
+"                                                     Lin Yang,1 Haibo Yuan,2 Ruoyi Zhang,2 Zexi Niu,3 Yang Huang,4 Fuqing Duan,1 and",53.0
+                                                                                       Yi Fang2,87.0
+                                                 1,49.0
+"                                                    College of Artificial Intelligence, Beijing Normal University No.19, Xinjiekouwai St, Haidian District, Beijing,",52.0
+"                                                                                                   100875, P.R.China",99.0
+                                                 2,49.0
+"                                                   Department of Astronomy, Beijing Normal University No.19, Xinjiekouwai St, Haidian District, Beijing, 100875,",51.0
+arXiv:2101.00750v2 [astro-ph.SR] 13 Jan 2021,0.0
+                                                                                              P.R.China; yuanhb@bnu.edu.cn,94.0
+                                                3,48.0
+"                                                  National Astronomical Observatories, Chinese Academy of Sciences 20A Datun Road, Chaoyang District, Beijing,",50.0
+                                                                                                          China,106.0
+                                               4,47.0
+"                                                 South-Western Institute for Astronomy Research, Yunnan University, Kunming 650500, People’s Republic of China",49.0
+                                                                                              ABSTRACT,94.0
+"                                                         In this letter, we have carried out an independent validation of the Gaia EDR3 pho-",57.0
+"                                                       tometry using about 10,000 Landolt standard stars from Clem & Landolt (2013). Using",55.0
+"                                                       a machine learning technique, the U BV RI magnitudes are converted into the Gaia",55.0
+"                                                       magnitudes and colors and then compared to those in the EDR3, with the effect of",55.0
+                                                       metallicity incorporated. Our result confirms the significant improvements in the cali-,55.0
+                                                       bration process of the Gaia EDR3. Yet modest trends up to 10 mmag with G magnitude,55.0
+"                                                       are found for all the magnitudes and colors for the 10 < G < 19 mag range, partic-",55.0
+                                                       ularly for the bright and faint ends. With the aid of synthetic magnitudes computed,55.0
+"                                                       on the CALSPEC spectra with the Gaia EDR3 passbands, absolute corrections are",55.0
+"                                                       further obtained, paving the way for optimal usage of the Gaia EDR3 photometry in",55.0
+                                                       high accuracy investigations.,55.0
+"                                                       Keywords: Astronomy data analysis, Fundamental parameters of stars, Stellar photom-",55.0
+                                                                 etry,65.0
+"                                                              1. INTRODUCTION                                Maı́z Apellániz & Weiler 2018; Niu et al. 2021,",62.0
+                                                 The Early Data Release 3 of the ESA’s space                 re-submitted). Thanks to significant improve-,49.0
+"                                               mission Gaia (Gaia Collaboration et al. 2016,                 ments in the calibration process, the magni-",47.0
+                                               2020) has delivered not only the best astromet-               tude term found in the Gaia DR2 photometry is,47.0
+                                               ric information but also the best photometric                 greatly reduced in the EDR3. The overall trend,47.0
+                                               data for about 1.8 billion stars (Riello et al.               is no larger than 1 mmag/mag except for very,47.0
+"                                               2020), in terms of full sky coverage, uniform                 blue and bright sources (Riello et al. 2020).",47.0
+"                                               calibration at mmag level, and small photo-                     Due to the unprecedented photometric qual-",47.0
+"                                               metric errors for a very wide range of magni-                 ity, it is challenging to identify possible prob-",47.0
+"                                               tudes. However, due to the changes of instru-                 lems of the Gaia photometry using external",47.0
+"                                               ment configurations, magnitude dependent sys-                 catalogs. Synthetic magnitudes from well cal-",47.0
+"                                               tematic errors up to 10 mmag or higher have                   ibrated spectral libraries, such as the CAL-",47.0
+"                                               been detected in its DR2 (Riello et al. 2018;                 SPEC (Bohlin 2014), have been used to com-",47.0
+                                               Casagrande & VandenBerg 2018; Weiler 2018;                    pare with the observed ones for the Gaia DR2,47.0
+avr_spaces,54.108695652173914
+ 2                                            Yang et al.,1.0
+"(Casagrande & VandenBerg 2018; Weiler 2018;          Gaia EDR3 passbands, we further obtain abso-",0.0
+"Maı́z Apellániz & Weiler 2018). However, the        lute corrections to the Gaia EDR3 photometry,",0.0
+number of available spectra is limited to a few      paving the way for optimal usage of the Gaia,0.0
+"hundreds, too few to identify any fine structures    photometry.",0.0
+in the correction curves. With about 0.5 million       The paper is organized as follows. In sec-,0.0
+"stars selected from the LAMOST DR5 (Luo et           tion 2, we introduce our data and method.",0.0
+"al. 2015), Niu et al. (2021, re-submitted) have      The result is presented in Section 3 and dis-",0.0
+applied the spectroscopy-based stellar color re-     cussed in Section 4. We summarize in Sec-,0.0
+"gression method (Yuan et al. 2015a) to cali-         tion 5. Note that in this paper, the Gaia",0.0
+brate the Gaia DR2 G − GRP and GBP − GRP             EDR3 G magnitudes refer to the corrected,0.0
+"colors. Systematic trends with G magnitude are       ones (phot g mean mag corrected, Riello et al.",0.0
+revealed for both colors in great detail at a pre-   2020),0.0
+"cision of about 1 mmag. However, contributions",0.0
+from each of the three Gaia magnitudes can not                   2. DATA AND METHOD,0.0
+be decoupled.                                                            2.1. Data,0.0
+"  In this letter, we aim to perform an indepen-        In this work, we only use main sequence stars",2.0
+dent test of the Gaia EDR3 photometry by com-        that have high-precision photometry from both,0.0
+paring with the Landolt standard stars. The          the Gaia EDR3 and the CL13. The following,0.0
+high-quality CCD-based U BV RI photometric           criteria are adopted to guarantee data quality:,0.0
+data from Clem & Landolt (2013; CL13 here-,0.0
+"after) is adopted for three reasons. Firstly, it        1) err(U ) < 0.02 mag, err(B) < 0.015 mag,",0.0
+"contains about 45,000 stars, about two orders               and err(V, R, I) < 0.01 mag to exclude",0.0
+of magnitude larger than the numbers of flux                stars of poor Landolt photometry;,0.0
+"standards in spectral libraries. Secondly, it has       2) phot bp rp excess factor < 1.26 +",0.0
+a wide magnitude range (10 < G < 20) that                   0.04 ∗ (GBP − GRP )2 to exclude stars,0.0
+matches well with the Gaia photometry. Last                 of poor Gaia photometry (Evans et al.,0.0
+"but not least, it has five filters (U BV RI), in-           2018). Note the above criterion is al-",0.0
+"cluding the metallicity sensitive U filter, mak-            most identical to requiring the corrected",0.0
+ing it possible to include the effect of metallic-          phot bp rp excess factor (Riello et al.,0.0
+ity when performing transformations between                 2020) < 0.08;,0.0
+"different photometric systems, which is essen-",0.0
+tial but ignored in the official validation of the      3) E(B–V )SFD < 0.12 mag to exclude stars,0.0
+"Gaia EDR3 (Riello et al. 2020; Fabricius et al.             of high extinction, where E(B–V )SFD is",0.0
+"2020). Using a machine learning technique, the              from the Schlegel et al. (1998, hereafter",0.0
+U BV RI magnitudes are trained into the Gaia                SFD) dust reddening map;,0.0
+magnitudes and colors and then compared to              4) 0.35 < B − V < 1.3 mag to select F/G/K,0.0
+those in the Gaia EDR3. Our result confirms                 stars;,0.0
+the significant improvements in the calibration,0.0
+process of the Gaia EDR3. Yet modest trends             5) G0 > 4 ∗ (GBP−RP − 1.33 ∗ E(B − V )SFD ),0.0
+"with G magnitude are found for all magnitudes               to exclude giant stars, where G0 is the in-",0.0
+and colors. By combining the synthetic mag-                 trinsic G magnitude. Here we adopt an,0.0
+nitudes computed on the CALSPEC (Bohlin et                  extinction coefficient of 2.5 for the G band,0.0
+"al. 2014, 2020 April Update) spectra with the               and a reddening coefficient of 1.33 for the",0.0
+                                                            GBP − GRP color (Chen et al. 2019).,60.0
+avr_spaces,1.3695652173913044
+                            Correction to the photometric magnitudes of the Gaia EDR3                                                                                       3,28.0
+                     0.04        0.4±8.5 mmag                      0.04                                             1.2                              0.04,21.0
+                     0.02                                          0.02                                                                              0.02,21.0
+                                                                                                     (U B)0 [mag],101.0
+                                                                                                                    0.8,116.0
+     G [mag]         0.00                          G [mag]         0.00,5.0
+                                                                                                                    0.4,116.0
+                                                                                                                                                     0.00   G [mag],149.0
+                     0.02                                          0.02                                                                               0.02,21.0
+                                                                                                                    0.0,116.0
+                     0.04                                          0.04                                                                               0.04,21.0
+                        0.50 0.75 1.00 1.25 1.50                     0.000 0.025 0.050 0.075 0.100                  0.40.2 0.4 0.6 0.8 1.0 1.2 1.4,24.0
+                                 GBP GRP [mag]                                  E(B - V) [mag]                                (B V)0 [mag],33.0
+                     0.04       -0.2±12.7 mmag                     0.04                                             1.2                              0.04,21.0
+                     0.02                                          0.02                                                                              0.02,21.0
+                                                                                                     (U B)0 [mag],101.0
+                                                                                                                    0.8,116.0
+     GBP [mag]       0.00                          GBP [mag]       0.00,5.0
+                                                                                                                    0.4,116.0
+                                                                                                                                                     0.00   GBP [mag],149.0
+                     0.02                                          0.02                                                                               0.02,21.0
+                                                                                                                    0.0,116.0
+                     0.04                                          0.04                                                                               0.04,21.0
+                        0.50 0.75 1.00 1.25 1.50                     0.000 0.025 0.050 0.075 0.100                  0.40.2 0.4 0.6 0.8 1.0 1.2 1.4,24.0
+                                 GBP GRP [mag]                                  E(B - V) [mag]                                (B V)0 [mag],33.0
+                     0.04        0.7±11.9 mmag                     0.04                                             1.2                              0.04,21.0
+                     0.02                                          0.02                                                                              0.02,21.0
+                                                                                                     (U B)0 [mag],101.0
+                                                                                                                    0.8,116.0
+     GRP [mag]       0.00                          GRP [mag]       0.00,5.0
+                                                                                                                    0.4,116.0
+                                                                                                                                                     0.00   GRP [mag],149.0
+                     0.02                                          0.02                                                                               0.02,21.0
+                                                                                                                    0.0,116.0
+                     0.04                                          0.04                                                                               0.04,21.0
+                        0.50 0.75 1.00 1.25 1.50                     0.000 0.025 0.050 0.075 0.100                  0.40.2 0.4 0.6 0.8 1.0 1.2 1.4,24.0
+                                 GBP GRP [mag]                                  E(B - V) [mag]                                (B V)0 [mag],33.0
+                     0.04        1.0±10.1 mmag                     0.04                                             1.2                              0.04,21.0
+     (G GBP) [mag]                                 (G GBP) [mag]                                                                                            (G GBP) [mag],5.0
+                     0.02                                          0.02                                                                              0.02,21.0
+                                                                                                     (U B)0 [mag],101.0
+                                                                                                                    0.8,116.0
+                     0.00                                          0.00                                                                              0.00,21.0
+                                                                                                                    0.4,116.0
+                     0.02                                          0.02                                                                               0.02,21.0
+                                                                                                                    0.0,116.0
+                     0.04                                          0.04                                                                               0.04,21.0
+                        0.50 0.75 1.00 1.25 1.50                     0.000 0.025 0.050 0.075 0.100                  0.40.2 0.4 0.6 0.8 1.0 1.2 1.4,24.0
+                                 GBP GRP [mag]                                  E(B - V) [mag]                                (B V)0 [mag],33.0
+                     0.04        -0.5±7.9 mmag                     0.04                                             1.2                              0.04,21.0
+     (G GRP) [mag]                                 (G GRP) [mag]                                                                                            (G GRP) [mag],5.0
+                     0.02                                          0.02                                                                              0.02,21.0
+                                                                                                     (U B)0 [mag],101.0
+                                                                                                                    0.8,116.0
+                     0.00                                          0.00                                                                              0.00,21.0
+                                                                                                                    0.4,116.0
+                     0.02                                          0.02                                                                               0.02,21.0
+                                                                                                                    0.0,116.0
+                     0.04                                          0.04                                                                               0.04,21.0
+                        0.50 0.75 1.00 1.25 1.50                     0.000 0.025 0.050 0.075 0.100                  0.40.2 0.4 0.6 0.8 1.0 1.2 1.4,24.0
+                                 GBP GRP [mag]                                  E(B - V) [mag]                                (B V)0 [mag],33.0
+"Figure 1. Residual distributions as functions of GBP − GRP (left panel), reddening (middle panel), and",0.0
+in the (U − B)0 − (B − V )0 diagram (right panel) of the training (black dots) and test (red dots) samples,0.0
+"for each of the five MLP networks. From top to bottom are the results for G, GBP , GRP , G − GBP , and",0.0
+"G − GRP , respectively. The median values and standard deviations of the residuals are also marked in the",0.0
+"left panels. For the reddening correction of the U − B and B − V colors, the SFD reddening map and",0.0
+reddening coefficients of 0.708 and 0.884 are adopted (Schlafly & Finkbeiner 2011).,0.0
+avr_spaces,51.35294117647059
+ 4                                           Yang et al.,1.0
+"  Finally, 10,294 stars are selected, including     magnitudes/colors are preferred to dereddened",2.0
+"1,539 stars of 17 < G < 17.5 mag as the ref-        ones, to avoid possible systematic errors caused",0.0
+erence sample. The 17 < G < 17.5 magnitude          by reddening correction. Systematic errors may,0.0
+range is adopted in order to 1) have a large        come from at least two aspects: spatially depen-,0.0
+number of reference stars and 2) have a rela-       dent systematic errors with the SFD reddening,0.0
+"tively wide range in metallicity. For the ref-      map (Sun et al., to be submitted; Niu et al.",0.0
+"erence sample, we further exclude a few hun-        2021) and overestimates of reddening for bright",0.0
+dred stars whose magnitude errors are larger        local stars.,0.0
+than 0.01 mag in the U band or 0.005 mag in           The training process is carried out with Keras,0.0
+"the B/V /R/I band. The remaining 1,079 stars        2.2.4 and Tensorflow 1.12. The loss function,",0.0
+are divided into two groups: the training set       Mean Squared Error (MSE) with a L2 regular-,0.0
+"(90 percent) and the test set (10 percent). For     ized term, is optimized using adaptive moment",0.0
+"the whole sample, the median errors are 4.3,        estimation (ADAM, Kingma & Ba 2014) with",0.0
+"3.3, 2.3, 1.9, and 2.3 mmag for U, B, V, R, I,      a mini-batch size of 900 samples. The trade-",0.0
+"and 2.8, 7.7, and 6.1 mmag for G, GBP , GRP ,       off coefficient between the MSE and regularized",0.0
+"respectively. For the reference sample, the me-     term is 0.000001 to avoid overfitting. Other",0.0
+"dian errors are 3.6, 2.9, 1.9, 1.6, and 1.9 mmag    hyper-parameters set manually in our work are",0.0
+"for U, B, V, R, I, and 2.9, 9.2, and 7.1 mmag for   training iterations epoch = 100, 000 and learn-",0.0
+"G, GBP , GRP , respectively.                        ing rate η = 0.00001.",0.0
+"                                                      During the training process, a 3σ clipping is",54.0
+"                    2.2. Method                     performed to exclude outliers. Then, the train-",20.0
+"  In this work, multi-layer perceptron neural       ing process runs again with the same hyper-",2.0
+"networks (MLP) with architectures of 4-128-64-      parameters. After the networks are well trained,",0.0
+8-1 are designed to convert the Landolt U BV RI     we apply the models to the whole dataset. The,0.0
+photometry of CL13 into the Gaia EDR3 mag-          predicted magnitudes and colors are then ob-,0.0
+nitudes and colors. Each node of the hidden         tained and compared to those in the EDR3. The,0.0
+layers and the output layer is connected to all     median differences (predicted − observed) as a,0.0
+"nodes of its previous layer, with a nonlinear       function of G magnitude are regarded as the",0.0
+function:                                           calibration curves.,0.0
+                                                                       3. RESULT,71.0
+               f (X) = g(W X + b)             (1),15.0
+                                                      Figure 1 shows the results of the training and,54.0
+where W and b respectively represent the weight     test samples for different MLP neural networks.,0.0
+"matric and bias vector, g(•) represents the         It can be seen that the residuals show no de-",0.0
+LeakyReLU activation function with negative         pendence on the GBP − GRP color or the SFD,0.0
+slope coefficient α = 0.1 in the hidden layer.      reddening. The residuals also show no system-,0.0
+"Five MLPs are trained, three for the Gaia EDR3      atic patterns in the (U −B)0 −(B−V )0 diagram.",0.0
+magnitudes and two for the Gaia EDR3 colors.        Because dwarf stars of different metallicities are,0.0
+The four input colors are the same for the five     well separated in the (U − B)0 − (B − V )0 dia-,0.0
+"MLPs, i.e., U −B, B −V, V −R, R−I. The out-         gram (e.g., Sandage & Smith 1963), the results",0.0
+"puts are G−A, GBP −A, GRP −A, G−GBP , and           suggest that the effect of metallicity has been",0.0
+"G − GRP respectively, where A is an artificial      fully taken into account in our neural networks.",0.0
+"magnitude defined as the mean of the B, V, R        Note that the standard deviations of the resid-",0.0
+"magnitudes. Note that in this work, observed        uals are 8.5, 12.7, 11.9, 10.1, and 7.9 mmag for",0.0
+avr_spaces,4.760869565217392
+              Correction to the photometric magnitudes of the Gaia EDR3                              5,14.0
+"the G, GBP , GRP , G−GBP , and G−GRP , respec-       GBP − GRP as a function of G is much weaker",0.0
+tively. The small standard deviations suggest        compared to that in G − GBP and G − GRP .,0.0
+"that the Gaia photometry can be well recov-            In the above analysis, we have assumed that",0.0
+"ered from the Landolt photometry, to a preci-        the corrections are zero for stars of 17 < G <",0.0
+"sion of about 1 percent with photometric errors      17.5 mag, which is not true. To set an ab-",0.0
+"included.                                            solute correction zero point, synthetic magni-",0.0
+"  Figure 2 shows the residual distributions in       tudes of G, GBP , and GRP are computed on",2.0
+"the (GBP − GRP ) – G diagram for the whole           the CALSPEC (Bohlin et al. 2014, 2020 April",0.0
+dataset. No obvious dependence on color within       Update) spectra with the Gaia EDR3 pass-,0.0
+"the two dashed lines is seen for all the pan-        bands, with the same approach of Riello et al.",0.0
+"els, consistent with the result of Riello et al.     (2020). The results are used to obtain the abso-",0.0
+(2020). For a few stars of GBP − GRP < 0.6 or        lute corrections.Only 20 stars of GBP − GRP >,0.0
+"GBP − GRP > 1.5, there exist some discrepan-         −0.3, G > 10, and phot bp rp excess factor",0.0
+"cies, probably caused by the boundary effect in      < 1.26+0.04∗(GBP −GRP )2 are used. The mean",0.0
+"the training process. Those stars are excluded       magnitude offsets are −4.2, −9.5, and 3.0 mmag",0.0
+"in the following analysis.                           for G, GBP , and GRP , respectively. The shifts",0.0
+"  The calibration curves as a function of G mag-     of the calibration curves are −2.1, −15.1, −1.0,",2.0
+"nitude for the Gaia magnitudes and colors are        9.9, and −3.1 mmag for G, GBP , GRP , G − GBP ,",0.0
+"plotted in Figure 3. The errors are also esti-       and G − GRP , respectively.The final calibration",0.0
+mated using the Bootstrap method with 500            curves are plotted in Figure 4 and listed in Ta-,0.0
+"subsamples. The errors at G ∼ 12.0, 13.0, 14.0,      ble 1. Note that only results directly obtained",0.0
+"16.0, and 18.0 mag are respectively (0.9, 0.8,       from the five MLPs (red lines in the top panels",0.0
+"0.6, 0.4, 0.4), (0.7, 0.7, 0.5, 0.3, 0.7), and (0.9, of Figure 4 and blue lines in the two bottom",0.0
+"0.9, 0.3, 0.3, 0.6) mmag in the top panels from      panels on the left) are given in Table 1. Cali-",0.0
+"left to right, (0.6, 0.8, 0.2, 0.2, 0.6), (0.6, 0.4, bration curves yielded by different MLPs (blue",0.0
+"0.2, 0.2, 0.5), and (0.5, 0.5, 0.2, 0.2, 0.5) mmag   and red dotted lines in Figure 4) agree with each",0.0
+"in the middle panels from left to right, (0.5, 0.3,  other very well, with a typical difference of 0.5",0.0
+"0.2, 0.2, 0.6), (0.5, 0.6, 0.4, 0.2, 0.4), and (0.4, mmag, within the training errors.",0.0
+"0.5, 0.5, 0.3, 0.4) mmag in the bottom panels",0.0
+                                                                     4. DISCUSSION,69.0
+from left to right. Our result confirms the sig-,0.0
+nificant improvements in the calibration process       Fabricius et al. (2020) compare Gaia EDR3,0.0
+of the Gaia EDR3. The strong trend in G as a         photometry to a number of external catalogs,0.0
+"function of G in DR2 is greatly reduced. Yet         in their Figure 34, including the one we use in",0.0
+modest trends with G magnitude are found for         the current work. They select all stars of |b| >,0.0
+all magnitudes and colors. A tiny discontinuity      30° and AV < 0.05 mag for low latitude stars.,0.0
+"of 2–3 mmag at G ∼ 13 mag is clearly detected        Simple color-color relations are then used, X =",0.0
+"for all the magnitude curves, probably related       V + f (V − I) where X denotes Gaia magnitude,",0.0
+"to a change in the instrument configuration.         to transform the Landolt V, I magnitudes into",0.0
+The downturn at faint magnitudes visible in the      Gaia magnitudes.,0.0
+GBP and GRP passbands is possibly caused by            Stellar colors depend mainly on the stellar ef-,0.0
+"some over-estimation of the background in the        fective temperature, but also to a fair degree on",0.0
+"BP and RP spectra. Therefore, the trend in           metallicity, particularly the blue colors. Yuan",0.0
+                                                     et al. (2015) propose to use the metallicity-,53.0
+                                                     dependent stellar locus to better describe the,53.0
+avr_spaces,4.1063829787234045
+   6                                                                  Yang et al.,3.0
+          20                                                20                                                 20,10.0
+                                       0.04                                               0.04                                              0.04,39.0
+          18                                                18                                                 18,10.0
+                                       0.02                                               0.02                                              0.02,39.0
+                                                                                                                                                   GRP [mag],147.0
+          16                                                16                                   GBP [mag]     16,10.0
+G [mag],0.0
+                                                  G,50.0
+                                       0.00                                               0.00                                              0.00,39.0
+          14                                  G [mag]       14                                   G [mag]       14,10.0
+                                        0.02                                               0.02                                              0.02,40.0
+          12                                                12                                                 12,10.0
+                                        0.04                                               0.04                                              0.04,40.0
+          100.50 0.75 1.00 1.25 1.50                        100.50 0.75 1.00 1.25 1.50                         100.50 0.75 1.00 1.25 1.50,10.0
+                     GBP GRP [mag]                                     GBP GRP [mag]                                      GBP GRP [mag],21.0
+          20                                                20                                                 20,10.0
+                                       0.04                                               0.04                                              0.04,39.0
+          18                                                18                                                 18,10.0
+                                                                                                                                                   GBP GRP [mag],147.0
+                                       0.02                                               0.02                                              0.02,39.0
+          16                                  G GBP [mag]   16                                   G GRP [mag]   16,10.0
+G [mag],0.0
+                                       0.00                                               0.00                                              0.00,39.0
+          14,10.0
+                                        0.02   G [mag]      14,40.0
+                                                                                           0.02   G [mag]      14,91.0
+                                                                                                                                             0.02,141.0
+          12                                                12                                                 12,10.0
+                                        0.04                                               0.04                                              0.04,40.0
+          100.50 0.75 1.00 1.25 1.50                        100.50 0.75 1.00 1.25 1.50                         100.50 0.75 1.00 1.25 1.50,10.0
+                     GBP GRP [mag]                                     GBP GRP [mag]                                      GBP GRP [mag],21.0
+          20                                                20                                                 20,10.0
+                                       0.04                                               0.04                                              0.04,39.0
+          18                                                18                                                 18,10.0
+                                                                                                                                                   GBP GRP [mag],147.0
+                                       0.02                                               0.02                                              0.02,39.0
+          16                                  G GBP [mag]   16                                   G GRP [mag]   16,10.0
+G [mag],0.0
+                                       0.00                                               0.00                                              0.00,39.0
+          14,10.0
+                                        0.02   G [mag]      14,40.0
+                                                                                           0.02   G [mag]      14,91.0
+                                                                                                                                             0.02,141.0
+          12                                                12                                                 12,10.0
+                                        0.04                                               0.04                                              0.04,40.0
+          100.50 0.75 1.00 1.25 1.50                        100.50 0.75 1.00 1.25 1.50                         100.50 0.75 1.00 1.25 1.50,10.0
+                     GBP GRP [mag]                                     GBP GRP [mag]                                      GBP GRP [mag],21.0
+Figure 2. Residual distributions in the (GBP − GRP ) – G diagram for the whole dataset. The top panels,0.0
+show the results of the Gaia magnitudes. The middle panels show the results of the Gaia colors calculated,0.0
+from the top panels. The two left panels in the bottom show the results of the Gaia colors directly trained,0.0
+"from the neural networks, while the right one the result calculated from the two left panels. The two vertical",0.0
+"dashed lines indicate GBP − GRP color of 0.6 and 1.5 mag, respectively.",0.0
+transformation relations between different col-                                   better than 1 percent by considering the effect,0.0
+"ors. Taking the SDSS colors for example, at                                       of metallicity on stellar colors. López-Sanjuan",0.0
+"a given g − i color, they find that typically 1                                   et al. (2021) have discussed the impact of metal-",0.0
+dex decrease in metallicity causes 0.20 and 0.02                                  licity on photometric calibration of the JPLUS,0.0
+mag decrease in colors u − g and g − r and 0.02                                   survey (Cenarro et al. 2019) with the stellar,0.0
+"and 0.02 mag increase in colors r − i and i − z,                                  locus technique and found significant improve-",0.0
+respectively. The variations are larger for more                                  ments for blue passbands.,0.0
+"metal-rich stars, and for F/G/K stars. The rela-                                    A large vertical metallicity gradient of the",0.0
+tions are also different between dwarf stars and                                  Galaxy at the solar neighborhood is widely re-,0.0
+"giant stars. Therefore, to make optimal trans-                                    ported, e.g., 0.15 dex kpc−1 from Huang et",0.0
+"formations between different colors, the metal-                                   al. (2015). Considering the strong correlation",0.0
+licity effect shall be taken into account. Huang                                  between stellar magnitudes and distances for,0.0
+"et al. (2020) have applied a revised stellar color                                dwarf stars, it implies a strong correlation be-",0.0
+"regression method to re-calibrate the SkyMap-                                     tween stellar magnitudes and metallicities, es-",0.0
+"per Southern Survey DR2 (Onken et al. 2019),                                      pecially for high Galactic latitude regions. Such",0.0
+achieving a uniform calibration with precision                                    a correlation could cause magnitude dependent,0.0
+avr_spaces,25.6
+                          Correction to the photometric magnitudes of the Gaia EDR3                                                            7,26.0
+                0.04                                           0.04                                             0.04,16.0
+                0.02                                           0.02                                             0.02,16.0
+G [mag]         0.00                           GBP [mag]       0.00                           GRP [mag]         0.00,0.0
+                0.02                                           0.02                                             0.02,16.0
+                0.04                                           0.04                                             0.04,16.0
+                    10   12   14 16      18   20                   10   12   14 16      18   20                     10   12   14 16      18   20,20.0
+                               G [mag]                                        G [mag]                                          G [mag],31.0
+                0.04                                           0.04                                             0.04,16.0
+(G GBP) [mag]                                  (G GRP) [mag]                                  (GBP GRP) [mag],0.0
+                0.02                                           0.02                                             0.02,16.0
+                0.00                                           0.00                                             0.00,16.0
+                0.02                                           0.02                                             0.02,16.0
+                0.04                                           0.04                                             0.04,16.0
+                    10   12   14 16      18   20                   10   12   14 16      18   20                     10   12   14 16      18   20,20.0
+                               G [mag]                                        G [mag]                                          G [mag],31.0
+                0.04                                           0.04                                             0.04,16.0
+(G GBP) [mag]                                  (G GRP) [mag]                                  (GBP GRP) [mag],0.0
+                0.02                                           0.02                                             0.02,16.0
+                0.00                                           0.00                                             0.00,16.0
+                0.02                                           0.02                                             0.02,16.0
+                0.04                                           0.04                                             0.04,16.0
+                    10   12   14 16      18   20                   10   12   14 16      18   20                     10   12   14 16      18   20,20.0
+                               G [mag]                                        G [mag]                                          G [mag],31.0
+Figure 3. Residual distributions as a function of G magnitude for the whole dataset after excluding stars,0.0
+of GBP − GRP < 0.6 and GBP − GRP > 1.5. The panels are arranged in the same way to Figure 2. For each,0.0
+"panel, stars are divided into different bins of width of 0.4 mag at a step size of 0.1 mag when 12.5 < G < 18.7",0.0
+"mag. The median value for each bin is estimated, with a 3−σ clipping performed and the grey dots dropped.",0.0
+"At the bright end, a linear fitting is performed for stars of G < 13.0 mag, the results are adopted when",0.0
+"G < 12.5 mag. Finally, a locally estimated scatterplot smoothing (LOWESS) is applied to smooth the",0.0
+"calibration curves, with f rac = 0.07. The final results are indicated by red dotted lines. The blue error bars",0.0
+are estimated with 500 subsamples using the Bootstrap method.,0.0
+"systematic errors when adopting simple color-                                     To validate our result, following the proce-",0.0
+"color relations and ignoring the effect of metal-                               dure in Niu et al. (2021, re-submitted), we",0.0
+"licity, at the level of from several mmag to tens                               select a high-quality common sample contain-",0.0
+"of mmag for the Gaia passbands, depending on                                    ing 0.7 million stars in LAMOST DR7 and",0.0
+which colors are used and properties of the sam-                                Gaia EDR3 and plot the residuals from the,0.0
+"ple stars. In our work, by making use of the                                    G − GRP = f (GBP − GRP , [Fe/H]) relation as a",0.0
+full color information of the Landolt photome-                                  function of G in Figure 5. The top panel plots,0.0
+"try, particularly the U − B color, we can nat-                                  the result of the published EDR3 data, which",0.0
+urally incorporate the effect of metallicity and                                is quite similar to Figure 32 in Fabricius et al.,0.0
+obtain robust results.                                                          (2020) and shows small but well-detected mag-,0.0
+avr_spaces,9.372093023255815
+    8                                                                   Yang et al.,4.0
+                0.02                                           0.02                                             0.03,16.0
+                0.01                                           0.01                                             0.02,16.0
+                0.00                                           0.00                                             0.01,16.0
+G [mag]         0.01                           GBP [mag]       0.01                           GRP [mag]         0.00,0.0
+                0.02                                           0.02                                             0.01,16.0
+                0.03                                           0.03                                             0.02,16.0
+                0.0410   12   14 16      18   20               0.0410   12   14 16      18   20                 0.0310   12   14 16      18   20,16.0
+                               G [mag]                                        G [mag]                                          G [mag],31.0
+                0.03                                           0.01                                             0.01,16.0
+                0.02                                           0.00                                             0.00,16.0
+(G GBP) [mag]                                  (G GRP) [mag]                                  (GBP GRP) [mag],0.0
+                0.01                                           0.01                                             0.01,16.0
+                0.00                                           0.02                                             0.02,16.0
+                0.0110   12   14 16      18   20               0.0310   12   14 16      18   20                 0.0310   12   14 16      18   20,16.0
+                               G [mag]                                        G [mag]                                          G [mag],31.0
+Figure 4. Magnitude (top panels) and color (bottom panels) calibration curves. The green dots are results,0.0
+from synthetic magnitudes/colors of the CALSPEC spectra. The red dotted lines are results from the trained,0.0
+magnitudes. The blue dotted lines in the two top panels on the right are results combining the trained G,0.0
+magnitude and trained G − GBP and G − GRP colors. The blue dotted lines in the bottom panels are results,0.0
+from the trained colors. All the dotted lines are shifted by the median of the differences between the dotted,0.0
+lines and the green dots to match the green dots.,0.0
+nitude dependent deviations from zero. The                                      tion. Note also that the EDR3 photometry is,0.0
+bottom panel plots the result after the mag-                                    calibrated in the absolute flux level using a set of,0.0
+nitude corrections in this work. Compared to                                    spectro-photometric standard stars (SPSS; Pan-,0.0
+"the published EDR3 data, the deviations are                                     cino et al. 2012), whose fluxes are tied to the",0.0
+significantly reduced to zero along with the G                                  2013 version of CALSPEC (Riello et al. 2020).,0.0
+"magnitude, especially at the bright and faint                                   Adjusting the ab solute flux scale to the current",0.0
+ends. The result suggests that our corrections                                  CALSPEC library will therefore result in an in-,0.0
+are valid. Note that at G ∼ 13 mag where a                                      consistency with the uncorrected photometry.,0.0
+"discontinuity happens, our corrections are not                                  To avoid discontinuities, the calibration terms",0.0
+as good as for fainter magnitudes. This is be-                                  at G = 10 are suggested for stars brighter than,0.0
+"cause we do not have enough stars to sample                                     G = 10. For stars fainter than G = 18.7, the",0.0
+the correction curves at a very high resolution                                 calibration terms at G = 18.7 are suggested.,0.0
+"in G magnitude.                                                                   In the current MLPs, reddening values of",0.0
+  Note that due to the limited magnitude and                                    individual stars are not included. We have,2.0
+"color ranges (10 < G < 19, 0.6 < GBP − GRP <                                    performed tests by including reddening values",0.0
+"1.5) of our final sample, our correction curves                                 from the SFD map into the networks, and",0.0
+may not be valid for stars outside the above                                    the predicted magnitudes and colors are hardly,0.0
+"ranges, particularly for the bright and blue                                    changed, suggesting that our results are insen-",0.0
+(G < 13 and GBP − GRP < −0.1) ones (Riello                                      sitive to the reddening. It is not surprising be-,0.0
+"et al. 2020), and thus should be used with cau-",0.0
+avr_spaces,5.674418604651163
+             Correction to the photometric magnitudes of the Gaia EDR3                         9,13.0
+Table 1. Magnitude and color calibration curves    G     ∆G     ∆GBP ∆GRP       ∆(G −   ∆(G −,0.0
+in units of mmag.                                                               GBP )    GRP ),0.0
+   G      ∆G   ∆GBP ∆GRP     ∆(G −     ∆(G −      15.5   −3.2   −10.1    3.3      3.9    −8.2,3.0
+                              GBP )     GRP )     15.6   −3.1   −10.6    3.3      4.1    −8.2,30.0
+  10.0   −6.7  −14.9  6.3      5.8     −12.3      15.7   −3.0   −10.8    3.3      4.3    −8.2,2.0
+  10.4   −5.9  −14.0  5.7      5.7     −11.3      15.8   −2.9   −10.7    3.2      4.5    −8.1,2.0
+  10.8   −5.0  −13.1  5.2      5.7     −10.2      15.9   −2.8   −10.7    3.2      4.6    −7.9,2.0
+  11.2   −4.1  −12.3  4.6      5.7      −9.2      16.0   −2.8   −10.8    3.1      5.1    −7.8,2.0
+  11.6   −3.2  −11.4  4.1      5.6      −8.2      16.1   −2.9   −11.0    2.9      5.5    −7.6,2.0
+  12.0   −2.3  −10.6  3.5      5.6      −7.1      16.2   −3.1   −11.6    2.6      5.8    −7.4,2.0
+  12.4   −1.0  −10.1  3.1      4.8      −5.9      16.3   −3.3   −12.0    2.2      6.0    −7.1,2.0
+  12.5   −0.6  −10.0  3.1      5.3      −5.4      16.4   −3.5   −12.4    1.7      6.0    −6.8,2.0
+  12.6   −0.4   −9.7  3.2      5.7      −5.0      16.5   −3.6   −12.8    1.2      6.3    −6.5,2.0
+  12.7   −0.4   −9.1  3.1      5.8      −4.7      16.6   −3.7   −13.2    0.8      6.5    −6.1,2.0
+  12.8   −0.2   −8.4  3.0      5.8      −4.5      16.7   −3.4   −13.5    0.5      7.0    −5.7,2.0
+  12.9   −0.9   −8.1  2.9      5.6      −4.3      16.8   −3.5   −13.8    0.1      7.6    −5.3,2.0
+  13.0   −1.4   −8.4  2.5      5.3      −4.6      16.9   −3.2   −14.1   −0.2      7.9    −4.8,2.0
+  13.1   −1.9   −8.9  1.9      5.1      −5.1      17.0   −3.0   −14.5   −0.5      8.2    −4.3,2.0
+  13.2   −2.7  −10.0  1.1      4.9      −5.5      17.1   −2.8   −14.7   −0.7      8.9    −3.7,2.0
+  13.3   −4.0  −10.6  0.2      4.7      −5.5      17.2   −2.7   −15.2   −0.8      9.6    −3.1,2.0
+  13.4   −3.5  −10.8  0.1      5.0      −5.5      17.3   −2.4   −15.0   −0.9     10.6    −2.7,2.0
+  13.5   −3.5  −11.0  0.1      5.2      −5.5      17.4   −2.1   −16.0   −1.0     10.7    −2.1,2.0
+  13.6   −3.6  −10.8  0.1      5.4      −5.4      17.5   −1.7   −16.4   −1.3     11.3    −1.5,2.0
+  13.7   −2.6  −10.5  0.1      5.3      −5.4      17.6   −1.6   −16.8   −1.8     11.7    −1.0,2.0
+  13.8   −2.7  −10.3  0.1      5.0      −5.3      17.7   −1.6   −17.2   −2.3     12.1    −0.4,2.0
+  13.9   −3.4  −10.0  0.0      4.7      −5.3      17.8   −1.5   −17.7   −3.1     13.2     0.0,2.0
+  14.0   −3.5   −9.7 −0.1      4.4      −5.2      17.9   −1.9   −18.4   −3.8     13.3     0.5,2.0
+  14.1   −3.7   −9.7  0.0      4.1      −5.1      18.0   −2.3   −19.1   −4.4     13.9     0.9,2.0
+  14.2   −3.7   −9.8  0.2      3.7      −5.4      18.1   −2.6   −20.0   −4.7     14.3     1.2,2.0
+  14.3   −3.5   −9.9  0.3      3.8      −5.7      18.2   −2.9   −20.3   −4.9     14.6     1.4,2.0
+  14.4   −4.2   −9.9  0.3      3.6      −6.0      18.3   −2.8   −20.3   −4.9     14.5     1.9,2.0
+  14.5   −4.1  −10.0  0.8      3.7      −6.4      18.4   −2.8   −20.3   −5.1     14.1     1.8,2.0
+  14.6   −4.4   −9.9  1.3      4.1      −6.9      18.5   −3.0   −20.5   −5.2     13.6     2.2,2.0
+  14.7   −3.9   −9.9  1.8      4.0      −7.3      18.6   −3.5   −20.8   −5.9     13.3     3.0,2.0
+  14.8   −3.3   −9.3  2.2      4.0      −7.5      18.7   −4.0   −21.8   −8.6     13.4     4.6,2.0
+  14.9   −3.3   −9.2  2.5      4.0      −7.6,2.0
+  15.0   −3.0   −9.7  2.4      3.9      −7.8    cause systematic errors in the reddening correc-,2.0
+  15.1   −3.4   −9.8  2.4      3.7      −7.9    tion are largely canceled out.,2.0
+  15.2   −3.1   −9.8  2.3      3.7      −7.9,2.0
+  15.3   −3.2   −9.9  2.7      3.6      −8.0                     5. SUMMARY,2.0
+  15.4   −3.3  −10.0  3.1      3.7      −8.1,2.0
+"                                                  In this work, we have carried out an indepen-",50.0
+                                                dent validation of the Gaia EDR3 photometry,48.0
+avr_spaces,4.844444444444444
+   10                                                                                      Yang et al.,3.0
+                              0.020,30.0
+"                                                                                                 detected for all the magnitude curves, proba-",97.0
+                              0.015                                                      103,30.0
+                                                                                                 bly related to a change in the instrument con-,97.0
+"G GRP f(GBP GRP,Fe/H) [mag]",0.0
+                              0.010                                                              figuration. The downturn at faint magnitudes,30.0
+                              0.005,30.0
+                                                                                                 visible in the GBP and GRP passbands is possi-,97.0
+                                                                                         102,89.0
+                                                                                                 bly caused by some over-estimation of the back-,97.0
+                              0.000                                                        N,30.0
+                                                                                                 ground in the BP and RP spectra. The trend,97.0
+                              0.005                                                              in GBP − GRP as a function of G is much weaker,30.0
+                                                                                         101,89.0
+                              0.010                                                              compared to that in G−GBP and G−GRP . With,30.0
+                              0.015       EDR3                                                   synthetic magnitudes computed on the CAL-,30.0
+"                                                                                                 SPEC spectra with the Gaia EDR3 passbands,",97.0
+                              0.020                                                      100,30.0
+                                      9    10    11   12   13   14   15   16   17   18           absolute calibration curves are further provided,38.0
+                              0.020,30.0
+"                                                                                                 (Figure 4 and Table 1), paving the way for opti-",97.0
+                                                                                         103,89.0
+                              0.015                                                              mal usage of the Gaia EDR3 photometry in high,30.0
+"G GRP f(GBP GRP,Fe/H) [mag]",0.0
+                              0.010                                                              accuracy investigations. In the future Gaia data,30.0
+                              0.005,30.0
+"                                                                                                 releases, the effect of metallicity should be in-",97.0
+                                                                                         102,89.0
+                                                                                                 cluded when comparing with external catalogs.,97.0
+                              0.000                                                        N,30.0
+                                                                                                   Our result demonstrates that mapping from,99.0
+                              0.005                                                              one set of observables directly to another set,30.0
+                                                                                         101,89.0
+                              0.010                                                              of observables with machine learning provides a,30.0
+                              0.015       This work                                              promising way in the calibration and analyses,30.0
+                                                                                                 of large scale surveys.,97.0
+                              0.020                                                      100,30.0
+                                      9    10    11   12   13   14   15   16   17   18,38.0
+                                                           G [mag],59.0
+                                                                                                   We acknowledge the anonymous referee for,99.0
+Figure 5. 2D histogram of the G−GBP residual af-,0.0
+ter subtracting the metallicity-dependent color lo-,0.0
+                                                                                                 his/her valuable comments that improve the,97.0
+cus. Top: published EDR3 data. Bottom: applying                                                  quality of this paper.      This work is sup-,0.0
+magnitude corrections from this work. Note that                                                  ported by the National Natural Science Foun-,0.0
+the colors here refer to dereddened colors.                                                      dation of China through the projects NSFC,0.0
+"                                                                                                 11603002, the National Key Basic R&D Pro-",97.0
+"using about 10,000 well selected Landolt stan-                                                   gram of China via 2019YFA0405503, and Bei-",0.0
+dard stars from Clem & Landolt (2013). Us-                                                       jing Normal University grant No.310232102.,0.0
+ing five MLPs with architectures of 4-128-64-8-                                                  This work has made use of data from the,0.0
+"1, the U BV RI magnitudes are trained into the                                                   European Space Agency (ESA) mission Gaia",0.0
+"Gaia magnitudes and colors and then compared                                                     (https://www.cosmos.esa.int/gaia), processed",0.0
+"to those in the Gaia EDR3, with the effect of                                                    by the Gaia Data Processing and Analysis Con-",0.0
+"metallicity fully taken into account.                                                            sortium (DPAC, https://www.cosmos.esa.int/",0.0
+  Our result confirms the significant improve-                                                   web/gaia/dpac/ consortium). Funding for the,2.0
+ments in the calibration process of the Gaia                                                     DPAC has been provided by national institu-,0.0
+"EDR3. The strong trend in G as a function of                                                     tions, in particular the institutions participat-",0.0
+G in DR2 is greatly reduced. Yet modest trends                                                   ing in the Gaia Multilateral Agreement. Gu-,0.0
+with G magnitude are found for all magnitudes                                                    oshoujing Telescope (the Large Sky Area Multi-,0.0
+"and colors for the 10 < G < 19 mag range, par-                                                   Object Fiber Spectroscopic Telescope LAM-",0.0
+ticularly at the bright and faint ends. A tiny dis-                                              OST) is a National Major Scientific Project,0.0
+continuity of 2–3 mmag at G ∼ 13 mag is clearly                                                  built by the Chinese Academy of Sciences.,0.0
+avr_spaces,38.859375
+              Correction to the photometric magnitudes of the Gaia EDR3                                 11,14.0
+"Funding for the project has been provided by          by the National Astronomical Observatories,",0.0
+the National Development and Reform Com-              Chinese Academy of Sciences. This research,0.0
+"mission. LAMOST is operated and managed               has made use of the SIMBAD database, oper-",0.0
+"                                                      ated at CDS, Strasbourg, France.",54.0
+                                               REFERENCES,47.0
+"Bohlin, R. C., Gordon, K. D., & Tremblay, P.-E.       Maı́z Apellániz, J. & Weiler, M. 2018, A&A, 619,",0.0
+"  2014, PASP, 126, 711. doi:10.1086/677655              A180. doi:10.1051/0004-6361/201834051",2.0
+"Casagrande, L. & VandenBerg, D. A. 2018,              Niu, Z.X., Yuan, H.-B., & Liu, J.-F. 2021, ApJ,",0.0
+"  MNRAS, 479, L102. doi:10.1093/mnrasl/sly104           re-submitted",2.0
+"Cenarro, A. J., Moles, M., Cristóbal-Hornillos, D.,",0.0
+"                                                      Onken, C. A., Wolf, C., Bessell, M. S., et al. 2019,",54.0
+"  et al. 2019, A&A, 622, A176.",2.0
+"  doi:10.1051/0004-6361/201833036                       PASA, 36, e033. doi:10.1017/pasa.2019.27",2.0
+"Chen, B.-Q., Huang, Y., Yuan, H.-B., et al. 2019,     Pancino, E., Altavilla, G., Marinoni, S., et al.",0.0
+"  MNRAS, 483, 4277. doi:10.1093/mnras/sty3341           2012, MNRAS, 426, 1767.",2.0
+"Clem, J. L. & Landolt, A. U. 2013, AJ, 146, 88.         doi:10.1111/j.1365-2966.2012.21766.x",0.0
+"  doi:10.1088/0004-6256/146/4/88                      Riello, M., De Angeli, F., Evans, D. W., et al.",2.0
+"Evans, D. W., Riello, M., De Angeli, F., et al.",0.0
+"                                                        2020, arXiv:2012.01916",56.0
+"  2018, A&A, 616, A4.",2.0
+"  doi:10.1051/0004-6361/201832756                     Sandage, A. & Smith, L. L. 1963, ApJ, 137, 1057.",2.0
+"Fabricius, C., Luri, X., Arenou, F., et al. 2020,       doi:10.1086/147584",0.0
+"  arXiv:2012.06242                                    Schlafly, E. F. & Finkbeiner, D. P. 2011, ApJ,",2.0
+"Gaia Collaboration, Prusti, T., de Bruijne,             737, 103. doi:10.1088/0004-637X/737/2/103",0.0
+"  J. H. J., et al. 2016, A&A, 595, A1.                Schlegel, D. J., Finkbeiner, D. P., & Davis, M.",2.0
+"  doi:10.1051/0004-6361/201629272                       1998, ApJ, 500, 525. doi:10.1086/305772",2.0
+"Gaia Collaboration, Brown, A. G. A., Vallenari,       Sun, Y., Yuan, H.-B., et al. 2021, ApJS, to be",0.0
+"  A., et al. 2020, arXiv:2012.01533",2.0
+                                                        submitted,56.0
+"Huang, Y., Liu, X.-W., Zhang, H.-W., et al. 2015,",0.0
+"  Research in Astronomy and Astrophysics, 15,         Weiler, M. 2018, A&A, 617, A138.",2.0
+  1240. doi:10.1088/1674-4527/15/8/010                  doi:10.1051/0004-6361/201833462,2.0
+"Huang, Y., Yuan, H., Li, C., et al. 2020,             Yuan, H.-B., Liu, X.-W., Xiang, M.-S., et al.",0.0
+"  arXiv:2011.07172                                      2015a, ApJ, 799, 133.",2.0
+"Kingma, D. P. & Ba, J. 2014, arXiv:1412.6980            doi:10.1088/0004-637X/799/2/133",0.0
+"López-Sanjuan, C., Yuan, H.-B., Vázquez Ramió,     Yuan, H.-B., Liu, X.-W., Xiang, M.-S., et al.",0.0
+"  H., et al. 2020, A&A, submitted                       2015b, ApJ, 799, 134.",2.0
+"Luo, A.-L., Zhao, Y.-H., Zhao, G., et al. 2015,",0.0
+                                                        doi:10.1088/0004-637X/799/2/134,56.0
+"  Research in Astronomy and Astrophysics, 15,",2.0
+  1095. doi:10.1088/1674-4527/15/8/002,2.0
+avr_spaces,8.674418604651162

@@ -1,0 +1,1485 @@
+text,space_num
+"                                              MNRAS 000, 1–19 (2019)                                                 Preprint 11 June 2021             Compiled using MNRAS LATEX style file v3.0",46.0
+                                              Observing the host galaxies of high-redshift quasars with JWST:,46.0
+                                              predictions from the BlueTides simulation,46.0
+"                                              Madeline A. Marshall1,2,3★ , J. Stuart B. Wyithe2,3 , Rogier A. Windhorst4 , Tiziana Di Matteo5 ,",46.0
+"                                              Yueying Ni5 , Stephen Wilkins6 , Rupert A.C. Croft5 , and Mira Mechtley4 .",46.0
+"                                              1   National Research Council of Canada, Herzberg Astronomy & Astrophysics Research Centre, 5071 West Saanich Road, Victoria, BC V9E 2E7, Canada",46.0
+"                                              2   School of Physics, University of Melbourne, Parkville, VIC 3010, Australia",46.0
+"                                              3   ARC Centre of Excellence for All Sky Astrophysics in 3 Dimensions (ASTRO 3D), Australia",46.0
+"                                              4   School of Earth and Space Exploration, Arizona State University, P.O. Box 871404, Tempe, AZ 85287, USA",46.0
+arXiv:2101.01219v2 [astro-ph.GA] 9 Jun 2021,0.0
+"                                              5   McWilliams Center for Cosmology, Department of Physics, Carnegie Mellon University, Pittsburgh, PA 15213, USA",46.0
+"                                              6   Astronomy Centre, Department of Physics and Astronomy, University of Sussex, Brighton, BN1 9QH, UK",46.0
+                                              Accepted XXX. Received YYY; in original form ZZZ,46.0
+                                              ABSTRACT,46.0
+"                                              The bright emission from high-redshift quasars completely conceals their host galaxies in the rest-frame ultraviolet/optical, with",46.0
+                                              detection of the hosts in these wavelengths eluding even the Hubble Space Telescope (HST) using detailed point spread function,46.0
+                                              (PSF) modelling techniques. In this study we produce mock images of a sample of 𝑧 = 7 quasars extracted from the BlueTides,46.0
+"                                              simulation, and apply Markov Chain Monte Carlo-based PSF modelling to determine the detectability of their host galaxies with",46.0
+"                                              the James Webb Space Telescope (JWST). While no statistically significant detections are made with HST, we predict that at the",46.0
+                                              same wavelengths and exposure times JWST NIRCam imaging will detect ∼ 50% of quasar host galaxies. We investigate various,46.0
+"                                              observational strategies, and find that NIRCam wide-band imaging in the long-wavelength filters results in the highest fraction",46.0
+"                                              of successful quasar host detections, detecting & 80% of the hosts of bright quasars in exposure times of 5 ks. Exposure times of",46.0
+"                                              & 5 ks are required to detect the majority of host galaxies in the NIRCam wide-band filters, however even 10 ks exposures with",46.0
+                                              MIRI result in . 30% successful host detections. We find no significant trends between galaxy properties and their detectability.,46.0
+"                                              The PSF modelling can accurately recover the host magnitudes, radii, and spatial distribution of the larger-scale emission, when",46.0
+                                              accounting for the central core being contaminated by residual quasar flux. Care should be made when interpreting the host,46.0
+                                              properties measured using PSF modelling.,46.0
+                                              Key words: galaxies: quasars: supermassive black holes – galaxies: evolution – galaxies: high-redshift – infrared: galaxies.,46.0
+"                                              1 INTRODUCTION                                                               Kauffmann 2000; Croton 2006; Gaskell 2011). Alternatively, some",46.0
+"                                                                                                                           studies suggest that the black hole and galaxy growth is uncorrelated,",123.0
+"                                              In the local Universe, there exist tight correlations between the mass",46.0
+                                                                                                                           with the relations a result of a central-limit-like theory caused by,123.0
+"                                              of a supermassive black hole and the properties of its host galaxy,",46.0
+                                                                                                                           galaxy mergers across cosmic history (e.g. Peng 2007; Jahnke &,123.0
+"                                              such as its bulge mass, luminosity, total stellar mass, and stellar",46.0
+                                                                                                                           Macciò 2011).,123.0
+                                              velocity dispersion (e.g. Magorrian et al. 1998; Ferrarese & Merritt,46.0
+"                                              2000; Gebhardt et al. 2000; Merritt & Ferrarese 2001; Tremaine et al.           To determine why these black hole–host relations exist, a key strat-",46.0
+                                              2002; Marconi & Hunt 2003; Häring & Rix 2004; Bentz et al. 2009;             egy is to study how they evolve throughout cosmic time (e.g. Peng,46.0
+"                                              Kormendy & Ho 2013; Reines & Volonteri 2015; see the review by               et al. 2006; Croton 2006; Willott et al. 2017). However, measuring",46.0
+                                              Heckman & Best 2014). These relations may be caused by the black             these relations at high redshift is significantly challenging observa-,46.0
+"                                              hole interacting with the host galaxy, with feedback from the active         tionally. Black hole mass measurements become less certain at higher",46.0
+"                                              galactic nucleus (AGN) heating the surrounding gas, regulating star          redshifts (see e.g. Shen 2013; Peterson 2013). In addition only black",46.0
+"                                              formation and also the future growth of the black hole (e.g. Silk &          holes that are highly accreting, shining as luminous quasars, are de-",46.0
+"                                              Rees 1998; Di Matteo et al. 2005b; Bower et al. 2006; Ciotti et al.          tectable, whereas local studies generally measure these relations for",46.0
+                                              2010). They may be also a result of the efficiency at which the galaxy       inactive galaxies (see e.g. Kormendy & Ho 2013).,46.0
+"                                              can fuel the black hole with gas (e.g. Hopkins & Quataert 2010;                 The main difficulty, however, lies in measuring the properties of",46.0
+                                              Cen 2015; Anglés-Alcázar et al. 2017). This relation may instead             the host galaxies of these high-redshift (𝑧 & 6) quasars. There are two,46.0
+"                                              be coincidental, with both black hole and galaxy growth triggered            main wavelength regimes used for detecting these galaxies. The most",46.0
+"                                              by the same processes, such as galaxy mergers (e.g. Haehnelt &               successful method is to use sub-mm instruments such as the Atacama",46.0
+                                                                                                                           Large Millimeter/submillimeter Array (ALMA) to study the rest-,123.0
+"                                                                                                                           frame far-infrared (FIR) emission from the host galaxies, produced",123.0
+"                                              ★   E-mail: Madeline.Marshall@nrc-cnrc.gc.ca                                 by gas and dust (e.g. Bertoldi et al. 2003; Walter et al. 2003, 2004;",46.0
+                                              © 2019 The Authors,46.0
+avr_spaces,52.72727272727273
+2       M. A. Marshall et al.,0.0
+"Riechers et al. 2007; Wang et al. 2010, 2011; Venemans et al. 2019).      galaxy and AGN emission lines in the rest-frame optical, such as H𝛼,",0.0
+"The emission from the quasar is minimal at these wavelengths, and         H𝛽, [OII] 𝜆3272 , [OIII] 𝜆𝜆4960,5008 , [NII] 𝜆6585 and [SII] 𝜆𝜆6717,6731 ,",0.0
+so this provides an unobstructed view of the host galaxy itself. These    which after careful modelling of the quasar contribution could be,0.0
+observations can measure detailed properties of the distributions         used for accurate characterisation of the properties of the galaxy,0.0
+"of gas and dust within these galaxies on even sub-kpc scales (e.g.        (e.g. Greene & Ho 2006; Harris et al. 2012). Overall, JWST will",0.0
+"Venemans et al. 2019). However, the local black hole–host scaling         lead to significant advancements in the detectability, and thus our",0.0
+"relations are generally linked to the stellar properties of the galaxy    understanding, of quasar host galaxies in the early Universe.",0.0
+"(e.g. Magorrian et al. 1998; Merritt & Ferrarese 2001), and so these         In this paper, we make detailed predictions for JWST photometric",0.0
+observations are not ideal for examining how these relations evolve       observations of high-redshift quasar host galaxies. We use the Blue-,0.0
+"with redshift. Regardless, these observations can make estimates for      Tides simulation (Feng et al. 2015), a cosmological hydrodynamical",0.0
+"the mass of the galaxy, for example, using the measured dynamical,        simulation with significant resolution and volume to contain the rare",0.0
+dust and gas masses (see e.g. Wang et al. 2013; Valiante et al. 2014).    high-redshift quasars seen in observations. We make mock images,0.0
+"This provides the best measurements of the high-redshift black hole–      of these BlueTides quasars in both HST and JWST, and apply the",0.0
+host mass relation possible with current instruments (e.g. Willott et al. psfMC modelling technique in an attempt to detect the underlying,0.0
+2017; Pensabene et al. 2020).                                             host emission. We describe the simulation and these methods in Sec-,0.0
+"   The second regime for observing quasar host galaxies is to study       tion 2. In Section 3, we investigate the detectability of host galaxies",3.0
+"the rest-frame ultraviolet (UV) emission (e.g. Bahcall et al. 1994;       using this technique, showing the improvements of JWST over HST",0.0
+"Disney et al. 1995; Kukula et al. 2001; Hutchings 2003), which is         in Section 3.1 and then comparing various JWST observing strate-",0.0
+"emitted by the host’s stellar population. At 𝑧 & 6, this emission is      gies in Section 3.2. In Section 4, we investigate the properties of",0.0
+"redshifted into the near-infrared. Unfortunately, however, quasars are    quasars and host galaxies that are most likely to result in successful",0.0
+"extremely bright at these wavelengths, generally outshining their host    detections. We then consider the biases in recovering the properties",0.0
+"galaxies (e.g., Schmidt 1963; McLeod & Rieke 1994; Dunlop et al.          of the host galaxies using this technique in Section 5. A discussion",0.0
+"2003; Hutchings 2003; Floyd et al. 2013). In addition, galaxies are       is presented in Section 6, and we conclude in Section 7.",0.0
+"smaller at larger redshifts, with galaxy size 𝑅𝑒 ∝ (1 + 𝑧) −𝑚 where          The cosmological parameters used throughout are from the nine-",0.0
+𝑚 ∼ 1–1.5 (e.g Oesch et al. 2010; Ono et al. 2013; Shibuya et al. 2015;   year Wilkinson Microwave Anisotropy Probe (WMAP; Hinshaw,0.0
+"Kawamata et al. 2018) decreasing more rapidly with redshift than the      et al. 2013): Ω 𝑀 = 0.2814, ΩΛ = 0.7186, Ω𝑏 = 0.0464, 𝜎8 = 0.820,",0.0
+increase in apparent diameters at 𝑧 & 2 due to the cosmic angular         𝜂 𝑠 = 0.971 and ℎ = 0.697.,0.0
+size–distance relation. Large (1 + 𝑧) 4 surface brightness dimming,0.0
+makes the host galaxies more difficult to detect at high redshift. Thus,0.0
+"at high redshift, the host galaxies become difficult to resolve with      2 METHODS",0.0
+"current telescopes such as the Hubble Space Telescope (HST), and",0.0
+so the light from the quasar completely obscures any underlying host      2.1 The BlueTides simulation,0.0
+galaxy emission (e.g. Mechtley et al. 2012).                              BlueTides1 (Feng et al. 2015) is a large-volume cosmological hy-,0.0
+"   A promising technique for observing the host emission in the           drodynamical simulation, which used the smoothed particle hydro-",3.0
+rest-frame UV is to perform point-source modelling on photometric         dynamics (SPH) code MP-Gadget to model the evolution of dark,0.0
+images. This involves carefully modelling the quasar emission using       matter and baryons from 𝑧 = 99 to 𝑧 = 7. In a box with vol-,0.0
+"the point spread function (PSF) of the telescope, to detect the un-       ume of (400/ℎ cMpc) 3 , BlueTides contains 2 × 70403 particles,",0.0
+"derlying host emission from the residual flux. One particular method      with a mass resolution of 1.2 × 107 /ℎ 𝑀 for dark matter particles,",0.0
+"for this is psfMC (Mechtley 2014; Mechtley et al. 2016), a Markov         2.4 × 106 /ℎ 𝑀 for gas particles, and 6 × 105 /ℎ 𝑀 for star par-",0.0
+Chain Monte Carlo (MCMC)-based software which has been used to            ticles. The effective spatial resolution is the gravitational softening,0.0
+"successfully detect the host emission from quasars at 𝑧 ' 2 (Mecht-       length of 𝜖 grav = 1.5/ℎ ckpc, corresponding to 0.269 pkpc or 0.05",0.0
+ley et al. 2016; Marian et al. 2019). When applied to HST images of       arcsec at 𝑧 = 7 in this cosmology. The resolution of BlueTides is,0.0
+"higher redshift quasars, this method can provide useful upper limits      well-matched to JWST, which has a resolution of 0.07 arcsec at 2𝜇m.",0.0
+on the underlying host galaxy flux and stellar mass (Mechtley et al.         BlueTides implements a variety of sub-grid models for the physics,0.0
+"2012; Marshall et al. 2020b), however, it has not been able to de-        governing galaxy and black hole formation and their feedback pro-",0.0
+"tect the host galaxies of 𝑧 & 6 quasars. This method is limited by the    cesses. A basic overview is provided below, with the reader referred",0.0
+"spatial resolution of HST, which barely resolves galaxies at these red-   to the original paper (Feng et al. 2015) for full details.",0.0
+"shifts. In addition, with the thermal instability of HST as it orbits the    In BlueTides, gas cools on to galaxies via primordial radiative",0.0
+"Earth, the PSF is difficult to characterise even with the most careful    cooling (Katz et al. 1999) and metal line cooling, with the gas and",0.0
+"of studies, and thus the subtraction is difficult to perform (Mechtley    stellar metallicities traced following Vogelsberger et al. (2014). This",0.0
+"et al. 2012; Mechtley 2014). These issues will both be significantly      gas can then form stars, based on the multi-phase star formation",0.0
+reduced with the launch of the James Webb Space Telescope (JWST;          model originally from Springel & Hernquist (2003) with modifica-,0.0
+"Gardner et al. 2006), with the NIRCam pixel resolution four times         tions following Vogelsberger et al. (2013), and accounting for the",0.0
+"smaller than HST WFC3 in the near-infrared, as well as being more         effects of molecular hydrogen (Krumholz & Gnedin 2011). These",0.0
+"thermally stable at the Sun–Earth second Lagrange point.                  stars can produce supernova feedback, via a type-II supernova wind",0.0
+   JWST will also provide the opportunity to observe these systems        feedback model (Okamoto et al. 2010).,3.0
+"at longer wavelengths than possible with HST, observing in the in-           Galaxies in dark matter haloes above a threshold mass of 𝑀 𝐻 =",0.0
+"frared from 0.6 to 28 𝜇m, covering the rest-frame UV and optical          5 × 1010 /ℎ 𝑀 are seeded with a supermassive black hole with mass",0.0
+"emission of these objects. These longer wavelengths will help to          of 𝑀BH,seed = 5 × 105 /ℎ 𝑀 . These black holes grow by merging",0.0
+"increase the detectability of dusty quasar host galaxies, which have",0.0
+their flux significantly attenuated in the rest-frame UV (e.g. Marshall,0.0
+"et al. 2020a,b). JWST will also allow for the detection of common         1  http://BlueTides-project.org/",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,0.13846153846153847
+                                                                            Observing high-redshift quasar hosts with JWST                         3,76.0
+"with other black holes, and via gas accretion at the Bondi-Hoyle ac-          2.2 Quasar sample",0.0
+cretion rate (Hoyle & Lyttleton 1939; Bondi & Hoyle 1944; Bondi,0.0
+"                                             2 −3/2 , where 𝜌                 We follow the Marshall et al. (2020a) method for characterising",45.0
+"1952), 𝑀¤BH = 𝛼4𝜋𝐺 2 𝑀BH     2 𝜌        2",0.0
+                                  BH (𝑐 𝑠 + 𝑣 )               BH is the lo-,34.0
+"                                                                              quasars in the BlueTides simulation, by making the simple assump-",78.0
+"cal gas density, 𝑐 𝑠 is the local sound speed, 𝑣 is the velocity of the",0.0
+                                                                              tion that ‘quasars’ are AGN which outshine their host galaxy in the,78.0
+"black hole relative to the surrounding gas, and 𝛼 is a dimensionless",0.0
+"                                                                              UV-band, i.e. 𝑀UV,AGN < 𝑀UV,Host . Here 𝑀UV,AGN and 𝑀UV,Host",78.0
+parameter. Black hole growth is limited to two times the Eddington,0.0
+                                                                              are the observed (dust-attenuated) UV absolute magnitudes for the,78.0
+limit. The black holes are assumed to radiate with bolometric lumi-,0.0
+"                                                                              AGN and host galaxy, respectively.",78.0
+"nosity 𝐿 AGN = 𝜂 𝑀¤ BH 𝑐2 , with a radiative efficiency 𝜂 of 0.1. The",0.0
+                                                                                 The pioneering sample of high-redshift quasars was discovered,81.0
+model for black hole growth and feedback is the same as in the Mas-,0.0
+"                                                                              using the Sloan Digital Sky Survey (e.g. Fan et al. 2000, 2001, 2003,",78.0
+"siveBlack I & II simulations, originally developed in Springel et al.",0.0
+"                                                                              2004). These are bright quasars, with the faintest SDSS quasar SDSS",78.0
+"(2005) and Di Matteo et al. (2005a), with modifications consistent",0.0
+"                                                                              J0129–0035 having 𝑚 1450 = 22.8 mag, or 𝑀1450 = −23.89 mag at",78.0
+with Illustris; see DeGraf et al. (2012) and DeGraf et al. (2015) for,0.0
+                                                                              𝑧 = 5.78 (Wang et al. 2013; Bañados et al. 2016). More recent studies,78.0
+full details.,0.0
+"                                                                              have discovered fainter quasars, with the faintest known high-redshift",78.0
+"    Throughout this work, we consider the 𝑧 = 7.0 snapshot, the",4.0
+                                                                              quasar to date discovered in the Subaru High-z Exploration of Low-,78.0
+lowest published redshift of the simulation to date (Ni et al.,0.0
+"                                                                              Luminosity Quasars (SHELLQs) project (Matsuoka et al. 2018),",78.0
+2020; Marshall et al. 2020a). From this snapshot we consider the,0.0
+"                                                                              HSC J1423–0018 with 𝑚 1450 = 24.85 mag, or 𝑀1450 = −21.93 mag",78.0
+"108,000 most massive halos, with masses 𝑀vir > 1010.8 𝑀 , which",0.0
+                                                                              at 𝑧 = 6.13.,78.0
+contain galaxies with 𝑀∗ = 105.9 –1011.2 𝑀 and black holes with,0.0
+"                                                                                 Using the limiting magnitudes from SDSS and SHELLQs, we",81.0
+𝑀BH = 105.8 –108.9 𝑀 .,0.0
+                                                                              define two quasar samples as:,78.0
+"    The spectral energy distribution (SED) of each galaxy from Blue-             • Bright quasars: 𝑀UV,AGN < 𝑀UV,Host and 𝑚 UV,AGN < 22.8",4.0
+Tides is calculated by assigning a simple stellar population (SSP)            mag,0.0
+"to each of its star particles, based on their mass, age and metallic-",0.0
+"ity, using the Binary Population and Spectral Population Synthesis               • Faint quasars: 𝑀UV,AGN < 𝑀UV,Host and 22.8 < 𝑚 UV,AGN <",0.0
+"model (BPASS, version 2.2.1; Stanway & Eldridge 2018), assuming               24.85 mag",0.0
+a modified Salpeter initial mass function with a high-mass cut-off of,0.0
+"300𝑀 . We assume no LyC photons escape. The SED of the galaxy                 This selection method can be visualised in Figure 1, which shows",0.0
+"is the sum of the SEDs of each of its star particles.                         the 𝑚 UV,AGN –𝑚 UV,Host distribution for all BlueTides galaxies and",0.0
+    The SED of each AGN is estimated using the CLOUDY spectral                quasars. The ‘bright’ and ‘faint’ quasar samples are equivalent to,4.0
+"synthesis code (Ferland et al. 2017), as in Tenneti et al. (2018) and         the Marshall et al. (2020a) ‘SDSS’ and ‘currently observable’ quasar",0.0
+"Marshall et al. (2020a). The shape of the continuum is approximated           samples, respectively.",0.0
+as                                                                               The BlueTides simulation contains 22 bright quasars and 175,0.0
+"                                                                              faint quasars, with the brightest quasar in the simulation having",78.0
+                 ,17.0
+                   −ℎ𝜈,19.0
+                               ,25.0
+                                  −𝑘𝑇IR,34.0
+"                                                                             𝑚 UV,AGN = 20.7 mag. Their stellar and black hole masses are",42.0
+ 𝑓 𝜈 = 𝜈 𝛼UV exp           exp              + 𝑎𝜈 𝛼X                     (1)   shown in Figure 1. The bright quasars have black hole masses of,1.0
+                   𝑘𝑇BB              ℎ𝜈,19.0
+                                                                              log(𝑀BH ) = 8.3+0.2  −0.3,78.0
+"                                                                                                        𝑀 2 , and are hosted by galaxies with stel-",104.0
+"where 𝛼UV = −0.5, 𝛼X = −1, 𝑘𝑇IR = 0.01Ryd, and 𝑇BB is the                     lar masses of log(𝑀∗ ) = 10.7+0.2   −0.3",0.0
+                                                                                                                       𝑀 . The faint quasars have,119.0
+"temperature of the accretion disc, which is determined by the black           lower median black hole mass and stellar mass than the bright",0.0
+                                                                                                                                        +1.0 𝑀 and,136.0
+"                                                                              quasars, with a larger range of values, log(𝑀BH ) = 7.9−0.9",78.0
+"hole mass and its accretion rate,",0.0
+                                                                              log(𝑀∗ ) = 10.4+0.6−0.7,78.0
+                                                                                                      𝑀 . The reader is referred to Marshall et al.,102.0
+                               ! 1/4                                          (2020a) for a detailed analysis of the simulated properties of these,31.0
+               3𝑐6      𝑀¤ BH,15.0
+𝑇BB =         3       2    2,0.0
+                                     .                                  (2)   quasars and their host galaxies.,37.0
+"          8𝜋6 𝜎SB 𝐺 𝑀BH                                                          Throughout this work we consider the bright quasars, correspond-",10.0
+"                                                                              ing to the highly-studied SDSS quasar sample. However, when study-",78.0
+The luminosity of the AGN used in CLOUDY is its bolometric lu-                ing the effect of quasar luminosity on whether a host galaxy is ob-,0.0
+"minosity calculated from the known black hole accretion rate from             servable, we also consider the faint quasar sample in order to increase",0.0
+BlueTides. Emission lines are estimated with CLOUDY by assum-                 the range of luminosities studied (see Section 4).,0.0
+"ing a hydrogen density of 1010 cm−3 at the face of the cloud, which",0.0
+"has inner radius 1018 cm, and a total hydrogen column density of",0.0
+1022 cm−2 .                                                                   2.3 The psfMC quasar modelling technique,0.0
+    Lyman-forest extinction is implemented on the redshifted spectra,4.0
+(Madau 1995; STScI Development Team 2018) for both the quasars                psfMC (Mechtley 2014; Mechtley et al. 2016) is an MCMC-based,0.0
+and the host galaxies.                                                        software which performs 2D surface brightness modelling on astro-,0.0
+    We follow the methods of Ni et al. (2020) and Marshall et al.             nomical images. It was designed specifically to model the emission,4.0
+"(2020a) for modelling the dust attenuation 𝜏UV of galaxies and AGN,           from bright quasars and their underlying host galaxies (Mechtley",0.0
+"based on the metals along the line of sight within the galaxy. For the        2014), and has been used on HST images of quasars at 𝑧 ' 2 (Mecht-",0.0
+"galaxies, we take the line-of-sight along the 𝑧-direction, whereas for        ley et al. 2016; Marian et al. 2019) and 𝑧 ' 6 (Mechtley et al. 2012;",0.0
+"each quasar, where the variation in dust attenuation between different        Marshall et al. 2020b).",0.0
+"sight-lines is significant, we take the direction of minimum dust-",0.0
+"attenuation, which is typically the face-on direction, as an optimistic",0.0
+"assumption. See Ni et al. (2020) and Marshall et al. (2020a) for full         2  The ranges presented correspond to the minimum and maximum values,",0.0
+details.                                                                      relative to the median value.,0.0
+"                                                                                                                             MNRAS 000, 1–19 (2019)",125.0
+avr_spaces,28.768421052631577
+4                   M. A. Marshall et al.,0.0
+                                                                                                                           software requires an image and variance map describing the PSF of,123.0
+                                                                            Faintest SDSS Quasar,76.0
+                                                                                                                           the telescope. In the section below we describe our method for mak-,123.0
+                                            Faintest Known,44.0
+"                    23                                                                                                     ing mock images to be supplied to psfMC, to simulate this process",20.0
+                                                                                                                           for the BlueTides galaxies.,123.0
+                                            (SHELLQs z = 6.13),44.0
+                    24,20.0
+                                                                                                                           2.4 Mock images,123.0
+"         mUV,Host",9.0
+                                                                                                                           2.4.1 Science images,123.0
+                    25,20.0
+                                                                                                                           We make mock images of each of the quasars using the SynthObs3,123.0
+"                                                                                                                           software, which produces synthetic observations from SPH simula-",123.0
+                    26                                                                                                     tions.,20.0
+                                                                                                                              SynthObs uses the positions and SEDs of each particle in the,126.0
+                                                                                                                           galaxy to produce these observations. We assume that the galaxy is,123.0
+                    27                                                                                                     viewed from the face-on direction. We also assume that the AGN flux,20.0
+"                                                                                                                           is emitted from a single ‘particle’ at the location of the black hole,",123.0
+                           26          25                        24    23                          22          21          and so appears as a point source convolved with the PSF in the mock,27.0
+"                                                                  mUV,AGN                                                  images. SynthObs uses these star- and AGN-particle positions and",66.0
+                                                                                                                           spectra to determine the total flux in a specified photometric filter,123.0
+"                                                                                                                           in each pixel, which is then convolved with a model instrument",123.0
+                9.00,16.0
+                                All Galaxies                                                                               PSF. For HST we use PSFs from the Tiny Tim model (Krist et al.,32.0
+"                8.75            Faint Quasars                                                                              2011), and for JWST we use PSFs from the WebbPSF model (Perrin",16.0
+                                Bright Quasars                                                                             et al. 2015). Examples of observed 2-orbit HST WFC3 PSFs are,32.0
+                8.50                                                                                                       given in Windhorst et al. (2011). SynthObs then applies appropriate,16.0
+                                                                                                                           smoothing to produce a mock image with the pixel scale of the,123.0
+                8.25,16.0
+ log(MBH /M ),1.0
+                                                                                                                           instrument.,123.0
+"                                                                                                                              We make mock images for both HST and JWST, to compare the",126.0
+                8.00,16.0
+                                                                                                                           results from the two telescopes. These mock images include shot,123.0
+"                7.75                                                                                                       noise, and a random noise background. The noise 𝜎 for the mock",16.0
+                                                                                                                           JWST images is estimated from the predicted 10𝜎 sensitivity of,123.0
+"                7.50                                                                                                       JWST, using a circular photometric aperture 2.5 pixels in radius",16.0
+"                                                                                                                           (STSci 2017a,b). For JWST we consider a range of exposure times",123.0
+"                7.25                                                                                                       in Sections 3.1 and 3.2.1, but otherwise assume an exposure time of",16.0
+                7.00,16.0
+                                                                                                                           10 ks. The noise in the mock HST images is equivalent to that in the,123.0
+"                                                                                                                           Marshall et al. (2020b) images, taken over 2 orbits or an exposure",123.0
+                     9.8        10.0        10.2    10.4   10.6                                         10.8        11.0   time of 4.8 ks.,21.0
+                                                log(M∗ /M )                                                                   Pixel sub-sampling or ‘dithering’ is commonly used in HST WFC3,48.0
+"                                                                                                                           observations, as the the camera pixels under-sample the PSF of the",123.0
+                                                                                                                           instrument (see e.g. Koekemoer et al. 2002). From Nyquist signal,123.0
+"                                                                                                                           theory, to fully recover the PSF the data must be sampled such that",123.0
+Figure 1. Top: The UV dust-attenuated apparent magnitudes of Blue-                                                         there are at least 2 pixels per full-width half-maximum (FWHM) of,0.0
+Tides galaxies and their central AGN. White points show 𝑧 = 7 Blue-,0.0
+"                                                                                                                           the PSF, which is ' 0.2516 𝜆(𝜇m)/𝐷 (m) arcsec where 𝐷 is the",123.0
+Tides galaxies with 𝑀vir > 1010.8 𝑀 . We classify quasars as those with,0.0
+                                                                                                                           diameter of the telescope. In the F160W filter HST WFC3 has a,123.0
+"𝑀UV,AGN < 𝑀UV,Host , since the AGN outshines the host galaxy. Using the",0.0
+"observational detection limits shown in the top panel (grey dashed lines),                                                 FWHM of ' 0.00 168 and a native pixel scale of ' 0.00 13, resulting in",0.0
+"we split the quasars into ‘bright’ (red) and ‘faint’ (blue) quasar samples.                                                under-sampling. This will also be true for JWST NIRCam, with the",0.0
+Bottom: The stellar and black hole masses of the BlueTides galaxies and                                                    short-wavelength F115W filter having a FWHM of ' 0.00 044 and a,0.0
+"quasar samples.                                                                                                            native pixel scale of ' 0.00 031, and the long-wavelength F277W filter",0.0
+"                                                                                                                           having a FWHM of ' 0.00 106 and a native pixel scale of ' 0.00 062,",123.0
+"                                                                                                                           for example. JWST MIRI will better sample the PSF, with a FWHM",123.0
+"                                                                                                                           of ' 0.00 214 and a native pixel scale of ' 0.00 11 in the F560W filter,",123.0
+"   This software models the input image using a combination of spec-                                                       for example. Our WFC3, NIRCam and MIRI mock images assume a",3.0
+"ified source profiles, in this work a point source for the quasar and                                                      sub-sampling in each spatial dimension of a factor of 2, equivalent to",0.0
+a Sérsic profile for its host galaxy. The user specifies prior proba-                                                      a 4-point sub-pixel dither pattern. This corresponds to a sampling of,0.0
+"bility distributions of the properties of these profiles: point source                                                     ∼ 2.6 pixels/FWHM in HST F160W, ∼ 2.84–4.9 pixels/FWHM in",0.0
+"magnitude and position, and Sérsic magnitude, position, Sérsic in-                                                         the NIRCam short-wavelength filters, ∼ 3.4–5.4 pixels/FWHM in the",0.0
+"dex 𝑛, effective radius of the major axis 𝑅𝑒 , ratio between the major                                                     NIRCam long-wavelength filters, and ∼ 3.9 and 5.4 pixels/FWHM",0.0
+"and minor axes 𝑏/𝑎, and position angle. psfMC then explores this                                                           in the MIRI F560W and F770W filters respectively. This ensures our",0.0
+"range of model parameters, convolving each model with an input                                                             mock observations adequately sample the PSF, so the PSF errors will",0.0
+"PSF, which is then compared to the input image to determine the                                                            not be dominated by sampling errors.",0.0
+posterior probability of the model parameters given the input data.,0.0
+"   To do this, psfMC requires an input science image and corre-",3.0
+"sponding variance map of the object to be modelled. In addition, the                                                       3   https://github.com/stephenmwilkins/SynthObs",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,53.94736842105263
+                                                                          Observing high-redshift quasar hosts with JWST                                     5,74.0
+"  The mock images are saved as FITS files in flux units of e/s, to",2.0
+mimic the true instrument output.                                                            Quasar               PSF Subtracted,0.0
+                                                                                                                                                  24,146.0
+                                                                             0.500                                                                    2,77.0
+2.4.2 Inverse variance maps,0.0
+                                                                                                                                                     mag arcsec,149.0
+"Alongside the science exposures, we also construct mock inverse              0.000                                                                25",0.0
+variance maps for psfMC. The inverse variance maps are used to,0.0
+calculate the probability of the posterior distribution for a given set,0.0
+                                                                              0.500                                                               26,78.0
+of parameters in the MCMC process.                                                                                                                27,0.0
+"   For the variance maps, we include a flat background, correspond-",3.0
+ing to 𝜎 2 from the sky noise. We also include a 2D Gaussian located                   0.500 0.000 0.500            0.500 0.000 0.500,0.0
+at the centre of the quasar to represent the additional uncertainty in,0.0
+"the inner region, with the peak 5000 times smaller than the peak",0.0
+"quasar flux, and width 𝜎 = 2. These properties were determined              Figure 2. Left: Mock image of one of the bright quasars, produced with",0.0
+"empirically from the Marshall et al. (2020b) HST images and in-             no underyling host emission, in the NIRCam F200W filter. Right: Residual",0.0
+"verse variance maps, which are calculated using AstroDrizzle on the         image after quasar subtraction using psfMC, showing that the method is",0.0
+output telescope ERR arrays. This simple approximation produces             reliably modelling the quasar flux. We assume a sub-sampling of the native,0.0
+"semi-realistic variance maps, and the resulting success of psfMC is         pixel scale of a factor of 2 in each spatial dimension, corresponding to a pixel",0.0
+                                                                            scale of 0.00 0155 × 0.00 0155.,76.0
+"not particularly sensitive to these Gaussian parameters. Thus, this",0.0
+simple empirical determination of the map is adequate for the pur-,0.0
+poses of this study.,0.0
+"   We then invert the variance matrix to produce an inverse variance        quasar in the JWST NIRCam F200W filter in Figure 2, as an example.",3.0
+"map, which is saved as a FITS file.                                         This shows that minimal flux remains in the residual image, with the",0.0
+"                                                                            psfMC technique accurately modelling the quasar emission. Indeed,",76.0
+"                                                                            we find that the modelling works well for all of the bright quasars,",76.0
+2.4.3 PSF images                                                            for both HST and JWST mock images. We are therefore confident,0.0
+                                                                            that this method is working successfully.,76.0
+"As well as the quasar image, psfMC requires an image of the PSF                 We first perform the quasar modelling using both PSF",0.0
+of the telescope in order to perform the modelling. This PSF image          techniques—the smooth PSF and star PSF—in the NIRCam F200W,0.0
+"can be from a model such as Tiny Tim, as in Mechtley et al. (2012).         filter. We find that both PSF models perform equivalently well for all",0.0
+"However, with the level of PSF variation experienced by HST (di             bright quasars, with an example showing the two fits relative to the",0.0
+"Nino et al. 2008), Mechtley et al. (2012) found more accurate results       true host mock image for one quasar given in Figure 3. As in prac-",0.0
+"by taking an image of a nearby star with similar properties to the          tice, a star image obtained from the telescope may be more likely to",0.0
+"quasar, to accurately measure the PSF. In this work we model both           match the observed quasar PSF than the model, for the remainder of",0.0
+"scenarios.                                                                  this work we use the mock star image in all subtractions. We note,",0.0
+"    We consider a point source with a flux of 6 × 105 nJy in each           however, that using a model PSF will produce similar results if the",4.0
+"filter, corresponding to 17 mag in the F200W filter. This is of similar     PSF model is sufficiently accurate relative to the true telescope PSF.",0.0
+brightness to the PSF stars observed in Marshall et al. (2020b). Note,0.0
+that we tested the modelling using various PSF brightnesses and,0.0
+"obtained similar results, unless the PSF brightness was of order the",0.0
+                                                                            3 DETECTABILITY OF QUASAR HOSTS,76.0
+"quasar brightness, which resulted in a poorer subtraction.",0.0
+    We first take the PSF of such an object directly from the Tiny-         In this section we explore the success of this method in detecting the,4.0
+Tim (for HST) or WebbPSF (for JWST) model: the ‘smooth PSF’.                host galaxies of the 𝑧 = 7 BlueTides bright quasar sample.,0.0
+"Additionally, we model a star observation, by adding shot noise and",0.0
+background noise (at the same level as the quasar image) to the out-,0.0
+put image: the ‘star PSF’. We use the same inverse variance map             3.1 Comparison of HST and JWST,0.0
+"for both, for simplicity, calculated as for the science image using the     We first compare the success of this method on mock images from",0.0
+"mock star observation. We create a PSF image and variance map for           HST and JWST. We consider an exposure time of 4800s, equiva-",0.0
+"each instrument, filter and exposure time combination considered in         lent to 2 orbits of HST, as used in the observational study of Mar-",0.0
+"this work.                                                                  shall et al. (2020b). We consider the HST WFC3 F160W filter, the",0.0
+"                                                                            longest-wavelength WFC3 wide-band filter, as used in Marshall et al.",76.0
+"                                                                            (2020b). For comparison, we choose the JWST NIRCam F150W fil-",76.0
+2.5 Performing and testing the quasar modelling,0.0
+"                                                                            ter, covering similar wavelengths.",76.0
+We run psfMC using these mock quasar and PSF images and variance               We create mock images for each of the bright quasars with these,0.0
+"maps. For this study, we assume uniform priors on all properties, over      two setups, and process them with psfMC. For two quasars we show",0.0
+"a wide range of parameter space to ensure we obtain the most accurate       the original quasar and host image, the residual image after PSF",0.0
+"solution. We also fix the quasar position to its known location in the      subtraction, the best Sérsic model from psfMC, the full residual",0.0
+"centre of the image to reduce computational expense.                        image after subtraction of the best quasar and host models, and a",0.0
+"   In order to test the quasar modelling technique, we create mock          true mock image of the host galaxy in Figure 4. Also shown is the",3.0
+"images of each of the bright quasars with no underlying host galaxy,        difference between the PSF-subtracted image and the true host image,",0.0
+and run psfMC on these images. We show the mock host-free quasar            which illustrates the success of the fit.,0.0
+image and the residual image after quasar subtraction for one bright           To determine whether psfMC has made a successful detection of,0.0
+"                                                                                                                               MNRAS 000, 1–19 (2019)",127.0
+avr_spaces,18.257142857142856
+6         M. A. Marshall et al.,0.0
+                                                                     Smooth           Star,69.0
+                                               True Host         PSF Subtraction PSF Subtraction,47.0
+                                 0.500                                                                                             2,33.0
+                                                                                                                              27,126.0
+                                                                                                                                   mag arcsec,131.0
+                                 0.0   00,33.0
+                                                                                                                              28,126.0
+                                 0.500                                                                                        29,33.0
+                                            0.500 0.000    0.500 0.500 0.000           0.500 0.500 0.000           0.500,44.0
+"Figure 3. Mock images of the host galaxy of one of the bright quasars in the NIRCam F200W filter. Left: the true host mock image, simulated by assuming no",0.0
+"quasar emission. Middle: the residual image of the host after the quasar has been subtracted by psfMC, using the modelled, smooth PSF. Right: the residual",0.0
+"image of the host after the quasar has been subtracted by psfMC, using the mock star PSF. We assume a sub-sampling of the native pixel scale of a factor of 2 in",0.0
+"each spatial dimension, corresponding to a pixel scale of 0.00 0155 × 0.00 0155. Images are smoothed with a 𝜎 = 1 pixel Gaussian kernel.",0.0
+                                          PSF                                                                                      PSF-Subtracted,42.0
+                     Quasar            Subtracted Sersic Model Residual                              True Host                       - True Host,21.0
+    0.700                                                                                                                    26,4.0
+                                                                                                                               2,127.0
+                                                                                                                                                                4e-3,160.0
+                                                                     ×                                                         mag arcsec,69.0
+HST 0.0   00,0.0
+                                                                                                                             27                                 2e-3,125.0
+       0.7   00                                                                                                              28,7.0
+                                                                                                                                                                0   e/s,160.0
+    0.700                                                                                                                      2,4.0
+                                                                                                                             27,125.0
+                                                                                                                               mag arcsec,127.0
+                                                                                                                                                                    2e-3,164.0
+JWST0.000,0.0
+                                                                                                                             28                                     4e-3,125.0
+       0.700                                                                                                                 29,7.0
+                  0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700                                 0.700 0.000 0.700,18.0
+                                       PSF                                                                                        PSF-Subtracted,39.0
+                    Quasar          Subtracted Sersic Model Residual                                True Host                       - True Host,20.0
+    0.700                                                                                                                    26,4.0
+                                                                                                                               2,127.0
+                                                                                                                                                                4e-3,160.0
+                                                                     ×                                                         mag arcsec,69.0
+HST 0.0   00,0.0
+                                                                                                                             27                                 2e-3,125.0
+    0.700                                                                                                                    28,4.0
+                                                                                                                                                                0e/s,160.0
+    0.700                                                                                                                      2,4.0
+                                                                                                                             27,125.0
+                                                                                                                               mag arcsec,127.0
+                                                                                                                                                                    2e-3,164.0
+JWST0.000,0.0
+                                                                                                                             28                                     4e-3,125.0
+    0.700                                                                                                                    29,4.0
+                  0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700                                 0.700 0.000 0.700,18.0
+Figure 4. Mock images of the host galaxy of two bright quasars from the simulation. The upper panels for each quasar show the galaxy in the HST WFC3 F160W,0.0
+"filter, while the lower panels show the galaxy in the JWST NIRCam F150W filter. All images have an exposure time of 4800s, equivalent to 2 HST orbits. We",0.0
+"show the original quasar and host image in the left-most panels, and the residual image after PSF subtraction in the second panels. The third panels show the best",0.0
+"Sérsic model for the galaxy from psfMC convolved with the telescope PSF. The fourth panels show the residual image after full model subtraction, i.e. of both",0.0
+"the quasar PSF and host Sérsic profiles. The fifth panels show the true mock image of the host galaxy, simulated by assuming no quasar emission. The right-most",0.0
+"panels show the difference between the PSF-subtracted image (second panel) and the true host image (fifth panel), with green circles depicting the PSF FWHM.",0.0
+"Green ticks show the statistically significant detections, while red crosses show the fits which are not significant detections. We assume a sub-sampling of the",0.0
+"native pixel scale of a factor of 2 in each spatial dimension, corresponding to a pixel scale of 0.00 065 × 0.00 065 for HST and 0.00 0155 × 0.00 0155 for JWST. Images",0.0
+"are smoothed with a 𝜎 = 1 pixel Gaussian kernel. The colour scale is chosen to best display the host galaxy, and so the inner quasar PSF core appears saturated.",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,52.49180327868852
+                                                                          Observing high-redshift quasar hosts with JWST                                                           7,74.0
+"the host galaxy, we use the Bayesian Information Criterion, BIC, to                                                                    Rest-Frame Wavelength (Å)",0.0
+compare models with and without the host galaxy. The criterion is                                                           2000         4000      6000        8000,0.0
+given by,0.0
+                                                                                                                  1.0,114.0
+"BIC = 𝑘 ln(𝑛) − 2 ln( 𝐿),",0.0
+                      ˆ                                            (3),22.0
+                                                                              Fraction of Successful Detections,78.0
+"where 𝑘 is the number of model parameters, 𝑛 is the number of data                                                0.8",0.0
+points and 𝐿ˆ is the maximum value of the likelihood function. Using,0.0
+"the psfMC output, we calculate the BIC for the model with both a",0.0
+"point source quasar and a Sérsic host galaxy, BIChost , which has 8                                               0.6",0.0
+"model parameters, and for the model with only a point source quasar,",0.0
+"BICno host , which has only 1 parameter, the magnitude of the quasar.                                             0.4",0.0
+"To compare models, we then calculate ΔBIC = BICno host − BIChost .",0.0
+"If ΔBIC > 10, there is very strong evidence that the host model is",0.0
+"preferred, and thus we claim a detection. Otherwise, if ΔBIC < 10,                                                0.2",0.0
+there is no significant detection of the host galaxy.,0.0
+"   From the mock HST images, there is no significant detection of                                                 0.0",3.0
+the host galaxy for any of the 22 bright quasars in the simulation.,0.0
+                                                                             LAGN /LHost,77.0
+"This is in agreement with current observational studies, which have                                               50",0.0
+not been able to detect the hosts in real HST WFC3 images using,0.0
+this technique (Mechtley et al. 2012; Marshall et al. 2020b). At the                                              40,0.0
+"same wavelengths and exposure times, the mock JWST images show",0.0
+successful host detections in 10 of the 22 bright quasars. This success                                                 1          2    3       4     5      6         7      8,0.0
+"rate is shown in Figure 5. Thus, while observing the host galaxies                                                                     Observed Wavelength (µm)",0.0
+"in HST is very challenging, the increased resolution of JWST will",0.0
+lead to significant improvements for the detectability of high-redshift,0.0
+                                                                                                                              1 ks           10 ks                  4.8 ks,126.0
+quasar host galaxies.                                                                                                         2.5 ks         10 ks (MIRI)           4.8 ks (HST),0.0
+                                                                                                                              5 ks,126.0
+3.2 Comparison of JWST observational strategies,0.0
+We now consider the success rates of various observational strategies       Figure 5. Upper panel: The fraction of the 22 bright quasar host galaxies that,0.0
+"with JWST, by exploring the effect of exposure time and wavelength.         are successfully detected in each NIRCam wide-band filter, as a function of",0.0
+"                                                                            wavelength. Colours show the exposure times, ranging from 1 ks to 10 ks (see",76.0
+                                                                            legend). Also shown are the results from the HST WFC3 F160W filter with an,76.0
+"                                                                            exposure of 4.8 ks, equivalent to the Marshall et al. (2020b) observations, and",76.0
+3.2.1 Exposure time,0.0
+                                                                            from 10 ks exposures with the MIRI F560W and F770W filters (see legend).,76.0
+"To study the effect of exposure times, we run psfMC on mock NIR-            Lower panel: The median ratio between the AGN and host luminosity for the",0.0
+"Cam F200W images with an exposure time of 1 ks, 2.5 ks, 5 ks, and           bright quasars, in each photometric filter.",0.0
+"10 ks, for each of the bright quasars. Example residual images for",0.0
+one quasar are shown in Figure 6. We choose the F200W filter as an,0.0
+"example, as it has the highest sensitivity of the wide-band filters for     F115W, F150W, F200W, F277W, F356W and F444W filters, a total",0.0
+"a given exposure time.                                                      of 12, 17, 19, 19, 22 and 22 successful detections are made for the 22",0.0
+"   We find that with an exposure time of 1 ks, only 1 of the 22             bright quasar hosts, respectively, in 10 ks exposures. These success",3.0
+"quasar hosts is successfully detected in the F200W filter. For 2.5, 5,      rates are shown in Figure 5. Longer-wavelength filters have larger",0.0
+"and 10 ks exposures, 9, 15, and 19 of the 22 hosts are successfully         success rates for detecting the quasar host galaxies, with the F115W",0.0
+"detected, respectively. These success rates are shown in Figure 5.          filter performing the worst.",0.0
+"Thus, exposures of at least 5 ks are recommended for detecting a                In Figure 5 we also show the median ratio of AGN to host lumi-",0.0
+"large fraction of quasar host galaxies.                                     nosity for the bright quasars, in each filter. This ratio is largest in the",0.0
+"   For the remainder of this work, we consider exposure times of            F115W filter, due to the large Lyman-alpha emission from the AGN",3.0
+10 ks unless otherwise specified. The residual images and true host         falling in this wavelength range. This may explain the low success,0.0
+"mock images of each of the 22 bright quasar host galaxies, in the           rate for F115W images, as the hosts are more significantly outshined",0.0
+"F200W filter with exposure times of 10 ks, are shown in Appendix            by the AGN and thus harder to detect. The AGN–host luminosity ra-",0.0
+"A.                                                                          tio increases from F150W to F277W, reflecting the increasing AGN",0.0
+                                                                            luminosity with wavelength and roughly constant galaxy luminosity.,76.0
+"                                                                            This ratio then drops in the F356W filter, due to the Balmer-break",76.0
+3.2.2 Wavelength,0.0
+"                                                                            causing a significant increase in the galaxy flux in this filter, before",76.0
+We now investigate the host detectablility in each of the NIRCam            again rising at larger wavelengths due to the AGN and host contin-,0.0
+"wide-band filters red-ward of the 𝑧 = 7 Lyman-break: F115W,                 nuum slopes. The AGN–host luminosity ratio is low for the F356W",0.0
+"F150W, F200W, F277W, F356W and F444W. We produce mock                       and F444W filters, which have the highest success rates, however",0.0
+"images of each of the bright quasars in these filters, with exposure        similar ratios are seen for the F150W and F200W filters which have",0.0
+"times of 10 ks, and run them through the psfMC software. Example            lower success rates, suggesting that this ratio does not entirely deter-",0.0
+residual images for a given quasar in these various filters are shown       mine the success of the method.,0.0
+"in Figure 7, alongside true mock images of the host galaxy. For the             We also investigate exposure times of 5 ks for each filter, and find",0.0
+"                                                                                                                                                            MNRAS 000, 1–19 (2019)",156.0
+avr_spaces,18.771428571428572
+8                         M. A. Marshall et al.,0.0
+                                                                                                                                                                               True Image,175.0
+                                Quasar (10 ks)                    1 ks                                       2.5 ks                        5 ks               10 ks              (10 ks),32.0
+         0.500,9.0
+                                                                                                                                                                                                   26,195.0
+                                                                                                                                                                                                        2,200.0
+                                                                                                                                                                                                        mag arcsec,200.0
+         0.000,9.0
+                                                                                  ×,82.0
+                                                                                                                                                                                                   27,195.0
+          0.500                                                                                                                                                                                    28,10.0
+                                  0.5 0.0,34.0
+                                        00    00,40.0
+                                                   0.5 0.5 0.0,51.0
+                                                      00     00     00,54.0
+                                                                                          0.500 0.500 0.000 0.500 0.500 0.000 0.500 0.500 0.000 0.500 0.500 0.000 0.500,90.0
+"Figure 6. PSF-subtracted mock images of one bright quasar host in the JWST NIRCam F200W filter, with exposure times of (left to right): 1 ks, 2.5 ks, 5 ks",0.0
+"and 10 ks. The left-most panel shows the original image of the quasar and host prior to PSF-subtraction, at an exposure time of 10 ks. The right-most panel",0.0
+"shows the true mock image of the host galaxy at an exposure time of 10 ks, simulated by assuming no quasar emission. This modelling results in a successful",0.0
+"detection for exposure times ≥ 2.5 ks, depicted by the red cross and green ticks. We assume a sub-sampling of the native pixel scale of a factor of 2 in each",0.0
+"spatial dimension, corresponding to a pixel scale of 0.00 0155 × 0.00 0155. Images are smoothed with a 𝜎 = 1 pixel Gaussian kernel. The colour scale is chosen to",0.0
+"best display the host galaxy, and so the inner quasar PSF core appears saturated.",0.0
+                                             F115W          F150W                                       F200W                                F277W             F356W             F444W,45.0
+    True Host PSF Subtracted,4.0
+                               0.500,31.0
+                               0.000,31.0
+                                                                                                                           27 2                                                                    26,123.0
+                                                                                                                                                                                                    2,196.0
+                                                                                                                              mag arcsec                                                            mag arcsec,126.0
+                               0.5 00,31.0
+                               0.500,31.0
+                                                                                                                           28                                                                      27,123.0
+                               0.000,31.0
+                                                                                                                           29                                                                      28,123.0
+                               0.500,31.0
+                                        0.500 0.000 0.500 0.500 0.000 0.500 0.500 0.000 0.500                                              0.500 0.000 0.500 0.500 0.000 0.500 0.500 0.000 0.500,40.0
+                                                                                                               F560W                  F770W,111.0
+                                                                                                    0.500,100.0
+                                                                         True Host PSF Subtracted,73.0
+                                                                                                    0.000,100.0
+                                                                                                                                                  ×          26,146.0
+                                                                                                                                                                2,160.0
+                                                                                                                                                                mag arcsec,160.0
+                                                                                                    0.500,100.0
+                                                                                                    0.500,100.0
+                                                                                                    0.000                                                    27,100.0
+                                                                                                                                                             28,157.0
+                                                                                                    0.500,100.0
+                                                                                                            0.500 0.000 0.500 0.500 0.000 0.500,108.0
+Figure 7. Mock images of one bright quasar host in each of the JWST NIRCam wide-band filters red-ward of the 𝑧 = 7 Lyman break (top panels) and the two,0.0
+"shortest-wavelength MIRI filters (bottom panels). The upper panels in each set show the residual image after PSF subtraction, and the lower panels show the true",0.0
+"mock image of the host galaxy, simulated by assuming no quasar emission. Images have an exposure time of 10 ks. This modelling results in a successful host",0.0
+"detection in all filters except for F770W, depicted by the red cross and green ticks. We assume a sub-sampling of the native pixel scale of a factor of 2 in each",0.0
+"spatial dimension, corresponding to a pixel scale of 0.00 0155 × 0.00 0155 for the short-wavelength NIRCam filters (F115W, F150W and F200W), 0.00 0315 × 0.00 0315",0.0
+"for the long-wavelength NIRCam filters (F277W, F356W and F444W), and 0.00 055 × 0.00 055 for the MIRI filters (F560W and F770W). Images are smoothed with",0.0
+a 𝜎 = 1 pixel Gaussian kernel.,0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,66.5
+                                                                            Observing high-redshift quasar hosts with JWST                             9,76.0
+"that as for the F200W filter, while 10 ks exposures result in more            contaminate the measured Sérsic magnitudes. However, we do see",0.0
+"successful detections, 5 ks exposures are reasonable and result in            that some of this flux, particularly in the outer core, may be being",0.0
+success rates of > 60% for all filters excluding F115W (see Figure            falsely attributed to the host galaxies. This will likely result in the,0.0
+5).                                                                           host brightnesses being overestimated. We investigate this in detail,0.0
+"    For comparison, we also consider 10 ks exposures in the two               in Section 5.1.",4.0
+"shortest wavelength MIRI imaging filters, F560W, centred at 5.6                  We note that this imperfect subtraction is not a result of under-",0.0
+"𝜇m, and F770W, centred at 7.7 𝜇m. We find that in the F560W                   sampling of the PSF, with an increased sub-sampling in each spatial",0.0
+"filter, only 6 of the 22 bright quasar host galaxies are successfully         dimension of a factor of 3, equivalent to a 9-point sub-pixel dither",0.0
+"detected. The F770W filter results in only 1 successful detection.            pattern, producing the same results.",0.0
+"Longer wavelength MIRI filters have lower sensitivity, and so are                We cannot at this stage fully anticipate the exact thermal behaviour",0.0
+"likely to perform worse than these two filters. Thus, MIRI imaging            of JWST in L2, and its subtle sun-angle and pointing-direction depen-",0.0
+will result in significantly fewer detections of quasar hosts using           dent thermal effects on the actual JWST PSF. Determining the PSF,0.0
+"this method, with NIRCam imaging likely to provide the best                   for JWST will be a challenging task, particularly in the first cycles",0.0
+opportunity for detecting the hosts. The low success rates for host           of observations. From our experience with HST with highly reliable,0.0
+"detections with MIRI are likely due to the lower resolution of these          PSFs, the psfMC code can leave PSF subtraction errors of order ∼1%",0.0
+"images, alongside the reduced sensitivity at these wavelengths due to         amplitude in the central 𝑟 = 0.00 2 circular region of the image where",0.0
+a significantly brighter thermal JWST foreground at 𝜆 > 4–4.5𝜇m.              the quasar is centered (see Figure 4 and Marshall et al. 2020b). With,0.0
+"Combined with the expected relatively flat rest-frame host galaxy             the improved resolution of JWST, this corruption should be limited to",0.0
+"spectra and the enormous (1 + 𝑧) 4 surface brightness dimming, this           a smaller region in the centre, if the PSF can be accurately calibrated.",0.0
+"will reduce the detected host contrast compared to the quasar point           Hence, it will always be safest to have a circular central exclusion",0.0
+"source at 𝜆 > 4.5𝜇m. Exceptions may be for very dusty, red quasars            area within which one will not, or cannot, determine the host galaxy",0.0
+"and their hosts, with significantly attenuated UV flux resulting in the       flux. The host flux in this region may simply have to be interpolated",0.0
+quasar/host contrast being more favourable for detection with MIRI.           from the host galaxy surface brightness distribution outside this cor-,0.0
+                                                                              rupted area (see Figure 4). The true level of contamination will need,78.0
+"    In summary, we predict that longer exposure times will result in          to be considered in detail when analysing the real JWST data.",4.0
+"more successful host detections, with & 5 ks exposures required to               For now, it therefore seems most realistic to approximate this pro-",0.0
+detect the majority of hosts with NIRCam wide-band filters. The               cess by simply measuring the total fluxes outside this inner corrupted,0.0
+"long-wavelength NIRCam wide-band filters show higher expected                 area, and interpolate the missing flux into this central area from the",0.0
+success rates than the short-wavelength filters. The F115W filter             actual surface-brightness distribution outside this corrupted region.,0.0
+"shows the worst performance, likely due to the large AGN luminos-             This is in essence what we do in Section 5.1.",0.0
+"ity in that wavelength range. Finally, MIRI imaging is predicted to",0.0
+result in significantly lower fractions of successful detections than,0.0
+"NIRCam, due to its lower resolution and sensitivity.",0.0
+                                                                              4 QUASAR AND HOST PROPERTIES,78.0
+                                                                              We now investigate the kinds of quasars and host galaxies that are,78.0
+3.3 Residual Quasar Flux,0.0
+                                                                              most likely to result in successful detections using this technique.,78.0
+The majority of the PSF-subtracted images contain some remnant                   First we investigate the bright quasars. We consider a host which is,0.0
+"flux from the quasar, concentrated in the central core of the PSF (see        successfully detected in at least 5 of the 6 NIRCam wide-band filters",0.0
+"e.g. Figures 3 and 6, and Appendix A). For the bright quasars across          in 10 ks exposures as ‘detectable’, while those that are successfully",0.0
+"all NIRCam filters, the ratio of the extracted psfMC luminosity to            detected in 4 or fewer of the 6 filters are ‘undetectable’. This results in",0.0
+"the input AGN luminosity 𝐿 AGN, psfMC /𝐿 AGN, Input is 99.15+0.76 −1.78",0.0
+"                                                                         %,   a sample of 15 ‘detectable’ hosts, and 7 ‘undetectable’ host galaxies,",73.0
+where values quoted are the median and the differences to the 5%              from the 22 total bright quasars. The residual images and true host,0.0
+"and 95% percentiles. All of the 132 runs either underestimated or             mock images of these host galaxies in the F200W filter, showing",0.0
+"matched the input luminosity, with 𝐿 AGN, psfMC ≤ 𝐿 AGN, Input .              which are ‘detectable,’ are presented in Appendix A.",0.0
+"    Across the three short-wavelength filters, the poorest extracted flux        We compare the physical properties of these host galaxies in Figure",4.0
+"is 95.9% of the input flux, while the long-wavelength filters show an         8, which shows their star formation rates, bulge-to-total mass ratios",0.0
+improved performance with the worst underestimation 97.7%. As                 and stellar masses. Figure 8 also shows the fraction of galaxies which,0.0
+"seen in Figure 7, for example, the long-wavelength residual images            are detectable, or the ‘success rate’, in bins of each property. We see",0.0
+"show smoother features than the short-wavelength images, due to the           that galaxies with the largest stellar masses, 𝑀∗ & 1010.7 𝑀 , have",0.0
+"decreased resolution in these filters. This smoothness may result in          a success rate of 1, whereas lower mass galaxies have much lower",0.0
+"the AGN being easier to extract.                                              success rates. A similar trend is seen for star formation rates, which",0.0
+    These psfMC fits thus predominantly underestimate the quasar lu-          are correlated with the stellar mass of the galaxy. Galaxies with the,4.0
+"minosity, however not by a significant fraction. This may be caused           largest star formation rates, SFR & 500𝑀 yr−1 , have a high success",0.0
+"by a mismatch in the PSF shapes due to the shot noise, as seen in             rate, with detectability worse for galaxies with lower star formation",0.0
+the HST images of Marshall et al. (2020b). A more substantial un-             rates. Galaxies with bulge-to-total mass ratios 𝑀bulge /𝑀∗ . 0.9 have,0.0
+"derestimation would result in residual flux in the PSF wings, which           success rates of 1, with 𝑀bulge /𝑀∗ & 0.9 galaxies showing lower",0.0
+"is not seen. This AGN underestimation may, however, significantly             success rates. However, given the low number of quasars studied,",0.0
+affect the measured flux of the host galaxy. Figure 4 shows the PSF-          these trends are not statistically significant.,0.0
+"subtracted model, alongside the full model-subtracted residual im-               Figure 8 also shows the half-mass radii of the bright quasar host",0.0
+"age, for two bright quasars. This shows that for the JWST images the          galaxies from BlueTides, as well as their Sérsic radii measured",0.0
+central core of this flux is not being attributed to the host galaxy in the   from psfMC fits to 10 ks F277W images. Note that we choose the,0.0
+Sérsic fit. This suggests that this residual flux will not significantly      F277W filter as the Sérsic radius is a more accurate measure of the,0.0
+"                                                                                                                              MNRAS 000, 1–19 (2019)",126.0
+avr_spaces,9.0
+10                                  M. A. Marshall et al.,0.0
+                                    3.2                                                                                 14,36.0
+                                                                                                                                                   Detectable,147.0
+                                                                                                                                                   Undetectable,147.0
+                                    3.0                                                                                 12,36.0
+     log(SFR/M yr−1 )                                                                                    BHAR (M /yr),5.0
+                                                                                                                        10,120.0
+                                    2.8,36.0
+                                                                                                                         8,121.0
+                                    2.6,36.0
+                                                                                                                         6,121.0
+                                    2.4,36.0
+                                                                                                                         4,121.0
+                                    2.2,36.0
+                                          0         1 10.4                                                              2.0 0           1,42.0
+                                                                      10.6         10.8,70.0
+                                                                                                                        1.8,120.0
+                                    0.9,36.0
+                                                                                                                        1.6,120.0
+      Mbulge /M∗                                                                                      LBol /LEdd,6.0
+                                    0.8                                                                                 1.4,36.0
+                                                                                                                        1.2,120.0
+                                    0.7,36.0
+                                                                                                                        1.0,120.0
+                                                                 Detectable                                             0.8,65.0
+                                    0.6                          Undetectable,36.0
+                                                                                                                              0          1,126.0
+                                          0          1                                                                            Success,42.0
+                                              Success                                                                              Rate,46.0
+                                               Rate                                                                                     0,47.0
+                                                    0                                                                                        8.0       8.2     8.4   8.6,52.0
+                                                         10.4         10.6      10.8                                                                 log(MBH /M ),57.0
+                                                                      log(M∗ /M ),70.0
+                                                                                                Figure 9. Physical properties of the BlueTides bright quasar black holes as a,96.0
+        F277W Sersic Radius (kpc),8.0
+"                                                                                                function of black hole mass 𝑀BH : black hole accretion rate (BHAR; top), and",96.0
+                                    1.6                                                         Eddington ratio 𝐿bol /𝐿Edd (bottom). Closed symbols represent quasars which,36.0
+                                                                                                have their host galaxy successfully detected in at least 5 of the 6 NIRCam,96.0
+"                                                                                                wide-band filters, ‘detectable’ hosts, while open symbols show host galaxies",96.0
+"                                                                                                which are successfully detected in 4 or fewer of the 6 filters, ‘undetectable’",96.0
+"                                    1.4                                                         hosts. The left and bottom panels show the fraction of detectable hosts, or",36.0
+"                                                                                                the ‘success rate’, in bins of each property, with 95% Binomial confidence",96.0
+                                                                                                intervals calculated using the Wilson score interval with continuity correction,96.0
+                                    1.2                                                         (see e.g. Wallis 2013).,36.0
+                                          0          1,42.0
+"                                              Success                                           galaxy extent in the long-wavelength filters, as discussed in detail in",46.0
+                                               Rate,47.0
+                                                     0,53.0
+                                                                                                Section 5.2.1. We see no significant trend between detectability and,96.0
+"                                                                0.4          0.6          0.8   half-mass radius or Sérsic radius, although smaller galaxies seem",64.0
+                                                                       R0.5 /kpc                to show mildly lower success rates. When examining the host mock,71.0
+"                                                                                                images (Appendix A), we do see that the undetectable hosts are",96.0
+"                                                                                                those that appear the most compact. Thus, there may be a correlation",96.0
+Figure 8. Physical properties of the BlueTides bright quasar host galax-                        between detectability and the compactness of the host emission.,0.0
+"ies. Top panels: star formation rate SFR (top), and bulge-to-total mass ratio                   However given the small sample size these trends are not statistically",0.0
+𝑀bulge /𝑀∗ (middle) as a function of stellar mass 𝑀∗ . Bottom panel: The                        significant. We discuss the differences between half-mass radius and,0.0
+half-mass radii against Sérsic radii measured from psfMC fits to 10 ks mock                     Sérsic radius in detail in Section 5.2.1.,0.0
+"images in the F277W filter. Closed symbols represent quasars which have                            Thus, we find no statistically significant trends between the de-",0.0
+their host galaxy successfully detected in at least 5 of the 6 NIRCam wide-,0.0
+"                                                                                                tectability of the host galaxy and its star formation rate, bulge-to-",96.0
+"band filters, ‘detectable’ hosts, while open symbols show host galaxies which",0.0
+"are successfully detected in 4 or fewer of the 6 filters, ‘undetectable’ hosts.",0.0
+"                                                                                                total mass ratio, radius, or stellar mass, however, the host galaxies of",96.0
+"The left and bottom panels show the fraction of detectable hosts, or the ‘suc-                  quasars may be more likely to be detected when observing the most",0.0
+"cess rate’, in bins of each property, with 95% Binomial confidence intervals                    massive, highly star-forming, least bulge-dominated, and largest host",0.0
+calculated using the Wilson score interval with continuity correction (see e.g.                 galaxies.,0.0
+"Wallis 2013).                                                                                      In Figure 9 we consider the black hole properties, showing the",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,55.594202898550726
+                                                                                  Observing high-redshift quasar hosts with JWST                         11,82.0
+"                       −22.5                                                         black hole accretion rate, Eddington ratio, and black hole mass. We",23.0
+                                                                                     find no significant trends between host detectability and these black,85.0
+                                                                                     hole properties.,85.0
+                       −22.0                                                            We also consider the impact of luminosity of the bright quasars and,23.0
+                                                                                     their host galaxies on their detectability. In Figure 10 we show the UV,85.0
+   host,3.0
+"                       −21.5                                                         absolute magnitudes of the quasar and the host galaxy, both intrinsic",23.0
+"  MUV,",2.0
+"                                                                                     and including dust attenuation. We find that brighter host galaxies,",85.0
+"                                                                                     𝑀UV,Host < −21.5 mag, have a success rate of 1, with fainter host",85.0
+"                       −21.0                                                         galaxies harder to detect. This is also seen, to a lesser extent, in the",23.0
+"                                                                                     intrinsic galaxy magnitudes. However, again we note that due to the",85.0
+"                                                                                     low number of quasars, these trends are not statistically significant.",85.0
+                       −20.5                                                         We also show the difference between the UV absolute magnitudes,23.0
+                              4.5 0           1                                      of the quasars and their host galaxies in Figure 10. We see lower,30.0
+                                                                                     success rates when the AGN outshines the galaxy by the largest,85.0
+"                       AGN                                                           fraction (𝑀UV,Host − 𝑀UV,AGN > 4), however again these trends are",23.0
+                              4.0,30.0
+"                      − MUV,",22.0
+                                                                                     not statistically significant. We also see no significant dependence of,85.0
+                                                                                     the detectability on the AGN magnitude.,85.0
+                              3.5                                                       We have focused purely on the bright quasar sample throughout,30.0
+                       host,23.0
+"                                                                                     this work. However, given the limited magnitude range covered by",85.0
+"                              3.0                                                    the bright quasars and the small sample size, we also consider the",30.0
+"                      MUV,                                                           faint quasar sample to study the detectability of quasar hosts. Here",22.0
+                                                                Detectable           we consider only whether the hosts are successfully detected in 10 ks,64.0
+"                              2.5                               Undetectable         F200W exposures, to reduce the computational expense of analysing",30.0
+                                    0          1,36.0
+"                                                                                     the large number of faint quasars in all filters. With this technique,",85.0
+                                        Success,40.0
+                                                                                     19/22 of the bright quasars and 167/175 of the faint quasars are,85.0
+"                                         Rate                                        successfully detected in the 10 ks F200W exposures, resulting in an",41.0
+                                               0                                     overall success rate for the faint quasars 9% higher than that for the,47.0
+                                                   −24.5 −25.0 −25.5 −26.0           bright quasars.,51.0
+"                                                          MUV, AGN                      In Figure 11 we show the UV dust-attenuated absolute magni-",58.0
+                                                                                     tudes for the quasars and their host galaxies from both samples.,85.0
+"                                                                                     For both bright and faint quasars, there is no significant trend",85.0
+                                                                                     between detectability in the F200W filter and the quasar or host,85.0
+                                                                                     magnitude. We also note that we see no trend between detectabil-,85.0
+                                                                                     ity and any other galaxy or black hole property for these faint quasars.,85.0
+                       −25.5,23.0
+   host (intrinsic),3.0
+"                                                                                       Overall, it seems that quasar host galaxies may be more likely to",87.0
+                       −25.0                                                         be successfully detected in at least 5 of the 6 NIRCam filters in 10 ks,23.0
+"                                                                                     exposures if they are massive, 𝑀∗ & 1010.7 𝑀 , bright, 𝑀UV,Host .",85.0
+"                       −24.5                                                         −21.5 mag, have bulge-to-total mass ratio 𝑀bulge /𝑀∗ . 0.9, have",23.0
+"                                                                                     extended emission, and have 𝑀UV,Host − 𝑀UV,AGN < 4, however",85.0
+"  MUV,                 −24.0                                                         our analysis finds no statistically significant trends between host",2.0
+                                                                                     detectability and the properties studied here.,85.0
+                       −23.5,23.0
+                                    0          1,36.0
+                                                                                     5 MEASUREMENT BIASES,85.0
+                                        Success,40.0
+                                         Rate                                        We now investigate the accuracy of this method for extracting the,41.0
+"                                               0                                     magnitudes, sizes and morphologies of the quasar host galaxies.",47.0
+                                                 −24.5 −25.0 −25.5 −26.0 −26.5,49.0
+"                                                       MUV, AGN (intrinsic)",55.0
+                                                                                     5.1 Magnitudes,85.0
+Figure 10. The UV absolute magnitudes of the bright quasars and their,0.0
+host galaxies. The top panels show the host magnitudes (top panel) and the           We first study the magnitudes of the host galaxies extracted from,0.0
+difference between the host and AGN magnitudes (middle) as a function of             psfMC.,0.0
+AGN magnitude. The bottom panels consider the intrinsic (i.e. non dust-                 We obtain the input magnitude of the host galaxies using Syn-,0.0
+"attenuated) magnitudes, showing the host intrinsic magnitude as a function of",0.0
+"                                                                                     thObs, by calculating the flux within the given filter of each star",85.0
+AGN intrinsic magnitude. Closed symbols represent quasars which have their,0.0
+"                                                                                     particle from the SSP model, and converting to a magnitude. We",85.0
+host galaxy successfully detected in at least 5 of the 6 NIRCam wide-band,0.0
+"filters, ‘detectable’ hosts, while open symbols show host galaxies which are         then compare these input magnitudes against the Sérsic magnitudes",0.0
+"successfully detected in 4 or fewer of the 6 filters, ‘undetectable’ hosts. The      extracted by psfMC, for quasars with ‘successful’ host detections, as",0.0
+"left and bottom panels show the fraction of detectable hosts, or the ‘success        shown in the top panel of Figure 12.",0.0
+"rate’, in magnitude bins, with 95% Binomial confidence intervals calculated             From Figure 12 we see that the long-wavelength filters F277W,",0.0
+using the Wilson score interval with continuity correction (see e.g. Wallis          F356W and F444W result in fit magnitudes which are gener-,0.0
+"2013).                                                                               ally fainter than the input magnitudes, with 𝑚 Sersic − 𝑚 input =",0.0
+"                                                                                                                                   MNRAS 000, 1–19 (2019)",131.0
+avr_spaces,45.285714285714285
+12               M. A. Marshall et al.,0.0
+                                                                               and −0.05+0.18−0.36,79.0
+                                                                                                    mag respectively. While on average the longer-,100.0
+"                                                                               wavelength filters perform well, the scatter means that individ-",79.0
+               −22.5                                                           ual hosts can have poorer estimates. For the short-wavelength fil-,15.0
+                                                                               ters 𝑚 Sersic − 𝑚 true = 0.27+0.38−0.35,79.0
+"                                                                                                                       , 0.23+0.33",119.0
+                                                                                                                             −0.36,125.0
+"                                                                                                                                   , 0.02+0.41",131.0
+                                                                                                                                          −0.40,138.0
+                                                                                                                                                 mag for,145.0
+"               −22.0                                                           the F115W, F150W and F200W filters respectively, again showing",15.0
+"    MUV,Host",4.0
+                                                                               poorer agreement than the long-wavelength filters.,79.0
+"               −21.5                                                              Overall, the Sérsic magnitudes are in better agreement with the",15.0
+                                                                               true host photometric magnitudes than the input magnitudes. This,79.0
+               −21.0,15.0
+                                                                               suggests that indeed the input magnitudes do not reflect the observed,79.0
+"               −20.5                                                           true host magnitudes due to observational effects. Thus, the Sérsic",15.0
+                                                                               magnitudes extracted from psfMC can be used to reasonably estimate,79.0
+               −20.0                                                           the magnitude of the host that would be measured if no quasar con-,15.0
+"                                                                               tamination were present. However, there is large scatter between the",79.0
+                       0          1,23.0
+"                                                                               Sérsic and true host photometric magnitudes, with an overall median",79.0
+                           Success,27.0
+                            Rate                                               𝑚 Sersic − 𝑚 true of 0.016 mag and a standard deviation of 0.279 mag,28.0
+                                  0,34.0
+                                                                               across all filters. This suggests that the Sérsic magnitude may not be,79.0
+"                                      −23       −24   −25     −26              an ideal estimator of the host magnitude, potentially indicating that",38.0
+"                                               MUV,AGN                         high-redshift galaxies are not ideally described by a Sérsic profile.",47.0
+                       Detectable in F200W           Faint Quasars                In the third panel of Figure 12 we also show the photometric mag-,23.0
+                       Undetectable in F200W         Bright Quasars            nitude of the PSF-subtracted host compared with that for the true host,23.0
+                                                                               image. We find that 𝑚 phot − 𝑚 true = −0.16+0.15−0.19,79.0
+"                                                                                                                                     , − 0.24+0.28",133.0
+                                                                                                                                               −0.25,143.0
+"                                                                                                                                                     , and",149.0
+                                                                                      +0.48,86.0
+"                                                                               −0.31−0.34 mag for F115W, F150W and F200W, and −0.11−0.31 , −    +0.18",79.0
+Figure 11. The UV dust-attenuated absolute magnitudes of the quasars and,0.0
+                                                                               0.12+0.25,79.0
+                                                                                    −0.22,84.0
+"                                                                                           , and −0.10+0.12",91.0
+                                                                                                         −0.23,105.0
+"                                                                                                               mag for F277W, F356W and F444W, re-",111.0
+"their host galaxies, for both bright and faint quasars (see legend). Closed",0.0
+                                                                               spectively. With an overall median 𝑚 phot − 𝑚 true of −0.128 mag and,79.0
+symbols represent quasars which have their host galaxy successfully detected,0.0
+"in the NIRCam F200W filter, with exposure times of 10 ks, while open           a standard deviation of 0.186 mag across all filters, there is a tighter",0.0
+symbols show host galaxies which are not detected. The left and bottom         correlation between 𝑚 phot and 𝑚 true than with the Sérsic magnitude,0.0
+"panels show the fraction of detectable hosts from the combined bright and      𝑚 Sersic , suggesting that this may be a more precise indicator of the",0.0
+"faint quasar samples, or the ‘success rate’, in magnitude bins, with 95%       true host photometric magnitude. However, the photometric mag-",0.0
+"Binomial confidence intervals calculated using the Wilson score interval       nitudes 𝑚 phot are generally offset to lower magnitudes than 𝑚 true ,",0.0
+with continuity correction (see e.g. Wallis 2013).                             and thus performing photometry on the PSF-subtracted images will,0.0
+                                                                               overestimate the brightness of the host galaxies. This is likely due to,79.0
+"                                                                               residual flux from the quasar itself, with some central flux remain-",79.0
+"                                                                               ing after the psfMC fit, as discussed in Section 3.3. We note that",79.0
+0.27+0.42,0.0
+     −0.33,5.0
+"           , 0.19+0.46",11.0
+                    −0.32,20.0
+                                       +0.46 mag respectively4 . The,39.0
+"                          , and 0.21−0.28                                      the Sérsic magnitudes do not systematically overestimate the host",26.0
+"method underestimates the brightness of the hosts more signif-                 brightness, as the central core of this remnant flux is not necessarily",0.0
+"icantly for the short-wavelength filters, with 𝑚 Sersic − 𝑚 input =            attributed to the host galaxy in the Sérsic fit (see Section 3.3).",0.0
+"     +0.35 , 0.66+0.73 , and 0.49+0.57 mag for the F115W, F150W",5.0
+"0.79−0.55                                                                         To account for this residual flux, we mask the central contaminated",0.0
+                   −0.58          −0.66,19.0
+"and F200W filters respectively. Thus, while the host galaxies are de-          region of the images before performing the photometry. Based on the",0.0
+"tected with statistical significance, the measured Sérsic magnitudes           PSF-subtracted images (see e.g. Figures 3 and 6, and Appendix A),",0.0
+"of these galaxies generally underestimate the input ‘true’ host bright-        we choose to mask the central circle with a radius of 5 pixels, which",0.0
+"ness, particularly in the short-wavelength filters. However, it is likely      encompasses the core of the contamination, setting their original flux",0.0
+"that there could be a difference in the observationally determined             values to NaNs. For a lower limit on the host brightness, we simply",0.0
+"magnitudes and theoretically input ones, due to surface brightness             assume that the flux for each pixel within this region is equal to the",0.0
+"effects and image extents, for example. Thus this difference may not           minimum flux in a ring of one pixel in radius around this central",0.0
+"be due to the PSF-subtraction method producing poor results.                   region. For our best estimate of the host brightness, we replace the",0.0
+   To investigate the accuracy of the extracted Sérsic host magnitudes         NaNs by interpolating from the neighbouring data points outside the,3.0
+"further, we perform aperture photometry on the PSF-subtracted im-              masked region with a 2D Gaussian kernel with standard deviation",0.0
+"ages and the mock images of the host galaxies with no quasar emis-             equal to the FWHM, using the AstroPy (Astropy Collaboration et al.",0.0
+sion (‘true host images’). We assume a circular aperture with diameter         2013) convolution and filtering functions. For both of these masking,0.0
+"equal to the total image width, and do not perform background sub-             choices, we perform aperture photometry in an identical procedure",0.0
+traction as this is already completed within psfMC. We then compare            to the unmasked images. We assume that the upper limit on the,0.0
+the photometric magnitudes measured from the true host images to               brightness is the original photometric magnitude 𝑚 phot .,0.0
+the Sérsic magnitudes extracted by psfMC for quasars with ‘success-               We show these masked photometric magnitudes in the bottom,0.0
+"ful’ host detections, shown in the second panel of Figure 12. The              panel of Figure 12. We find that for the best estimate magnitudes us-",0.0
+"long-wavelength filters F277W, F356W and F444W result in best-fit              ing the Gaussian kernels, 𝑚 masked −𝑚 true = −0.09+0.15−0.17",0.0
+"                                                                                                                                            , −0.13+0.21",140.0
+                                                                                                                                                   −0.18,147.0
+"                                                                                                                                                         ,",153.0
+Sérsic magnitudes which are similar to the true photometric magni-             and −0.11+0.19 −0.31,0.0
+"                                                                                                     mag     for F115W,     F150W    and    F200W,     and",101.0
+"tudes on average, with 𝑚 Sersic − 𝑚 true = −0.07+0.23",0.0
+                                                   −0.35,51.0
+"                                                         , − 0.08+0.17",57.0
+                                                                   −0.42,67.0
+"                                                                         ,     0.06+0.22   ,  0.09+0.21  , and 0.12+0.16  mag for F277W, F356W and",73.0
+                                                                                    −0.16          −0.19           −0.20,84.0
+"                                                                               F444W, respectively, with an overall median 𝑚 masked − 𝑚 true of",79.0
+                                                                               0.001 mag and a standard deviation of 0.178 mag across all filters.,79.0
+"4 Values quoted are the median and the differences to the 5% and 95%           Overall, this masking process provides the most accurate and pre-",0.0
+percentiles.                                                                   cise measure of the true host photometric magnitudes. This method,0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,44.1078431372549
+                                                                             Observing high-redshift quasar hosts with JWST                                 13,77.0
+                                                                                             Best-Fit Sersic Magnitude,93.0
+"makes clear improvements for the short-wavelength filters, although",0.0
+it provides more limited benefits for the magnitudes measured in the,0.0
+"long-wavelength filters, which are less affected by residual flux from",0.0
+the quasar.                                                                                                              24,0.0
+"    In summary, we find that the host Sérsic magnitudes extracted from",4.0
+psfMC are not representative of the ‘input’ theoretical magnitudes,0.0
+"from BlueTides, however this is likely due to observational effects",0.0
+such as surface brightnesses and not a failure of the psfMC method.,0.0
+To determine the success of the psfMC technique we compare the,0.0
+extracted Sérsic magnitudes to the photometric magnitudes measured                                                       26,0.0
+"from the true host images. While overall these are similar, with an                                          26      25    24      23",0.0
+"overall median 𝑚 Sersic − 𝑚 true of 0.016 mag, there is a large scatter of                                     Input Host Magnitude",0.0
+"0.279 mag, which suggests that Sérsic profiles do not ideally model",0.0
+the host profiles. Photometric host magnitudes calculated from the                                     F115W          F200W         F356W,0.0
+PSF-subtracted images generally overestimate the host brightness                                       F150W          F277W         F444W,0.0
+"due to the quasar contamination, with an overall median 𝑚 phot −𝑚 true",0.0
+of −0.128 mag and a standard deviation of 0.186 mag across all                                                           23,0.0
+                                                                                            Best-Fit,92.0
+filters. Masking the inner contaminated region prior to performing,0.0
+                                                                                                                         24,121.0
+the photometry and smoothing with a Gaussian kernel results in the,0.0
+"most accurate and precise estimates of the true host magnitude, with",0.0
+                                                                                       Sersic Magnitude,87.0
+median 𝑚 masked − 𝑚 true of 0.001 mag and a standard deviation of,0.0
+                                                                                                                         25,121.0
+0.178 mag across all filters. Significant care thus needs to be made,0.0
+when extracting the magnitudes of the host galaxies.,0.0
+                                                                                                                                              : 0.279,142.0
+5.2 Physical Properties,0.0
+                                                                                                                         26           Median: 0.016,121.0
+                                                                                                                         23,121.0
+                                                                                               Photometric Magnitude,95.0
+We now investigate the extent to which psfMC can recover the phys-,0.0
+ical properties of quasar host galaxies.,0.0
+                                                                                                                         24,121.0
+5.2.1 Radius,0.0
+In Figure 13 we show the Sérsic radius found from psfMC fits to 10                                                       25,0.0
+"ks images in each NIRCam filter, compared with the half-mass radius",0.0
+determined from the true particle distribution from BlueTides. We                                                                            : 0.186,0.0
+see no clear correlation between the half-mass radius and fit Sérsic                                                     26          Median: -0.128,0.0
+"radius for the majority of the filters, with no statistically significant",0.0
+"Spearman rank-order correlations found. Thus, the Sérsic radius pro-                                                     23",0.0
+                                                                                             Masked,93.0
+"vides no prediction for the intrinsic half-mass radius of the galaxy,",0.0
+"as measured by BlueTides. It is important to note, however, that the",0.0
+BlueTides half-mass radius is calculated from the stellar particle dis-                                                  24,0.0
+                                                                                       Photometric Magnitude,87.0
+"tribution, and does not consider the dust distribution. In addition, the",0.0
+"mass-to-light ratio may not be constant. Thus, the half-mass radius is",0.0
+"unlikely to trace the dust-attenuated half-light radius. Hence, while                                                    25",0.0
+the Sérsic fit cannot provide an estimate for the simulated half-mass,0.0
+"radius, this may not represent a failure of this technique specifically,                                                                     : 0.178",0.0
+but a difference in observational and theoretical derivations of galaxy                                                  26           Median: 0.001,0.0
+properties.                                                                                                                   26    25      24      23,0.0
+   To evaluate the success of the psfMC technique in recovering                                                                      True Host,3.0
+"galaxy sizes, we also consider the non-parametric effective radius, as                                                         Photometric Magnitude",0.0
+measured from the true and PSF-subtracted images. We first define,0.0
+                                                                                Figure 12. The magnitudes of each bright quasar host that is classified as,80.0
+the effective area of each galaxy as the minimum area encompassing              ‘successfully detected’ in the corresponding image. Each of the NIRCam,0.0
+"50% of the total light of galaxy, even if the contributing pixels are           wide-band filters red-ward of the 𝑧 = 7 Lyman-break are shown (see leg-",0.0
+"non-contiguous. Then, we calculate the effective radius as the radius           end), with exposure times of 10 ks. Top panel: The Sérsic magnitude found",0.0
+"of a circle which contains this total area. This is a more robust way           from psfMC, compared with the input magnitude of the galaxy from Blue-",0.0
+"to measure the light distributions of clumpy, high-redshift galaxies            Tides. Lower panels: The photometric magnitude of the true host image",0.0
+(e.g. Ma et al. 2018).                                                          (without quasar contamination) compared to: the Sérsic magnitude found,0.0
+"   In Figure 13 we first compare the Sérsic radii from the psfMC                from psfMC (second panel), the photometric magnitude calculated from the",3.0
+"fits to the effective radii measured from the true host images. We              PSF-subtracted image (third panel), and the photometric magnitude calcu-",0.0
+"find that for the long-wavelength NIRCam filters, these show rea-               lated from the PSF-subtracted image with the inner circle of radius 5 pixels",0.0
+                                                                                masked (bottom panel). The lower limit on the host brightness assumes that,80.0
+"sonable agreement albeit with large scatter, with 𝑟 Sersic − 𝑟 true =",0.0
+                                                                                the flux for each pixel within this masked region is equal to the minimum flux,80.0
+−0.15+0.42,0.0
+       −0.18,7.0
+"             , −0.18+0.33",13.0
+                     −0.25,21.0
+"                                      +0.31 kpc for F277W, F356W and",38.0
+"                           , and −0.29−0.31                                     in a ring of one pixel in radius around this central region. The best estimate",27.0
+                                                                                interpolates the neighbouring data points outside the masked region with a,80.0
+"                                                                                2D Gaussian kernel, and the upper limit on theMNRAS  brightness000,",80.0
+                                                                                                                                                 is 1–19 (2019),145.0
+                                                                                                                                                    the original,148.0
+                                                                                photometric magnitude (i.e. the third panel).,80.0
+avr_spaces,26.904761904761905
+14       M. A. Marshall et al.,0.0
+F444W respectively. This suggests that the Sérsic radii are a reason-,0.0
+                                                                                            Best-Fit,92.0
+"able measure of the true extent of the host galaxies. However, for the",0.0
+short-wavelength filters we see that the Sérsic radii are significantly                                         1.5,0.0
+"smaller than the effective radii, with 𝑟 Sersic − 𝑟 true = −0.87+0.36",0.0
+                                                                 −0.51,65.0
+"                                                                        , and",72.0
+                                                                                      Sersic Radius (kpc),86.0
+        +0.48             +0.36,8.0
+"−0.74−0.60 , and −0.73−0.47 kpc for F115W, F150W and F200W re-",0.0
+"spectively. In fact, we find that the Sérsic radii in the short-wavelength                                      1.0",0.0
+filters cluster around a radius of 10 pixels. This is a result of the prior,0.0
+distributions specified for the Sérsic radii in psfMC—these radii are,0.0
+constrained to be less than 10.5 pixels. This was required for the,0.0
+psfMC method to converge on a reasonable solution; we found that,0.0
+                                                                                                                0.5,112.0
+by allowing larger radii the model would not converge on a feasi-                                                        0.4     0.6      0.8,0.0
+"ble solution, with significant PSF under-subtraction resulting in no                                                  Half-Mass Radius (kpc)",0.0
+"statistically-significant host detections. Thus, Sérsic radii measured",0.0
+in these short-wavelength filters are not an accurate representation,0.0
+of the true host extent.                                                                                   F115W              F200W             F356W,0.0
+    In Figure 13 we also compare the effective radii as measured                                           F150W              F277W             F444W,4.0
+from the PSF-subtracted image and the true host image. For the,0.0
+"long wavelength filters F277W, F356W and F444W, 𝑟 eff − 𝑟 true =",0.0
+                                                                                                            2.5,108.0
+"−0.11+0.17    , 0.03+0.17 , and 0.04+0.12",0.0
+                                                                                             Best-Fit,93.0
+"                                             kpc respectively, while for",45.0
+        −0.25       −0.24             −0.28,8.0
+"the short wavelength filters we find 𝑟 eff − 𝑟 true = −0.79+0.23       , and                                    2.0",0.0
+                                                                 −0.22,65.0
+"−0.67+0.25          −0.64  +0.26 kpc for F115W, F150W and F200W",0.0
+                                                                                       Sersic Radius (kpc),87.0
+"              , and",14.0
+        −0.23              −0.26,8.0
+respectively. These radii agree well for the long-wavelength NIR-                                               1.5,0.0
+"Cam filters, with less scatter than seen in the relation with the Sér-",0.0
+"sic radii. However, we find that the effective radii measured from                                              1.0",0.0
+the PSF-subtracted images for the short-wavelength filters are offset,0.0
+"from the true effective radii, showing radii that are lower by ∼0.7",0.0
+kpc. Thus 50% of the flux in the PSF-subtracted images are con-,0.0
+                                                                                                                0.5,112.0
+tained in fewer pixels than in the true host images. This is expected                                           2.5,0.0
+"due to the remnant quasar flux in the core of the images, which",0.0
+"impacts the short-wavelength images more significantly. Thus, as                                                2.0",0.0
+                                                                                        Effective,88.0
+"for the magnitude comparison, we also calculate the effective ra-",0.0
+                                                                                                                1.5,112.0
+                                                                                       Radius (kpc),87.0
+dius on the PSF-subtracted images with the inner circle of radius 5,0.0
+pixels masked using a 2D Gaussian kernel. These radii are shown,0.0
+"in the final panel of Figure 13. We find that 𝑟 eff,mask − 𝑟 true =",0.0
+−0.05+0.17,0.0
+        −0.21,8.0
+"              , − 0.07+0.28",14.0
+                       −0.37,23.0
+"                             , − 0.09+0.31",29.0
+                                       −0.42,39.0
+"                                             , 0.23+0.42",45.0
+                                                     −0.20,53.0
+"                                                           , 0.26+0.57",59.0
+                                                                 −0.36,65.0
+"                                                                       , and                                    1.0",71.0
+"      +0.36 kpc for F115W, F150W, F200W, F277W, F356W and",6.0
+0.23−0.22,0.0
+F444W respectively. This masking results in a good match for the                                                0.5,0.0
+"short-wavelength filters, however the effective radii for the long-                                             2.5",0.0
+                                                                                              Masked,94.0
+wavelength filters are now overestimated.,0.0
+"    Thus, the psfMC technique is able to recover the effective radii",4.0
+of the host galaxies well; in the long-wavelength filters from the raw,0.0
+                                                                                                                2.0,112.0
+                                                                                       Effective Radius (kpc),87.0
+"images, while the short-wavelength filters first require masking of",0.0
+the central quasar-contaminated regions.                                                                        1.5,0.0
+5.2.2 Morphology,0.0
+                                                                                                                1.0,112.0
+"Finally, we consider the morphologies of the host galaxies.                                                     0.5",0.0
+"   We consider the Sérsic index 𝑛, which can be used to estimate the",3.0
+                                                                                                                          1           2,122.0
+                                                                                                                            True Host,124.0
+morphology of the galaxy as it is generally correlated with the mea-,0.0
+sured bulge-to-total ratio (e.g. Vika et al. 2014; Kennedy et al. 2016).,0.0
+                                                                                                                      Effective Radius (kpc),118.0
+In Figure 14 we show the Sérsic index compared to the bulge-to-total,0.0
+mass ratio calculated from the BlueTides simulation. The psfMC                  Figure 13. The radii of each BlueTides bright quasar host galaxy that is,0.0
+                                                                                classified as ‘successfully detected’ in the corresponding image. Each of the,80.0
+method finds large uncertainties on the extracted Sérsic indices. The,0.0
+                                                                                NIRCam wide-band filters red-ward of the 𝑧 = 7 Lyman-break are shown (see,80.0
+Sérsic index shows no significant correlation with bulge-to-total mass,0.0
+"                                                                                legend), with exposure times of 10 ks. Top panel: The Sérsic radius found",80.0
+"ratio, with no statistically significant Spearman rank-order correla-           from psfMC, compared with the half-mass radius of the galaxy measured",0.0
+tions found.                                                                    from the BlueTides particle distribution. Lower panels: The effective radius,0.0
+   Observations measure the galaxy light profiles to estimate the               measured from the true host image (without quasar contamination) compared,3.0
+"bulge-to-total mass ratio, performing bulge–disc decomposition (e.g.            to: the Sérsic radius found from psfMC (second panel), the effective radius",0.0
+"Byun & Freeman 1995; Gadotti 2009; Vika et al. 2014; Bottrell et al.            calculated from the PSF-subtracted image (third panel), and the effective",0.0
+2019). In BlueTides the bulge-to-total mass ratio is instead calcu-             radius calculated from the PSF-subtracted image with the inner circle of,0.0
+"lated kinematically, based on the angular momentum of each star                 radius 5 pixels masked using a 2D Gaussian kernel (bottom panel).",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,26.702970297029704
+                                                                               Observing high-redshift quasar hosts with JWST                         15,79.0
+"                                                                                  host distributions, likely due to the reduced resolution of these im-",82.0
+"      Sersic Index, PSF Subtraction",6.0
+                                      5,38.0
+"                                                                                  ages, but also the reduced dust attenuation in the central cores of",82.0
+                                                                                  these galaxies resulting in smoother galaxy profiles. These images,82.0
+                                      4,38.0
+                                                                                  show fewer faint extended features. The method recovers these hosts,82.0
+"                                                                                  well, excluding the inner core.",82.0
+                                      3,38.0
+                                                                                     Thus we urge caution when interpreting the spatial distribution of,85.0
+"                                                                                  the emission of these galaxies, with more extended emission likely",82.0
+                                      2,38.0
+"                                                                                  to be real host features, while the cores of the hosts are significantly",82.0
+                                                                                  contaminated.,82.0
+                                      1,38.0
+                                                                                     One would like to apply quantitative morphological codes to de-,85.0
+                                                                                  scribe the surface-brightness distribution outside this central con-,82.0
+                                      0,38.0
+"                                                                                  taminated area. For this, model-independent measures such as the",82.0
+                                          0.6       0.7      0.8     0.9,42.0
+"                                                                                  concentration, asymmetry and clumpiness indices (CAS; e.g. Con-",82.0
+"                                                                                  selice 2003), the Gini coefficient (e.g. Gini 1912; Abraham et al.",82.0
+                                                Bulge-to-Total Mass Ratio         2003) and the M20 parameter (e.g Lotz et al. 2004) could be used.,48.0
+                                           F115W          F200W        F356W      These approaches have been shown to work well on high signal-,43.0
+"                                           F150W          F277W        F444W      to-noise images of galaxies that are not too asymmetric, at low to",43.0
+"                                                                                  intermediate redshifts (z'0–2, e.g. Taylor-Mager et al. 2007; Mager",82.0
+Figure 14. The Sérsic index 𝑛 of each bright quasar host galaxy found from        et al. 2018). The issues with applying these methods to our PSF-,0.0
+"psfMC, compared with the bulge-to-total mass ratio of the galaxy calcu-",0.0
+                                                                                  subtracted host galaxy images are that: 1) these host galaxies can be,82.0
+lated from BlueTides. Shown are fits from 10ks exposures from each of the,0.0
+                                                                                  extremely asymmetric (see e.g. Appendix A); 2) they have very low,82.0
+NIRCam wide-band filters red-ward of the 𝑧 = 7 Lyman-break (see legend).,0.0
+"                                                                                  signal-to-noise ratios, rendering the traditional quantitative morpho-",82.0
+                                                                                  logical classification algorithms less reliable (see e.g. Taylor-Mager,82.0
+                                                                                  et al. 2007; Mager et al. 2018); and 3) the imperfections in the PSF-,82.0
+particle following Scannapieco et al. (2009). This is based on the                subtraction process (see above) may not allow certain morphological,0.0
+"intrinsic stellar properties, and does not consider the observational             parameters to be determined reliably or at all, such as the compact-",0.0
+"effects of stellar ages, dust attenuation or inclination, for example             ness parameter, because it is heavily weighted towards the central",0.0
+"(see e.g. Scannapieco et al. 2009), which alter the observed light                galaxy flux which may be corrupted by PSF imperfections. There-",0.0
+"distributions. The presence of bars and pseudo-bulges further com-                fore, for true JWST data, one may need to modify these morphology",0.0
+"plicate the observational measurements. Thus, it is unlikely that the             codes such that the central circular area is excluded. We presented a",0.0
+BlueTides bulge-to-total measurements would reflect observation-                  simplified version of this process to determine the total magnitudes,0.0
+"ally measured ratios. In addition, there is significant scatter in the            in Section 5.1. However, because the high-redshift quasar host galaxy",0.0
+"relations between measured bulge-to-total ratio and Sérsic index 𝑛.               signal-to-noise ratio will always be low, the CAS and Gini/M20 mea-",0.0
+"Thus, it is reasonable that we see a lack of correlation between 𝑛                sures may have to be determined as averages over cones centered on",0.0
+"and the BlueTides bulge-to-total ratio, and this is not necessarily an            the quasar.",0.0
+indicator that the psfMC technique is producing poor measurements,0.0
+of the galaxy.,0.0
+   To understand the success of psfMC in recovering the observed                  6 DISCUSSION,3.0
+"galaxy structure, we visually compare how each PSF-subtracted host",0.0
+                                                                                  6.1 Sérsic Profiles,82.0
+image compares to the true host image (see e.g. Appendix A1 for the,0.0
+"F200W images).                                                                    In this work, we have modelled the galaxies in psfMC as following a",0.0
+"   We see that the PSF-subtracted images contain a bright core, from              Sérsic profile. A different profile, or combination of Sérsic profiles,",3.0
+"the residual quasar flux as discussed in Section 3.3. The flux in this            could be used in psfMC, however a single Sérsic profile is chosen",0.0
+"region fluctuates significantly between pixels, so the cores are both             for simplicity.",0.0
+bright and clumpy. This central flux is therefore likely to negatively               It is important to note that high-redshift galaxies are unlikely,0.0
+influence any measurements taken of the galaxy light concentration                to be well-described by a Sérsic profile. As seen in the true host,0.0
+"or clumpiness, and so must be carefully considered when exploring                 images (e.g. Figure A1), the host galaxies are often asymmetric and",0.0
+"such properties. In some true host images, the centre of the galaxy               clumpy, and appear not to follow a smooth Sérsic-like distribution.",0.0
+"often contains less flux than the outer regions; this is due to the               Indeed, as seen in Figure 4 which shows both the Sérsic model",0.0
+"large amount of dust present in the cores of these galaxies, which                and the true host profile for two quasars, the Sérsic model does not",0.0
+significantly attenuates the flux in these rest-frame UV wavelengths              perfectly describe the host emission. The suitability of the Sérsic,0.0
+(see e.g. Marshall et al. 2020a). The contaminated core makes these               model for describing the magnitudes and radii of the host galaxies,0.0
+features undetectable.                                                            was discussed in Sections 5.1 and 5.2.1.,0.0
+"   In the short wavelength filters, many host galaxies have extended                 The use of the Sérsic model may result in some host galaxy de-",3.0
+"emission beyond the contaminated core, which is often quite asym-                 tections being classified as statistically insignificant, when by eye",0.0
+metric and clumpy. The psfMC method is able to recover these                      the PSF-subtracted images appear to show emission from the host,0.0
+"features well, working best for the brighter features that are furthest           galaxy. For example, the PSF-subtracted HST images in Figure 4",0.0
+from the quasar location. psfMC performs poorly for the more com-                 show some host galaxy flux that is consistent with the true host mock,0.0
+"pact galaxies with minimal flux outside the contaminated core, with               image, although these are not classified as statistically significant",0.0
+"the recovered outer host flux more clumpy than the true emission,                 detections. This suggests that the assumed Sérsic profile may be a",0.0
+"and the central flux contaminated by the inner quasar core. In the                poor model for the true emission of these hosts. However, this neg-",0.0
+"long-wavelength filters, the true host images show much smoother                  ative classification is consistent with the large positive and negative",0.0
+"                                                                                                                                MNRAS 000, 1–19 (2019)",128.0
+avr_spaces,30.571428571428573
+16       M. A. Marshall et al.,0.0
+residuals seen in the difference between the PSF-subtracted and true        this method to images in various filters would allow for a compre-,0.0
+"host images, which are independent of the host model (Figure 4).            hensive understanding of the rest-frame UV and optical properties",0.0
+"                                                                            of these host galaxies. For additional complexity, the fits from each",76.0
+"                                                                            filter could be processed simultaneously, as in GalfitM which fits",76.0
+6.2 The Bayesian Information Criterion                                      the galaxy while imposing a smooth variation of Sérsic parameters,0.0
+                                                                            with wavelength (Vika et al. 2013). This could lead to more secure,76.0
+The Bayesian Information Criterion provides a statistical way to,0.0
+                                                                            measurements of the host galaxy properties.,76.0
+compare the quasar model to a model with both the quasar and Sérsic,0.0
+host galaxy. This accounts for the extra parameters involved with the,0.0
+"more complex host model, ensuring that the additional component",0.0
+is not over-fitting the data. This criterion can be used to determine       7 CONCLUSIONS,0.0
+whether a statistically significant detection of the host galaxy has,0.0
+                                                                            High-redshift quasars completely outshine and conceal their host,76.0
+"been made. However, we note that this criterion does not consider",0.0
+                                                                            galaxies in rest-frame ultraviolet (UV) wavelengths. The detection,76.0
+the pixel smoothing that results in the host galaxies appearing clearer,0.0
+                                                                            of these hosts has eluded the Hubble Space Telescope (HST) even,76.0
+in the mock images. The majority of the mock images shown here,0.0
+                                                                            with advanced modelling of the telescope’s point spread function,76.0
+"have been smoothed with a 𝜎 = 1 pixel Gaussian kernel, which",0.0
+                                                                            (PSF) to account for the quasar emission (e.g. Mechtley et al. 2012;,76.0
+"makes the noisy host image clearer, and results in more extended",0.0
+                                                                            Marshall et al. 2020b). In this work we use mock images of 𝑧 = 7,76.0
+features being easier to distinguish against the background noise (see,0.0
+                                                                            quasars from the BlueTides simulation (Feng et al. 2015) to study,76.0
+"Appendix B). For visualization, in Figure B1 we show Figure 4 with",0.0
+                                                                            the detectability of quasar host galaxies with the upcoming James,76.0
+no smoothing applied.,0.0
+                                                                            Webb Space Telescope (JWST; Gardner et al. 2006). We apply the,76.0
+"   Image smoothing has a consequence on human classification,",3.0
+                                                                            psfMC Markov Chain Monte Carlo-based PSF modelling technique,76.0
+based on observing extended structures of positive flux (yellow re-,0.0
+"                                                                            (Mechtley 2014) to these mock images, using the Bayesian Infor-",76.0
+gions) beyond the central contaminated core (red region). In 10 ks,0.0
+                                                                            mation Criterion to determine whether a host galaxy is successfully,76.0
+"images with the F200W filter, in non-smoothed images 19/22 of the",0.0
+                                                                            detected. We primarily consider the 22 ‘bright’ quasars in the simu-,76.0
+bright quasar hosts are visually classified as successfully detected.,0.0
+"                                                                            lation with 𝑀UV,AGN < 𝑀UV,Host and 𝑚 UV,AGN < 22.8 mag.",76.0
+"For the smoothed images this increases to 21/22, with marginal",0.0
+                                                                                We compare the performance of HST and JWST at the same wave-,80.0
+flux observed from two additional very compact host galaxies. The,0.0
+"                                                                            lengths (∼ 1.6𝜇m) and exposure time (4.8 ks), and find that while",76.0
+Bayesian Information Criterion results in 19/22 successful detec-,0.0
+"                                                                            HST makes no statistically significant detections, JWST can detect",76.0
+"tions, the same fraction as with human classification using only the",0.0
+                                                                            10 of the 22 bright BlueTides quasars. The improved resolution of,76.0
+"raw (non-smoothed) images. However, note that the detected galaxies",0.0
+                                                                            JWST is therefore expected to result in the first successful detec-,76.0
+"are not the all the same, with two BIC-detected galaxies not detected",0.0
+                                                                            tions of the rest-frame UV emission from high-redshift quasar host,76.0
+visually and vice versa; this occurs for very compact marginally-,0.0
+                                                                            galaxies.,76.0
+detected hosts. As this smoothing has an effect on human classifica-,0.0
+"                                                                                We investigate various observational strategies with JWST, study-",80.0
+"tion, using a different or modified statistical method which includes",0.0
+"                                                                            ing the effect of instrument, photometric filter and exposure time. We",76.0
+smoothing could result in a larger number of successful detections.,0.0
+"                                                                            find that in the NIRCam F200W filter with exposure times of 1, 2.5, 5",76.0
+"   When using psfMC to analyse quasar observations, it is a reason-",3.0
+"                                                                            and 10 ks, < 5%, 41%, 68% and 86% of the 22 hosts are successfully",76.0
+able assumption to model the galaxies as Sérsic profiles and then use,0.0
+"                                                                            detected, respectively. Thus we predict that exposures of at least 5 ks",76.0
+the Bayesian Information Criterion to support the hypothesis that the,0.0
+                                                                            will be required to detect a large fraction of quasar host galaxies. We,76.0
+host detection is true and not likely to be noise or residual quasar flux,0.0
+                                                                            find that NIRCam imaging in the long-wavelength wide-band filters,76.0
+"from the PSF-subtraction. However, alternative statistical measures",0.0
+"                                                                            will result in the highest fraction of successful host detections, with",76.0
+"or galaxy profiles may result in a larger number of detections, and",0.0
+"                                                                            10 ks exposures with the F277W, F356W and F444W filters detect-",76.0
+may be more accurate at measuring the true galaxy properties.,0.0
+"                                                                            ing 86%, 100% and 100% of the hosts of bright quasars respectively.",76.0
+                                                                            The short wavelength wide-band filters are predicted to obtain fewer,76.0
+"                                                                            successful detections, with the F115W, F150W, and F200W filters",76.0
+6.3 Recommendations for JWST Images,0.0
+"                                                                            detecting 55%, 77% and 86% of hosts respectively in 10 ks expo-",76.0
+The methods used here are guided by the large number of simulated           sures. We find that MIRI will obtain fewer successful detections than,0.0
+"images, and our overall aims of understanding the successes and             NIRCam, with only 27% of the hosts of bright quasars successfully",0.0
+"failures of psfMC for detecting the hosts of quasars with JWST—we           detected in the F560W filter in 10 ks exposures, and < 5% success-",0.0
+"create a generic, standard pipeline for this analysis. Initially there will ful detections in the F770W filter, with the lower-sensitivity longer",0.0
+"be very few images of high-z quasars taken with JWST, which will all        wavelength filters expected to perform worse.",0.0
+have significant science outcomes that warrant detailed investigation.          We find no significant trends between the quasar or galaxy prop-,0.0
+Hence for the best outcomes with real JWST images we suggest a              erties and the detectability of the host. However the host galaxies of,0.0
+similar but more bespoke method to the one performed here.                  bright quasars may be more likely to be successfully detected in at,0.0
+"   We recommend using psfMC modelling with a host Sérsic profile            least 5 of the 6 NIRCam filters if they are massive, 𝑀∗ & 1010.7 𝑀 ,",3.0
+"for the quasar subtraction, using the BIC for basic statistical detection   highly star forming, SFR & 500𝑀 yr−1 , bright, 𝑀UV,Host . −21.5",0.0
+"classification. A detailed analysis should then be performed on each        mag, with bulge-to-total mass ratio 𝑀bulge /𝑀∗ . 0.9, have more",0.0
+"PSF-subtracted image to understand the host galaxies. This includes         extended emission, and have 𝑀UV,Host − 𝑀UV,AGN < 4. We also",0.0
+"masking any regions contaminated by the quasar flux on a specific           consider the 175 faint quasars with 22.8 < 𝑚 UV,AGN < 24.85 mag,",0.0
+"pixel-by-pixel basis in each image, as opposed to masking a general         which have an overall rate of successful host detection in the F200W",0.0
+region as performed here. We have shown that the magnitudes and             filter 9% higher than that of the bright quasars. Considering both,0.0
+"radii extracted from the hosts in this way are reliable estimates of        bright and faint quasars, there is no significant trend between de-",0.0
+"the true host properties, if sufficient care is shown. Thus, applying       tectability and host or quasar properties.",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,29.642857142857142
+                                                                        Observing high-redshift quasar hosts with JWST                                17,72.0
+"   We investigate the accuracy of this method for recovering the true      AST-1517593, NSF AST-1616168 and NASA ATP 19-ATP19-0084",3.0
+"host galaxy magnitudes. We find that the host Sérsic magnitudes ex-        and 80NSSC20K0519,ATP. TDM and RAC also acknowledge ATP",0.0
+tracted from psfMC are not representative of the input theoretical         80NSSC18K101 and NASA ATP 17-0123. We acknowledge support,0.0
+"magnitudes from BlueTides, however this is likely due to obser-            provided by NASA through grants GO-12332.*A, GO-12974.*A,",0.0
+"vational effects such as surface brightnesses and not a failure of         and GO-12613.*A from the Space Telescope Science Institute, which",0.0
+the psfMC method. We compare the Sérsic magnitudes to photo-               is operated by the Association of Universities for Research in As-,0.0
+"metric magnitudes measured from the true host images, finding fair         tronomy, Inc., under NASA contract NAS 5-26555. This work was",0.0
+"agreement but with large scatter, suggesting that Sérsic profiles are      supported by NASA JWST Interdisciplinary Scientist grants NAG5-",0.0
+"reasonable but do not ideally model the host distributions. Photo-         12460, NNX14AN10G, and 80NSSC18K0200 to RAW from GSFC.",0.0
+metric host magnitudes measured from the PSF-subtracted images                This paper made use of Python packages and software AstroPy,0.0
+"generally overestimate the host brightness due to the residual quasar      (Astropy Collaboration et al. 2013), astroRMS (Mechtley 2011),",0.0
+"flux in the central regions. Masking this contaminated region prior        BigFile (Feng et al. 2017), corner (Foreman-Mackey 2016), emcee",0.0
+"to performing the photometry results in the most accurate and pre-         (Foreman-Mackey et al. 2013), FLARE (Wilkins 2019a), Matplotlib",0.0
+"cise estimates of the true host magnitudes. Careful masking of these       (Hunter 2007), NumPy (van der Walt et al. 2011), Pandas (Pandas",0.0
+"central regions will therefore be required to accurately measure the       Development Team 2020), Photutils (Bradley et al. 2018), psfMC",0.0
+"host magnitudes.                                                           (Mechtley 2019), SciPy (Virtanen et al. 2020), Synphot (STScI De-",0.0
+"   We also study how well the PSF-subtraction can recover the phys-        velopment Team 2018), and SynthObs (Wilkins 2019b). This paper",3.0
+"ical properties of the galaxy. We find that the Sérsic radius provides     also makes use of version 17.00 of Cloudy, last described by Ferland",0.0
+"no prediction for the intrinsic half-mass radius of the galaxy from        et al. (2017), and version 2.2.1 of the Binary Population and Spectral",0.0
+"BlueTides, although this reflects a difference in observational and        Population Synthesis (BPASS) model (Stanway & Eldridge 2018).",0.0
+theoretical derivations of galaxy properties and does not indicate,0.0
+that the fits perform poorly. We compare the Sérsic radii from the,0.0
+psfMC fits to the effective radii as measured from the true host im-,0.0
+                                                                           DATA AVAILABILITY,75.0
+"ages, and find that while these show reasonable agreement in the",0.0
+"long-wavelength NIRCam filters, the Sérsic radii are not an accurate       Data of the BlueTides simulation is available at http://",0.0
+representation of the true host extent in the short-wavelength filters.    bluetides.psc.edu. The mock images and data generated in this,0.0
+"Measuring the effective radii from the PSF-subtracted images, we           work will be shared on reasonable request to the corresponding au-",0.0
+find that the psfMC technique is able to recover the effective radii       thor.,0.0
+"of the host galaxies well in the long-wavelength filters, and in the",0.0
+short-wavelength filters only after masking of the central quasar-,0.0
+"contaminated regions. Finally, we consider the morphologies of the",0.0
+                                                                           REFERENCES,75.0
+host galaxies. We find no correlation between Sérsic index 𝑛 and,0.0
+"the BlueTides bulge-to-total mass ratio. The PSF-subtraction ac-           Abraham R. G., van den Bergh S., Nair P., 2003, ApJ, 588, 218",0.0
+"curately recovers the distribution of more extended host emission,         Anglés-Alcázar D., Faucher-Giguère C.-A., Quataert E., Hopkins P. F., Feld-",0.0
+"while the cores of the hosts are contaminated. Significant care is             mann R., Torrey P., Wetzel A., Kereš D., 2017, MNRAS: Letters, 472,",0.0
+needed when interpreting the magnitudes and physical properties of             L109,0.0
+"PSF-subtracted quasar host galaxies.                                       Astropy Collaboration et al., 2013, A&A, 558, A33",0.0
+"                                                                           Bahcall J. N., Kirhakos S., Schneider D. P., 1994, AJ, 435, L11",75.0
+   In this work we predict that JWST will be able to detect the rest-,3.0
+"                                                                           Bañados E., et al., 2016, ApJS, 227, 11",75.0
+"frame UV/optical emission from high-redshift quasar host galaxies          Bentz M. C., Peterson B. M., Pogge R. W., Vestergaard M., 2009, ApJ, 694,",0.0
+for the first time. This ground-breaking instrument will lead to huge          L166,0.0
+"advancements in our understanding of the growth of the first super-        Bertoldi F., et al., 2003, A&A, 409, L47",0.0
+"massive black holes in the Universe, and the interplay between black       Bondi H., 1952, MNRAS, 112, 195",0.0
+"holes and their host galaxies.                                             Bondi H., Hoyle F., 1944, MNRAS, 104, 273",0.0
+"                                                                           Bottrell C., Simard L., Mendel J. T., Ellison S. L., 2019, MNRAS, 486, 390",75.0
+"                                                                           Bower R. G., Benson A. J., Malbon R., Helly J. C., Frenk C. S., Baugh C. M.,",75.0
+"                                                                               Cole S., Lacey C. G., 2006, MNRAS, 370, 645",79.0
+"ACKNOWLEDGEMENTS                                                           Bradley L., et al., 2018, astropy/photutils: v0.5, doi:10.5281/zenodo.1340699,",0.0
+                                                                               https://doi.org/10.5281/zenodo.1340699,79.0
+"We thank the anonymous referee for their useful suggestions which          Byun Y. I., Freeman K. C., 1995, ApJ, 448, 563",0.0
+"have improved the quality of this work.                                    Cen R., 2015, ApJ, 805, L9",0.0
+"   This research was supported by the Australian Research Coun-            Ciotti L., Ostriker J. P., Proga D., 2010, ApJ, 717, 708",3.0
+"cil Centre of Excellence for All Sky Astrophysics in 3 Dimensions          Conselice C. J., 2003, ApJS, 147, 1",0.0
+"(ASTRO 3D), through project number CE170100013. The Blue-                  Croton D. J., 2006, MNRAS, 369, 1808",0.0
+"Tides simulation was run on the BlueWaters facility at the Na-             DeGraf C., Matteo T. D., Khandai N., Croft R., 2012, ApJ, 755, L8",0.0
+"tional Center for Supercomputing Applications. Part of this work           DeGraf C., Matteo T. D., Treu T., Feng Y., Woo J.-H., Park D., 2015, MNRAS,",0.0
+"was performed on the OzSTAR national facility at Swinburne Uni-                454, 913",0.0
+"                                                                           Di Matteo T., Springel V., Hernquist L., 2005a, Nature, 433, 604",75.0
+"versity of Technology, which is funded by Swinburne University",0.0
+"                                                                           Di Matteo T., Springel V., Hernquist L., 2005b, Nature, 433, 604",75.0
+of Technology and the National Collaborative Research Infrastruc-,0.0
+"                                                                           Disney M. J., et al., 1995, Nature, 376, 150",75.0
+"ture Strategy (NCRIS). MAM acknowledges the support of an Aus-             Dunlop J. S., McLure R. J., Kukula M. J., Baum S. A., O’Dea C. P., Hughes",0.0
+"tralian Government Research Training Program (RTP) Scholarship, a              D. H., 2003, MNRAS, 340, 1095",0.0
+"Postgraduate Writing-Up Award sponsored by the Albert Shimmins             Fan X., et al., 2000, AJ, 120, 1167",0.0
+"Fund, and the National Research Council of Canada Plaskett Fel-            Fan X., et al., 2001, AJ, 122, 2833",0.0
+"lowship. TDM acknowledges funding from NSF ACI-1614853, NSF                Fan X., et al., 2003, AJ, 125, 1649",0.0
+"                                                                                                                                 MNRAS 000, 1–19 (2019)",129.0
+avr_spaces,14.32876712328767
+18        M. A. Marshall et al.,0.0
+"Fan X., et al., 2004, AJ, 128, 515                                             Mechtley M., et al., 2012, ApJ, 756, L38",0.0
+"Feng Y., Di-Matteo T., Croft R. A., Bird S., Battaglia N., Wilkins S., 2015,   Mechtley M., et al., 2016, ApJ, 830, 156",0.0
+"    MNRAS, 455, 2778                                                           Merritt D., Ferrarese L., 2001, MNRAS, 320, L30",4.0
+"Feng Y., Bird S., Francois Lanusse 2017, Rainwoodman/Bigfile 0.1.39,           Ni Y., Matteo T. D., Gilli R., Croft R. A. C., Feng Y., Norman C., 2020,",0.0
+"    doi:10.5281/ZENODO.1051251                                                     MNRAS, 495, 2135",4.0
+"Ferland G. J., et al., 2017, Revista Mexicana de Astronomía y Astrofísica, 53, di Nino D., Makidon R. B., Lallo M., Sahu K. C., Sirianni M., Caser-",0.0
+"    385                                                                            tano S., 2008, HST Focus Variations with Temperature, Instrument Sci-",4.0
+"Ferrarese L., Merritt D., 2000, ApJ, 539, L9                                       ence Report ACS 2008-03, https://ui.adsabs.harvard.edu/abs/",0.0
+"Floyd D. J. E., Dunlop J. S., Kukula M. J., Brown M. J. I., McLure R. J.,          2008acs..rept....3D",0.0
+"    Baum S. A., O’Dea C. P., 2013, MNRAS, 429, 2                               Oesch P. A., et al., 2010, ApJ, 709, L21",4.0
+"Foreman-Mackey D., 2016, JOSS, 24                                              Okamoto T., Frenk C. S., Jenkins A., Theuns T., 2010, MNRAS, 406, 208",0.0
+"Foreman-Mackey D., Hogg D. W., Lang D., Goodman J., 2013, PASP, 125,           Ono Y., et al., 2013, ApJ, 777, 155",0.0
+"    306                                                                        Pandas Development Team 2020, pandas-dev/pandas: Pandas,",4.0
+"Gadotti D. A., 2009, MNRAS, 393, 1531                                              doi:10.5281/zenodo.3509134, https://doi.org/10.5281/zenodo.",0.0
+"Gardner J. P., et al., 2006, SSRv, 123, 485                                        3509134",0.0
+"Gaskell C. M., 2011, in Alecian G., Belkacem K., Samadi R., Valls-Gabaud       Peng C. Y., 2007, ApJ, 671, 1098",0.0
+"    D., eds, SF2A-2011: Proceedings of the Annual meeting of the French So-    Peng C. Y., Impey C. D., Rix H.-W., Kochanek C. S., Keeton C. R., Falco",4.0
+"    ciety of Astronomy and Astrophysics. pp 577–582 (arXiv:1111.2067)              E. E., Lehar J., McLeod B. A., 2006, ApJ, 649, 616",4.0
+"Gebhardt K., et al., 2000, ApJ, 539, L13                                       Pensabene A., Carniani S., Perna M., Cresci G., Decarli R., Maiolino R.,",0.0
+"Gini C., 1912, Variabilità e mutabilità. https://ui.adsabs.harvard.                Marconi A., 2020, arXiv e-prints",0.0
+"    edu/abs/1912vamu.book.....G                                                Perrin M. D., Long J., Sivaramakrishnan A., Lajoie C.-P., Elliot E., Pueyo L.,",4.0
+"Greene J. E., Ho L. C., 2006, ApJ, 641, 117                                        Albert L., 2015, WebbPSF: James Webb Space Telescope PSF Simula-",0.0
+"Haehnelt M. G., Kauffmann G., 2000, MNRAS, 318, L35                                tion Tool (ascl:1504.007), https://ui.adsabs.harvard.edu/abs/",0.0
+"Häring N., Rix H.-W., 2004, ApJL, 604, L89                                         2015ascl.soft04007P",0.0
+"Harris C. E., Bennert V. N., Auger M. W., Treu T., Woo J.-H., Malkan M. A.,    Peterson B. M., 2013, SSRv, 183, 253",0.0
+"    2012, ApJS, 201, 29                                                        Reines A. E., Volonteri M., 2015, ApJ, 813, 82",4.0
+"Heckman T. M., Best P. N., 2014, ARA&A, 52, 589                                Riechers D. A., Walter F., Carilli C. L., Bertoldi F., 2007, ApJ Letters, 671,",0.0
+"Hinshaw G., et al., 2013, ApJS, 208, 19                                            L13",0.0
+"Hopkins P. F., Quataert E., 2010, MNRAS, 407, 1529                             STScI Development Team 2018, synphot: Synthetic photometry using As-",0.0
+"Hoyle F., Lyttleton R. A., 1939, Math. Proc. Cambridge Philos. Soc., 35, 405       tropy, Astrophysics Source Code Library (ascl:1811.001), https://ui.",0.0
+"Hunter J. D., 2007, CiSE, 9, 90                                                    adsabs.harvard.edu/abs/2018ascl.soft11001S",0.0
+"Hutchings J. B., 2003, AJ, 125, 1053                                           STSci 2017b, MIRI Sensitivity, https://jwst-docs.stsci.edu/",0.0
+"Jahnke K., Macciò A. V., 2011, ApJ, 734, 92                                        mid-infrared-instrument/miri-predicted-performance/",0.0
+"Katz N., Hernquist L., Weinberg D. H., 1999, ApJ, 523, 463                         miri-sensitivity",0.0
+"Kawamata R., Ishigaki M., Shimasaku K., Oguri M., Ouchi M., Tanigawa S.,       STSci 2017a, NIRCam Sensitivity, https://jwst-docs.stsci.edu/",0.0
+"    2018, ApJ, 855, 4                                                              near-infrared-camera/nircam-predicted-performance/",4.0
+"Kennedy R., et al., 2016, MNRAS, 460, 3458                                         nircam-sensitivity",0.0
+"Koekemoer A. M., Fruchter A. S., Hook R. N., Hack W., 2002, in The 2002        Scannapieco C., White S. D. M., Springel V., Tissera P. B., 2009, MNRAS,",0.0
+"    HST Calibration Workshop: Hubble after the Installation of the ACS             396, 696",4.0
+"    and the NICMOS Cooling System. STScI, Baltimore, p. 337, http:             Schmidt M., 1963, Nature, 197, 1040",4.0
+"    //labs.adsabs.harvard.edu/ui/abs/2003hstc.conf..337K                       Shen Y., 2013, Bull. Astron. Soc. India, 41, 61",4.0
+"Kormendy J., Ho L. C., 2013, ARA&A, 51, 511                                    Shibuya T., Ouchi M., Harikane Y., 2015, ApJS, 219, 15",0.0
+"Krist J. E., Hook R. N., Stoehr F., 2011, in Kahan M. A., ed.,                 Silk J., Rees M. J., 1998, A&A, 331, L1",0.0
+"    SPIE Proceedings Vol. 8127, Optical Modeling and Performance               Springel V., Hernquist L., 2003, MNRAS, 339, 289",4.0
+"    Predictions V. SPIE, pp 81270J–16, doi:10.1117/12.892762,                  Springel V., Di Matteo T., Hernquist L., 2005, MNRAS, 361, 776",4.0
+"    http://proceedings.spiedigitallibrary.org/proceeding.                      Stanway E. R., Eldridge J. J., 2018, MNRAS, 479, 75",4.0
+"    aspx?articleid=1266873                                                     Taylor-Mager V. A., Conselice C. J., Windhorst R. A., Jansen R. A., 2007,",4.0
+"Krumholz M. R., Gnedin N. Y., 2011, ApJ, 729, 36                                   ApJ, 659, 162",0.0
+"Kukula M. J., Dunlop J. S., McLure R. J., Miller L., Percival W. J., Baum      Tenneti A., Wilkins S. M., Matteo T. D., Croft R. A. C., Feng Y., 2018,",0.0
+"    S. A., O’Dea C. P., 2001, MNRAS, 326, 1533                                     MNRAS, 483, 1388",4.0
+"Lotz J. M., Primack J., Madau P., 2004, AJ, 128, 163                           Tremaine S., et al., 2002, ApJ, 574, 740",0.0
+"Ma X., et al., 2018, MNRAS, 477, 219                                           Valiante R., Schneider R., Salvadori S., Gallerani S., 2014, MNRAS, 444,",0.0
+"Madau P., 1995, ApJ, 441, 18                                                       2442",0.0
+"Mager V. A., Conselice C. J., Seibert M., Gusbar C., Katona A. P., Villari     Venemans B. P., Neeleman M., Walter F., Novak M., Decarli R., Hennawi",0.0
+"    J. M., Madore B. F., Windhorst R. A., 2018, ApJ, 864, 123                      J. F., Rix H.-W., 2019, ApJ, 874, L30",4.0
+"Magorrian J., et al., 1998, AJ, 115, 2285                                      Vika M., Bamford S. P., Häußler B., Rojas A. L., Borch A., Nichol R. C.,",0.0
+"Marconi A., Hunt L. K., 2003, ApJ, 589, L21                                        2013, MNRAS, 435, 623",0.0
+"Marian V., et al., 2019, ApJ, 882, 141                                         Vika M., Bamford S. P., Häußler B., Rojas A. L., 2014, MNRAS, 444, 3603",0.0
+"Marshall M. A., Ni Y., Matteo T. D., Wyithe J. S. B., Wilkins S., Croft R.     Virtanen P., et al., 2020, Nature Methods, 17, 261",0.0
+"    A. C., Kuusisto J. K., 2020a, MNRAS, 499, 3819                             Vogelsberger M., Genel S., Sĳacki D., Torrey P., Springel V., Hernquist L.,",4.0
+"Marshall M. A., et al., 2020b, ApJ, 900, 21                                        2013, MNRAS, 436, 3031",0.0
+"Matsuoka Y., et al., 2018, PASJ, 70                                            Vogelsberger M., et al., 2014, MNRAS, 444, 1518",0.0
+"McLeod K. K., Rieke G. H., 1994, ApJ, 420, 58                                  Wallis S., 2013, Journal of Quantitative Linguistics, 20, 178",0.0
+"Mechtley M., 2011, astroRMS, https://github.com/mmechtley/                     Walter F., et al., 2003, Nature, 424, 406",0.0
+"    astroRMS                                                                   Walter F., Carilli C., Bertoldi F., Menten K., Cox P., Lo K. Y., Fan X., Strauss",4.0
+"Mechtley M., 2014, PhD thesis, Arizona State University, http://adsabs.            M. A., 2004, ApJ, 615, L17",0.0
+"    harvard.edu/abs/2014PhDT.........1M                                        Wang R., et al., 2010, ApJ, 714, 699",4.0
+"Mechtley M., 2019, psfMC, https://github.com/mmechtley/psfMC                   Wang R., et al., 2011, AJ, 142, 101",0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,1.2394366197183098
+                                                                          Observing high-redshift quasar hosts with JWST         19,74.0
+"Wang R., et al., 2013, ApJ, 773, 44",0.0
+"Wilkins S., 2019a, FLARE, https://github.com/stephenmwilkins/",0.0
+    FLARE,4.0
+"Wilkins S., 2019b, SynthObs, https://github.com/stephenmwilkins/",0.0
+    SynthObs,4.0
+"Willott C. J., Bergeron J., Omont A., 2017, ApJ, 850, 108",0.0
+"Windhorst R. A., et al., 2011, ApJS, 193, 27",0.0
+"van der Walt S., Colbert S. C., Varoquaux G., 2011, CiSE, 13, 22",0.0
+APPENDIX A: HOST MOCK IMAGES,0.0
+We plot the PSF-subtracted images of each of the BlueTides bright,0.0
+"quasars in the JWST NIRCam F200W filter, with an exposure time",0.0
+"of 10 ks, in Figure A1. For comparison, we also show true host mock",0.0
+"images, produced by assuming no quasar emission. We find that 19",0.0
+of the 22 hosts are successfully detected in 10 ks F200W exposures,0.0
+using the psfMC PSF modelling technique.,0.0
+APPENDIX B: NON-SMOOTHED MOCK IMAGES,0.0
+The majority of the mock images throughout this work have been,0.0
+smoothed with a 𝜎 = 1 pixel Gaussian kernel. This smooths the,0.0
+"galaxy emission, making more extended features easier to see com-",0.0
+"pared to the background noise and any residual host flux. However,",0.0
+the statistical criterion used to determine whether a host galaxy is,0.0
+"significantly detected does not consider this smoothed data, but the",0.0
+raw images. We therefore show the non-smoothed mock images for,0.0
+"two quasars in Figure B1, which is identical to Figure 4 except the",0.0
+mock images have no smoothing applied.,0.0
+This paper has been typeset from a TEX/LATEX file prepared by the author.,0.0
+"                                                                                                              MNRAS 000, 1–19 (2019)",110.0
+avr_spaces,6.620689655172414
+20       M. A. Marshall et al.,0.0
+             PSF-Subtracted True Host PSF-Subtracted True Host PSF-Subtracted True Host,13.0
+      0.5   00,6.0
+      0.000,6.0
+      0.500,6.0
+      0.500,6.0
+      0.000,6.0
+      0.500,6.0
+      0.500                                                                                                                                          27,6.0
+      0.000,6.0
+      0.500,6.0
+      0.500                                                                                                                                        2,6.0
+                                                                                                                                                   mag arcsec,147.0
+      0.000,6.0
+      0.500                                                            ×,6.0
+      0.500,6.0
+      0.000,6.0
+      0.500                 ×                                                                                                                        28,6.0
+      0.500,6.0
+      0.000,6.0
+      0.500,6.0
+                                                                                                                                                     29,149.0
+      0.500,6.0
+      0.000,6.0
+      0.500                                                                                                        ×,6.0
+      0.500                                               0.500 0.000 0.500 0.500 0.000 0.500 0.500 0.000 0.500 0.500 0.000 0.500,6.0
+      0.000,6.0
+      0.500,6.0
+                 0.500 0.000 0.500 0.500 0.000 0.500,17.0
+Figure A1. The BlueTides bright quasar host galaxies. The left panels in each group show the PSF-subtracted image after processing through psfMC. The,0.0
+"true mock images of the galaxies, simulated by assuming no quasar emission, are shown in the right panels. Mock images are in the F200W filter with exposure",0.0
+"times of 10 ks. Green ticks represent quasars which have their host galaxy successfully detected in at least 5 of the 6 NIRCam wide-band filters, ‘detectable’",0.0
+"hosts, while red crosses show host galaxies which are successfully detected in 4 or fewer of the 6 filters, ‘undetectable’ hosts. We assume a sub-sampling of",0.0
+"the native pixel scale of a factor of 2 in each spatial dimension, corresponding to a pixel scale of 0.00 0155 × 0.00 0155. Images are smoothed with a 𝜎 = 1 pixel",0.0
+Gaussian kernel.,0.0
+"MNRAS 000, 1–19 (2019)",0.0
+avr_spaces,12.702702702702704
+                                                                                 Observing high-redshift quasar hosts with JWST                                        21,81.0
+                                      PSF                                                                                            PSF-Subtracted,38.0
+                  Quasar           Subtracted Sersic Model Residual                                    True Host                       - True Host,18.0
+    0.700                                                                                                                      26,4.0
+                                                                                                                                 2,129.0
+                                                                                                                                                                  4e-3,162.0
+                                                                      ×                                                          mag arcsec,70.0
+HST 0.0   00,0.0
+                                                                                                                               27                                 2e-3,127.0
+       0.700                                                                                                                   28,7.0
+                                                                                                                                                                  0   e/s,162.0
+    0.700                                                                                                                        2,4.0
+                                                                                                                               27,127.0
+                                                                                                                                 mag arcsec,129.0
+                                                                                                                                                                      2e-3,166.0
+JWST0.000,0.0
+                                                                                                                               28                                     4e-3,127.0
+       0.700                                                                                                                   29,7.0
+               0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700                                      0.700 0.000 0.700,15.0
+                                      PSF                                                                                           PSF-Subtracted,38.0
+                 Quasar            Subtracted Sersic Model Residual                                   True Host                       - True Host,17.0
+   0.700                                                                                                                       26,3.0
+                                                                                                                                 2,129.0
+                                                                                                                                                                  4e-3,162.0
+                                                                      ×                                                          mag arcsec,70.0
+HST0.0    00,0.0
+                                                                                                                               27                                 2e-3,127.0
+    0.7   00                                                                                                                   28,4.0
+                                                                                                                                                                  0e/s,162.0
+   0.700                                                                                                                         2,3.0
+                                                                                                                               27,127.0
+                                                                                                                                 mag arcsec,129.0
+                                                                                                                                                                      2e-3,166.0
+JWST,0.0
+   0.000,3.0
+                                                                                                                               28                                     4e-3,127.0
+    0.700                                                                                                                      29,4.0
+               0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700 0.700 0.000 0.700                                      0.700 0.000 0.700,15.0
+Figure B1. Mock images of the host galaxy of two bright quasars from the simulation. The upper panels for each quasar show the galaxy in the HST WFC3,0.0
+"F160W filter, while the lower panels show the galaxy in the JWST NIRCam F150W filter. All images have an exposure time of 4800s, equivalent to 2 HST",0.0
+"orbits. We show the original quasar and host image in the left-most panels, and the residual image after PSF subtraction in the second panels. The third panels",0.0
+"show the best Sérsic model for the galaxy from psfMC convolved with the telescope PSF. The fourth panels show the residual image after full model subtraction,",0.0
+"i.e. of both the quasar PSF and host Sérsic profiles. The fifth panels show the true mock image of the host galaxy, simulated by assuming no quasar emission.",0.0
+"The right-most panels show the difference between the PSF-subtracted image (second panel) and the true host image (fifth panel), with green circles depicting",0.0
+"the PSF FWHM. Green ticks show the statistically significant detections, while red crosses show the fits which are not significant detections. We assume a",0.0
+"sub-sampling of the native pixel scale of a factor of 2 in each spatial dimension, corresponding to a pixel scale of 0.00 065 × 0.00 065 for HST and 0.00 0155 × 0.00 0155",0.0
+"for JWST. The colour scale is chosen to best display the host galaxy, and so the inner quasar PSF core appears saturated. Images are not smoothed.",0.0
+"                                                                                                                                                   MNRAS 000, 1–19 (2019)",147.0
+avr_spaces,57.265306122448976

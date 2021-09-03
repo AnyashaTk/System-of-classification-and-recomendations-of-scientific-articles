@@ -1,0 +1,1056 @@
+text,space_num
+"                                              MNRAS 000, 1–17 (0000)                              Preprint 9 March 2021              Compiled using MNRAS LATEX style file v3.0",46.0
+                                              Multi-wavelength mock galaxy catalogs of the low-redshift,46.0
+                                              Universe,46.0
+"                                                  Aseem Paranjape1? , Tirthankar Roy Choudhury2 † & Ravi K. Sheth3,4 ‡",50.0
+"                                              1   Inter-University Centre for Astronomy & Astrophysics, Ganeshkhind, Post Bag 4, Pune 411007, India",46.0
+"                                              2   National Centre for Radio Astrophysics, TIFR, Post Bag 3, Ganeshkhind, Pune 411007, India",46.0
+"                                              3   Center for Particle Cosmology, University of Pennsylvania, 209 S. 33rd St., Philadelphia, PA 19104, USA",46.0
+"                                              4   The Abdus Salam International Center for Theoretical Physics, Strada Costiera, 11, Trieste 34151, Italy",46.0
+arXiv:2101.02717v2 [astro-ph.GA] 8 Mar 2021,0.0
+                                              9 March 2021,46.0
+                                                                                 ABSTRACT,81.0
+"                                                                                 We present a new suite of mock galaxy catalogs mimicking the low-redshift Universe,",81.0
+                                                                                 based on an updated halo occupation distribution (HOD) model and a scaling relation,81.0
+                                                                                 between optical properties and the neutral hydrogen (Hi) content of galaxies. Our,81.0
+                                                                                 algorithm is constrained by observations of the luminosity function and luminosity-,81.0
+"                                                                                 and colour-dependent clustering of SDSS galaxies, as well as the Hi mass function and",81.0
+                                                                                 Hi-dependent clustering of massive Hi-selected galaxies in the ALFALFA survey. Mock,81.0
+"                                                                                 central and satellite galaxies with realistic values of r-band luminosity, g − r and u − r",81.0
+"                                                                                 colour, stellar mass and Hi mass are populated in an N -body simulation, inheriting",81.0
+                                                                                 a number of properties of the density and tidal environment of their host halos. The,81.0
+                                                                                 host halo of each central galaxy is also ‘baryonified’ with realistic spatial distributions,81.0
+"                                                                                 of stars as well as hot and cold gas, along with the corresponding rotation curve. Our",81.0
+"                                                                                 default HOD assumes that galaxy properties are a function of group halo mass alone,",81.0
+                                                                                 and can optionally include effects such as galactic conformity and colour-dependent,81.0
+                                                                                 galaxy assembly bias. The mocks predict the relation between the stellar mass and,81.0
+"                                                                                 Hi mass of massive Hi galaxies, as well as the 2-point cross-correlation function of",81.0
+                                                                                 spatially co-located optical and Hi-selected samples. They enable novel null tests for,81.0
+"                                                                                 galaxy assembly bias, provide predictions for the Hi velocity width function, and clarify",81.0
+                                                                                 the origin and universality of the radial acceleration relation in the ΛCDM framework.,81.0
+"                                                                                 Key words: galaxies: formation - cosmology: theory, dark matter, large-scale structure",81.0
+                                                                                 of Universe - methods: numerical,81.0
+                                              1    INTRODUCTION                                                    serve as excellent test-beds for exploring ideas related to the,46.0
+"                                                                                                                   galaxy-dark matter connection, the nature of dark matter or",115.0
+                                              Contemporary studies of galaxy evolution and cosmology,46.0
+"                                                                                                                   the predictions of alternative gravity theories, and the effects",115.0
+                                              must explore a multitude of physical and statistical properties,46.0
+"                                                                                                                   of dark energy. As such, it is critical to develop and calibrate",115.0
+                                              of the observed large-scale structure of the Universe. The,46.0
+"                                                                                                                   mock-making algorithms, constrained by existing observa-",115.0
+                                              computational and technical challenges involved in any such,46.0
+"                                                                                                                   tions, that can accurately account for the multi-scale, multi-",115.0
+"                                              analysis, whether observational or theoretical, mean that",46.0
+                                                                                                                   probe connection between baryonic matter in and around,115.0
+                                              mock galaxy catalogs are now a staple tool of cosmological,46.0
+                                                                                                                   galaxies and the dark cosmic web in which these galaxies,115.0
+                                              analyses.,46.0
+                                                                                                                   reside. This is the primary motivation behind the present,115.0
+                                                   Current and upcoming large-volume surveys of the Uni-,51.0
+                                                                                                                   work.,115.0
+"                                              verse, aiming to extract cosmological information using ob-",46.0
+                                              servables including the redshift space clustering of galaxies,46.0
+"                                                                                                                        Computationally speaking, the most efficient algorithms",120.0
+"                                              at large and small scales, weak lensing, the abundances of",46.0
+                                                                                                                   are those which model the baryon-dark matter connection us-,115.0
+"                                              clusters and voids, etc., increasingly rely on the use of mock",46.0
+"                                                                                                                   ing empirical, statistical tools that are motivated by the Halo",115.0
+                                              galaxy catalogs for a variety of applications. Apart from,46.0
+"                                                                                                                   Model (see Cooray & Sheth 2002, for a review). These include",115.0
+                                              calibrating expected measurement covariances and end-to-,46.0
+"                                                                                                                   the halo occupation distribution (HOD; Zehavi et al. 2011),",115.0
+"                                              end pipeline testing (Mao et al. 2018), such catalogs also",46.0
+"                                                                                                                   conditional luminosity function (CLF; Yang et al. 2018, and",115.0
+                                                                                                                   references therein) or subhalo abundance matching (SHAM;,115.0
+"                                              ? E-mail: aseem@iucaa.in                                             Behroozi et al. 2019, and references therein) prescriptions",46.0
+                                              † E-mail: tirth@ncra.tifr.res.in                                     that are constrained by observed galaxy abundances and,46.0
+"                                              ‡ E-mail: shethrk@physics.upenn.edu                                  clustering. At the other end of the spectrum, lie full-fledged",46.0
+                                              © 0000 The Authors,46.0
+avr_spaces,71.8970588235294
+2      Paranjape et al.,0.0
+cosmological hydrodynamical simulations of galaxy forma-          2014; Castorina & Villaescusa-Navarro 2017; Padmanabhan,0.0
+"tion (e.g., Vogelsberger et al. 2014; Dubois et al. 2014; Schaye  et al. 2017).",0.0
+"et al. 2015; Springel et al. 2018), arguably the most realistic         In this paper, we aim to combine low-redshift (z . 0.1)",0.0
+"and most expensive tool in computational cosmology. Semi-         constraints on galaxy abundances and clustering, from sur-",0.0
+"analytical models (SAMs), which evolve simplified physical        veys of both optically selected as well as Hi-selected galaxies,",0.0
+descriptions of galaxy formation and evolution within the         to generate mock galaxies that are simultaneously assigned,0.0
+"cosmic web of gravity-only simulations, lie somewhere be-         multi-band optical information as well as Hi masses. To this",0.0
+"tween full simulations and empirical models, in terms of both     end, we consolidate recent work in these areas and intro-",0.0
+computational complexity as well as fidelity to observational     duce mock galaxy catalogs constructed using updated halo,0.0
+"constraints (for a recent review, see Somerville & Davé 2015).   occupation models and calibration of multi-wavelength low-",0.0
+The present work focuses on HOD models.                           redshift galaxy optical and Hi properties. Each mock galaxy,0.0
+     Mock-making algorithms based on the HOD or SHAM              in our catalogs is assigned values of the r-band absolute mag-,5.0
+"frameworks have been frequently used in the literature in         nitude Mr (detailed definition below), colour indices g − r",0.0
+"conjunction with large-volume surveys at low and interme-         and u − r, Hi mass mHi and stellar mass m∗ , along with",0.0
+diate redshifts (Manera et al. 2013; de la Torre & Peacock        a range of environmental properties derived from the dark,0.0
+2013; de la Torre et al. 2013; Kitaura et al. 2016; Mao et al.    matter environment of the galaxy’s host halo. Relying on,0.0
+"2018; Alam et al. 2020; Zhao et al. 2020; Sugiyama et al.         these properties, the mocks reproduce the luminosity func-",0.0
+2020). These algorithms typically segregate into those de-        tion and the luminosity and colour dependence of projected,0.0
+"scribing stellar populations and overall star formation ac-       2-point clustering of SDSS galaxies, the Hi mass function",0.0
+"tivity (constrained by a multitude of galaxy surveys at low-      and mHi -dependent clustering of massive ALFALFA galaxies,",0.0
+and high-redshift spanning wavelengths from the infrared          and predict the cross-correlations between these galaxies.,0.0
+"to optical to ultraviolet), and others focused on the distri-     The mocks also have tunable implementations of galactic",0.0
+"bution of gas, primarily in the form of neutral hydrogen          conformity (Weinmann et al. 2006) and colour-dependent",0.0
+"(Hi, constrained by radio wavelength observations, typically      galaxy assembly bias (Hearin & Watson 2013; Paranjape",0.0
+at low-redshift). We broadly refer to the former category         et al. 2015).,0.0
+"using the label ‘optical’ and the latter as ‘Hi’ algorithms.            Additionally, the host halo of each central galaxy in",0.0
+"All such algorithms typically rely on dark halos identified in    our mocks is ‘baryonified’, i.e., assigned a realistic spatial",0.0
+"gravity-only cosmological simulations, along with statistical     distribution of stars and gas and, consequently, a realistic",0.0
+prescriptions to paint galaxies into these halos.                 rotation curve for the galactic disk. This is a novel feature,0.0
+"                                                                  of our mocks which, as we discuss later, potentially allows",66.0
+     Algorithms for assigning single band optical luminosities    us to explore a number of interesting questions that have,5.0
+"(or stellar masses) to mock galaxies using HOD, CLF or            not been adequately addressed in the theoretical literature.",0.0
+"SHAM prescriptions have existed for about two decades             Among others, these include modelling the observed 21cm",0.0
+"(Cooray & Sheth 2002; Vale & Ostriker 2004; Reddick et al.        line profiles of Hi-selected galaxies, along with the associated",0.0
+"2013), with relatively recent extensions to include colours       velocity width distribution, and the nature and universality",0.0
+(or star formation rates) (Skibba & Sheth 2009; Hearin &          of the radial acceleration relation in the baryons+cold dark,0.0
+Watson 2013; Contreras et al. 2020). While the simplest           matter (CDM) paradigm.,0.0
+occupation models single out halo mass as the primary driver            The rest of the paper is organised as follows. We de-,0.0
+"of observed correlations between galaxy properties and their      scribe the ingredients of our mock algorithm in section 2,",0.0
+"environments (e.g., Abbas & Sheth 2007; Zu & Mandelbaum           followed by a detailed description of the algorithm itself in",0.0
+"2015; Paranjape et al. 2018b; Alam et al. 2019), recent work      section 3. In section 4, we demonstrate the performance of",0.0
+has argued for the importance of modelling beyond-mass            our mocks in reproducing a number of 1-point and 2-point,0.0
+"effects such as assembly bias and galactic conformity (Zentner    statistical observables. In section 5, we discuss observables",0.0
+"et al. 2014), leading to tune-able prescriptions for these        whose behaviour is predicted by our mocks, along with possi-",0.0
+effects (Masaki et al. 2013; Paranjape et al. 2015; Hearin        ble extensions of our technique that are interesting for future,0.0
+et al. 2016a; Yuan et al. 2018; Xu et al. 2020; Contreras         analyses. We conclude in section 6 with a brief discussion of,0.0
+et al. 2020). State-of-the-art implementations such as the        potential applications of our mocks.,0.0
+"UniverseMachine prescription of Behroozi et al. (2019)                  Throughout, we consider a flat ΛCDM cosmology with",0.0
+"employ SHAM on entire merger trees in high-resolution             parameters {Ωm , Ωb , h, ns , σ8 } given by {0.276, 0.045, 0.7,",0.0
+"gravity-only simulations, calibrated to reproduce stellar mass    0.961, 0.811} compatible with the 7-year results of the Wilkin-",0.0
+"functions and star formation rates over a wide range of           son Microwave Anisotropy Probe experiment (WMAP7, Ko-",0.0
+"redshifts.                                                        matsu et al. 2011), with a linear theory transfer function",0.0
+"     On the Hi side, mock catalogs have been created using a      generated by the code camb (Lewis et al. 2000).1 Our con-",5.0
+combination of galaxy formation SAMs and a prescription for       vention will be to quote halo masses (m) in h−1 M and,0.0
+"distributing the Hi in disks (see, e.g., Obreschkow et al. 2009), galaxy stellar masses (m∗ ) and Hi masses (mHi ) in h−2 M",0.0
+"which have been useful for planning upcoming surveys with         units. The notation m for halo mass will refer to m200b , the",0.0
+telescopes such as the Square Kilometre Array (SKA). If one       mass enclosed in the radius R200b where the enclosed density,0.0
+is only interested in the very large-scale correlations of the    falls to 200 times the background density. Similarly mvir will,0.0
+"Hi distribution (e.g., for intensity mapping experiments), or     refer to m200c , the mass enclosed in the radius R200c where",0.0
+in interpreting Hi detections based on stacking experiments       the enclosed density falls to 200 times the critical density.,0.0
+"at high redshift, the algorithms for creating the catalogs are",0.0
+"considerably simpler, assigning an Hi mass directly to dark",0.0
+halos using a physically motivated prescription (Bagla et al.,0.0
+2010; Guha Sarkar et al. 2012; Villaescusa-Navarro et al.         1  http://camb.info,0.0
+"                                                                                                         MNRAS 000, 1–17 (0000)",105.0
+avr_spaces,2.7761194029850746
+                                                                                                       Colourful mocks            3,103.0
+"2    INGREDIENTS                                                  uncorrected colours. Correcting for inclination can, in princi-",0.0
+"                                                                  ple, affect inferences regarding the physics of quenching in",66.0
+We start by describing the ingredients used in constructing,0.0
+"                                                                  satellites, as well as the physics governing the Hi content of",66.0
+our mocks. These include the gravity-only simulations that,0.0
+"                                                                  optically red galaxies, which we will explore in future work.",66.0
+"we populate with galaxies, the observed galaxy sample whose",0.0
+                                                                  (Consistency with Zehavi et al. 2011 is also why we do not,66.0
+optical properties form the basis of the halo occupation,0.0
+                                                                  work with the improved SDSS photometry discussed in Meert,66.0
+"distribution (HOD) we use to assign luminosities, colours",0.0
+                                                                  et al. 2015.) Flux measurement errors were accounted for,66.0
+"and stellar masses to the mock galaxies, and the scaling",0.0
+"                                                                  when using K-correct, but not explicitly in the Gaussian",66.0
+relation between optical properties and neutral hydrogen,0.0
+                                                                  mixture fitting below.,66.0
+(Hi) using which we assign Hi masses.,0.0
+"                                                                        This analysis yielded values of Mr ≡ M0.1 r − 5 log10 (h),",72.0
+"                                                                  and similarly Mg and Mu , for each galaxy. The latter were",66.0
+2.1     Simulations                                               converted to the colour indices g − r = Mg − Mr and u − r =,0.0
+"                                                                  Mu − Mr , which are therefore rest frame colours, K-corrected",66.0
+"The N -body simulations we rely on are listed in Table 1 of       and evolution corrected to z = 0.1. Below, we use Petrosian",0.0
+"Paranjape & Alam (2020), of which we focus on the WMAP7           absolute magnitudes Mr and Model colours g − r and u − r.",0.0
+"configurations. Specifically, we have 2, 10 and 3 realisations",0.0
+"each of the L150 N1024, L300 N1024 and L600 N1024 boxes,",0.0
+"respectively, corresponding to particle masses mp = 2.41 ×        2.3    Optical halo occupation distribution",0.0
+"108 , 1.93 × 109 , 1.54 × 1010 h−1 M , respectively. The notation",0.0
+                                                                  Here we discuss the complete optical HOD we use for assign-,66.0
+"L150 N1024, for example, indicates a cubic, periodic box of",0.0
+                                                                  ing luminosities and colours to mock galaxies. This HOD,66.0
+length Lbox = 150h−1 Mpc containing 10243 particles. The,0.0
+                                                                  is constrained by measurements of luminosity- and colour-,66.0
+simulations were performed using the tree-PM code gadget-,0.0
+                                                                  dependent clustering in SDSS DR7 and uses a Gaussian,66.0
+2 (Springel 2005)2 with a PM grid of a factor 2 finer than the,0.0
+"                                                                  mixture description of bi-variate colour distributions, as de-",66.0
+"initial particle count along each axis, and a comoving force",0.0
+                                                                  scribed below.,66.0
+softening length of 1/30 of the mean interparticle spacing.,0.0
+Initial conditions were generated using 2nd order Lagrangian,0.0
+perturbation theory (Scoccimarro 1998) with the code music        2.3.1    Constraints from luminosity-dependent clustering,0.0
+(Hahn & Abel 2011).3 Halos were identified using the code,0.0
+rockstar (Behroozi et al. 2013a)4 which performs a Friends-       We use the standard 5-parameter mass-only HOD calibrated,0.0
+"of-Friends (FoF) algorithm in 6-dimensional phase space. We       by Paul et al. (2019) for the WMAP7 cosmology, which de-",0.0
+discard all sub-halos and further only consider objects whose     scribes SDSS luminosity-dependent clustering measurements,0.0
+‘virial’ energy ratio η = 2T /|U | satisfies 0.5 ≤ η ≤ 1.5 (Bett  from Zehavi et al. (2011). The HOD was calibrated using,0.0
+et al. 2007). All the simulations and analysis were performed     simulation-based tables of 2-point halo correlation functions,0.0
+on the Perseus and Pegasus clusters at IUCAA.5                    and halo profiles from the z = 0 outputs of the simulations,0.0
+"                                                                  described above, following the technique of Zheng & Guo",66.0
+                                                                  (2016). Satellites were assumed to be distributed according to,66.0
+2.2     Galaxy sample                                             the spherically averaged dark matter distribution in parent,0.0
+"                                                                  halos, without assuming the (Navarro et al. 1996, NFW)",66.0
+We rely on optical properties of galaxies in the local Uni-,0.0
+                                                                  profile (although the latter is an excellent approximation,66.0
+"verse as provided by Data Release 7 (DR7, Abazajian et al.",0.0
+                                                                  over the spatial and mass dynamic range of interest; this,66.0
+"2009) of the Sloan Digital Sky Survey (SDSS, York et al.",0.0
+"                                                                  will be useful below). For the 2-halo terms, hard-sphere halo",66.0
+"2000).6 From the SDSS DR7 Catalog Archive Server (CAS),7",0.0
+"                                                                  exclusion was implemented, but all other correlations were",66.0
+we obtained galaxy properties including Galactic extinction-,0.0
+"                                                                  directly measured from the simulations in narrow mass bins,",66.0
+"corrected apparent magnitudes (luptitudes) in the u, g and",0.0
+"                                                                  so that non-linear, scale-dependent halo bias was accurately",66.0
+r bands for all galaxies with spectroscopic redshifts in the,0.0
+                                                                  modelled. See Paul et al. (2019) for further discussion.,66.0
+range 0.02 ≤ z ≤ 0.2 and satisfying the Petrosian r-band,0.0
+apparent magnitude threshold mr ≤ 17.7. Both Petrosian,0.0
+and Model magnitudes were obtained from the database.             2.3.2    Constraints from colour dependent-clustering,0.0
+"Absolute magnitudes M0.1 u , M0.1 g , M0.1 r were estimated by",0.0
+K-correcting to rest frame bands at z = 0.1 using K-correct       Paul et al. (2019) also modelled colour-dependent cluster-,0.0
+(Blanton & Roweis 2007) (we used a modified version of the        ing from Zehavi et al. (2011) by treating the ‘red fraction’,0.0
+Python wrapper provided by N. Raseliarison8 ) and evolution       fr|s (Mr ) of satellites of luminosity Mr as a free parameter.,0.0
+correcting as described by Blanton et al. (2003). We did not      Here fr|s (Mr ) is the fraction of satellites in a luminosity bin,0.0
+"correct for dust extinction in the host, which makes edge-on      (labelled Mr ) whose g − r colours satisfy",0.0
+"spirals appear redder. This makes our colour-dependent anal-                 g − r > (g − r)cut (Mr ) ≡ 0.21 − 0.03Mr ,         (1)",0.0
+ysis consistent with that of Zehavi et al. (2011) who reported,0.0
+measurements of colour-dependent clustering using similarly       (equation 13 of Zehavi et al. 2011). Paul et al. (2019) prop-,0.0
+                                                                  agated this cut into the halo model formalism to observa-,66.0
+                                                                  tionally constrain fr|s (Mr ) in the four wide luminosity bins,66.0
+2  http://www.mpa-garching.mpg.de/gadget/,0.0
+3,0.0
+                                                                  for which clustering measurements and jack-knife covariance,66.0
+   https://www-n.oca.eu/ohahn/MUSIC/,3.0
+4                                                                 matrices were available (see their Table 1).,0.0
+   https://bitbucket.org/gfcstanford/rockstar,3.0
+5  http://hpc.iucaa.in                                                  The final product provided by Paul et al. (2019) com-,0.0
+6  www.sdss.org                                                   prises simple fitting functions for the Mr -dependence of the,0.0
+7  www.skyserver.sdss.org                                         five parameters defining the thresholded HOD and the pa-,0.0
+8  https://github.com/nirinA/kcorrect_python                      rameter fr|s in the range −23 < Mr ≤ −19 (see their Figures,0.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,22.526881720430108
+4      Paranjape et al.,0.0
+                                                                 of the respective subsample and use the average values of,65.0
+                                                                 the 11 parameters defining the Gaussian mixture as the ‘best,65.0
+"                                                                 fit’, with the corresponding standard deviations across the",65.0
+                                                                 bootstrap samples as errors.,65.0
+                                                                       Figure 1 compares the measured bivariate distri-,71.0
+                                                                 butions in a few bins of Mr (coloured histograms),65.0
+                                                                 with the best fit Gaussian mixture (contours). Fig-,65.0
+                                                                 ure 2 summarises the 11 parameters of the mixture,65.0
+                                                                 for all the luminosity bins (points with errors). The,65.0
+                                                                 parameters are: (i) the probability p(red|Mr ) that the,65.0
+"                                                                 galaxy belongs to the ‘red’ mode of the mixture, (ii)",65.0
+"                                                                 the mean vectors (h g − r|Mr ired , h u − r|Mr ired ) and",65.0
+"                                                                 (h g − r|Mr iblue , h u − r|Mr iblue ) of the red and blue modes,",65.0
+"                                                                 respectively, (iii) the diagonal elements of the covariance",65.0
+                                                                                2                 2                         2,80.0
+"                                                                 matrices (σred    (g − r|Mr ), σred (u − r|Mr )) and (σblue    (g −",65.0
+                                                                           2,75.0
+"                                                                 r|Mr ), σblue (u − r|Mr )) of the red and blue modes, respec-",65.0
+                                                                 tively and (iv) the correlation coefficients between g − r and,65.0
+"                                                                 u − r, for the red and blue modes respectively. The smooth",65.0
+                                                                 curves in Figure 2 show piece-wise continuous polynomial,65.0
+                                                                 fits to each parameter. These are used similarly to the HOD,65.0
+"                                                                 fitting functions provided by Paul et al. (2019), to assign",65.0
+                                                                 colours to mock galaxies (see below).,65.0
+"                                                                       For assigning colours to centrals and satellites separately,",71.0
+"                                                                 we require the probability p(red|sat, Mr ) that the g − r and",65.0
+                                                                 u − r colours of a satellite of luminosity Mr are drawn from,65.0
+                                                                 the ‘red mode’ of the bivariate double-Gaussian distribution,65.0
+                                                                 described above. This can be easily obtained by combining,65.0
+                                                                 the constraints on fr|s described in section 2.3.2 with (a subset,65.0
+"                                                                 of) the parameters of the Gaussian mixture p(g −r, u−r|Mr ),",65.0
+                                                                 and is given by,65.0
+                                                                                                   2fr|s − I(blue) (Mr ),99.0
+"                                                                            p(red|sat, Mr ) =                                     (2)",76.0
+"Figure 1. Bivariate distribution of Model (g − r, u − r) colours                               I(red) (Mr ) − I(blue) (Mr )",0.0
+in bins of Petrosian absolute magnitude Mr (coloured histograms),0.0
+                                                                 where (suppressing the Mr -dependence of the arguments for,65.0
+"measured in SDSS, compared with the best fit Gaussian mixture",0.0
+                                                                 brevity),65.0
+in each bin (contours).                                                                                                        !,0.0
+                                                                                                (g − r)cut − h g − r ired/blue,96.0
+"                                                                     I(red/blue) (Mr ) = erfc        √                           ,",69.0
+12 and 13 and Table 3; they denote fr|s as pr|s ). We use these                                        2σred/blue (g − r),0.0
+below to assign luminosities and colours to mock central and                                                                      (3),0.0
+satellite galaxies.                                              and where (g − r)cut (Mr ) was given in equation (1).,0.0
+                                                                 2.3.4    Stellar masses,65.0
+2.3.3    Colour distribution,0.0
+                                                                 Stellar masses are calculated using a mass-to-light ratio,65.0
+"In the following, we require the joint distribution p(u − r, g −",0.0
+                                                                 calibrated to SDSS DR7 measurements similarly to Paranjape,65.0
+"r|Mr ) of g −r and u−r at fixed Mr in SDSS, which we model",0.0
+"                                                                 et al. (2015, see their sections 2.3 and 4.2). The measurements",65.0
+"as a 2-component bivariate Gaussian mixture. In principle,",0.0
+                                                                 are shown as the coloured histogram in Figure 3. We fit a,65.0
+one can logically extend this analysis to multiple bands using,0.0
+"                                                                 mean relation to these measurements in bins of x ≡ (g − r),",65.0
+"a higher-dimensional Gaussian mixture. Likewise, we could",0.0
+                                                                 of the form,65.0
+"use more components in the mixture, but have found that",0.0
+"2 are sufficient for the present purpose. We use measured          h M/L i (x) = a + b erf ((x − c)d) + e tanh((x − f )/g) , (4)",0.0
+values of g − r and u − r in narrow bins of Mr without           finding best fitting values,0.0
+"accounting for measurement errors. For each bin of Mr , we",0.0
+"construct a volume-limited subsample by choosing galaxies          a = 1.3281 ;     b = 0.735 ;    c = 0.5859 ,",0.0
+"in the redshift range 0.02 ≤ z < zmax (Mr,max ), where Mr,max         d = 3.38 ;    e = 0.187 ;    f = 0.8976 ;     g = 0.0874 . (5)",0.0
+"is the faint edge of the bin and zmax (Mr,max ) is the redshift",0.0
+"                                                                 We also fit the scatter around the mean in the same bins, of",65.0
+at which a galaxy of this absolute magnitude would fall,0.0
+                                                                 the form,65.0
+below the flux limit mr = 17.7 of the survey. We use the                          ,0.0
+Python package sklearn.mixture (Pedregosa et al. 2011)9 to                          k0 + k1 (x − x0 )                    ; x < x0,0.0
+                                                                 σ(M/L) (x) =,65.0
+"implement an iterative Expectation-Maximisation algorithm                           k0 + k2 (x − x0 ) + k3 (x − x0 )2 ; x ≥ x0 ,",0.0
+(Dempster et al. 1977) with 12 initialisations. We repeat the                                                                     (6),0.0
+exercise in each luminosity bin for 150 bootstrap resamplings    finding best-fitting values given by,0.0
+"                                                                           x0 = 1.019 ;    k0 = 0.1441 ;     k1 = −0.182 ,",75.0
+9  https://scikit-learn.org/                                                 k2 = 1.16 ;   k3 = −0.2 .                            (7),0.0
+"                                                                                                          MNRAS 000, 1–17 (0000)",106.0
+avr_spaces,43.265822784810126
+                                                                                                           Colourful mocks          5,107.0
+"Figure 2. Summary of Gaussian mixture fits for p(g − r, u − r|Mr ) (points with errors). Smooth curves show piece-wise continuous",0.0
+"polynomial fits to each mixture parameter, which we use in assigning colours to mock galaxies.",0.0
+Our calibration is shown in Figure 3 and is better behaved,0.0
+than that of Paranjape et al. (2015) for very blue objects; we,0.0
+"have checked, however, that both calibrations lead to nearly",0.0
+identical results for the final mocks. For each mock galaxy,0.0
+"with colour g − r, we calculate a Gaussian random number",0.0
+for the mass-to-light ratio with mean and standard deviation,0.0
+"calculated using equations (4) and (6), respectively, setting",0.0
+x = (g − r). This is then combined with the corresponding,0.0
+value of Mr of the galaxy to assign a stellar mass m∗ .,0.0
+2.4    Neutral hydrogen masses,0.0
+"Paul et al. (2018, hereafter, PCP18) calibrated a lognormal",0.0
+scaling relation (with constant scatter in log-mass) between,0.0
+the neutral hydrogen mass mHi of a galaxy and its opti-,0.0
+"cal properties Mr and g − r, using the optical HOD from",0.0
+Guo et al. (2015) and clustering measurements from Guo,0.0
+et al. (2017) of Hi-selected galaxies in the ALFALFA sur-,0.0
+vey (Giovanelli et al. 2005). The scaling relation was sep-,0.0
+arately calibrated for central and satellite galaxies using a,0.0
+"halo model, along with an overall parameter fHi which gives",0.0
+the fraction of optically selected galaxies that contain Hi.,0.0
+Their default model also assumed that satellites with mHi >,0.0
+1010.2 × (0.678/h)2 M do not exist. The model was con-,0.0
+                                                                      Figure 3. Calibration of mass-to-light ratio for the SDSS DR7,70.0
+strained using measurements of number counts and projected,0.0
+"                                                                      sample, using the code K-correct. Histogram shows the measured",70.0
+clustering wp (rp ) of ALFALFA Hi-selected galaxies from              distribution of Model g − r colours against Petrosian mass-to-,0.0
+Guo et al. (2017) for the thresholds log10 (mHi /h−2 M ) ≥            light ratio in the r-band. Green points with errors show binned,0.0
+"9.8 + 2 log10 (0.678) and 10.2 + 2 log10 (0.678).                     measurements of the same, and the green solid curve shows our",0.0
+"      The default PCP18 model precludes rare, massive Hi              best fit relation (4) to the points. Dashed red curve shows the",6.0
+"satellites. In the following, we will also see that this de-          fit reported by Wang & White (2012) for reference. See text for",0.0
+fault implementation is in mild disagreement with wp (rp )            discussion.,0.0
+for galaxies with log10 (mHi /h−2 M ) ≥ 10.0 + 2 log10 (0.678),0.0
+(which was not used in constraining the scaling relation). This,0.0
+"is likely due to our updated optical HOD from Paul et al.             excluding satellites from halos with m > msat,max , while",0.0
+(2019) with its improved modelling of scale-dependent halo            keeping the scaling relations for centrals and satellites intact,0.0
+"bias and the self-consistent calibration of the satellite red         otherwise, leads to acceptable descriptions of the measure-",0.0
+"fraction. (The latter was identified by PCP18 as the parame-          ments for all the thresholds mentioned above, as well as of",0.0
+ter most susceptible to systematic effects in their analysis; see     the Hi mass function. Since the threshold is on halo rather,0.0
+"their section 4.2.) We therefore explored variations around           than Hi mass, such a model can in principle accommodate",0.0
+"the PCP18 model, finding that the simple modification of              rare and massive Hi satellites. A simple χ2 minimisation",0.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,5.622222222222222
+6      Paranjape et al.,0.0
+"exercise, varying msat,max and predicting wp (rp ) for galaxies   Diemer & Kravtsov (2015, who used the m200c definition of",0.0
+with log10 (mHi /h−2 M ) ≥ 10.0 + 2 log10 (0.678) using the       halo mass) are converted to the m200b definition appropriate,0.0
+"covariance matrix kindly provided by Hong Guo, leads to           for the HOD fits using the prescription of Hu & Kravtsov",0.0
+"msat,max ' 1014.4 h−1 M .                                         (2003).",0.0
+"      Being tied to the optical HOD, this Hi scaling relation        To preserve correlations between halo concentration and",6.0
+"suffers from a natural incompleteness in producing Hi masses,     large-scale environment, the Lognormal concentrations of",0.0
+determined by the optical completeness limit on Mr for the        halos in narrow mass bins are rank ordered by the actual,0.0
+"galaxy population. For a sample limited by Mr < −19,              estimated halo concentrations in each bin (the assumption",0.0
+"for example, the Hi mass function is complete only above          being that this ranking would be approximately preserved",0.0
+"mHi & 109.65 h−2 M . As such, all our analysis of Hi-selected     even in relatively coarsely sampled halos, although see Ra-",0.0
+galaxies is restricted to the massive end.                        makrishnan et al. 2020). The scale radius rs = R200b /c200b,0.0
+                                                                  inferred for each halo from this exercise is stored for later,66.0
+                                                                  use (see section 3.2).,66.0
+                                                                     • Galaxy velocities: The central of a halo is assigned the,69.0
+3    ASSIGNING GALAXY PROPERTIES IN,0.0
+                                                                  bulk velocity of the halo. The satellites are assigned random,66.0
+     MOCKS,5.0
+                                                                  velocities drawn from a 3-dimensional isotropic Gaussian,66.0
+We now describe our main algorithm for generating mock            distribution with mean equal to the central velocity and 1-d,0.0
+"galaxies in a gravity-only simulation, along with a ‘baryoni-     velocity dispersion appropriate for the NFW profile at the",0.0
+fication’ scheme for assigning spatial distributions of stars     location of the satellite.,0.0
+and gas to each galaxy.,0.0
+"                                                                       Additionally, we implement the following modifications:",71.0
+                                                                     • Galaxy colours: To assign g − r and u − r colours to,69.0
+"3.1    Algorithm                                                  galaxies, we extend the algorithm proposed by Skibba &",0.0
+"Our basic algorithm to assign galaxy luminosities and colours     Sheth (2009). As in their case, the first step is to determine",0.0
+"to halos in N -body simulations is essentially the same as that   whether a galaxy is ‘red’ or ‘blue’, which is done separately",0.0
+"described by Skibba & Sheth (2009), with a few technical          for satellites and centrals, using the probability p(red|sat, Mr )",0.0
+improvements. We also include a number of additional galaxy       for satellites (see sections 2.3.3) and the corresponding prob-,0.0
+"properties. The algorithm can be summarised as follows:           ability for centrals which can be derived using p(red|sat, Mr ),",0.0
+                                                                  p(red|Mr ) and the HOD (this also requires an integral over,66.0
+"   • Central occupation and luminosity: A threshold               the halo mass function, for which we use the fitting function",3.0
+"luminosity Lmin (or absolute magnitude Mr,max ) is dy-            from Tinker et al. 2008). In the next step, we assign g − r and",0.0
+namically determined by requiring that the HOD of cen-            u − r colours by sampling the appropriate (bivariate) mode,0.0
+"tral galaxies fcen (> Lmin |m) be sampled down to a value         of the double Gaussian p(g − r, u − r|Mr ) calibrated in sec-",0.0
+"1.5 × 10−3 for all halo masses m ≥ 40 mpart , where mpart is      tion 2.3.3. Operationally, we first sample the univariate mode",0.0
+"the particle mass of the simulation. For example, for the         pred/blue (g − r|Mr ) (obtained by marginalising the respective",0.0
+"L300 N1024 configuration, this gives us Mr,max ' −19.             bivariate distribution over u − r) and then sample the corre-",0.0
+"halos of mass m are then occupied by a central galaxy             sponding conditional distribution pred/blue (u − r|g − r, Mr ),",0.0
+"with probability fcen (> Lmin |m). Central galaxy luminosi-       for each red/blue galaxy (see also Xu et al. 2018). Optionally,",0.0
+ties are sampled from the conditional luminosity function         we also include galactic conformity by correlating g − r with,0.0
+fcen (> L|m)/fcen (> Lmin |m).                                    halo concentration (or an unspecified Gaussian-distributed,0.0
+"   • Satellite occupation and luminosity: The number              halo property) at fixed halo mass, using the tunable prescrip-",3.0
+of satellites in an occupied halo is drawn from a Poisson         tion of Paranjape et al. (2015).,0.0
+"distribution with mean N̄sat (> Lmin |m), and the luminosities       • Galaxy stellar masses: As discussed by Paranjape",0.0
+"of these satellites are sampled from the conditional luminosity   et al. (2015) and described in detail in section 2.3.4, we",0.0
+function N̄sat (> L|m)/N̄sat (> Lmin |m). We do not enforce       calculate stellar masses m∗ using a (g − r)-dependent mass-,0.0
+that satellites be less luminous than their host central. For     to-light ratio calibrated for SDSS DR7 galaxies.,0.0
+"a luminosity-complete sample of galaxies with Mr ≤ −19,              • Galaxy neutral hydrogen masses: We assign Hi",0.0
+"we find that, in approximately 6.5% of groups containing at       masses to a uniformly sampled fraction fHi of galaxies, with a",0.0
+"least one satellite, the brightest satellite is brighter than the lognormal distribution at fixed Mr and g −r, using the model",0.0
+"central.                                                          from PCP18. This model, which we refer to as the ‘mini-",0.0
+"   • Galaxy positions: The central of a halo is placed at         mal PCP18’ model below, additionally discards Hi-satellites",3.0
+the halo center-of-mass. Satellite positions are distributed as   which have log10 (mHi /h−2 M ) > 10.2 + 2 log10 (0.678). As,0.0
+"an NFW profile around the central, truncated at R200b . Halo      described in section 2.4, we modify this model by instead dis-",0.0
+"concentrations c200b are drawn from a Lognormal distribution      carding Hi-satellites in parent halos having m ≥ msat,max .10",0.0
+with median and scatter at fixed halo mass as calibrated          This is done after the uniform downsampling for Hi assign-,0.0
+"by Diemer & Kravtsov (2015) using very high-resolution            ment described above. For our default model, which we call",0.0
+"simulations, which avoids contamination due to numerical          ‘PCP18 mod-sat’, we set msat,max = 1014.4 h−1 M (see be-",0.0
+fitting errors in relatively low-resolution boxes. The use of     low for a comparison between the models). As discussed by,0.0
+"the NFW form, which is an accurate description of the profile     PCP18, for optically selected galaxies with Mr ≤ −18, this",0.0
+of well-resolved halos at the masses and spatial separations,0.0
+"of our interest (see, e.g., Figures 2 and 3 of Paul et al.",0.0
+"2019), also allows us to bypass the need for accessing particle",0.0
+information from the underlying N -body simulation and            10 All such ‘discarded’ satellites continue to have their assigned,0.0
+"work only with halo catalogs. The fitting functions from          optical properties, only their Hi mass is set to zero.",0.0
+"                                                                                                          MNRAS 000, 1–17 (0000)",106.0
+avr_spaces,9.63768115942029
+                                                                                                        Colourful mocks            7,104.0
+"optical-Hi scaling relation places the majority of Hi mass in         • Before baryonification, each halo starts with its total",0.0
+faint blue galaxies (see their Figure 9).                          matter as a single component distributed according to an,0.0
+   • Neutral hydrogen disks: For each galaxy containing            NFW profile consistent with the gravity-only simulation in,3.0
+"Hi, we assign a comoving disk scale length hHi for an assumed      which the mock catalog is being generated, using the mass",0.0
+thin disk with Hi surface density ΣHi (r⊥ ) ∝ e−r⊥ /hHi (here      mvir and concentration cvir = Rvir /rs (see section 3.1 for,0.0
+"r⊥ is the radial distance in the disk plane), using the scaling    details of determining the scale radius rs for each halo).",0.0
+relation                                                              • We divide the total mass of each baryonified halo into 5,0.0
+"                                                   0.5            components: bound gas (‘bgas’), stars in the central galaxy",51.0
+"          hHi = 7.49 h−1 kpc mHi /1010 h−2 M            ,      (8)",10.0
+"                                                                   (‘cgal’), neutral hydrogen in its disk (‘Hi’),12 gas expelled",67.0
+"with a scatter of 0.06 dex, consistent with the measurements       due to feedback (‘egas’) and the dark matter which quasi-",0.0
+reported by Wang et al. (2016).11 These are useful in mod-         adiabatically relaxes in the presence of the baryons (‘rdm’).,0.0
+"elling ‘baryonified’ rotation curves, as we describe later.           • Each baryonic component, denoted by index α ∈",0.0
+"   • Galaxy environment: We assign to each galaxy the              {bgas, cgal, Hi, egas}, is assigned   a mass fraction fα subject",3.0
+                                                                                               P,95.0
+value of its host-centric dark matter overdensity δ and tidal      to the constraint fbary ≡ α fα = Ωb /Ωm due to conserva-,0.0
+"anisotropy α,√ each Gaussian smoothed at an adaptive scale         tion of baryonic mass. In practice, we set fcgal = m∗ /mvir ,",0.0
+"4R200b,host / 5 and at the fixed scale 2h−1 Mpc, as well as the    fHi = 1.33 mHi /mvir (with the prefactor accounting for He-",0.0
+bias b1 of the host (see Paranjape et al. 2018a and Paranjape      lium correction) and fbgas using,0.0
+& Alam 2020 for how these variables are calculated in the                                          h                 i−1,0.0
+"N -body simulation).                                                          fbgas = (Ωb /Ωm ) × 1 + (Mc /mvir )β       ,       (9)",0.0
+                                                                   with Mc = 1.2 × 1014 h−1 M and β = 0.6 as described by,67.0
+3.2    ‘Baryonified’ density profiles and rotation                 ST15 (see their equation 2.19 and figure 2). We comment,0.0
+       curves                                                      on possible variations in this relation later. The ejected gas,7.0
+"The galaxy properties described above, namely, luminosity,         fraction fegas is then set by the baryonic mass conservation",0.0
+"colour, stellar mass and Hi mass, are all assigned by our al-      constraint.13",0.0
+gorithm by treating each galaxy as a point object. Combined           • Each baryonic component is given its own mass pro-,0.0
+"with the information on the host halo mass and concentra-          file ρα (r). The choices below for ρbgas , ρcgal and ρegas are",0.0
+"tion, however, these properties can also be used to model the      identical to those in ST15. We briefly describe these below",0.0
+spatial distribution of stars and of hot and cold gas in the       and refer the reader to ST15 for more details and original,0.0
+galaxy and its halo. This in turn can be used to construct a       references.,0.0
+"rotation curve for the galaxy, which has several interesting             – The bound gas component refers to the hot, ionized",0.0
+"applications as we discuss later.                                     halo gas (which does not include, e.g., gas heated by su-",0.0
+     Since the circular velocity vrot (r) at a halo-centric dis-      pernovae). The corresponding density profile ρbgas has,5.0
+"tance r depends on the total mass mtot (< r) enclosed in              the form ρbgas ∝ [ln(1 + r/rs )/(r/rs )]1/(Γ−1) , set assum-",0.0
+"this radius, we must model the spatial distribution of all            ing hydrostatic equilibrium and a polytropic equation of",0.0
+matter components inside the host halo. This is particularly          state in the inner halo and matched to the original NFW,0.0
+relevant for the inner parts of the halo which are typically          profile in the outer halo. Here rs and Γ are the scale ra-,0.0
+baryon-dominated. We restrict this analysis to central galax-         dius of the NFW profile and the polytropic index of the,0.0
+"ies and will return in future work to satellite galaxies, which       gas, respectively.  The matching is performed at a radius",0.0
+                                                                                √,80.0
+require additional modelling of processes such as tidal and           rmatch = 5 rs and fixes the value of Γ. For hosts of cen-,0.0
+"ram pressure stripping, strangulation, etc. (see, e.g., van den       trals with Mr ≤ −19, we find typical values of Γ ' 1.19",0.0
+Bosch et al. 2008; Behroozi et al. 2019) that are beyond the          with a dispersion of ' 0.015.,0.0
+scope of the present work.                                               – The stellar profile is assumed to follow ρcgal ∝,0.0
+"     We follow the prescription of Schneider & Teyssier (2015,                2    2",5.0
+                                                                      r−2 e−r /4Rhl with half-light radius Rhl = 0.015 Rvir,70.0
+"henceforth, ST15) to ‘baryonify’ each host halo. This method,",0.0
+"                                                                      (Kravtsov 2013). In principle, this can be extended to",70.0
+"and extensions thereof, have been shown to successfully ac-",0.0
+                                                                      include a scatter and/or accommodate a dependence on,70.0
+count for baryonic effects in the matter power spectrum,0.0
+                                                                      halo angular momentum as predicted by disk formation,70.0
+(Chisari et al. 2018; Schneider et al. 2019; Aricò et al. 2020b),0.0
+"                                                                      models (Mo et al. 1998, see the discussion in Kravtsov",70.0
+and bispectrum (Aricò et al. 2020a) at relatively small scales,0.0
+"                                                                      2013); we ignore this here for simplicity. Strictly speaking,",70.0
+over a range of redshifts. We have modifed the ST15 pre-,0.0
+                                                                      we should treat the stellar profile as a combination of a,70.0
+scription to include the Hi disk and have simplified it by,0.0
+                                                                      central bulge and a 2-dimensional disk (with a relative,70.0
+"truncating all profiles at the halo radius (see, e.g., Aricò",0.0
+"                                                                      contribution that correlates with galaxy colour), rather",70.0
+"et al. 2020b). Following the general practice for this method,",0.0
+we use the mass mvir ≡ m200c and radius Rvir ≡ R200c for,0.0
+                                                                   12,67.0
+all baryonification scaling relations below. We are primarily          We assume that the stellar and Hi disks are decoupled and do,0.0
+"interested here in low redshifts and length scales . Rvir . We     not model time-dependent warps, etc. in the Hi disk. We correct",0.0
+briefly summarise the method next.                                 for Helium as mentioned in the text but do not attempt to account,0.0
+                                                                   for molecular Hydrogen.,67.0
+"                                                                   13 For a small fraction (∼ 1%) of objects with M ≤ −19, the sum",67.0
+                                                                                                                   r,115.0
+11  Wang et al. (2016) provide a scaling relation for the quantity fcgal + fHi + fbgas exceeds Ωb /Ωm (these in turn are dominated,0.0
+"DHi defined as the diameter of the contour corresponding to a      by objects having fcgal + fHi > Ωb /Ωm ). For such objects, we",0.0
+"surface density of 1M pc−2 , which we relate to hHi using the      set fegas = 0 without changing any of the other baryonic mass",0.0
+"provided scaling relation itself (which implies a constant average fractions, so that fbary > Ωb /Ωm . Overall mass conservation",0.0
+"surface density, independent of mHi ) along with an integral over  then implies that the corresponding dark matter fraction frdm =",0.0
+the exponential disk profile ΣHi (r⊥ ).                            1 − fbary is smaller than 1 − Ωb /Ωm for these objects.,0.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,17.814814814814813
+8      Paranjape et al.,0.0
+Figure 4. Baryonification of halos from gravity-only simulations. We show two examples of hypothetical halos with masses mvir =,0.0
+"1011 h−1 M (left panels) and mvir = 1012.5 h−1 M (right panels), with halo concentrations and baryonic mass fractions as indicated",0.0
+in respective labels. The baryonic fractions sum up to Ωb /Ωm ' 0.163. Upper panels: Density profiles normalised by the halo density,0.0
+ρ(< Rvir ) ≡ 200ρcrit . The original NFW profile in each case is shown by the thin dotted black curve. Thicker curves with different colours,0.0
+"and line styles show the 5 individual components as indicated, with the thick dark red curve showing the final total profile. Note especially",0.0
+"that the ejected gas profile (dotted magenta) is nearly a constant in each case, and that the relaxed dark matter profile (thick dashed",0.0
+black) is substantially different from the original NFW in its shape duepto quasi-adiabatic contraction and expansion. Lower panels:,0.0
+Rotation velocity profile vrot (r) normalised by the virial velocity Vvir = Gmvir /Rvir . Note that the contribution of the Hi disk to the,0.0
+"rotation curve is treated separately from that of the spherical components, as described in the text.",0.0
+   than the purely spherically symmetric form assumed here.                   the Hi disk to the rotation curve itself is treated separately,3.0
+"   In this work, we will follow the previous literature on the                as described below.",3.0
+"   subject and assume the form given above, leaving a more",3.0
+                                                                           Each profile function ρα (r) is normalised so as to enclose the,75.0
+   self-consistent description of the stellar disk to future work.,3.0
+                                                                           total mass mvir inside,75.0
+                                                                                               P Rvir . The total baryonic profile is then,95.0
+"   In this sense, the stellar profile we model is better thought",3.0
+"                                                                           fbary ρbary (r) =      α fRα ρα (r), with an enclosed baryonic",75.0
+   of as a pure bulge.                                                                                  r,3.0
+                                                                           mass mbary (< r) = 4π 0 dr0 r02 fbary ρbary (r0 ).,75.0
+      – The expelled gas component incorporates all gas af-                   • The dark matter component is assumed to quasi-,6.0
+"   fected by feedback, without distinguishing between possible             adiabatically respond to the presence of baryonic mass and",3.0
+                                                              2   2,62.0
+   gas phases. Its √ profile is taken to be ρegas (r) ∝ e−r /2rej          relax to a new shape while approximately conserving angular,3.0
+"   with rej = 0.5 200 ηej Rvir , setting ηej = 0.5, so that                momentum. The details of the iterative procedure used to",3.0
+"   rej ' 3.5Rvir . As discussed by ST15, the modelling of                  calculate the resulting relaxed dark matter profile ρrdm (r)",3.0
+   ρegas (r) in the halo outskirts is rather uncertain and ob-            (normalised similarly to the baryonic profile functions) are,3.0
+"   servationally ill-constrained. However, at the scales of our            in Appendix A, which is based on section 2.3 of ST15. The",3.0
+"   interest (r . Rvir ), ρegas (r) ≈ constant and its contribu-            mass fraction frdm is set simply by mass conservation to be",3.0
+   tion to the total mass is therefore completely determined               frdm = 1 − Ωb /Ωm . The dark    R r matter mass enclosed in radius,3.0
+   by baryonic mass conservation inside the halo. Our results              r is then mrdm (< r) = 4π 0 dr0 r02 frdm ρrdm (r0 ).,3.0
+   are therefore expected to be very robust to any minor                      • The thin exponential Hi disk leads to a mid-plane circu-,3.0
+   variations in the shape of ρegas (r) at scales & Rvir .                 lar velocity contribution vHi (r) satisfying (see section 2.6 of,3.0
+      – The sphericalised profile of Hi is obtained by integrat-           Binney & Tremaine 1987),6.0
+   ing a thin exponential disk of surface density ΣHi (r⊥ ) ∝                                    2,3.0
+                                                                                          2fHi Vvir,90.0
+                                                                                2,80.0
+"   e−r⊥ /hHi (with r⊥ being the radial distance in the disk                    vHi (r) =              y 2 [I0 (y)K0 (y) − I1 (y)K1 (y)] , (10)",3.0
+                                                                                         (hHi /Rvir ),89.0
+   plane) to get ρHi (r) ∝ r−1 e−r/hHi . The disk scale length                                              p,3.0
+"   hHi is assigned as described in section 3.1. Note: This                 where y ≡ r/(2hHi ), Vvir = Gmvir /Rvir is the virial velocity",3.0
+   sphericalised contribution only affects the calculation of              and In (y) and Kn (y) are modified Bessel functions of the,3.0
+"   the relaxed dark matter component. The contribution of                  first and second kind, respectively.",3.0
+"                                                                                                                     MNRAS 000, 1–17 (0000)",117.0
+avr_spaces,19.869565217391305
+                                                                                                              Colourful mocks            9,110.0
+"Figure 5. Sanity check on HOD. (Left panel:) Mocks versus input functions. For each threshold on Mr , we separately show the contribution",0.0
+of central and satellite galaxies in the mock (histograms) and in the analytical HOD (smooth curves). (Right panel:) Thresholded,0.0
+"luminosity function in the mock (separately showing the contribution of central, satellite and all galaxies) versus SDSS data from Zehavi",0.0
+et al. (2011). Vertical dotted line indicates the completeness threshold calculated by our algorithm for the L300 N1024 box.,0.0
+                                                                         Hi. Since we truncate all profiles at the radius Rvir of the,73.0
+"                                                                         host halo, the total halo mass satisfies mvir = mtot−Hi (<",73.0
+"                                                                         Rvir ) + mHi . Finally, the rotational velocity vrot (r) of a test",73.0
+                                                                         particle at halo-centric distance r in the galaxy mid-plane is,73.0
+                                                                                                q,96.0
+                                                                                                                        2,120.0
+                                                                                     vrot (r) = Gmtot−Hi (< r)/r + vHi    (r) .       (11),85.0
+                                                                         Figure 4 shows baryonified density profiles and rotation,73.0
+                                                                         curves for hypothetical dwarf-like and Milky Way-like halos,73.0
+"                                                                         hosting an NGC 99-like galaxy, comparing the baryonified",73.0
+                                                                         result with the original NFW result in each case. Only for,73.0
+"                                                                         these examples, we have set the galaxy stellar mass using the",73.0
+                                                                         abundance matching prescription of Behroozi et al. (2013b),73.0
+"                                                                         with updated parameters taken from Kravtsov et al. (2018),",73.0
+"                                                                         and have fixed the Hi mass to mHi = 109.83 h−2 M , with the",73.0
+                                                                         Hi disk size set using equation (8).,73.0
+                                                                              We clearly see that the ejected gas profile is essentially,78.0
+"                                                                         constant in each case. More importantly, we see that the",73.0
+                                                                         baryonified rotation curves are substantially flatter and also,73.0
+                                                                         more diverse in shape than their purely NFW counterparts,73.0
+                                                                         (see also section 5.1).,73.0
+Figure 6. Sanity check on clustering. Projected 2-point correlation,0.0
+function (2pcf) wp (rp ) for red/blue/all galaxies in luminosity bins,0.0
+in the mock (solid lines with error bands) compared with data from,0.0
+"Zehavi et al. (2011, points with errors). Mock measurements used         4    RESULTS",0.0
+6 realisations of the L300 N1024 box for the three fainter bins and,0.0
+3 realisations of the L600 N1024 box for the brightest bin. Lines        We now report the results of generating mock catalogs using,0.0
+show the mean and error bands reflect the respective standard            the algorithm of section 3 on the simulations described in,0.0
+"deviations over all available realisations. Similarly to the data,       section 2.1.",0.0
+mock galaxies were classified as red and blue based on their g − r,0.0
+values in comparison to equation (1). The 2pcf for mock galaxies,0.0
+was calculated using equation (12) with πmax = 60h−1 Mpc to              4.1    Optical properties,0.0
+match the Zehavi et al. (2011) measurements.,0.0
+"                                                                         As a sanity check, the left panel of Figure 5 compares the",73.0
+                                                                         input fitting functions for the HOD from Paul et al. (2019),73.0
+   • The total mass of dark matter and all baryonic compo-               with the output of the mock algorithm applied to a single,3.0
+nents except the Hi disk enclosed in radius r is mtot−Hi (<              L300 N1024 box. The right panel of the Figure compares the,0.0
+"r) = mrdm (< r) + mbary−Hi (< r), where the notation ‘bary-              thresholded luminosity function averaged over 6 realisations",0.0
+Hi’ refers to summing over all baryonic components except                of the L300 N1024 box with the measurements from Zehavi,0.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,40.84782608695652
+10      Paranjape et al.,0.0
+Figure 7. Colour-magnitude and colour-colour bimodality in the mock. Histograms show distributions of Mr against g − r (left panel),0.0
+"and u − r (middle panel), and g − r against u − r (right panel) in one mock using the L300 N1024 box.",0.0
+Figure 8. Differential luminosity functions (left panel) and stellar mass functions (right panel) of red/blue/all central/satellite/all galaxies,0.0
+averaged over 6 mocks using the L300 N1024 configuration. Colour segregation in the left panel was based on equation (1) applied to,0.0
+"g − r and Mr for each galaxy, while for the right panel we used (g − r)cut = 0.76 + 0.10[log10 (m∗ /h−2 M ) − 10] (Paranjape et al. 2015).",0.0
+"For comparison, the solid green curves in the left (right) panel show the corresponding SDSS fits from Blanton et al. (2003) (Peng et al.",0.0
+"2012). In the case of the stellar mass function, these fits are also separately available for centrals and satellites and are shown as the",0.0
+"dashed and dotted green curves, respectively",0.0
+"et al. (2011) that were used as constraints by Paul et al.                the limited volume of our 300h−1 Mpc boxes, which do not",0.0
+(2019).                                                                   include the effects of faint (predominantly red) satellites in,0.0
+     Figure 6 similarly compares the projected clustering of              very massive halos.,5.0
+"red/blue/all galaxies in mock catalogs with the measurements                    Figure 7 shows the joint distributions of Mr , g−r and u−",0.0
+from Zehavi et al. (2011). Mock galaxies were classified as               r in one mock using the L300 N1024 box. We clearly see the,0.0
+"red and blue based on their g − r values in comparison to                 well-known colour-magnitude and colour-colour bimodality,",0.0
+equation (1) to ensure a fair comparison with the data. The               another sanity check on the mock algorithm.,0.0
+projected 2-point correlation function (2pcf) wp (rp ) for mock,0.0
+"galaxies was calculated by integrating the real space 2pcf                      Turning to somewhat more detailed tests, Figure 8 com-",0.0
+ξ(r) using                                                                pares the differential luminosity and stellar mass functions,0.0
+                                                                          averaged over 6 realisations of the L300 N1024 box with,74.0
+                          Z √rp2 +πmax,26.0
+                                   2,35.0
+                                            r ξ(r)                        fitting functions to SDSS measurements from the literature.,44.0
+"             wp (rp ) = 2              dr p           ,        (12)       In each case, for the mock measurements we show results",13.0
+                           rp               r2 − rp2,27.0
+                                                                          separately for red/blue/all central/satellite/all galaxies. The,74.0
+where we set πmax = 60h−1 Mpc to match the Zehavi et al.                  total luminosity function is in reasonable agreement with the,0.0
+"(2011) measurements. We see generally good agreement in                   Schechter function fit from Blanton et al. (2003), which is not",0.0
+"all cases, although the clustering of red galaxies tends to be            very surprising since the thresholded luminosity function was",0.0
+lower in the mock than in the data. This is very likely due to            used as a constraint in the HOD calibration. The total stellar,0.0
+"                                                                                                                   MNRAS 000, 1–17 (0000)",115.0
+avr_spaces,12.90625
+                                                                                                           Colourful mocks           11,107.0
+Figure 9. (Left panel:) Differential Hi mass function of red/blue/all central/satellite/all galaxies in averaged over 6 ‘minimal PCP18’,0.0
+model mocks using the L300 N1024 configuration. Colour segregation was based on equation (1) applied to g − r and Mr for each galaxy.,0.0
+"For comparison, the solid green curves show the corresponding fit from Martin et al. (2010) to Hi-selected galaxies in the ALFALFA",0.0
+survey. (Right panel:) Projected 2pcf in the ‘minimal PCP18’ model (averaged over the same mocks as in the left panel) for three mHi,0.0
+"thresholds, compared with corresponding ALFALFA measurements from Guo et al. (2017). The labels indicate the values of χ2 when",0.0
+comparing each mock result with the corresponding 12 data points from the ALFALFA measurements using the covariance matrices,0.0
+kindly provided by Hong Guo.,0.0
+mass function of the mocks also agrees reasonably well with            We therefore explore the modification of the PCP18 model,0.0
+"the corresponding fit from Peng et al. (2012). In this case,           described in section 3.1 and discard Hi-selected satellites",0.0
+"we also have individual fits for centrals and satellites, which        in parent halos with m ≥ msat,max . To set the value of",0.0
+"were produced by Peng et al. (2012) using the SDSS group               the threshold, we attempted to minimise the χ2 between",0.0
+"catalog of Yang et al. (2007), which similarly agree well with         mocks and data for the threshold log10 (mHi /h−2 M ) ≥",0.0
+"the stellar mass functions of mock centrals and satellites,            10.0 + 2 log10 (0.678). We found that the χ2 has a very broad",0.0
+"respectively. Considering the substantial amount of system-            minimum in the vicinity of msat,max = 1014.4 h−1 M , which",0.0
+atic uncertainty involved in extracting stellar mass functions         we use as our default value. The resulting Hi mass function,0.0
+"from data, as well as inherent systematics in the galaxy clas-         and projected 2pcf are shown in Figure 10; we see a mild im-",0.0
+"sification algorithm used to produce the SDSS group catalog,           provement in the 2pcf of the lowest threshold, and also some",0.0
+we conclude that the mocks are in good agreement with the              improvement in the higher thresholds. Since this halo thresh-,0.0
+"data here as well.                                                     olded model, which we refer to as ‘PCP18 mod-sat’, allows",0.0
+                                                                       for the existence of massive satellites while still agreeing with,71.0
+"                                                                       observations, we choose to adopt it as our default model. For",71.0
+"                                                                       comparison, the number densities in units of (h−1 Mpc)−3",71.0
+4.2    Neutral hydrogen properties,0.0
+                                                                       in this model for each thresholded sample (in order of in-,71.0
+"Figure 9 compares the Hi mass function and projected 2pcf              creasing threshold Hi mass) in the mocks are, respectively,",0.0
+"in the ‘minimal PCP18’ model (see section 3.1) with measure-           {2.274 ± 0.003, 0.810 ± 0.002, 0.203 ± 0.0007} × 10−3 (with",0.0
+"ments in the ALFALFA survey. The left panel shows the dif-             errors estimated using the scatter across 6 realisations), while",0.0
+ferential Hi mass function of red/blue/all central/satellite/all       the corresponding values from Table 1 of Guo et al. (2017),0.0
+"galaxies averaged over 6 realisations of the L300 N1024                are {2.68, 0.92, 0.22} × 10−3 (no errors are provided on these",0.0
+"box, compared with the fit to Hi-selected galaxies in the              values).",0.0
+ALFALFA survey by Martin et al. (2010). We see reason-                      We have also explored several ‘beyond halo mass’ mod-,0.0
+able agreement above the completeness limit of the cat-                ifications of the PCP18 model by changing the criterion,0.0
+"alog (set by the luminosity completeness threshold; see                used for discarding Hi-selected satellites. In particular, we",0.0
+section 2.4 and the discussion in Paul et al. 2018). The               considered thresholds on (i) halo mass and concentration,0.0
+"right panel shows that the 2pcf of mock galaxies with                  jointly (i.e., only allowing satellites in low mass and high",0.0
+"log10 (mHi /h−2 M ) > 10.0 + 2 log10 (0.678) compares slightly         concentration halos), (ii) halo concentration alone (only high",0.0
+"worse with the corresponding ALFALFA measurements from                 concentration halos allowed), (iii) large-scale linear halo bias",0.0
+"Guo et al. (2017) than the higher mHi thresholds, which               (low bias halos allowed) and (iv) discarding all ‘red mode’",0.0
+perform well. The 2pcf for Hi-selected mock galaxies was               satellites. These are generally inspired by the results of Guo,0.0
+"calculated using equation (12) with πmax = 20h−1 Mpc to                et al. (2017), who found that abundance matching prefer-",0.0
+match the Guo et al. (2017) measurements.                              entially younger (sub)halos with Hi-selected galaxies led to,0.0
+"      As mentioned earlier, this slight disagreement is likely         good descriptions of ALFALFA clustering. Of these, a joint",6.0
+"due to our use of an updated and improved optical HOD.                 threshold on halo mass and concentration performs the best,",0.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,8.630434782608695
+12      Paranjape et al.,0.0
+"Figure 10. Same as figure 9, showing results for the ‘PCP18 mod-sat’ model described in section 3.1, which discards Hi-selected satellites",0.0
+"in parent halos with m ≥ msat,max . The value of msat,max was set to 1014.4 h−1 M by minimising the χ2 between the mock 2pcf results",0.0
+and corresponding ALFALFA measurements and covariance for the lowest mass threshold shown. We adopt this as our default model for,0.0
+assigning Hi mass to mock galaxies.,0.0
+but leads to minimum χ2 values nearly identical to those for          their analytical halo model. Both sets of results are consistent,0.0
+"the ‘PCP18 mod-sat’ model above, at the cost of one addi-             with these earlier works, showing a steep m∗ − m relation but",0.0
+tional parameter. We therefore conclude that the ALFALFA              a much shallower mHi − m relation. The latter feature also,0.0
+data for massive Hi galaxies do not require ‘beyond halo              emphasizes the need for caution when painting Hi directly,0.0
+mass’ effects in modelling the mass function and projected            into halos: the weak correlation between Hi mass and halo,0.0
+"2pcf, provided that Hi mass is assigned through an optical            mass can amplify systematic errors in any calibration.",0.0
+"scaling relation.                                                           For comparison, the purple curves in the top panel show",0.0
+                                                                      the median m∗ − m relations calibrated using SHAM by,70.0
+"                                                                      Behroozi et al. (2013b, solid) and Kravtsov et al. (2018,",70.0
+"                                                                      dash-dotted), converted in each case to the m200b mass def-",70.0
+"5    PREDICTIONS AND EXTENSIONS                                       inition appropriate for this work. We see that, for stellar",0.0
+Having demonstrated that our mock catalogs reproduce the              masses above the completeness limit of our mocks (horizon-,0.0
+"basic 1-point and 2-point observables associated with galaxy          tal dotted line), the mock result is closer to the Behroozi",0.0
+"samples selected by optical or Hi properties, in this section         et al. (2013b) relation for m . 1013.5 h−1 M and lies between",0.0
+"we discuss certain predictions of our mocks, along with a few         the two SHAM calibrations at larger halo masses. A similar",0.0
+possible extensions.                                                  comparison with the literature for the mHi − m relation is,0.0
+                                                                      complicated by the fact that different authors have used,70.0
+"                                                                      different conventions for defining this relation (e.g., Padman-",70.0
+5.1    Rotation curves and baryon mass-halo mass                      abhan et al. 2017; Guo et al. 2017). We have checked that our,0.0
+"       relations                                                      results are qualitatively similar to these calibrations, leaving",7.0
+                                                                      a more detailed analysis to future work.,70.0
+Figure 11 shows the rotation curves of 150 randomly chosen,0.0
+"mock central galaxies containing Hi disks, with the curves in",0.0
+"each panel being coloured by one of m∗ , Mr , mHi or g − r. As",0.0
+                                                                      5.2     HI-optical cross-correlations,70.0
+"noted earlier, these are generally flat but show considerable",0.0
+"diversity, in qualitative agreement with observed rotation            A primary strength of our mock algorithm is its ability to",0.0
+curves (Persic et al. 1996; McGaugh et al. 2001). We defer            paint realistic optical and Hi properties in the same galaxies.,0.0
+a more quantitative comparison with observations to future            This means that we can go beyond previous studies and,0.0
+"work.                                                                 predict or forecast expectations for the joint distribution of,",0.0
+"     Our mocks also predict the relations between group halo          say, stellar and Hi mass in low-redshift galaxies, along with",5.0
+mass and stellar mass (m∗ − m) as well as Hi mass (mHi − m).          the corresponding spatial correlations.,0.0
+Figure 12 shows the m∗ −m relation (top panel) and the mHi −                Figure 13 shows the mHi − m∗ relation (left panel) and,0.0
+m relation (bottom panel) for all central galaxies with Mr ≤          the spatial cross-correlation function between galaxy samples,0.0
+−19 in one mock using the L300 N1024 configuration. The               selected by luminosity and Hi mass (right panel) in our mocks.,0.0
+top panel is essentially the same as Figure A4 of Paranjape           These are genuine predictions of our algorithm; comparing,0.0
+"et al. (2015), except that we have used an updated HOD.               these with corresponding measurements forms a test of the",0.0
+"Similarly, the bottom panel can be compared with Figure B1            various underlying assumptions. Indeed, as already noted by",0.0
+"of PCP18, who showed the median mHi − m relation using                PCP18, we see in the left panel that the predicted mHi − m∗",0.0
+"                                                                                                             MNRAS 000, 1–17 (0000)",109.0
+avr_spaces,13.282608695652174
+                                                                                                            Colourful mocks            13,108.0
+"Figure 11. Rotation curves of 150 central galaxies containing Hi disks, chosen at random from one mock using the L300 N1024",0.0
+"configuration. Each curve is coloured by the galaxy’s stellar mass m∗ (top left), luminosity Mr (bottom left), Hi mass mHi (top right) and",0.0
+"colour g − r (bottom right). Since each rotation curve is only generated for r ≤ Rvir , the curves truncate at the dotted line which shows",0.0
+v(r) = (Vvir /Rvir ) r in each panel.,0.0
+                                                                         relation is in reasonable agreement with the results of Maddox,73.0
+"                                                                         et al. (2015, purple points with errors), although the median",73.0
+"                                                                         trend in the mocks is slightly lower than in the data. Note,",73.0
+"                                                                         however, that our mocks are only complete above the m∗",73.0
+                                                                         and mHi thresholds indicated by the vertical and horizontal,73.0
+"                                                                         dotted lines, respectively. As such, a robust comparison with",73.0
+                                                                         observations is not possible in the mass range we can explore.,73.0
+"                                                                              To date, the only measurements of cross-correlations",78.0
+                                                                         similar to those in the right panel are by Papastergis et al.,73.0
+"                                                                        (2013), who studied the projected cross-2pcf between Hi-",72.0
+                                                                         selected galaxies in ALFALFA and colour-selected galaxies,73.0
+                                                                         in SDSS (see their Figures 17 and 18). As pointed out by,73.0
+"                                                                         Guo et al. (2017), however, the weights used by Papastergis",73.0
+                                                                         et al. (2013) in their 2pcf measurements did not accurately,73.0
+"                                                                         account for sample variance effects, which are substantial in",73.0
+                                                                         the small volume (z . 0.05) probed by the ALFALFA survey.,73.0
+"                                                                         E.g., Guo et al. (2017) reported a significant mHi -dependence",73.0
+"                                                                         of clustering, which was not detected by Papastergis et al.",73.0
+                                                                        (2013).,72.0
+                                                                              It will therefore be very interesting to confront our mock,78.0
+                                                                         catalogs with more robust cross-2pcf measurements. For,73.0
+"                                                                         example, the choices controlling Hi-satellites in our model",73.0
+"                                                                        (namely, the value of the threshold halo mass msat,max ) af-",72.0
+                                                                         fect the shape of the cross-correlation at small separations,73.0
+Figure 12. Correlation with halo mass. Histograms show the,0.0
+m∗ − m (top panel) and mHi − m (bottom panel) relation for all,0.0
+                                                                         between bright optical galaxies and Hi-selected galaxies and,73.0
+central galaxies with Mr ≤ −19 in one mock using the L300 N1024          can therefore be tested by such observations.,0.0
+configuration. Solid yellow lines in each panel show the median,0.0
+"relation in bins of halo mass, while dashed yellow lines show the",0.0
+corresponding 16th and 84th percentiles. For calculating these           5.3    Possible extensions,0.0
+"curves, in the top panel, we ignore halos which do not contain a         Although the mocks we have presented here provide fairly",0.0
+"central galaxy and in the bottom panel, we further ignore halos",0.0
+                                                                         realistic descriptions of the distribution of optical and Hi,73.0
+whose central does not contain any Hi mass. The solid purple,0.0
+"                                                                         properties of local Universe galaxies, they contain several",73.0
+curve in the top panel shows the SHAM calibration from Behroozi,0.0
+"et al. (2013b), while the dash-dotted purple curve shows the             ingredients which can be potentially improved upon or ex-",0.0
+"same relation with parameters taken from Kravtsov et al. (2018),         tended. We list some of these here.",0.0
+converted to the m200b mass definition in each case. The horizontal,0.0
+dotted lines in each panel indicate the approximate completeness,0.0
+thresholds for m∗ and mHi in the mock.                                   5.3.1    Assembly bias,0.0
+                                                                        We noted in section 3.1 that our assignment of halo concen-,72.0
+                                                                         trations c200b preserves spatial correlations of c200b at fixed,73.0
+                                                                         halo mass (also called assembly bias) under the assumption,73.0
+                                                                         that these correlations are accurately tracked even by poorly,73.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,44.84905660377358
+14       Paranjape et al.,0.0
+Figure 13. Predictions of optical-Hi correlations not used in constraining the galaxy-dark matter connection in our mocks. (Left panel:),0.0
+Joint distribution (coloured histogram) of mHi and m∗ for galaxies containing Hi in one mock using the L300 N1024 box. Solid yellow line,0.0
+"indicates the median mHi in bins of m∗ , while dashed yellow lines indicate the 16th and 84th percentiles. Vertical and horizontal dotted",0.0
+"lines indicate the completeness limits of the mock in m∗ and mHi , respectively (see Figures 8 and 10). For comparison, the purple symbols",0.0
+"with error bars show the relation calibrated by Maddox et al. (2015, see their Table 1) using a cross-matched sample of Hi-selected",0.0
+galaxies from the ALFALFA and SDSS surveys. (Right panel:) 2-point projected cross-correlation function between galaxy samples,0.0
+selected by optical luminosity thresholds (indicated by colours) and a sample selected by Hi mass threshold (indicated in the label) using,0.0
+"3 realisations of the L300 N1024 configuration. The samples lie in the same volume and therefore overlap in membership, but are not",0.0
+explicitly cross-matched during their selection.,0.0
+"resolved halos. Recently, Ramakrishnan et al. (2020) have                elling all central galaxies with Mr ≤ −19. Strictly speaking,",0.0
+shown that this assumption fails at worse than ∼ 20% for                 this relation holds for the central galaxies of halos with,0.0
+"halos resolved with . 150 particles. Instead, they showed                mvir & 1013 h−1 M , since it is calibrated using X-ray obser-",0.0
+that the spatial correlations of the local tidal anisotropy α            vations of galaxy clusters. Our choice therefore corresponds,0.0
+are accurately preserved even for halos with as few as 30                to an extrapolation of this relation into an unobserved regime,0.0
+particles. Using their technique of sampling a conditional               of halo mass. Since the resulting value of fbgas for each cen-,0.0
+"distribution p(c200b |m, α), therefore, will be a promising ex-          tral is typically substantially smaller than its fegas (which",0.0
+"tension of our algorithm that would endow mocks built on                 is set by baryonic mass conservation in this work), we do",0.0
+low-resolution N -body simulations with accurate representa-             not expect this extrapolation to lead to any significant sys-,0.0
+"tions of halo assembly bias. Another interesting extension,              tematic error for any of the statistics explored in this paper.",0.0
+"also easy to include in our mocks, would be an environment-              Improvements to this model could potentially explore using",0.0
+"dependent modulation of the HOD itself, as discussed by                  observations of the circum-galactic medium to first constrain",0.0
+Xu et al. (2020). Combined with the conditional sampling of              fegas .,0.0
+"halo properties, this would lead to full flexibility in modelling",0.0
+galaxy assembly bias.,0.0
+                                                                         5.3.4    Predictions at higher redshift,73.0
+"5.3.2    Stellar disk-bulge decomposition                                All of our results have been restricted to the local Universe,",0.0
+                                                                         a consequence of using clustering constraints from the low-,73.0
+We also noted above that our treatment of the stellar spatial            redshift (z . 0.1) surveys SDSS and ALFALFA. It will,0.0
+"profile is, strictly speaking, inconsistent because it assumes a         be interesting to extend our results to the redshift range",0.0
+"spherically symmetric distribution of stars rather than, say,            0.5 . z . 1, which is interesting for both astrophysics and",0.0
+"an axially symmetric disk. Since our primary intention is                cosmology, and is the target of several completed, ongoing",0.0
+"to produce a rotation curve for each galaxy, the difference              and upcoming galaxy surveys. In future work, we will ex-",0.0
+"between a spherical bulge and an axial disk can potentially              plore whether an extension of our low-redshift algorithm,",0.0
+"be a large effect (Binney & Tremaine 1987). We intend to                 augmented by simplified galaxy evolution models (e.g., Lilly",0.0
+"explore this further in a forthcoming work, by simultaneously            et al. 2013), can be used to make robust predictions at these",0.0
+modelling a stellar disk and bulge using realistic bulge-to-             higher redshifts.,0.0
+"disk mass ratios (e.g. Bernardi et al. 2014), along with their",0.0
+correlations with galaxy colours and the presence of an Hi,0.0
+disk.,0.0
+                                                                         6    CONCLUSION,73.0
+"                                                                         The ability to realistically reproduce, in a simulated universe,",73.0
+5.3.3    Gas fractions,0.0
+                                                                         the properties and spatial distribution of galaxies observed in,73.0
+"In this work, we used the expression (9) for the bound gas               the actual Universe, opens the door to addressing a number",0.0
+"fraction fbgas , with parameters adopted from ST15, for mod-             of interesting astrophysical and cosmological questions. We",0.0
+"                                                                                                                MNRAS 000, 1–17 (0000)",112.0
+avr_spaces,9.9375
+                                                                                                   Colourful mocks          15,99.0
+have presented an updated algorithm that produces catalogs          • Our mocks can predict the Hi mass function of (massive),0.0
+"of mock galaxies in simulated halos at z ≈ 0, realistically      galaxies selected by optical luminosity or colour. The corre-",0.0
+endowed with a variety of properties including r-band lumi-      sponding measurements have only recently become available,0.0
+"nosities, g − r and u − r colours, stellar masses m∗ , neutral   (Dutta et al. 2020; Dutta & Khandai 2021), and will be",0.0
+"hydrogen (Hi) masses mHi , as well as (for central galaxies)     very useful for testing our basic assumptions regarding the",0.0
+"the spatial distribution of gas and stars, leading to realistic  connection between optical properties and Hi.",0.0
+"rotation curves. Our mock galaxies additionally inherit a           • The rotation curves of our mock central galaxies, along",0.0
+"number of environmental properties from their host dark          with their Hi disks when present, can be used to model the",0.0
+"matter halos, including the halo-centric overdensity, tidal      observed 21cm velocity profiles of Hi-selected galaxies. The",0.0
+anisotropy and large-scale halo bias.                            distribution of the widths of these profiles has been measured,0.0
+"     Our algorithm, which relies on an HOD which assigns         in the ALFALFA survey (Papastergis et al. 2011; Moorman",5.0
+"galaxy properties based on halo mass m alone, can option-        et al. 2014) and constitutes an exciting and hitherto unex-",0.0
+ally include effects such as galactic conformity and colour-     plored new probe of the small-scale distribution of baryonic,0.0
+"dependent galaxy assembly bias, and is easily extendable to      matter.",0.0
+include effects such as environment-dependent modulations of        • The ‘radial acceleration relation’ (RAR) between the,0.0
+"the HOD. By construction, the basic mocks we presented here      acceleration profiles due to dark matter and baryons in disk",0.0
+"reproduce the luminosity function, colour-luminosity relation    galaxies (McGaugh et al. 2016; Lelli et al. 2017) has emerged",0.0
+and the luminosity- and colour-dependent 2-point clustering      as an intriguing new probe of gravitational theories at galac-,0.0
+"of optically selected SDSS galaxies with Mr ≤ −19, as well       tic length scales. The rotation curves and mass profiles of",0.0
+as the Hi mass function and Hi-dependent 2-point clustering      baryonic and dark matter in our mock central galaxies enable,0.0
+of Hi-selected ALFALFA galaxies with mHi & 109.7 h−2 M .         an exploration of the nature of the RAR for large samples,0.0
+The mocks then reproduce the SDSS stellar mass function          of galaxies in the CDM+baryons framework (Paranjape &,0.0
+and the SDSS-ALFALFA m∗ − mHi relation reasonably well           Sheth 2021).,0.0
+(these were not used when constraining the parameters of,0.0
+"the algorithm), while predicting the spatial 2-point cross-",0.0
+correlation function of low-redshift optical and Hi galaxies,0.0
+                                                                 ACKNOWLEDGMENTS,65.0
+"(which has not yet been robustly measured; Figure 13), and",0.0
+the m∗ − m and mHi − m relations (Figure 12). The cal-           We thank R. Srianand for his collaboration and for many,0.0
+ibrations we used lead to volume-completeness thresholds         valuable discussions and suggestions which improved the pre-,0.0
+"of Mr ≤ −19, m∗ & 109.85 h−2 M and mHi & 109.7 h−2 M ,           sentation of this paper. AP also thanks Nishikanta Khandai",0.0
+thus representing the population of massive galaxies in the      and Kandaswamy Subramanian for insightful discussions.,0.0
+low-redshift Universe. Our algorithm represents a consoli-       The research of AP is supported by the Associateship Scheme,0.0
+"dation of the results of Paranjape et al. (2015), Paul et al.    of ICTP, Trieste and the Ramanujan Fellowship awarded",0.0
+"(2018) and Paul et al. (2019).                                   by the Department of Science and Technology, Government",0.0
+     Our mocks are potentially useful for a number of appli-     of India. TRC acknowledges support of the Department of,5.0
+"cations, some of which we list here.                             Atomic Energy, Government of India, under project no. 12-",0.0
+                                                                 R&D-TFR-5.02-0700 and the Associateship Scheme of ICTP.,65.0
+   • In their study of environment-dependent clustering in       This work made extensive use of the open source computing,3.0
+"SDSS, Paranjape et al. (2018b) noted some small (∼ 20%)          packages NumPy (Van Der Walt et al. 2011),14 SciPy (Vir-",0.0
+"but significant differences between their ‘mass-only HOD’        tanen et al. 2020),15 Matplotlib (Hunter 2007),16 Jupyter",0.0
+mocks and SDSS galaxies in the most anisotropic tidal envi-      Notebook17 and the plotting software Veusz.18 We gratefully,0.0
+ronments. These differences were ultimately inconclusive due     acknowledge the use of high performance computing facilities,0.0
+"to the comparable level of systematic uncertainties associated   at IUCAA, Pune.19",0.0
+with the HOD calibration used by Paranjape et al. (2018b).,0.0
+"The mocks we have presented, which are based on updated",0.0
+"calibrations, largely mitigate many of these uncertainties.",0.0
+                                                                 DATA AVAILABILITY,65.0
+It will therefore be interesting to revisit this analysis to as-,0.0
+sess the level of beyond-mass effects induced by the tidal       The mock catalogs generated by our algorithm will be shared,0.0
+environment in the SDSS field (see also Alam et al. 2019).       upon reasonable request to the authors.,0.0
+"   • As we noted earlier, our algorithm successfully describes",3.0
+Hi-dependent clustering at the massive end in ALFALFA,0.0
+"without the need of assembly bias, unlike earlier studies (e.g.",0.0
+                                                                 REFERENCES,65.0
+Guo et al. 2017). Our mocks can therefore serve as useful,0.0
+"null tests for galaxy assembly bias using interesting new        Abadi M. G., Navarro J. F., Fardal M., Babul A., Steinmetz M.,",0.0
+"combinations of observables, such as the large-scale bias of         2010, MNRAS, 407, 435",0.0
+"galaxies split by Hi mass in bins of stellar mass.               Abazajian K. N., et al., 2009, ApJS, 182, 543",0.0
+"   • Galactic conformity, a putative non-local connection        Abbas U., Sheth R. K., 2007, MNRAS, 378, 641",3.0
+"between the satellites and central galaxy of the same halo,",0.0
+continues to pose a puzzle for galaxy formation models (Wein-    14 http://www.numpy.org,0.0
+mann et al. 2006; Hearin et al. 2016b). Our mocks can be         15 http://www.scipy.org,0.0
+"used to explore new tests of this phenomenon, e.g., the poten-   16 https://matplotlib.org/",0.0
+tial dependence of galactic conformity on tidal environment      17 https://jupyter.org,0.0
+(which is otherwise an excellent indicator of halo assembly      18 https://veusz.github.io/,0.0
+"bias, see Ramakrishnan et al. 2019).                             19 http://hpc.iucaa.in",0.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,5.4
+16       Paranjape et al.,0.0
+"Alam S., Zu Y., Peacock J. A., Mandelbaum R., 2019, MNRAS,        McGaugh S. S., Lelli F., Schombert J. M., 2016, Phys. Rev. Lett.,",0.0
+"    483, 4501                                                         117, 201101",4.0
+"Alam S., et al., 2020, arXiv e-prints, p. arXiv:2007.09004        Meert A., Vikram V., Bernardi M., 2015, MNRAS, 446, 3943",0.0
+"Aricò G., Angulo R. E., Hernández-Monteagudo C., Contreras S.,  Mo H. J., Mao S., White S. D. M., 1998, MNRAS, 295, 319",0.0
+"    Zennaro M., 2020a, arXiv e-prints, p. arXiv:2009.14225        Moorman C. M., Vogeley M. S., Hoyle F., Pan D. C., Haynes",4.0
+"Aricò G., Angulo R. E., Hernández-Monteagudo C., Contreras S.,      M. P., Giovanelli R., 2014, MNRAS, 444, 3559",0.0
+"    Zennaro M., Pellejero-Ibañez M., Rosas-Guevara Y., 2020b,    Navarro J. F., Frenk C. S., White S. D. M., 1996, ApJ, 462, 563",4.0
+"    MNRAS, 495, 4800                                              Obreschkow D., Croton D., De Lucia G., Khochfar S., Rawlings",4.0
+"Bagla J. S., Khandai N., Datta K. K., 2010, MNRAS, 407, 567           S., 2009, ApJ, 698, 1467",0.0
+"Barnes J., White S. D. M., 1984, MNRAS, 211, 753                  Padmanabhan H., Refregier A., Amara A., 2017, MNRAS, 469,",0.0
+"Behroozi P. S., Wechsler R. H., Wu H.-Y., 2013a, ApJ, 762, 109        2323",0.0
+"Behroozi P. S., Wechsler R. H., Conroy C., 2013b, ApJ, 770, 57    Papastergis E., Martin A. M., Giovanelli R., Haynes M. P., 2011,",0.0
+"Behroozi P., Wechsler R. H., Hearin A. P., Conroy C., 2019,           ApJ, 739, 38",0.0
+"    MNRAS, 488, 3143                                              Papastergis E., Giovanelli R., Haynes M. P., Rodrı́guez-Puebla A.,",4.0
+"Bernardi M., Meert A., Vikram V., Huertas-Company M., Mei S.,         Jones M. G., 2013, ApJ, 776, 43",0.0
+"    Shankar F., Sheth R. K., 2014, MNRAS, 443, 874                Paranjape A., Alam S., 2020, MNRAS, 495, 3233",4.0
+"Bett P., Eke V., Frenk C. S., Jenkins A., Helly J., Navarro J.,   Paranjape A., Sheth R. K., 2021, arXiv e-prints, p.",0.0
+"    2007, MNRAS, 376, 215                                             arXiv:2102.13116",4.0
+"Binney J., Tremaine S., 1987, Galactic dynamics. Princeton Uni-   Paranjape A., Kovač K., Hartley W. G., Pahwa I., 2015, MNRAS,",0.0
+"    versity Press, Princeton, NJ                                      454, 3030",4.0
+"Blanton M. R., Roweis S., 2007, AJ, 133, 734                      Paranjape A., Hahn O., Sheth R. K., 2018a, MNRAS, 476, 3631",0.0
+"Blanton M. R., et al., 2003, ApJ, 592, 819                        Paranjape A., Hahn O., Sheth R. K., 2018b, MNRAS, 476, 5442",0.0
+"Blumenthal G. R., Faber S. M., Flores R., Primack J. R., 1986,    Paul N., Choudhury T. R., Paranjape A., 2018, MNRAS, 479,",0.0
+"    ApJ, 301, 27                                                      1627",4.0
+"Castorina E., Villaescusa-Navarro F., 2017, MNRAS, 471, 1788      Paul N., Pahwa I., Paranjape A., 2019, MNRAS, 488, 1220",0.0
+"Chisari N. E., et al., 2018, MNRAS, 480, 3962                     Pedregosa F., et al., 2011, Journal of Machine Learning Research,",0.0
+"Contreras S., Angulo R., Zennaro M., 2020, arXiv e-prints, p.         12, 2825",0.0
+    arXiv:2012.06596,4.0
+"                                                                  Peng Y.-j., Lilly S. J., Renzini A., Carollo M., 2012, ApJ, 757, 4",66.0
+"Cooray A., Sheth R., 2002, Phys. Rep., 372, 1",0.0
+"                                                                  Persic M., Salucci P., Stel F., 1996, MNRAS, 281, 27",66.0
+"Dempster A. P., Laird N. M., Rubin D. B., 1977, Journal of the",0.0
+"                                                                  Ramakrishnan S., Paranjape A., Hahn O., Sheth R. K., 2019,",66.0
+"    Royal Statistical Society. Series B (Methodological), 39, 1",4.0
+"                                                                      MNRAS, 489, 2977",70.0
+"Diemer B., Kravtsov A. V., 2015, ApJ, 799, 108",0.0
+"                                                                  Ramakrishnan S., Paranjape A., Sheth R. K., 2020, arXiv e-prints,",66.0
+"Dubois Y., et al., 2014, MNRAS, 444, 1453",0.0
+                                                                      p. arXiv:2012.10170,70.0
+"Dutta S., Khandai N., 2021, MNRAS, 500, L37",0.0
+"                                                                  Reddick R. M., Wechsler R. H., Tinker J. L., Behroozi P. S., 2013,",66.0
+"Dutta S., Khandai N., Dey B., 2020, MNRAS, 494, 2664",0.0
+"                                                                      ApJ, 771, 30",70.0
+"Giovanelli R., et al., 2005, AJ, 130, 2598",0.0
+"                                                                  Schaye J., et al., 2015, MNRAS, 446, 521",66.0
+"Gnedin O. Y., Kravtsov A. V., Klypin A. A., Nagai D., 2004, ApJ,",0.0
+"                                                                  Schneider A., Teyssier R., 2015, J. Cosmology Astropart. Phys.,",66.0
+"    616, 16",4.0
+"                                                                      2015, 049",70.0
+"Guha Sarkar T., Mitra S., Majumdar S., Choudhury T. R., 2012,",0.0
+"                                                                  Schneider A., Teyssier R., Stadel J., Chisari N. E., Le Brun A.",66.0
+"    MNRAS, 421, 3570",4.0
+"                                                                      M. C., Amara A., Refregier A., 2019, J. Cosmology Astropart.",70.0
+"Guo H., et al., 2015, MNRAS, 453, 4368",0.0
+"                                                                      Phys., 2019, 020",70.0
+"Guo H., Li C., Zheng Z., Mo H. J., Jing Y. P., Zu Y., Lim S. H.,",0.0
+"                                                                  Scoccimarro R., 1998, MNRAS, 299, 1097",66.0
+"    Xu H., 2017, ApJ, 846, 61",4.0
+"Hahn O., Abel T., 2011, MNRAS, 415, 2101                          Skibba R. A., Sheth R. K., 2009, MNRAS, 392, 1080",0.0
+"Hearin A. P., Watson D. F., 2013, MNRAS, 435, 1313                Somerville R. S., Davé R., 2015, ARA&A, 53, 51",0.0
+"Hearin A. P., Zentner A. R., van den Bosch F. C., Campbell D.,    Springel V., 2005, MNRAS, 364, 1105",0.0
+"    Tollerud E., 2016a, MNRAS, 460, 2552                          Springel V., et al., 2018, MNRAS, 475, 676",4.0
+"Hearin A. P., Behroozi P. S., van den Bosch F. C., 2016b, MNRAS,  Sugiyama S., Takada M., Kobayashi Y., Miyatake H., Shirasaki",0.0
+"    461, 2135                                                         M., Nishimichi T., Park Y., 2020, Phys. Rev. D, 102, 083520",4.0
+"Hu W., Kravtsov A. V., 2003, ApJ, 584, 702                        Teyssier R., Moore B., Martizzi D., Dubois Y., Mayer L., 2011,",0.0
+"Hunter J. D., 2007, Computing In Science & Engineering, 9, 90         MNRAS, 414, 195",0.0
+"Kitaura F.-S., et al., 2016, MNRAS, 456, 4156                     Tinker J., Kravtsov A. V., Klypin A., Abazajian K., Warren M.,",0.0
+"Komatsu E., et al., 2011, ApJS, 192, 18                               Yepes G., Gottlöber S., Holz D. E., 2008, ApJ, 688, 709",0.0
+"Kravtsov A. V., 2013, ApJ, 764, L31                               Vale A., Ostriker J. P., 2004, MNRAS, 353, 189",0.0
+"Kravtsov A. V., Vikhlinin A. A., Meshcheryakov A. V., 2018,       Van Der Walt S., Colbert S. C., Varoquaux G., 2011, preprint,",0.0
+"    Astronomy Letters, 44, 8                                          (arXiv:1102.1523)",4.0
+"Lelli F., McGaugh S. S., Schombert J. M., Pawlowski M. S., 2017,  Villaescusa-Navarro F., Viel M., Datta K. K., Choudhury T. R.,",0.0
+"    ApJ, 836, 152                                                     2014, J. Cosmology Astropart. Phys., 2014, 050",4.0
+"Lewis A., Challinor A., Lasenby A., 2000, ApJ, 538, 473           Virtanen P., et al., 2020, Nature Methods, 17, 261",0.0
+"Lilly S. J., Carollo C. M., Pipino A., Renzini A., Peng Y., 2013, Vogelsberger M., et al., 2014, MNRAS, 444, 1518",0.0
+"    ApJ, 772, 119                                                 Wang W., White S. D. M., 2012, MNRAS, 424, 2574",4.0
+"Maddox N., Hess K. M., Obreschkow D., Jarvis M. J., Blyth S. L.,  Wang J., Koribalski B. S., Serra P., van der Hulst T., Roychowd-",0.0
+"    2015, MNRAS, 447, 1610                                            hury S., Kamphuis P., Chengalur J. N., 2016, MNRAS, 460,",4.0
+"Manera M., et al., 2013, MNRAS, 428, 1036                             2143",0.0
+"Mao Y.-Y., et al., 2018, ApJS, 234, 36                            Weinmann S. M., van den Bosch F. C., Yang X., Mo H. J., 2006,",0.0
+"Martin A. M., Papastergis E., Giovanelli R., Haynes M. P.,            MNRAS, 366, 2",0.0
+"    Springob C. M., Stierwalt S., 2010, ApJ, 723, 1359            Xu H., Zheng Z., Guo H., Zu Y., Zehavi I., Weinberg D. H., 2018,",4.0
+"Masaki S., Lin Y.-T., Yoshida N., 2013, MNRAS, 436, 2286              MNRAS, 481, 5470",0.0
+"McGaugh S. S., Rubin V. C., de Blok W. J. G., 2001, AJ, 122,      Xu X., Zehavi I., Contreras S., 2020, arXiv e-prints, p.",0.0
+    2381                                                              arXiv:2007.05545,4.0
+"                                                                                                          MNRAS 000, 1–17 (0000)",106.0
+avr_spaces,13.727272727272727
+                                                                                                      Colourful mocks            17,102.0
+"Yang X., Mo H. J., van den Bosch F. C., Pasquali A., Li C.,      equation (A1) can be re-written as",0.0
+"     Barden M., 2007, ApJ, 671, 153                                                                                           −1",5.0
+"Yang X., et al., 2018, ApJ, 860, 30                                                             qrdm            mbary (< r)",0.0
+                                                                   L(ξ|r) ≡ ξ − 1 + qrdm −            1+,67.0
+"York D. G., et al., 2000, AJ, 120, 1579                                                         frdm         frdm mnfw (< r/ξ)",0.0
+"Yuan S., Eisenstein D. J., Garrison L. H., 2018, MNRAS, 478,               = 0,                                                 (A4)",0.0
+    2019,4.0
+"Zehavi I., et al., 2011, ApJ, 736, 59                            which is conducive to an iterative solution. We employ New-",0.0
+"Zentner A. R., Hearin A. P., van den Bosch F. C., 2014, MNRAS,   ton’s method using an analytical expression for the derivative",0.0
+"    443, 3044                                                    L0 (ξ|r) = ∂L(ξ|r)/∂ξ at fixed r and writing the estimate at",4.0
+"Zhao C., et al., 2020, arXiv e-prints, p. arXiv:2007.08997       the nth iteration as",0.0
+"Zheng Z., Guo H., 2016, MNRAS, 458, 4015",0.0
+"Zu Y., Mandelbaum R., 2015, MNRAS, 454, 1161                                                         L(ξ (n−1) |r)",0.0
+                                                                                   ξ (n) = ξ (n−1) −                 .          (A5),83.0
+"de la Torre S., Peacock J. A., 2013, MNRAS, 435, 743                                                 L0 (ξ (n−1) |r)",0.0
+"de la Torre S., et al., 2013, A&A, 557, A54",0.0
+                                                                 For practically all baryonic configurations and values of r ∈,65.0
+"van den Bosch F. C., Aquino D., Yang X., Mo H. J., Pasquali A.,",0.0
+"     McIntosh D. H., Weinmann S. M., Kang X., 2008, MNRAS,",5.0
+"                                                                 (10−3 , 1) × Rvir , and for all values 0 ≤ qrdm ≤ 1, convergence",65.0
+"    387, 79                                                      is achieved with a relative tolerance of 10−5 in . 8 iterations",4.0
+"                                                                 using equation (A5). (In contrast, a simple iteration applied",65.0
+                                                                 directly to equation A4 typically requires several tens to,65.0
+"                                                                 hundreds of iterations for qrdm . 0.8, while the inner regions",65.0
+                                                                 of the halo do not converge for qrdm & 0.9.),65.0
+                                                                      Knowing the ratio ξ at any r then gives the mass of,70.0
+APPENDIX A: QUASI-ADIABATIC                                      relaxed dark matter enclosed in radius r using equation (A2),0.0
+"RELAXATION                                                       setting rin = r/ξ on the right hand side. By construction,",0.0
+"                                                                 ξ = 1 at r = Rvir , so that mrdm (< Rvir ) = frdm mvir , as it",65.0
+Here we describe the technique for calculating the response,0.0
+                                                                 should be. The value of mrdm (< r) at any r is sufficient for,65.0
+of the dark matter profile to presence of baryonic matter,0.0
+                                                                 calculating the rotation curve vrot (r) using equation (11). For,65.0
+through an approximate conservation of angular momentum,0.0
+"                                                                 the differential profile shown in Figure 4, we must differentiate",65.0
+(Barnes & White 1984; Blumenthal et al. 1986; Gnedin et al.,0.0
+                                                                 equation (A2) with respect to r. The (somewhat cumbersome),65.0
+2004; Abadi et al. 2010; Teyssier et al. 2011; ST15). The dis-,0.0
+                                                                 result can be written analytically entirely in terms of ξ and,65.0
+cussion below follows section 2.3 of ST15 (see their equations,0.0
+                                                                 r; we omit it for brevity.,65.0
+2.15-2.17).,0.0
+      The basic equation describing this quasi-adiabatic re-,6.0
+laxation gives the final radius r of a spherical dark matter,0.0
+"element in terms of its initial radius rin ,",0.0
+                                                 ,31.0
+               r                 mnfw (< rin ),15.0
+                   = 1 + qrdm                  −1 .        (A1),19.0
+              rin                 mtot (< r),14.0
+"Here, mtot (< r) = mbary (< r) + mrdm (< r) is the total",0.0
+"massR r contained inside the final radius r, with mbary (< r) =",0.0
+4π 0 dr0 r02 fbary ρbary (r0 ) being the baryonic component,0.0
+"and mrdm (< r) being the final, relaxed dark matter mass",0.0
+profile which satisfies,0.0
+"                 mrdm (< r) = frdm mnfw (< rin ) ,         (A2)",17.0
+                          R rin 0 02,26.0
+and mnfw (< rin ) = 4π 0 dr r ρnfw (r0 ) is the dark matter,0.0
+"mass inside the initial radius as per the original, normalised",0.0
+NFW profile. We remind the reader that all the density,0.0
+profiles are normalised so as to enclose the entire mass mvir,0.0
+inside r = Rvir .,0.0
+      The quantity qrdm is a parameter controlling the level,6.0
+"of angular momentum conservation. From equation (A1), we",0.0
+"see that qrdm = 1 corresponds to perfect conservation, since",0.0
+r m(< r) is an adiabatic invariant in this case. On the other,0.0
+"hand, qrdm = 0 corresponds to no baryonic backreaction. In",0.0
+"this work, we follow ST15 and set qrdm = 0.68, which has",0.0
+been found to accurately describe the cumulative effects of,0.0
+baryonic backreaction effects both in the inner and outer,0.0
+"regions of simulated halos, accounting for the fact that the",0.0
+formation of the central galaxy is not instantaneous. The,0.0
+effect of varying qrdm on rotation curves and related statistics,0.0
+will be the focus of a future study.,0.0
+      Defining the ratio,6.0
+"                             ξ ≡ r/rin ,                   (A3)",29.0
+"MNRAS 000, 1–17 (0000)",0.0
+avr_spaces,17.41025641025641

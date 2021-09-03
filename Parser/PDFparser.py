@@ -5,7 +5,6 @@ import pandas as pd
 import nltk
 from bs4 import BeautifulSoup
 import tempfile
-from pdfminer.pdftypes import LITERALS_JBIG2_DECODE
 
 class PDFParser(object):
     pathToScript = '/home/stork/PycharmProjects/ClsRecArticles/SCRSA/Parser/pdf2txt.sh'

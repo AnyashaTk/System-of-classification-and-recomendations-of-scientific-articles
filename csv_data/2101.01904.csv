@@ -1,0 +1,618 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+Comparing Classiﬁcation Models on Kepler,20,CMBX12,,40,40
+Data,20,CMBX12,,4,4
+Rohan Saha - rsaha@ualberta.ca,11,CMR12,,30,30
+University of Alberta,11,CMBX12,,21,21
+"November 26, 2019",11,CMR12,,17,17
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+n,10,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+J,7,Times-Roman,,1,1
+,4,Times-Roman,,0,0
+7,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+P,11,Times-Roman,,1,1
+E,12,Times-Roman,,1,1
+.,5,Times-Roman,,1,1
+"h
+p",10,Times-Roman,,3,1
+-,6,Times-Roman,,1,1
+o,10,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+t,5,Times-Roman,,1,1
+s,7,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"2
+v
+4
+0
+9
+1
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+1,14,CMBX12,,1,1
+Introduction,14,CMBX12,,12,12
+"Even though the original kepler mission ended due to mechanical failures, the kepler satellite continues
+to collect data. Using classiﬁcation models, we can understand the features exoplanets possess and then
+use those features to investigate further for any more information on the candidate planet. Based on",9,CMR10,,309,104
+"the classiﬁcation model, the idea is to ﬁnd out the probability of the planet under observation being a",9,CMR10,,103,103
+"candidate for an exoplanet or a false positive. If the model predicts that the observation is a candidate for
+being an exoplanet, then further investigation can be conducted. From the model we can narrow down
+the features that might explain the diﬀerence between a candidate and false positive which ultimately
+help use to increase the eﬃciency of any model and ﬁne tune the model and ultimately the process of
+searching for any future exoplanets.",9,CMR10,,447,109
+2 Dataset Description,14,CMBX12,,21,21
+"Space agencies have placed telescopes in the orbit to look for exoplanets. Exoplanets are planets that
+are not present in our solar system. NASA had launched the telescope in 2009 for ﬁnding exoplanets in
+other star systems, with the goal of ﬁnding other habitable planets, which might be explored in the future
+with scientiﬁc advancements. Though the mission ended due to mechanical failures, the satellite still
+records images on an extended mission. The data set contains numerous features which are explained
+by the data dictionary here. Each sample in the dataset is termed as a Kepler “object of interests” or
+KOIs. The data set contains 9564 samples and 49 columns as features and one target variable which is
+categorical. Some columns of interests for the experiment are given below[1]:",9,CMR10,,794,106
+•,9,SFRM1000,,1,1
+kepler name:,9,CMR10,,12,12
+"[These names] are intended to clearly indicate a class of objects that have been
+conﬁrmed or validated as planets—a step up from the planet candidate designation. However, this
+attribute will not be included for classiﬁcation.",9,CMR10,,226,95
+•,9,SFRM1000,,1,1
+koi pdisposition: The disposition Kepler data analysis has towards this exoplanet candidate. One,9,CMR10,,96,96
+"of FALSE POSITIVE, NOT DISPOSITIONED, and CANDIDATE.",9,CMR10,,52,52
+•,9,SFRM1000,,1,1
+"koi score: A value between 0 and 1 that indicates the conﬁdence in the KOI disposition. For CAN-
+DIDATEs, a higher value indicates more conﬁdence in its disposition, while for FALSE POSITIVEs,
+a higher value indicates less conﬁdence in that disposition.",9,CMR10,,253,96
+"In addition, features like koi fpﬂag nt and koi fpﬂag ss have high correlation with the target variable,
+where the former deals with the light curve of the kepler object of interest and the latter deals with the
+transit-like event and whether the transit like event was signiﬁcant. From preliminary exploratory data
+analysis, these two features had high scores in terms of their relation with the target variable. Also,",9,CMR10,,419,106
+koi,9,CMR10,,3,3
+depth is an important variable for problem and its relation related to koi duration and how these,9,CMR10,,97,97
+two variables aﬀect the candidacy of the astronomical body being an exoplanet.,9,CMR10,,78,78
+1,9,CMR10,,1,1
+3 Problem Description,14,CMBX12,,21,21
+"For the purposes of this problem, the target variable under consideration is the ‘koi disposition’, and
+with a quick inspection of the data set, it is observed that there are two categorical outputs, “CANDI-
+DATE”, and “FALSE POSITIVE”. Therefore, is a binary classiﬁcation problem. The former output
+says that the sample under observation is a candidate for being an exoplanet and the latter output
+says that the sample under observation is false positive for being considered as a planet. This poses an
+important question of ﬁnding out how similar should be the attributes so as to distinguish between false
+positives and candidates. This is of paramount importance because if a model predicts a sample as a
+candidate then the decision of undertaking further investigation should be carried out for the sample to
+be conﬁrmed as an exoplanet; this approach will ﬁlter out observations ultimately saving time. Some
+observations after looking at the data are as follows.",9,CMR10,,969,104
+1. The number of samples are almost equally distributed for each label.,9,CMR10,,71,71
+"a. There are 4,496 candidate exoplanets
+b. There are 5,068 false positives",9,CMR10,,74,39
+"2. koi depth - Candidate exoplanets tend to have a lower koi depth compared to False Positives.
+However, the distinction is not clear because there are also some exoplanets that have a higher
+koi depth. Therefore, predicting the label solely based on the koi depth will be a naive decision.
+koi dpeth is the fraction of stellar ﬂux lost at the minimum of the planetary transit.",9,CMR10,,377,98
+4 Experimental Design,14,CMBX12,,21,21
+The experiment under consideration was divided into multiple parts for ease of understanding and,9,CMR10,,96,96
+clarity. The choice of algorithms and justiﬁcation is provided in a later subsection.,9,CMR10,,85,85
+4.1 Exploratory data analysis,11,CMBX12,,29,29
+"Before preprocessing, basic exploratory data analysis was carried out to obtain a high level under-
+standing of the data. We ﬁrst looked at the proportion of the number of samples and found out that
+the dataset has almost equal number of samples for each class (CANDIDATE and FALSE POSITIVE).
+And from some preliminary data analysis the most insightful observation was from the two variables",9,CMR10,,391,99
+koi duration,9,CMTT10,,12,12
+and,9,CMR10,,3,3
+koi depth,9,CMTT10,,9,9
+". These two variables are most insightful because they represent the tran-
+sit attributes of the astronomical body under consideration.",9,CMR10,,135,74
+koi duration,9,CMTT10,,12,12
+"represents the time taken
+from the start to the end when the astronomical body passes in front of the host star[2] and",9,CMR10,,118,92
+koi depth,9,CMTT10,,9,9
+represents the fraction of stellar ﬂux lost at minimum during transit. Figure 1 shows that low,9,CMR10,,94,94
+koi depth,9,CMTT10,,9,9
+"is signiﬁcant because lesser amount of stellar ﬂux lost represents that the astronomical body is closer to
+the host star and thus has a high possibility of revolving around an orbit. Low",9,CMR10,,186,106
+koi duration,9,CMTT10,,12,12
+"signiﬁes
+that transit time is less and has a higher chance of being within the gravitational inﬂuence of the host
+star. Therefore, low values of these two parameters support candidacy of the astronomical body for an",9,CMR10,,215,104
+exoplanet.,9,CMR10,,10,10
+"From ﬁgure 1, it can be observed that candidate exoplanets usually have low koi depth and low
+koi duration. On the other hand, false positives either have high koi depth and low koi duration or low
+koi depth and high koi duration.",9,CMR10,,230,103
+2,9,CMR10,,1,1
+Figure 1: koi duration vs koi depth,9,CMR10,,35,35
+4.2 Feature Selection,11,CMBX12,,21,21
+"The ﬁrst part involved feature selection, where we remove the features which are redundant. Out
+of the initial 49 feature variables, 18 were removed. This reduce the dimensionality of the data. The
+features were removed manually after calculating the pearson correlation between the features. After
+calculating the correlation, the dependent features were removed from the dataset",9,CMR10,,380,101
+1,6,CMR7,,1,1
+". It must be noted
+that the features were selected manually because the number of features is small enough and it also helps
+us to understand the data at a higher level.
+The scores for the top features are given in ﬁgure",9,CMR10,,220,105
+Figure 2: Feature Scores for top 30 features,9,CMR10,,44,44
+4.3 Preprocessing,11,CMBX12,,17,17
+"The second part is to preprocess the dataset. From initial examination of the dataset, there were",9,CMR10,,97,97
+"considerable number of samples, which contained null values. One could simply ignore the samples from",9,CMR10,,101,101
+"the dataset while training the model. However, such an approach is valid when the number of samples
+containing null values are extremely small. This ensures that there is no signiﬁcant loss of information",9,CMR10,,204,104
+1,5,CMR6,,1,1
+The,7,CMR8,,3,3
+χ,7,CMMI8,,1,1
+2,5,CMR6,,1,1
+"method for selecting best features could not be used because the dataset contains negative values, which could",7,CMR8,,110,110
+"have been solved with normalizing the features between 0 and 1. However, it was out of the scope of the experiment.",7,CMR8,,115,115
+3,9,CMR10,,1,1
+"when the samples are dropped. In the case where there is considerable amount of samples, dropping
+samples leads to loss of information and thus requires replacing the null values in the samples. Here,
+we will learn the distribution over the non-null values in the samples in order to obtain the value of the
+feature containing the null value. This is analogous to learning the distribution over the target variables
+given the feature values in the dataset. The iterative imputer from the scikit-learn package will be used
+to accomplish the task",9,CMR10,,544,107
+2,6,CMR7,,1,1
+. The iterative imputer calculates p(x,9,CMR10,,38,38
+|,9,CMSY10,,1,1
+"y) where x is the value of the feature which
+has missing value and y contains the rest of the features which contain values.
+After the dataset has been preprocesed, the dataset has to be divided into training and testing data.
+For the purposes of the experiment, the dataset has been divided in an 80-20 split where 80% of the
+data will be used for training and 20% will be used for testing, which gives us 7651 samples for training
+and 1913 samples for testing. Also, cross-validation[3] will be used with k=5 and the validation set for
+the cross-validation will be a part of the training set. The test set will never be used for any form of
+training as this might bias the results and result in overﬁtting. Also, no sample from the testing set is
+included in the training process in any form. This is ensured by implementing cross-validation after the
+training-test dataset split.",9,CMR10,,882,105
+The algorithms that will be used for modelling the dataset will be,9,CMR10,,66,66
+4.4 Algorithms,11,CMBX12,,14,14
+1. Logistic Regression,9,CMR10,,22,22
+2. Decision Tree,9,CMR10,,16,16
+3. Artiﬁcial Neural Network,9,CMR10,,27,27
+4.5 Choice of Algorithms,11,CMBX12,,24,24
+4.5.1 Logistic Regression,9,CMBX10,,25,25
+"Logistic Regression is one of most basic models which is used in machine learning for classiﬁcation.
+The term logistic refers to the logistic function that helps to normalize the output between the values
+0 and 1. This helps to set a threshold (usually 0.5) above which the class for the sample is classiﬁed to
+be one of the classes(usually class one) and below which the sample is classiﬁed to be in the other class
+(usually class zero). In other words, logistic regression tries to maximize the posterior class probability.
+The logistic function is the sigmoid function which normalizes the output between zero and one. The
+sigmoid function is given as:",9,CMR10,,655,108
+σ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+"1
+1 + exp",9,CMR10,,9,7
+−,6,CMSY7,,1,1
+x,6,CMMI7,,1,1
+(1),9,CMR10,,3,3
+"In fact, a neural network also uses a sigmoid function in the output layer in case of binary classiﬁcation
+which we will examine later.",9,CMR10,,135,106
+The meta-parameter under consideration for logistic regression was the,9,CMR10,,70,70
+inverse regularization,9,CMBX10,,22,22
+parameter for which the values were in the set,9,CMR10,,46,46
+{,9,CMSY10,,1,1
+"0.001, 0.01, 0.1, 1, 10, 100, 1000",9,CMR10,,34,34
+},9,CMSY10,,1,1
+.,9,CMR10,,1,1
+4.5.2 Decision Tree,9,CMBX10,,19,19
+"The initial choice was to use support vector machine for the problem. However, we found out that the
+Decision Tree classiﬁer also provides similar performance to that of support vector machine. The initial
+choice of SVM was motivated by the fact that it is robust to outliers but decision tree is also robust to
+outliers. For the dataset, SVM took much longer to train than Decision Tree, but performed similarly.
+Therefore, decision tree was chosen as one of the algorithms for this experiment. Also, Decision Tree
+is a simpler model than Support Vector Machine in terms of intuition and understanding. A high level
+understanding of Decision Trees can be found out here, and a more in depth understanding is provided
+here.",9,CMR10,,723,105
+"For the Decision Tree algorithm, the meta-parameter under consideration was the depth of the tree[4].
+The values under observation for the tree depth",9,CMR10,,149,101
+∈,9,CMSY10,,1,1
+Z,9,CMMI10,,1,1
++,6,CMR7,,1,1
+and lie in the set,9,CMR10,,18,18
+{,9,CMSY10,,1,1
+"1,2,3,...,25",9,CMR10,,12,12
+},9,CMSY10,,1,1
+". It was also observed
+that higher values of depth did not have any improvement in the performance of the decision tree model.",9,CMR10,,126,103
+2,5,CMR6,,1,1
+IterativeImputer is an experimental feature in the scikit-learn package and must be used with caution.,7,CMR8,,102,102
+https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html,7,CMTT8,,86,86
+4,9,CMR10,,1,1
+4.5.3 Artiﬁcial Neural Network,9,CMBX10,,30,30
+"Neural Networks are a variations of generalized linear models that learn a chain of hidden represen-
+tations with the help of non-linear activations. For the purpose of the experiment, a two layered neural
+network was used with 10 hidden units in each hidden layer and with ReLU activation in the hidden
+layer. The rectiﬁed linear unit is used because is is faster in terms of the training process and intuitive.
+The last layer had a sigmoid activation and the loss function used was binary cross-entropy or the log
+loss, which is the same loss function used for logistic regression. Here 10 hidden neurons were used to
+have a reasonably large function space and two layers were used to learn the representations. Building
+on this, the number of layers can also be increased and a comparison can be done on the basis of a chosen
+metric. From initial analysis, with two layers, the performance on the training set and the test set was
+fairly similar. Also, stochastic gradient descent was used with Nesterov Accelerated Gradient[5] and a
+momentum value of 0.9. Such a setting was used to accelerate the learning process. In addition, other
+optimization procedures can be used for the training process and a comparative analysis can be carried
+out. 100 epochs were used with a batch size of 10 samples.
+The meta-parameter under consideration is the learning rate and the values under observation are:",9,CMR10,,1398,108
+1. 0.001,9,CMR10,,8,8
+2. 0.01,9,CMR10,,7,7
+3. 0.1,9,CMR10,,6,6
+error.,9,CMR10,,6,6
+4.5.4 Statistical Signiﬁcance Tests,9,CMBX10,,35,35
+Statistical Signiﬁcance Tests are used to analyze any two models in terms of measures of accuracy or,9,CMR10,,100,100
+The paired t-test can be used to compare the models under observation which is given by the following.,9,CMR10,,102,102
+t,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+¯,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+µ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+√,9,CMSY10,,1,1
+"n
+s/",9,CMMI10,,4,2
+where ¯,9,CMR10,,7,7
+x,9,CMMI10,,1,1
+"is the sample mean,",9,CMR10,,19,19
+µ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+"is the population mean, s is the sample standard deviation, and n in the
+sample size.
+However, the t-test will not be used for the experiment because due to cross-validation, the assumption
+that the samples are i.i.d is violated. The reason for this is that the estimated scores are now dependent.
+The k-fold cross validation will lead to optimistic scores and result in a higher type-1 error[6].
+Now that we understand why we do not use the t-test, we will use the McNemar’s test[7] for comparing the
+models under observation. Some reasons for using McNemar’s test are given below. It is a distribution-
+free test and it is suitable for binary classiﬁers with cross-validation. It must be noted that the McNemar’s
+test does not say which of the two models is better than the other but says whether the two models
+agree or disagree in the same way or not. An The McNemar’s test uses a contingency table to ﬁnd out
+the disagreement between the pair of algorithms being compared. A sample contingency table is given
+in table 1",9,CMR10,,1024,109
+Classiﬁer 2 correct Classiﬁer 2 incorrect,9,CMR10,,41,41
+"Classiﬁer 1 Correct
+Classiﬁer 2 Incorrect",9,CMR10,,41,21
+"b
+d",9,CMR10,,3,1
+Table 1: Contingency table,9,CMR10,,26,26
+The McNemar’s test statistic is given as,9,CMR10,,40,40
+χ,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+=,9,CMR10,,1,1
+(,9,CMR10,,1,1
+b,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+c,9,CMMI10,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
+b,9,CMMI10,,1,1
++,9,CMR10,,1,1
+c,9,CMMI10,,1,1
+"which gives you the value of the statistic, which can be used to retrieve the p-value. As evident, this test",9,CMR10,,108,108
+"tries to ascertain the measure of disagreement between the two algorithms as to say how do the algorithms
+disagree on the data. We use the McNemar’s test for three pairs of algorithms. The McNemar’s test will
+be used for evaluating the models in the analysis section.",9,CMR10,,267,105
+(2),9,CMR10,,3,3
+(3),9,CMR10,,3,3
+"a
+c",9,CMR10,,3,1
+5,9,CMR10,,1,1
+4.6 Preliminary Results,11,CMBX12,,23,23
+"For each of the algorithm, some preliminary results were calculated which are given below. For each
+of the algorithms, GridSearch[8] with k-fold(k=5) cross-validation was used. For each of the algorithm,
+the ROC curve is provided below which tells us how good the model is in classiﬁcation. This is important
+because we do not just want our model to achieve a high accuracy but also the quality of the model
+should be good in terms of the number of true positives and false positives.
+In addition to the ROC curve, the precision-recall curve is also provided because it help us to understand
+the performance of the model in terms of the number of correct, incorrect predictions, and the total
+predictions. Even though the dataset under consideration has almost balanced classes, the precision-
+recall curve can tell us about the relevant predictions returned out of the total number of predictions.",9,CMR10,,898,106
+4.6.1 Logistic Regression,9,CMBX10,,25,25
+"With k-fold cross-validation, and k=5, 1000 iterations, and a tolerance level of 0.00001, the best
+parameter that was obtained was the",9,CMR10,,134,98
+inverse regularization,9,CMBX10,,22,22
+"[9] of 0.1. The accuracy that was obtained
+with L2 regularization was 95.72(with a standard deviation of 1.325%) without feature scaling (for
+the mentioned number of iterations and the tolerance level) and an accuracy of 98.39(with a standard
+deviation of 0.55%) with feature scaling. This is because the gradient takes longer time to converge
+because the contours for the features are not symmetrical in nature. Also, the rest of the algorithms will
+be trained and tested on the scaled dataset.
+Now that we had a chance to look at the accuracy, let’s understand how good our model is in separating",9,CMR10,,598,106
+"the two classes of the problem. To understand this, we will have to look at the ROC curve and the Area",9,CMR10,,102,102
+under the Receiving Operating Characteristics curve.,9,CMR10,,52,52
+Figure 3: ROC curve for Logistic Regression,9,CMR10,,43,43
+"From ﬁgure 3, it is very clear that the model when very well classify between the two classes.
+Correspondingly, the area under the receiving operating characteristics curve achieved a score of 99.41.
+The precision recall curve for logistic Regression is given in ﬁgure 4",9,CMR10,,270,104
+6,9,CMR10,,1,1
+Figure 4: Precision-Recall curve for Logistic Regression,9,CMR10,,56,56
+4.6.2 Decision Tree,9,CMBX10,,19,19
+"The Decision Tree algorithm was also used with GridSearch to determine the best parameters. The
+meta-parameter under consideration was the max depth and the best value for max depth was found to
+be 6 when using k-fold cross-validation(k=5).
+When using the chosen best parameter max depth as 6, an accuracy of 98.53%(with a standard deviation
+of +- 0.35%) is obtained with the feature scaled dataset. The receiving operating characteristics curve
+is shown in ﬁgure 5.",9,CMR10,,466,103
+Figure 5: ROC curve for Decision Tree,9,CMR10,,37,37
+"The area under the curve for the roc curve achieved a score of 99.39% which is almost similar to that of
+Logistic Regression.",9,CMR10,,125,104
+The precision recall curve for decision tree is given in ﬁgure 6,9,CMR10,,64,64
+7,9,CMR10,,1,1
+Figure 6: Precision-Recall curve for Decision Tree,9,CMR10,,50,50
+4.6.3 Neural Network,9,CMBX10,,20,20
+"As mentioned before, the neural network contained two hidden layers with a rectiﬁed linear unit
+activation in the hidden layers. Using GridSearch, the best value of the learning rate was found to be
+0.001 with a batch size of 10, and for 100 epochs. The average accuracy was 98.33% (with a standard
+deviation of 0.53%) over 10 runs, for the learning rate of 0.001 with a batch size of 10 for 100 epochs. The
+neural network used a momentum of 0.9 with Nesterov Accelerated Gradient to decrease the learning
+time. In addition, the Adam optimizer was also used to train the network which gave a mean accuracy
+of 98.37% +- 0.6%. Since there is no signiﬁcant diﬀerence in the estimates of accuracy for both the
+optimizers, we select the Nesterov Accelerated Gradient as the choice of optimizer on the basis of lower
+standard deviation. Further, more analysis can be carried out in terms of comparing diﬀerent optimizers
+for the experiment and their eﬀects on the prediction performance. However, for this experiment such
+analyses is out of scope for the problem. The receiving operating characteristics curve for the neural
+network is shown in ﬁg 7.",9,CMR10,,1144,108
+Figure 7: ROC curve for Neural Network,9,CMR10,,38,38
+The area under the roc curve also received a score of 99.49% which is slightly higher when compared to,9,CMR10,,102,102
+other models in the experiment.,9,CMR10,,31,31
+The precision recall curve for neural network is given in ﬁgure 8,9,CMR10,,65,65
+8,9,CMR10,,1,1
+Figure 8: Precision-Recall curve for Neural Network,9,CMR10,,51,51
+All the three algorithms will be analyzed in terms of the following:,9,CMR10,,68,68
+5 Analysis,14,CMBX12,,10,10
+1. Execution time,9,CMR10,,17,17
+2. Statistical Signiﬁcance Test,9,CMR10,,31,31
+3. Prediction Performance,9,CMR10,,25,25
+5.0.1 Execution time,9,CMBX10,,20,20
+"Logistic Regression took an average of 5.39 seconds for the training process for the non-scaled dataset
+and an average of 0.06 seconds to train on the scaled dataset. This shows that the training process is
+expedited when the dataset is scaled. This behavior is observed because the contours of the features are
+of diﬀerent scales and thus the gradient takes uneven steps to reach the minima and thus takes longer
+in terms of execution time. This result also shows that we must always scale are dataset while training
+complex models like neural networks because they inherently have longer execution times.",9,CMR10,,606,104
+"Decision Tree provides interesting results compared to other logistic regression because of the selection
+meta-parameters. Using GridSearch with the scaled dataset, we found that the optimal depth of the de-
+cision tree is six. Now, it is obvious that since the depth of tree is ﬁxed, the time required for the training
+process will be the same, which, on average was 0.08 seconds for a max depth of 6, but the accuracy on
+the scaled dataset and the non-scaled dataset will be diﬀerent. In addition, it is worthwhile to report that",9,CMR10,,531,111
+"when using cross-validation with the scaled dataset, the max depth meta-parameter of the tree is found
+out to be six, but when using cross-validation with the non-scaled dataset, the max depth was found to be
+18. For memory considerations and execution time, lower tree depth is beneﬁcial for the training process.",9,CMR10,,314,105
+"For the two hidden layered neural network, the training time with the scaled dataset was about 326.33
+seconds on average (with a batch size of 10, momentum of 0.9 and using Nesterov Accelerated Gradient).
+Increasing the size of the neural network did not result in considerable increase in the performance of
+the model and therefore the two layer neural network is selected here. On the other hand, training a
+neural network with a single hidden layer resulted in a lower training time on average but with a cost of
+a minor drop in accuracy (about 1%). In addition, using the the Adam",9,CMR10,,584,105
+5.0.2 Statistical Signiﬁcance Test,9,CMBX10,,34,34
+"Following the explanation from the experimental design section, we will use the McNemar’s test for",9,CMR10,,98,98
+"comparing the algorithms for the binary classiﬁcation problem in this experiment.
+It must be noted that the McNemar’s test does not say which algorithm is better than the other but says",9,CMR10,,185,103
+9,9,CMR10,,1,1
+"whether the two algorithms under consideration disagree in the same manner or not. This is important
+because there is no signiﬁcant diﬀerence in the accuracy of the models on the test data for multiple runs.
+The null hypothesis for each pair of the three algorithms is given below. The value for",9,CMR10,,295,106
+α,9,CMMI10,,1,1
+"is set to 0.05,
+which means that 95% of the time, we reject the null hypothesis. Also, it must be noted that if the
+sum of disagreements is less than 25 the binomial distribution is used, which is the default behaviour
+for this experiment. If the sum is equal to above 25, the distribution changes to a chi-squared distribution.",9,CMR10,,328,109
+"The alternate hypothesis is that there is signiﬁcant statistical diﬀerence between the pair of algorithms
+as shown below.",9,CMR10,,121,105
+1. Logistic Regression = Decision Tree,9,CMR10,,38,38
+2. Decision Tree = Neural Network,9,CMR10,,33,33
+3. Logistic Regression = Neural Network,9,CMR10,,39,39
+1. Logistic Regression,9,CMR10,,22,22
+,9,CMSY10,,0,0
+= Decision Tree,9,CMR10,,15,15
+2. Decision Tree,9,CMR10,,16,16
+,9,CMSY10,,0,0
+= Neural Network,9,CMR10,,16,16
+3. Logistic Regression,9,CMR10,,22,22
+,9,CMSY10,,0,0
+= Neural Network,9,CMR10,,16,16
+The algorithms that are diﬀerent have to be inferred from the statistical signiﬁcance test.,9,CMR10,,91,91
+•,9,SFRM1000,,1,1
+"Logistic Regression and Decision Tree - The p-value obtained from the test for logistic regression
+and decision tree is 0.012 on average which is less than the critical value of",9,CMR10,,177,98
+α,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"05. Therefore, we
+conclude that the null hypothesis is rejected and there is signiﬁcant diﬀerence in the disagreement
+between the two algorithms. Looking the contingency table, logistic regression gets more predictions
+incorrect when decision tree gets the predictions correct compared to the other case where the
+incorrect number of predictions is less for decision tree where logistic regression gets them correct.
+This says that the decision tree algorithm performs slightly better than logistic regression. However,
+the diﬀerences in the disagreements are signiﬁcant and therefore the are statistically diﬀerent.",9,CMR10,,616,102
+•,9,SFRM1000,,1,1
+"Decision Tree and Neural Network - The p-value obtained from the McNemar’s test is 0.0044
+which is lower than the value of",9,CMR10,,122,89
+α,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"05. Therefore, there is signiﬁcant diﬀerence between the a
+Decision Tree and Neural Network. Looking at the contingency matrix, we observe that 21 times
+the decision tree algorithm got correct number of predictions when the neural network predicted
+the observations incorrectly. In addition, 3 times, the decision tree got the observations incorrect
+when the neural network predicted them correctly. Again, this indicates that the decision tree
+algorithm performs better for the experiment under consideration.",9,CMR10,,510,100
+•,9,SFRM1000,,1,1
+"Logistic Regression and Neural Network - The p-value obtained in this case was 0.015 when con-
+sidering a neural network trained with a batch size of 10 and 0.5 when trained with a batch size
+of 100. When training with a batch size of 10, the logistic regression performed slightly better but
+the diﬀerence is not signiﬁcant because the number of incorrect predictions for the neural network",9,CMR10,,391,100
+"when logistic regression predicted correctly was 7 times and there were no instances where logistic
+regression predicted incorrectly and the neural network predicted correctly.
+In addition to this
+result, when using a batch size of 100, the p-value of 0.5 was obtained which is over the value of",9,CMR10,,295,99
+α,9,CMMI10,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+"05, which says that there is a signiﬁcant diﬀerence. This also agrees with the contingency
+table of logistic regression and the neural network (trained with a batch size of 100 epochs), which
+does not show a signiﬁcant diﬀerence between between the number of incorrect predictions for
+logistic regression and neural network.",9,CMR10,,324,100
+"In order to save resources, time, and capital, the decision tree algorithm should be considered while
+classifying kepler objects of interests either as candidate exoplanets or false positives,",9,CMR10,,192,101
+The results for the McNemar’s test are summarized in table 2 (with a neural network trained on batch,9,CMR10,,100,100
+size of 100),9,CMR10,,12,12
+10,9,CMR10,,2,2
+Algorithm 1,9,CMR10,,11,11
+Algorithm 2,9,CMR10,,11,11
+P-Value,9,CMR10,,7,7
+"Logistic Regression
+Decision Tree",9,CMR10,,33,19
+"Decision Tree
+Neural Network
+Logistic Regression Neural Network",9,CMR10,,63,34
+"0.012
+0.0044
+0.5",9,CMR10,,16,6
+Table 2: P-values for the algorithm pairs,9,CMR10,,41,41
+"From the values in table 2, we can infer that the third null hypothesis is true which states that there
+exists no statistically signiﬁcant diﬀerence between the performance of Logistic Regression and the Neu-
+ral Network. Again, it is emphasized that the McNemar’s test does not state which algorithm is better
+than the other, but says to what extent do the algorithm disagree with each other.",9,CMR10,,393,104
+The decision of rejecting or accepting the null hypothesis is given in 3.,9,CMR10,,73,73
+Algorithm 1,9,CMR10,,11,11
+Algorithm 2,9,CMR10,,11,11
+Reject Null Hypothesis?,9,CMR10,,23,23
+"Logistic Regression
+Decision Tree",9,CMR10,,33,19
+"Decision Tree
+Neural Network
+Logistic Regression Neural Network",9,CMR10,,63,34
+"Yes
+Yes
+No",9,CMR10,,10,3
+Table 3: Hypothesis decision results,9,CMR10,,36,36
+5.0.3 Prediction performance,9,CMBX10,,28,28
+"Instead of looking at the actual numbers of false positives and false negatives, a closer look at the",9,CMR10,,101,101
+precision-recall curve for each algorithm provides some good insights.,9,CMR10,,70,70
+"For logistic regression, the precision drops steeply when the recall goes over around 98%. This means
+that there is low chance that the predictions of logistic regression will be relevant when the goal is to
+improve the accuracy of the model.
+In other words, an increase in the recall results in some of the
+samples to be incorrectly predicted; for example some samples are predicted to belong in class 0, when
+the actual prediction is that of class 1. This is not desirable because classifying a kepler objects of interest
+is important as only when the planet is classiﬁed as a candidate planet, only then the space organization
+should invest time and funds for further investigations.",9,CMR10,,686,112
+"For the decision tree algorithm, the precision-recall curve shows that when the recall reaches almost
+a 100%, only then the precision drops steeply. This shows that the observations are predicted almost
+100% correctly and the samples that are predicted correctly are relevant. In other words, the samples
+that are predicted to be in class 1 have an extremely low chance of being in class 0 and vice versa. This
+result is better than that of logistic regression. When comparing logistic regression to the decision tree
+algorithm, the choice of algorithm for the dataset would be decision tree.",9,CMR10,,592,106
+"For the neural network, when trained with a batch size of 10, the accuracy is the comparable to other",9,CMR10,,101,101
+"models. However, from the precision-recall curve, we can observe that the precision drops sharply when
+the recall goes just over 97.5%. The amount of relevant predictions is still small but the diﬀerence is
+signiﬁcant when compared to the decision tree algorithm. Again, the observation from the precision-
+recall curve for the neural network agrees with the fact that decision tree will be a good algorithm
+to choose when considering the scaled dataset and meta-parameters selected in this experiment from
+cross-validation.",9,CMR10,,524,103
+"It is surprising to see that the neural network performs slightly poorly than decision tree and logistic
+regression in terms of precision and recall even when the accuracy is on the higher side. Therefore,
+considering only accuracy as the metric for algorithm selection will be insuﬃcient when there is no
+signiﬁcant diﬀerence over multiple runs. From the results above, it can be seen that decision tree",9,CMR10,,404,104
+outperforms logistic regression and the two-layered neural network in terms of predicting accurately and,9,CMR10,,104,104
+relevantly.,9,CMR10,,11,11
+11,9,CMR10,,2,2
+6 Conclusion,14,CMBX12,,12,12
+"The project conducted an experiment on a dataset that contained information about kepler objects
+of interests. The dataset contained features observed from the kepler satellite. Using this dataset, basic
+exploratory data analysis helped to visualize the data and get a high level understanding of the data. The
+selection of the machine learning models were carried out depending on existing works on binary classiﬁ-
+cation with the hope that the selected models will perform comparably to other experiments with similar
+conditions. The models were run with cross-validation to help select the best meta-parameters for each
+model. The accuracy for each algorithm is evaluated against each other as basic comparison technique.
+In addition, the receiving operating characteristic and the precision-recall curves were plotted to under-
+stand the diagnostic ability of the machine learning model and the number of relevant results returned
+from the model during the prediction, respectively. The algorithms were also compared using the McNe-
+mar’s test which led to rejecting the null hypothesis on two occasions and accepting the null hypothesis
+on one occasion. Ultimately from the statistical signiﬁcance tests, accuracy, and the execution time, it
+can be concluded that the decision tree algorithm with the selected meta-parameter(max depth=6) was
+the model that performed optimally.",9,CMR10,,1382,106
+7 Future Work,14,CMBX12,,13,13
+"As an extension to the experiment, it would be beneﬁcial for this problem to study the eﬀects of
+diﬀerent eﬀects of using various optimization algorithms for the classiﬁcation process. Especially for the",9,CMR10,,203,106
+"neural network, it will be interesting to study the eﬀects of choosing various optimization algorithms",9,CMR10,,102,102
+"with respect to increasing the number of layers and its eﬀect on the performance. Other parameters
+can also be tested, which will be critical to classiﬁcation of astronomical objects. For example, feature
+engineering techniques can be used to create new features which can help to learn other attributes from
+the data and thus improving the models performance. Engaging in such studies will help to build and
+use sophisticated models in analysing various astronomical objects.",9,CMR10,,476,105
+References,14,CMBX12,,10,10
+[1],9,CMR10,,3,3
+Kepler Exoplanet Search Results,9,CMTI10,,31,31
+", en. [Online]. Available:",9,CMR10,,26,26
+https : / / kaggle . com / nasa / kepler -,9,CMTT10,,42,42
+exoplanet-search-results,9,CMTT10,,24,24
+.,9,CMR10,,1,1
+[2],9,CMR10,,3,3
+Nasa Exoplanet kepler candidate columns,9,CMTI10,,39,39
+. [Online]. Available:,9,CMR10,,22,22
+https://exoplanetarchive.ipac.,9,CMTT10,,30,30
+caltech.edu/docs/API_kepcandidate_columns.html,9,CMTT10,,46,46
+.,9,CMR10,,1,1
+[3],9,CMR10,,3,3
+Cross validation,9,CMTI10,,16,16
+. [Online]. Available:,9,CMR10,,22,22
+https : / / scikit - learn . org / stable / modules / cross _,9,CMTT10,,61,61
+[4],9,CMR10,,3,3
+Decision trees scikit-learn 0.21.3 documentation,9,CMTI10,,48,48
+. [Online]. Available:,9,CMR10,,22,22
+https://scikit-learn.org/,9,CMTT10,,25,25
+validation.html,9,CMTT10,,15,15
+.,9,CMR10,,1,1
+stable/modules/tree.html,9,CMTT10,,24,24
+.,9,CMR10,,1,1
+[5],9,CMR10,,3,3
+"Optimization - What’s the diﬀerence between momentum based gradient descent and Nesterov’s ac-
+celerated gradient descent?",9,CMTI10,,122,94
+[Online]. Available:,9,CMR10,,20,20
+https://stats.stackexchange.com/questions/,9,CMTT10,,42,42
+179915/whats-the-difference-between-momentum-based-gradient-descent-and-nesterovs-,9,CMTT10,,82,82
+acc,9,CMTT10,,3,3
+.,9,CMR10,,1,1
+"[6] J. Brownlee,",9,CMR10,,16,16
+Statistical Signiﬁcance Tests for Comparing Machine Learning Algorithms,9,CMTI10,,71,71
+", en-US, Jun.
+2018. [Online]. Available:",9,CMR10,,40,26
+"https://machinelearningmastery.com/statistical-significance-
+tests-for-comparing-machine-learning-algorithms/",9,CMTT10,,109,60
+.,9,CMR10,,1,1
+"[7] ——,",9,CMR10,,7,7
+How to Calculate McNemar’s Test to Compare Two Machine Learning Classiﬁers,9,CMTI10,,74,74
+", en-US,
+Jul. 2018. [Online]. Available:",9,CMR10,,40,31
+"https : / / machinelearningmastery . com / mcnemars - test - for -
+machine-learning/",9,CMTT10,,84,66
+.,9,CMR10,,1,1
+[8],9,CMR10,,3,3
+Tuning the hyperparameters of an estimator scikit-learn 0.21.3 documentation,9,CMTI10,,76,76
+. [Online]. Available:,9,CMR10,,22,22
+https://scikit-learn.org/stable/modules/grid_search.html,9,CMTT10,,56,56
+.,9,CMR10,,1,1
+[9],9,CMR10,,3,3
+Sklearn.linear model logisticregression scikit-learn 0.21.3 documentation,9,CMTI10,,73,73
+. [Online]. Available:,9,CMR10,,22,22
+https:,9,CMTT10,,6,6
+"//scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.
+html",9,CMTT10,,89,84
+.,9,CMR10,,1,1
+12,9,CMR10,,2,2

@@ -1,0 +1,74 @@
+text,space_num
+                                        Modeling compact binary signals and instrumental glitches in gravitational wave data,40.0
+"                                                Katerina Chatziioannou,1, 2, 3 Neil J. Cornish,4 Marcella Wijngaarden,3, 5 and Tyson B. Littenberg6",48.0
+                                                      1,54.0
+"                                                        Department of Physics, California Institute of Technology, Pasadena, California 91125, USA",56.0
+                                                             2,61.0
+"                                                               LIGO Laboratory, California Institute of Technology, Pasadena, CA 91125, USA",63.0
+                                                   3,51.0
+"                                                     Center for Computational Astrophysics, Flatiron Institute, 162 5th Ave, New York, NY 10010, USA",53.0
+                                              4,46.0
+"                                                eXtreme Gravity Institute, Department of Physics, Montana State University, Bozeman, Montana 59717, USA",48.0
+                                              5,46.0
+"                                                Mathematical Sciences and STAG Research Centre, University of Southampton, SO17 1BJ, Southampton, UK",48.0
+                                                                    6,68.0
+"                                                                      NASA Marshall Space Flight Center, Huntsville, AL 35812, USA",70.0
+"                                                                                         (Dated: February 9, 2021)",89.0
+"                                                        Transient non-Gaussian noise in gravitational wave detectors, commonly referred to as glitches,",56.0
+                                                     pose challenges for detection and inference of the astrophysical properties of detected signals when,53.0
+                                                     the two are coincident in time. Current analyses aim toward modeling and subtracting the glitches,53.0
+"                                                     from the data using a flexible, morphology-independent model in terms of sine-Gaussian wavelets",53.0
+                                                     before the signal source properties are inferred using templates for the compact binary signal. We,53.0
+arXiv:2101.01200v2 [gr-qc] 8 Feb 2021,0.0
+                                                     present a new analysis of gravitational wave data that contain both a signal and glitches by simul-,53.0
+                                                     taneously modeling the compact binary signal in terms of templates and the instrumental glitches,53.0
+                                                     using sine-Gaussian wavelets. The model for the glitches is generic and can thus be applied to a,53.0
+                                                     wide range of glitch morphologies without any special tuning. The simultaneous modeling of the,53.0
+"                                                     astrophysical signal with templates allows us to efficiently separate the signal from the glitches, as",53.0
+                                                     we demonstrate using simulated signals injected around real O2 glitches in the two LIGO detectors.,53.0
+"                                                     We show that our new proposed analysis can separate overlapping glitches and signals, estimate",53.0
+"                                                     the compact binary parameters, and provide ready-to-use glitch-subtracted data for downstream",53.0
+                                                     inference analyses.,53.0
+                                                          I.   INTRODUCTION                               choices for estimating the PSD or treating its uncertainty,58.0
+"                                                                                                          can result in different functional forms for the likelihood,",106.0
+                                                                                                          but they are all based on the assumption of colored Gaus-,106.0
+"                                           During the first half of their third observing run (O3a),",43.0
+"                                                                                                          sian noise [9, 10].",106.0
+                                        the advanced ground based gravitational wave (GW) de-,40.0
+                                        tectors LIGO [1] and Virgo [2] observed an astrophysi-               Since instrumental glitches violate the basic assump-,40.0
+"                                        cal transient signal about every 5 days of data [3]. The          tions of GW inference, they need to be effectively miti-",40.0
+                                        large detection rate increases the chance of observing an         gated before the data are analyzed. One option is to re-,40.0
+"                                        event while one of the detectors experiences transient non        move the offending data all together [4, 11–13], which can",40.0
+"                                        Gaussian noise, also known as instrumental glitches. In-          be done quickly, allowing for low latency estimation of",40.0
+"                                        deed, this scenario has come to pass for one event from           source parameters that enable followup observations [4].",40.0
+                                        the second observing run (O2) [4] and 8 events from the           The downside of this approach is that part of the astro-,40.0
+                                        first half of the third observing run [3].                        physical signal is lost making it prohibitive for binary,40.0
+                                                                                                          black hole (BBH) signals whose duration is comparable,106.0
+"                                           Such coincidences are expected to become even more             to the glitch duration. In order to avoid signal, and thus",43.0
+"                                        frequent in the coming years. Planned improvements in             information loss, another option is to model the glitch",40.0
+"                                        the detectors’ sensitivity will be directly reflected by an       and regress it from the data, leaving behind not only the",40.0
+                                        even larger rate of astrophysical discoveries [5]. More-          astrophysical signal but also the Gaussian noise. This,40.0
+"                                        over, O3a was characterized by an increase in the rate            approach is the topic of the current study1 .",40.0
+"                                        of glitch occurrence in the two LIGO detectors, a trend",40.0
+"                                                                                                             The wide variety of glitch morphologies, and even vari-",109.0
+                                        that might persist during the fourth observing run (O4),40.0
+"                                                                                                          ations within a certain glitch type, make constructing ex-",106.0
+                                        as the decreased average detector noise might help reveal,40.0
+                                                                                                          act models for glitches challenging [21]. A more flexible,106.0
+                                        weaker sources of transient noise. For example the rate of,40.0
+"                                                                                                          approach is based on BayesWave [22, 23] which models",106.0
+                                        glitches in the LIGO Livingston detector increased from,40.0
+                                                                                                          various components of the GW data in a morphology-,106.0
+                                        0.2 per minute in O2 to 0.8 per minute in O3a [3].,40.0
+                                                                                                          independent way. Non-Gaussian features in the data,106.0
+                                           The presence of a non Gaussian noise feature in the            are modeled in terms of sums of sine-Gaussian wavelets,43.0
+"                                        data, a glitch, poses challenges for nearly all inference         whose number and parameters are marginalized over with",40.0
+                                        analyses. GW inference is based on a model for the de-,40.0
+"                                        tector noise, expressed through the likelihood function.",40.0
+"                                        In the absence of glitches, detector noise is colored and",40.0
+"                                        Gaussian to a very good approximation [6], with a spec-           1   An independent effort to mitigate the effect of broadband and/or",40.0
+                                        trum that is described through the noise power spectral               nonstationary detector noise is based on information from auxil-,40.0
+                                        density (PSD). The above considerations give rise to a                iary sensors [14–20]. This approach does not remove entire data,40.0
+                                        Gaussian likelihood function whose variance is the noise              segments either and thus is not expected to lead to loss of infor-,40.0
+"                                        PSD, a choice that is almost ubiquitous [7, 8]. Different             mation.",40.0
+avr_spaces,54.19178082191781

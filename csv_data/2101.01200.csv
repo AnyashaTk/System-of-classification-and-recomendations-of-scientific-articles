@@ -1,0 +1,3220 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+b,10,Times-Roman,,1,1
+e,8,Times-Roman,,1,1
+F,11,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+8,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+c,8,Times-Roman,,1,1
+q,10,Times-Roman,,1,1
+"-
+r",6,Times-Roman,,3,1
+g,10,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"2
+v
+0
+0
+2
+1
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+Modeling compact binary signals and instrumental glitches in gravitational wave data,11,CMBX12,,84,84
+"Katerina Chatziioannou,",9,CMR10,,23,23
+"1, 2, 3",6,CMR7,,7,7
+"Neil J. Cornish,",9,CMR10,,16,16
+4,6,CMR7,,1,1
+"Marcella Wijngaarden,",9,CMR10,,21,21
+"3, 5",6,CMR7,,4,4
+and Tyson B. Littenberg,9,CMR10,,23,23
+6,6,CMR7,,1,1
+1,5,CMR6,,1,1
+"Department of Physics, California Institute of Technology, Pasadena, California 91125, USA",8,CMTI9,,90,90
+2,5,CMR6,,1,1
+"LIGO Laboratory, California Institute of Technology, Pasadena, CA 91125, USA",8,CMTI9,,76,76
+3,5,CMR6,,1,1
+"Center for Computational Astrophysics, Flatiron Institute, 162 5th Ave, New York, NY 10010, USA",8,CMTI9,,95,95
+4,5,CMR6,,1,1
+"eXtreme Gravity Institute, Department of Physics, Montana State University, Bozeman, Montana 59717, USA",8,CMTI9,,103,103
+5,5,CMR6,,1,1
+"Mathematical Sciences and STAG Research Centre, University of Southampton, SO17 1BJ, Southampton, UK",8,CMTI9,,100,100
+6,5,CMR6,,1,1
+"NASA Marshall Space Flight Center, Huntsville, AL 35812, USA",8,CMTI9,,60,60
+"(Dated: February 9, 2021)",8,CMR9,,25,25
+"Transient non-Gaussian noise in gravitational wave detectors, commonly referred to as glitches,
+pose challenges for detection and inference of the astrophysical properties of detected signals when
+the two are coincident in time. Current analyses aim toward modeling and subtracting the glitches
+from the data using a ﬂexible, morphology-independent model in terms of sine-Gaussian wavelets
+before the signal source properties are inferred using templates for the compact binary signal. We
+present a new analysis of gravitational wave data that contain both a signal and glitches by simul-
+taneously modeling the compact binary signal in terms of templates and the instrumental glitches
+using sine-Gaussian wavelets. The model for the glitches is generic and can thus be applied to a
+wide range of glitch morphologies without any special tuning. The simultaneous modeling of the
+astrophysical signal with templates allows us to eﬃciently separate the signal from the glitches, as
+we demonstrate using simulated signals injected around real O2 glitches in the two LIGO detectors.",8,CMR9,,1077,100
+"We show that our new proposed analysis can separate overlapping glitches and signals, estimate
+the compact binary parameters, and provide ready-to-use glitch-subtracted data for downstream
+inference analyses.",8,CMR9,,208,94
+I.,8,CMBX9,,2,2
+INTRODUCTION,8,CMBX9,,12,12
+"During the ﬁrst half of their third observing run (O3a),
+the advanced ground based gravitational wave (GW) de-
+tectors LIGO [1] and Virgo [2] observed an astrophysi-
+cal transient signal about every 5 days of data [3]. The
+large detection rate increases the chance of observing an
+event while one of the detectors experiences transient non
+Gaussian noise, also known as instrumental glitches. In-
+deed, this scenario has come to pass for one event from
+the second observing run (O2) [4] and 8 events from the
+ﬁrst half of the third observing run [3].",9,CMR10,,550,58
+"Such coincidences are expected to become even more
+frequent in the coming years. Planned improvements in
+the detectors’ sensitivity will be directly reﬂected by an
+even larger rate of astrophysical discoveries [5]. More-",9,CMR10,,220,58
+"over, O3a was characterized by an increase in the rate
+of glitch occurrence in the two LIGO detectors, a trend
+that might persist during the fourth observing run (O4)
+as the decreased average detector noise might help reveal
+weaker sources of transient noise. For example the rate of
+glitches in the LIGO Livingston detector increased from
+0.2 per minute in O2 to 0.8 per minute in O3a [3].",9,CMR10,,390,58
+"The presence of a non Gaussian noise feature in the
+data, a glitch, poses challenges for nearly all inference
+analyses. GW inference is based on a model for the de-
+tector noise, expressed through the likelihood function.",9,CMR10,,221,57
+"In the absence of glitches, detector noise is colored and
+Gaussian to a very good approximation [6], with a spec-
+trum that is described through the noise power spectral
+density (PSD). The above considerations give rise to a
+Gaussian likelihood function whose variance is the noise
+PSD, a choice that is almost ubiquitous [7, 8]. Diﬀerent",9,CMR10,,338,57
+"choices for estimating the PSD or treating its uncertainty
+can result in diﬀerent functional forms for the likelihood,
+but they are all based on the assumption of colored Gaus-
+sian noise [9, 10].",9,CMR10,,196,59
+"Since instrumental glitches violate the basic assump-
+tions of GW inference, they need to be eﬀectively miti-
+gated before the data are analyzed. One option is to re-
+move the oﬀending data all together [4, 11–13], which can
+be done quickly, allowing for low latency estimation of
+source parameters that enable followup observations [4].
+The downside of this approach is that part of the astro-
+physical signal is lost making it prohibitive for binary
+black hole (BBH) signals whose duration is comparable
+to the glitch duration. In order to avoid signal, and thus
+information loss, another option is to model the glitch
+and regress it from the data, leaving behind not only the
+astrophysical signal but also the Gaussian noise. This",9,CMR10,,733,58
+approach is the topic of the current study,9,CMR10,,42,42
+1,6,CMR7,,1,1
+.,9,CMR10,,1,1
+"The wide variety of glitch morphologies, and even vari-
+ations within a certain glitch type, make constructing ex-
+act models for glitches challenging [21]. A more ﬂexible
+approach is based on",9,CMR10,,192,58
+BayesWave,9,CMTT10,,9,9
+"[22, 23] which models
+various components of the GW data in a morphology-
+independent way. Non-Gaussian features in the data
+are modeled in terms of sums of sine-Gaussian wavelets
+whose number and parameters are marginalized over with",9,CMR10,,233,54
+1,5,CMR6,,1,1
+"An independent eﬀort to mitigate the eﬀect of broadband and/or
+nonstationary detector noise is based on information from auxil-
+iary sensors [14–20]. This approach does not remove entire data
+segments either and thus is not expected to lead to loss of infor-
+mation.",7,CMR8,,266,66
+"a suite of Markov Chain Monte Carlo (MCMC) and Re-
+versible Jump MCMC (RJMCMC) [24] samplers. Coher-
+ent features (i.e. features that appear in all detectors in a
+manner consistent with an astrophysical signal originat-
+ing from a speciﬁc sky location) are modeled by a single
+sum of wavelets that is projected onto the detector net-
+work; these features are interpreted as having an astro-
+physical origin. Incoherent features are instead modeled
+by independent sums of wavelets in each GW detector
+and are interpreted as instrumental glitches. The PSD
+of the Gaussian noise is also modeled in terms of splines
+and Lorentzians using an algorithm sometimes known as",9,CMR10,,665,61
+BayesLine,9,CMTT10,,9,9
+"[6, 25].",9,CMR10,,8,8
+BayesWave,9,CMTT10,,9,9
+and,9,CMR10,,3,3
+BayesLine,9,CMTT10,,9,9
+"are fully
+integrated and we will refer to the combined analysis with
+the name",9,CMR10,,77,58
+BayesWave,9,CMTT10,,9,9
+in this paper.,9,CMR10,,14,14
+Modeling instrumental glitches with,9,CMR10,,35,35
+BayesWave,9,CMTT10,,9,9
+"and
+subtracting them from the data in order to make ready-
+to-use data for downstream inference has been a stan-
+dard step of LIGO/Virgo analyses since O2 [3, 4]. The",9,CMR10,,166,54
+"GW signal from the ﬁrst binary neutron star (BNS)
+coalescence detection, GW170817, overlapped with a
+glitch in the LIGO Livingston detector approximately
+1",9,CMR10,,155,52
+.,9,CMMI10,,1,1
+1s before coalescence [4]. The glitch was modeled with,9,CMR10,,54,54
+BayesWave,9,CMTT10,,9,9
+’s,9,CMR10,,2,2
+glitch model,9,CMTI10,,12,12
+"in terms of a sum of wavelets
+and removed from the data, a procedure documented and
+released in [26]. Despite the glitch overlapping with the
+actual astrophysical signal, the subtraction process was
+robust against inadvertently removing the signal together
+with the glitch. The reason is that the speciﬁc glitch was
+short in duration (less than a second) and extended in
+frequency, unlike the signal that lasted for about 2 min-
+utes in the detector sensitive band. As such, the sine-
+Gaussian wavelets that would ﬁt the glitch and the signal
+are distinct in terms of their time-frequency features; the
+wavelets that model the glitch are short and hence do
+not model the long-lasting BNS signal. This procedure
+was further shown to not introduce biases in the astro-
+physical parameter inference of the underlying signal by
+analyzing simulated signals injected on instances of the
+same glitch type in LIGO Livingston data [27].",9,CMR10,,927,59
+Motivated by the success of this ﬁrst attempt at glitch,9,CMR10,,55,55
+"mitigation and in preparation for the increased detection
+rate of O3,",9,CMR10,,69,57
+BayesWave,9,CMTT10,,9,9
+"was extended to be able to si-
+multaneously model both the signal and the glitch [23].
+Both signals and glitches are modeled with a sum of sine-
+Gaussian wavelets, the only diﬀerence being that the sig-
+nal is coherent across the detectors in the network, while
+the glitch is not. The analysis eﬀectively uses data from
+all detectors available to determine which part of the non
+Gaussian data are coherent (and would thus correspond
+to an astrophysical signal), and which part is incoherent
+(and would thus correspond to an instrumental glitch).",9,CMR10,,545,58
+"The combined signal+glitch analysis was applied to one
+O3a detection [3], enabling glitch mitigation even for data
+that contained short-duration BBH signals.",9,CMR10,,157,59
+The signal+glitch analysis models compact binary co-,9,CMR10,,52,52
+"alescence (CBC) signals in terms of wavelets, and is thus
+agnostic to the signal morphology. However, accurate",9,CMR10,,110,57
+2,9,CMR10,,1,1
+"models exist for CBCs in terms of solutions to the Ein-
+stein ﬁeld equations that are routinely used both for de-
+tection and parameter estimation. In this paper we take
+another step toward eﬃcient separation of CBCs and
+glitches by constructing an analysis that simultaneously
+models the CBC signal in terms of CBC templates and
+the glitch in terms of sine-Gaussian wavelets. Similar to
+the initial glitch-only analysis and the subsequent sig-
+nal+glitch analysis, we also model and marginalize over
+the detector noise PSD. We test our analysis using public
+O2 data that contain common glitch types and simulated
+CBC signals. We demonstrate that we can eﬃciently sep-
+arate the glitch from the CBC, estimate the CBC param-
+eters, and provide ready-to-use glitch-subtracted data for
+downstream inference analyses.",9,CMR10,,813,58
+"The rest of the paper is organized as follows. In Sec. II
+we describe the updates to the standard",9,CMR10,,97,57
+BayesWave,9,CMTT10,,9,9
+"algo-
+rithm in terms of the CBC analysis. In Sec. III we apply
+our analysis to simulated signal overlapping with known",9,CMR10,,118,56
+"detector glitches from O2 data. In Sec. IV we analyze
+a selection of detected signals, namely GW170817 and
+GW150914. Finally, in Sec. V we conclude and point to
+future work.",9,CMR10,,173,53
+II. GENERAL ALGORITHM DESCRIPTION,8,CMBX9,,33,33
+The combined,9,CMR10,,12,12
+BayesWave,9,CMTT10,,9,9
+"algorithm is presented in de-
+tail in [23] and here we describe only the features relevant
+to our study.",9,CMR10,,104,60
+BayesWave,9,CMTT10,,9,9
+"simultaneously models signals,
+glitches, and Gaussian noise in GW data by means of
+diﬀerent models. The",9,CMR10,,103,51
+signal model,9,CMTI10,,12,12
+"describes astrophysi-
+cal signals through a sum of Morlet Gabor wavelets that
+are coherent across the detector network. The number
+of wavelets and the parameters of each are marginalized
+over, as are the extrinsic parameters that determine how
+the signal is projected in each detector. The",9,CMR10,,289,56
+glitch model,9,CMTI10,,12,12
+"describes instrumental glitches with an incoherent sum
+of Morlet Gabor wavelets whose number and parameters
+are again marginalized over. Glitch power in each detec-
+tor is described by an independent sum of such wavelets.",9,CMR10,,221,56
+The,9,CMR10,,3,3
+noise model,9,CMTI10,,11,11
+"describes the Gaussian noise PSD with
+a broadband spline model and sharp Lorentzians. As
+above, the number of spline points and Lorentzians as
+well as their parameters are marginalized over.",9,CMR10,,190,53
+"In order to sample the multidimensional posterior den-
+sity of all models,",9,CMR10,,74,54
+BayesWave,9,CMTT10,,9,9
+"uses a blocked Gibbs sam-
+pler that takes turns between sampling each model with
+completely independent MCMC or RJMCMC samplers.
+This includes (i) an RJMCMC that samples the signal
+and glitch wavelet parameters, (ii) an MCMC that sam-
+ples the signal extrinsic parameters, and (iii) an RJM-",9,CMR10,,290,55
+"CMC that samples the splines and Lorentzians for the
+noise PSD. Each sampler in turn updates its parame-
+ters for a predetermined number of iterations, typically
+(10",9,CMR10,,165,56
+2,6,CMR7,,1,1
+"), while all other parameters are kept ﬁxed. For ex-",9,CMR10,,52,52
+O,9,CMSY10,,1,1
+"ample, the extrinsic sampler updates the extrinsic signal
+parameters while the wavelet parameters and noise PSD",9,CMR10,,111,57
+O,9,CMSY10,,1,1
+"are kept constant. Once the predetermined number of
+updates has been reached, the extrinsic sampler returns
+its current parameters and the noise sampler begins up-
+dating the noise model while keeping the wavelet and
+extrinsic parameters ﬁxed. This process of alternating
+sampling between diﬀerent blocks of model parameters
+is repeated for",9,CMR10,,340,55
+(10,9,CMR10,,3,3
+4,6,CMR7,,1,1
+) iterations.,9,CMR10,,13,13
+"The construction of the algorithm in terms of a blocked
+Gibbs sampler makes adding further models and sam-
+plers straightforward.
+In the current version described
+in [23], the astrophysical signal is modeled with coherent
+sine-Gaussian wavelets that allow us to describe signals
+with a large level of ﬂexibility. We extend",9,CMR10,,322,58
+BayesWave,9,CMTT10,,9,9
+"’s
+blocked Gibbs sampler by adding one more element,
+namely a model of the signal in terms of quasicircular
+CBC waveforms. In fashion with the existing implemen-
+tation, the MCMC that samples the posterior distribu-
+tion for the CBC parameters is completely independent
+from the remaining code samplers. The result is a ﬂexi-",9,CMR10,,325,55
+"ble algorithm that can be used with any combination of
+CBC, signal",9,CMR10,,66,54
+2,6,CMR7,,1,1
+", glitch, and noise models for the detector
+data.",9,CMR10,,49,43
+The CBC model is integrated with,9,CMR10,,32,32
+LALSimulation,9,CMTT10,,13,13
+"[28]
+and can operate with any nonprecessing model available
+there",9,CMR10,,65,54
+3,6,CMR7,,1,1
+". The eleven parameters of a spin-aligned quasicir-
+cular CBC signal, namely the four intrinsic parameters
+(the two masses and spin magnitudes) and seven extrin-
+sic parameters (the time of coalescence, the phase of co-
+alescence, two sky location angles, the polarization angle
+and the inclination angle the distance), are updated in
+overlapping blocks. Common to both blocks is the phase
+of coalescence since",9,CMR10,,410,58
+BayesWave,9,CMTT10,,9,9
+"’s extrinsic sampler up-
+dates the overall phase of the signal as described in [23].
+The CBC MCMC sampler updates the four intrinsic pa-
+rameters, the time of coalescence, the phase of coales-
+cence, and the distance. The existing extrinsic sampler
+in",9,CMR10,,251,59
+BayesWave,9,CMTT10,,9,9
+"updates the two sky angles, the polariza-
+tion angle, the inclination angle, and the phase of co-
+alescence while holding all other parameters ﬁxed. We
+use standard priors for all parameters: uniform over the
+detector-frame masses and spin magnitudes, uniform in
+time and phase, and uniform in luminosity volume.",9,CMR10,,312,56
+"The CBC sampler is custom and not based on any
+existing samplers used in LIGO-Virgo parameter estima-
+tion. The CBC sampler is taken from the recently devel-
+oped",9,CMR10,,162,55
+QuickCBC,9,CMTT10,,8,8
+[29] analysis pipeline. A closely related,9,CMR10,,41,41
+2,5,CMR6,,1,1
+We retain the original model names in,7,CMR8,,37,37
+BayesWave,7,CMTT8,,9,9
+", hence the",7,CMR8,,11,11
+signal model,7,CMTI8,,12,12
+"refers to the wavelet signal model, while the",7,CMR8,,45,45
+"CBC
+model",7,CMTI8,,9,5
+"refers to the model in terms of CBC templates. Both
+models target astrophysical signals. Since we do not use the",7,CMR8,,112,60
+signal model,7,CMTI8,,12,12
+"in the remainder of the paper, we trust that this
+will not lead to confusion.",7,CMR8,,77,49
+3,5,CMR6,,1,1
+"Both the sampling and the jump proposals for the CBC param-
+eters are constructed to expect the signal amplitude and phase
+from the waveform generator. There is therefore no fundamental
+limitation to non-precessing signals and we plan to extend our
+analysis to include the eﬀect of spin-precession in the future.",7,CMR8,,312,63
+3,9,CMR10,,1,1
+"sampler [30] has been developed for analyzing data from
+the future Laser Interferometer Space Antenna. The
+CBC sampler is a replica exchange (parallel tempered)
+Markov Chain Monte Carlo (PTMCMC) algorithm that
+uses a mixture of proposal distributions. The default
+collection of proposals are: Gaussian jumps along eigen-
+vectors of the Fisher information matrix, scaled by the
+reciprocal of the square root of the corresponding eigen-
+value; diﬀerential evolution using a rolling history array
+at each temperature, updated every 10 iterations and
+holding 1000 past samples; and small, Gaussian jumps
+along each parameter direction. Each chain carries its
+own Fisher information matrix, which is updated peri-
+odically. The Fisher and diﬀerential evolution proposals
+are eﬀective at exploring parameter correlations, while
+the small jumps prevent the chains from getting stuck in
+regions where the Fisher matrix becomes ill-conditioned.
+The CBC sampler is not optimized for blindly ﬁnd-
+ing signals, so it is best to initialize the sampler with",9,CMR10,,1043,58
+"a good starting solution for the source parameters such
+as the output from a CBC search pipeline, or the in-
+jected parameters for a simulated signal. Alternatively
+the sampler can be initialized using a custom built CBC
+search algorithm from the",9,CMR10,,246,55
+QuickCBC,9,CMTT10,,8,8
+"[29] analysis pipeline
+that has been incorporated into the",9,CMR10,,58,35
+BayesWave,9,CMTT10,,9,9
+"prepro-
+cessing steps. The search is broken into two stages, a
+rapid network-coherent search with analytic maximiza-
+tion over extrinsic parameters, followed by a fast MCMC
+over the extrinsic parameters using a likelihood function
+that precomputes the waveform inner products [31]. This
+procedure returns the starting point for all 11 CBC pa-
+rameters. More details about the initial search step and
+discussion of its robustness against instrumental glitches
+are presented in [29].",9,CMR10,,481,58
+III. SIMULATED SIGNALS,8,CMBX9,,22,22
+"We test the eﬃcacy of separating CBCs from glitches
+with our CBC+glitch model by selecting 3 common glitch",9,CMR10,,106,54
+"types from O2 data [32, 33] that are known to have an
+adverse eﬀect on searches for CBCs [3]. We then add sim-
+ulated CBC signals consistent with a BBH with detector-
+frame masses of 36",9,CMR10,,185,56
+M,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+and 29,9,CMR10,,6,6
+M,9,CMMI10,,1,1
+,6,CMSY7,,0,0
+"and vanishing spin at
+diﬀerent times with respect to the glitch. All simulated
+signals have a signal-to-noise (SNR) ratio of 15. We use
+the",9,CMR10,,139,56
+IMRPhenomD,9,CMTT10,,10,10
+"[34, 35] waveform model both for simula-
+tion and recovery as implemented in",9,CMR10,,76,40
+LALSimulation,9,CMTT10,,13,13
+"[28].
+We then analyze the data from the two LIGO detectors
+with our CBC+glitch+noise model, where the coherent
+signal is modeled by the CBC template, the glitch is mod-",9,CMR10,,168,57
+"eled by incoherent wavelets, and the noise PSD is mod-
+eled with splines and Lorenzians. Spectrograms for the 3
+glitches are shown in Fig. 1: blip glitch (left), scattered
+light (middle), and blue mountain (right). Further de-
+tails and run settings for each type of glitch are shown in
+Table I.",9,CMR10,,295,59
+4,9,CMR10,,1,1
+"FIG. 1. Spectrograms for the three glitches of diﬀerent types studied here: blip glitch (left), scattered light (middle), blue
+mountain (right). The three types of glitches are characterized by very diﬀerent time-frequency properties.",8,CMR9,,234,126
+Glitch,8,CMR9,,6,6
+GPS time (s) Detector,8,CMR9,,21,21
+f,8,CMMI9,,1,1
+low,5,CMR6,,3,3
+(Hz),8,CMR9,,4,4
+Q,8,CMMI9,,1,1
+max,5,CMR6,,3,3
+CBC SNR,8,CMR9,,7,7
+Blip,8,CMR9,,4,4
+1168989748 Hanford,8,CMR9,,18,18
+"Scattered light 1172917779 Livingston
+Blue mountain 1165069536 Hanford",8,CMR9,,70,37
+"Segment
+length (s)
+4
+8
+16",8,CMR9,,25,10
+"Sampling
+rate (Hz)
+2048
+2048
+2048",8,CMR9,,33,9
+"16
+8
+16",8,CMR9,,7,2
+"40
+160
+40",8,CMR9,,9,3
+"15
+15
+15",8,CMR9,,8,2
+"TABLE I. Settings for the runs of Sec. III. From left to right, columns correspond to the type of glitch, the GPS time, the
+aﬀected detector, the segment length, the sampling rate, to low frequency cut oﬀ, the maximum quality factor of the glitch
+wavelets, and the SNR of the injected signals.",8,CMR9,,293,123
+A. Glitch type 1: Blip,8,CMBX9,,22,22
+"Blip glitches are one of the most common glitch types
+for the two LIGO detectors. They are characterized by
+short duration, and hence pose a challenge for the de-
+tection of high mass BBH signals [36]. Their origin is
+largely unknown. Figures 2-5 show our results for sim-
+ulated signals injected at diﬀerent times with respect to
+a blip glitch in the LIGO Hanford detector during O2.
+Details about the glitch, including its GPS time, and the
+run settings are presented in Table I. A spectrogram of
+the data containing the glitch is given on the left panel
+of Fig. 1, where the short duration and large frequency
+extent are shown.",9,CMR10,,630,57
+∼,9,CMSY10,,1,1
+"The whitened data and reconstructions for the CBC
+signal and the glitch are shown in Fig. 2 where we plot the
+90% credible intervals for each reconstruction in LIGO
+Hanford (top) and LIGO Livingston (bottom). The",9,CMR10,,212,59
+"glitch is easily visible in LIGO Hanford as a short dura-
+15",9,CMR10,,60,57
+σ,9,CMMI10,,1,1
+"noise excursion. No glitch power is identiﬁed
+tion
+in LIGO Livingston at that time, but the CBC signal is
+clearly identiﬁed. This allows us to separate the corre-
+sponding coherent CBC signal in LIGO Hanford from the
+instrumental glitch, even when the latter overlaps with
+the merger phase of the signal (left panel). The glitch re-
+construction is also consistent across the three simulated
+signals, suggesting that the glitch model is not ﬁtting any
+part of the CBC signal.",9,CMR10,,475,59
+Source parameters for the simulated CBC are pre-,9,CMR10,,48,48
+"sented in Figs. 3 and 4 both for the CBC+glitch+noise
+analysis and a CBC+noise analysis for selected recov-
+ered parameters for the leftmost simulated CBC sig-
+nal together with the injected values with black crosses
+or vertical
+lines as appropriate. Figure 3 shows the
+mass ratio",9,CMR10,,280,56
+q,9,CMMI10,,1,1
+", the eﬀective spin",9,CMR10,,19,19
+χ,9,CMMI10,,1,1
+eﬀ,6,CMR7,,2,2
+", and the detector",9,CMR10,,18,18
+M,9,CMSY10,,1,1
+"frame chirp mass
+, while Fig. 4 shows the luminos-
+ity distance and the cosine of the inclination angle. In
+all cases the posterior distributions recovered under the
+CBC+glitch+noise model are consistent with the in-
+jected parameters, though the marginalized posteriors do
+not peak at the injected values, as expected from infer-
+ence of signals in Gaussian noise. For reference, we show
+posteriors under the CBC+noise model in orange that
+assumes that the data are consisted of just a CBC signal
+and Gaussian noise, without any provision for a glitch.
+Since this assumption is violated by the presence of the
+blip glitch, the resulting posteriors are expected to be
+biased compared to the true parameters and the orange
+contours in Figs. 3 and 4 quantify this bias. We ﬁnd that
+the extrinsic parameters that are primarily determined
+by the signal amplitude are more biased than the intrin-
+sic ones that are measured through the GW phase, as
+also discussed in [37].",9,CMR10,,967,57
+"The separation of the CBC signal from the glitch
+demonstrated in Fig. 2 can be used to produce ready-to-
+use deglitched data for downstream inference analyses, as
+was done in [3]. An estimate of the glitch reconstruction
+(the median or a fair draw from the glitch model poste-
+rior) is subtracted from the data to produce strain data
+that contain only the CBC signal and Gaussian noise.
+The result of the glitch subtraction is shown in the spec-
+trograms of Fig. 5 that show the LIGO Hanford data
+before (left) and after (middle) the subtraction of a fair",9,CMR10,,555,58
+"draw glitch reconstruction for the leftmost injection of
+Fig. 2. The left panel includes both the chirping signal
+and the blip glitch, while only the former is visible in the
+middle panel. The right panel shows the data after a fair
+draw from both the CBC and the glitch models has been
+subtracted, resulting in residual Gaussian noise only.",9,CMR10,,341,60
+"-0.04
+0
+0.04
+0.08
+0.12
+0.16
+0.2
+0.24
+0.28
+0.32",4,CMR17,,46,5
+t,6,CMMI12,,1,1
+(s)fromGPS1168989748,6,CMR17,,20,20
+"100
+
+50
+
+
+
+
+
+
+
+500",4,CMR17,,18,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+20
+
+40
+
+60
+
+80
+
+100",4,CMR17,,22,3
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0
+0.8
+1.6
+2.4
+3.2
+4
+4.8
+5.6
+6.4
+7.2",5,CMR17,,35,3
+t,7,CMMI12,,1,1
+(s)fromGPS1172917776,7,CMR17,,20,20
+"10
+100
+
+
+
+
+
+50",5,CMR17,,14,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0
+0.8
+1.6
+2.4
+3.2
+4
+4.8
+5.6
+6.4
+7.2",5,CMR17,,35,3
+t,7,CMMI12,,1,1
+(s)fromGPS1165069533,7,CMR17,,20,20
+"10
+100",5,CMR17,,6,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+5,9,CMR10,,1,1
+"FIG. 2. Credible intervals for the glitch (orange) and the CBC (blue) signal reconstruction for data containing a blip glitch
+in LIGO Hanford and a simulated CBC signal at 3 diﬀerent times with respect to the glitch (left to right). Shaded regions
+correspond to 90% credible intervals for the whitened reconstruction, while in grey dashed lines we plot the data whitened with
+a fair draw PSD from our noise model posterior. The top row corresponds to LIGO Hanford and the bottom row corresponds
+to LIGO Livingston.",8,CMR9,,514,127
+"FIG. 3. One- and two-dimensional posterior distributions for
+selected source parameters of the simulated signal from the
+left panel of Fig. 2 injected on top of a LIGO Hanford blip
+glitch. We include the mass ratio",8,CMR9,,214,60
+q,8,CMMI9,,1,1
+", the eﬀective spin",8,CMR9,,19,19
+χ,8,CMMI9,,1,1
+eﬀ,5,CMR6,,2,2
+",
+and the detector frame chirp mass",8,CMR9,,35,33
+M,8,CMSY9,,1,1
+"posteriors, while black
+crosses or black vertical lines denote the true parameters of
+the injection. Blue (orange) contours and lines correspond to",8,CMR9,,147,61
+the CBC+glitch+noise (CBC+noise) run.,8,CMR9,,37,37
+B. Glitch type 2: Scattered light,8,CMBX9,,33,33
+"Glitches caused by scattered light in the interferome-
+ter became particularly prominent during O3 [3]. Unlike
+the blip glitches studied above, scattered light glitches
+have a longer temporal duration of a few seconds and
+are characterized by arches in a time-frequency spectro-",9,CMR10,,278,57
+"gram [38, 39], as depicted in the middle panel of Fig. 1.
+We inject simulated signals on an instance of such a glitch
+in LIGO Livingston and analyze the data from both
+LIGO detectors with our CBC+glitch+noise model. De-
+tails of the glitch and the run settings are given in Table I.
+Due to the duration of the glitch and its low frequency",9,CMR10,,338,62
+"FIG. 4. Two-dimensional posterior distributions for the lu-
+minosity distance and the binary inclination of the simulated
+signal from the left panel of Fig. 2 injected on top of a LIGO
+Hanford blip glitch. A black cross at (1,1200Mpc) denotes
+the true parameters of the injection. Blue (orange) contours
+correspond to the CBC+glitch+noise (CBC+noise) run.",8,CMR9,,355,62
+"power we extend our analysis duration and bandwidth.
+The longer duration helps the noise model determine the
+low-frequency Gaussian noise PSD and thus separate the
+low frequency part of the glitch from Gaussian noise. We
+also increase the maximum quality factor",9,CMR10,,261,56
+Q,9,CMMI10,,1,1
+max,6,CMR7,,3,3
+"of the
+wavelets due to the glitch’s long duration.",9,CMR10,,50,43
+"Figure 6 shows the data and reconstructed CBC and
+glitch models. We zoom in around the CBC signals,
+though the glitch extends beyond the time range plotted.
+In all cases the CBC signal is separated from the glitch,
+aided by the presence of a coherent signal in LIGO Han-",9,CMR10,,270,57
+"ford. The glitch reconstruction is also consistent for all 3
+simulated signals, as expected for runs on the same glitch.
+The reconstruction exhibits oscillations at around 32Hz
+and 16Hz, consistent with expectations from the glitch
+spectrogram. Figure 7 shows posterior distributions for
+selected source parameters for the left-most injection in",9,CMR10,,345,60
+−,5,CMSY10,,1,1
+15,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+10,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+"5
+
+0
+
+5",5,CMR17,,7,1
+σ,4,CMMI12,,1,1
+n,3,CMMI12,,1,1
+o,2,CMMI12,,1,1
+i,1,CMMI12,,1,1
+s,2,CMMI12,,1,1
+e,2,CMMI12,,1,1
+LIGOHanford,8,CMR17,,11,11
+−,5,CMSY10,,1,1
+15,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+10,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+"5
+
+0
+
+5
+
+Data
+CBC
+Glitch",5,CMR17,,24,6
+−,5,CMSY10,,1,1
+15,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+10,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+"5
+
+0
+
+5",5,CMR17,,7,1
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+08,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+06,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+04,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+"02
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"00
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"02
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"04
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+06,5,CMR17,,2,2
+t(s)fromGPS1168989748.125,7,CMR17,,25,25
+−,5,CMSY10,,1,1
+4,5,CMR17,,1,1
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2
+
+4",5,CMR17,,10,1
+σ,4,CMMI12,,1,1
+n,3,CMMI12,,1,1
+o,2,CMMI12,,1,1
+i,1,CMMI12,,1,1
+s,2,CMMI12,,1,1
+e,2,CMMI12,,1,1
+LIGOLivingston,8,CMR17,,14,14
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+08,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+06,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+04,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+"02
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"00
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"02
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"04
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+06,5,CMR17,,2,2
+t(s)fromGPS1168989748.125,7,CMR17,,25,25
+−,5,CMSY10,,1,1
+4,5,CMR17,,1,1
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2
+
+4",5,CMR17,,10,1
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+08,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+06,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+04,5,CMR17,,2,2
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+"02
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"00
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"02
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+"04
+
+0",5,CMR17,,5,2
+.,5,CMMI12,,1,1
+06,5,CMR17,,2,2
+t(s)fromGPS1168989748.125,7,CMR17,,25,25
+−,5,CMSY10,,1,1
+4,5,CMR17,,1,1
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2
+
+4",5,CMR17,,10,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"8
+
+1",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+0
+
+2
+
+4",6,CMR17,,10,1
+6,6,CMR17,,1,1
+"CBC+glitch+noise
+CBC+noise",3,CMR10,,26,16
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"8
+
+1",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+24
+
+26
+
+28
+
+30",6,CMR17,,17,2
+M,10,CMSY10,,1,1
+(,3,CMR17,,1,1
+M,8,CMMI12,,1,1
+,4,CMSY10,,0,0
+),3,CMR17,,1,1
+"24
+
+26
+
+28
+
+30
+
+0",6,CMR17,,17,2
+.,6,CMMI12,,1,1
+"0
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0",6,CMR17,,25,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"8
+
+1",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+0,6,CMR17,,1,1
+q,8,CMMI12,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+4,6,CMR17,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+4,6,CMR17,,1,1
+χ,5,CMMI12,,1,1
+e,2,CMR12,,1,1
+ﬀ,3,CMR12,,1,1
+"24
+
+26
+
+28
+
+30",6,CMR17,,14,2
+M,8,CMSY10,,1,1
+(,8,CMR17,,1,1
+M,8,CMMI12,,1,1
+,6,CMSY10,,0,0
+),8,CMR17,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+4,6,CMR17,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+4,6,CMR17,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+4,5,CMR12,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+4,5,CMR12,,1,1
+χ,8,CMMI12,,1,1
+eﬀ,6,CMR12,,2,2
+"0
+
+2
+
+4
+
+6",5,CMR12,,10,1
+−,8,CMSY10,,1,1
+1,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+00,8,CMR17,,2,2
+−,8,CMSY10,,1,1
+0,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+75,8,CMR17,,2,2
+−,8,CMSY10,,1,1
+0,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+50,8,CMR17,,2,2
+−,8,CMSY10,,1,1
+0,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+"25
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+"00
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+"25
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+"50
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+"75
+
+1",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+00,8,CMR17,,2,2
+cos(,10,CMR17,,4,4
+ι,10,CMMI12,,1,1
+),10,CMR17,,1,1
+"200
+
+400
+
+600
+
+800
+
+1000
+
+1200
+
+1400",8,CMR17,,36,4
+D,8,CMMI12,,1,1
+(,3,CMR17,,1,1
+M,8,CMR17,,1,1
+p,5,CMR17,,1,1
+c,4,CMR17,,1,1
+),3,CMR17,,1,1
+"CBC+glitch+noise
+CBC+noise",4,CMR10,,26,16
+6,9,CMR10,,1,1
+"FIG. 5. Spectrogram of the LIGO Hanford data around the time of the blip glitch for the leftmost injection from Fig. 2. Left
+panel: data containing the blip glitch and the simulated CBC signal. Middle panel: data after a fair draw from the glitch
+model has been subtracted leaving behind only the chirping CBC signal. Right panel: data after a fair draw from the glitch
+and CBC models has been subtracted, leaving behind only Gaussian detector noise.",8,CMR9,,450,124
+"blue, as well as the injected parameters. In all cases the
+recovered parameters are consistent with their injected
+values. In orange, we plot results from a CBC+noise run
+and ﬁnd small biases in the source intrinsic parameters,
+most notably the mass ratio.",9,CMR10,,256,58
+"Finally, Fig. 8 shows the spectrogram of the data be-
+fore and after various components of the model have been
+subtracted from the data. The left panel corresponds to
+data that contain both a signal and the glitch and thus
+both the signal chirp and the characteristic glitch arches
+are visible.
+In the middle panel we plot data after a
+fair draw from the glitch model has been subtracted, re-
+sulting in both the high and the low frequency arches of
+the glitch having been regressed, leaving only the chirp-
+ing signal behind. The right panel corresponds to data
+where a fair draw from the CBC model has further been
+subtracted and is consistent with Gaussian noise.",9,CMR10,,666,58
+C. Glitch type 3: Blue mountain,8,CMBX9,,31,31
+"The ﬁnal type of glitch we consider is the blue moun-
+tain; the spectrogram of the LIGO Hanford instance of
+a blue mountain glitch we consider is shown in the right
+panel of Fig. 1. The glitch has a duration of multiple sec-
+onds and is characterized by higher frequencies
+200Hz.",9,CMR10,,279,59
+"We inject simulated signals at diﬀerent times relative to
+the glitch and again analyze data from the two LIGO de-
+tectors with the CBC+glitch+noise model with settings
+shown in Table I. Due to the large glitch duration we
+have to increase the length of the analyzed segment even
+further to 16s. Despite the glitch’s overall long duration,
+we do not ﬁnd it necessary to increase the wavelet max-
+imum quality factor",9,CMR10,,414,59
+Q,9,CMMI10,,1,1
+max,6,CMR7,,3,3
+", as the glitch is composed of
+short individual bursts of power, each of which is mod-
+eled by individual wavelets with a small quality factor.",9,CMR10,,143,56
+∼,9,CMSY10,,1,1
+Figure 9 shows the whitened data and credible inter-,9,CMR10,,52,52
+"vals for the whitened CBC and glitch reconstruction in
+each detector for each of the injected signals. Due to the
+large glitch duration, the signals are injected suﬃciently
+wide apart that the reconstruction plots show non over-
+lapping parts of the data and the glitch. The glitch re-
+constructions are therefore not expected to match. As",9,CMR10,,339,58
+"expected from the glitch spectrogram, the glitch is char-
+acterized by a series of short high frequency bursts, each
+of which is modeled by diﬀerent wavelets within our glitch
+model. Figure 10 shows posterior distributions for se-
+lected source parameters for the left-most injection in",9,CMR10,,286,58
+"blue, as well as the injected parameters. In all cases the
+recovered parameters are consistent with their injected
+values, suggesting that the presence of the glitch does
+not incur biases on the inferred source properties if the
+two are modeled simultaneously. As before, we also plot
+results from a CBC+noise run that neglects the glitch
+in the data in orange and again ﬁnd small biases by the
+presence of the glitch in the source intrinsic parameters.
+The glitch subtraction process is detailed in Fig. 11
+that again shows spectrograms of the original data con-
+taining both the glitch and the signal (left), data after a
+fair draw glitch model has been subtracted (middle), and
+data after both the glitch and the fair draw CBC model
+have been removed (right). As before, data from the mid-
+dle panel could be used for further data processing. The
+right panel shows data where a model for both the glitch
+and the CBC have been subtracted. Even though the ma-
+jority of the glitch power is absent (compare the left and
+right panels), some small non Gaussian power might be
+left behind. The reason for this is that the blue mountain
+glitch is manifested as individual short bursts of glitch
+power, which our ﬂexible analysis attempts to model",9,CMR10,,1242,59
+"completely independently. Indeed, the glitch model for
+this run uses
+(70) wavelets. Each of these wavelets,
+needs to model suﬃcient non-Gaussian power in the data
+in order to overcome the parsimony penalty incurred by
+adding more parameters to the model. As such, we ex-
+pect that some of the weaker “bursts” of the glitch will
+not be recovered. Possible ways to alleviate this are dis-
+cussed in Sec. V.",9,CMR10,,404,58
+O,9,CMSY10,,1,1
+IV. GRAVITATIONAL WAVE EVENTS,8,CMBX9,,29,29
+As a further demonstration of our CBC+glitch+noise,9,CMR10,,50,50
+"model, we also analyze two astrophysical events,
+GW170817 [4] and GW150914 [40] whose data are avail-
+able from GWOSC [32, 33]. Though not the main focus",9,CMR10,,153,52
+"0.8
+0.84
+0.88
+0.92
+0.96
+1
+1.04
+1.08
+1.12
+1.16
+1.2",4,CMR17,,49,4
+t,6,CMMI12,,1,1
+(s)fromGPS1168989747.125,6,CMR17,,24,24
+"100
+
+50",4,CMR17,,7,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+20
+
+40
+
+60
+
+80
+
+100",4,CMR17,,22,3
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0.8
+0.84
+0.88
+0.92
+0.96
+1
+1.04
+1.08
+1.12
+1.16
+1.2",4,CMR17,,49,4
+t,6,CMMI12,,1,1
+(s)fromGPS1168989747.125,6,CMR17,,24,24
+"100
+
+50",4,CMR17,,7,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+20
+
+40
+
+60
+
+80
+
+100",4,CMR17,,22,3
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0.8
+0.84
+0.88
+0.92
+0.96
+1
+1.04
+1.08
+1.12
+1.16
+1.2",4,CMR17,,49,4
+t,6,CMMI12,,1,1
+(s)fromGPS1168989747.125,6,CMR17,,24,24
+"100
+
+50",4,CMR17,,7,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+20
+
+40
+
+60
+
+80
+
+100",4,CMR17,,22,3
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+7,9,CMR10,,1,1
+"FIG. 6. Credible intervals for the glitch (orange) and the CBC (blue) signal reconstruction for data containing a scattered light
+glitch in LIGO Livingston and a simulated CBC signal at 3 diﬀerent times with respect to the glitch (left to right). Shaded
+regions correspond to 90% credible intervals, while in grey dashed lines we plot the data whitened with a fair draw PSD from
+our noise model posterior. The top row corresponds to LIGO Hanford while the bottom row corresponds to LIGO Livingston.",8,CMR9,,498,129
+and subtracted. Analysis of simulated signals suggests,9,CMR10,,54,54
+"that this procedure leads to unbiased inference, while
+any analysis on data that contain the glitch results in
+highly biased source parameters [27]. Both versions of
+the data are publicly available, both with and without
+the glitch [26], so we analyze them both with diﬀerent
+models. We use data from the LIGO Hanford and the
+LIGO Livingston detectors and analyze 64s of data from
+16Hz to 2048Hz using the",9,CMR10,,405,55
+IMRPhenomD NRTides,9,CMTT10,,18,18
+"wave-
+form model that includes ﬁnite-size eﬀects [41]. We em-
+ploy our CBC+glitch+noise model on the data with the
+glitch and the CBC+noise model on data where the glitch
+has already been subtracted. For the CBC+glitch+noise
+case we use",9,CMR10,,236,55
+GlitchBuster,9,CMTT10,,12,12
+"[23] to provide a quick ﬁt to
+the glitch and use that as a starting point for our glitch
+model during sampling.",9,CMR10,,111,58
+∼,9,CMSY10,,1,1
+"Credible intervals for the signal and glitch reconstruc-
+tions are shown in Fig. 12 for each detector for
+150ms of
+data around the glitch. Despite its high SNR, GW170817
+had a relatively low amplitude, so the LIGO Hanford
+plot has been zoomed in to make the signal visible. The
+LIGO Livingston data are dominated by the glitch, peak-
+150",9,CMR10,,337,56
+σ,9,CMMI10,,1,1
+"relative to the background detector Gaus-
+ing at",9,CMR10,,48,41
+"sian noise. The signal is not visible in the LIGO Liv-
+ingston data given the plotting scale. Figure 13 shows
+selected source parameters obtained from data both with
+and without the glitch. We ﬁnd consistent results, show-
+ing that our combined CBC+glitch+noise analysis can
+faithfully ﬁt the CBC signal and the glitch simultane-
+ously, without the need for the two step process of ﬁrst
+removing the glitch and then reanalyzing the data.",9,CMR10,,437,56
+∼,9,CMSY10,,1,1
+"FIG. 7. One- and two-dimensional posterior distribution for
+selected source parameters of the simulated signal from the
+left panels of Fig. 6 injected on top of a LIGO Livingston scat-
+tered light glitch. We include the mass ratio",8,CMR9,,230,64
+q,8,CMMI9,,1,1
+", the eﬀective
+spin",8,CMR9,,19,14
+χ,8,CMMI9,,1,1
+eﬀ,5,CMR6,,2,2
+", and the detector frame chirp mass",8,CMR9,,35,35
+M,8,CMSY9,,1,1
+"posteriors,
+while black crosses or black vertical lines denote the true pa-
+rameters of the injection. Blue (orange) contours and lines
+correspond to the CBC+glitch+noise (CBC+noise) run.",8,CMR9,,187,63
+"of this paper, the analysis presented below also provides
+an estimate of the eﬀect of marginalizing over the noise
+PSD has on the inferred astrophysical parameters. More
+details about this eﬀect will be presented in a separate
+study.",9,CMR10,,233,57
+A. GW170817,8,CMBX9,,11,11
+B. GW150914,8,CMBX9,,11,11
+Perhaps the most known instance of a GW signal over-,9,CMR10,,52,52
+"lapping with an instrumental glitch is GW170817 [4].
+Inference on the GW170817 source properties is per-
+formed on data where the glitch in LIGO Livingston
+has been modeled with",9,CMR10,,177,52
+BayesWave,9,CMTT10,,9,9
+’s glitch-only model,9,CMR10,,20,20
+The ﬁrst GW signal directly detected by the LIGO,9,CMR10,,48,48
+"detectors, GW150914 [40], did not overlap with an in-
+strumental glitch [42]. However, since it is one of the
+best studied and loudest signals, we select it as a demon-
+stration of our analysis on data without glitches. Our",9,CMR10,,223,58
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+σ,4,CMMI12,,1,1
+n,3,CMMI12,,1,1
+o,2,CMMI12,,1,1
+i,1,CMMI12,,1,1
+s,2,CMMI12,,1,1
+e,2,CMMI12,,1,1
+LIGOHanford,8,CMR17,,11,11
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+"Data
+CBC
+Glitch",5,CMR17,,15,6
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR17,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR17,,4,1
+.,5,CMMI12,,1,1
+2,5,CMR17,,1,1
+t(s)fromGPS1172917779.7,7,CMR17,,23,23
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+σ,4,CMMI12,,1,1
+n,3,CMMI12,,1,1
+o,2,CMMI12,,1,1
+i,1,CMMI12,,1,1
+s,2,CMMI12,,1,1
+e,2,CMMI12,,1,1
+LIGOLivingston,8,CMR17,,14,14
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR17,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR17,,4,1
+.,5,CMMI12,,1,1
+2,5,CMR17,,1,1
+t(s)fromGPS1172917779.7,7,CMR17,,23,23
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+−,5,CMSY10,,1,1
+0,5,CMR17,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR17,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR17,,4,1
+.,5,CMMI12,,1,1
+2,5,CMR17,,1,1
+t(s)fromGPS1172917779.7,7,CMR17,,23,23
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0
+
+2",7,CMR17,,7,1
+4,7,CMR17,,1,1
+CBC+glitch+noise,3,CMR10,,16,16
+CBC+noise,3,CMR10,,9,9
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+24
+
+26
+
+28
+
+30",7,CMR17,,17,2
+M,10,CMSY10,,1,1
+(,3,CMR17,,1,1
+M,8,CMMI12,,1,1
+,4,CMSY10,,0,0
+),3,CMR17,,1,1
+"24
+
+26
+
+28
+
+30
+
+0",7,CMR17,,17,2
+.,7,CMMI12,,1,1
+"0
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0",7,CMR17,,25,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+0,7,CMR17,,1,1
+q,8,CMMI12,,1,1
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+4,7,CMR17,,1,1
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+4,7,CMR17,,1,1
+χ,5,CMMI12,,1,1
+e,2,CMR12,,1,1
+ﬀ,3,CMR12,,1,1
+"24
+
+26
+
+28
+
+30",7,CMR17,,14,2
+M,8,CMSY10,,1,1
+(,8,CMR17,,1,1
+M,8,CMMI12,,1,1
+,6,CMSY10,,0,0
+),8,CMR17,,1,1
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+4,7,CMR17,,1,1
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+4,7,CMR17,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+4,5,CMR12,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+4,5,CMR12,,1,1
+χ,8,CMMI12,,1,1
+eﬀ,6,CMR12,,2,2
+"0
+
+2
+
+4
+
+6",5,CMR12,,10,1
+8,9,CMR10,,1,1
+"FIG. 8. Spectrogram of the LIGO Livingston data around the time of the scattered light glitch for the leftmost injection from
+Fig. 6. Left panel: data containing the scattered light glitch and the simulated CBC signal. Middle panel: data after a fair
+draw from the glitch model has been subtracted leaving behind only the chirping CBC signal. Right panel: data after a fair
+draw from the glitch and CBC models has been subtracted, leaving behind only Gaussian detector noise.",8,CMR9,,475,125
+"FIG. 9. Credible intervals for the glitch (orange) and the CBC (blue) signal reconstruction for data containing a blue mountain
+glitch in LIGO Hanford and a simulated CBC signal at 3 diﬀerent times with respect to the glitch (left to right). Shaded
+regions correspond to 90% credible intervals, while in grey dashed lines we plot the data whitened with a fair draw PSD from
+our noise model posterior. The top row corresponds to LIGO Hanford while the bottom row corresponds to LIGO Livingston.",8,CMR9,,493,127
+"glitch model has the ﬂexibility to use no glitch wavelets,
+we therefore expect many samples in the glitch model
+posterior to contain exactly zero glitch power. We an-
+alyze 4s of data starting at 16Hz and with a sampling
+rate of 2048Hz. We perform two runs, one with the
+CBC+glitch+noise model and one with the CBC+glitch
+model using otherwise identical settings.",9,CMR10,,363,58
+"Relevant results are shown in Figs. 14 and 15 where as
+before we plot the CBC and glitch reconstructions of the
+CBC+glitch+noise model in the two detectors and the
+recovered source parameters. The CBC reconstruction of
+Fig. 14 is consistent with previous results [43]. The glitch
+reconstruction is too small to identify in the scale of the
+plot, as we ﬁnd that 86% and 14% of our posterior sam-
+ples had exactly zero glitch wavelets in LIGO Hanford
+and LIGO Livingston respectively. Figure 15 shows the",9,CMR10,,502,60
+"posterior distribution for selected source parameters of
+GW150914 obtained under the CBC+glitch+noise and
+the CBC+noise models. The two posteriors yield con-
+sistent results, showing that the glitch model does not
+aﬀect the CBC parameters when no glitch is present in
+the data.",9,CMR10,,277,56
+V. CONCLUSIONS,8,CMBX9,,14,14
+"We construct and validate an analysis of GW data
+that simultaneously models astrophysical CBC signals
+and instrumental glitches. We test the analysis against
+real instances of glitches in the two LIGO detectors from
+O2 data and simulated CBC signals injected at diﬀerent
+times with respect to the glitch. We ﬁnd that our analy-
+sis can separate the two, and provide both estimates for",9,CMR10,,384,57
+"the CBC source parameters and glitch-subtracted data
+for subsequent analyses. The glitch model we employ is
+a sum of sine-Gaussian wavelets that is not tuned to any
+speciﬁc glitch type and morphology; it can thus handle
+even novel glitch types that might ﬁrst appear during
+O4. Even though this ﬂexibility is desirable given the
+unpredictable and evolving nature of glitches, the eﬃ-
+cacy of glitch subtraction can be improved by employing
+targeted priors for diﬀerent glitch types. One such exam-
+ple would be a prior that anticipates arches at frequency
+multiples in the case of scattered light glitches. We leave",9,CMR10,,615,59
+such targeted priors to future work.,9,CMR10,,36,36
+Our analysis considered only simulated BBH sig-,9,CMR10,,47,47
+"nals, though we also present an analysis of the BNS
+GW170817. We expect overlapping CBCs and glitches
+of similar duration to be a worse-case-scenario due to",9,CMR10,,156,54
+"0.3
+0.45
+0.6
+0.75
+0.9
+1.05
+1.2
+1.35
+1.5
+1.65",5,CMR17,,44,4
+t,7,CMMI12,,1,1
+(s)fromGPS1172917778.7,7,CMR17,,22,22
+"10
+100
+20
+30
+40
+
+60",5,CMR17,,19,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0.3
+0.45
+0.6
+0.75
+0.9
+1.05
+1.2
+1.35
+1.5
+1.65",5,CMR17,,44,4
+t,7,CMMI12,,1,1
+(s)fromGPS1172917778.7,7,CMR17,,22,22
+"10
+100
+20
+30
+40
+
+60",5,CMR17,,19,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0.3
+0.45
+0.6
+0.75
+0.9
+1.05
+1.2
+1.35
+1.5
+1.65",5,CMR17,,44,4
+t,7,CMMI12,,1,1
+(s)fromGPS1172917778.7,7,CMR17,,22,22
+"10
+100
+20
+30
+40
+
+60",5,CMR17,,19,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+σ,4,CMMI12,,1,1
+n,3,CMMI12,,1,1
+o,2,CMMI12,,1,1
+i,1,CMMI12,,1,1
+s,2,CMMI12,,1,1
+e,2,CMMI12,,1,1
+LIGOHanford,8,CMR17,,11,11
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+"-0.4
+
+-0.2
+
+0
+
+0.2
+
+0.4",5,CMR17,,23,4
+t(s)fromGPS1165069535.9,7,CMR17,,23,23
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+σ,4,CMMI12,,1,1
+n,3,CMMI12,,1,1
+o,2,CMMI12,,1,1
+i,1,CMMI12,,1,1
+s,2,CMMI12,,1,1
+e,2,CMMI12,,1,1
+LIGOLivingston,8,CMR17,,14,14
+"-0.4
+
+-0.2
+
+0
+
+0.2
+
+0.4",5,CMR17,,23,4
+t(s)fromGPS1165069536.9,7,CMR17,,23,23
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+"Data
+CBC
+Glitch",5,CMR17,,15,6
+"-0.4
+
+-0.2
+
+0
+
+0.2
+
+0.4",5,CMR17,,23,4
+t(s)fromGPS11650695367.9,7,CMR17,,24,24
+−,5,CMSY10,,1,1
+"2
+
+0
+
+2",5,CMR17,,7,1
+9,9,CMR10,,1,1
+"the glitch model during sampling will decrease the sam-
+pler’s convergence time and result in ready-to-use glitch-
+subtracted data more quickly. We hope that our analysis
+will contribute to robust and eﬃcient glitch mitigation
+against the increased event rate anticipated in O4; our
+goal is to facilitate analysis of as much data as possible
+and maximize the science output of the upcoming obser-
+vations.",9,CMR10,,405,58
+ACKNOWLEDGMENTS,8,CMBX9,,15,15
+"We thank Derek Davis, Laura Nuttall, and Jessica
+McIver for sharing preliminary results and datasets
+for LIGO glitches and CBC injections. This research
+has made use of data, software and/or web tools ob-
+tained from the Gravitational Wave Open Science Cen-
+ter (https://www.gw-openscience.org), a service of LIGO
+Laboratory, the LIGO Scientiﬁc Collaboration and the",9,CMR10,,366,55
+"Virgo Collaboration. LIGO is funded by the U.S. Na-
+tional Science Foundation. Virgo is funded by the French
+Centre National de Recherche Scientiﬁque (CNRS), the
+Italian Istituto Nazionale della Fisica Nucleare (INFN)
+and the Dutch Nikhef, with contributions by Polish and
+Hungarian institutes. The authors are grateful for com-
+putational resources provided by the LIGO Laboratory
+and supported by National Science Foundation Grants
+PHY-0757058 and PHY-0823459. N.J.C. appreciates the
+support provided by NSF award PHY-1912053. M.W.
+gratefully acknowledges support and hospitality from the
+Simons Foundation through the pre-doctoral program at
+the Center for Computational Astrophysics, Flatiron In-
+stitute. The Flatiron Institute is supported by the Si-
+mons Foundation. Software: gwpy [46], matplotlib [47].",9,CMR10,,811,56
+"FIG. 10. One- and two-dimensional posterior distribution for
+selected source parameters of the simulated signal from the
+left panels of Fig. 9 injected on top of a LIGO Hanford blue
+mountain glitch. We include the mass ratio",8,CMR9,,224,60
+q,8,CMMI9,,1,1
+", the eﬀective",8,CMR9,,14,14
+spin,8,CMR9,,4,4
+χ,8,CMMI9,,1,1
+eﬀ,5,CMR6,,2,2
+", and the detector frame chirp mass",8,CMR9,,35,35
+M,8,CMSY9,,1,1
+"posteriors,
+while black crosses or black vertical lines denote the true pa-
+rameters of the injection.",8,CMR9,,102,63
+"their similar morphology [44, 45]. Given that, we plan to
+carry out a larger scale study of our CBC+glitch analysis
+that includes more glitch types and CBC classes, such as
+BNSs and lower mass BBHs. Additionally, the analysis
+presented here did not make use of",9,CMR10,,260,57
+GlitchBuster,9,CMTT10,,12,12
+"[23]
+to provide initial ﬁts to the glitch, apart from the
+GW170817 case.
+In the future we plan to investigate
+interfacing",9,CMR10,,121,52
+GlitchBuster,9,CMTT10,,12,12
+and,9,CMR10,,3,3
+BayesWave,9,CMTT10,,9,9
+"in more de-
+in the hopes that an eﬃcient starting point for
+tail,",9,CMR10,,65,47
+[1] J. Aasi,8,CMR9,,11,11
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc), Class. Quant. Grav.",8,CMR9,,37,37
+32,8,CMBX9,,2,2
+",",8,CMR9,,1,1
+"[10] C. Talbot and E. Thrane,",8,CMR9,,29,29
+"(2020), arXiv:2006.05292",8,CMR9,,24,24
+"074001 (2015), arXiv:1411.4547 [gr-qc].",8,CMR9,,39,39
+[astro-ph.IM].,8,CMR9,,14,14
+[2] F. Acernese,8,CMR9,,15,15
+et al.,8,CMTI9,,6,6
+"(Virgo Collaboration), Class. Quant.",8,CMR9,,36,36
+[11] S. A. Usman,8,CMR9,,16,16
+et al.,8,CMTI9,,6,6
+", Class. Quant. Grav.",8,CMR9,,21,21
+33,8,CMBX9,,2,2
+", 215004",8,CMR9,,8,8
+Grav.,8,CMR9,,5,5
+32,8,CMBX9,,2,2
+", 024001 (2015), arXiv:1408.3978 [gr-qc].",8,CMR9,,41,41
+"(2016), arXiv:1508.02357 [gr-qc].",8,CMR9,,33,33
+[3] R. Abbott,8,CMR9,,13,13
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo),",8,CMR9,,24,24
+"(2020),",8,CMR9,,7,7
+arXiv:2010.14527 [gr-qc].,8,CMR9,,25,25
+[4] B. P. Abbott,8,CMR9,,16,16
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc Collaboration, Virgo
+Collaboration), Phys. Rev. Lett.",8,CMR9,,69,36
+119,8,CMBX9,,3,3
+", 161101 (2017),
+arXiv:1710.05832 [gr-qc].",8,CMR9,,42,25
+[5] B. P. Abbott,8,CMR9,,16,16
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc Collaboration,
+Virgo Collaboration), Living Rev. Rel.",8,CMR9,,69,38
+19,8,CMBX9,,2,2
+", 1 (2013),
+arXiv:1304.0670 [gr-qc].",8,CMR9,,36,24
+"[6] K. Chatziioannou, C.-J. Haster, T. B. Littenberg, W. M.
+Farr, S. Ghonge, M. Millhouse, J. A. Clark, and N. Cor-
+nish, Phys. Rev. D",8,CMR9,,134,59
+100,8,CMBX9,,3,3
+", 104004 (2019).",8,CMR9,,16,16
+[7] J. Veitch,8,CMR9,,13,13
+et al.,8,CMTI9,,6,6
+", Phys. Rev. D",8,CMR9,,14,14
+91,8,CMBX9,,2,2
+", 042003 (2015),",8,CMR9,,16,16
+arXiv:1409.7215 [gr-qc].,8,CMR9,,24,24
+[12] S. Sachdev,8,CMR9,,15,15
+et al.,8,CMTI9,,6,6
+", (2019), arXiv:1901.08580 [gr-qc].
+[13] B. Zackay, T. Venumadhav, J. Roulet, L. Dai,",8,CMR9,,85,49
+"and
+M. Zaldarriaga, (2019), arXiv:1908.05644 [astro-ph.IM].
+[14] R. DeRosa, J. C. Driggers, D. Atkinson, H. Miao,
+V. Frolov, M. Landry, J. A. Giaime,
+and R. X.
+Adhikari, Classical and Quantum Gravity",8,CMR9,,199,55
+29,8,CMBX9,,2,2
+", 215008
+(2012), arXiv:1204.5504 [physics.ins-det].",8,CMR9,,51,42
+[15] V. Tiwari,8,CMR9,,14,14
+et al.,8,CMTI9,,6,6
+", Class. Quant. Grav.",8,CMR9,,21,21
+32,8,CMBX9,,2,2
+", 165014 (2015),",8,CMR9,,16,16
+arXiv:1503.07476 [gr-qc].,8,CMR9,,25,25
+"[16] G. D. Meadors, K. Kawabe, and K. Riles, Class. Quant.
+Grav.",8,CMR9,,64,58
+31,8,CMBX9,,2,2
+", 105014 (2014), arXiv:1311.6835 [astro-ph.IM].
+[17] J. Driggers",8,CMR9,,64,47
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc), Phys. Rev. D",8,CMR9,,30,30
+99,8,CMBX9,,2,2
+",",8,CMR9,,1,1
+"042001 (2019), arXiv:1806.00532 [astro-ph.IM].",8,CMR9,,46,46
+[8] B. P. Abbott,8,CMR9,,16,16
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo), Class.
+Quant. Grav.",8,CMR9,,44,31
+37,8,CMBX9,,2,2
+", 055002 (2020), arXiv:1908.11170 [gr-
+qc].",8,CMR9,,43,38
+"[18] D. Davis, T. Massinger, A. Lundgren, J. Driggers, A. Ur-
+ban, and L. Nuttall, Class. Quant. Grav.",8,CMR9,,102,61
+36,8,CMBX9,,2,2
+", 055011
+(2019), arXiv:1809.05348 [astro-ph.IM].",8,CMR9,,48,39
+"[9] C. Rover, R. Meyer, and N. Christensen, Class. Quant.
+Grav.",8,CMR9,,63,57
+28,8,CMBX9,,2,2
+", 015010 (2011), arXiv:0804.3853 [stat.ME].",8,CMR9,,43,43
+"[19] G. Vajente, Y. Huang, M. Isi, J. C. Driggers, J. S. Kissel,
+M. J. Szczepanczyk, and S. Vitale, Phys. Rev. D",8,CMR9,,112,64
+101,8,CMBX9,,3,3
+",",8,CMR9,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"8
+
+1",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+0
+
+2
+
+4",6,CMR17,,10,1
+"CBC+glitch+noise
+CBC+noise",3,CMR10,,26,16
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"8
+
+1",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+22
+
+24
+
+26
+
+28
+
+30",6,CMR17,,21,2
+M,9,CMSY10,,1,1
+(,2,CMR17,,1,1
+M,7,CMMI12,,1,1
+,4,CMSY10,,0,0
+),2,CMR17,,1,1
+"22
+
+24
+
+26
+
+28
+
+30
+
+0",6,CMR17,,21,2
+.,6,CMMI12,,1,1
+"0
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"1
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"3
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0",6,CMR17,,25,1
+.,6,CMMI12,,1,1
+"4
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"6
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"8
+
+1",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+0,6,CMR17,,1,1
+q,8,CMMI12,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+4,6,CMR17,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+2,6,CMR17,,1,1
+χ,4,CMMI12,,1,1
+e,2,CMR12,,1,1
+ﬀ,3,CMR12,,1,1
+"22
+
+24
+
+26
+
+28
+
+30",6,CMR17,,18,2
+M,8,CMSY10,,1,1
+(,8,CMR17,,1,1
+M,8,CMMI12,,1,1
+,5,CMSY10,,0,0
+),8,CMR17,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+4,6,CMR17,,1,1
+−,6,CMSY10,,1,1
+0,6,CMR17,,1,1
+.,6,CMMI12,,1,1
+"2
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+"0
+
+0",6,CMR17,,4,1
+.,6,CMMI12,,1,1
+2,6,CMR17,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+4,5,CMR12,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+2,5,CMR12,,1,1
+χ,8,CMMI12,,1,1
+eﬀ,5,CMR12,,2,2
+"0
+
+2
+
+4",5,CMR12,,7,1
+10,9,CMR10,,2,2
+"FIG. 11. Spectrogram of the LIGO Livingston data around the time of the blue mountain glitch for the leftmost injection from
+Fig. 9. Left panel: data containing the blue mountain glitch and the simulated CBC signal. Middle panel: data after a fair
+draw from the glitch model has been subtracted leaving behind only the chirping CBC signal. Right panel: data after a fair
+draw from the glitch and CBC models has been subtracted, leaving behind only Gaussian detector noise.",8,CMR9,,472,124
+"FIG. 12. Credible intervals for the glitch (orange) and the
+CBC (blue) signal reconstruction for GW170817. Shaded
+regions correspond to 90% credible intervals, while in grey
+dashed lines we plot the data whitened with a fair draw PSD
+from our noise model posterior. The top row corresponds to
+LIGO Hanford while the bottom row corresponds to LIGO
+Livingston. The LIGO Hanford plot zooms in to show the
+signal that is invisible in the LIGO Livingston plot due to the
+size of the glitch; note the y-scale diﬀerence in the two plots",8,CMR9,,529,63
+"FIG. 13. One- and two-dimensional posterior distribution for
+selected source parameters for GW170817. We include the
+mass ratio",8,CMR9,,127,60
+q,8,CMMI9,,1,1
+", the eﬀective spin",8,CMR9,,19,19
+χ,8,CMMI9,,1,1
+eﬀ,5,CMR6,,2,2
+", and the detector frame
+chirp mass",8,CMR9,,35,24
+M,8,CMSY9,,1,1
+"posteriors. Blue curves show posteriors under
+the CBC+glitch+noise model on the full data, while orange
+curves correspond to the CBC+noise model on data where the
+glitch has already been subtracted. The two sets of results are
+consistent with each other.",8,CMR9,,254,63
+[27] C. Pankow,8,CMR9,,14,14
+et al.,8,CMTI9,,6,6
+", Phys. Rev.",8,CMR9,,12,12
+D98,8,CMBX9,,3,3
+", 084016 (2018),",8,CMR9,,16,16
+arXiv:1808.03619 [gr-qc].,8,CMR9,,25,25
+"042003 (2020), arXiv:1911.09083 [gr-qc].",8,CMR9,,40,40
+"[20] R. Ormiston, T. Nguyen, M. Coughlin, R. X. Adhikari,
+and E. Katsavounidis, Phys. Rev. Res.",8,CMR9,,95,57
+2,8,CMBX9,,1,1
+", 033066 (2020),
+arXiv:2005.06534 [astro-ph.IM].",8,CMR9,,48,31
+"[28] LIGO Scientiﬁc Collaboration, Virgo Collaboration,",8,CMR9,,55,55
+"“LALSuite,” https://git.ligo.org/lscsoft/lalsuite (2018).",8,CMR9,,57,57
+"[29] N. J. Cornish, (2021), arXiv:2101.01188 [gr-qc].
+[30] N. J. Cornish and K. Shuman, Phys. Rev. D",8,CMR9,,100,53
+101,8,CMBX9,,3,3
+", 124008",8,CMR9,,8,8
+[21] S. Coughlin,8,CMR9,,16,16
+et al.,8,CMTI9,,6,6
+", Phys. Rev. D",8,CMR9,,14,14
+99,8,CMBX9,,2,2
+", 082002 (2019),",8,CMR9,,16,16
+"(2020), arXiv:2005.03610 [gr-qc].",8,CMR9,,33,33
+arXiv:1903.04058 [astro-ph.IM].,8,CMR9,,31,31
+"[22] N. J. Cornish and T. B. Littenberg, Class. Quant. Grav.",8,CMR9,,60,60
+"[31] N. J. Cornish, (2016), arXiv:1606.00953 [gr-qc].
+[32] Gravitational Wave Open Science Center (GWOSC),",8,CMR9,,106,53
+32,8,CMBX9,,2,2
+", 135012 (2015), arXiv:1410.3835 [gr-qc].",8,CMR9,,41,41
+https://www.gw-openscience.org/,8,CMTT9,,31,31
+.,8,CMR9,,1,1
+"[23] N. J. Cornish, T. B. Littenberg, B. B´ecsy, K. Chatziioan-
+nou, J. A. Clark, S. Ghonge, and M. Millhouse, (2020),
+arXiv:2011.09494 [gr-qc].
+J. Green,",8,CMR9,,154,63
+"(1995),",8,CMR9,,7,7
+[24] P.,8,CMR9,,7,7
+711,8,CMR9,,3,3
+82,8,CMBX9,,2,2
+",
+http://oup.prod.sis.lan/biomet/article-",8,CMR9,,41,39
+pdf/82/4/711/699533/82-4-711.pdf.,8,CMR9,,33,33
+Biometrika,8,CMR9,,10,10
+"[25] T. B. Littenberg and N. J. Cornish, Phys. Rev.",8,CMR9,,51,51
+D91,8,CMBX9,,3,3
+",",8,CMR9,,1,1
+"084034 (2015), arXiv:1410.3852 [gr-qc].",8,CMR9,,39,39
+[33] R. Abbott,8,CMR9,,14,14
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo),",8,CMR9,,24,24
+"(2019),",8,CMR9,,7,7
+arXiv:1912.11716 [gr-qc].,8,CMR9,,25,25
+"[34] S. Husa, S. Khan, M. Hannam, M. P¨urrer, F. Ohme,
+X. Jim´enez Forteza, and A. Boh´e, Phys. Rev. D",8,CMR9,,102,54
+93,8,CMBX9,,2,2
+",
+044006 (2016), arXiv:1508.07250 [gr-qc].",8,CMR9,,42,40
+"[35] S. Khan, S. Husa, M. Hannam, F. Ohme, M. P¨urrer,
+X. Jim´enez Forteza, and A. Boh´e, Phys. Rev. D",8,CMR9,,102,54
+93,8,CMBX9,,2,2
+",
+044007 (2016), arXiv:1508.07253 [gr-qc].",8,CMR9,,42,40
+"[26] BayesWave Glitch Subtraction for GW170817,",8,CMR9,,47,47
+https://,8,CMTT9,,8,8
+[36] M. Cabero,8,CMR9,,14,14
+et al.,8,CMTI9,,6,6
+", Class. Quant. Grav.",8,CMR9,,21,21
+36,8,CMBX9,,2,2
+", 15 (2019),",8,CMR9,,12,12
+dcc.ligo.org/LIGO-T1700406/public,8,CMTT9,,33,33
+.,8,CMR9,,1,1
+arXiv:1901.05093 [physics.ins-det].,8,CMR9,,35,35
+"0.5
+0.6
+0.7
+0.8
+0.9
+1
+1.1
+1.2
+1.3
+1.4
+1.5",5,CMR17,,41,3
+t,7,CMMI12,,1,1
+(s)fromGPS1165069534.9,7,CMR17,,22,22
+"100
+
+
+
+50
+
+
+
+
+
+
+
+500",5,CMR17,,20,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0.5
+0.6
+0.7
+0.8
+0.9
+1
+1.1
+1.2
+1.3
+1.4
+1.5",5,CMR17,,41,3
+t,7,CMMI12,,1,1
+(s)fromGPS1165069534.9,7,CMR17,,22,22
+"100
+
+
+
+50
+
+
+
+
+
+
+
+500",5,CMR17,,20,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+"0.5
+0.6
+0.7
+0.8
+0.9
+1
+1.1
+1.2
+1.3
+1.4
+1.5",5,CMR17,,41,3
+t,7,CMMI12,,1,1
+(s)fromGPS1165069534.9,7,CMR17,,22,22
+"100
+
+
+
+50
+
+
+
+
+
+
+
+500",5,CMR17,,20,3
+f,3,CMMI12,,1,1
+(,2,CMR17,,1,1
+H,4,CMR17,,1,1
+z,2,CMR17,,1,1
+),2,CMR17,,1,1
+"0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30",5,CMR17,,24,2
+N,4,CMR17,,1,1
+o,3,CMR17,,1,1
+r,2,CMR17,,1,1
+m,5,CMR17,,1,1
+a,3,CMR17,,1,1
+li,1,CMR17,,2,2
+ze,2,CMR17,,2,2
+d,3,CMR17,,1,1
+e,2,CMR17,,1,1
+n,3,CMR17,,1,1
+e,2,CMR17,,1,1
+r,2,CMR17,,1,1
+g,3,CMR17,,1,1
+y,3,CMR17,,1,1
+−,7,CMSY10,,1,1
+1,7,CMR17,,1,1
+"0
+
+1",7,CMR17,,4,1
+σ,5,CMMI12,,1,1
+n,4,CMMI12,,1,1
+o,3,CMMI12,,1,1
+i,2,CMMI12,,1,1
+s,3,CMMI12,,1,1
+e,3,CMMI12,,1,1
+LIGOHanford,10,CMR17,,11,11
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+15,7,CMR17,,2,2
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+12,7,CMR17,,2,2
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+09,7,CMR17,,2,2
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+06,7,CMR17,,2,2
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"03
+
+0",7,CMR17,,5,2
+.,7,CMMI12,,1,1
+00,7,CMR17,,2,2
+t(s)fromGPS1187008881.4457,9,CMR17,,26,26
+−,7,CMSY10,,1,1
+150,7,CMR17,,3,3
+−,7,CMSY10,,1,1
+100,7,CMR17,,3,3
+−,7,CMSY10,,1,1
+"50
+
+0
+
+50
+
+100
+
+150",7,CMR17,,19,3
+σ,5,CMMI12,,1,1
+n,4,CMMI12,,1,1
+o,3,CMMI12,,1,1
+i,2,CMMI12,,1,1
+s,3,CMMI12,,1,1
+e,3,CMMI12,,1,1
+LIGOLivingston,10,CMR17,,14,14
+"Data
+CBC
+Glitch",6,CMR17,,15,6
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0
+
+2
+
+4",7,CMR17,,10,1
+"CBC+glitch+noise
+CBC+noise(cleaned)",3,CMR10,,35,18
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+1.1975
+
+1.198",7,CMR17,,16,6
+M,10,CMSY10,,1,1
+(,3,CMR17,,1,1
+M,8,CMMI12,,1,1
+,4,CMSY10,,0,0
+),3,CMR17,,1,1
+"1.1975
+
+1.198
+
+0
+
+2000",7,CMR17,,22,6
+4000,7,CMR17,,4,4
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+0,7,CMR17,,1,1
+q,8,CMMI12,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"00
+
+0",7,CMR17,,5,2
+.,7,CMMI12,,1,1
+"05
+
+0",7,CMR17,,5,2
+.,7,CMMI12,,1,1
+10,7,CMR17,,2,2
+χ,5,CMMI12,,1,1
+e,2,CMR12,,1,1
+ﬀ,3,CMR12,,1,1
+"1.1975
+
+1.198",7,CMR17,,13,6
+M,8,CMSY10,,1,1
+(,8,CMR17,,1,1
+M,8,CMMI12,,1,1
+,5,CMSY10,,0,0
+),8,CMR17,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"00
+
+0",7,CMR17,,5,2
+.,7,CMMI12,,1,1
+"05
+
+0",7,CMR17,,5,2
+.,7,CMMI12,,1,1
+10,7,CMR17,,2,2
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+"00
+
+0",5,CMR12,,5,2
+.,5,CMMI12,,1,1
+"05
+
+0",5,CMR12,,5,2
+.,5,CMMI12,,1,1
+10,5,CMR12,,2,2
+χ,8,CMMI12,,1,1
+eﬀ,5,CMR12,,2,2
+"0
+
+10
+
+20
+
+30",5,CMR12,,13,2
+11,9,CMR10,,2,2
+"[37] J. Powell, Class. Quant. Grav.",8,CMR9,,35,35
+35,8,CMBX9,,2,2
+", 155017 (2018),",8,CMR9,,16,16
+arXiv:1803.11346 [astro-ph.IM].,8,CMR9,,31,31
+[38] T. Accadia,8,CMR9,,15,15
+et al.,8,CMTI9,,6,6
+", Classical and Quantum Gravity",8,CMR9,,31,31
+27,8,CMBX9,,2,2
+",",8,CMR9,,1,1
+194011 (2010).,8,CMR9,,14,14
+[39] S. Soni,8,CMR9,,12,12
+et al.,8,CMTI9,,6,6
+", arXiv e-prints , arXiv:2007.14876 (2020),",8,CMR9,,43,43
+arXiv:2007.14876 [astro-ph.IM].,8,CMR9,,31,31
+[40] B. Abbott,8,CMR9,,14,14
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo), Phys. Rev.
+Lett.",8,CMR9,,41,35
+116,8,CMBX9,,3,3
+", 061102 (2016), arXiv:1602.03837 [gr-qc].
+[41] T. Dietrich",8,CMR9,,59,42
+et al.,8,CMTI9,,6,6
+", Phys. Rev.",8,CMR9,,12,12
+D99,8,CMBX9,,3,3
+", 024029 (2019),",8,CMR9,,16,16
+arXiv:1804.02235 [gr-qc].,8,CMR9,,25,25
+[42] B. P. Abbott,8,CMR9,,17,17
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo), Class.
+Quant. Grav.",8,CMR9,,44,31
+33,8,CMBX9,,2,2
+", 134001 (2016), arXiv:1602.03844 [gr-
+qc].",8,CMR9,,43,38
+[43] B. P. Abbott,8,CMR9,,17,17
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo), Phys. Rev.
+Lett.",8,CMR9,,41,35
+116,8,CMBX9,,3,3
+", 241102 (2016), arXiv:1602.03840 [gr-qc].
+[44] B. P. Abbott",8,CMR9,,60,42
+et al.,8,CMTI9,,6,6
+"(LIGO Scientiﬁc, Virgo), Class.
+Quant. Grav.",8,CMR9,,44,31
+35,8,CMBX9,,2,2
+", 065010 (2018), arXiv:1710.02185 [gr-
+qc].",8,CMR9,,43,38
+"[45] D. Davis, L. V. White, and P. R. Saulson, Class. Quant.
+Grav.",8,CMR9,,66,60
+37,8,CMBX9,,2,2
+", 145001 (2020), arXiv:2002.09429 [gr-qc].
+[46] D. Macleod, A. L. Urban, S. Coughlin, T. Massinger,
+M. Pitkin, paulaltin, J. Areeda, E. Quintero, T. G. Bad-",8,CMR9,,156,56
+"ger, L. Singer, and K. Leinweber, “gwpy/gwpy: 1.0.1,”
+(2020).",8,CMR9,,61,53
+"[47] J. D. Hunter, Computing In Science & Engineering",8,CMR9,,53,53
+9,8,CMBX9,,1,1
+", 90",8,CMR9,,4,4
+(2007).,8,CMR9,,7,7
+"FIG. 14. Credible intervals for the glitch (orange) and the
+CBC (blue) signal reconstruction for GW150914. Shaded
+regions correspond to 90% credible intervals, while in grey
+dashed lines we plot the data whitened with a fair draw PSD",8,CMR9,,233,59
+"from our noise model posterior. The top row corresponds to
+LIGO Hanford while the bottom row corresponds to LIGO
+Livingston. Our glitch model recovers essentially no incoher-
+ent power coincident with the astrophysical signal and there-
+fore the reconstruction is not visible in the scale of the plot.",8,CMR9,,301,64
+"FIG. 15. One- and two-dimensional posterior distribution for
+selected source parameters for GW150914. We include the
+mass ratio",8,CMR9,,127,60
+q,8,CMMI9,,1,1
+", the eﬀective spin",8,CMR9,,19,19
+χ,8,CMMI9,,1,1
+eﬀ,5,CMR6,,2,2
+", and the detector frame
+chirp mass",8,CMR9,,35,24
+M,8,CMSY9,,1,1
+"posteriors. Blue curves show posteriors un-
+der the CBC+glitch+noise model, while orange curves corre-
+spond to the CBC+noise model. The two sets of results are
+consistent with each other.",8,CMR9,,188,58
+−,8,CMSY10,,1,1
+4,8,CMR17,,1,1
+−,8,CMSY10,,1,1
+"2
+
+0
+
+2
+
+4
+
+6",8,CMR17,,13,1
+σ,5,CMMI12,,1,1
+n,4,CMMI12,,1,1
+o,3,CMMI12,,1,1
+i,2,CMMI12,,1,1
+s,3,CMMI12,,1,1
+e,3,CMMI12,,1,1
+LIGOHanford,11,CMR17,,11,11
+"Data
+CBC
+Glitch",7,CMR17,,15,6
+−,8,CMSY10,,1,1
+0,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+06,8,CMR17,,2,2
+−,8,CMSY10,,1,1
+0,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+04,8,CMR17,,2,2
+−,8,CMSY10,,1,1
+0,8,CMR17,,1,1
+.,8,CMMI12,,1,1
+"02
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+"00
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+"02
+
+0",8,CMR17,,5,2
+.,8,CMMI12,,1,1
+04,8,CMR17,,2,2
+t(s)fromGPS1126259462.391,10,CMR17,,25,25
+−,8,CMSY10,,1,1
+4,8,CMR17,,1,1
+−,8,CMSY10,,1,1
+"2
+
+0
+
+2
+
+4
+
+6",8,CMR17,,13,1
+σ,5,CMMI12,,1,1
+n,4,CMMI12,,1,1
+o,3,CMMI12,,1,1
+i,2,CMMI12,,1,1
+s,3,CMMI12,,1,1
+e,3,CMMI12,,1,1
+LIGOLivingston,11,CMR17,,14,14
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0
+
+2
+
+4",7,CMR17,,10,1
+"CBC+glitch+noise
+CBC+noise",3,CMR10,,26,16
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+28
+
+30
+
+32
+
+34",7,CMR17,,17,2
+M,10,CMSY10,,1,1
+(,3,CMR17,,1,1
+M,8,CMMI12,,1,1
+,4,CMSY10,,0,0
+),3,CMR17,,1,1
+"28
+
+30
+
+32
+
+34
+
+0",7,CMR17,,17,2
+.,7,CMMI12,,1,1
+"0
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"4
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0",7,CMR17,,29,1
+.,7,CMMI12,,1,1
+"6
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"8
+
+1",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+0,7,CMR17,,1,1
+q,8,CMMI12,,1,1
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+2,7,CMR17,,1,1
+χ,5,CMMI12,,1,1
+e,2,CMR12,,1,1
+ﬀ,3,CMR12,,1,1
+"28
+
+30
+
+32
+
+34",7,CMR17,,14,2
+M,8,CMSY10,,1,1
+(,8,CMR17,,1,1
+M,8,CMMI12,,1,1
+,6,CMSY10,,0,0
+),8,CMR17,,1,1
+−,7,CMSY10,,1,1
+0,7,CMR17,,1,1
+.,7,CMMI12,,1,1
+"2
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+"0
+
+0",7,CMR17,,4,1
+.,7,CMMI12,,1,1
+2,7,CMR17,,1,1
+−,5,CMSY10,,1,1
+0,5,CMR12,,1,1
+.,5,CMMI12,,1,1
+"2
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+"0
+
+0",5,CMR12,,4,1
+.,5,CMMI12,,1,1
+2,5,CMR12,,1,1
+χ,8,CMMI12,,1,1
+eﬀ,6,CMR12,,2,2
+"0
+
+2
+
+4
+
+6",5,CMR12,,10,1

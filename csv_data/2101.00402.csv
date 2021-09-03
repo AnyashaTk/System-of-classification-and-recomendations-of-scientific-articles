@@ -1,0 +1,397 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+Towards new servo control algorithms at the TNG telescope,15,CMBX12,,57,57
+P. Schipani,11,CMR12,,11,11
+a,7,CMR8,,1,1
+", M. Gonzalez",11,CMR12,,13,13
+b,7,CMR8,,1,1
+", F. Perrotta",11,CMR12,,13,13
+a,7,CMR8,,1,1
+", S. Savarese",11,CMR12,,13,13
+a,7,CMR8,,1,1
+", M. Colapietro",11,CMR12,,15,15
+a,7,CMR8,,1,1
+", A. Ghedina",11,CMR12,,12,12
+b,7,CMR8,,1,1
+", M.
+Hernandez Diaz",11,CMR12,,19,14
+b,7,CMR8,,1,1
+", and H. Ventura",11,CMR12,,16,16
+b,7,CMR8,,1,1
+a,7,CMR8,,1,1
+"INAF - Osservatorio Astronomico di Capodimonte, Salita Moiariello 16, Naples, Italy",11,CMR12,,83,83
+b,7,CMR8,,1,1
+"INAF - FGG, TNG, Rambla J.A. Fern´andez P´erez 7, Bre˜na Baja (TF), Spain",11,CMR12,,73,73
+ABSTRACT,10,CMBX10,,8,8
+"The servo control algorithms of the TNG, developed in the nineties, have been working for more than 20 years
+with no major updates. The original hardware was based on a VME-bus based platform running a real time
+operating system, a rather popular choice for similar applications at the time. Recently, the obsolescence of
+the hardware and the lack of spares pushed the observatory towards a complete replacement of the electronics
+that is now being implemented in steps, respecting the basic requirement of never stopping the observatory
+night operations. Within the framework of this major hardware work, we are taking the opportunity to review",9,CMR10,,645,109
+"and update the existing control schemes. This servo control update, crucial for the telescope performance,
+envisages a new study from scratch of the controlled plant, including a re-identiﬁcation of the main axes transfer
+functions and a re-design of the control ﬁlters in the two nested position and speed loops. The ongoing work is
+described, including preliminary results in the case study of the azimuth axis and our plans for possible further
+improvements.",9,CMR10,,461,114
+Keywords:,9,CMBX10,,9,9
+"TNG, Telescope, Tracking, Servo Control",9,CMR10,,39,39
+1. INTRODUCTION,10,CMBX10,,15,15
+"The 3.5-m TNG telescope saw ﬁrst light in La Palma (Canary Islands) at Roque de Los Muchachos observatory
+in 1998. Its axes control system had been realized few years before: all the control hardware had been installed in
+1995, completing the procurement of components and custom parts during the preliminary integration in Italy.
+In the original design, the speed loop control had been implemented adopting a custom hardware developed by
+the Sierracin Magnedyne company, including motors, power ampliﬁers and control CPUs, whereas the position
+loop had been realized in-house by the Italian community, using all commercial components based on the VME
+bus technology and a real-time operating system: this system has been working every night for more than 20
+years.",9,CMR10,,765,115
+"Only few relatively minor interventions have been necessary over the years, but after more than two decades,
+the observatory was running out of spare parts. Soon after the telescope realization, the stock could no longer
+be updated for the custom parts. Of course, over the years this became a critical issue because of aging and
+obsolescence, including the commercial components as well. Thus, recently the observatory started a project to",9,CMR10,,440,111
+"replace all the control hardware components but motors and feedback sensors: this work is described in Ref. 1.
+Obviously, this kind of modernization eﬀorts are common for telescopes operating since a few decades (e.g. see
+Ref. 2–4).",9,CMR10,,232,110
+"Within this eﬀort, it was decided to maintain the same software, which had proved to be eﬀective and reliable
+for many years, so avoiding a full recommissioning of the system. Thus, the control software has been ported to
+the new platform with a heavy and accurate work of translation from the old real-time textual environment to
+the National Instruments LabVIEW graphical programming language. Thus, the telescope is still running the
+“same” axes control software albeit under a totally diﬀerent environment.",9,CMR10,,510,111
+"As the whole intervention involves critical system components (e.g. the axes drives), possible eﬀects on the
+axes transfer function, and consequently on the servo control performance, can be expected. This motivated",9,CMR10,,215,108
+"the team to plan a complete check and redesign of the servo control algorithms, under the strict requirement of",9,CMR10,,111,111
+"never stopping the telescope operations. This is the main objective of this paper, which describes the case of the
+azimuth axis.",9,CMR10,,128,114
+Send correspondence to: pietro.schipani@inaf.it,8,CMR9,,47,47
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+n,10,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+J,7,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+2,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+M,17,Times-Roman,,1,1
+I,6,Times-Roman,,1,1
+.,5,Times-Roman,,1,1
+"h
+p",10,Times-Roman,,3,1
+-,6,Times-Roman,,1,1
+o,10,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+t,5,Times-Roman,,1,1
+s,7,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"1
+v
+2
+0
+4
+0
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+"Figure 1. Open loop model identiﬁcation. The white noise is injected into the torque input, the diﬀerentiated encoder
+signal is recorded synchronously as system output. The I/O sample pairs are analyzed in Matlab through a laptop
+computer.",8,CMR9,,239,117
+2. SYSTEM IDENTIFICATION,10,CMBX10,,24,24
+"The ﬁrst step of the work has been the identiﬁcation of the azimuth model. The derivation of the transfer
+function has been done purely from ﬁeld test data, as no analytical model was available for comparison. A white
+noise signal has been applied at the torque input to excite the dynamics of the telescope. The white noise is a
+random signal of even spectrum, able to excite evenly each frequency component of the telescope dynamics. The
+corresponding velocity output has been measured by diﬀerentiating the position encoder output.",9,CMR10,,534,111
+"It is worth noticing that, in the original implementation, the velocity feedback was provided by custom",9,CMR10,,103,103
+"tachometers; after several years they started to fail and were replaced by an encoder based system, providing a
+back-compatible analogue speed signal. Finally, in the new system it has been decided to work with “software
+tachometers” obtained by diﬀerentiating the encoder readings. This is the same solution adopted, e.g. at the
+VLT (Ref. 5) and the VST (Ref. 6).",9,CMR10,,364,111
+"To be eﬀective, the white noise procedure has been tuned by varying parameters like the amplitude of the
+input noise and the duration of the test. After some tuning, the test was run at 500Hz frequency for an overall
+duration of 5 minutes, corresponding to 150,000 samples of input-output pairs. Longer acquisition times did not
+produce any diﬀerence. The amplitude of the input signal was determined after a trade-oﬀ between the opposite
+needs of exciting suﬃciently the axis dynamics and prevent damages to the system. The average input signal
+was null, so the axis remained always approximately in the same position.",9,CMR10,,619,111
+"The test conﬁguration was extremely easy, as no external equipment was adopted. Everything was based
+on dedicated software features prepared in advance, fully integrated into the new graphical implementation of
+the control software, adopting a post-processing code developed in Matlab. The white noise input was purely",9,CMR10,,318,109
+Figure 2. Open-loop transfer functions of the azimuth axis at three diﬀerent altitude angles: ALT=90,8,CMR9,,100,100
+◦,5,CMSY6,,1,1
+"(Zenith),
+ALT=50",8,CMR9,,16,9
+◦,5,CMSY6,,1,1
+", ALT=20",8,CMR9,,8,8
+◦,5,CMSY6,,1,1
+(observational limit).,8,CMR9,,22,22
+"digital as well as the velocity output. The sample vectors were analyzed in quasi-real-time within the Matlab
+environment. Figure 1 shows the basic diagram of the open-loop system identiﬁcation.",9,CMR10,,194,109
+"In the case of azimuth, it is well known that the transfer function depends on the altitude position (Ref. 7).
+The model identiﬁcation has been repeated at the two extremes of the altitude range (ALT=20",9,CMR10,,202,110
+◦,6,CMSY7,,1,1
+and ALT=90,9,CMR10,,10,10
+◦,6,CMSY7,,1,1
+")
+and in an intermediate position (ALT=50",9,CMR10,,41,39
+◦,6,CMSY7,,1,1
+"). As expected, the three transfer functions are similar, but not",9,CMR10,,65,65
+identical (Figure 2). The result at ALT=50,9,CMR10,,42,42
+◦,6,CMSY7,,1,1
+"is assumed to be a good compromise, representing a ﬁrst order
+approximation of the axis model.",9,CMR10,,94,61
+"In principle, the identiﬁed model might be compared with an analytical model coming from FEA data, which
+would help to identify the physical meaning of all resonances in the model. Nevertheless, an accurate FEA model
+is not available for the TNG and any old simpliﬁed model, dating back to design time, could not be deemed
+reliable. Also, the purpose of this work is the design of the servo control for an existing telescope, rather than
+the study of a new optomechanical system still in design phase. Consequently, all the work was based uniquely
+on the identiﬁed transfer function. The identiﬁed model has been the starting point for the servo control design,
+described in the following sections.",9,CMR10,,698,114
+It is worth mentioning that for some control strategies (e.g. model-based control schemes) an accurate,9,CMR10,,102,102
+"identiﬁed model is mandatory (Ref. 7). So far, the old servo control architecture has been kept for this work,
+but a model-based controller would be a viable alternative. Working on a model-based controller (e.g. LQG)
+design, it is generally necessary to reduce the order of the model to get an accurate, but simple, representation
+of the system. The order of the system must be decreased saving only an appropriate number of modes that",9,CMR10,,436,113
+Figure 3. Open-loop transfer functions of the azimuth axis at ALT=50,8,CMR9,,68,68
+◦,5,CMSY6,,1,1
+". Blue: raw noisy data; Red: 50-state identiﬁed
+model; Yellow: 14-state model after Hankel reduction.",8,CMR9,,101,53
+"still represent the system with good approximation. All the others, adding unuseful complexity to the controller
+design, shall be excluded.",9,CMR10,,139,112
+"In the case under study, the azimuth axis was identiﬁed with a model of order 50, i.e. the dynamical matrix
+of the space-state representation is 50x50. This order is too high for the implementation of e.g. a LQG controller
+and likely includes dynamics that do not represent the system, possibly measurement noise. Diﬀerent reduction
+techniques exist (Ref. 8); here the Hankel norm technique has been adopted, computing the Hankel singular
+vaues of the dynamical system and removing the modes with the smallest norms, under a given threshold. The
+threshold must be tuned in order to keep an adequate representation of the system. Figure 3 compares raw data,
+the 50-state azimuth model and a balanced 14-state model reduced by truncation of the smallest Hankel norms;
+here the 50- and 14-state model diﬀers signiﬁcantly only for the high frequency dynamics, above 100Hz.",9,CMR10,,868,114
+"The telescope main axes adopt a two-loop control structure with a speed loop nested inside the position loop.
+Adopting this structure, the problem is naturally decoupled in two steps, to be performed in the right order:",9,CMR10,,219,109
+3. SPEED LOOP CONTROL,10,CMBX10,,21,21
+•,9,SFRM1000,,1,1
+"design of the speed controller, which deﬁnes the closed-loop speed transfer function",9,CMR10,,84,84
+•,9,SFRM1000,,1,1
+design of the position controller,9,CMR10,,33,33
+"Thus, the speed controller design is the ﬁrst step. A good speed control is necessary, but not suﬃcient, for a
+good star tracking. When the velocity control works suﬃciently well, the control engineer can start dealing with
+the position control loop.",9,CMR10,,250,112
+"The implementation of a series of second order ﬁlters oﬀers a full ﬂexibility for the speed controller design.
+They have an immediate interpretation, e.g. they can be low-pass, Notch, PID ﬁlters. The serial connection
+of a number of simple blocks allows to shape any possible transfer function in the frequency domain. Here,
+we preliminarily estimated that a series of four ﬁlters could give enough degrees of freedom. However, a good
+solution was identiﬁed using just three of them. The ﬁlters have been designed in the frequency domain, by
+placing poles and zeros where appropriate. In the current implementation, the ﬁlter no.1 and no.2 are identical",9,CMR10,,653,111
+"low-pass ﬁlters and the ﬁlter no.3 is a PI controller. An external gain has been modulated in order to increase the
+bandwidth of the closed speed loop as much as possible, preserving simultaneously the system stability. Figure 4
+shows the speed closed-loop with a schematic description of the speed controller. Figure 5 reports an example
+of speed error time series during the tuning phase.",9,CMR10,,390,115
+"Figure 4. The speed loop scheme. The inner structure of the speed controller is shown as a block diagram. On top, the
+Bode diagrams of the ﬁlters.",8,CMR9,,146,117
+4. POSITION LOOP CONTROL,10,CMBX10,,24,24
+"The fundamental goal for a telescope axis servo control is the quality of tracking. The control loops must be
+designed carefully to constrain the tracking error within tight speciﬁcations, especially for an optical telescope
+like the TNG. However, a good design of the slewing phase is essential as well. The slew phase must be as short
+as possible, so ideally the telescope axes should be driven at maximum speed, but this is impossible because of
+physical limits for the next position derivatives, i.e. acceleration and jerk. Overall, a system approach for servo
+control shall be adopted, addressing simultaneously all issues related to both slew and tracking phases.",9,CMR10,,669,115
+"With reference to the PI (Proportional-Integral) controller, one of the most popular tracking position con-",9,CMR10,,107,107
+"trollers for telescopes as well, one problem is represented by the large overshoot caused by the integral action",9,CMR10,,112,112
+"during the slew phase, when the position error is large. One workaround is the implementation of diﬀerent
+position controllers for slew and tracking, with a transition phase between the two; this was the ﬁrst solution
+implemented at the VLT as described in Ref. 9 (later the implementation was changed as described in Ref. 10",9,CMR10,,325,111
+"Figure 5. Example of a velocity error time series, for a speed command of 80 arcsec/s (RMS=0.4 arcsec/s).",8,CMR9,,105,105
+"adopting a command preprocessor, see also Section 5.1).",9,CMR10,,55,55
+"A more sophisticated and ﬂexible solution, still attractively easy, is the implementation of a variable structure
+controller in the loop (ﬁg. 6), pioneered in the telescope ﬁeld at the TNG itself in the nineties. With a variable
+structure controller, the parameters are dynamically changed as a function of the position error, with the following
+guidelines.",9,CMR10,,357,116
+•,9,SFRM1000,,1,1
+"When the axis is tracking and the error is small, the controller must guarantee optimal performance and",9,CMR10,,103,103
+minimal servo error.,9,CMR10,,20,20
+•,9,SFRM1000,,1,1
+"When the error is large, using the tracking gains would cause instability. The position gain must be smaller",9,CMR10,,108,108
+and the integral gain must be zero for errors larger than a threshold.,9,CMR10,,70,70
+•,9,SFRM1000,,1,1
+Between the two extreme conditions (,9,CMR10,,36,36
+large,9,CMTI10,,5,5
+and,9,CMR10,,3,3
+small,9,CMTI10,,5,5
+"errors), it shall be possible to shape the gain functions",9,CMR10,,57,57
+as appropriate to allow for a smooth transition.,9,CMR10,,48,48
+The implementation of these principles enables a smooth switch from a purely proportional to a proportional-,9,CMR10,,108,108
+"integral controller, varying continuously the proportional and integral gains over the transition phase.",9,CMR10,,104,104
+"In the TNG case, this has been implemented through a simple linear interpolation of three points in the
+gain-error plane; the principle is simply described by ﬁg. 7. The variable gain function is fully described by the
+coordinates of the three points, i.e. by 6 parameters. Thus, the PI variable structure controller is described by
+12 parameters, fully deﬁning Kp(e) and Ki(e). With reference to the transition phase, it is worth mentioning
+that more mathematically elegant connections of the two extreme points would not give, for the shaping of the
+functions, the same total freedom of a simple linear interpolation of points. In the TNG case, setting only one
+intermediate point has been enough.",9,CMR10,,699,114
+Figure 6. Position loop adopting a Variable Structure controller.,8,CMR9,,65,65
+"Figure 7. Variable structure controller gain. The K(e) function comes from the linear interpolation of three points. The
+two extremes deﬁne the gain for the slewing phase (large errors) and the tracking phase (small errors); the central point
+gives the necessary degrees of freedom for the transition phase.",8,CMR9,,307,121
+5.1 Command preprocessor,10,CMBX10,,24,24
+5. ALTERNATIVE IMPLEMENTATIONS,10,CMBX10,,30,30
+"Other approaches to the problems outlined in section 4 are possible, rather than recurring to variable structure
+controllers. An eﬀective solution can be designing the slew phase by pre-ﬁltering the axes reference positions
+coming from the astrometric sequence, a solution sometimes referred to as",9,CMR10,,297,112
+command pre-preprocessor,9,CMTI10,,24,24
+or,9,CMR10,,2,2
+"command
+shaper",9,CMTI10,,14,7
+"(Fig. 8). This way, the designer can constraint the system variables by planning a trajectory that will
+never exceed the velocity and acceleration limits, with two consequences: the telescope dynamics will always
+work in the linear regime, as any saturation will be prevented by design; the position error will always be limited,
+eﬀectively preventing the overshoot problem caused by the integral action.",9,CMR10,,404,116
+"The trajectory planning is not trivial because the telescope target is moving, although slowly, so the ﬁnal
+destination of the telescope slew is not rigorously known in advance. Of course, in theory the whole trajectory of",9,CMR10,,222,114
+"the celestial object might be precomputed; but this would require the servo control software embeds or replicates
+the astrometry computations.",9,CMR10,,142,113
+"This is normally an impractical solution, because the two tasks of astrometry and servo control are usually",9,CMR10,,107,107
+Figure 8. Position loop adopting a command preprocessor in input.,8,CMR9,,65,65
+"decoupled and implemented separately: this is the case at the TNG too. An astrometry module computes the
+axes coordinates and generates the set-points for the servo control; on the servo side, the astrometry is seen as a
+black-box that outputs periodically the coordinates to track. Thus, the instantaneous trajectory set-points are
+known, but all the future ones are unknowns. Therefore, an essential feature for a command preprocessor at
+the TNG is the ability to work recursively, having no knowledge of the future positions but using instantaneous",9,CMR10,,551,115
+inputs only.,9,CMR10,,12,12
+"Examples of slew trajectory planners are in Ref. 11–17. They diﬀer signiﬁcantly in the approach and imple-
+mentation. Here, the preference for a possible future implementation at the TNG goes for a recursive scheme
+guaranteeing the continuity of velocity and acceleration, i.e. for a preprocessor implementing a C",9,CMR10,,313,107
+2,6,CMR7,,1,1
+"class trajec-
+tory.",9,CMR10,,19,13
+The implementation of a command shaper may lead to the implementation of a single position controller for,9,CMR10,,105,105
+"any phase (large, medium and small errors), removing the need of variable gains.",9,CMR10,,80,80
+5.2 Model-based control,10,CMBX10,,23,23
+"The current PI controller improves the performance when the gains are increased, but makes the system unstable
+if the gains are too high, causing vibrations. The reason is that the telescope is not totally rigid but has ﬂexible
+modes. A controller that suppresses the telescope vibrations when the gains are increased would be helpful.
+This is what a model-based controller aims to do. Therefore, although the current implementation fulﬁlls the
+requirements, moving to a model-based controller could in principle further enhance the system.",9,CMR10,,540,116
+"One option is the LQG control. In the optimal control theory, a LQG controller is a combination of a Kalman
+ﬁlter (a Linear Quadratic state Estimator - LQE) with a Linear Quadratic Regulator (LQR). The tracking version
+of the LQG controller described in Ref. 7 has some similarities with the PI control scheme and may be a candidate
+for an experimentation at the TNG.",9,CMR10,,367,113
+"As shown in Fig. 9, the LQG is implemented in the position loop and the ”Telescope Axis”, to be modelled",9,CMR10,,104,104
+"through a white-noise identiﬁcation procedure, is the velocity closed-loop. Here, the command preprocessor is
+mandatory: in fact the capability to shape the trajectory not exceeding velocity and acceleration limits allows
+to work always in the linear regime, as needed by this method. The scheme includes an estimator of the states
+of the ﬂexible modes from the axis position and the speed command (output of position controller). The ﬂexible
+mode controller",9,CMR10,,458,111
+K,9,CMMI10,,1,1
+f,6,CMMI7,,1,1
+"action is added to the PI output, allowing the suppression of the telescope vibrations. The
+tracking version of the LQG controller is a PI augmented with a ﬂexible mode controller, where the increase of
+the proportional gain cause no longer instability because the vibrations are suppressed.",9,CMR10,,291,110
+6. CONCLUSIONS,10,CMBX10,,14,14
+"Within the framework of a hardware modernization eﬀort at the TNG, more than two decades into the start of",9,CMR10,,106,106
+"telescope operations, the servo control algorithms are consequently under update, to cope with the new drive
+system. After the control algorithms redesign and the validation of the tracking performance, the azimuth axis
+completed the transition to the new hardware. The open-loop axis model was identiﬁed and the servo controllers",9,CMR10,,330,110
+Figure 9. Position loop adopting a command preprocessor and a LQG controller.,8,CMR9,,77,77
+"were redesigned from scratch. For the servo control algorithm redesign, few days of technical time in day-hours
+were allocated at the observatory, without stopping the telescope night operations.",9,CMR10,,195,111
+"The minimum goal was leaving the telescope operational with the new hardware system, with at least the same
+satisfactory performance shown for the previous twenty years. This goal was achieved, as the ﬁnal performance
+exceeded the previous ones.",9,CMR10,,245,109
+"Given the limited time allocated for this ﬁrst intervention, it was conservatively decided to start from the
+control philosophy implemented by the same authors at telescope commissioning time. New options are under
+study, which might further improve the TNG tracking quality.",9,CMR10,,275,108
+REFERENCES,10,CMBX10,,10,10
+"[1] Gonzalez, M., Ventura, H. P., Diaz, M. H., Schipani, P., Ghedina, A., G´omez, J. S. J., Hernandez, N., Guerra,
+J., Lodi, M., Rodr´ıguez, A. L. R., Riverol, C., Gonzalez, C., Galli, A., Colapietro, M., and Savarese, S.,
+“Telescopio Nazionale Galileo control system upgrade, new milestone achieved: Azimuth axis completed,”",9,CMR10,,325,114
+Proc. SPIE,9,CMTI10,,10,10
+11445,9,CMBX10,,5,5
+(2020).,9,CMR10,,7,7
+"[2] Abbott, T. M. C., Schumacher, G., Warner, M., Mondaca, E., Schmidt, R. E., Cantarutti, R., Martinez,
+M., Estay, O., Delgado, F., and Walker, A., “Cerro Tololo Inter-American observatory, Victor M. Blanco
+4-m telescope: an upgrade to the telescope control system,”",9,CMR10,,267,104
+Proc. SPIE,9,CMTI10,,10,10
+7012,9,CMBX10,,4,4
+", 70123K (2008).",9,CMR10,,16,16
+"[3] Sprayberry, D., Dunlop, P., M.Evatt, Reddell, L., Gott, S., George, J. R., Donaldson, J., Stupak, R. J.,
+R.Marshall, Abareshi, B., Stover, D., Warner, M., Cantarutti, R. E., and Probst, R. G., “Modernization of
+the Mayall telescope control system: design, implementation, and performance,”",9,CMR10,,293,108
+Proc. SPIE,9,CMTI10,,10,10
+9906,9,CMBX10,,4,4
+", 990608",9,CMR10,,8,8
+(2016).,9,CMR10,,7,7
+"[4] Krasuski, T., Thompson, P., McCarney, B., Kwok, S., James, E., Tsubota, K., Pollard, M., and McCann,
+K., “Implementation of W. M. Keck observatory’s telescope control system upgrade,”",9,CMR10,,187,104
+Proc. SPIE,9,CMTI10,,10,10
+10700,9,CMBX10,,5,5
+",
+107005I (2018).",9,CMR10,,17,15
+"[5] Erm, T. and Gutierrez, P., “Integration and tuning of the VLT drive systems,”",9,CMR10,,81,81
+Proc. SPIE,9,CMTI10,,10,10
+4004,9,CMBX10,,4,4
+", 490–499",9,CMR10,,9,9
+(2000).,9,CMR10,,7,7
+"[6] Schipani, P., Arcidiacono, C., , Argomedo, J., Dall’Ora, M., D’Orsi, S., Farinato, J., Magrin, D., Marty, L.,
+Ragazzoni, R., and Umbriaco, G., “The tracking control system of the VLT Survey Telescope,”",9,CMR10,,205,113
+"Rev. Sci.
+Instrum.",9,CMTI10,,18,9
+83,9,CMBX10,,2,2
+", 094501 (2012).",9,CMR10,,16,16
+"[7] Gawronski, W., [",9,CMR10,,20,20
+Modeling and control of antennas and telescopes,9,CMTI10,,47,47
+"], Springer (2008).",9,CMR10,,19,19
+"[8] Gawronski, W., [",9,CMR10,,20,20
+Adavanced structural dynamics and active control of structures,9,CMTI10,,62,62
+"], Springer (2004).",9,CMR10,,19,19
+"[9] Chiesa, M. and Sandrock, S., “VLT-TRE-ESO-17130-1211,” (2001).
+[10] Sandrock, S., Di Lieto, N., Pettazzi, L., and Erm, T., “Design and implementation of a general main axis",9,CMR10,,176,109
+"controller for the eso telescopes,”",9,CMR10,,35,35
+Proc. SPIE,9,CMTI10,,10,10
+8451,9,CMBX10,,4,4
+", 84510N (2012).",9,CMR10,,16,16
+"[11] Tyler, S. R., “A trajectory preprocessor for antenna pointing,”",9,CMR10,,68,68
+TDA Progress Report,9,CMTI10,,19,19
+42-118,9,CMBX10,,6,6
+", 139–159",9,CMR10,,9,9
+(1994).,9,CMR10,,7,7
+"[12] Olberg, M., Lindeborg, C., Seyf, A., and Kastengren, C. F., “Simple, robust digital controller for the onsala",9,CMR10,,114,114
+"20-m radio telescope,”",9,CMR10,,22,22
+Proc. SPIE,9,CMTI10,,10,10
+2479,9,CMBX10,,4,4
+", 257–265 (1995).",9,CMR10,,17,17
+"[13] Prestage, R. M., Oliveira, F. J., Bailey, J. A., Friberg, P., and Kenderdine, S., “Route-ﬁnding algorithm for",9,CMR10,,114,114
+"the optimal control of telescope slews,”",9,CMR10,,40,40
+Proc. SPIE,9,CMTI10,,10,10
+3112,9,CMBX10,,4,4
+", 76–87 (1997).",9,CMR10,,15,15
+"[14] Gawronski, W. and Almassy, W. T., “Command preprocessor for radio telescopes and microwave antennas,”",9,CMR10,,106,106
+IEEE Antennas Propag. Mag.,9,CMTI10,,26,26
+44 (2),9,CMBX10,,6,6
+", 30–37 (2002).",9,CMR10,,15,15
+"[15] Smith, D. R., “A polynomial-based trajectory generator for improved telescope control,”",9,CMR10,,92,92
+Proc. SPIE,9,CMTI10,,10,10
+7019,9,CMBX10,,4,4
+",",9,CMR10,,1,1
+701909 (2008).,9,CMR10,,14,14
+"[16] Hunter, T. R., Wilson, R. W., Kimberk, R., Leiker, P. S., Patel, N. A., Blundell, R., Christensen, R. D.,
+Diven, A. R., Maute, J., Plante, R. J., Riddle, P., and Young, K. H., “The digital motion control system
+for the submillimeter array antennas,”",9,CMR10,,254,110
+J. Astron. Instrum.,9,CMTI10,,19,19
+2 (1),9,CMBX10,,5,5
+", 1350002 (2013).",9,CMR10,,17,17
+"[17] Savarese, S., Perrotta, F., Schipani, P., Schillir`o, F., Capasso, G., Colapietro, M., and D’Orsi, S., “Trajectory",9,CMR10,,119,119
+"generation methods for radio and optical telescopes,”",9,CMR10,,53,53
+Proc. SPIE,9,CMTI10,,10,10
+11445,9,CMBX10,,5,5
+(2020).,9,CMR10,,7,7

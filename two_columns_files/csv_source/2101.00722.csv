@@ -1,0 +1,1212 @@
+text,space_num
+"                                                    MNRAS 000, 1–17 (2021)                                                    Preprint 29 June 2021                Compiled using MNRAS LATEX style file v3.0",52.0
+                                                    Dissipation in weakly collisional plasmas,52.0
+"                                                    O. Pezzi ID       1,2,3★ ,    H. Liang ID 4 , J. L. Juno ID 5 , P. A. Cassak ID 6 , C. L. Vásconez ID 7 , L. Sorriso-Valvo                         ID   8,3 ,",52.0
+"                                                    D. Perrone        ID   9 , S. Servidio ID 10 , V. Roytershteyn ID 11 , J. M. TenBarge ID 12 & W. H. Matthaeus ID 13",52.0
+"                                                    1 Gran   Sasso Science Institute, Viale F. Crispi 7, I-67100 L’Aquila, Italy",52.0
+"                                                    2 INFN/Laboratori     Nazionali del Gran Sasso, I-67100 Assergi (AQ), Italy",52.0
+arXiv:2101.00722v2 [physics.plasm-ph] 26 Jun 2021,0.0
+"                                                    3 Istituto per la Scienza e Tecnologia dei Plasmi, Consiglio Nazionale delle Ricerche, Via Amendola 122/D, I-70126 Bari, Italy",52.0
+"                                                    4 Center for Space Plasma and Aeronomic Research, University of Alabama in Huntsville, Huntsville, AL 35899, USA",52.0
+"                                                    5 Department of Physics and Astronomy, University of Iowa, Iowa City, IA 54224, USA",52.0
+"                                                    6 Department of Physics and Astronomy and Center for KINETIC Plasma Physics, West Virginia University, WV 26506, USA",52.0
+"                                                    7 Departamento de Física, Escuela Politécnica Nacional, Ladrón de Guevara E11-253, 170525 Quito, Ecuador",52.0
+"                                                    8 Swedish Institute of Space Physics, Ångström Laboratory, Lägerhyddsvägen 1, SE-751 21 Uppsala, Sweden",52.0
+"                                                    9 ASI – Italian Space Agency, via del Politecnico snc, I-00133 Rome, Italy",52.0
+"                                                    10 Dipartimento di Fisica, Università della Calabria, I-87036 Rende (CS), Italy",52.0
+"                                                    11 Space Science Institute, Boulder, CO 80301, USA",52.0
+"                                                    12 Department of Astrophysical Sciences, Princeton University, Princeton, NJ 08544, USA",52.0
+"                                                    13 Bartol Research Institute and Department of Physics and Astronomy, University of Delaware, Newark, DE 19716, USA",52.0
+                                                    Accepted 2021 May 21; Revised 2021 May 21; Received 2021 January 4,52.0
+                                                    ABSTRACT,52.0
+                                                    The physical foundations of the dissipation of energy and the associated heating in weakly collisional plasmas are poorly,52.0
+"                                                    understood. Here, we compare and contrast several measures that have been used to characterize energy dissipation and kinetic-",52.0
+                                                    scale conversion in plasmas by means of a suite of kinetic numerical simulations describing both magnetic reconnection and,52.0
+                                                    decaying plasma turbulence. We adopt three different numerical codes that can also include interparticle collisions: the fully,52.0
+"                                                    kinetic particle-in-cell vpic, the fully kinetic continuum Gkeyll, and the Eulerian Hybrid Vlasov–Maxwell (HVM) code. We",52.0
+"                                                    differentiate between (i) four energy-based parameters, whose definition is related to energy transfer in a fluid description of a",52.0
+"                                                    plasma, and (ii) four distribution function-based parameters, requiring knowledge of the particle velocity distribution function.",52.0
+"                                                    There is an overall agreement between the dissipation measures obtained in the PIC and continuum reconnection simulations,",52.0
+                                                    with slight differences due to the presence/absence of secondary islands in the two simulations. There are also many qualitative,52.0
+"                                                    similarities between the signatures in the reconnection simulations and the self-consistent current sheets that form in turbulence,",52.0
+                                                    although the latter exhibits significant variations compared to the reconnection results. All the parameters confirm that dissipation,52.0
+"                                                    occurs close to regions of intense magnetic stresses, thus exhibiting local correlation. The distribution function-based measures",52.0
+"                                                    show a broader width compared to energy-based proxies, suggesting that energy transfer is co-localized at coherent structures,",52.0
+                                                    but can affect the particle distribution function in wider regions. The effect of interparticle collisions on these parameters is,52.0
+                                                    finally discussed.,52.0
+                                                    Key words: turbulence – magnetic reconnection – (Sun:) solar wind,52.0
+"                                                    1 INTRODUCTION                                                                   particles (kinetic scales), allowing the conversion of magnetic en-",52.0
+"                                                                                                                                     ergy to kinetic, thermal, and non-thermal energy (Yamada et al.",133.0
+                                                    Understanding energy dissipation and heating in weakly collisional,52.0
+                                                                                                                                     2010). Another example is that weakly collisional plasmas are often,133.0
+                                                    plasmas is a key challenge in the study of space and astrophysical,52.0
+                                                                                                                                     observed to be in a strongly turbulent state (Federrath et al. 2010;,133.0
+"                                                    plasmas, such as the solar corona, solar wind, the outer magneto-",52.0
+                                                                                                                                     Bruno & Carbone 2016; Narita 2018; Beresnyak 2019; Fraternale,133.0
+"                                                    spheres of planets, and compact astrophysical objects. At variance",52.0
+"                                                                                                                                     et al. 2019). Hence, they are characterized by the cross-scale transfer",133.0
+"                                                    with neutral fluids and collisional plasmas (e.g. magnetofluids), in-",52.0
+"                                                                                                                                     of fluctuation energy from large injection scales to smaller, kinetic",133.0
+                                                    terparticle collisions are typically weak in these systems and are of-,52.0
+"                                                                                                                                     scales, where energy dissipation is expected to occur (Schekochihin",133.0
+"                                                    ten neglected. One example is during magnetic reconnection, where",52.0
+                                                                                                                                     et al. 2009; Howes 2015b; Matthaeus et al. 2015; Vaivads et al. 2016;,133.0
+                                                    magnetic fields with a reversing component effectively break and,52.0
+"                                                                                                                                     Verscharen et al. 2019). These features have, at least, two profound",133.0
+                                                    cross-connect at length-scales at and below the gyroradius of the,52.0
+                                                                                                                                     implications.,133.0
+"                                                                                                                                       First, the dynamics of weakly collisional plasmas involve the whole",135.0
+"                                                    ★   Email: oreste.pezzi@gssi.it                                                  phase-space, both in configuration and velocity space, as opposed to",52.0
+                                                    © 2021 The Authors,52.0
+avr_spaces,65.15
+2       O. Pezzi et al.,0.0
+collisional systems for which the proximity to local thermal equilib-     features in the particle VDF. The two classes of dissipation proxies,0.0
+"rium restricts velocity distribution functions to be near-Maxwellians     are correlated, since the distortion of the particle VDF is often the",0.0
+"due to efficient collisional thermalization. Indeed, VDFs in weakly       consequence of a transfer of energy and vice versa. The dissipation",0.0
+"collisional plasmas frequently display non-equilibrium features, such     proxies here adopted do not explicitly distinguish signatures asso-",0.0
+"as temperature anisotropy and agyrotropy, rings, beams of acceler-        ciated with particular phenomena, e.g. Landau damping, cyclotron",0.0
+"ated particles, etc. (Marsch 2006; Servidio et al. 2012, 2015; Lapenta    damping, or stochastic processes (Chandran et al. 2010; Numata &",0.0
+"et al. 2017; Perri et al. 2020). In turbulence, this interesting dynamics Loureiro 2015; Li et al. 2016; Chen et al. 2019). Future studies will",0.0
+has been envisioned as a phase-space cascade (Tatsuno et al. 2009;        analyze the connection between these dissipation measures –useful,0.0
+Plunk & Tatsuno 2011; Kanekar et al. 2015; Parker et al. 2016;            to detect potential sites of inhomogeneous dissipation in a turbulent,0.0
+"Schekochihin et al. 2016; Servidio et al. 2017), where the plasma         environment– and the underlying plasma processes, e.g. highlighted",0.0
+exhibits a power-law scaling –typical of turbulence– in both phys-        through the field-particle correlation (Klein & Howes 2016; Klein,0.0
+"ical and velocity space. In this perspective, by expanding particle       et al. 2017; Chen et al. 2019; Klein et al. 2020).",0.0
+"VDFs in velocity space using Hermite polynomials, a power-law",0.0
+"Hermite spectrum was recently observed, reflecting the presence of           In this work, we investigate numerically the functionality of several",0.0
+"fine velocity-space structures, in both in situ observations (Servidio    dissipation proxies belonging to the two classes introduced above.",0.0
+                                                                          We focus on two different types of numerical simulations: mag-,74.0
+et al. 2017) and numerical simulations (Cerri et al. 2018; Pezzi et al.,0.0
+                                                                          netic reconnection in a single current sheet and the development,74.0
+2018). This clearly illustrates the necessity of using kinetic models,0.0
+                                                                          of a turbulent cascade at kinetic scales. We exploit three different,74.0
+"to describe such plasmas. Moreover, non-Maxwellian structures in",0.0
+"particle VDFs are observed to be significant in the vicinity of intense   numerical Boltzmann–Maxwell algorithms, of both Lagrangian and",0.0
+"current sheets or other nearby coherent structures such as vortices,      Eulerian type, that can include inter-particle collisions. In partic-",0.0
+"where MHD-like dissipation is thought to occur (Osman et al. 2011;        ular, we adopt the fully kinetic particle-in-cell vpic code (Bowers",0.0
+"Servidio et al. 2012; Matthaeus et al. 2015; Parashar & Matthaeus         et al. 2008), and two Eulerian Vlasov–Maxwell codes. These latter",0.0
+2016).                                                                    codes are the fully kinetic continuum Vlasov–Maxwell solver imple-,0.0
+                                                                          mented in the Gkeyll simulation framework (Juno et al. 2018) and,74.0
+"   Secondly, concepts about energy dissipation and conversion in",3.0
+                                                                          the Hybrid Vlasov–Maxwell (HVM) code with kinetic protons and,74.0
+neutral fluids and magnetofluids do not necessarily carry over to,0.0
+                                                                          fluid electrons (Valentini et al. 2007). We find that the dissipation,74.0
+weakly collisional systems. The rate and parametric dependence of,0.0
+                                                                          measures well characterize significant features of both magnetic re-,74.0
+dissipation and kinetic-scale energy conversion for such plasmas is,0.0
+"                                                                          connection and turbulence, such as the reconnection diffusion region",74.0
+extremely challenging and is not thoroughly understood. One chal-,0.0
+                                                                          and the intermittent current sheets surrounding turbulent vortices.,74.0
+lenge is that various physical mechanisms and processes can cause,0.0
+                                                                          The dissipation surrogates evaluated from the PIC and Gkeyll re-,74.0
+dissipation and kinetic scale energy conversion in various physi-,0.0
+                                                                          connection simulations agree to a wide extent. Slight differences,74.0
+cal circumstances. In weakly collisional plasmas in which kinetic,0.0
+                                                                          between the two runs result from the presence of secondary islands,74.0
+"effects play a crucial role in the dynamics, such as during turbu-",0.0
+                                                                          in the Gkeyll simulation that are not present in the PIC simulation.,74.0
+"lence and reconnection, it may be difficult to assess quantitatively",0.0
+                                                                          A qualitative correspondence between the signatures in the recon-,74.0
+"the relative importance of the various dissipative mechanisms, and",0.0
+                                                                          nection simulations and the self-consistent current sheets generated,74.0
+likewise the net effect of a given dynamical process may be unclear,0.0
+"                                                                          in turbulence is also found, despite larger variations observed in the",74.0
+due to reversibility. To address these issues different mechanisms and,0.0
+                                                                          turbulent case with respect to the magnetic reconnection one. The,74.0
+"concepts of dissipation have been proposed and, hence, several dis-",0.0
+                                                                          parameters show a regional correlation: their local peaks take place,74.0
+sipation surrogates have been adopted (see e.g. Vaivads et al. 2016;,0.0
+"                                                                          in similar spatial regions, but they are not necessarily point-to-point",74.0
+"Matthaeus et al. 2020, for recent reviews). However, a unified and",0.0
+                                                                          correlated (Yang et al. 2019; Matthaeus et al. 2020). When including,74.0
+general picture of when and where different views work better is still,0.0
+"                                                                          interparticle collisions, peaks of the dissipation proxies are in general",74.0
+lacking.,0.0
+"                                                                          weaker than in the associated collisionless system, suggesting that the",74.0
+   Another important question is the following: do the sites identified,3.0
+                                                                          slow yet incessant effect of collisions locally reduce the transfer of,74.0
+potential sites of dissipation correspond to regions where interpar-,0.0
+                                                                          energy and the presence of non-Maxwellian features. By considering,74.0
+"ticle collisions, although weak, dissipate energy in an irreversible",0.0
+"                                                                          the effect of both intraspecies and interspecies collisions, we confirm",74.0
+way? Addressing this question has encouraged the examination of,0.0
+                                                                          that the former mainly dissipate non-Maxwellian features in the par-,74.0
+a different concept of dissipation associated with the growth of en-,0.0
+"                                                                          ticle VDF, although they may have an indirect effect also on energy",74.0
+tropy due to collisions (TenBarge et al. 2013; Navarro et al. 2016;,0.0
+                                                                          transfer through the pressure tensor isotropization (Del Sarto et al.,74.0
+Pezzi et al. 2019c; Liang et al. 2019). Although collisions typically,0.0
+"                                                                          2016). On the other hand, the latter also significantly affect energy-",74.0
+"act on large characteristic times (Spitzer Jr. 1956; Vafin et al. 2019),",0.0
+"                                                                          based parameters. Finally, by adopting a suite of different algorithms",74.0
+their effects are enhanced where particle VDFs exhibit strong dis-,0.0
+"                                                                          and numerical codes, the current work aims at providing a further",74.0
+"tortions, since intense velocity-space gradients are dissipated very",0.0
+                                                                          contribution to the “turbulence dissipation challenge” (Parashar et al.,74.0
+quickly by collisions (Landau 1936; Rosenbluth et al. 1957; Balescu,0.0
+"                                                                          2015), on which several recent efforts have been dedicated (e.g. Pezzi",74.0
+1960; Schekochihin et al. 2009; Pezzi et al. 2016; Pezzi 2017). Non-,0.0
+                                                                          et al. 2017; Perrone et al. 2018; González et al. 2019).,74.0
+"Maxwellian VDFs make intraspecies collision operators non-zero,",0.0
+"thus activating this dissipation channel.                                    The paper is structured as follows. In Section 2, we define and",0.0
+"   In the following, we classify eight different dissipation proxies into discuss the dissipation measures investigated in the current work.",3.0
+"two general classes that we call “energy-based” and “VDF-based”.          In Section 3, numerical models and algorithms adopted for the cur-",0.0
+The energy-based definition describes dissipation as a transfer of        rent analysis are described. Sections 4 and 5 report numerical results,0.0
+energy within a fluid-like description. Often such transfer occurs        obtained in the simulations of reconnection and the onset of kinetic,0.0
+"from an ordered component (e.g. magnetic or bulk flow fluctuations)       turbulence, respectively. In Section 6, we show one-dimensional (1D)",0.0
+"into a random (e.g., internal) component. On the other hand, VDF-         profiles of the dissipation proxies close to the reconnecting current",0.0
+based surrogates directly quantify the presence of non-equilibrium        sheet and a typical current sheet observed in the turbulence simu-,0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,25.505050505050505
+                                                                        Dissipation measures in weakly collisional plasmas                          3,72.0
+"lation. Finally, conclusions and discussions are presented in Section        interaction (𝑷 𝛼 · ∇) · 𝒖 𝛼 . Including intraspecies collisional effects",0.0
+7.                                                                           (e.g. proton–proton and electron–electron) would not introduce an,0.0
+                                                                             extra term in Eqs. (6)–(8). However these collisions indirectly affect,77.0
+"                                                                             these equations by thermalizing the particle VDF, thus reducing the",77.0
+"2 DISSIPATION MEASURES IN WEAKLY COLLISIONAL                                 nongyrotropic terms in the pressure tensor and, in turn, having an",0.0
+   PLASMAS                                                                   impact on the pressure-strain interaction term (Del Sarto et al. 2016).,3.0
+"                                                                             On the other hand, interspecies collisions (electron–proton) insert an",77.0
+"In this section, we introduce the framework and summarize the dissi-         explicit interspecies energy transfer term in the energy equations.",0.0
+pation proxies adopted in this work. We consider a weakly collisional            The first dissipation surrogate here considered is the Zenitani mea-,0.0
+"plasma, composed of protons (𝑝) and electrons (𝑒). The Boltzmann–            sure (Zenitani et al. 2011), widely adopted to describe dissipation in",0.0
+"Maxwell equations, describing non-relativistic plasmas, in cgs units         magnetic reconnection (Zenitani et al. 2011; Phan et al. 2018) and",0.0
+are:                                                                         plasma turbulence (Wan et al. 2015). It evaluates the rate of work,0.0
+ 𝜕 𝑓𝛼          𝜕 𝑓𝛼 𝑞 𝛼              𝒗       𝜕𝑓,1.0
+"                                                   𝛼   𝜕 𝑓𝛼                  per unit volume done by the electric field on particles, 𝒋 · 𝑬, in the",51.0
+"        +𝒗·           +         𝑬+ ×𝑩 ·              =                 (1)   reference frame co-moving with the considered species, in contrast",8.0
+  𝜕𝑡            𝜕𝒓       𝑚𝛼           𝑐           𝜕𝒗    𝜕𝑡 coll,2.0
+"                                                                             with 𝒋 · 𝑬 in the simulation frame, which gives the total rate of en-",77.0
+∇ · 𝑬 = 4𝜋𝜌 𝑐                                                          (2)   ergy conversion between the electromagnetic fields and the plasma.,0.0
+∇·𝑩=0                                                                  (3)   It directly measures the non-ideal energy conversion (Zenitani et al.,0.0
+               1 𝜕𝑩                                                          2011) and is related to the production of entropy density in the MHD,15.0
+∇×𝑬 =−                                                                 (4)   framework (Birn & Hesse 2005). It reads as:,0.0
+               𝑐 𝜕𝑡                                                                                      𝒖𝛼          ,15.0
+∇×𝑩=,0.0
+             1 𝜕𝑬 4𝜋,13.0
+"                      +      𝒋,                                        (5)    𝐷 𝛼 = 𝒋0 · 𝑬0 = 𝒋 · 𝑬 +          × 𝑩 − 𝜌 𝑐 (𝒖 𝛼 · 𝑬) ,              (11)",22.0
+             𝑐 𝜕𝑡          𝑐                                                                                𝑐,13.0
+"where 𝑓 𝛼 (𝒓, 𝒗, 𝑡) is the 𝛼-species VDF (𝛼 = 𝑝, 𝑒); 𝑬 (𝒓, 𝑡) and            where 𝒋 0 and 𝑬 0 are the current density and the electric field in",0.0
+"𝑩(𝒓, 𝑡) are the electric and magnetic fields; and 𝑞 𝛼 , 𝑚 𝛼 , and 𝑐          the reference frame co-moving with the species 𝛼, respectively. As",0.0
+"are the 𝛼-species charge, mass and the light speed. The charge               shown in Zenitani et al. (2011), 𝑛𝑒 𝐷 𝑒 = 𝑛 𝑝 𝐷 𝑝 and, in a singly ion-",0.0
+                                                             Í,61.0
+"and electric current densities are,∫respectively, 𝜌 𝑐 = 𝛼 𝑞 𝛼 𝑛 𝛼 and        ized quasi-neutral system such as the ones considered in the present",0.0
+        Í                                       3,8.0
+" 𝒋 = 𝛼 𝑞 𝛼 𝑛 𝛼 𝒖 𝛼 , where 𝑛 𝛼 = 𝑑 𝑣 𝑓 𝛼 is the 𝛼-species number             work, 𝐷 𝑒 ' 𝐷 𝑝 . 𝐷 𝛼 contains both reversible and irreversible con-",1.0
+                             ∫                                               tributions since the electric field 𝑬 has contributions from both re-,29.0
+density and 𝑛 𝛼 𝒖 𝛼 = 𝑑 3 𝑣𝒗 𝑓 𝛼 is the 𝛼-species number flux den-,0.0
+                                                                             versible (e.g. wave–particle interactions etc.) and irreversible (e.g.,77.0
+"sity. In the following subsections, we omit the collisional operator",0.0
+                                                                             collisional resistive) processes. We note that the probability distribu-,77.0
+ 𝜕 𝑓 𝛼 /𝜕𝑡| coll for simplicity.,1.0
+                                                                             tion function (PDF) of 𝐷 𝛼 and other dissipation measures are almost,77.0
+                                                                             symmetric between negative and positive values (see Fig. 4 of Wan,77.0
+"2.1 Energy-based dissipation measures                                        et al. (2015)). Net dissipation, which is ultimately an integral over",0.0
+"                                                                             space and time, arises from slight asymmetry (skewness) in the tails",77.0
+The energy-based dissipation proxies can be introduced from the              of the PDF.,0.0
+"energy equations:                                                                More recently, the pressure–strain interaction (𝑷 𝛼 · ∇) · 𝒖 𝛼 has",0.0
+      𝑓                                                                    been analysed to understand dissipative mechanisms in weakly colli-,6.0
+ 𝜕E 𝛼                    𝑓,1.0
+"         + ∇ · 𝒖 𝛼 E 𝛼 + 𝒖 𝛼 · 𝑷 𝛼 = (𝑷 𝛼 · ∇) · 𝒖 𝛼 + 𝑛 𝛼 𝑞 𝛼 𝒖 𝛼 · 𝑬       sional plasmas (Yang et al. 2017a,b; Yang et al. 2019; Chasapis et al.",9.0
+  𝜕𝑡                                                                         2018a; Sitnov et al. 2018; Pezzi et al. 2019a; Matthaeus et al. 2020).,2.0
+                                                                       (6),71.0
+                                                                             This term is commonly decomposed as,77.0
+ 𝜕E 𝑡𝛼ℎ                           ,1.0
+"         + ∇ · 𝒖 𝛼 E 𝑡𝛼ℎ + 𝒉 𝛼 = − (𝑷 𝛼 · ∇) · 𝒖 𝛼                     (7)   − (𝑷 𝛼 · ∇) · 𝒖 𝛼 = −𝑃 𝛼 𝜃 𝛼 − 𝚷 𝛼 : D 𝛼 ,                           (12)",9.0
+   𝜕𝑡,3.0
+ 𝜕E 𝑚,1.0
+         +,9.0
+             𝑐,13.0
+                ∇ · (𝑬 × 𝑩) = − 𝒋 · 𝑬                                  (8),16.0
+"                                                                             where 𝑃 𝛼,𝑖 𝑗 = 𝑃 𝛼 𝛿𝑖 𝑗 + Π     𝛼,𝑖 𝑗 ; 𝑃 𝛼 = 𝑃 𝛼,𝑖𝑖 /3; 𝜃 𝛼 = ∇ · 𝒖 𝛼 ;",77.0
+"  𝜕𝑡        4𝜋                                                                D 𝛼,𝑖 𝑗 = 𝜕 𝑗 𝑢 𝛼,𝑖 + 𝜕𝑖 𝑢 𝛼, 𝑗 /2 − 𝜃 𝛼 𝛿𝑖 𝑗 /3; and 𝛿𝑖 𝑗 and 𝜕𝑖 denote",2.0
+                𝑓,16.0
+                                                                             the Kronecker delta and a partial derivative with respect to the 𝑖–,77.0
+"   where E 𝛼 = 𝜌 𝛼 𝒖∫2𝛼 /2 is the bulk flow energy density of the 𝛼-         th spatial coordinate, respectively. The first term on the right-hand",3.0
+"species, E 𝑡𝛼ℎ = 𝑚 𝛼 𝑑 3 𝑣 𝑓 𝛼 (𝒗 − 𝒖 𝛼 ) 2 /2 is the thermal (internal)     side of Eq. (12), called P-𝜃 𝛼 , is associated with plasma expansion",0.0
+"energy density of the 𝛼-species and E 𝑚 = (𝑬 2 + 𝑩2 )/8𝜋 is the              and compression. The last term, called Pi-D 𝛼 , is associated with the",0.0
+"electromagnetic energy density. In the above equations,                      trace-less (anisotropic and off-diagonal) parts of the pressure tensor",0.0
+         𝑚𝛼,9.0
+               ∫                                                             and the symmetric part of the velocity strain and describes the rate of,15.0
+𝑷𝛼 =                𝑑 3 𝑣(𝒗 − 𝒖 𝛼 )(𝒗 − 𝒖 𝛼 ) 𝑓 𝛼                      (9)   work per unit volume done by flow shear. The spatial integral of the,0.0
+           2,11.0
+            ∫                                                                Pi-D 𝛼 term measures the thermal energy gain (Pezzi et al. 2019a).,12.0
+         1,9.0
+"𝒉𝛼 =             𝑑 3 𝑣(𝒗 − 𝒖 𝛼 ) 2 (𝒗 − 𝒖 𝛼 ) 𝑓 𝛼                     (10)   Here, we use the convention that Pi-D 𝛼 and P-𝜃 𝛼 include the minus",0.0
+"         2                                                                   signs in Eq. (12), so that positive values tend to locally increase the",9.0
+"are the pressure tensor and vector heat flux, respectively.                  thermal energy. The Pi-D 𝛼 term has been adopted to provide insights",0.0
+"   The left-hand sides of Eqs. (6)–(8) contain terms involving diver-        on the mechanisms that transfer energy towards smaller scales, where",3.0
+gences of fluxes. These terms can be locally important and corre-            it is dissipated (Yang et al. 2019). The motivation for this term be-,0.0
+"spond physically to energy transport (Pezzi et al. 2019a). Assuming          ing associated with dissipation arises from the MHD framework, in",0.0
+"there is no flux across the domain boundaries (e.g., with periodic           which traceless pressure–tensor terms are related to viscous dissi-",0.0
+"boundary conditions), they have no net effect on the global energy           pation (Braginskii 1965). Hence, it is interesting to explore whether",0.0
+partition of the system. Energy transfer between bulk flow and mag-          this connection remains valid in a weakly collisional system.,0.0
+"netic energy is described by the 𝒋 · 𝑬 term, while conversion of energy          Another dissipation proxy is associated with the cross-scale con-",0.0
+between bulk flow and thermal occurs through the pressure–strain             version of energy in its non-linear transfer during the turbulent cas-,0.0
+"                                                                                                                               MNRAS 000, 1–17 (2021)",127.0
+avr_spaces,18.558139534883722
+4       O. Pezzi et al.,0.0
+cade (Frisch 1995). A proxy of the scale-dependent local energy          the two perpendicular directions to a given axis (Scudder & Daughton,0.0
+transfer rate (LET) in a weakly collisional plasma at proton inertial    2008; Aunai et al. 2013; Swisdak 2016). Standard axis orientations,0.0
+"scales may be estimated through the combined velocity, magnetic          for computing agyrotropy are along the local magnetic field or the",0.0
+"field and current fluctuations as (Sorriso-Valvo et al. 2018a,b, 2019)   mean magnetic field. Other coordinate systems, such as the minimum",0.0
+"                            Δ𝑢 𝑝,ℓ                                      variance frames of the particle VDF, have been also adopted (Ser-",27.0
+                                                    Δ𝑏,9.0
+"𝜖 𝑝,ℓ = |Δ𝒖 𝑝 | 2 + |Δ𝒃| 2           − 2(Δ𝒖 𝑝 · Δ𝒃) ℓ                    vidio et al. √ 2015; Pezzi et al. 2017). We consider here the agyrotropy",0.0
+"                               ℓ                      ℓ             (13) parameter 𝑄 𝛼 proposed by Swisdak (2016), evaluated relative to",31.0
+                     𝑑𝑝       Δ  𝑗                   Δ𝑏,21.0
+                   − |Δ𝒃| 2        ℓ,19.0
+                                     + 𝑑 𝑝 (Δ𝒃 · Δ 𝒋) ℓ                  the local magnetic field. Writing the pressure tensor 𝑷 𝛼 in the coor-,37.0
+                      2         ℓ                     ℓ                  dinate system where the local magnetic field is parallel to the 𝑧-axis,22.0
+where 𝑑 𝑝 is the proton skin depth. The magnetic field is in ve-         as,0.0
+                        √︁,24.0
+"locity units 𝒃 ≡ 𝑩/ 4𝜋𝜌, where 𝜌 is the proton mass density.",0.0
+"                                                                                    𝑃 𝛼,⊥       𝑃 𝛼,12      𝑃 𝛼,13",84.0
+Δ𝒈 ≡ 𝒈(𝒓 +ℓ) − 𝒈(𝒓) is the increment of a field 𝒈 between two spatial,0.0
+"                                                                         𝑷 𝛼 = ­𝑃 𝛼,12",73.0
+                                                                                  ©                                   ª,82.0
+"                                                                                                𝑃 𝛼,⊥       𝑃 𝛼,23 ® ,                                        (14)",96.0
+points separated by a distance ℓ and is used to describe structures or,0.0
+"fluctuations of that size. The subscript ℓ indicates longitudinal incre-          «𝑃 𝛼,13       𝑃 𝛼,23       𝑃 𝛼, k ¬",0.0
+"ment, i.e. the projection along the increment vector ℓ. In this work,    the agyrotropy parameter is defined as",0.0
+LET values are associated with the starting point of the increment,0.0
+"vector and, for all simulations, the LET parameter 𝜖 𝑝,ℓ is computed               𝑃2𝛼,12 + 𝑃2𝛼,13 + 𝑃2𝛼,23",0.0
+                                                                         𝑄𝛼 =                                       .                                         (15),73.0
+"with ℓ = 𝑑 𝑝 and by averaging the increments taken in the positive                   𝑃2𝛼,⊥ + 2𝑃 𝛼,⊥ 𝑃 𝛼, k",0.0
+"horizontal and vertical directions. Since the LET parameter 𝜖 𝑝,ℓ is",0.0
+"introduced within a fluid framework, we do not compute it with ℓ         𝑄 𝛼 can be computed in an arbitrary coordinate system, as explained",0.0
+"below proton scales, where electron kinetic effects become impor-        in appendix A of Swisdak (2016).",0.0
+tant. The definition of LET is motivated by the isotropic form of            The variety of non-Maxwellian structures observed during mag-,0.0
+the Politano–Pouquet scaling law for the mixed third-order fluctua-      netic reconnection or in a turbulent plasma is much richer than just,0.0
+"tions in turbulent incompressible MHD plasmas (Politano & Pouquet        pressure agyrotropies. Another proxy, usually named 𝜖 but here called",0.0
+"1998; Sorriso-Valvo et al. 2002, 2007), in this case also including the  𝜉 since 𝜖 is already used to indicate the LET proxy, was proposed",0.0
+"Hall–MHD terms (Galtier 2008; Ferrand et al. 2019; Bandyopad-            by Greco et al. (2012). Here we propose a slightly different, non-",0.0
+hyay et al. 2020; Vásconez et al. 2021). Under the assumption of         dimensional definition (the original definition had dimensions of,0.0
+"stationarity, homogeneity and large Reynolds’ number, the associ-        𝑣 −3/2 ):",0.0
+ated scaling coefficient h𝜖 𝑝 i (h...i indicating the ensemble average)                   3/2           √︄,0.0
+"                                                                                        𝑣 𝑡 ℎ, 𝛼 (𝒓, 𝑡) ∫",88.0
+"is the constant mean energy transfer (or, in the stationary steady       𝜉 𝛼 (𝒓, 𝑡) =                            𝑑 3 𝑣 [ 𝑓 𝛼 (𝒓, 𝒗, 𝑡) − 𝑔 𝛼 (𝒓, 𝒗, 𝑡)] 2 . (16)",0.0
+"state, the dissipation) rate of the turbulent cascade (Kolmogorov                         𝑛 𝛼 (𝒓, 𝑡)",0.0
+"1941). In 3D fluid, fully developed turbulence, the sign of the av-",0.0
+"                                                                         Here, 𝑔 𝛼 is the equivalent Maxwellian distribution function associ-",73.0
+"eraged third-order moment has to be negative, corresponding to an",0.0
+"                                                                         ated with 𝑓 𝛼 , i.e. constructed using the local values of the density",73.0
+ensemble-averaged global net transfer towards the small scales (the,0.0
+"                                                                         𝑛 𝛼 , bulk√︁speed 𝒖 𝛼 and total temperature 𝑇𝛼 of the 𝛼-species; while",73.0
+non-linear turbulent energy cascade). Other terms locally contribut-,0.0
+"                                                                         𝑣 𝑡 ℎ, 𝛼 = 𝑘 𝐵 𝑇𝛼 /𝑚 𝛼 is the (local) thermal speed.",73.0
+ing to the energy transfer vanish and are disregarded here. These,0.0
+                                                                             Similar measures to identify non-Maxwellian VDFs were con-,77.0
+represent the different fluid contributions to the turbulent transfer of,0.0
+                                                                         structed using kinetic entropy. The kinetic entropy density 𝑠 𝛼 is,73.0
+energy: kinetic and magnetic turbulent energy transported by veloc-,0.0
+                                                                                               ∫,95.0
+"ity fluctuations, coupled magnetic and velocity Alfvénic fluctuations",0.0
+"                                                                         𝑠 𝛼 (𝒓, 𝑡) = −𝑘 𝐵          𝑑 3 𝑣 𝑓 𝛼 (𝒓, 𝒗, 𝑡) log 𝑓 𝛼 (𝒓, 𝒗, 𝑡) .                   (17)",73.0
+"transported by magnetic structures, and two associated Hall terms. In",0.0
+"weakly collisional plasmas, the LET may be unable to describe the                                                ∫",0.0
+"contribution of compressibility, as well as the role of possible non-    Note the total entropy 𝑆 𝛼 = 𝑠 𝛼 𝑑 3 𝑟 of a collisional system is non-",0.0
+"thermal features. The latter might enter in the energy budget via the    decreasing from the Boltzmann H-theorem, but the entropy density",0.0
+"pressure–tensor contributions. However, it can provide information       may locally increase or decrease (Pezzi et al. 2019c). It is possible",0.0
+"on the local transfer of ordered energy towards small scales, where      to define a velocity–space entropy density 𝑠vel                 𝛼 retaining only the",0.0
+it is made available for conversion through various possible mecha-      spatially local contribution to entropy from permutations of particles,0.0
+"nisms, including dissipation. In particular, according to the definition in velocity space (Liang et al. 2019) as",0.0
+"used in this work, negative LET terms can be thought of as locally                                                            ",0.0
+"                                                                                                                                𝑛 𝛼 (𝒓, 𝑡)",128.0
+                                                                                                                                           ,139.0
+"contributing to the non-linear energy transfer towards small scales,     𝑠vel",0.0
+"                                                                           𝛼   (𝒓, 𝑡) =  𝑠 𝛼 (𝒓,  𝑡) +  𝑘 𝐵  𝑛 𝛼 (𝒓,  𝑡) log                                  (18)",75.0
+                                                                                                                                  Δ𝑣 3,130.0
+and positive LET terms describe a contribution to energy transfer to,0.0
+large scales. In non-turbulent systems as well as in systems displaying  where Δ3 𝑣 is the volume of the cell in velocity space. Using these,0.0
+"a large-scale structure (e.g. a single reconnecting current sheet), the  definitions, two dimensionless non-Maxwellianity parameters have",0.0
+"interpretation of the LET sign is more difficult, since the assumption   been introduced:",0.0
+"of homogeneity is not satisfied. However, for this analysis, peaks of",0.0
+                                                                                                                                   vel             vel,131.0
+"LET indicate the local concentration of cross-scale energy transfer                            𝑠M, 𝛼 (𝒓, 𝑡) − 𝑠 𝛼 (𝒓, 𝑡) 𝑠M, 𝛼 (𝒓, 𝑡) − 𝑠 𝛼 (𝒓, 𝑡)",0.0
+"that can be made available for dissipation, regardless of the sign.      𝑀¯ KP, 𝛼 (𝒓, 𝑡) =                                    =                             ,",0.0
+"                                                                                                  (3/2)𝑘 𝐵 𝑛 𝛼 (𝒓, 𝑡)                (3/2)𝑘 𝐵 𝑛 𝛼 (𝒓, 𝑡)",98.0
+                                                                                                                                                              (19),158.0
+"2.2 VDF-based dissipation measures                                       proposed by Kaufmann & Paterson (2009), and",0.0
+"The first parameter belonging to the class of VDF-based dissipation                             𝑀¯ KP, 𝛼 (𝒓, 𝑡)",0.0
+"measures is the pressure agyrotropy (Scudder & Daughton 2008).           𝑀¯ 𝛼 (𝒓, 𝑡) =                                 ,                                    (20)",0.0
+Agyrotropy is a measure of differences in the plasma temperatures in                      1 + log 𝑚2 𝜋(Δ𝑘 𝐵3 𝑣) 𝑇𝛼,0.0
+                                                                                                                   2/3,115.0
+                                                                                                         𝛼,105.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,26.38888888888889
+                                                                           Dissipation measures in weakly collisional plasmas                         5,75.0
+"proposed by Liang et al. (2020). Here, 𝑠M, 𝛼 (𝒓, 𝑡) is the entropy den-         preserving Runge–Kutta method for the integration in time. The",0.0
+"sity evaluated using the equivalent Maxwellian distribution function            conservative, discontinuous Galerkin implementation of the non-",0.0
+"𝑔 𝛼 (𝒓, 𝒗, 𝑡) associated with the VDF 𝑓 𝛼 (𝒓, 𝒗, 𝑡), given by                   linear Dougherty operator (Dougherty 1964) is adopted to include",0.0
+"                     ""                 #                                        intraspecies collisions (Hakim et al. 2020) (see Juno 2020, for further",21.0
+           3                 2𝜋𝑘 𝐵 𝑇𝛼,11.0
+"𝑠M, 𝛼 = 𝑘 𝐵 𝑛 𝛼 1 + log                  .                               (21)   details).",0.0
+           2                       2/3,11.0
+                              𝑚 𝛼𝑛 𝛼                                                HVM integrates the Vlasov–Maxwell system within the hybrid,30.0
+"       vel (𝒓, 𝑡)                                                               framework, assuming quasi-neutrality and neglecting the displace-",7.0
+"and   𝑠M, 𝛼",0.0
+                   is computed according to Eq. (18).,19.0
+                                                                                ment current density (Mangeney et al. 2002; Valentini et al. 2007).,80.0
+"    In a system with a fixed number of particles and total energy, the",4.0
+                                                                                The proton Vlasov equation is discretized on a phase-space grid and,80.0
+"Maxwellian distribution has the maximum entropy. Hence, 𝑀¯ KP and",0.0
+"                                                                                integrated numerically, while electrons are assumed to be a massless",80.0
+𝑀¯ (along with 𝜉) are positive definite. These parameters measure all,0.0
+                                                                                isothermal fluid. A generalized Ohm’s law for evaluating the electric,80.0
+higher order VDF disturbances from the local Maxwellian beyond,0.0
+                                                                                field in Faraday’s law is coupled to the Vlasov equation. Proton–,80.0
+"its second-order moment. This retains information about dissipation,",0.0
+                                                                                proton collisions have been recently included through the non-linear,80.0
+since high-order variations from the Maxwellian coincide with the,0.0
+"                                                                                Dougherty operator (Pezzi et al. 2015; Pezzi et al. 2019b,c).",80.0
+"presence of fine velocity–space structures that, in turn, are dissipated",0.0
+by collisional effects (Pezzi et al. 2016).,0.0
+                                                                                3.2 Simulations setup,80.0
+                                                                                We discuss the two classes of numerical simulations in this work. The,80.0
+3 NUMERICAL MODELS AND SIMULATIONS SETUP,0.0
+                                                                                first class employs both collisionless and weakly collisional vpic and,80.0
+The parameters introduced in the previous section are computed                  Gkeyll simulations of a single current sheet that undergoes sym-,0.0
+"using the results of kinetic numerical simulations performed with               metric antiparallel magnetic reconnection. In the collisionless case,",0.0
+"different codes. All simulations in this work are 2.5D in space (quan-          we find that vpic and a separate PIC code P3D (Zeiler et al. 2002),",0.0
+"tities depend on two dimensions, but vectors have three components)             adopted in Liang et al. (2020), provide consistent and qualitatively",0.0
+"and 3D in velocity space. For all codes, quantities are presented us-           similar results. Although the vpic and Gkeyll simulations are very",0.0
+"ing a normalization based on an arbitrary magnetic field strength               similar in their choice of parameters, there are small differences we",0.0
+𝐵0 and density 𝑛0 . Spatial and temporal scales are normalized to               make note of in the subsequent discussion. We first describe the vpic,0.0
+the proton inertial length 𝑑 𝑝 = 𝑐/𝜔 𝑝 𝑝 and the proton cyclotron               simulations.,0.0
+                                                                                    The vpic reconnection simulations use a domain size of 𝐿 𝑥 ×,84.0
+                                           √︃,43.0
+"time Ω−1 𝑐 𝑝 , respectively, where 𝜔 𝑝 𝑝 =    4𝜋𝑛0 𝑒 2 /𝑚 𝑝 is the proton",0.0
+"                                                                                 𝐿 𝑧 = 25 × 25, with periodic boundary conditions in 𝑥 and perfectly",81.0
+plasma frequency based on 𝑛0 and Ω𝑐 𝑝 = 𝑒𝐵0 /𝑚 𝑝 𝑐 is the proton,0.0
+                                                                                conducting boundaries on 𝑧. A single-current-sheet initial condition,80.0
+"cyclotron frequency based on 𝐵0 . Thus, velocities are normalized to",0.0
+"                                                                                is used, with magnetic field given by 𝐵 𝑥 (𝑧) = tanh[(𝑧 − 𝐿 𝑧 /2)/𝑤 0 ],",80.0
+the Alfvén velocity 𝑐 𝐴 = 𝑑 𝑝 Ω𝑐 𝑝 ; electric fields are normalized to,0.0
+                                                                                where 𝑤 0 = 0.5 is the initial half-thickness of the current sheet.,80.0
+𝑐 𝐴 𝐵0 /𝑐; pressures and temperatures are normalized to 𝐵02 /4𝜋 and             The initial VDFs are drifting Maxwellians with temperatures 𝑇𝑒 =,0.0
+"𝑚 𝑝 𝑐2𝐴/𝑘 𝐵 , respectively; and entropy is normalized to Boltzmann’s            1/12 and 𝑇 𝑝 = 5/12 for electrons and protons, respectively; both",0.0
+constant 𝑘 𝐵 [see Liang et al. (2019) for a detailed discussion of the          temperatures are initially uniform over the whole domain. The density,0.0
+"units of the continuous Boltzmann entropy]. Derived units of the                is set to balance plasma pressure in the fluid sense, with 𝑛(𝑧) =",0.0
+"dissipation measures are therefore as follows: 𝐷 𝛼 , Pi-D 𝛼 , and P-𝜃 𝛼         sech2 [(𝑧 − 𝐿 𝑧 /2)/𝑤 0 ] + 𝑛𝑏 , where 𝑛𝑏 = 0.2 is the background (lobe)",0.0
+"are Ω𝑐 𝑝 𝐵02 /4𝜋, 𝜖 𝑝 is 𝑐2𝐴Ω𝑐 𝑝 , while 𝑄 𝛼 , 𝜉 𝛼 , 𝑀¯ 𝐾 𝑃, 𝛼 , and 𝑀¯ 𝛼 are   density. Therefore, the total upstream plasma 𝛽 for this simulation is",0.0
+dimensionless.                                                                  𝑛𝑏 𝑘 𝐵 (𝑇𝑒 + 𝑇 𝑝 )/(𝐵02 /8𝜋) = 0.2. The proton-to-electron mass ratio is,0.0
+                                                                                 𝑚 𝑝 /𝑚 𝑒 = 25 and the speed of light 𝑐 = 15. These choices enforce,81.0
+                                                                                that the plasma is non-relativistic (the thermal and Alfvén speeds,80.0
+3.1 Numerical algorithms,0.0
+"                                                                                are much less than the light speed), which is appropriate for the",80.0
+"For the present analysis, we adopt the particle-in-cell vpic code               non-relativistic treatment of kinetic entropy. We employ a time-step",0.0
+and two different Eulerian Vlasov–Maxwell codes: the fully kinetic              of Δ𝑡 ≈ 5.8 × 10−4 . The smallest electron Debye length for this,0.0
+Gkeyll code and the hybrid-kinetic HVM code.                                    simulation (based on the maximum density of 1 + 𝑛𝑏 ) is 𝜆 𝐷𝑒 =,0.0
+"    vpic utilizes a 3D, relativistic, fully kinetic explicit algorithm          0.018. The spatial grid scale is Δ𝑥 = Δ𝑧 = 0.0125 ≈ 0.6944 𝜆 𝐷𝑒",4.0
+(Bowers et al. 2008). vpic has been widely adopted for both collision-          (𝑁 𝑥 = 𝑁 𝑧 = 2000). The reference number of particles per cell per,0.0
+"less and weakly collisional plasma simulations, including simulations           particle species is 104 for a density equal to one. We simulate three",0.0
+"of magnetic reconnection and plasma turbulence (e.g. Daughton et al.            different electron–ion collision frequencies: 𝜈 = 0, 𝜈 = 0.01 Ω𝑐𝑒 =",0.0
+2009; Daughton et al. 2011; Karimabadi et al. 2013; Roytershteyn                0.25 Ω𝑐 𝑝 and 𝜈 = 0.05 Ω𝑐𝑒 = 1.25 Ω𝑐 𝑝 . All types of collisions,0.0
+"et al. 2013; Wan et al. 2015; Roytershteyn et al. 2015). The code               (electron–electron, electron–ion, and ion–ion) are taken into account.",0.0
+"includes several models of binary collisions, including the particle-           For each type of collision, the variance of the scattering angle in",0.0
+pairing Coulomb collision algorithm of Takizuka & Abe (1977) ca-                the Takizuka–Abe algorithm is chosen to yield correct ratio of the,0.0
+"pable of accurately reproducing the Landau collisional integral over            respective collision frequencies (see Takizuka & Abe 1977, for more",0.0
+a wide range of parameters. The latter model is used in this study.             details).,0.0
+"    Gkeyll is a highly extensible code framework that contains solvers              In addition to the parameters for the PIC simulation, the kinetic",4.0
+"for a number of systems of equations of relevance to plasma physics,            entropy diagnostic requires other parameters, discussed in detail in",0.0
+"including multimoment multifluid (Wang et al. 2015), continuum                  appendix B of Liang et al. (2019). For the PIC simulation, we use",0.0
+"gyrokinetics (Shi et al. 2019; Mandell et al. 2020), and continuum              a velocity space grid scale of Δ𝑣 ≈ 0.6 𝑣 𝑡 ℎ,𝑒 for electrons and",0.0
+"Vlasov–Maxwell (Juno et al. 2018; Hakim & Juno 2020). Gkeyll’s                  Δ𝑣 ≈ 0.5𝑣 𝑡 ℎ,𝑖 for ions. We use a velocity range for binning the",0.0
+Vlasov-Maxwell solver utilizes the discontinuous Galerkin finite el-            particles from −𝑐 to 𝑐 in each dimension for electrons and from,0.0
+ement method for phase-space discretization and a strong-stability              −0.4𝑐 to 0.4𝑐 for ions.,0.0
+"                                                                                                                                MNRAS 000, 1–17 (2021)",128.0
+avr_spaces,21.98780487804878
+6       O. Pezzi et al.,0.0
+   The Gkeyll reconnection simulation also uses a single current             rate. To compute energy-based parameters involving spatial deriva-,3.0
+"sheet initial condition, in a domain of size, 𝐿 𝑥 × 𝐿 𝑧 = 8𝜋 × 4𝜋,           tives, Gaussian smoothing is used to filter the noise (e.g. Birdsall &",0.0
+which compared to the PIC simulation is a similar size in 𝑥 but              Langdon 2004).,0.0
+about half the size in 𝑧. The boundary conditions are periodic in               The Zenitani parameter 𝐷 𝑝 shows signatures consistent with pre-,0.0
+"𝑥, a reflecting wall boundary condition in 𝑧. The initial magnetic           vious studies (Zenitani et al. 2011; Swisdak 2016), being peaked",0.0
+"fields and plasma parameters are the same as the vpic simulations:           with a positive value in the diffusion region. In the exhausts, there",0.0
+"𝑤 0 = 0.5, 𝑚 𝑝 /𝑚 𝑒 = 25, 𝑇 𝑝 = 5/12, 𝑇𝑒 = 1/12, and 𝑛𝑏 = 0.2. Like-         is oscillatory behavior especially on small scales in the primary is-",0.0
+"wise, there is only one Maxwellian component in the current sheet,           land. This is likely due to time-domain structures (Mozer et al. 2015)",0.0
+"but 𝑐 = 50. Since the continuum Vlasov method in Gkeyll avoids               such as electron holes, which form Debye-scale bi-directional electric",0.0
+aliasing errors associated with under-resolving the Debye length in          fields. Such structures are at small scales and produce local energy,0.0
+"PIC methods while still conserving energy, we choose a coarser con-          conversion between the particles and fields.",0.0
+"figuration space grid resolution to save on the computational cost of           The LET parameter 𝜖 𝑝,ℓ shows a large-scale pattern peaked inside",0.0
+a continuum method while still resolving the reconnection dynam-             the magnetic island that is only weakly modulated in the horizontal,0.0
+"ics. Our grid resolution is Δ𝑥 = Δ𝑧 ≈ 0.4 ≈ 40 𝜆 𝐷𝑒 (𝑁 𝑥 = 64,               direction, as well as a weaker signal approximately coincident with",0.0
+"𝑁 𝑧 = 32) with piecewise quadratic Serendipity polynomials within            the electron diffusion region (EDR). As pointed out in Section 2.1,",0.0
+a grid cell (Arnold & Awanou 2011). The velocity space range is              extracting information about LET is challenging in this reconnection,0.0
+"from −6 𝑣 𝑡 ℎ, 𝛼 to 6 𝑣 𝑡 ℎ, 𝛼 with a velocity space grid of Δ𝑣 𝛼 = 𝑣 𝑡 ℎ, 𝛼 simulation, where the background field is inhomogeneous and the",0.0
+along with piecewise quadratic Serendipity polynomials in velocity           fields are not in a steady state of fully developed turbulence. The,0.0
+space. Zero-flux boundary conditions are employed in velocity space          signs of LET are opposite on either side of the magnetic reversal,0.0
+to ensure energy conservation. We choose a constant collisionality           because LET is calculated with an increment with a component in,0.0
+of 𝜈𝑒𝑒 = 0.01 for electron–electron collisions and 𝜈 𝑝 𝑝 = 0.002             the positive 𝑧 direction. The contribution of various terms to the,0.0
+"for proton–proton collisions for the Dougherty collision operator.           local 𝜖 𝑝,ℓ (not shown) reveals that the Hall terms (in particular",0.0
+"Reconnection is initiated using a magnetic perturbation with a spec-         the current-helicity term, i.e., the last term in Eq. 13) dominate",0.0
+trum of random wave modes in the first 20 modes of the system with           the non-linear energy transfer. This is related to the presence of,0.0
+r.m.s. amplitude 𝛿𝐵/𝐵0 = 2 × 10−3 . These random perturbations               Hall-scale electric currents and to the magnetic configuration of,0.0
+"break the symmetry of the continuum kinetic initial condition and            the reconnection region, which thus are the main drivers of the non-",0.0
+"allow for the study of the standard 𝑚 = 1 tearing mode that arises           linear interactions. Furthermore, the prevalent positive sign observed",0.0
+from noise in PIC simulations.                                               for the MHD cross-helicity term (not shown) suggests that non-linear,0.0
+   The HVM turbulence simulations have 512 grid-points in each di-           interactions are inhibited by the strong presence of coupled velocity-,3.0
+"rection and a size 𝐿 𝑥 = 𝐿 𝑦 = 𝐿 = 2𝜋 × 20. Periodic boundary condi-         magnetic field (Alfvénic) fluctuations, which reduce the effective",0.0
+tions are imposed for the spatial domain. Velocity,0.0
+                                                      space is discretized,49.0
+                                                                            transfer of energy and possibly the onset of turbulence.,67.0
+"with 71 grid-points in the range 𝑣 𝑗 = −5𝑣 𝑡 ℎ, 𝑝 , 5𝑣 𝑡 ℎ, 𝑝 ( 𝑗 =             The Pi-D 𝑝 plot shows that the pressure–strain term is positive",0.0
+"𝑥, 𝑦, 𝑧), with the boundary condition 𝑓 (𝑣 𝑗 > 5𝑣 𝑡 ℎ, 𝑝 ) = 0. The ini-     yet small near the X point on a length-scale in the inflow direction",0.0
+"tial equilibrium is characterized by spatial homogeneity, Maxwellian         beyond the EDR. Protons undergo meandering orbits in this region,",0.0
+"proton VDFs, and a background uniform out-of-plane magnetic field            producing non-gyrotropic VDFs, while the reconnection inflow and",0.0
+𝑩0 = 𝒆 𝑧 with 𝛽 𝑝 = 2. This equilibrium is perturbed at 𝑡 = 0                outflow are associated with bulk velocity shear: this produces a non-,0.0
+"by imposing magnetic 𝜹𝑩 and bulk speed 𝜹𝒖 = ±𝜹𝒃 fluctuations                 zero Pi-D 𝑝 . Inside the islands, a bipolar (positive/negative) signal is",0.0
+"(𝜹𝒃 in Alfvén speed units). Energy is injected at large scales, i.e.         found. The strong negative region suggests energy is locally being",0.0
+"𝑘 ∈ [2, 6] 𝑘 0 (𝑘 0 = 2𝜋/𝐿), with a flat energy spectrum and random          converted from thermal energy to bulk kinetic energy, perhaps in",0.0
+phases. The r.m.s. amplitude of the fluctuations is 𝛿𝐵/𝐵0 = 1/2.             a region where counterstreaming beams including reflected ions at,0.0
+No density perturbations nor parallel perturbations are introduced at        the dipolarization front where the denser current sheet population,0.0
+"𝑡 = 0. Electron inertia effects are neglected in Ohm’s law, while elec-      is being pushed downstream by the reconnected magnetic field are",0.0
+"tron temperature is set equal to the initial ion temperature. A small        converted into bulk flow. In contrast, P-𝜃 𝑝 , which has a peak value",0.0
+"resistivity (𝜂 ' 10−3 ) is introduced to suppress numerical instabili-       about a factor of 2 larger than Pi-D 𝑝 , tends to be quite structured and",0.0
+"ties and does not play a significant role in the plasma dynamics. The        positive in most of the island, is negative in the EDR, and is small in",0.0
+adopted numerical resolution captures two decades of perpendicular           the ion diffusion region (IDR). These results make sense physically:,0.0
+wavenumbers: one above and one below the proton skin depth 𝑑 𝑝 . We          the plasma in the island is undergoing compression due to the bulk,0.0
+"consider two simulations, characterized by a different proton–proton         flows, so that P-𝜃 𝑝 is positive. In the diffusion region, when upstream",0.0
+"collisional frequency 𝜈, namely collisionless (𝜈 = 0) and weakly             magnetic flux tubes enter the region of weaker magnetic field, they",0.0
+"collisional (𝜈 = 10−3 ) (see Pezzi et al. 2019c, for further details).       expand, leading to negative 𝜃 𝑝 = ∇ · 𝒖 𝑝 .                         √︁",0.0
+"                                                                                Moving to VDF-based parameters, the proton agyrotropy 𝑄 𝑝",80.0
+                                                                             parameter indicates a proton gyro-scale region of non-gyrotropy sur-,77.0
+                                                                             rounding the diffusion region and the whole island at this stage of the,77.0
+"4 NUMERICAL RESULTS: DISSIPATION MEASURES IN                                 evolution, owing to the complicated distribution functions        that ap-",0.0
+   MAGNETIC RECONNECTION,3.0
+                                                                                                                                         √︁,137.0
+                                                                             pear where protons undergo meandering orbits. Local 𝑄 𝑝 maxima,77.0
+"                                                                             occur in the inner shell of the magnetic island, where both the LET",77.0
+4.1 Proton dissipation proxies for collisionless reconnection,0.0
+                                                                             and Pi-D 𝑝 are locally peaked. Turning to the non-Maxwellianity pa-,77.0
+"Figure 1 displays the set of implemented proxies for protons in the          rameters, the 𝜉 𝑝 parameter similarly shows structure at proton scales",0.0
+"vpic simulations. The left column collects the results for the col-          in both the diffusion region and the islands. The structure of 𝑀¯ KP,p",0.0
+"lisionless simulation, i.e. with 𝜈 = 0. We initially focus on these          and 𝑀¯ 𝑝 are qualitatively quite similar to 𝜉 𝑝 , as expected. In each",0.0
+"results, and discuss the effects of collisions in Section 4.3. The data      case, the protons are most strongly non-Maxwellian in the EDR, with",0.0
+"are taken at time 𝑡 ' 22 Ω−1     𝑐 𝑝 , after the peak of the reconnection    non-zero values also in the IDR and in the island. The main difference",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,10.385714285714286
+                                                                                                       Dissipation measures in weakly collisional plasmas                                              7,103.0
+                                           ν=0                                                        ν=0.25                                                       ν=1.25,43.0
+                       4,23.0
+                            Dp                                               4     0.20,28.0
+                                                                                   0.13,83.0
+                                                                                        D,88.0
+                                                                                        p,88.0
+                                                                                                                                          4     0.20,138.0
+                                                                                                                                                0.13,144.0
+                                                                                                                                                     D,149.0
+                                                                                                                                                     p,149.0
+                                                                                                                                                                                               0.20,191.0
+                                                                                                                                                                                               0.13,191.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                   0.07                                                         0.07                                           0.07,83.0
+                                                                                   0.00                                                         0.00                                           0.00,83.0
+                       0                                                     0                                                            0,23.0
+                                                                                  -0.07                                                        -0.07                                          -0.07,82.0
+                   -2                                                    -2       -0.13                                               -2       -0.13                                          -0.13,19.0
+                                                                                  -0.20                                                        -0.20                                          -0.20,82.0
+                   -4                                                    -4                                                           -4,19.0
+                    4                                                     4                                                            4,20.0
+"                            Ïp,l                                                        Ïp,l                                                         Ïp,l                                      0.03",28.0
+                                                                                                                                                                                               0.02,191.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                                                                                                                               0.01,191.0
+                       0                PLACE HOLDER                         0                       PLACE HOLDER                         0                       PLACE HOLDER                 0.00,23.0
+                                                                                                                                                                                              -0.01,190.0
+                       -2                                                    -2                                                           -2                                                  -0.02,23.0
+                                                                                                                                                                                              -0.03,190.0
+                       -4                                                    -4                                                           -4,23.0
+                        4,24.0
+                            Pi-Dp                                             4    0.10 Pi-Dp                                              4    0.10 Pi-Dp                                     0.10,28.0
+                                                                                   0.07                                                         0.07                                           0.07,83.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                   0.03                                                         0.03                                           0.03,83.0
+                                                                                   0.00                                                         0.00                                           0.00,83.0
+                       0                                                     0                                                            0,23.0
+                                                                                  -0.03                                                        -0.03                                          -0.03,82.0
+                       -2                                                    -2   -0.07                                                   -2   -0.07                                          -0.07,23.0
+                                                                                  -0.10                                                        -0.10                                          -0.10,82.0
+                       -4                                                    -4                                                           -4,23.0
+                        4   P−θp                                              4    0.20 P−θp                                               4    0.20 P−θp                                      0.20,24.0
+                                                                                   0.13                                                         0.13                                           0.13,83.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                   0.07                                                         0.07                                           0.07,83.0
+                                                                                   0.00                                                         0.00                                           0.00,83.0
+                       0                                                     0                                                            0,23.0
+                                                                                  -0.07                                                        -0.07                                          -0.07,82.0
+                   -2                                                    -2       -0.13                                               -2       -0.13                                          -0.13,19.0
+                                                                                  -0.20                                                        -0.20                                          -0.20,82.0
+                   -4                                                    -4                                                           -4,19.0
+                    4                                                     4                                                            4,20.0
+                            Qp                                                    0.5    Qp                                                    0.5    Qp                                      0.5,28.0
+                                                                                  0.4                                                          0.4                                            0.4,82.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                  0.3                                                          0.3                                            0.3,82.0
+                       0                                                     0    0.2                                                     0    0.2                                            0.2,23.0
+                                                                                  0.1                                                          0.1                                            0.1,82.0
+                   -2                                                    -2                                                           -2,19.0
+                                                                                  0.0                                                          0.0                                            0.0,82.0
+                   -4                                                    -4                                                           -4,19.0
+                    4,20.0
+                            ξp                                            4       0.3   ξp                                             4       0.3   ξp                                       0.3,28.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                  0.2                                                          0.2                                            0.2,82.0
+                       0                                                     0                                                            0,23.0
+                                                                                  0.1                                                          0.1                                            0.1,82.0
+                   -2                                                    -2                                                           -2,19.0
+                                                                                  0.0                                                          0.0                                            0.0,82.0
+                   -4                                                    -4                                                           -4,19.0
+                    4                                                     4                                                            4,20.0
+"                            MKP, p                                                0.66M",28.0
+"                                                                                            KP, p",92.0
+                                                                                                                                               0.66M,143.0
+"                                                                                                                                                         KP, p",153.0
+                                                                                                                                                                                              0.66,190.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                  0.33                                                         0.33                                           0.33,82.0
+                       0                                                     0                                                            0,23.0
+                   -2                                                    -2                                                           -2,19.0
+                                                                                  0.00                                                         0.00                                           0.00,82.0
+                   -4                                                    -4                                                           -4,19.0
+                    4       Mp                                            4       0.15M                                                4       0.15M                                          0.15,20.0
+                                                                                            p                                                            p,92.0
+                       2                                                     2                                                            2,23.0
+       (z-z 0 ) / dp                                         (z-z 0 ) / dp                                                (z-z 0 ) / dp,7.0
+                                                                                  0.10                                                         0.10                                           0.10,82.0
+                       0                                                     0                                                            0,23.0
+                                                                                  0.05                                                         0.05                                           0.05,82.0
+                   -2                                                    -2                                                           -2,19.0
+                                                                                  0.00                                                         0.00                                           0.00,82.0
+                   -4                                                    -4                                                           -4,19.0
+                                   -5         0          5                                      -5         0          5                                      -5         0          5,35.0
+                                          (x-x0 ) / dp                                                 (x-x0 ) / dp                                                 (x-x0 ) / dp,42.0
+"Figure 1. Comparison of various dissipation proxies for protons, from the vpic simulations with 𝜈 = 0 (left column), 𝜈 = 0.25 (centre) and 𝜈 = 1.25 (right).",0.0
+The proxies are computed at 𝑡 = 22 for the collisionless run and 𝑡 = 26 for the weakly collisional runs. From top to√bottom: the Zenitani parameter 𝐷 𝑝 ; the,0.0
+"LET parameter 𝜖 𝑝,ℓ with ℓ ' 𝑑 𝑝 ; the pressure–strain interaction Pi-D 𝑝 ; the pressure dilatation P-𝜃 𝑝 ; the agyrotropy 𝑄 𝑝 ; the non-Maxwellian indicators 𝜉 𝑝 ;",0.0
+"𝑀¯ KP, 𝑝 ; and 𝑀",0.0
+               ¯ 𝑝 . Solid lines indicate separatrices.,15.0
+"                                                                                                                                                                                   MNRAS 000, 1–17 (2021)",179.0
+avr_spaces,57.73394495412844
+8       O. Pezzi et al.,0.0
+"between these last measures, namely the quadratic non-Maxwellian               4.3 Collisional effects on proton and electron dissipation proxies",0.0
+"parameter 𝜉 𝑝 and the entropy-based non-Maxwellianity parameters,",0.0
+"is that the latter appear more localized than the former, suggest-             We now turn to the effect of interspecies and intraspecies collisions",0.0
+ing that the entropy-based proxies require relatively more strongly            on the dissipation measures for both protons and electrons. To put the,0.0
+"non-Maxwellian structures to attain appreciable values relative to             numerical collisionality in perspective, we compare it to two known",0.0
+"𝜉 𝑝 , owing to the natural log VDF dependence in their definition              critical collision frequencies for reconnection. Collisionless (Hall)",0.0
+compared to the quadratic dependence of 𝜉 𝑝 .                                  reconnection transitions to collisional (Sweet–Parker) reconnection,0.0
+"   Summarizing the collisionless simulation results for protons, all           at a critical resistivity 𝜂 𝑐 (Cassak et al. 2005). The initial current",3.0
+"eight dissipation measures in question show structure in and around            sheet thickness 𝑤 0 = 0.5 is about four times smaller than 𝑑 𝑝 , so",0.0
+the current sheet and magnetic island. For the parameters in this              it is expected that collisionless reconnection will occur for small,0.0
+"simulation, the quantities that are most strongly peaked in the EDR            enough resistivity. From Fig. 3 of Cassak et al. (2005), the critical",0.0
+"are 𝐷 𝑝 , 𝜉 𝑝 , 𝑀¯ 𝐾 𝑃, 𝑝 , and 𝑀¯ 𝑝 . The strongest measure for the IDR is    resistivity is 𝜂 𝑐 𝑐2 /4𝜋𝑐 𝐴 𝑑 𝑝 ' 0.2, which in normalized units for",0.0
+"√                                                                              this study is 𝜂 𝑐 ' 1. Then, the critical collision frequency is 𝜈 𝑐 =",0.0
+"  𝑄 𝑝 , with Pi-D 𝑝 , 𝜉 𝑝 , 𝑀¯ 𝐾 𝑃, 𝑝 , and 𝑀¯ 𝑝 also displaying structure. In",2.0
+"the island, 𝜖 𝑝 , Pi-D 𝑝 and P-𝜃 𝑝 are significant, with 𝐷 𝑝 revealing         𝜂 𝑐 𝑛𝑒 𝑒 2 /𝑚 𝑒 ' 5. Therefore, for 𝜈 = 0.25 and 1.25, as is used here in",0.0
+"significant electron-scale variations.                                         the vpic simulations, reconnection is expected to remain Hall-like.",0.0
+                                                                               The time-scale for magnetic diffusion in the electron current sheet,79.0
+"                                                                               is 4𝜋𝑑 𝑒2 /𝜂𝑐2 = 1/𝜈, so the diffusion time-scales are 4 and 0.8 for",79.0
+"                                                                               𝜈 = 0.25 and 1.25, respectively. In comparison, the electron Alfvén",79.0
+"4.2 Electron dissipation proxies for collisionless reconnection                transit time through the EDR is 2𝑑 𝑒 /(0.1𝑐 𝐴𝑒 ) ' 2, where 𝑐 𝐴𝑒 is the",0.0
+"                                                                               electron Alfvén speed. Consequently, collisions are expected to have",79.0
+"In analogy with protons, electron dissipation proxies are displayed in",0.0
+"                                                                               a noticeable effect in the EDR in the vpic simulations for 𝜈 = 0.25,",79.0
+Fig. 2. One exception is that the LET parameter is not computed for,0.0
+                                                                               and a significant effect for 𝜈 = 1.25. A second critical collision,79.0
+"electrons, as discussed in Section 2.1. As expected, 𝐷 𝑒 ' 𝐷 𝑝 due to",0.0
+                                                                               frequency is that at which collisions affect electron trapping upstream,79.0
+"quasi-neutrality. Again, we first focus on the collisionless case in the",0.0
+"                                                                               of the EDR, which is approximately 𝜈 = 0.1 (Le et al. 2015). Thus,",79.0
+left column.,0.0
+                                                                               the trapping of electrons will be minorly affected for 𝜈 = 0.25 and,79.0
+"   The other energy-based parameters, the electron pressure–strain",3.0
+"                                                                               significantly affected for 𝜈 = 1.25. In contrast, the collisionality for",79.0
+"interaction terms Pi-D𝑒 and P-𝜃 𝑒 , have highly structured patterns",0.0
+"                                                                               the Gkeyll simulation is very low, below both thresholds, so the",79.0
+"at much smaller scales than their proton counterparts, as expected.",0.0
+                                                                               evolution is essentially collisionless.,79.0
+"In the current sheet, Pi-D𝑒 and P-𝜃 𝑒 are both confined to the EDR,",0.0
+with almost no signal in the IDR. Pi-D𝑒 is positively peaked in                    Figure 1 displays the proton dissipation proxies for the 𝜈 = 0.25,0.0
+the magnetic island close to the X-point. There are strong bands of            (centre) and 𝜈 = 1.25 (right) vpic simulations. Data are from 𝑡 ' 26,0.0
+"Pi-D𝑒 near the upstream edges of the EDR, where velocity shear                 for both 𝜈 = 0.25 and 1.25, when the magnetic energy of these",0.0
+"due to electron meandering orbits is significant. In the island, both          simulations is nearly the same as the collisionless case at 𝑡 = 22. The",0.0
+"Pi-D𝑒 and P-𝜃 𝑒 have strong variations in the small-scale structures           𝜈 = 0.25 case is just after the peak in reconnection rate, as for the",0.0
+discussed in the previous subsection. The intense electric fields are          𝜈 = 0 case. The 𝜈 = 1.25 case is just before the peak in reconnection,0.0
+"expanding and compressing the electron fluid as seen in P-𝜃 𝑒 , and            rate, which explains why the island is somewhat smaller for this case.",0.0
+these fluctuations in the local velocity shear give a non-zero Pi-D𝑒 .             The energy-based parameters should be affected by the presence,0.0
+There is also coherent structure of Pi-D𝑒 as the electrons leave the           of inter-species collisions due to the exchange of energy between,0.0
+"EDR and develop a velocity shear as they move around the pre-                  species. For 𝜈 = 0.25, collisions affect the small-scale structures that",0.0
+"existing magnetic island.                                                      were present in the collisionless case, especially in 𝐷 𝑝 and P-𝜃 𝑝 .",0.0
+"                                                         √                     However, as expected, the large-scale structure of these parameters",57.0
+"   For the VDF-based proxies, all four proxies 𝑄 𝑒 , 𝜉𝑒 , 𝑀¯ KP,e and",3.0
+"𝑀¯ 𝑒 are peaked                                                                is not greatly altered for this collisionality. For 𝜈 = 1.25, however,",0.0
+                 √ in the EDR where the strong signature of 𝐷 𝑒 is             collisions significantly alter the dissipation proxies. The signals in,17.0
+"present. For 𝑄 𝑒 , it is peaked at the upstream edges of the EDR",0.0
+"where the meandering orbits meet the upstream electrons, and is                the magnetic islands are severely weakened, as are the signals in the",0.0
+"relatively smaller near the magnetic field reversal where distributions        EDR and IDR. Despite being weaker, the large-scale structure of the",0.0
+"have a characteristic        wedge shape (Ng et al. 2011). Interestingly,      measures is largely unchanged.",0.0
+                    √,20.0
+"the agyrotropy 𝑄 𝑒 is only non-zero in the EDR, while the non-                     In a similar way, VDF-based parameters are qualitatively unaf-",0.0
+"Maxwellianities 𝜉𝑒 , 𝑀¯ KP,e and 𝑀¯ 𝑒 are non-zero in both the EDR             fected by collisional effects for 𝜈 = 0.25, with only weak quantitative",0.0
+"and IDR. The reason for this is that the electrons upstream in the             differences. On the other hand, for 𝜈 = 1.25, VDF-based parame-",0.0
+"IDR are trapped (Egedal et al. 2005), and it has been shown that they          ters are strongly quantitatively affected. As collisions drive distribu-",0.0
+"produce gyrotropic distributions elongated in the parallel direction           tions toward Maxwellianity, especially those with fine velocity–space",0.0
+"(Egedal et al. 2008, 2013). Consequently, the agyrotropy in the IDR            structures, i.e. the non-Maxwellianity measures 𝜉 𝑝 , 𝑀¯ KP,p , and 𝑀¯ 𝑝 ,",0.0
+                                                                                                                           √,123.0
+"is zero, while the non-Maxwellianity is non-zero, as is seen in the            are strongly decreased. The agyrotropy 𝑄 𝑝 is also reduced by strong",0.0
+"simulation results.                                                            collisions, but not as drastically as the non-Maxwellianity measures,",0.0
+   All four VDF-based proxies also show strong signatures close to             as it is less sensitive to sharp peaks in velocity space. This result again,3.0
+"the separatrices, where complicated distributions at the boundaries            confirms that collisional dissipation acts on different characteristic",0.0
+between upstream plasma and the magnetic island occur. This is a               time-scales depending on the scale of the velocity–space distortion in,0.0
+"key distinction between these proxies and the energy-based proxies,            the particle VDF: finer velocity space structures produce shorter dis-",0.0
+which are not peaked near the separatrices. This signature suggests            sipation time-scales (Landau 1936; Rosenbluth et al. 1957; Balescu,0.0
+that the energy conversion in the island and exhaust is not taking             1960; Pezzi et al. 2016).,0.0
+"place near the edges of the islands, but more towards the core as                  We analyze now the effect of collisions on electron dissipation",0.0
+"the bent field lines straighten. The VDF-based proxies also display            proxies for the vpic simulations, which bears many similarities to",0.0
+non-zero signals at the small-scale structures in the exhaust.                 the effect on proton dissipation proxies. The small-scale structures in,0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,14.924050632911392
+                                                                                                   Dissipation measures in weakly collisional plasmas                                               9,99.0
+                                      ν=0                                                          ν=0.25                                                        ν=1.25,38.0
+                      4,22.0
+                           De                                              4     0.20,27.0
+                                                                                 0.13,81.0
+                                                                                      D,86.0
+                                                                                      e,86.0
+                                                                                                                                         4     0.20 D,137.0
+                                                                                                                                                    e,148.0
+                                                                                                                                                                                            0.20,188.0
+                                                                                                                                                                                            0.13,188.0
+                                                                                                                                               0.13,143.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                 0.07                                                          0.07                                         0.07,81.0
+                                                                                 0.00                                                          0.00                                         0.00,81.0
+                      0                                                    0                                                             0,22.0
+                                                                                -0.07                                                         -0.07                                        -0.07,80.0
+                      -2                                                   -2   -0.13                                                    -2   -0.13                                        -0.13,22.0
+                                                                                -0.20                                                         -0.20                                        -0.20,80.0
+                      -4                                                   -4                                                            -4,22.0
+                       4,23.0
+                           Pi-De                                            4    0.10 Pi-De                                               4    0.10 Pi-De                                   0.10,27.0
+                                                                                                                                                                                            0.07,188.0
+                                                                                 0.07                                                          0.07,81.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                 0.03                                                          0.03                                         0.03,81.0
+                                                                                 0.00                                                          0.00                                         0.00,81.0
+                      0                                                    0                                                             0,22.0
+                                                                                -0.03                                                         -0.03                                        -0.03,80.0
+                      -2                                                   -2   -0.07                                                    -2   -0.07                                        -0.07,22.0
+                                                                                -0.10                                                         -0.10                                        -0.10,80.0
+                      -4                                                   -4                                                            -4,22.0
+                       4   P−θe                                             4    0.20 P−θe                                                4    0.20 P−θe                                    0.20,23.0
+                                                                                 0.13                                                          0.13                                         0.13,81.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                 0.07                                                          0.07                                         0.07,81.0
+                                                                                 0.00                                                          0.00                                         0.00,81.0
+                      0                                                    0                                                             0,22.0
+                                                                                -0.07                                                         -0.07                                        -0.07,80.0
+                  -2                                                   -2       -0.13                                                -2       -0.13                                        -0.13,18.0
+                                                                                -0.20                                                         -0.20                                        -0.20,80.0
+                  -4                                                   -4                                                            -4,18.0
+                   4                                                    4                                                             4,19.0
+                           Qe                                                   0.5,27.0
+                                                                                       Qe                                                     0.5    Qe                                    0.5,87.0
+                                                                                0.4                                                           0.4                                          0.4,80.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                0.3                                                           0.3                                          0.3,80.0
+                      0                                                    0    0.2                                                      0    0.2                                          0.2,22.0
+                                                                                0.1                                                           0.1                                          0.1,80.0
+                  -2                                                   -2                                                            -2,18.0
+                                                                                0.0                                                           0.0                                          0.0,80.0
+                  -4                                                   -4                                                            -4,18.0
+                   4,19.0
+                           ξe                                           4       0.3,27.0
+                                                                                      ξe                                              4       0.3   ξe                                     0.3,86.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                0.2                                                           0.2                                          0.2,80.0
+                      0                                                    0                                                             0,22.0
+                                                                                0.1                                                           0.1                                          0.1,80.0
+                  -2                                                   -2                                                            -2,18.0
+                                                                                0.0                                                           0.0                                          0.0,80.0
+                  -4                                                   -4                                                            -4,18.0
+                   4                                                    4                                                             4       0.66M,19.0
+"                           MKP, e                                               0.66M",27.0
+"                                                                                          KP, e                                                         KP, e",90.0
+                                                                                                                                                                                           0.66,187.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                0.33                                                          0.33                                         0.33,80.0
+                      0                                                    0                                                             0,22.0
+                  -2                                                   -2                                                            -2,18.0
+                                                                                0.00                                                          0.00                                         0.00,80.0
+                  -4                                                   -4                                                            -4,18.0
+                   4       Me                                           4       0.15M                                                 4       0.15M                                        0.15,19.0
+                                                                                          e                                                             e,90.0
+                      2                                                    2                                                             2,22.0
+      (z-z 0 ) / dp                                        (z-z 0 ) / dp                                                 (z-z 0 ) / dp,6.0
+                                                                                0.10                                                          0.10                                         0.10,80.0
+                      0                                                    0                                                             0,22.0
+                                                                                0.05                                                          0.05                                         0.05,80.0
+                  -2                                                   -2                                                            -2,18.0
+                                                                                0.00                                                          0.00                                         0.00,80.0
+                  -4                                                   -4                                                            -4,18.0
+                                -5       0          5                                         -5       0          5                                         -5       0          5,32.0
+                                     (x-x0 ) / dp                                                  (x-x0 ) / dp                                                  (x-x0 ) / dp,37.0
+"                                                        Figure 2. Same as figure 1, but for electrons instead of protons.",56.0
+the island largely disappear even for the weaker collisionality of 𝜈 =                                       upstream of the EDR are weaker for 𝜈 = 0.25 and nearly non-existent,0.0
+"0.25. However, at variance with the protons, P-𝜃 𝑒 shows persistent                                          for 𝜈 = 1.25, consistent with the predictions from Le et al. (2015).",0.0
+small-scale structure even at large collisionality 𝜈 = 1.25. The non-,0.0
+                                                                                                                We finally describe the weakly collisional continuum Gkeyll,112.0
+Maxwellianity proxies for electrons are very small for 𝜈 = 1.25. This,0.0
+                                                                                                             simulation. The Gkeyll simulation includes only the effects of in-,109.0
+is consistent with collisions being dynamically important on the time-,0.0
+                                                                                                             traspecies collisions.,109.0
+scale of the electron transit through the EDR; they Maxwellianize,0.0
+"almost fully. In contrast, the EDR remains clearly visible in the                                               Figure 3 shows the proton dissipation proxies, plotted at a slightly",0.0
+"non-Maxwellianity measures for 𝜈 = 0.25. The agyrotropy is non-                                              earlier time 𝑡 ' 18, but this time is after the peak of the reconnection",0.0
+"zero at the edges of the EDR for all three simulations, suggesting                                           rate which takes place at an earlier time with respect to the vpic case",0.0
+that the meandering orbits are sufficient to produce this signal even                                        owing to the smaller system size. The plots reveal that the X-line is not,0.0
+for the highest collisionality considered here. The trapped electrons                                        located exactly in the center of the domain and there is a significant,0.0
+                                                                                                             left–right asymmetry. This is because the random perturbation to the,109.0
+"                                                                                                                                                                                MNRAS 000, 1–17 (2021)",176.0
+avr_spaces,51.80733944954128
+10        O. Pezzi et al.,0.0
+"Figure 3. Same dissipation proxies as plotted in Figure 1, but for the protons Figure 4. Same dissipation proxies as plotted in Figure 2, but for the electrons",0.0
+in the Gkeyll reconnection simulation.                                         in the Gkeyll reconnection simulation.,0.0
+initial condition seeding reconnection breaks the symmetry in the 𝑥                The comparison of this wide array of diagnostics from these two,0.0
+"direction.                                                                     different codes in different regimes, from collisionless vpic to weakly",0.0
+"   Three of the energy-based measures, 𝐷 𝑝 , Pi-D 𝑝 , and P-𝜃 𝑝 , show         collisional Gkeyll to collisional vpic, reveals the diversity of infor-",3.0
+"broad agreement with the vpic results in Figure 1. The Gkeyll                  mation content each diagnostic contains. In many cases, we observe",0.0
+simulation has a more structured Pi-D 𝑝 near the X-line due to a               little qualitative difference between the energy-based diagnostics,0.0
+"secondary island near 𝑧 = 𝑧 0 and 𝑥 − 𝑥0 ' [1, 2], which develops              from different simulations while VDF-based diagnostics are more",0.0
+shortly after the peak of the reconnection rate. The secondary island          sensitive both qualitatively and quantitatively to the strength of col-,0.0
+has a bipolar structure in Pi-D 𝑝 analogous to the bipolar structure           lisions and subtle differences in the underlying kinetic evolution of,0.0
+"downstream in a dipolarization front in the vpic simulation, visible           the reconnection process, such as the secondary island which forms",0.0
+"at 𝑧 = 𝑧 0 and 𝑥 − 𝑥0 ' [−9, −4] in Figure 1. The strongest difference         in the Gkeyll simulation.",0.0
+"between the two data sets is observed in the LET diagnostic 𝜖 𝑝 ,",0.0
+which displays broader features in the Gkeyll simulation. This is,0.0
+likely due to the coarser configuration-space resolution.,0.0
+                                                                               5 NUMERICAL RESULTS: DISSIPATION MEASURES IN,79.0
+"   For the VDF-based diagnostics, the Gkeyll simulation gives qual-",3.0
+                                                                                   TURBULENT PLASMAS,83.0
+"itatively and quantitatively similar results in the exhaust, especially",0.0
+"the inner shell of the magnetic island. However, small differences             We here describe the structure of dissipation proxies in plasma turbu-",0.0
+arise in these diagnostics due to the secondary island in the Gkeyll           lence at kinetic scales. Since the HVM code using the hybrid model,0.0
+"simulation. Indeed, this structure generates intense deviations from           neglects electrons, we only treat proton parameters. In these simu-",0.0
+"the thermal equilibrium due to the mixing and rapid rotation of pro-           lations, energy injected at large scales generates a cascade towards",0.0
+tons trying to align with the local magnetic field. Inside the proton          smaller scales. The time corresponding to the most intense turbulent,0.0
+"scale island, we observe strong deformation",0.0
+"                                       √︁        of the proton VDF which       activity is 𝑡 = 𝑡 ∗ = 30, in which a turbulent state characterized by",39.0
+"manifests as an intense agyrotropy Q 𝑝 and non-Maxwellianity 𝜉 𝑝 ,             an intermittent pattern of current sheets that border magnetic islands",0.0
+"M̄𝐾 𝑃, 𝑝 and M̄ 𝑝 .                                                            and vortices (Servidio et al. 2015; Wan et al. 2015) is reached. We",0.0
+"   Turning to electron dissipation proxies, displayed in Figure 4,             show simulation results at 𝑡 = 𝑡 ∗ in Fig. 5, with the output of the",3.0
+the Gkeyll simulation results display a good agreement with the                collisionless (left) and collisional (right) simulation.   √︁ Panels from (a),0.0
+"vpic data. In fact, the overall structure in energy-based diagnostics          to (h) display 𝐷 𝑝 , 𝜖 𝑝,ℓ with ℓ ' 𝑑 𝑝 , Pi-D 𝑝 , P-𝜃 𝑝 , 𝑄 𝑝 , 𝜖 𝑝 , 𝑀¯ KP,p ,",0.0
+"such as 𝐷 √︁ 𝑒 and Pi-D𝑒 and distribution function-based diagnostics           and 𝑀¯ 𝑝 , respectively.",0.0
+"such as Q𝑒 and 𝜉𝑒 , agrees better for electrons than for protons.                  We begin by analysing the energy-based parameters. 𝐷 𝑝 , LET",0.0
+"For example, 𝐷 𝑒 and Pi-D𝑒 are positive in the electron diffusion              𝜖 𝑝,ℓ , and the Pi-D 𝑝 term are all peaked close to the most intense",0.0
+"region, and we observe enhancement of all the distribution function-           current sheets. This confirms that current sheets are the sites with",0.0
+based diagnostics near the separatrices. This better agreement can be          the most intense local energy conversion and dissipation. 𝐷 𝑝 has a,0.0
+"linked to the secondary island not having as dramatic an impact on             preferred sign, being positive in most of the regions of highest energy",0.0
+the electron dynamics in the magnetic island.                                  conversion. This implies there is a net conversion of energy from,0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,5.121951219512195
+                                                                           Dissipation measures in weakly collisional plasmas                                      11,75.0
+"Figure 5. Various dissipation surrogates evaluated at the time of maximum turbulent activity in HVM simulations, 𝑡 = 𝑡 ∗ . The two columns at left refer    √︁ to the",0.0
+"collisionless case, and the two at the right are for the weakly collisional case. Panels from (a) to (h) display 𝐷 𝑝 , 𝜖 𝑝,ℓ with ℓ ' 𝑑 𝑝 , Pi-D 𝑝 , P-𝜃 𝑝 , 𝑄 𝑝 , 𝜉 𝑝 ,",0.0
+"𝑀¯ KP,p , and 𝑀",0.0
+"              ¯ 𝑝 , respectively.",14.0
+"the electromagnetic fields to protons. Similarly, the predominantly                  icant contributions both at the current sheets and in magnetic islands",0.0
+negative LET supports the standard picture of a direct global energy                 since it is related to large-scale plasma compression (red) and rarefac-,0.0
+"cascade towards small scales. The regions of larger energy transfer                  tion (blue). The most intense regions of P−𝜃 𝑝 are at current sheets,",0.0
+"are generally located near the current sheets, and some complexity                   reflecting the rapid collision or separation of large-scale magnetic",0.0
+in the fine local details of the transfer can be observed. A detailed                islands.,0.0
+analysis of each term of the right-hand side of Eq. (13) reveals that                    The four VDF-based proxies bear many similarities. They are,0.0
+"the total energy (kinetic plus magnetic) available to be transported by              highly structured, with local peaks close to current sheets. As with",0.0
+"the longitudinal component Δ𝑢 𝑝,ℓ is the main contributor to the LET                 the reconnection simulations, there are also differences between       √ these",0.0
+"parameter in this HVM simulation. In this case, it is also confirmed                 measures. It is more common to get appreciable values of 𝑄 𝑝 than",0.0
+"(not shown) that the global (Yaglom–Hall) law shows a linear scaling                 other VDF-based measures, especially 𝑀¯ 𝐾 𝑃, 𝑝 and 𝑀¯ 𝑝 . This indi-",0.0
+in the interval roughly corresponding to the MHD-turbulence range                    cates that the agyrotropy provides an overall picture of the presence,0.0
+"(2𝑑 𝑝 . ℓ . 10𝑑 𝑝 ), as also recently reported in similar simulation                 of large-scale kinetic effects in the VDFs (namely the 2nd order VDF",0.0
+"setups by Sorriso-Valvo et al. (2018a) and Vásconez et al. (2021).                   moment), while fine-scale structures in the VDF are larger contribu-",0.0
+   As displayed in previous HVM (Pezzi et al. 2019a) and in PIC                      tors to non-Maxwellianity measures.,3.0
+"simulations (Yang et al. 2019), Pi-D 𝑝 is highly structured, having                      The collisionless and weakly collisional simulations do not reveal",0.0
+both positive and negative regions close to intense current sheets.                  significant differences in the energy-based parameters for the col-,0.0
+"Conversely, P-𝜃 𝑝 is larger than its Pi-D 𝑝 counterpart and has signif-              lision frequency in use. The inclusion of proton–proton collisional",0.0
+"                                                                                                                                         MNRAS 000, 1–17 (2021)",137.0
+avr_spaces,9.541666666666666
+12        O. Pezzi et al.,0.0
+Figure 6. 1D cuts vertically through the 𝑥-line showing the various dissipation surrogates in the reconnecting current sheet for the vpic collisionless reconnection,0.0
+"simulation. The top row refers to proton proxies, displaying energy-based parameters (left, with 𝜖 𝑝,ℓ scaled by a factor of 10 to make it more visible) and",0.0
+"VDF-based parameters (right). In the right-hand panel, the Zenitani measure 𝐷 𝑝 is showed as a reference. The bottom row is analogous for the electron proxies.",0.0
+effects does not affect the statistical characteristics of turbulence at             both the reconnecting current sheet and a typical current sheet ob-,0.0
+"the proton scale. This can be explained since, at variance with inter-               served in the turbulent HVM simulation. We focus on the collision-",0.0
+"species collisional effects, intraspecies collisions do not generate a               less simulation, since our aim is mainly discussing how these pa-",0.0
+"resistivity-like term which directly affects the electric field and hence            rameters look when crossing a particular structure. Moreover, for the",0.0
+"fluid quantities. On the other hand, VDF-based parameters are dissi-                 magnetic reconnection simulations, we show cuts for only the vpic",0.0
+"pated by collisions, signature of the collisional thermalization. Since              runs, since Gkeyll and vpic provide similar results. These plots",0.0
+"these parameters are sensitive to the presence of out-of-equilibrium                 help reveal comparative proxy structure near to the current sheets,",0.0
+"structure in the proton VDF, they are affected by intraspecies",0.0
+                                                            √︁          colli-       and may also be useful for future comparison with in situ spacecraft,60.0
+"sional effects. The effect of collisions is less visible in 𝑄 𝑝 since col-           observations, e.g., for the Pi-D measure (Chasapis et al. 2018b). For",0.0
+lisions preferentially dissipate fine velocity–space,0.0
+                                            √︁            structures (Pezzi          applications of these results to observations or laboratory experi-,44.0
+"et al. 2016), which contribute less to 𝑄 𝑝 . The effect of collisions                ments, it is important to emphasize that the results are undoubtedly",0.0
+is visible in 𝜉 𝑝 and in the entropy density-based non-Maxwellianity                 sensitive to the plasma parameters and to the reduced 2D physical-,0.0
+proxies. The maximum values of these three parameters are smaller                    space dimensionality (Howes 2015a; Li et al. 2016). Note also that,0.0
+by about 10% in the weakly collisional simulation than the colli-                    multispacecraft observations are necessary to compute the spatial,0.0
+"sionless simulation. Similarly, average values are reduced by about                  derivatives needed to calculate some of these diagnostics (e.g. Pi-D",0.0
+"20% for 𝜉 𝑝 and 30% for 𝑀¯ KP,p and 𝑀¯ 𝑝 when including collisions.                  measure).",0.0
+The effect of collisions becomes more significant at later times (not,0.0
+"shown here, see Fig. 4 of Pezzi et al. 2019c). Indeed, at the final time",0.0
+"of the simulation, maxima of 𝜉 𝑝 and of the entropy density-based                       Figure 6 shows the dissipation proxies along a cut in the recon-",0.0
+"proxies are, respectively, about 20 and 30% smaller when collisional                 nection simulation through the X-point in 𝑧. The vertical dotted and",0.0
+"effects are considered, while their average values are reduced by 40                 dashed lines mark the upstream edges of the EDR and IDR, respec-",0.0
+"and 60%, respectively. The different dissipation (in terms of both                   tively. These edges are defined by the location at which the electron",0.0
+maximum and averaged values) of 𝜉 𝑝 and the entropy density-based                    and ion out-of-plane currents are 20% of their maximum (Shay et al.,0.0
+"proxies suggests that the latter react more to collisional effects than              2001). The upper panels show the results for the protons, and the",0.0
+"𝜉 𝑝 since entropy-based proxies are dissipated more efficiently via                  lower panels are for electrons, with energy-based measures in the left",0.0
+collisions.                                                                          plots and VDF-based measures on the right. For the energy-based,0.0
+"                                                                                     measures, 𝐷 𝑒 ' 𝐷 𝑝 shows a clear peak in the EDR. The LET param-",85.0
+"                                                                                     eter 𝜖 𝑝,ℓ , scaled by a factor of 10 to make it easier to see, displays the",85.0
+                                                                                     negative-positive double-peaked structure in the EDR seen in Figure,85.0
+6 ONE-DIMENSIONAL PROFILES OF DISSIPATION,0.0
+"                                                                                     1, and is negligible elsewhere. The sign of 𝜖 𝑝,ℓ is the same sign as",85.0
+   PROXIES,3.0
+                                                                                     𝐵 𝑥 for this current sheet. The electron and ion Pi-D and P-𝜃 show,85.0
+We conclude by presenting 1D cuts of the dissipation surrogates                      moderately intensified signals within the EDR with tails extending,0.0
+"adopted in this work across a typical current structure. We include                  into the IDR. Compared to the Zenitani measure, both P-𝜃 and Pi-D",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,12.372093023255815
+                                                                     Dissipation measures in weakly collisional plasmas                               13,69.0
+"                                                    Figure 7. Same as figure 6, but at 𝑥 − 𝑥0 = 5𝑑 𝑝 .",52.0
+"display rapidly fluctuating patterns but only Pi-D is positive definite           Finally, we show in Fig. 8 the dissipation proxies for the collision-",0.0
+"within the IDR, i.e. the same sign of 𝐷 𝑝 .                                    less HVM turbulence simulation along a 1D cut close to the current",0.0
+"                                                        √          √︁          sheet near (𝑥, 𝑦) = (69, 36). Similar results are obtained in the col-",56.0
+"   For the VDF-based measures, the agyrotropies 𝑄 𝑒 and 𝑄 𝑝",3.0
+reveal a double-peak structure the diffusion region of each species            lisional simulation. All the energy-based parameters (top panel of,0.0
+"correlated with the size of its diffusion region. As discussed in Sec-         Fig. 8) are peaked within the same region, i.e. 𝑦 ' 36. The VDF-",0.0
+"tion 4.2, this shape is caused by the meandering motions of the parti-         based proxies (bottom panel of Fig. 8) also reveal clear maxima near",0.0
+"cles traversing their diffusion√regions at their gyroscale and is there-       the current structure. However, the maxima are somewhat broader in",0.0
+fore a characteristic shape of 𝑄 in the diffusion region of antiparal-         width (∼ 2 − 5) than the energy-based,0.0
+"                                                                                                           √︁            parameters (∼ 1). Moreover,",107.0
+"lel reconnection. For both electrons and ions, the non-Maxwellianity           the agyrotropy parameter 𝑄 𝑝 shows large-scale fluctuations quite",0.0
+"proxies 𝜉, 𝑀¯ 𝐾 𝑃 , and 𝑀,",0.0
+                         ¯ show intensified signals over the IDR with          far from the current structure. The broader distribution observed for,25.0
+"relatively strong peaks in the EDR. As discussed in Section 4, the             the VDF-based parameters suggests that energy transfer is localized",0.0
+"electron non-Maxwellianities not only show the peaks in the EDR                close to the coherent structures, but can affect the particle distribution",0.0
+but also broad intensified signals over the IDR. As analysed in Liang          function in a larger region around these structures.,0.0
+"et al. (2020), the broad intensified signals are due to the gyrotropic            The 1D cuts of the dissipation proxies for both the reconnection",0.0
+distributions created by trapped electrons (Egedal et al. 2005). This          and turbulence simulations support the idea that peaks of dissipation,0.0
+non-zero signal is coincident with negligible signal in the electron           measures in a reconnecting current sheet or a turbulent environment,0.0
+"energy-based proxies 𝐷 𝑒 , Pi-D𝑒 and P-𝜃 𝑒 .                                   characteristically occur in coincident spatial regions, but not nec-",0.0
+   Figure 7 similarly displays the dissipation proxies along a vertical        essarily at the same exact spatial position. This is consistent with,3.0
+"cut through the reconnection simulation at 𝑥 − 𝑥0 = 5, i.e. through            the notion of regional correlations, suggested by Yang et al. (2019);",0.0
+the reconnection exhaust. The format is the same as Figure 6. For              Matthaeus et al. (2020). The selected structure has more of a resem-,0.0
+"this cut, the exhaust is between the separatrices at 𝑧 − 𝑧 0 ' ±1.5. For       blance to the 1D cut of the reconnection simulation at the X-point",0.0
+"both electrons and ions, all energy-based diagnostics, 𝐷 𝑒 = 𝐷 𝑝 , 𝜖 𝑝 ,       than at the reconnection exhaust. However, there are qualitative and",0.0
+"Pi-D and P-𝜃 show intensified, yet noisy, signals. The signals include         quantitative differences. The Zenitani measure and the diagnostics",0.0
+"positive and negative values due to complex flows in this region,              based on the pressure–strain interaction (Pi-D and P-𝜃) have the same",0.0
+"although for this cut the Pi-D 𝑝 measure has a sizeable negative value.        dimensions (see Sect. 3), hence it is reasonable to compare their mag-",0.0
+"The VDF-based proxies for both electrons and ions are intensified in           nitude. In this respect, we notice that the Zenitani measure is most",0.0
+"the exhaust, as well. The electron VDF-based proxies have peaks near           prominent in the reconnection simulation, while a positive P-𝜃 is the",0.0
+"the separatrices, due to the counter-streaming electron flows (Hesse           strongest in the turbulence simulation. This suggests that, when sim-",0.0
+"et al. 2018; Liang et al. 2020). The VDF-based proxies are slightly            ulating a single reconnecting current sheet, compressible effects are",0.0
+"broader than the exhaust, which results from the finite Larmor radius          less significant. On the other hand, when reconnection occurs in a",0.0
+(FLR),0.0
+"√︁      effects near the separatrices as shown by the non-gyrotropy            turbulent environment, where magnetic islands can merge with each",0.0
+"  𝑄 𝑝 . Although FLR effects are not seen much in the energy-based             other, compression is much more significant. The LET parameter,",2.0
+"diagnostics, they are picked up by the VDF-based diagnostics 𝜉 𝑝 ,             which has different dimensions than the other three energy-based",0.0
+"𝑀¯ 𝐾 𝑃, 𝑝 and 𝑀¯ 𝑝 .                                                           surrogates, oscillates in the reconnection simulation, but is strongly",0.0
+"                                                                                                                              MNRAS 000, 1–17 (2021)",126.0
+avr_spaces,10.547619047619047
+14       O. Pezzi et al.,0.0
+                                                                         nature of the dissipation in magnetized turbulence (e.g. Pezzi et al.,73.0
+                                                                         (2017); Perrone et al. (2018); González et al. (2019)).,73.0
+"                                                                            In the same spirit, we have conducted a survey of a number of dis-",76.0
+                                                                         sipation surrogates with three different kinetic plasma codes — the,73.0
+"                                                                         fully kinetic particle-in-cell vpic, the fully kinetic Eulerian Vlasov–",73.0
+"                                                                         Maxwell Gkeyll, and the Eulerian Hybrid Vlasov–Maxwell codes",73.0
+                                                                         — to perform numerical simulations of two important physical phe-,73.0
+                                                                         nomena in plasma physics. The first class investigates reconnection in,73.0
+"                                                                         an isolated current sheet, and the second concerns plasma turbulence",73.0
+                                                                         at kinetic scales. We have calculated and compared eight distinct,73.0
+"                                                                         dissipation proxies, delineated in Section 2. For the sake of clarity,",73.0
+"                                                                         we have categorized them in terms of (i) energy-based parameters,",73.0
+                                                                         whose definition describes energy transfer and conversion; and (ii),73.0
+"                                                                         VDF-based parameters, that are directly related to kinetic signatures",73.0
+                                                                         in the particle VDF. Energy-based parameters considered here are the,73.0
+                                                                         power density by electromagnetic fields on charged particles (Zeni-,73.0
+"                                                                         tani et al. 2011), the pressure–strain interaction (Yang et al. 2017a),",73.0
+                                                                         and a local proxy of the turbulent energy transfer (Sorriso-Valvo et al.,73.0
+                                                                         2018a). The VDF-based parameters are the local pressure agyrotropy,73.0
+                                                                         (Swisdak 2016) and three measures describing how different a lo-,73.0
+                                                                         cal distribution function is from being Maxwellian (Kaufmann &,73.0
+                                                                         Paterson 2009; Greco et al. 2012; Liang et al. 2019).,73.0
+                                                                            Our findings are that each of the studied measures is non-zero,76.0
+"                                                                         in key settings in reconnection and turbulence, including the recon-",73.0
+"                                                                         nection diffusion region and magnetic islands, and the intermittent",73.0
+"Figure 8. (Color online) Same as figure 6, but for the HVM collisionless",0.0
+                                                                         magnetic shear regions bordering magnetic eddies in a turbulent sys-,73.0
+turbulence simulation. The cut is taken at 𝑥 = 68.7 𝑑 𝑝 .,0.0
+                                                                         tem. The region that each proxy is strongest highlights a potentially,73.0
+"                                                                         different aspect of the physics taking place, as is described in detail",73.0
+                                                                         in Sections 4 and 5. It is intended that the discussion therein will,73.0
+negative in the turbulence one. Qualitative agreement between the        contribute to the assessment of dissipation and energy conversion in,0.0
+"structures is found for the VDF-based surrogates, that are all adimen-   satellite and plasma laboratory experiment measurements. We here",0.0
+"sional, although some features in the reconnection simulation (e.g.      remark on the importance of the VDF-based diagnostics, which re-",0.0
+double peaks in the agyrotropy) are not present in the turbulence        veal further details about the underlying dynamics of the plasma,0.0
+"simulation perhaps because of the different numerical resolution.        compared to the energy-based diagnostics. Indeed, the energy-based",0.0
+"Furthermore, for the cut through the current sheet in turbulence,        diagnostics give similar results for similar simulations in the mag-",0.0
+"the parameters depend on time due to the turbulent interaction of        netic reconnection setup (i.e. vpic and Gkeyll runs), as we expect",0.0
+"larger scale magnetic eddies, so wide variation in parameters across     since these simulations which show little difference in many of the",0.0
+"different current sheets and at different times is expected.             measures of the plasma response to magnetic reconnection. However,",0.0
+                                                                         the additional level of detail provided by VDF-based diagnostics al-,73.0
+                                                                         lows us to more carefully ascertain the kinetic response of the plasma,73.0
+                                                                         from small differences which arise naturally between two different,73.0
+7 DISCUSSION AND CONCLUSIONS,0.0
+"                                                                         simulation codes, and the added robustness of these diagnostics is",73.0
+As a result of the weak collisionality of many space and astrophysical   likely to be especially useful when analysing more general simu-,0.0
+"plasmas, several physical processes can locally contribute to the dis-   lations and observations of real plasma systems such as the solar",0.0
+"sipation of energy and the heating of the plasma. During magnetic        wind. In contrast, the energy-based diagnostics are directly related to",0.0
+"reconnection, magnetic energy is efficiently converted to directed       the turbulence cascade process that connects the energy containing",0.0
+"plasma flows, thermal energy, and energetic particles (Burch et al.      scales to the kinetic range of scales where the velocity space structure",0.0
+"2016; Torbert et al. 2018). During turbulence in a magnetized plasma,    becomes increasingly important. Therefore both type of diagnostics",0.0
+the cascade provides the global amount of energy needed for fluc-        are helpful to form a complete picture of the dynamics leading to,0.0
+tuations to be dissipated at small scales (Marino et al. 2008). How-     dissipation.,0.0
+"ever, which dissipative mechanisms are dominant and under which             The spatial locations where each proxy has a local maximum can",0.0
+"conditions is still not sufficiently understood (Vaivads et al. 2016).   be different between the different proxies. For example, in the mag-",0.0
+"Therefore, a multiplicity of dissipation surrogates have been adopted    netic reconnection simulations, the Zenitani measure is peaked at",0.0
+in the literature to identify potential sites of dissipation. Owing to   the X-point while the pressure–strain interaction terms are peaked,0.0
+the strongly non-linear dynamics and the importance of physics at        inside the magnetic islands. This confirms a suggestion that both,0.0
+"kinetic scales in such systems, numerical simulations of the Vlasov–     energy-based and VDF-based parameters display a regional correla-",0.0
+"Maxwell system (or, including collisions, the Boltzmann–Maxwell          tion: structures identified by these parameters often occur in similar",0.0
+"system) are the decisive tool to address the long-standing issue of      regions, although not necessarily exhibiting a point-to-point corre-",0.0
+"plasma heating and energy dissipation in magnetized plasmas, e.g.        lation. This underscores a key conclusion of this work: that no one",0.0
+"Parashar et al. (2009). For example, the “turbulence dissipation chal-   single measure is universally the best measure for dissipation. Rather,",0.0
+lenge” (Parashar et al. 2015) motivated numerical work to compare        employing a number of proxies is likely best for assessing the dissi-,0.0
+different algorithms on the solution of similar problems to assess the   pation and energy conversion in a plasma system.,0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,35.51470588235294
+                                                                        Dissipation measures in weakly collisional plasmas                         15,72.0
+   We also consider the role of collisions by including their dy-             tion directly in velocity space while the others here adopted involve,3.0
+namical effect ab initio in the numerical simulations for both re-            an integration over the full velocity space. The field-particle corre-,0.0
+connection and turbulence. When including only weak intraspecies              lation is also local in physical space and does not require spatial,0.0
+"(proton–proton) collisions in the turbulence simulations, the VDF-            gradients, which would require multiple spacecraft for in situ ob-",0.0
+based proxies decreased while the energy-based proxies were largely           servations. Incorporating the field–particle correlation gives a visual,0.0
+"unchanged. This behavior is expected since such collisions drive par-         way to identify energy transfer between particles and fields, and",0.0
+"ticle VDFs towards Maxwellian distributions, but they do not pro-             would be interesting to compare with the other proxies. Indeed, the",0.0
+duce a net energy transfer between different species although they            diagnostics considered in this work are extremely useful to char-,0.0
+"indirectly modify the energy equations by isotropizing the pressure           acterize potential sites of intermittent dissipation, e.g. in structures",0.0
+"tensor (Del Sarto et al. 2016). On the other hand, both energy- and           close to intense current sheets. On the other hand, methods such as",0.0
+"VDF-based proxies are influenced by interspecies and intraspecies             the field–particle correlation identifies basic plasma processes, e.g.",0.0
+(electron–proton) collisions in simulations of magnetic reconnection.         Landau damping. Connecting these two points of view would also,0.0
+"In particular, small-scale structures are dissipated by collisions, and       contribute to addressing the fundamental question whether dissipa-",0.0
+the distributions in the diffusion region are less non-Maxwellian and         tion in plasmas is uniform or intermittent (Vaivads et al. 2016) and,0.0
+"thermalize more rapidly than in the collisionless case.                       deserves a dedicated, future study. Moreover, kinetic plasma turbu-",0.0
+"   Interestingly, we find the peaks of dissipation proxies in the sys-        lence excites in a very complex way an entire ensemble of genuinely",3.0
+"tems with collisions are generally weaker than in the collisionless           kinetic degrees of freedom, i.e. those related to velocity–space struc-",0.0
+"system. VDF-based dissipation proxies show this behavior for all the          tures in the particle VDF (Servidio et al. 2017; Pezzi et al. 2018),",0.0
+simulations reported in the manuscript. These surrogates are local            thus driving free energy towards finer and finer scales in velocity,0.0
+in position space and provide only a local measure of the complex-            space where it is dissipated through interparticle collisions (Pezzi,0.0
+ity of the distribution function. Energy-based measures also become           et al. 2019c). The relation of the dissipation surrogates considered,0.0
+"weaker in the collisional runs of magnetic reconnection, which in-            here with the enstrophy phase-space cascade will be the subject of a",0.0
+clude interspecies collisional effects. This behavior is an effect of the     future work.,0.0
+"work of collisions that, since the beginning of the numerical simula-            Finally, there are many necessary extensions to the current study.",0.0
+"tion, have produced dissipation. In particular, intraspecies collisions       The present simulations varied collisionality, but for a particular set",0.0
+"dissipate VDF complexity, while interspecies collisions affect both           of field and plasma initial conditions, so the parametric dependence",0.0
+"the VDF and the energy. Therefore, by looking at these parameters at          of the conclusions attained herein should be the subject of future",0.0
+"a fixed time snapshot, their peaks are weaker in the collisional runs         work. Both the reconnection and turbulence simulations were 2D,",0.0
+"with respect to the collisionless case. Further, it also clearly illustrates  and therefore 3D effects are not captured. The reconnection sim-",0.0
+that the energy-based measures contain information about both col-            ulations studied here employed a small system size in which the,0.0
+"lisional and collisionless processes, implying that they are not yet          protons do not fully couple back to the large-scale systems, so it is",0.0
+capable of distinguishing reversible from irreversible processes.             important to revisit the proton dissipation measures in larger sys-,0.0
+   Although defining the concept of dissipation in a collisionless            tem sizes. The effect of proton–electron collisions on energy-based,3.0
+"plasma is rather complicated, analysing dissipation surrogates in col-        parameters in turbulence should be addressed in future work. The tur-",0.0
+"lisionless simulations and comparing the evolution of these proxies in        bulence simulations considered here addressed decaying turbulence,",0.0
+"collisionless and collisional runs, as done in this study, is meaningful.     and comparisons to driven turbulence would be interesting.",0.0
+Such a comparison indeed addresses the key question: are collisions,0.0
+preferentially active in regions where the dissipation surrogates eval-,0.0
+"uated in absence of collisions are intense, i.e. where other dynami-",0.0
+                                                                              ACKNOWLEDGEMENTS,78.0
+"cal characteristics (e.g. pressure–strain interactions, non-Maxwellian",0.0
+structures) are significant? Our analysis may indirectly suggest a posi-      This manuscript stemmed from discussions at Vlasovia 2019: The,0.0
+tive answer to this question. The regional correlation of energy-based        Sixth International Workshop on the Theory and Applications of,0.0
+and VDF-based diagnostics indicate that non-Maxwellian structures             the Vlasov Equation; we acknowledge many helpful conversations at,0.0
+in the particle VDF are expected close to regions where energy-               the workshop. The authors thank an anonymous referee for her/his,0.0
+"based dissipation surrogates are also strong. Moreover, as shown              suggestions, which significantly improved the quality of the paper.",0.0
+in previous studies (Landau 1936; Rosenbluth et al. 1957; Balescu             Simulations here described have been partially performed on the,0.0
+"1960; Schekochihin et al. 2009; Pezzi et al. 2016, 2019c), collisions         Marconi cluster at CINECA (Italy), within the projects IsC53_RoC-",0.0
+"rapidly dissipate strong velocity–space disturbances in the particle          SWT and IsC63_RoC-SWTB, on the Newton cluster at the Univer-",0.0
+"VDF. Hence, we suggest that regions identified by dissipation sur-            sity of Calabria (Italy). This research partially used resources of the",0.0
+"rogates in the collisionless simulations are regions where collisions,        National Energy Research Scientific Computing Center (NERSC),",0.0
+"if present, preferentially smooth out non-Maxwellian features in the          under Contract no. DE-AC02-05CH11231. This work used the Ex-",0.0
+"particle VDF, thus producing irreversible dissipation.                        treme Science and Engineering Discovery Environment (XSEDE),",0.0
+   The present study is not intended to be the final word on this             which is supported by National Science Foundation grant number,3.0
+"topic, as there are many avenues for future work. The diagnostics             ACI-1548562. Resources supporting this work were also provided",0.0
+considered here do not discriminate the underlying process which              by the NASA High-End Computing (HEC) Program through the,0.0
+"may lead to energy dissipation or conversion, e.g. Landau damping,            NASA Advanced Supercomputing (NAS) Division at Ames Research",0.0
+"cyclotron damping, phase-mixing, and stochastic heating (Chandran             Center. HL acknowledges support from NSF EPSCoR RII-Track-1",0.0
+"et al. 2010; Li et al. 2016). In this perspective, a different approach,      Cooperative Agreement OIA-1655280 and an NSF/DOE Partner-",0.0
+"based on the field-particle correlation, has been recently adopted to         ship in Basic Plasma Science and Engineering via NSF grant PHY-",0.0
+identify the presence of particular signatures in the particle VDF            1707247. JJ was supported by a NSF Atmospheric and Geospace Sci-,0.0
+(Klein & Howes 2016; Klein et al. 2017; Chen et al. 2019; Klein               ence Postdoctoral Fellowship (Grant No. AGS-2019828). PAC grate-,0.0
+"et al. 2020). This method has the advantage of diagnosing energiza-           fully acknowledges support from NSF Grant PHY-1804428, NASA",0.0
+"                                                                                                                             MNRAS 000, 1–17 (2021)",125.0
+avr_spaces,4.348484848484849
+16        O. Pezzi et al.,0.0
+"Grants NNX16AG76G and 80NSSC19M0146, and DOE Grant DE-                         Greco A., Valentini F., Servidio S., Matthaeus W., 2012, Physical Review E,",0.0
+"SC0020294. CLV was partially supported by EPN projects: PIM-19-                    86, 066405",0.0
+"01, PII-DFIS-2019-01 and PII-DFIS-2019-04. LSV was funded by                   Hakim A., Juno J., 2020, Supercomputing (accepted)",0.0
+"the Swedish Contingency Agency, grant 2016-2102, and by SNSA                   Hakim A., Francisquez M., Juno J., Hammett G. W., 2020, Journal of Plasma",0.0
+"grant 86/20. SS acknowledges funding from the European Union                       Physics, 86, 905860403",0.0
+"                                                                               Hesse M., et al., 2018, Physics of Plasmas, 25, 122902",79.0
+Horizon2020 research and innovation programme under grant agree-,0.0
+"                                                                               Howes G. G., 2015a, Journal of Plasma Physics, 81, 3203",79.0
+"ment No. 776262 (AIDA, www.aida-space.eu). VR is supported by                  Howes G. G., 2015b, Philosophical Transactions of the Royal Society of",0.0
+"US DOE grant DE-SC0019315. JMT acknowledges support from                           London Series A, 373, 20140145",0.0
+"NSF Grant AGS-1842638. WHM is partially supported by the MMS                   Juno J., 2020, PhD thesis, University of Maryland, College Park",0.0
+"Theory and Modeling team under NASA grant 80NSSC19K0565.                       Juno J., Hakim A., TenBarge J., Shi E., Dorland W., 2018, Journal of Com-",0.0
+"                                                                                   putational Physics, 353, 110",83.0
+"                                                                               Kanekar A., Schekochihin A. A., Dorland W., Loureiro N. F., 2015, Journal",79.0
+"DATA AVAILABILITY                                                                  of Plasma Physics, 81, 305810104",0.0
+"                                                                               Karimabadi H., et al., 2013, Physics of Plasmas, 20, 012303",79.0
+"The data underlying this article will be shared on reasonable request          Kaufmann R. L., Paterson W. R., 2009, J. Geophys. Res., 114, A00D04",0.0
+"to the corresponding author.                                                   Klein K. G., Howes G. G., 2016, The Astrophysical Journal Letters, 826, L30",0.0
+"                                                                               Klein K. G., Howes G. G., TenBarge J. M., 2017, Journal of Plasma Physics,",79.0
+"                                                                                   83, 535830401",83.0
+"                                                                               Klein K. G., Howes G. G., TenBarge J. M., Valentini F., 2020, Journal of",79.0
+"REFERENCES                                                                         Plasma Physics, 86, 905860402",0.0
+"Arnold D. N., Awanou G., 2011, Foundation of Computational Mathematics,        Kolmogorov A., 1941, Akademiia Nauk SSSR Doklady, 30, 301",0.0
+"    11, 337                                                                    Landau L., 1936, Collected papers of LD Landau, pp 163–170",4.0
+"Aunai N., Hesse M., Kuznetsova M., 2013, Physics of Plasmas, 20, 092903        Lapenta G., et al., 2017, Journal of Geophysical Research (Space Physics),",0.0
+"Balescu R., 1960, The Physics of Fluids, 3, 52                                     122, 2024",0.0
+"Bandyopadhyay R., et al., 2020, Physical Review Letters, 124, 225101           Le A., Egedal J., Daughton W., Roytershteyn V., Karimabadi H., Forest C.,",0.0
+"Beresnyak A., 2019, Living Reviews in Computational Astrophysics, 5, 2             2015, Journal of Plasma Physics, 81, 305810108",0.0
+"Birdsall C. K., Langdon A. B., 2004, Plasma physics via computer simulation.   Li T. C., Howes G. G., Klein K. G., TenBarge J. M., 2016, The Astrophysical",0.0
+"    CRC press                                                                      Journal Letters, 832, L24",4.0
+"Birn J., Hesse M., 2005, Annales Geophysicae, 23, 3365                         Liang H., et al., 2019, Physics of Plasmas, 26, 082903",0.0
+"Bowers K. J., Albright B. J., Yin L., Bergen B., Kwan T. J. T., 2008, Physics  Liang H., Barbhuiya M. H., Cassak P. A., Pezzi O., Servidio S., Valentini F.,",0.0
+"    of Plasmas, 15, 055703                                                         Zank G. P., 2020, Journal of Plasma Physics, 86, 825860502",4.0
+"Braginskii S., 1965, Reviews of plasma physics, 1                              Mandell N. R., Hakim A., Hammett G. W., Francisquez M., 2020, Journal of",0.0
+"Bruno R., Carbone V., 2016, Turbulence in the solar wind. Springer,                Plasma Physics, 86, 905860109",0.0
+"    doi:10.1007/978-3-319-43440-7                                              Mangeney A., Califano F., Cavazzoni C., Trávníček P., 2002, Journal of",4.0
+"Burch J. L., et al., 2016, Science, 352                                            Computational Physics, 179, 495",0.0
+"Cassak P. A., Shay M. A., Drake J. F., 2005, Physical Review Letters, 95,      Marino R., Sorriso-Valvo L., Carbone V., Noullez A., Bruno R., Bavassano",0.0
+"    235002                                                                         B., 2008, The Astrophysical Journal Letters, 677, L71",4.0
+"Cerri S. S., Kunz M. W., Califano F., 2018, The Astrophysical Journal Letters, Marsch E., 2006, Living Reviews in Solar Physics, 3, 1",0.0
+"    856, L13                                                                   Matthaeus W. H., Wan M., Servidio S., Greco A., Osman K. T., Oughton",4.0
+"Chandran B. D. G., Li B., Rogers B. N., Quataert E., Germaschewski K.,             S., Dmitruk P., 2015, Philosophical Transactions of the Royal Society of",0.0
+"    2010, The Astrophysical Journal, 720, 503                                      London Series A, 373, 20140154",4.0
+"Chasapis A., et al., 2018a, The Astrophysical Journal, 856, L19                Matthaeus W. H., Yang Y., Wan M., Parashar T. N., Bandyopadhyay R.,",0.0
+"Chasapis A., et al., 2018b, The Astrophysical Journal, 862, 32                     Chasapis A., Pezzi O., Valentini F., 2020, The Astrophysical Journal,",0.0
+"Chen C., Klein K., Howes G., 2019, Nature communications, 10, 740                  891, 101",0.0
+"Daughton W., Roytershteyn V., Albright B. J., Karimabadi H., Yin L., Bowers    Mozer F. S., Agapitov O. V., Artemyev A., Drake J. F., Krasnoselskikh V.,",0.0
+"    K. J., 2009, Phys. Rev. Lett., 103, 65004                                      Lejosne S., Vasko I., 2015, Geophysical Research Letters, 42, 3627",4.0
+"Daughton W., Roytershteyn V., Karimabadi H., Yin L., Albright B. J., Bergen    Narita Y., 2018, Living Reviews in Solar Physics, 15, 2",0.0
+"    B., Bowers K. J., 2011, Nature Physics, 7, 539                             Navarro A. B. n., Teaca B., Told D., Groselj D., Crandall P., Jenko F., 2016,",4.0
+"Del Sarto D., Pegoraro F., Califano F., 2016, Physical Review E, 93, 053203        Phys. Rev. Lett., 117, 245101",0.0
+"Dougherty J. P., 1964, The Physics of Fluids, 7, 1788                          Ng J., Egedal J., Le A., Daughton W., Chen L.-J., 2011, Phys. Rev. Lett., 106,",0.0
+"Egedal J., Øieroset M., Fox W., Lin R. P., 2005, Physical Review Letters, 94,      065002",0.0
+"    025006                                                                     Numata R., Loureiro N. F., 2015, Journal of Plasma Physics, 81, 3001",4.0
+"Egedal J., Fox W., Katz N., Porkolab M., Øieroset M., Lin R. P., Daughton      Osman K. T., Matthaeus W. H., Greco A., Servidio S., 2011, The Astrophys-",0.0
+"    W., Drake J. F., 2008, Journal of Geophysical Research: Space Physics,         ical Journal Letters, 727, L11",4.0
+"    113                                                                        Parashar T. N., Matthaeus W. H., 2016, The Astrophysical Journal, 832, 57",4.0
+"Egedal J., Le A., Daughton W., 2013, Physics of Plasmas, 20, 061201            Parashar T. N., Shay M. A., Cassak P. A., Matthaeus W. H., 2009, Physics of",0.0
+"Federrath C., Roman-Duval J., Klessen R. S., Schmidt W., Mac Low M. M.,            Plasmas, 16, 032310",0.0
+"    2010, Astronomy and Astrophysics, 512, A81                                 Parashar T. N., Salem C., Wicks R. T., Karimabadi H., Gary S. P., Matthaeus",4.0
+"Ferrand R., Galtier S., Sahraoui F., Meyrand R., Andrés N., Banerjee S., 2019,     W. H., 2015, Journal of Plasma Physics, 81, 905810513",0.0
+"    The Astrophysical Journal, 881, 50                                         Parker J. T., Highcock E. G., Schekochihin A. A., Dellar P. J., 2016, Physics",4.0
+"Fraternale F., Pogorelov N. V., Richardson J. D., Tordella D., 2019, The           of Plasmas, 23, 070703",0.0
+"    Astrophysical Journal, 872, 40                                             Perri S., et al., 2020, Journal of Plasma Physics, 86, 905860108",4.0
+"Frisch U., 1995, Turbulence: the legacy of AN Kolmogorov. Cambridge uni-       Perrone D., Passot T., Laveder D., Valentini F., Sulem P. L., Zouganelis I.,",0.0
+"    versity press                                                                  Veltri P., Servidio S., 2018, Physics of Plasmas, 25, 052302",4.0
+"Galtier S., 2008, Physical Review E, 77, 015302                                Pezzi O., 2017, Journal of Plasma Physics, 83, 555830301",0.0
+"González C. A., Parashar T. N., Gomez D., Matthaeus W. H., Dmitruk P.,         Pezzi O., Valentini F., Veltri P., 2015, Journal of Plasma Physics, 81,",0.0
+"    2019, Physics of Plasmas, 26, 012306                                           305810107",4.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,9.833333333333334
+                                                                            Dissipation measures in weakly collisional plasmas                           17,76.0
+"Pezzi O., Valentini F., Veltri P., 2016, Physical Review Letters, 116, 145001     Yang Y., et al., 2017a, Physics of Plasmas, 24, 072306",0.0
+"Pezzi O., et al., 2017, Journal of Plasma Physics, 83, 705830108                  Yang Y., et al., 2017b, Phys. Rev. E, 95, 061201",0.0
+"Pezzi O., Servidio S., Perrone D., Valentini F., Sorriso-Valvo L., Greco A.,      Yang Y., Wan M., Matthaeus W. H., Sorriso-Valvo L., Parashar T. N., Lu",0.0
+"    Matthaeus W. H., Veltri P., 2018, Physics of Plasmas, 25, 060704                  Q., Shi Y., Chen S., 2019, Monthly Notices of the Royal Astronomical",4.0
+"Pezzi O., Yang Y., Valentini F., Servidio S., Chasapis A., Matthaeus W. H.,           Society, 482, 4933",0.0
+"    Veltri P., 2019a, Physics of Plasmas, 26, 072301                              Zeiler A., Biskamp D., Drake J. F., Rogers B. N., Shay M. A., Scholer M.,",4.0
+"Pezzi O., Valentini F., Servidio S., Camporeale E., Veltri P., 2019b, Plasma          2002, Journal of Geophysical Research: Space Physics, 107, SMP 6",0.0
+"    Physics and Controlled Fusion, 61, 054005                                     Zenitani S., Hesse M., Klimas A., Kuznetsova M., 2011, Physical review",4.0
+"Pezzi O., Perrone D., Servidio S., Valentini F., Sorriso-Valvo L., Veltri P.,         letters, 106, 195003",0.0
+"    2019c, The Astrophysical Journal, 887, 208",4.0
+"Phan T. D., et al., 2018, Nature, 557, 202                                        This paper has been typeset from a TEX/LATEX file prepared by the author.",0.0
+"Plunk G. G., Tatsuno T., 2011, Physical Review Letters, 106, 165003",0.0
+"Politano H., Pouquet A., 1998, Geophysical Research Letters, 25, 273",0.0
+"Rosenbluth M. N., MacDonald W. M., Judd D. L., 1957, Phys. Rev., 107, 1",0.0
+"Roytershteyn V., Dorfman S., Daughton W., Ji H., Yamada M., Karimabadi",0.0
+"    H., 2013, Physics of Plasmas, 20, 061212",4.0
+"Roytershteyn V., Karimabadi H., Roberts A., 2015, Philosophical Transac-",0.0
+"    tions of the Royal Society A: Mathematical, Physical and Engineering",4.0
+"    Sciences, 373, 20140151",4.0
+"Schekochihin A., Cowley S., Dorland W., Hammett G., Howes G., Quataert",0.0
+"    E., Tatsuno T., 2009, The Astrophysical Journal Supplement Series, 182,",4.0
+    310,4.0
+"Schekochihin A. A., Parker J. T., Highcock E. G., Dellar P. J., Dorland W.,",0.0
+"    Hammett G. W., 2016, Journal of Plasma Physics, 82, 905820212",4.0
+"Scudder J., Daughton W., 2008, Journal of Geophysical Research: Space",0.0
+"    Physics, 113",4.0
+"Servidio S., Valentini F., Califano F., Veltri P., 2012, Physical Review Letters,",0.0
+"    108, 045001",4.0
+"Servidio S., Valentini F., Perrone D., Greco A., Califano F., Matthaeus W. H.,",0.0
+"    Veltri P., 2015, Journal of Plasma Physics, 81, 325810107",4.0
+"Servidio S., et al., 2017, Phys. Rev. Lett., 119, 205101",0.0
+"Shay M. A., Drake J. F., Rogers B. N., Denton R. E., 2001, Journal of",0.0
+"    Geophysical Research: Space Physics, 106, 3759",4.0
+"Shi E. L., Hammett G. W., Stoltzfus-Dueck T., Hakim A., 2019, Physics of",0.0
+"    Plasmas, 26, 012307",4.0
+"Sitnov M. I., Merkin V. G., Roytershteyn V., Swisdak M., 2018, Geophysical",0.0
+"    Research Letters, 45, 4639",4.0
+"Sorriso-Valvo L., Carbone V., Noullez A., Politano H., Pouquet A., Veltri P.,",0.0
+"    2002, Physics of Plasmas, 9, 89",4.0
+"Sorriso-Valvo L., et al., 2007, Physical Review Letters, 99, 115001",0.0
+"Sorriso-Valvo L., Perrone D., Pezzi O., Valentini F., Servidio S., Zouganelis",0.0
+"    I., Veltri P., 2018a, Journal of Plasma Physics, 84, 725840201",4.0
+"Sorriso-Valvo L., Carbone F., Perri S., Greco A., Marino R., Bruno R., 2018b,",0.0
+"    Solar Physics, 293, 10",4.0
+"Sorriso-Valvo L., et al., 2019, Phys. Rev. Lett., 122, 035102",0.0
+"Spitzer Jr. L., 1956, Physics of Fully Ionized Gases. Interscience Publishers",0.0
+"Swisdak M., 2016, Geophys. Res. Lett., 43, 43",0.0
+"Takizuka T., Abe H., 1977, Journal of Computational Physics, 25, 205",0.0
+"Tatsuno T., Dorland W., Schekochihin A. A., Plunk G. G., Barnes M., Cowley",0.0
+"    S. C., Howes G. G., 2009, Physical Review Letters, 103, 015003",4.0
+"TenBarge J. M., Howes G. G., Dorland W., 2013, The Astrophysical Journal,",0.0
+"    774, 139",4.0
+"Torbert R. B., et al., 2018, Science, 362, 1391",0.0
+"Vafin S., Riazantseva M., Pohl M., 2019, The Astrophysical Journal, 871,",0.0
+    L11,4.0
+"Vaivads A., et al., 2016, Journal of Plasma Physics, 82, 905820501",0.0
+"Valentini F., Trávníček P., Califano F., Hellinger P., Mangeney A., 2007,",0.0
+"    Journal of Computational Physics, 225, 753",4.0
+"Vásconez C. L., Perrone D., Marino R., Laveder D., Valentini F., Servidio",0.0
+"    S., Mininni P., Sorriso-Valvo L., 2021, Journal of Plasma Physics, 87,",4.0
+    825870101,4.0
+"Verscharen D., Klein K. G., Maruca B. A., 2019, Living Reviews in Solar",0.0
+"    Physics, 16, 5",4.0
+"Wan M., Matthaeus W. H., Roytershteyn V., Karimabadi H., Parashar T., Wu",0.0
+"    P., Shay M., 2015, Physical Review Letters, 114, 175002",4.0
+"Wang L., Hakim A. H., Bhattacharjee A., Germaschewski K., 2015, Physics",0.0
+"    of Plasmas, 22, 012108",4.0
+"Yamada M., Kulsrud R., Ji H., 2010, Reviews of Modern Physics, 82, 603",0.0
+"                                                                                                                                    MNRAS 000, 1–17 (2021)",132.0
+avr_spaces,4.507042253521127

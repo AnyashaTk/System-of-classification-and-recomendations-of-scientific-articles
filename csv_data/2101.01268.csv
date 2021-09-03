@@ -1,0 +1,3273 @@
+text,fonts-size,fonts-type,fonts-style,base_str_len,max_str_len
+"PSF Estimation in Crowded Astronomical Imagery
+as a Convolutional Dictionary Learning Problem",23,NimbusRomNo9L-Regu,,93,46
+Brendt Wohlberg and Przemek Wozniak,10,NimbusRomNo9L-Regu,,35,35
+1,6,NimbusRomNo9L-Regu,,1,1
+"1
+2
+0
+2",10,Times-Roman,,7,1
+,5,Times-Roman,,0,0
+b,10,Times-Roman,,1,1
+e,8,Times-Roman,,1,1
+F,11,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+7,10,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+],6,Times-Roman,,1,1
+V,14,Times-Roman,,1,1
+I,6,Times-Roman,,1,1
+.,5,Times-Roman,,1,1
+"s
+s",7,Times-Roman,,3,1
+"e
+e",8,Times-Roman,,3,1
+[,6,Times-Roman,,1,1
+,5,Times-Roman,,0,0
+"2
+v
+8
+6
+2
+1
+0",10,Times-Roman,,13,1
+.,5,Times-Roman,,1,1
+"1
+0
+1
+2",10,Times-Roman,,7,1
+:,5,Times-Roman,,1,1
+v,10,Times-Roman,,1,1
+i,5,Times-Roman,,1,1
+X,14,Times-Roman,,1,1
+r,6,Times-Roman,,1,1
+a,8,Times-Roman,,1,1
+Abstract,8,NimbusRomNo9L-MediItal,,8,8
+"—We present a new algorithm for estimating the Point
+Spread Function (PSF) in wide-ﬁeld astronomical images with
+extreme source crowding. Robust and accurate PSF estimation in
+crowded astronomical images dramatically improves the ﬁdelity
+of astrometric and photometric measurements extracted from
+wide-ﬁeld sky monitoring imagery. Our radically new approach
+utilizes convolutional sparse representations to model the contin-
+uous functions involved in the image formation. This approach
+avoids the need to detect and precisely localize individual point
+sources that is shared by existing methods. In experiments involv-",8,NimbusRomNo9L-Medi,,619,66
+"ing simulated astronomical imagery, it signiﬁcantly outperforms
+the recent alternative method with which it is compared.",8,NimbusRomNo9L-Medi,,120,63
+"This is an extended version of an IEEE Signal Processing
+Letters paper (doi:10.1109/LSP.2021.3050706), with supple-
+mental material included as appendices.",9,NimbusRomNo9L-ReguItal,,155,58
+I. I,9,NimbusRomNo9L-Regu,,4,4
+NTRODUCTION,7,NimbusRomNo9L-Regu,,11,11
+Astronomical images deliver a wealth of information on a,9,NimbusRomNo9L-Regu,,56,56
+wide range of phenomena in natural objects such as stars and,9,NimbusRomNo9L-Regu,,60,60
+"galaxies. Similar techniques have been successfully applied to
+tracking man made space objects, showing great promise to",9,NimbusRomNo9L-Regu,,120,62
+address pressing problems in Space Trafﬁc Management [1].,9,NimbusRomNo9L-Regu,,57,57
+Point Spread Function (PSF) estimation in astronomical im-,9,NimbusRomNo9L-Regu,,58,58
+"agery presents unique challenges [2], [3]. Stars are nearly",9,NimbusRomNo9L-Regu,,59,59
+"perfect point sources, so there is no shortage of ﬁducial points",9,NimbusRomNo9L-Regu,,64,64
+"for analysis. At the same time, there are numerous factors
+that affect the PSF shape: atmospheric blur, imperfect optics",9,NimbusRomNo9L-Regu,,120,61
+"and sky tracking, vibration etc. Modeling is often performed",9,NimbusRomNo9L-Regu,,60,60
+"iteratively, using stars to improve the PSF model and using the",9,NimbusRomNo9L-Regu,,63,63
+model to better ﬁt all stars [4]. While deconvolution is often,9,NimbusRomNo9L-Regu,,62,62
+"considered more fundamental in signal processing [5], [6],
+many applications in astronomy are framed as PSF estimation
+and forward modeling in the convolved image [3], [7]. For ex-
+ample, changes in brightness and motion of unresolved sources
+are typically extracted by ﬁtting individual PSF proﬁles and
+”streaks” in differenced (uncluttered) images of the same ﬁeld
+separated in time [8]. PSF ﬁtting on the original crowded
+images is performed to measure positions and brightness of
+stars used for calibration and science. Reaching the required
+ﬁdelity is rarely possible without a good subpixel PSF model.
+The analysis of crowded stellar ﬁelds is an important and
+challenging application of astronomical imaging [9]. When",9,NimbusRomNo9L-Regu,,723,62
+"deep source confusion sets in, every image pixel includes",9,NimbusRomNo9L-Regu,,57,57
+"B. Wohlberg is with Theoretical Division, Los Alamos National Laboratory,",7,NimbusRomNo9L-Regu,,73,73
+"Los Alamos, NM 87545, USA (Email:",7,NimbusRomNo9L-Regu,,33,33
+brendt@lanl.gov,7,NimbusMonL-Regu,,15,15
+),7,NimbusRomNo9L-Regu,,1,1
+"P. Wozniak is with Space and Remote Sensing Group, Los Alamos National",7,NimbusRomNo9L-Regu,,70,70
+"Laboratory, Los Alamos, NM 87545, USA (Email:",7,NimbusRomNo9L-Regu,,45,45
+wozniak@lanl.gov,7,NimbusMonL-Regu,,16,16
+),7,NimbusRomNo9L-Regu,,1,1
+Research presented in this article was supported by the Laboratory Directed,7,NimbusRomNo9L-Regu,,75,75
+"Research and Development program of Los Alamos National Laboratory
+under project numbers 20170183ER and 20200061DR.",7,NimbusRomNo9L-Regu,,115,66
+"signal from multiple PSF proﬁles. This situation naturally
+arises in densely populated sky areas and in very wide-ﬁeld
+imaging that aims to cover as many objects as possible [10].
+There is a scarcity of algorithms and software tools that
+can tackle extreme crowding. Standard source extraction and
+PSF estimation codes like DAOPHOT [11], DoPHOT [4],
+SExtractor [12] were not designed to handle images where not
+a single star can be considered sufﬁciently isolated to ignore",9,NimbusRomNo9L-Regu,,473,62
+perturbations from neighbors. Their treatment of crowding,9,NimbusRomNo9L-Regu,,57,57
+typically consists of identifying occasional PSF collisions,9,NimbusRomNo9L-Regu,,59,59
+"to either ﬁt special
+local models or eliminate them from",9,NimbusRomNo9L-Regu,,56,35
+consideration. Recent PSF estimation work in astronomy has,9,NimbusRomNo9L-Regu,,58,58
+focused primarily on super-resolution and sub-pixel sampling,9,NimbusRomNo9L-Regu,,60,60
+"by paying close attention to the correct image formation model
+and introducing modern sparsity based approaches (e.g. [13],",9,NimbusRomNo9L-Regu,,123,62
+"[14], [15]). These algorithms are an important step forward,",9,NimbusRomNo9L-Regu,,60,60
+but they still ignore the cross-talk between sources and rely,9,NimbusRomNo9L-Regu,,61,61
+on user’s ability to identify isolated stars.,9,NimbusRomNo9L-Regu,,45,45
+In this paper we present a new PSF estimation algorithm,9,NimbusRomNo9L-Regu,,55,55
+based on convolutional sparse representation (CSR). There,9,NimbusRomNo9L-Regu,,57,57
+"is no need to detect and ﬁt
+individual stars, eliminating",9,NimbusRomNo9L-Regu,,57,29
+"the uncertainties and instabilities associated with these local
+modeling decisions. We are not aware of any prior use of CSR",9,NimbusRomNo9L-Regu,,124,63
+methods for this application.,9,NimbusRomNo9L-Regu,,29,29
+1,6,NimbusRomNo9L-Regu,,1,1
+"We also note that the methods presented here include some
+including the use of
+more general contributions in CSR,",9,NimbusRomNo9L-Regu,,113,57
+an interpolation kernel to generate a dictionary suitable for,9,NimbusRomNo9L-Regu,,61,61
+"approximating the translations of a continuous function, as",9,NimbusRomNo9L-Regu,,59,59
+well as additional algorithm reﬁnements described in Sec. III.,9,NimbusRomNo9L-Regu,,62,62
+"Other authors have also devised techniques for CSR of con-
+tinuous signals [17], [18], [19], but employing very different
+methods. The approach of [20], which we became aware
+of during the ﬁnal stages of preparation of this manuscript,
+exploits similar ideas to ours in the use of interpolation to
+generate the dictionary, but makes use of greedy algorithms
+as opposed to our optimization-based approach. The latter
+has the advantage of greater ﬂexibility supporting different
+regularization terms and constraints, which is exploited in
+constructing our proposed PSF estimation method.",9,NimbusRomNo9L-Regu,,585,62
+II. I,9,NimbusRomNo9L-Regu,,5,5
+MAGE,7,NimbusRomNo9L-Regu,,4,4
+F,9,NimbusRomNo9L-Regu,,1,1
+ORMATION,7,NimbusRomNo9L-Regu,,8,8
+M,9,NimbusRomNo9L-Regu,,1,1
+ODEL,7,NimbusRomNo9L-Regu,,4,4
+"We restrict our attention to estimation of a spatially-invariant
+PSF. In practice it is usually necessary to characterize imaging",9,NimbusRomNo9L-Regu,,129,64
+1,5,NimbusRomNo9L-Regu,,1,1
+These methods have previously been considered for analysis of astronom-,7,NimbusRomNo9L-Regu,,71,71
+"ical imagery [16], but the application was background removal rather than",7,NimbusRomNo9L-Regu,,73,73
+"PSF estimation, and no attempt was made to model the continuous nature of
+the underlying scene.",7,NimbusRomNo9L-Regu,,95,73
+2,6,NimbusRomNo9L-Regu,,1,1
+y,9,CMMI10,,1,1
+"systems with a spatially-varying PSF, but since these varia-
+tions are typically negligible across the small image regions
+required by our approach, they can be represented by making
+independent estimates of a ﬁxed PSF in overlapping image
+regions covering the image. We represent the scene being
+imaged as the continuous function",9,NimbusRomNo9L-Regu,,330,61
+r,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+", where",9,NimbusRomNo9L-Regu,,7,7
+x,9,CMMI10,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+y,9,CMMI10,,1,1
+"are
+spatial coordinates, the image on the detector as the continuous
+function",9,NimbusRomNo9L-Regu,,77,64
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+", and the PSF of the optical system by the
+continuous function",9,NimbusRomNo9L-Regu,,62,42
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+", so that we have (ignoring noise
+for now)",9,NimbusRomNo9L-Regu,,42,33
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+) =,9,CMR10,,3,3
+r,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+"u, y",9,CMMI10,,4,4
+−,9,CMSY10,,1,1
+v,9,CMMI10,,1,1
+),9,CMR10,,1,1
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"u, v",9,CMMI10,,4,4
+),9,CMR10,,1,1
+du dv .,9,CMMI10,,7,7
+(1),9,NimbusRomNo9L-Regu,,3,3
+,9,CMEX10,,0,0
+∞,6,CMSY7,,1,1
+,9,CMEX10,,0,0
+∞,6,CMSY7,,1,1
+−∞,6,CMSY7,,2,2
+−∞,6,CMSY7,,2,2
+"In the case of an ideal detector, the ﬁnal sampled version of the
+image,",9,NimbusRomNo9L-Regu,,72,65
+s,9,CMBX10,,1,1
+", is obtained by point sampling of the image function",9,NimbusRomNo9L-Regu,,53,53
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+". In practice, however, detectors sample the image func-
+tion",9,NimbusRomNo9L-Regu,,61,56
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+"by integrating its product with some sensitivity
+function at each photosite. This behavior can be modeled as",9,NimbusRomNo9L-Regu,,108,59
+the convolution of,9,NimbusRomNo9L-Regu,,18,18
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+"by the photosite sensitivity function,",9,NimbusRomNo9L-Regu,,38,38
+followed by point sampling. As a result of the commutative,9,NimbusRomNo9L-Regu,,58,58
+"property of convolution, this additional convolution can be",9,NimbusRomNo9L-Regu,,59,59
+included in (1) by redeﬁning,9,NimbusRomNo9L-Regu,,28,28
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+"as the image on the sensor
+blurred by the photosite sensitivity function, and",9,NimbusRomNo9L-Regu,,77,50
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+),9,CMR10,,1,1
+as the,9,NimbusRomNo9L-Regu,,6,6
+convolution of the PSF of the optical system and the photosite,9,NimbusRomNo9L-Regu,,62,62
+sensitivity function. It is this,9,NimbusRomNo9L-Regu,,32,32
+effective,9,NimbusRomNo9L-ReguItal,,9,9
+PSF [13] that we will,9,NimbusRomNo9L-Regu,,21,21
+be estimating.,9,NimbusRomNo9L-Regu,,14,14
+Our image formation model assumes that the scene consists,9,NimbusRomNo9L-Regu,,57,57
+of a ﬁnite sum of impulses,9,NimbusRomNo9L-Regu,,26,26
+,9,CMEX10,,0,0
+r,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+) =,9,CMR10,,3,3
+k,6,CMMI7,,1,1
+a,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+δ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+x,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+", y",9,CMMI10,,3,3
+−,9,CMSY10,,1,1
+y,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+(2),9,NimbusRomNo9L-Regu,,3,3
+where,9,NimbusRomNo9L-Regu,,5,5
+a,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+",",9,NimbusRomNo9L-Regu,,1,1
+x,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+", and",9,NimbusRomNo9L-Regu,,5,5
+y,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+are the scaling factor and,9,NimbusRomNo9L-Regu,,26,26
+x,9,CMMI10,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+y,9,CMMI10,,1,1
+locations respectively of the,9,NimbusRomNo9L-Regu,,29,29
+k,9,CMMI10,,1,1
+th,6,NimbusRomNo9L-Regu,,2,2
+"impulse, so that we have",9,NimbusRomNo9L-Regu,,24,24
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"x, y",9,CMMI10,,4,4
+) =,9,CMR10,,3,3
+a,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+δ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+x,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+"u, y",9,CMMI10,,4,4
+−,9,CMSY10,,1,1
+y,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+v,9,CMMI10,,1,1
+),9,CMR10,,1,1
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+"u, v",9,CMMI10,,4,4
+),9,CMR10,,1,1
+du dv,9,CMMI10,,5,5
+a,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+x,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+", y",9,CMMI10,,3,3
+−,9,CMSY10,,1,1
+y,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+(3),9,NimbusRomNo9L-Regu,,3,3
+  ,9,CMEX10,,2,0
+k,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+=,9,CMR10,,1,1
+k,6,CMMI7,,1,1
+If the,9,NimbusRomNo9L-Regu,,6,6
+x,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+", and",9,NimbusRomNo9L-Regu,,5,5
+y,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+"values were quantized to a ﬁnite resolution
+grid, this equation could be equivalently represented in discrete",9,NimbusRomNo9L-Regu,,109,65
+form as,9,NimbusRomNo9L-Regu,,7,7
+s,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+",",9,CMMI10,,1,1
+where,9,NimbusRomNo9L-Regu,,5,5
+s,9,CMBX10,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+g,9,CMBX10,,1,1
+denote,9,NimbusRomNo9L-Regu,,6,6
+s,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+",",9,CMMI10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+",",9,CMMI10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+"sampled on that grid, and",9,NimbusRomNo9L-Regu,,25,25
+a,9,CMBX10,,1,1
+"is an image, on the same sampling
+grid, taking on the value zero except at sample positions
+corresponding to one of the",9,NimbusRomNo9L-Regu,,119,57
+x,9,CMMI10,,1,1
+k,6,CMMI7,,1,1
+", y",9,CMMI10,,3,3
+k,6,CMMI7,,1,1
+pairs above.,9,NimbusRomNo9L-Regu,,12,12
+"In this simpliﬁed context, a natural approach to the PSF
+estimation problem would be to exploit the sparsity of",9,NimbusRomNo9L-Regu,,111,56
+a,9,CMBX10,,1,1
+",
+posing the problem as blind deconvolution via regularized
+inversion with a sparsity prior, e.g.",9,NimbusRomNo9L-Regu,,97,57
+arg min,9,CMR10,,7,7
+g,6,CMBX7,,1,1
+",",6,CMMI7,,1,1
+a,6,CMBX7,,1,1
+(1,9,CMR10,,2,2
+/,9,CMMI10,,1,1
+2),9,CMR10,,2,2
+,9,CMSY10,,0,0
+g,9,CMBX10,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
+,9,CMSY10,,0,0
+2,6,CMR7,,1,1
+2,6,CMR7,,1,1
++,9,CMR10,,1,1
+λ,9,CMMI10,,1,1
+,9,CMSY10,,0,0
+a,9,CMBX10,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+(4),9,NimbusRomNo9L-Regu,,3,3
+with a squared,9,NimbusRomNo9L-Regu,,14,14
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+data ﬁdelity term,9,NimbusRomNo9L-Regu,,17,17
+2,6,NimbusRomNo9L-Regu,,1,1
+and an,9,NimbusRomNo9L-Regu,,6,6
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+"regularization
+term. However, since our images are typically sampled close
+to the Nyquist rate, different alignments of the signal with
+respect to the sampling grid can result in signiﬁcant differences
+in the samples obtained from the same continuous signal, as
+illustrated in Fig. 1.",9,NimbusRomNo9L-Regu,,284,65
+III. C,9,NimbusRomNo9L-Regu,,6,6
+ONVOLUTIONAL,7,NimbusRomNo9L-Regu,,12,12
+D,9,NimbusRomNo9L-Regu,,1,1
+ICTIONARY,7,NimbusRomNo9L-Regu,,9,9
+L,9,NimbusRomNo9L-Regu,,1,1
+EARNING,7,NimbusRomNo9L-Regu,,7,7
+"In this section, for simplicity of notation, concepts are
+introduced and mathematically deﬁned in the context of 1D
+signals. The extension to the 2D signals is, for the most part",9,NimbusRomNo9L-Regu,,178,62
+"trivial, and details of the extension are explicitly provided",9,NimbusRomNo9L-Regu,,61,61
+when it is not. While the simple convolutional model,9,NimbusRomNo9L-Regu,,52,52
+s,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+"is not entirely adequate, a signiﬁcantly more accurate discrete",9,NimbusRomNo9L-Regu,,63,63
+model can be deﬁned as,9,NimbusRomNo9L-Regu,,22,22
+s,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+g,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+where,9,NimbusRomNo9L-Regu,,5,5
+g,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+"denote
+different sub-pixel sampling offsets of the continuous function",9,NimbusRomNo9L-Regu,,70,63
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+", and the",9,NimbusRomNo9L-Regu,,9,9
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+are corresponding maps of the sub-pixel,9,NimbusRomNo9L-Regu,,39,39
+impulse locations as in (3). A naive extension of (4) to account,9,NimbusRomNo9L-Regu,,64,64
+for this model would be,9,NimbusRomNo9L-Regu,,23,23
+arg min,9,CMR10,,7,7
+{,6,CMSY7,,1,1
+g,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+",",6,CMMI7,,1,1
+{,6,CMSY7,,1,1
+a,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+"
+
+",9,CMEX10,,2,0
+"1
+2",9,CMR10,,3,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+g,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
++,9,CMR10,,1,1
+λ,9,CMMI10,,1,1
+,9,CMSY10,,0,0
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+",",9,CMMI10,,1,1
+(5),9,NimbusRomNo9L-Regu,,3,3
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,6,CMR7,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+i.e. a convolutional dictionary learning (CDL) problem [22].,9,NimbusRomNo9L-Regu,,60,60
+We modify the generic CDL problem for our purposes,9,NimbusRomNo9L-Regu,,50,50
+by deﬁning the,9,NimbusRomNo9L-Regu,,14,14
+g,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+", sampled at different sub-pixel offsets,
+to be derived via linear interpolation from a common grid-",9,NimbusRomNo9L-Regu,,100,58
+aligned (i.e. zero sub-pixel offset) PSF kernel,9,NimbusRomNo9L-Regu,,47,47
+g,9,CMBX10,,1,1
+. Since linear,9,NimbusRomNo9L-Regu,,14,14
+interpolation to a set of,9,NimbusRomNo9L-Regu,,25,25
+M,9,CMMI10,,1,1
+fractional offsets from the sampling,9,NimbusRomNo9L-Regu,,36,36
+grid can be computed via convolution with a set of,9,NimbusRomNo9L-Regu,,50,50
+M,9,CMMI10,,1,1
+ﬁlters,9,NimbusRomNo9L-Regu,,6,6
+{,9,CMSY10,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+", we can write dictionary ﬁlters",9,NimbusRomNo9L-Regu,,32,32
+g,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+as,9,NimbusRomNo9L-Regu,,2,2
+3,6,NimbusRomNo9L-Regu,,1,1
+g,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+.,9,CMMI10,,1,1
+(6),9,NimbusRomNo9L-Regu,,3,3
+"We use Lanczos interpolation [23, Sec. 10.3.6], for which the
+interpolation kernel of order",9,NimbusRomNo9L-Regu,,91,61
+K,9,CMMI10,,1,1
+is deﬁned as,9,NimbusRomNo9L-Regu,,12,12
+,9,CMEX10,,0,0
+sinc(,9,CMR10,,5,5
+x,9,CMMI10,,1,1
+) sinc(,9,CMR10,,7,7
+x/K,9,CMMI10,,3,3
+),9,CMR10,,1,1
+if,9,NimbusRomNo9L-Regu,,2,2
+−,9,CMSY10,,1,1
+K < x < K,9,CMMI10,,9,9
+otherwise,9,NimbusRomNo9L-Regu,,9,9
+",",9,CMMI10,,1,1
+φ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+0,9,CMR10,,1,1
+where,9,NimbusRomNo9L-Regu,,5,5
+sinc(,9,CMR10,,5,5
+x,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+sin,9,CMMI10,,3,3
+(,9,CMR10,,1,1
+πx,9,CMMI10,,2,2
+),9,CMR10,,1,1
+/,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+πx,9,CMMI10,,2,2
+),9,CMR10,,1,1
+.,9,CMMI10,,1,1
+"Deﬁning the set of fractional
+offsets (chosen to evenly divide the intervals between the
+integer grid points) as values",9,NimbusRomNo9L-Regu,,119,58
+n/M,9,CMMI10,,3,3
+where,9,NimbusRomNo9L-Regu,,5,5
+n,9,CMMI10,,1,1
+∈,9,CMSY10,,1,1
+Z,9,MSBM10,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+−,9,CMSY10,,1,1
+(,9,CMR10,,1,1
+M,9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+1),9,CMR10,,2,2
+/,9,CMMI10,,1,1
+2,9,CMR10,,1,1
+ ≤,9,CMSY10,,2,2
+n,9,CMMI10,,1,1
+≤ ,9,CMSY10,,2,1
+M/,9,CMMI10,,2,2
+2,9,CMR10,,1,1
+,9,CMSY10,,0,0
+", ﬁlter",9,NimbusRomNo9L-Regu,,7,7
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+"is obtained by
+evaluating",9,NimbusRomNo9L-Regu,,25,14
+φ,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+x,9,CMMI10,,1,1
+),9,CMR10,,1,1
+at the set of points,9,NimbusRomNo9L-Regu,,20,20
+{−,9,CMSY10,,2,2
+K,9,CMMI10,,1,1
++,9,CMR10,,1,1
+δ,9,CMMI10,,1,1
+m,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+K,9,CMMI10,,1,1
++ 1 +,9,CMR10,,5,5
+δ,9,CMMI10,,1,1
+m,6,CMMI7,,1,1
+", . . . , K",9,CMMI10,,11,11
+−,9,CMSY10,,1,1
+1 +,9,CMR10,,3,3
+δ,9,CMMI10,,1,1
+m,6,CMMI7,,1,1
+", K",9,CMMI10,,3,3
++,9,CMR10,,1,1
+δ,9,CMMI10,,1,1
+m,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+", where",9,NimbusRomNo9L-Regu,,7,7
+δ,9,CMMI10,,1,1
+m,6,CMMI7,,1,1
+is the,9,NimbusRomNo9L-Regu,,6,6
+m,9,CMMI10,,1,1
+th,6,NimbusRomNo9L-Regu,,2,2
+fractional,9,NimbusRomNo9L-Regu,,10,10
+offset.,9,NimbusRomNo9L-Regu,,7,7
+"Fig. 1: Illustration of dependence of sampled PSF values on
+alignment of the PSF with the sampling grid. The dotted",9,NimbusRomNo9L-Regu,,115,59
+"red lines indicate the location of the impulses deﬁning the
+locations of the PSFs.",9,NimbusRomNo9L-Regu,,82,59
+x,9,CMMI10,,1,1
+2,5,NimbusRomNo9L-Regu,,1,1
+The Poisson noise model encountered in practice suggests that we should,7,NimbusRomNo9L-Regu,,71,71
+at least employ an appropriate weighted,7,NimbusRomNo9L-Regu,,39,39
+,7,CMMI8,,0,0
+2,5,CMR6,,1,1
+"data ﬁdelity term [21, Ch. 17].",7,NimbusRomNo9L-Regu,,31,31
+We retain the unweighted norm since the Poisson noise weighting was,7,NimbusRomNo9L-Regu,,67,67
+found to complicate algorithm convergence without providing any signiﬁcant,7,NimbusRomNo9L-Regu,,74,74
+performance improvements.,7,NimbusRomNo9L-Regu,,25,25
+3,5,NimbusRomNo9L-Regu,,1,1
+In two dimensions we have,7,NimbusRomNo9L-Regu,,25,25
+M,7,CMMI8,,1,1
+2,5,CMR6,,1,1
+ﬁlters,7,NimbusRomNo9L-Regu,,6,6
+g,7,CMBX8,,1,1
+"m,n",5,CMMI6,,3,3
+= (,7,CMR8,,3,3
+h,7,CMBX8,,1,1
+m,5,CMMI6,,1,1
+⊗,7,CMSY8,,1,1
+h,7,CMBX8,,1,1
+n,5,CMMI6,,1,1
+),7,CMR8,,1,1
+∗,7,CMSY8,,1,1
+g,7,CMBX8,,1,1
+", where",7,NimbusRomNo9L-Regu,,7,7
+m,7,CMMI8,,1,1
+and,7,NimbusRomNo9L-Regu,,3,3
+n,7,CMMI8,,1,1
+"index the fractional offsets on the two axes, and",7,NimbusRomNo9L-Regu,,49,49
+⊗,7,CMSY8,,1,1
+"denotes the tensor
+product of two vectors.",7,NimbusRomNo9L-Regu,,42,23
+We can therefore pose our variant of the CDL problem as,9,NimbusRomNo9L-Regu,,55,55
+arg min,9,CMR10,,7,7
+g,6,CMBX7,,1,1
+",",6,CMMI7,,1,1
+{,6,CMSY7,,1,1
+a,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+"
+
+",9,CMEX10,,2,0
+"1
+2",9,CMR10,,3,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
++,9,CMR10,,1,1
+λ,9,CMMI10,,1,1
+,9,CMSY10,,0,0
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+",",9,CMMI10,,1,1
+(7),9,NimbusRomNo9L-Regu,,3,3
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,6,CMR7,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+"which, as usual for such bi-convex problems, is solved via
+alternating minimization with respect to the",9,NimbusRomNo9L-Regu,,103,58
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+g,9,CMBX10,,1,1
+". By
+associativity of convolution we can express the minimization
+to the",9,NimbusRomNo9L-Regu,,72,60
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+"as a convolutional sparse coding
+with respect
+(CSC) [24] of",9,NimbusRomNo9L-Regu,,59,32
+s,9,CMBX10,,1,1
+with respect to dictionary,9,NimbusRomNo9L-Regu,,26,26
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+", and
+by commutativity and linearity of convolution we can express
+the minimization with respect to",9,NimbusRomNo9L-Regu,,99,60
+g,9,CMBX10,,1,1
+as a deconvolution of,9,NimbusRomNo9L-Regu,,21,21
+s,9,CMBX10,,1,1
+with respect to the kernel,9,NimbusRomNo9L-Regu,,26,26
+b,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+.,9,NimbusRomNo9L-Regu,,1,1
+We introduce a number of additional reﬁnements for im-,9,NimbusRomNo9L-Regu,,54,54
+proved performance:,9,NimbusRomNo9L-Regu,,19,19
+DC invariance:,9,NimbusRomNo9L-ReguItal,,14,14
+Astronomical,9,NimbusRomNo9L-Regu,,12,12
+"imagery includes a very
+smooth background that can be accurately modeled as a
+constant offset on spatial scales of up to a few hundred pixels.
+In practice, this amounts to a non-zero DC offset that is",9,NimbusRomNo9L-Regu,,200,64
+"omitted from image formation model (2), and is not accounted",9,NimbusRomNo9L-Regu,,60,60
+"for in the data ﬁdelity term of our CDL problem, resulting in",9,NimbusRomNo9L-Regu,,61,61
+"poor performance due to the mismatch between the model
+and the data. The most effective solution is to include a",9,NimbusRomNo9L-Regu,,112,57
+frequency-domain mask in the data ﬁdelity term that excludes,9,NimbusRomNo9L-Regu,,60,60
+the DC value from having any effect. This is straightforward to,9,NimbusRomNo9L-Regu,,63,63
+implement since both the sparse coding and dictionary update,9,NimbusRomNo9L-Regu,,60,60
+sub-problems employ frequency-domain solvers [22].,9,NimbusRomNo9L-Regu,,50,50
+Non-negativity:,9,NimbusRomNo9L-ReguItal,,15,15
+Both,9,NimbusRomNo9L-Regu,,4,4
+g,9,CMBX10,,1,1
+and the,9,NimbusRomNo9L-Regu,,7,7
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+must be non-negative,9,NimbusRomNo9L-Regu,,20,20
+according to the physical process being modeled. This re-,9,NimbusRomNo9L-Regu,,57,57
+quirement is included as an additional constraint on,9,NimbusRomNo9L-Regu,,52,52
+g,9,CMBX10,,1,1
+", but",9,NimbusRomNo9L-Regu,,5,5
+is omitted for,9,NimbusRomNo9L-Regu,,14,14
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+since it was empirically observed not to,9,NimbusRomNo9L-Regu,,40,40
+make a signiﬁcant performance difference.,9,NimbusRomNo9L-Regu,,41,41
+Normalization of,9,NimbusRomNo9L-ReguItal,,16,16
+g,9,CMBX10,,1,1
+:,9,NimbusRomNo9L-ReguItal,,1,1
+We include a unit-norm constraint on,9,NimbusRomNo9L-Regu,,36,36
+g,9,CMBX10,,1,1
+to resolve the scaling ambiguity between,9,NimbusRomNo9L-Regu,,40,40
+g,9,CMBX10,,1,1
+and the,9,NimbusRomNo9L-Regu,,7,7
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+.,9,NimbusRomNo9L-Regu,,1,1
+Regularization of the,9,NimbusRomNo9L-ReguItal,,21,21
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+:,9,NimbusRomNo9L-ReguItal,,1,1
+"In the CSC sub-problem, we",9,NimbusRomNo9L-Regu,,26,26
+replace the usual,9,NimbusRomNo9L-Regu,,17,17
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+norm regularizer with an,9,NimbusRomNo9L-Regu,,24,24
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+"norm,",9,NimbusRomNo9L-Regu,,5,5
+which has been demonstrated to provide improved sparse,9,NimbusRomNo9L-Regu,,54,54
+recovery with a highly coherent dictionary [25].,9,NimbusRomNo9L-Regu,,48,48
+Regularization of,9,NimbusRomNo9L-ReguItal,,17,17
+g,9,CMBX10,,1,1
+:,9,NimbusRomNo9L-ReguItal,,1,1
+We include a regularization term,9,NimbusRomNo9L-Regu,,32,32
+consisting of the squared,9,NimbusRomNo9L-Regu,,25,25
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+norm of the gradient of,9,NimbusRomNo9L-Regu,,23,23
+g,9,CMBX10,,1,1
+"[26, Sec.",9,NimbusRomNo9L-Regu,,9,9
+"4], which has the effect of penalizing non-smooth solutions.",9,NimbusRomNo9L-Regu,,60,60
+The resulting CDL problem can be written as,9,NimbusRomNo9L-Regu,,43,43
+arg min,9,CMR10,,7,7
+g,6,CMBX7,,1,1
+",",6,CMMI7,,1,1
+{,6,CMSY7,,1,1
+a,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+"
+
+",9,CMEX10,,2,0
+"1
+2",9,CMR10,,3,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+W,6,CMMI7,,1,1
++,9,CMR10,,1,1
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+λ,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+2,9,CMR10,,1,1
+(,9,CMR10,,1,1
+,9,CMSY10,,0,0
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+− ,9,CMSY10,,2,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+2,6,CMR7,,1,1
+) +,9,CMR10,,3,3
+m,6,CMMI7,,1,1
+"
+",9,CMEX10,,1,0
+(,9,CMR10,,1,1
+c,9,CMBX10,,1,1
+0,6,CMR7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
++ (,9,CMR10,,3,3
+c,9,CMBX10,,1,1
+1,6,CMR7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,6,CMR7,,1,1
++,9,CMR10,,1,1
+ι,9,CMMI10,,1,1
+C,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+(8),9,NimbusRomNo9L-Regu,,3,3
+where,9,NimbusRomNo9L-Regu,,5,5
+·,9,CMSY10,,1,1
+2,6,CMR7,,1,1
+W,6,CMMI7,,1,1
+denotes an,9,NimbusRomNo9L-Regu,,10,10
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+"norm with weighting in the
+frequency-domain,",9,NimbusRomNo9L-Regu,,44,26
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+λ,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+"are regularization parameters,",9,NimbusRomNo9L-Regu,,30,30
+,9,CMSY10,,0,0
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+2,6,CMR7,,1,1
+is the,9,NimbusRomNo9L-Regu,,6,6
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+norm of,9,NimbusRomNo9L-Regu,,7,7
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+",",9,NimbusRomNo9L-Regu,,1,1
+c,9,CMBX10,,1,1
+0,6,CMR7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+c,9,CMBX10,,1,1
+1,6,CMR7,,1,1
+are ﬁlters,9,NimbusRomNo9L-Regu,,10,10
+"that compute the gradients along image rows and columns re-
+spectively, and",9,NimbusRomNo9L-Regu,,75,59
+ι,9,CMMI10,,1,1
+C,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+is the indicator function,9,NimbusRomNo9L-Regu,,25,25
+4,6,NimbusRomNo9L-Regu,,1,1
+of constraint set,9,NimbusRomNo9L-Regu,,17,17
+4,5,NimbusRomNo9L-Regu,,1,1
+The indicator function of set,7,NimbusRomNo9L-Regu,,29,29
+C,7,CMMI8,,1,1
+is deﬁned as,7,NimbusRomNo9L-Regu,,12,12
+ι,7,CMMI8,,1,1
+C,5,CMMI6,,1,1
+(,7,CMR8,,1,1
+x,7,CMBX8,,1,1
+) =,7,CMR8,,3,3
+,7,CMEX8,,0,0
+0,7,CMR8,,1,1
+if,7,NimbusRomNo9L-Regu,,2,2
+x,7,CMBX8,,1,1
+∈,7,CMSY8,,1,1
+C,7,CMMI8,,1,1
+∞,7,CMSY8,,1,1
+if,7,NimbusRomNo9L-Regu,,2,2
+x,7,CMBX8,,1,1
+/,7,CMMI8,,1,1
+∈,7,CMSY8,,1,1
+C,7,CMMI8,,1,1
+.,7,CMMI8,,1,1
+3,6,NimbusRomNo9L-Regu,,1,1
+C,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+{,9,CMSY10,,1,1
+x,9,CMBX10,,1,1
+∈,9,CMSY10,,1,1
+R,9,MSBM10,,1,1
+N,6,CMMI7,,1,1
+| ,9,CMSY10,,2,1
+x,9,CMBX10,,1,1
+,9,CMSY10,,0,0
+= 1,9,CMR10,,3,3
+", x",9,CMMI10,,3,3
+i,6,CMMI7,,1,1
+≥,9,CMSY10,,1,1
+0,9,CMR10,,1,1
+∀,9,CMSY10,,1,1
+i,9,CMMI10,,1,1
+∈ {,9,CMSY10,,3,3
+0,9,CMR10,,1,1
+",",9,CMMI10,,1,1
+1,9,CMR10,,1,1
+", . . . , N",9,CMMI10,,11,11
+−,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+}},9,CMSY10,,2,2
+". As
+is usual for CDL problems, we tackle this bi-convex problem
+via alternating minimization over the two convex sub-problems
+corresponding to holding",9,NimbusRomNo9L-Regu,,151,61
+g,9,CMBX10,,1,1
+"constant and minimizing with
+respect to the",9,NimbusRomNo9L-Regu,,43,28
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+", and vice-versa. While there has been some
+work on establishing convergence guarantees for alternating
+minimization algorithms for dictionary learning [27], we are
+not aware of any guarantees that would apply to this speciﬁc
+algorithm.",9,NimbusRomNo9L-Regu,,236,60
+The minimization with respect to the,9,NimbusRomNo9L-Regu,,36,36
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+"can be solved via
+the ADMM [28] algorithm for CSC [29, Sec. 2.2][24, Sec.
+III], with the proximal operator of the",9,NimbusRomNo9L-Regu,,113,55
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+"norm replaced by the
+proximal operator of the",9,NimbusRomNo9L-Regu,,45,24
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+"norm [30], with the required
+frequency domain weighting being achieved by setting the DC
+components of the frequency-domain representations of the",9,NimbusRomNo9L-Regu,,146,59
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+s,9,CMBX10,,1,1
+"to zero. The convergence of ADMM applied to
+problems involving the",9,NimbusRomNo9L-Regu,,66,43
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+norm is addressed in [30].,9,NimbusRomNo9L-Regu,,26,26
+The minimization with respect,9,NimbusRomNo9L-Regu,,29,29
+to,9,NimbusRomNo9L-Regu,,2,2
+g,9,CMBX10,,1,1
+can be solved by,9,NimbusRomNo9L-Regu,,16,16
+a variant of the FISTA [31] algorithm for the constrained,9,NimbusRomNo9L-Regu,,57,57
+convolutional method of optimal directions (CCMOD) [22].,9,NimbusRomNo9L-Regu,,56,56
+The only changes required to this algorithm are (i) implement,9,NimbusRomNo9L-Regu,,61,61
+the frequency-domain weighting by setting the DC component,9,NimbusRomNo9L-Regu,,58,58
+of the frequency-domain representations of,9,NimbusRomNo9L-Regu,,42,42
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+s,9,CMBX10,,1,1
+"to zero in the gradient calculation [22, Sec. III.D], (ii) include
+a term for the gradient regularization in the calculation of the",9,NimbusRomNo9L-Regu,,131,66
+"FISTA gradient, and (iii) compose the usual spatial support",9,NimbusRomNo9L-Regu,,59,59
+"projection [22, Sec. III.D] in the FISTA proximal step with",9,NimbusRomNo9L-Regu,,59,59
+"a clipping to zero of negative values, which is the proximal",9,NimbusRomNo9L-Regu,,60,60
+"operator of the non-negativity constraint. Since this is a convex
+problem, the usual convergence results for FISTA apply [31].",9,NimbusRomNo9L-Regu,,126,65
+IV. R,9,NimbusRomNo9L-Regu,,5,5
+ESULTS,7,NimbusRomNo9L-Regu,,6,6
+A. Test Images,9,NimbusRomNo9L-ReguItal,,14,14
+Our benchmark images were simulated to reproduce a,9,NimbusRomNo9L-Regu,,50,50
+"realistic distribution of star brightness, pixel sampling, and",9,NimbusRomNo9L-Regu,,62,62
+noise. They span a range of PSF shapes and star densities. The,9,NimbusRomNo9L-Regu,,62,62
+"scene consists of PSF light proﬁles of point sources (stars) on
+top of a constant sky background. After injecting uniformly
+distributed stars at random sub-pixel locations and re-sampling
+to the pixel grid of the image, we add Poisson noise to model
+the effects of counting statistics in electro-optical sensors such
+as CCDs and CMOS arrays. The amplitude of the signal
+(full 16-bit dynamic range) and sky background (a ﬂat DC
+offset of 1000 counts) are typical of well exposed astronomical
+images, where the noise distribution is effectively Gaussian.
+The baseline noise level corresponds to an inverse gain of 1
+electron per data number (variance equal to signal).",9,NimbusRomNo9L-Regu,,666,66
+The observed number density of stars varies dramatically,9,NimbusRomNo9L-Regu,,56,56
+"across the sky. This, in combination with the ﬁeld of view,
+sensitivity, and the spatial extent of the PSF, will determine
+the severity of source confusion. The density of stars in our test
+images (see Fig. 4 in Appx. C) varies from 100 to 1 pixels per
+star, i.e. between 655 and 65,500 stars in a tile of",9,NimbusRomNo9L-Regu,,305,66
+256,9,CMR10,,3,3
+×,9,CMSY10,,1,1
+256,9,CMR10,,3,3
+pixels. This size is both sufﬁciently large for a robust PSF,9,NimbusRomNo9L-Regu,,60,60
+"estimate and sufﬁciently small to avoid signiﬁcant variations
+of the PSF and the sky background within the tile.",9,NimbusRomNo9L-Regu,,112,61
+4,6,NimbusRomNo9L-Regu,,1,1
+"TABLE I: PSF estimation performance in SNR (dB) for
+the RCA method with parameters optimized for each case.
+Performance relative to that of the proposed method in Table II
+is indicated by the font and parentheses",9,NimbusRomNo9L-Regu,,212,63
+6,6,NimbusRomNo9L-Regu,,1,1
+.,9,NimbusRomNo9L-Regu,,1,1
+"TABLE II: PSF estimation performance in SNR (dB) for the
+proposed method. Performance relative to that of the RCA
+method in Table I is indicated by the font and parentheses",9,NimbusRomNo9L-Regu,,172,58
+6,6,NimbusRomNo9L-Regu,,1,1
+.,9,NimbusRomNo9L-Regu,,1,1
+density,7,NimbusRomNo9L-Regu,,7,7
+"shape
+narrow
+wide
+elongated
+complex",7,NimbusRomNo9L-Regu,,35,9
+1,7,NimbusRomNo9L-Regu,,1,1
+10,7,NimbusRomNo9L-Regu,,2,2
+25,7,NimbusRomNo9L-Regu,,2,2
+50,7,NimbusRomNo9L-Regu,,2,2
+100,7,NimbusRomNo9L-Regu,,3,3
+"20.17
+24.39
+23.18
+28.45",7,NimbusRomNo9L-Regu,,23,5
+"23.63
+25.91
+26.11
+26.12",7,NimbusRomNo9L-Regu,,23,5
+"20.78
+25.43
+22.76
+25.08",7,NimbusRomNo9L-Regu,,23,5
+"20.56
+24.57
+22.33
+24.77",7,NimbusRomNo9L-Regu,,23,5
+"23.77
+(26.42)
+23.75
+(25.38)",7,NimbusRomNo9L-Regu,,27,7
+"We use a set of four reference PSFs, shown in Fig. 3
+in Appx. C. The “narrow” PSF consists of a circularly sym-
+metric pseudo-Gaussian function",9,NimbusRomNo9L-Regu,,143,58
+5,6,NimbusRomNo9L-Regu,,1,1
+"with Full Width at Half
+Maximum (FWHM) of 2 pixels, resulting in a near critical
+sampling. This represents a very sharp image under excellent
+viewing conditions. The “wide” PSF has the same shape
+as the narrow one, except for",9,NimbusRomNo9L-Regu,,225,60
+FWHM = 4,9,CMR10,,8,8
+"pixels. This
+represents poor focus and/or strong atmospheric blurring. The",9,NimbusRomNo9L-Regu,,74,61
+“elongated” PSF is an elliptical pseudo-Gaussian at,9,NimbusRomNo9L-Regu,,51,51
+45,9,CMR10,,2,2
+degrees,9,NimbusRomNo9L-Regu,,7,7
+with the major and minor axis,9,NimbusRomNo9L-Regu,,29,29
+FWHM = 4,9,CMR10,,8,8
+and,9,NimbusRomNo9L-Regu,,3,3
+2,9,CMR10,,1,1
+pixels. An,9,NimbusRomNo9L-Regu,,10,10
+elongated PSF may arise e.g. due to a coma in imaging optics,9,NimbusRomNo9L-Regu,,60,60
+"or imperfect tracking of the sidereal sky motion. Finally, the",9,NimbusRomNo9L-Regu,,62,62
+“complex” PSF includes one of each with different amplitudes,9,NimbusRomNo9L-Regu,,60,60
+"and small centroid offsets to simulate shapes resulting from a
+combination of factors.",9,NimbusRomNo9L-Regu,,86,62
+B. Metrics,9,NimbusRomNo9L-ReguItal,,10,10
+The metric for evaluating the accuracy of sampled estimates,9,NimbusRomNo9L-Regu,,59,59
+of a continuous PSF must take into account both a scaling,9,NimbusRomNo9L-Regu,,57,57
+"ambiguity (multiplication of the PSF by a scalar factor can
+be compensated by dividing the star ﬁeld by the same factor)",9,NimbusRomNo9L-Regu,,120,60
+and a phase shift ambiguity (a phase shift in the PSF can be,9,NimbusRomNo9L-Regu,,60,60
+compensated by a corresponding phase shift in the star ﬁeld).,9,NimbusRomNo9L-Regu,,61,61
+We denote the reference continuous PSF by the function,9,NimbusRomNo9L-Regu,,54,54
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+and the sampled PSF with which it is to be compared by,9,NimbusRomNo9L-Regu,,54,54
+vector,9,NimbusRomNo9L-Regu,,6,6
+h,9,CMBX10,,1,1
+", with components",9,NimbusRomNo9L-Regu,,17,17
+h,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+", which are assumed to represent
+samples of an underlying continuous function",9,NimbusRomNo9L-Regu,,77,44
+h,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+taken at,9,NimbusRomNo9L-Regu,,8,8
+points,9,NimbusRomNo9L-Regu,,6,6
+I ⊂,9,CMSY10,,3,3
+Z,9,MSBM10,,1,1
++,6,CMR7,,1,1
+. A correlation function between continuous,9,NimbusRomNo9L-Regu,,43,43
+function,9,NimbusRomNo9L-Regu,,8,8
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+and vector,9,NimbusRomNo9L-Regu,,10,10
+h,9,CMBX10,,1,1
+at sampling offset,9,NimbusRomNo9L-Regu,,18,18
+n,9,CMMI10,,1,1
+is deﬁned as,9,NimbusRomNo9L-Regu,,12,12
+c,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+n,9,CMMI10,,1,1
+) =,9,CMR10,,3,3
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+i,6,CMMI7,,1,1
+∈I,6,CMSY7,,2,2
+h,9,CMMI10,,1,1
+i,6,CMMI7,,1,1
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+i,9,CMMI10,,1,1
++,9,CMR10,,1,1
+n/N,9,CMMI10,,3,3
+R,6,CMR7,,1,1
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+i,6,CMMI7,,1,1
+∈I,6,CMSY7,,2,2
+h,9,CMMI10,,1,1
+2,6,CMR7,,1,1
+i,6,CMMI7,,1,1
+i,6,CMMI7,,1,1
+∈I,6,CMSY7,,2,2
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+i,9,CMMI10,,1,1
++,9,CMR10,,1,1
+n/N,9,CMMI10,,3,3
+R,6,CMR7,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
+",",9,CMMI10,,1,1
+(9),9,NimbusRomNo9L-Regu,,3,3
+where,9,NimbusRomNo9L-Regu,,5,5
+N,9,CMMI10,,1,1
+R,6,CMR7,,1,1
+"is the sub-pixel resolution factor at which the
+correlation is computed. Now, deﬁning",9,NimbusRomNo9L-Regu,,85,47
+ˆ,9,CMR10,,1,1
+n,9,CMMI10,,1,1
+= arg max,9,CMR10,,9,9
+c,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+n,9,CMMI10,,1,1
+),9,CMR10,,1,1
+g,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+I,9,CMSY10,,1,1
++ ˆ,9,CMR10,,3,3
+n/N,9,CMMI10,,3,3
+R,6,CMR7,,1,1
+),9,CMR10,,1,1
+a,9,CMMI10,,1,1
+=,9,CMR10,,1,1
+h,9,CMBX10,,1,1
+T,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+/,9,CMMI10,,1,1
+g,9,CMBX10,,1,1
+T,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+",",9,CMMI10,,1,1
+we compute the value of the metric as the Signal-to-Noise,9,NimbusRomNo9L-Regu,,57,57
+Ratio (SNR) of,9,NimbusRomNo9L-Regu,,14,14
+h,9,CMBX10,,1,1
+with respect to,9,NimbusRomNo9L-Regu,,15,15
+a,9,CMMI10,,1,1
+g,9,CMBX10,,1,1
+", i.e., the SNR between a
+sampled and scaled representation of",9,NimbusRomNo9L-Regu,,62,36
+g,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+·,9,CMSY10,,1,1
+),9,CMR10,,1,1
+"with the sampling
+offset,",9,NimbusRomNo9L-Regu,,25,17
+n,9,CMMI10,,1,1
+", and scaling,",9,NimbusRomNo9L-Regu,,14,14
+a,9,CMMI10,,1,1
+", chosen to maximize the SNR.",9,NimbusRomNo9L-Regu,,29,29
+5,5,NimbusRomNo9L-Regu,,1,1
+A pseudo-Gaussian is an inverse of a Taylor expansion of the exponential,7,NimbusRomNo9L-Regu,,72,72
+used by the DoPHOT software [4].,7,NimbusRomNo9L-Regu,,32,32
+density,7,NimbusRomNo9L-Regu,,7,7
+"shape
+narrow
+wide
+elongated
+complex",7,NimbusRomNo9L-Regu,,35,9
+1,7,NimbusRomNo9L-Regu,,1,1
+10,7,NimbusRomNo9L-Regu,,2,2
+25,7,NimbusRomNo9L-Regu,,2,2
+50,7,NimbusRomNo9L-Regu,,2,2
+"34.39
+34.41
+33.20
+30.32",7,NimbusRomNo9L-Medi,,23,5
+"39.06
+32.97
+35.14
+29.52",7,NimbusRomNo9L-Medi,,23,5
+"36.15
+30.90
+34.11
+27.24",7,NimbusRomNo9L-Medi,,23,5
+"36.36
+31.19
+34.95
+29.71",7,NimbusRomNo9L-Medi,,23,5
+100,7,NimbusRomNo9L-Regu,,3,3
+31.57,7,NimbusRomNo9L-Medi,,5,5
+25.46,7,NimbusRomNo9L-Regu,,5,5
+30.95,7,NimbusRomNo9L-Medi,,5,5
+25.08,7,NimbusRomNo9L-Regu,,5,5
+C. Performance Comparisons,9,NimbusRomNo9L-ReguItal,,26,26
+"A direct comparison to existing approaches is difﬁcult
+because few algorithms can handle extreme crowding and even
+fewer have publicly available implementations. We compare
+the performance of the proposed algorithm with that of the
+recent Resolved Components Analysis (RCA) [15] method,
+using the implementation provided by the authors [32]. The
+algorithm takes input in the form of postage stamp images",9,NimbusRomNo9L-Regu,,403,59
+"approximately centered around well detected, isolated stars.",9,NimbusRomNo9L-Regu,,60,60
+"In our most crowded images, ﬁnding isolated stars is virtually",9,NimbusRomNo9L-Regu,,62,62
+impossible. In order to ensure the best possible quality of input,9,NimbusRomNo9L-Regu,,65,65
+"data, we manually selected several dozen bright stars, while",9,NimbusRomNo9L-Regu,,60,60
+attempting to minimize the contamination from neighboring,9,NimbusRomNo9L-Regu,,57,57
+"objects. Since this method has six parameters for which
+there are no clear selection guidelines, for each test case we",9,NimbusRomNo9L-Regu,,118,62
+select the best parameters by evaluating the performance of,9,NimbusRomNo9L-Regu,,59,59
+the method over 9000 different parameter combinations. The,9,NimbusRomNo9L-Regu,,58,58
+results of this experiment are displayed in Table I.,9,NimbusRomNo9L-Regu,,52,52
+The proposed algorithm is implemented in Python as an,9,NimbusRomNo9L-Regu,,53,53
+"extension [33] of the SPORCO package [34], [35]. Parameter",9,NimbusRomNo9L-Regu,,58,58
+M,9,CMMI10,,1,1
+"was set to 5 for all cases,",9,NimbusRomNo9L-Regu,,27,27
+K,9,CMMI10,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+"were chosen according
+to the PSF shape, and the remaining parameters were chosen",9,NimbusRomNo9L-Regu,,80,58
+"according to the star density, as described in Appx. B.",9,NimbusRomNo9L-Regu,,55,55
+6,6,NimbusRomNo9L-Regu,,1,1
+The,9,NimbusRomNo9L-Regu,,3,3
+results of this experiment are displayed in Table II. Despite the,9,NimbusRomNo9L-Regu,,65,65
+much larger parameter space explored in computing the RCA,9,NimbusRomNo9L-Regu,,57,57
+"results, the performance of the proposed method exceeds that",9,NimbusRomNo9L-Regu,,60,60
+"of RCA by more than 2db for all but two cases, and in some
+cases is better by more than 10 dB. The only cases where",9,NimbusRomNo9L-Regu,,115,58
+RCA outperforms the proposed method are at the lowest star,9,NimbusRomNo9L-Regu,,58,58
+density of 100 pixels per star.,9,NimbusRomNo9L-Regu,,31,31
+V. C,9,NimbusRomNo9L-Regu,,4,4
+ONCLUSIONS,7,NimbusRomNo9L-Regu,,10,10
+"We have proposed a new PSF estimation algorithm, based
+on a CDL framework, for crowded astronomical imagery. The
+resulting performance over a very wide range of crowding
+conditions compares very favorably with that of RCA, a
+recent alternative method. Unlike competing algorithms, our
+approach does not require laborious pre-processing to select
+isolated stars. The need to detect and model individual point
+sources—a complicated and error prone task—is eliminated
+altogether. Our hypothesis is that the global nature of the pro-",9,NimbusRomNo9L-Regu,,529,64
+"posed model accounts for most of the observed performance
+improvements over the usual patch-based methods. The CDL
+method can be further extended to support a spatial mask for",9,NimbusRomNo9L-Regu,,175,60
+6,5,NimbusRomNo9L-Regu,,1,1
+Performance relative to values in the other table is indicated by parentheses,7,NimbusRomNo9L-Regu,,77,77
+"where the performance is less than 2dB better than that in the other table,
+and by",7,NimbusRomNo9L-Regu,,82,75
+bold font,7,NimbusRomNo9L-Medi,,9,9
+where it is at least 2dB better than that in the other table.,7,NimbusRomNo9L-Regu,,61,61
+6,5,NimbusRomNo9L-Regu,,1,1
+"The development of reliable automated parameter selection, which would",7,NimbusRomNo9L-Regu,,70,70
+"enhance the practical value of the proposed method, is left as a topic for
+future study.",7,NimbusRomNo9L-Regu,,88,74
+5,6,NimbusRomNo9L-Regu,,1,1
+[19] Y.,7,NimbusRomNo9L-Regu,,7,7
+S.,7,NimbusRomNo9L-Regu,,2,2
+"“Group
+Soh,",7,NimbusRomNo9L-Regu,,11,6
+arXiv:2007.07550,7,NimbusMonL-Regu,,16,16
+.,7,NimbusRomNo9L-Regu,,1,1
+invariant,7,NimbusRomNo9L-Regu,,9,9
+dictionary,7,NimbusRomNo9L-Regu,,10,10
+"learning,”",7,NimbusRomNo9L-Regu,,10,10
+"2020,”",7,NimbusRomNo9L-Regu,,6,6
+"[20] A. Song, F. J. Flores, and D. Ba, “Convolutional dictionary learning
+with grid reﬁnement,”",7,NimbusRomNo9L-Regu,,95,73
+IEEE Transactions on Signal Processing,7,NimbusRomNo9L-ReguItal,,38,38
+", vol. 68,
+pp. 2558–2573, Apr. 2020. doi:10.1109/TSP.2020.2986897",7,NimbusRomNo9L-Regu,,65,54
+"[21] C. A. Bouman, “Model based imaging,” 2020. [Online]. Available: https:
+//engineering.purdue.edu/",7,NimbusRomNo9L-Regu,,101,75
+∼,5,CMSY6,,1,1
+"bouman/publications/pdf/MBIP-book.pdf
+[22] C. Garcia-Cardona and B. Wohlberg, “Convolutional dictionary learn-
+ing: A comparative review and new algorithms,”",7,NimbusRomNo9L-Regu,,157,72
+"IEEE Transactions
+on Computational Imaging",7,NimbusRomNo9L-ReguItal,,42,24
+", vol. 4, no. 3, pp. 366–381, Sep. 2018.
+doi:10.1109/TCI.2018.2840334",7,NimbusRomNo9L-Regu,,69,40
+"[23] W. Burger and M. J. Burge,",7,NimbusRomNo9L-Regu,,31,31
+Principles of Digital Image Processing:,7,NimbusRomNo9L-ReguItal,,39,39
+Core Algorithms,7,NimbusRomNo9L-ReguItal,,15,15
+". Springer, 2009.",7,NimbusRomNo9L-Regu,,17,17
+"[24] B. Wohlberg, “Efﬁcient algorithms for convolutional sparse represen-
+tations,”",7,NimbusRomNo9L-Regu,,83,73
+IEEE Transactions on Image Processing,7,NimbusRomNo9L-ReguItal,,37,37
+", vol. 25, no. 1, pp.
+301–315, Jan. 2016. doi:10.1109/TIP.2015.2495260",7,NimbusRomNo9L-Regu,,70,48
+"[25] Y. Lou, P. Yin, Q. He, and J. Xin, “Computing sparse representation
+in a highly coherent dictionary based on difference of L1 and L2,”",7,NimbusRomNo9L-Regu,,139,72
+Journal of Scientiﬁc Computing,7,NimbusRomNo9L-ReguItal,,30,30
+", vol. 64, no. 1, pp. 178––196, Jul. 2015.
+doi:10.1007/s10915-014-9930-1",7,NimbusRomNo9L-Regu,,72,42
+"[26] B. Wohlberg, “Convolutional sparse representations as an image model
+for impulse noise restoration,” in",7,NimbusRomNo9L-Regu,,108,73
+"Proceedings of the IEEE Image, Video,
+and Multidimensional Signal Processing Workshop (IVMSP)",7,NimbusRomNo9L-ReguItal,,93,55
+", Bordeaux,
+France, Jul. 2016. doi:10.1109/IVMSPW.2016.7528229",7,NimbusRomNo9L-Regu,,62,50
+[27] N. S. Chatterji,7,NimbusRomNo9L-Regu,,20,20
+for dictionary learning:,7,NimbusRomNo9L-Regu,,24,24
+arXiv:1711.03634,7,NimbusMonL-Regu,,16,16
+.,7,NimbusRomNo9L-Regu,,1,1
+"and P. L. Bartlett,
+local",7,NimbusRomNo9L-Regu,,25,19
+"“Alternating minimization
+convergence guarantees,” 2017,”",7,NimbusRomNo9L-Regu,,57,31
+"[28] S. Boyd, N. Parikh, E. Chu, B. Peleato, and J. Eckstein, “Distributed
+optimization and statistical learning via the alternating direction method
+of multipliers,”",7,NimbusRomNo9L-Regu,,166,74
+Foundations and Trends in Machine Learning,7,NimbusRomNo9L-ReguItal,,42,42
+", vol. 3,
+no. 1, pp. 1–122, 2010. doi:10.1561/2200000016",7,NimbusRomNo9L-Regu,,56,46
+"[29] B. Wohlberg, “Efﬁcient convolutional sparse coding,” in",7,NimbusRomNo9L-Regu,,60,60
+"Proceedings
+of IEEE International Conference on Acoustics, Speech, and Sig-
+nal Processing (ICASSP)",7,NimbusRomNo9L-ReguItal,,99,63
+", Florence, Italy, May 2014, pp. 7173–7177.
+doi:10.1109/ICASSP.2014.6854992",7,NimbusRomNo9L-Regu,,75,43
+"[30] Y. Lou and M. Yan, “Fast L1-L2 minimization via a proximal operator,”",7,NimbusRomNo9L-Regu,,74,74
+Journal of Scientiﬁc Computing,7,NimbusRomNo9L-ReguItal,,30,30
+", vol. 74, no. 2, pp. 767–785, 2018.
+doi:10.1007/s10915-017-0463-2",7,NimbusRomNo9L-Regu,,66,36
+"[31] A. Beck and M. Teboulle, “A fast iterative shrinkage-thresholding algo-
+rithm for linear inverse problems,”",7,NimbusRomNo9L-Regu,,112,76
+SIAM Journal on Imaging Sciences,7,NimbusRomNo9L-ReguItal,,32,32
+",
+vol. 2, no. 1, pp. 183–202, 2009. doi:10.1137/080716542",7,NimbusRomNo9L-Regu,,57,55
+"[32] F. Ngol´e Mboula, “Resolved components analysis,” Python package
+available from https://www.cosmostat.org/software/rca, Jun. 2017.
+[33] B. Wohlberg and P. Wozniak, “Software implementation of CDL-based
+PSF estimation technique,” Software available from https://github.com/
+bwohlberg/sporco-extra, 2021.",7,NimbusRomNo9L-Regu,,307,70
+"[34] B. Wohlberg, “SParse Optimization Research COde (SPORCO),” Soft-
+ware library available from http://purl.org/brendt/software/sporco, 2016.
+[35] ——, “SPORCO: A Python package for standard and convolutional
+sparse representations,” in",7,NimbusRomNo9L-Regu,,237,73
+"Proceedings of the 15th Python in Science
+Conference",7,NimbusRomNo9L-ReguItal,,52,41
+", Austin, TX, USA, Jul. 2017, pp. 1–8. doi:10.25080/shinma-
+7f4c6e7-001",7,NimbusRomNo9L-Regu,,71,59
+"rejection of artifacts such as saturated pixels, cosmic ray hits,
+or bad columns. These properties make the algorithm well
+suited for PSF estimation anywhere from extremely crowded
+stellar populations like the Galactic bulge and globular clusters
+to more routine work.",9,NimbusRomNo9L-Regu,,268,65
+R,9,NimbusRomNo9L-Regu,,1,1
+EFERENCES,7,NimbusRomNo9L-Regu,,9,9
+"[1] B. Lal, A. Balakrishnan, B. M. Caldwell, R. S. Buenconsejo, and S. A.
+Carioscia, “Global trends in space situational awareness (SSA) and space
+trafﬁc management (STM),” Institute for Defense Analyses, Tech. Rep.
+D-9074, 2018.",7,NimbusRomNo9L-Regu,,229,73
+"[2] R. Racine, “The telescopic point-spread function,”",7,NimbusRomNo9L-Regu,,54,54
+"Publications of the
+Astronomical Society of the Paciﬁc",7,NimbusRomNo9L-ReguItal,,54,34
+", vol. 108, no. 726, pp. 699–705, Aug.
+1996. doi:10.1086/133788",7,NimbusRomNo9L-Regu,,63,38
+"[3] R. Lupton, “The characterization, subtraction, and addition of astronom-
+ical images,” in",7,NimbusRomNo9L-Regu,,93,76
+Statistical Challenges in Modern Astronomy IV,7,NimbusRomNo9L-ReguItal,,45,45
+", ser.
+Astronomical Society of the Paciﬁc Conference Series, G. J. Babu and
+E. D. Feigelson, Eds., vol. 371, Nov. 2007, p. 160.",7,NimbusRomNo9L-Regu,,127,68
+"[4] P. L. Schechter, M. Mateo, and A. Saha, “DoPHOT, A CCD Photometry
+Program: Description and Tests,”",7,NimbusRomNo9L-Regu,,102,69
+"Publications of
+the Astronomical
+Society of the Paciﬁc",7,NimbusRomNo9L-ReguItal,,54,21
+", vol. 105, p. 1342, Nov. 1993. doi:10.1086/133316
+[5] P. Campisi and K. Egiazarian,",7,NimbusRomNo9L-Regu,,84,50
+Blind image deconvolution: Theory and,7,NimbusRomNo9L-ReguItal,,37,37
+Applications,7,NimbusRomNo9L-ReguItal,,12,12
+". CRC Press, 2017.",7,NimbusRomNo9L-Regu,,18,18
+"[6] S. Chaudhuri, R. Velmurugan, and R. Rameshan, “Blind deconvolution
+methods: A review,” in",7,NimbusRomNo9L-Regu,,93,70
+Blind Image Deconvolution,7,NimbusRomNo9L-ReguItal,,25,25
+". Springer Interna-
+tional Publishing, 2014, pp. 37–60. doi:10.1007/978-3-319-10485-0 3
+[7] R. Mandelbaum, “Weak Lensing for Precision Cosmology,”",7,NimbusRomNo9L-Regu,,146,67
+"Annual
+Review of Astronomy and Astrophysics",7,NimbusRomNo9L-ReguItal,,43,36
+", vol. 56, pp. 393–433, Sep. 2018.
+doi:10.1146/annurev-astro-081817-051928",7,NimbusRomNo9L-Regu,,74,39
+"[8] P. Wozniak, L. Prasad, and B. Wohlberg, “Moving point source
+detection and localization in wide-ﬁeld images,” in",7,NimbusRomNo9L-Regu,,116,64
+"The Advanced
+Maui Optical and Space Surveillance Technologies Conference",7,NimbusRomNo9L-ReguItal,,72,59
+",
+Wailea, Maui, HI, USA, Sep. 2018.
+[Online]. Available: http:
+//amostech.com/TechnicalPapers/2018/Poster/Wozniak.pdf",7,NimbusRomNo9L-Regu,,117,54
+"[9] P. Wozniak, “Crowded Field Photometry and Difference Imaging,”
+in",7,NimbusRomNo9L-Regu,,69,66
+"Proceedings of The Manchester Microlensing Conference: The
+12th International Conference and ANGLES Microlensing Workshop",7,NimbusRomNo9L-ReguItal,,121,62
+",
+E. Kerins, S. Mao, N. Rattenbury, and L. Wyrzykowski, Eds., Jan. 2008.
+doi:10.22323/1.054.0003",7,NimbusRomNo9L-Regu,,96,70
+"[10] L. W. Piotrowski, T. Batsch, H. Czyrkowski, M. Cwiok, R. Dabrowski,
+G. Kasprowicz, A. Majcher, A. Majczyna, K. Malek, L. Mankiewicz,
+K. Nawrocki, R. Opiela, M. Siudek, M. Sokolowski, R. Wawrzaszek,
+G. Wrochna, M. Zaremba, and A. F. ˙Zarnecki, “PSF modelling for very
+wide-ﬁeld CCD astronomy,”",7,NimbusRomNo9L-Regu,,297,72
+Astronomy & Astrophysics,7,NimbusRomNo9L-ReguItal,,24,24
+", vol. 551, p.
+A119, Mar. 2013. doi:10.1051/0004-6361/201219230",7,NimbusRomNo9L-Regu,,63,48
+"[11] P. B. Stetson, “DAOPHOT: A Computer Program for Crowded-Field
+Stellar Photometry,”",7,NimbusRomNo9L-Regu,,87,66
+"Publications of the Astronomical Society of the
+Paciﬁc",7,NimbusRomNo9L-ReguItal,,54,47
+", vol. 99, pp. 191–222, Mar. 1987. doi:10.1086/131977",7,NimbusRomNo9L-Regu,,53,53
+"[12] E. Bertin and S. Arnouts, “SExtractor: Software for source extraction,”",7,NimbusRomNo9L-Regu,,76,76
+Astronomy and Astrophysics Supplement Series,7,NimbusRomNo9L-ReguItal,,44,44
+", vol. 117, pp. 393–404,",7,NimbusRomNo9L-Regu,,24,24
+Jun. 1996. doi:10.1051/aas:1996164,7,NimbusRomNo9L-Regu,,34,34
+"[13] J. Anderson and I. R. King, “Toward high-precision astrometry with
+WFPC2. I. Deriving an accurate point-spread function,”",7,NimbusRomNo9L-Regu,,126,71
+"Publications of
+the Astronomical Society of the Paciﬁc",7,NimbusRomNo9L-ReguItal,,54,38
+", vol. 112, no. 776, pp. 1360–
+1382, Oct. 2000. doi:10.1086/316632",7,NimbusRomNo9L-Regu,,66,35
+"[14] F. M. Ngol`e Mboula, J.-L. Starck, S. Ronayette, K. Okumura, and
+J. Amiaux, “Super-resolution method using sparse regularization for
+point-spread function recovery,”",7,NimbusRomNo9L-Regu,,170,69
+Astronomy & Astrophysics,7,NimbusRomNo9L-ReguItal,,24,24
+", vol. 575,
+p. A86, Mar. 2015. doi:10.1051/0004-6361/201424167",7,NimbusRomNo9L-Regu,,62,50
+"[15] F. Ngol`e, J.-L. Starck, K. Okumura, J. Amiaux, and P. Hudelot,
+“Constraint matrix factorization for space variant PSFs ﬁeld restoration,”",7,NimbusRomNo9L-Regu,,143,74
+Inverse Problems,7,NimbusRomNo9L-ReguItal,,16,16
+", vol. 32, no. 12, p. 124001, 2016.",7,NimbusRomNo9L-Regu,,35,35
+"[16] P. del Aguila Pla and J. Jald´en, “Convolutional group-sparse coding
+and source localization,” in",7,NimbusRomNo9L-Regu,,102,73
+"IEEE International Conference on Acous-
+tics, Speech and Signal Processing (ICASSP)",7,NimbusRomNo9L-ReguItal,,83,43
+", 2018, pp. 2776–2780.",7,NimbusRomNo9L-Regu,,22,22
+doi:10.1109/ICASSP.2018.8462235,7,NimbusRomNo9L-Regu,,31,31
+"[17] C. Ekanadham, D. Tranchina, and E. P. Simoncelli, “Recovery of",7,NimbusRomNo9L-Regu,,67,67
+"sparse translation-invariant signals with continuous basis pursuit,”",7,NimbusRomNo9L-Regu,,68,68
+"IEEE
+Transactions on Signal Processing",7,NimbusRomNo9L-ReguItal,,38,33
+", vol. 59, no. 10, pp. 4735–4744, Oct.",7,NimbusRomNo9L-Regu,,38,38
+2011. doi:10.1109/tsp.2011.2160058,7,NimbusRomNo9L-Regu,,34,34
+"[18] G. Tang, B. N. Bhaskar, and B. Recht, “Sparse recovery over continuous",7,NimbusRomNo9L-Regu,,75,75
+"dictionaries – just discretize,” in",7,NimbusRomNo9L-Regu,,35,35
+"Proc. Asilomar Conference on Signals,",7,NimbusRomNo9L-ReguItal,,37,37
+Systems and Computers,7,NimbusRomNo9L-ReguItal,,21,21
+", Paciﬁc Grove, CA, USA, 2013, pp. 1043–1047.
+doi:10.1109/ACSSC.2013.6810450",7,NimbusRomNo9L-Regu,,76,45
+6,6,NimbusRomNo9L-Regu,,1,1
+as,9,NimbusRomNo9L-Regu,,2,2
+A,9,NimbusRomNo9L-Regu,,1,1
+PPENDIX,7,NimbusRomNo9L-Regu,,7,7
+"A
+CDL A",9,NimbusRomNo9L-Regu,,7,5
+LGORITHM,7,NimbusRomNo9L-Regu,,8,8
+"The algorithm for minimization of our CDL problem, (8),
+consists of alternating minimization with respect to the",9,NimbusRomNo9L-Regu,,112,56
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+(sparse coding) and to,9,NimbusRomNo9L-Regu,,22,22
+g,9,CMBX10,,1,1
+(dictionary update).,9,NimbusRomNo9L-Regu,,20,20
+A. Sparse Coding,9,NimbusRomNo9L-ReguItal,,16,16
+The minimization with respect to the,9,NimbusRomNo9L-Regu,,36,36
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+can be expressed,9,NimbusRomNo9L-Regu,,16,16
+where,9,NimbusRomNo9L-Regu,,5,5
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+"represents the sum of the ﬁrst and third terms
+in (14),",9,NimbusRomNo9L-Regu,,55,46
+t,9,CMMI10,,1,1
+(0),6,CMR7,,3,3
+= 1,9,CMR10,,3,3
+", and",9,NimbusRomNo9L-Regu,,5,5
+L,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+>,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+"is a parameter controlling the
+step size. The frequency-domain weighting of the data ﬁdelity
+term can be implemented by setting the DC component of
+the frequency-domain representations of",9,NimbusRomNo9L-Regu,,187,61
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+s,9,CMBX10,,1,1
+to zero in the calculation of the gradient of,9,NimbusRomNo9L-Regu,,45,45
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+", and the
+proximal operator of the indicator function of",9,NimbusRomNo9L-Regu,,56,46
+C,9,CMMI10,,1,1
+"corresponds
+to the composition of the usual spatial support projection [22,
+Sec. III.D] in the FISTA proximal step with clipping to zero
+of negative values and normalization.",9,NimbusRomNo9L-Regu,,174,63
+arg min,9,CMR10,,7,7
+{,6,CMSY7,,1,1
+a,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
+ι,9,CMMI10,,1,1
+C,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+) +,9,CMR10,,3,3
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+W,6,CMMI7,,1,1
+,9,CMEX10,,0,0
++,9,CMR10,,1,1
+m,6,CMMI7,,1,1
+"
+
+",9,CMEX10,,2,0
+"1
+2",9,CMR10,,3,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+m,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+,9,CMSY10,,0,0
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+− ,9,CMSY10,,2,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+2,6,CMR7,,1,1
+),9,CMR10,,1,1
+",",9,CMMI10,,1,1
+(10),9,NimbusRomNo9L-Regu,,4,4
+C. Alternating Minimization,9,NimbusRomNo9L-ReguItal,,27,27
+where,9,NimbusRomNo9L-Regu,,5,5
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+". This problem is similar to the standard
+convolutional sparse coding (CSC) [24] problem, and can be
+solved via a variant of the ADMM algorithm described in [24]",9,NimbusRomNo9L-Regu,,161,60
+{,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+= arg min,9,CMR10,,9,9
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
+{,6,CMSY7,,1,1
+a,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+W,6,CMMI7,,1,1
++,9,CMR10,,1,1
+"
+",9,CMEX10,,1,0
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+u,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
+),6,CMR7,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
++,9,CMR10,,1,1
+v,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
+),6,CMR7,,1,1
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,6,CMR7,,1,1
+(11),9,NimbusRomNo9L-Regu,,4,4
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+"
+",9,CMEX10,,1,0
+,9,CMEX10,,0,0
+1,9,CMR10,,1,1
+2,9,CMR10,,1,1
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+2,9,CMR10,,1,1
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+{,9,CMSY10,,1,1
+u,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+},9,CMSY10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+= arg min,9,CMR10,,9,9
+{,6,CMSY7,,1,1
+u,6,CMBX7,,1,1
+m,4,CMMI5,,1,1
+},6,CMSY7,,1,1
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+,9,CMSY10,,0,0
+u,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+1,6,CMR7,,1,1
+− ,9,CMSY10,,2,1
+u,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+,9,CMSY10,,0,0
+2,6,CMR7,,1,1
+) +,9,CMR10,,3,3
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+ι,9,CMMI10,,1,1
+C,6,CMMI7,,1,1
+a,4,CMMI5,,1,1
+(,9,CMR10,,1,1
+u,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+)+,9,CMR10,,2,2
+m,6,CMMI7,,1,1
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+2,9,CMR10,,1,1
+,9,CMEX10,,0,0
+"
+",9,CMEX10,,1,0
+a,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+m,6,CMMI7,,1,1
+−,9,CMSY10,,1,1
+u,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+m,6,CMMI7,,1,1
+",",9,CMMI10,,1,1
+−,9,CMSY10,,1,1
+u,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
++,9,CMR10,,1,1
+v,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
+),6,CMR7,,1,1
+m,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,6,CMR7,,1,1
+(12),9,NimbusRomNo9L-Regu,,4,4
+(13),9,NimbusRomNo9L-Regu,,4,4
+v,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+m,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+v,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
+),6,CMR7,,1,1
+m,6,CMMI7,,1,1
++,9,CMR10,,1,1
+a,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+j,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+m,6,CMMI7,,1,1
+where,9,NimbusRomNo9L-Regu,,5,5
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+"is the ADMM penalty parameter that controls the
+convergence of the algorithm.",9,NimbusRomNo9L-Regu,,77,47
+"Update (11) can be solved by setting the DC components
+of the frequency-domain representations of the",9,NimbusRomNo9L-Regu,,101,54
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+and,9,NimbusRomNo9L-Regu,,3,3
+s,9,CMBX10,,1,1
+to,9,NimbusRomNo9L-Regu,,2,2
+zero before applying the computationally efﬁcient frequency-,9,NimbusRomNo9L-Regu,,60,60
+"domain solution described in [29, Sec. 2.2][24, Sec. III].",9,NimbusRomNo9L-Regu,,58,58
+Update (12) corresponds to the proximal operators of the,9,NimbusRomNo9L-Regu,,56,56
+,9,CMMI10,,0,0
+1,6,CMR7,,1,1
+−,9,CMSY10,,1,1
+,9,CMMI10,,0,0
+2,6,CMR7,,1,1
+"norm, for which there is a closed form expression [30].",9,NimbusRomNo9L-Regu,,55,55
+B. Dictionary Update,9,NimbusRomNo9L-ReguItal,,20,20
+The minimization with respect to,9,NimbusRomNo9L-Regu,,32,32
+g,9,CMBX10,,1,1
+can be expressed as,9,NimbusRomNo9L-Regu,,19,19
+arg min,9,CMR10,,7,7
+g,6,CMBX7,,1,1
++,9,CMR10,,1,1
+ι,9,CMMI10,,1,1
+C,6,CMMI7,,1,1
+(,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+)+,9,CMR10,,2,2
+"
+",9,CMEX10,,1,0
+1,9,CMR10,,1,1
+2,6,CMR7,,1,1
+"
+
+",9,CMEX10,,2,0
+b,9,CMBX10,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+−,9,CMSY10,,1,1
+s,9,CMBX10,,1,1
+,9,CMEX10,,0,0
+2,9,CMR10,,1,1
+,9,CMEX10,,0,0
+λ,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+(,9,CMR10,,1,1
+c,9,CMBX10,,1,1
+0,6,CMR7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
++ (,9,CMR10,,3,3
+c,9,CMBX10,,1,1
+1,6,CMR7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,9,CMR10,,1,1
+W,6,CMMI7,,1,1
+,9,CMEX10,,0,0
+2,6,CMR7,,1,1
+"
+",9,CMEX10,,1,0
+2,6,CMR7,,1,1
+",",9,CMMI10,,1,1
+where,9,NimbusRomNo9L-Regu,,5,5
+b,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+", which is a regularized and con-
+strained deconvolution of",9,NimbusRomNo9L-Regu,,59,33
+s,9,CMBX10,,1,1
+with respect to,9,NimbusRomNo9L-Regu,,15,15
+b,9,CMBX10,,1,1
+". This problem
+is similar to the constrained convolutional method of optimal
+directions (CCMOD) [22] problem, and can be solved via a",9,NimbusRomNo9L-Regu,,133,61
+"variant of the FISTA algorithm described in [22, Sec. III.D]",9,NimbusRomNo9L-Regu,,60,60
+g,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+= prox,9,CMR10,,6,6
+ι,6,CMMI7,,1,1
+C,4,CMMI5,,1,1
+y,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
+),6,CMR7,,1,1
+−,9,CMSY10,,1,1
+L,9,CMMI10,,1,1
+−,6,CMSY7,,1,1
+1,6,CMR7,,1,1
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+,9,CMEX10,,0,0
+g,6,CMMI7,,1,1
+∇,9,CMSY10,,1,1
+y,6,CMBX7,,1,1
+f,9,CMMI10,,1,1
+(,9,CMR10,,1,1
+y,9,CMBX10,,1,1
+),9,CMR10,,1,1
+,9,CMEX10,,0,0
+t,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+=,9,CMR10,,1,1
+1 +,9,CMR10,,3,3
+1 + 4 (,9,CMR10,,7,7
+t,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
+),6,CMR7,,1,1
+),9,CMR10,,1,1
+2,6,CMR7,,1,1
+,9,CMEX10,,0,0
+"1
+2",9,CMR10,,3,1
+y,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+=,9,CMR10,,1,1
+g,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
++1),6,CMR7,,3,3
++,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
+),6,CMR7,,1,1
+−,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+t,9,CMMI10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+,9,CMEX10,,0,0
+g,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
++1),6,CMR7,,3,3
+−,9,CMSY10,,1,1
+y,9,CMBX10,,1,1
+(,6,CMR7,,1,1
+i,6,CMMI7,,1,1
+),6,CMR7,,1,1
+,9,CMEX10,,0,0
+",",9,CMMI10,,1,1
+Input:,9,NimbusRomNo9L-Medi,,6,6
+image,9,NimbusRomNo9L-Regu,,5,5
+s,9,CMBX10,,1,1
+Initialize:,9,NimbusRomNo9L-Medi,,11,11
+Initialize,9,NimbusRomNo9L-Regu,,10,10
+g,9,CMBX10,,1,1
+"as a symmetric Gaussian PSF of
+width",9,NimbusRomNo9L-Regu,,36,30
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+for,9,NimbusRomNo9L-Medi,,3,3
+i,9,CMMI10,,1,1
+∈,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+",",9,CMMI10,,1,1
+2,9,CMR10,,1,1
+", . . . , N",9,CMMI10,,11,11
+iter,6,NimbusRomNo9L-ReguItal,,4,4
+",",6,CMMI7,,1,1
+0,6,CMR7,,1,1
+do,9,NimbusRomNo9L-Medi,,2,2
+Compute sparse coding steps (11)–(13) with ﬁxed,9,NimbusRomNo9L-Regu,,47,47
+dictionary,9,NimbusRomNo9L-Regu,,10,10
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+Set ﬁnal,9,NimbusRomNo9L-Regu,,8,8
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+as the current sparse representation,9,NimbusRomNo9L-Regu,,36,36
+"end
+for",9,NimbusRomNo9L-Medi,,7,3
+i,9,CMMI10,,1,1
+∈,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+",",9,CMMI10,,1,1
+2,9,CMR10,,1,1
+", . . . , N",9,CMMI10,,11,11
+iter,6,NimbusRomNo9L-ReguItal,,4,4
+",",6,CMMI7,,1,1
+0,6,CMR7,,1,1
+do,9,NimbusRomNo9L-Medi,,2,2
+Compute dictionary update steps (15)–(17) with,9,NimbusRomNo9L-Regu,,46,46
+ﬁxed,9,NimbusRomNo9L-Regu,,4,4
+b,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+Set ﬁnal,9,NimbusRomNo9L-Regu,,8,8
+g,9,CMBX10,,1,1
+as the current PSF estimate,9,NimbusRomNo9L-Regu,,27,27
+"end
+for",9,NimbusRomNo9L-Medi,,7,3
+i,9,CMMI10,,1,1
+∈,9,CMSY10,,1,1
+1,9,CMR10,,1,1
+",",9,CMMI10,,1,1
+2,9,CMR10,,1,1
+", . . . , N",9,CMMI10,,11,11
+iter,6,NimbusRomNo9L-ReguItal,,4,4
+do,9,NimbusRomNo9L-Medi,,2,2
+Compute sparse coding steps (11)–(13) with ﬁxed,9,NimbusRomNo9L-Regu,,47,47
+dictionary,9,NimbusRomNo9L-Regu,,10,10
+d,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+=,9,CMR10,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+g,9,CMBX10,,1,1
+Set resulting,9,NimbusRomNo9L-Regu,,13,13
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+as the current sparse,9,NimbusRomNo9L-Regu,,21,21
+representation,9,NimbusRomNo9L-Regu,,14,14
+"Compute dictionary update steps (15)–(17) with
+ﬁxed",9,NimbusRomNo9L-Regu,,51,46
+b,9,CMBX10,,1,1
+=,9,CMR10,,1,1
+,9,CMEX10,,0,0
+Set resulting,9,NimbusRomNo9L-Regu,,13,13
+g,9,CMBX10,,1,1
+as the current PSF estimate,9,NimbusRomNo9L-Regu,,27,27
+m,6,CMMI7,,1,1
+h,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+∗,9,CMSY10,,1,1
+a,9,CMBX10,,1,1
+m,6,CMMI7,,1,1
+"end
+Output:",9,NimbusRomNo9L-Medi,,11,7
+Estimated PSF,9,NimbusRomNo9L-Regu,,13,13
+g,9,CMBX10,,1,1
+Algorithm 1:,9,NimbusRomNo9L-Medi,,12,12
+Summary of CDL algorithm for PSF esti-,9,NimbusRomNo9L-Regu,,38,38
+mation.,9,NimbusRomNo9L-Regu,,7,7
+The full CDL algorithm is summarized in Alg. 1.,9,NimbusRomNo9L-Regu,,47,47
+A,9,NimbusRomNo9L-Regu,,1,1
+PPENDIX,7,NimbusRomNo9L-Regu,,7,7
+"B
+P",9,NimbusRomNo9L-Regu,,3,1
+ARAMETER,7,NimbusRomNo9L-Regu,,8,8
+S,9,NimbusRomNo9L-Regu,,1,1
+ELECTION,7,NimbusRomNo9L-Regu,,8,8
+(14),9,NimbusRomNo9L-Regu,,4,4
+(15),9,NimbusRomNo9L-Regu,,4,4
+(16),9,NimbusRomNo9L-Regu,,4,4
+(17),9,NimbusRomNo9L-Regu,,4,4
+Our algorithm has four model parameters,9,NimbusRomNo9L-Regu,,39,39
+M,9,CMMI10,,1,1
+"(number of
+sub-pixel offsets of the fundamental PSF",9,NimbusRomNo9L-Regu,,51,40
+g,9,CMBX10,,1,1
+"),",9,NimbusRomNo9L-Regu,,2,2
+K,9,CMMI10,,1,1
+"(order of the
+Lanczos interpolation used in computing the sub-pixel shifts),",9,NimbusRomNo9L-Regu,,76,62
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+"(regularization parameter for the sparse representation),
+and",9,NimbusRomNo9L-Regu,,61,57
+λ,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+(regularization parameter for the fundamental PSF,9,NimbusRomNo9L-Regu,,49,49
+g,9,CMBX10,,1,1
+"). In addition,
+there are ﬁve optimization parameters",9,NimbusRomNo9L-Regu,,53,37
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+"(width parameter of the symmetric Gaussian PSF used to
+initialize the dictionary learning),",9,NimbusRomNo9L-Regu,,91,54
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+"(penalty parameter of the
+ADMM algorithm of the CSC update),",9,NimbusRomNo9L-Regu,,60,34
+L,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+"(inverse step length
+parameter of the FISTA algorithm for the dictionary update),",9,NimbusRomNo9L-Regu,,81,60
+N,9,CMMI10,,1,1
+iter,6,NimbusRomNo9L-Regu,,4,4
+",",6,CMMI7,,1,1
+0,6,CMR7,,1,1
+"(initialization iterations), and",9,NimbusRomNo9L-Regu,,32,32
+N,9,CMMI10,,1,1
+iter,6,NimbusRomNo9L-Regu,,4,4
+"(main iterations).
+We set",9,NimbusRomNo9L-Regu,,25,18
+M,9,CMMI10,,1,1
+= 5,9,CMR10,,3,3
+for all our experiments since this value was,9,NimbusRomNo9L-Regu,,44,44
+"found to give represent a good balance between performance
+(see Fig. 2) and computational cost, which is quadratic in",9,NimbusRomNo9L-Regu,,117,58
+M,9,CMMI10,,1,1
+for 2D signals. We set,9,NimbusRomNo9L-Regu,,22,22
+K,9,CMMI10,,1,1
+= 5,9,CMR10,,3,3
+"for “complex” and “narrow” PSF
+shapes, and",9,NimbusRomNo9L-Regu,,42,30
+K,9,CMMI10,,1,1
+= 10,9,CMR10,,4,4
+"for the “elong” and “wide” shapes since
+these values maximize the accuracy of the Lanczos kernel in
+interpolating the respective PSF shapes.",9,NimbusRomNo9L-Regu,,140,59
+7,6,NimbusRomNo9L-Regu,,1,1
+(a) Narrow PSF,8,NimbusRomNo9L-Regu,,14,14
+(b) Wide PSF,8,NimbusRomNo9L-Regu,,12,12
+(c) Elongated PSF,8,NimbusRomNo9L-Regu,,17,17
+(d) Complex PSF,8,NimbusRomNo9L-Regu,,15,15
+Fig. 3: Reference PSFs,9,NimbusRomNo9L-Regu,,22,22
+(a) 1 pixel per star,8,NimbusRomNo9L-Regu,,20,20
+(b) 10 pixels per star,8,NimbusRomNo9L-Regu,,22,22
+(c) 100 pixels per star,8,NimbusRomNo9L-Regu,,23,23
+Fig. 4: Example test images,9,NimbusRomNo9L-Regu,,27,27
+7,6,NimbusRomNo9L-Regu,,1,1
+with noise level 1.0.,9,NimbusRomNo9L-Regu,,21,21
+"run time of RCA was approximately 6s, and the typical run
+times of the proposed method, which depend on parameter",9,NimbusRomNo9L-Regu,,113,57
+M,9,CMMI10,,1,1
+", are displayed in Fig. 5. While the typical run time of the
+proposed method is approximately 24s when",9,NimbusRomNo9L-Regu,,102,60
+M,9,CMMI10,,1,1
+= 5,9,CMR10,,3,3
+", which
+is the value selected for the results reported in Table II in the
+main document, smaller values of",9,NimbusRomNo9L-Regu,,106,65
+M,9,CMMI10,,1,1
+"have corresponding run
+times that are closer to that of RCA while retaining good PSF
+estimation performance (see Fig. 2). It is also important to",9,NimbusRomNo9L-Regu,,145,61
+"note that the typical run-time reported for RCA excludes the
+time required for identifying isolated stars and extracting their",9,NimbusRomNo9L-Regu,,126,65
+Fig. 2: Dependence on parameter,9,NimbusRomNo9L-Regu,,31,31
+M,9,CMMI10,,1,1
+of mean and median of,9,NimbusRomNo9L-Regu,,21,21
+"PSF estimation performance over all test cases, with param-",9,NimbusRomNo9L-Regu,,59,59
+eters,9,NimbusRomNo9L-Regu,,5,5
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+",",9,NimbusRomNo9L-Regu,,1,1
+λ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+",",9,NimbusRomNo9L-Regu,,1,1
+λ,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+",",9,NimbusRomNo9L-Regu,,1,1
+ρ,9,CMMI10,,1,1
+a,6,CMMI7,,1,1
+", and",9,NimbusRomNo9L-Regu,,5,5
+L,9,CMMI10,,1,1
+g,6,CMMI7,,1,1
+"individually optimized for each
+case. Note that competitive performance is even achieved at",9,NimbusRomNo9L-Regu,,91,59
+K,9,CMMI10,,1,1
+= 1,9,CMR10,,3,3
+", which corresponds to a dictionary with a single ﬁlter,",9,NimbusRomNo9L-Regu,,56,56
+without any interpolation to account for sub-pixel offsets of,9,NimbusRomNo9L-Regu,,61,61
+the PSF.,9,NimbusRomNo9L-Regu,,8,8
+"For the results in Table II, we set",9,NimbusRomNo9L-Regu,,35,35
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+= 1,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+0,9,CMR10,,1,1
+for the,9,NimbusRomNo9L-Regu,,7,7
+"“complex” and “wide” PSF shapes,",9,NimbusRomNo9L-Regu,,32,32
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+= 0,9,CMR10,,3,3
+.,9,CMMI10,,1,1
+5,9,CMR10,,1,1
+for the “narrow”,9,NimbusRomNo9L-Regu,,16,16
+"and “elong” shapes,",9,NimbusRomNo9L-Regu,,19,19
+N,9,CMMI10,,1,1
+iter,6,NimbusRomNo9L-Regu,,4,4
+",",6,CMMI7,,1,1
+0,6,CMR7,,1,1
+= 10,9,CMR10,,4,4
+", and",9,NimbusRomNo9L-Regu,,5,5
+N,9,CMMI10,,1,1
+iter,6,NimbusRomNo9L-Regu,,4,4
+= 100,9,CMR10,,5,5
+". The other
+parameters are all selected according to the star density, as",9,NimbusRomNo9L-Regu,,73,61
+indicated in Table III. The dependency of,9,NimbusRomNo9L-Regu,,41,41
+σ,9,CMMI10,,1,1
+0,6,CMR7,,1,1
+on the PSF shape,9,NimbusRomNo9L-Regu,,16,16
+and of the other parameters on the star density was chosen,9,NimbusRomNo9L-Regu,,58,58
+by selecting the dependency rules to maximize the mean,9,NimbusRomNo9L-Regu,,54,54
+SNR for all test cases over a set of 768 different parameter,9,NimbusRomNo9L-Regu,,60,60
+combinations.,9,NimbusRomNo9L-Regu,,13,13
+TABLE III: Parameter selection according to star density.,9,NimbusRomNo9L-Regu,,57,57
+density,7,NimbusRomNo9L-Regu,,7,7
+param.,7,NimbusRomNo9L-Regu,,6,6
+λ,7,CMMI8,,1,1
+a,5,CMMI6,,1,1
+λ,7,CMMI8,,1,1
+g,5,CMMI6,,1,1
+ρ,7,CMMI8,,1,1
+a,5,CMMI6,,1,1
+L,7,CMMI8,,1,1
+g,5,CMMI6,,1,1
+1,7,NimbusRomNo9L-Regu,,1,1
+"0.01
+0.01
+1
+50",7,NimbusRomNo9L-Regu,,14,4
+10,7,NimbusRomNo9L-Regu,,2,2
+"0.01
+0.1
+1
+100",7,NimbusRomNo9L-Regu,,14,4
+25,7,NimbusRomNo9L-Regu,,2,2
+"0.01
+0.1
+1
+100",7,NimbusRomNo9L-Regu,,14,4
+50,7,NimbusRomNo9L-Regu,,2,2
+"0.01
+0.1
+1
+500",7,NimbusRomNo9L-Regu,,14,4
+100,7,NimbusRomNo9L-Regu,,3,3
+"0.1
+0.1
+10
+1000",7,NimbusRomNo9L-Regu,,15,4
+A,9,NimbusRomNo9L-Regu,,1,1
+PPENDIX,7,NimbusRomNo9L-Regu,,7,7
+"C
+R",9,NimbusRomNo9L-Regu,,3,1
+EFERENCE,7,NimbusRomNo9L-Regu,,8,8
+PSF,9,NimbusRomNo9L-Regu,,3,3
+S AND,7,NimbusRomNo9L-Regu,,5,5
+T,9,NimbusRomNo9L-Regu,,1,1
+EST,7,NimbusRomNo9L-Regu,,3,3
+I,9,NimbusRomNo9L-Regu,,1,1
+MAGES,7,NimbusRomNo9L-Regu,,5,5
+Reference PSFs and test images are shown in Figs. 3 and 4,9,NimbusRomNo9L-Regu,,57,57
+respectively.,9,NimbusRomNo9L-Regu,,13,13
+A,9,NimbusRomNo9L-Regu,,1,1
+PPENDIX,7,NimbusRomNo9L-Regu,,7,7
+"D
+C",9,NimbusRomNo9L-Regu,,3,1
+OMPUTATIONAL,7,NimbusRomNo9L-Regu,,12,12
+C,9,NimbusRomNo9L-Regu,,1,1
+OST,7,NimbusRomNo9L-Regu,,3,3
+C,9,NimbusRomNo9L-Regu,,1,1
+OMPARISON,7,NimbusRomNo9L-Regu,,9,9
+"We compared the run times of the proposed method and
+RCA on a host with a 14 core Xeon E5-2690 CPU. The typical",9,NimbusRomNo9L-Regu,,111,58
+7,5,NimbusRomNo9L-Regu,,1,1
+"The gray scale levels have been adjusted using the “zscale” algorithm,",7,NimbusRomNo9L-Regu,,70,70
+which preferentially displays data around the peak of the pixel distribution,7,NimbusRomNo9L-Regu,,76,76
+without computing the actual histogram (see the documentation for the IRAF,7,NimbusRomNo9L-Regu,,74,74
+"display utility at https://iraf.net/irafhelp.php?val=display&help=Help+Page#s
+zscale algorithm), and is widely used in the astronomical community.",7,NimbusRomNo9L-Regu,,146,77
+"1
+2
+3
+4
+5
+6
+7",4,DejaVuSans,,13,1
+M,4,DejaVuSans-Oblique,,1,1
+"29
+30
+31
+32
+33",4,DejaVuSans,,14,2
+S,3,DejaVuSans,,1,1
+N,3,DejaVuSans,,1,1
+R,3,DejaVuSans,,1,1
+,1,DejaVuSans,,0,0
+(,1,DejaVuSans,,1,1
+d,3,DejaVuSans,,1,1
+B,3,DejaVuSans,,1,1
+),1,DejaVuSans,,1,1
+"Mean
+Median",4,DejaVuSans,,11,6
+"6
+4
+2
+0
+2
+4
+6
+6
+4
+2
+0
+2
+4
+6",2,DejaVuSans,,27,1
+0,0,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+010,0,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+050,2,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+100,2,DejaVuSans,,3,3
+0,0,DejaVuSans,,1,1
+.,0,DejaVuSans,,1,1
+250,0,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+500,2,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0",2,DejaVuSans,,19,3
+"6
+4
+2
+0
+2
+4
+6
+6
+4
+2
+0
+2
+4
+6",2,DejaVuSans,,27,1
+0,1,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+010,1,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+050,2,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+100,1,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+250,1,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+500,2,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+900,1,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0",2,DejaVuSans,,19,3
+"6
+4
+2
+0
+2
+4
+6",2,DejaVuSans,,13,1
+"6
+4
+2
+0
+2
+4
+6",2,DejaVuSans,,13,1
+0,0,DejaVuSans,,1,1
+.,0,DejaVuSans,,1,1
+010,0,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+050,1,DejaVuSans,,3,3
+0,0,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+100,0,DejaVuSans,,3,3
+0,0,DejaVuSans,,1,1
+.,0,DejaVuSans,,1,1
+250,0,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+500,1,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0",2,DejaVuSans,,19,3
+"6
+4
+2
+0
+2
+4
+6",2,DejaVuSans,,13,1
+"6
+4
+2
+0
+2
+4
+6",2,DejaVuSans,,13,1
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+010,2,DejaVuSans,,3,3
+0,0,DejaVuSans,,1,1
+.,0,DejaVuSans,,1,1
+050,0,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+100,2,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+250,1,DejaVuSans,,3,3
+0,0,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+500,0,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,1,DejaVuSans,,1,1
+900,1,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0
+1.2",2,DejaVuSans,,23,3
+8,6,NimbusRomNo9L-Regu,,1,1
+Fig. 5: Dependence on parameter,9,NimbusRomNo9L-Regu,,31,31
+M,9,CMMI10,,1,1
+"of run time of the
+proposed method.",9,NimbusRomNo9L-Regu,,35,18
+"surrounding patches, which can be a time-consuming manual",9,NimbusRomNo9L-Regu,,57,57
+"process, while no such process is required by the proposed
+method.",9,NimbusRomNo9L-Regu,,66,58
+A,9,NimbusRomNo9L-Regu,,1,1
+PPENDIX,7,NimbusRomNo9L-Regu,,7,7
+E,9,NimbusRomNo9L-Regu,,1,1
+P,9,NimbusRomNo9L-Regu,,1,1
+ERFORMANCE,7,NimbusRomNo9L-Regu,,10,10
+C,9,NimbusRomNo9L-Regu,,1,1
+OMPARISONS,7,NimbusRomNo9L-Regu,,10,10
+Selected examples,9,NimbusRomNo9L-Regu,,17,17
+from the performance comparison,9,NimbusRomNo9L-Regu,,31,31
+in Sec. IV-C of the main document are displayed in Figs. 6–17.,9,NimbusRomNo9L-Regu,,62,62
+The sub-pixel resolution PSF estimates shown in these ﬁgures,9,NimbusRomNo9L-Regu,,60,60
+were obtained by Lanczos interpolation of the pixel resolution,9,NimbusRomNo9L-Regu,,62,62
+PSFs estimated via RCA and CDL.,9,NimbusRomNo9L-Regu,,31,31
+"1
+2
+3
+4
+5",4,DejaVuSans,,9,1
+M,4,DejaVuSans-Oblique,,1,1
+"5.0
+7.5
+10.0
+12.5
+15.0
+17.5
+20.0
+22.5",4,DejaVuSans,,37,4
+R,3,DejaVuSans,,1,1
+un,3,DejaVuSans,,2,2
+,1,DejaVuSans,,0,0
+T,2,DejaVuSans,,1,1
+i,1,DejaVuSans,,1,1
+m,4,DejaVuSans,,1,1
+e,3,DejaVuSans,,1,1
+,1,DejaVuSans,,0,0
+(,1,DejaVuSans,,1,1
+s,2,DejaVuSans,,1,1
+),1,DejaVuSans,,1,1
+9,6,NimbusRomNo9L-Regu,,1,1
+"Fig. 6: Contour plots comparing the reference “narrow” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star.",9,NimbusRomNo9L-Regu,,157,116
+Fig. 7: Row and column slices comparing the reference “narrow” shape PSF with estimates computed via RCA and CDL from,9,NimbusRomNo9L-Regu,,117,117
+images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,47,47
+Fig. 8: Row and column slices of the differences between the reference “narrow” shape PSF and the estimates (a constant zero,9,NimbusRomNo9L-Regu,,124,124
+difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,119,119
+"4
+3
+2
+1
+0
+1
+2
+3
+4
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,35,1
+Reference,5,DejaVuSans,,9,9
+0,2,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+050,2,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,3,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+"4
+3
+2
+1
+0
+1
+2
+3
+4
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,35,1
+RCA,5,DejaVuSans,,3,3
+0,5,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+050,5,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+"4
+3
+2
+1
+0
+1
+2
+3
+4
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,35,1
+CDL,5,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,0,DejaVuSans,,1,1
+050,2,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,3,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,3,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0
+
+
+0.0
+0.2
+0.4
+0.6
+0.8
+
+
+0.0
+0.2
+0.4
+0.6
+0.8",4,DejaVuSans,,63,3
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0",5,DejaVuSans,,41,3
+Row slice,6,DejaVuSans,,9,9
+"Reference
+RCA
+CDL
+
+8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,36,9
+Column slice,6,DejaVuSans,,12,12
+"Reference
+RCA
+CDL",5,DejaVuSans,,17,9
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.08
+0.06",5,DejaVuSans,,27,4
+"0.04
+0.02
+0.00
+0.02
+0.04
+0.06",5,DejaVuSans,,29,4
+Row slice,6,DejaVuSans,,9,9
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+"8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,17,1
+Column slice,6,DejaVuSans,,12,12
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+10,6,NimbusRomNo9L-Regu,,2,2
+"Fig. 9: Contour plots comparing the reference “wide” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star.",9,NimbusRomNo9L-Regu,,155,114
+Fig. 10: Row and column slices comparing the reference “wide” shape PSF with estimates computed via RCA and CDL from,9,NimbusRomNo9L-Regu,,116,116
+images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,47,47
+Fig. 11: Row and column slices of the differences between the reference “wide” shape PSF and the estimates (a constant zero,9,NimbusRomNo9L-Regu,,123,123
+difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,119,119
+"6
+4
+2
+0
+2
+4
+6
+6
+4
+2
+0
+2
+4
+6",4,DejaVuSans,,27,1
+Reference,5,DejaVuSans,,9,9
+0,5,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+050,5,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,3,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+400,2,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+800,4,DejaVuSans,,3,3
+"6
+4
+2
+0
+2
+4
+6
+6
+4
+2
+0
+2
+4
+6",4,DejaVuSans,,27,1
+RCA,5,DejaVuSans,,3,3
+0,5,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+050,5,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,3,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+400,2,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+0,5,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+800,5,DejaVuSans,,3,3
+"6
+4
+2
+0
+2
+4
+6
+6
+4
+2
+0
+2
+4
+6",4,DejaVuSans,,27,1
+CDL,5,DejaVuSans,,3,3
+0,5,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+050,5,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,3,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,3,DejaVuSans,,1,1
+400,2,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+800,4,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0
+
+
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+
+
+0.0
+0.2
+0.4
+0.6
+0.8",4,DejaVuSans,,67,3
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0",5,DejaVuSans,,41,3
+Row slice,6,DejaVuSans,,9,9
+"Reference
+RCA
+CDL
+
+8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,36,9
+Column slice,6,DejaVuSans,,12,12
+"Reference
+RCA
+CDL",5,DejaVuSans,,17,9
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.03",5,DejaVuSans,,22,4
+0.02,5,DejaVuSans,,4,4
+"0.01
+0.00
+0.01
+0.02
+0.03",5,DejaVuSans,,24,4
+Row slice,6,DejaVuSans,,9,9
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+"8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,17,1
+Column slice,6,DejaVuSans,,12,12
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+11,6,NimbusRomNo9L-Regu,,2,2
+"Fig. 12: Contour plots comparing the reference “elong” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star.",9,NimbusRomNo9L-Regu,,157,116
+Fig. 13: Row and column slices comparing the reference “elong” shape PSF with estimates computed via RCA and CDL from,9,NimbusRomNo9L-Regu,,117,117
+images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,47,47
+Fig. 14: Row and column slices of the differences between the reference “elong” shape PSF and the estimates (a constant zero,9,NimbusRomNo9L-Regu,,124,124
+difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,119,119
+"4
+3
+2
+1
+0
+1
+2
+3
+4
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,35,1
+Reference,5,DejaVuSans,,9,9
+0,1,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+050,1,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+"4
+3
+2
+1
+0
+1
+2
+3
+4
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,35,1
+RCA,5,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+050,1,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+0,5,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,5,DejaVuSans,,3,3
+"4
+3
+2
+1
+0
+1
+2
+3
+4
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,35,1
+CDL,5,DejaVuSans,,3,3
+0,1,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+050,1,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,3,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0
+
+
+0.0
+0.2
+0.4
+0.6
+0.8
+
+
+0.0
+0.2
+0.4
+0.6
+0.8",4,DejaVuSans,,63,3
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0",5,DejaVuSans,,41,3
+Row slice,6,DejaVuSans,,9,9
+"Reference
+RCA
+CDL
+
+8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,36,9
+Column slice,6,DejaVuSans,,12,12
+"Reference
+RCA
+CDL",5,DejaVuSans,,17,9
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.03
+0.02",5,DejaVuSans,,27,4
+"0.01
+0.00
+0.01
+0.02
+0.03",5,DejaVuSans,,24,4
+Row slice,6,DejaVuSans,,9,9
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+"8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,17,1
+Column slice,6,DejaVuSans,,12,12
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+12,6,NimbusRomNo9L-Regu,,2,2
+"Fig. 15: Contour plots comparing the reference “complex” shape PSF with estimates computed via RCA and CDL from images
+with a star density of 1 pixel per star.",9,NimbusRomNo9L-Regu,,159,118
+Fig. 16: Row and column slices comparing the reference “complex” shape PSF with estimates computed via RCA and CDL,9,NimbusRomNo9L-Regu,,114,114
+from images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,52,52
+Fig. 17: Row and column slices of the differences between the reference “complex” shape PSF and the estimates (a constant,9,NimbusRomNo9L-Regu,,121,121
+zero difference represents a perfect estimate) computed via RCA and CDL from images with a star density of 1 pixel per star.,9,NimbusRomNo9L-Regu,,124,124
+"4
+2
+0
+2
+4
+5
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,29,1
+Reference,5,DejaVuSans,,9,9
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+050,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+"4
+2
+0
+2
+4
+5
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,29,1
+RCA,5,DejaVuSans,,3,3
+0,2,DejaVuSans,,1,1
+.,2,DejaVuSans,,1,1
+050,2,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+"4
+2
+0
+2
+4
+5
+4
+3
+2
+1
+0
+1
+2
+3
+4",4,DejaVuSans,,29,1
+CDL,5,DejaVuSans,,3,3
+0,3,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+050,3,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+200,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+400,4,DejaVuSans,,3,3
+0,4,DejaVuSans,,1,1
+.,4,DejaVuSans,,1,1
+600,4,DejaVuSans,,3,3
+"0.2
+0.4
+0.6
+0.8
+1.0
+
+
+0.0
+0.2
+0.4
+0.6
+0.8
+
+
+0.0
+0.2
+0.4
+0.6
+0.8",4,DejaVuSans,,63,3
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0",5,DejaVuSans,,41,3
+Row slice,6,DejaVuSans,,9,9
+"Reference
+RCA
+CDL
+
+8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,36,9
+Column slice,6,DejaVuSans,,12,12
+"Reference
+RCA
+CDL",5,DejaVuSans,,17,9
+"8
+6
+4
+2
+0
+2
+4
+6
+8
+0.02",5,DejaVuSans,,22,4
+"0.01
+0.00
+0.01
+0.02",5,DejaVuSans,,19,4
+Row slice,6,DejaVuSans,,9,9
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10
+"8
+6
+4
+2
+0
+2
+4
+6
+8",5,DejaVuSans,,17,1
+Column slice,6,DejaVuSans,,12,12
+"RCA - Ref.
+CDL - Ref.",5,DejaVuSans,,21,10

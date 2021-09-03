@@ -1,0 +1,758 @@
+text,space_num
+"                                                 D RAFT VERSION M ARCH 2, 2021",49.0
+                                                 Typeset using LATEX twocolumn style in AASTeX62,49.0
+                                                                                  Stromlo Stellar Tracks: non-solar scaled abundances for massive stars,82.0
+"                                                                                  K. G RASHA , 1, 2 A. ROY , 1, 2 R. S. S UTHERLAND , 1, 2   AND   L. J. K EWLEY 1, 2",82.0
+"                                                                   1 Research   School of Astronomy and Astrophysics, Australian National University, Canberra, ACT 2611, Australia",67.0
+"                                                                                2 ARCCentre of Excellence for All Sky Astrophysics in 3 Dimensions (ASTRO 3D), Australia",80.0
+                                                                                                          ABSTRACT,106.0
+arXiv:2101.01197v3 [astro-ph.GA] 28 Feb 2021,0.0
+"                                                           We present the Stromlo Stellar Tracks, a set of stellar evolutionary tracks, computed by modifying the Mod-",59.0
+"                                                        ules for Experiments in Stellar Astrophysics (MESA) 1D stellar evolution package, to fit the Galactic Concor-",56.0
+"                                                        dance abundances for hot (T > 8000 K) massive (≥ 10 M ) Main-Sequence (MS) stars. Until now, all stellar",56.0
+"                                                        evolution tracks are computed at solar, scaled-solar, or alpha-element enhanced abundances, and none of these",56.0
+                                                        models correctly represent the Galactic Concordance abundances at different metallicities. This paper is the,56.0
+                                                        first implementation of Galactic Concordance abundances to the stellar evolution models. The Stromlo tracks,56.0
+"                                                        cover massive stars (10 ≤ M/M ≤ 300) with varying rotations (v/vcrit = 0.0, 0.2, 0.4) and a finely sampled",56.0
+                                                        grid of metallicities (−2.0 ≤ [Z/H] ≤ +0.5; ∆[Z/H] = 0.1) evolved from the pre-main sequence to the end,56.0
+                                                        of 12 Carbon burning. We find that the implementation of Galactic Concordance abundances is critical for the,56.0
+"                                                        evolution of main-sequence, massive hot stars in order to estimate accurate stellar outputs (L, Teff , g), which,",56.0
+"                                                        in turn, have a significant impact on determining the ionizing photon luminosity budgets. We additionally sup-",56.0
+                                                        port prior findings of the importance that rotation plays on the evolution of massive stars and their ionizing,56.0
+                                                        budget. The evolutionary tracks for our Galactic Concordance abundance scaling provide a more empirically,56.0
+                                                        motivated approach than simple uniform abundance scaling with metallicity for the analysis of H II regions and,56.0
+"                                                        have considerable implications in determining nebular emission lines and metallicity. Therefore, it is important",56.0
+                                                        to refine the existing stellar evolutionary models for comprehensive high-redshift extragalactic studies. The,56.0
+                                                        Stromlo tracks are publicly available to the astronomical community online.,56.0
+                                                        Keywords: stars: evolution — stars: general — stars: massive — stars: rotation — stars: abundances — ISM:,56.0
+                                                                  abundances,66.0
+                                                                     1. INTRODUCTION                                             interpret observations. This is critically important as solar-,69.0
+                                                  Our understanding of stellar physics and our ability to cre-                   scaled stellar evolutionary tracks are in general not well,50.0
+                                               ate realistic and accurate stellar evolution models across a                      matched to stellar observations and subsequent nebular emis-,47.0
+                                               wide range of stellar parameters heavily impact our ability                       sion modeling (see Przybilla 2008; Morel 2009; Nicholls,47.0
+                                               to create physically realistic stellar population synthesis and                   et al. 2017; Cazorla et al. 2017; Kewley et al. 2019a). The,47.0
+                                               photoionization models to interpret galaxy spectra. Most                          implementation of abundance patterns is especially critical,47.0
+"                                               stellar evolutionary models (e.g., BaSTI (Pietrinferni et al.                     in massive, hot stars that dominate the excitation sources for",47.0
+                                               2004; Hidalgo et al. 2018); Geneva (Ekström et al. 2012);                        H II regions. This is especially important because nearby OB,47.0
+"                                               Padova (Girardi et al. 2004); Y2 (Yi et al. 2001, 2003; De-                       stars quite often exhibit metal abundances that are generally",47.0
+                                               marque et al. 2004)) assume solar or scaled-solar abundances                      lower than solar estimates (Morel 2009).,47.0
+                                               (Anders & Grevesse 1989; Asplund et al. 2009). Two imme-                             Iron abundances relative to α-element abundances change,47.0
+                                               diate problems arise from currently available stellar tracks.                     as a function of time and with the galactic environment (Wyse,47.0
+"                                                  First, solar (Anders & Grevesse 1989; Asplund et al. 2009)                     & Gilmore 1993) and this systematic variation of [α/Fe]",50.0
+                                               relative abundance ratios conflict observed abundance ratios                      needs to be taken into account at different metallicities. It,47.0
+"                                               in H II regions in the Milky Way, Large Magellanic Cloud, or                      is not just iron that changes with metallicity – a complete",47.0
+                                               Small Magellanic Cloud at a given metallicity (Morel 2009;                        census on the chemical history of other elements and their,47.0
+                                               Nieva & Przybilla 2012; Nicholls et al. 2017). The solar-                         evolution with overall metallicity is critical to determine ac-,47.0
+"                                               scaled and alpha-enhanced abundances predict non-realistic                        curate metallicity measurements in galaxies, especially at",47.0
+"                                               stellar quantity measurements (L, g, Teff , etc) and thus will                    high redshift. The [NII]/[OII] ratio is an ideal abundance",47.0
+"                                               predict non-realistic ionizing photon budgets when used to                        diagnostic (Kewley & Dopita 2002), but at high redshift the",47.0
+"                                                                                                                                 [OII]λλ3727, 3729 doublet is often unobservable, relying on",129.0
+                                                                                                                                 calibrations based on [NII]/Hα (Denicoló et al. 2002) and/or,129.0
+"                                               kathryn.grasha@anu.edu.au                                                         the [NII]/[OIII] ratio (Pettini & Pagel 2004). Often yet, only",47.0
+"                                                                                                                                 red line ratios are available such as Hα, [NII], and [SII], and",129.0
+avr_spaces,57.57692307692308
+ 2                                                            G RASHA ET AL .,1.0
+"the O/H ratio relies on indirect methods using combinations            the Stromlo Stellar Tracks1 , self-consistent stellar evolu-",0.0
+of these line ratios (Dopita et al. 2016).                             tion models using the Modules for Experiments in Stellar,0.0
+"   Second, coarse metallicity grids are usually assumed in             Astrophysics (MESA2 ; Paxton et al. 2011, 2013, 2015, 2018,",3.0
+the calculation of stellar evolutionary tracks. These coarse           2019) stellar evolution code. We build upon the stellar evo-,0.0
+metallicity griding results in non-accurate values while in-           lutionary models used in the MESA Isochrones and Stellar,0.0
+"terpolating different stellar quantities (L, g, Teff , etc) for the    Tracks (MIST) by Choi et al. (2016) to present models with",0.0
+metallicities falling in between the grid metallicities. The           the scaling abundances based on Milky Way stellar abun-,0.0
+coarse metallicity grids limit the resolution at which theo-           dance data referred to as ‘Galactic Concordance’ (Nicholls,0.0
+retical strong-line metallicity diagnostics can be reliably cal-       et al. 2017). We focus on massive (>10 M ) hot stars that,0.0
+"culated (Kewley et al. 2019b,a). Interpolation of metallicity          dominate the ionizing budget that power H II regions and",0.0
+diagnostics in coarse metallicity grids prevents accurate mea-         provides the feedback that regulates the efficiency of star,0.0
+surements of nebular emission lines for star-forming galaxies          formation (Mckee & Ostriker 2007; Krumholz et al. 2012;,0.0
+and potentially has important consequences for the interpre-           Hopkins et al. 2012) and drives turbulence and wind out-,0.0
+tation of galactic properties of high-redshift galaxies such as        flows.,0.0
+"their star formation rates (SFRs; e.g., Kewley et al. 2004) and           We configure MESA to include all the same physical pro-",0.0
+ionization parameters which show metallicity dependence in             cesses and parameters values as used in the MIST library,0.0
+ionization parameter diagnostics (Kewley & Dopita 2002;                as described by Choi et al. (2016) with modifications to im-,0.0
+Kewley et al. 2019a).                                                  prove the treatment of massive stars as outline by Roy et al.,0.0
+"   Accurate determination of the chemical evolutionary state           (2020), which includes our inclusion of Galactic Concor-",3.0
+of distant galaxies will be critically important for next gen-         dance abundances to replace replace commonly adopted uni-,0.0
+"eration observatories such as JWST that will reveal the first          form scaling abundances (Section 2.1), radiative opacities",0.0
+"galaxies. These objects will not be physically represented             (Section 2.2), and our treatment of mixing mechanisms (Sec-",0.0
+with current stellar evolutionary models at Solar or alpha-            tion 2.3). The software used to generate the Stromlo Tracks,0.0
+"enhanced abundances and will predict non-realistic stellar             is the GALCON-HOT-MIST package, to be described in Roy",0.0
+"quantities and thus, ionizing photon budgets. New stel-                et al. (in preparation).",0.0
+"lar evolution models that are not limited to Solar or alpha-              For this work, we use MESA version v9793 compiled with",0.0
+enhanced abundance ratios are critically needed. New stel-             GNU Fortran version 7.2.0 installed as part of MESA SDK3 .,0.0
+lar evolution models and their opacities additionally need to          All of our MESA calculations implement the same spatial,0.0
+be calculated at much finer metallicity intervals of ∼0.1–0.2          and temporal resolution conditions as adopted by Choi et al.,0.0
+dex in log(O/H) to avoid non-accurate values while interpo-            (2016) for MIST. Below we briefly outline the parameters in,0.0
+lating different stellar quantities. These new tracks will allow       MESA/MIST immediately pertinent to this work and we re-,0.0
+"for consistent abundance ratios to be used in stellar popula-          fer the reader to Paxton et al. (2011, 2013, 2015) for more",0.0
+"tion synthesis and photoionization models to derive accurate,          detailed information on MESA and Choi et al. (2016) for",0.0
+high-resolution metallicity diagnostics for the first time.            more detailed information regarding the physical processes,0.0
+   This paper will enable the future development of atmo-              in MIST. For detailed information regarding the impact of,3.0
+sphere and photoionization nebular modeling with the same              our different setups to the MIST models for high mass stars,0.0
+physical inputs to self-consistently predict the emission spec-        and associated uncertainties in various parameter choices and,0.0
+"tra arising from ionized nebula and central ionizing stellar           their effects, we refer the reader to Roy et al. (2020).",0.0
+population. This paper is the first in this series and presents,0.0
+the stellar evolutionary tracks using Galactic Concordance                            2.1. Non-solar elemental abundances,0.0
+abundances to be used in modern stellar population synthe-,0.0
+                                                                          We adopt the non-solar abundance standard developed by,74.0
+"sis, atmosphere, and photoionization models. The Galactic",0.0
+                                                                       Nieva & Przybilla (2012) and Nicholls et al. (2017) referred,71.0
+Concordance reference standard and scaling system serves,0.0
+                                                                       to as ‘Galactic Concordance’ abundances. Galactic concor-,71.0
+as an empirical basis for interpreting observations and deter-,0.0
+                                                                       dance is based on the observed metallicities of 29 main-,71.0
+mining the physical conditions of H II regions.,0.0
+                                                                       sequence B-stars in local galactic region (Nieva & Przybilla,71.0
+"   The paper is organized as follows. In Section 2, we de-",3.0
+                                                                       2012) and is augmented with elements that are of minor,71.0
+scribe the numerical methods adopted in our stellar evolu-,0.0
+                                                                       importance in nebular and stellar modeling (Nicholls et al.,71.0
+tion models. Section 3 reports the results and comparison,0.0
+                                                                       2017). Galactic Concordance abundances are representative,71.0
+between the Stromlo non-uniform abundance stellar tracks,0.0
+"                                                                       of present day, nearby massive stars (Nieva & Przybilla 2012)",71.0
+and the scaled-solar MIST stellar tracks. We discuss the im-,0.0
+                                                                       and we adopt the scaling method in order to scale elements,71.0
+pact of the abundance ratio implementation on the photon,0.0
+                                                                       consistently down to [Fe/H] = −2 using the scaling relation,71.0
+ionizing budget in Section 4. We conclude and summarize,0.0
+our results in Section 5.,0.0
+                                                                          1 The Stromlo Stellar Tracks are publicly available online at https://sites.,74.0
+ 2. METHOD: STELLAR EVOLUTION CALCULATION                              google.com/view/stromlotracks,1.0
+                                                                          2 http://mesa.sourceforge.net,74.0
+   In order to explore the impact of non-uniform scaled,3.0
+                                                                          3 http://www.astro.wisc.edu/∼townsend/static.php?ref=mesasdk,74.0
+"abundances on stellar evolutionary tracks, we construct",0.0
+avr_spaces,14.208333333333334
+                                                    S TROMLO S TAR TRACKS                                                       3,52.0
+"of Nicholls et al. (2017). The Galactic Concordance refer-        consistency in our stellar tracks, we calculate new OPAL4",0.0
+ence standard and scaling method provides a reliable present-     opacity tables for our tracks that use Galactic Concordance,0.0
+day cosmic abundance reference points for anchoring chem-         abundances. The OPAL opacity tables must be re-computed,0.0
+ical evolution models to observation. Most importantly for        at each metallicity value in our stellar grid (Section 2.5) be-,0.0
+this work and future work on creating self-consistent atmo-       cause we cannot assume uniform scaling as is traditionally,0.0
+"spheres and nebular models based on the same abundance,           done with the OPAL tables in MESA that assume solar abun-",0.0
+Galactic Concordance allows for linking the stellar abun-         dances.,0.0
+dance scale to the nebular abundance scale. As elements,0.0
+"have been observed to vary systematically with [Fe/H], un-                                  2.3. Mixing processes",0.0
+"like MIST, we do not assume that all elements uniformly              In stellar evolution codes, mixing describes the convective",0.0
+scale with Fe and we adopt the non-uniform scaling relation       transport of energy within the stellar interior. We implement,0.0
+for the abundances of Nicholls et al. (2017).                     the Ledoux criterion for the convective mixing of elements,0.0
+   We adopt the same linear fits for the elemental scaling pa-    as adopted in Choi et al. (2016). The only change in our,3.0
+rameter given in Nicholls et al. (2017) and use stellar abun-     mixing methods is the inclusion of the instability caused by,0.0
+dance measurements using iron as the reference scale in all       magnetic torques by dynamo-generated fields referred to as,0.0
+"our models. The piecewise linear fit for iron-based scaling       Spruit Tayler (ST), which follows the standard approach used",0.0
+"for the α and α-like elements X is calculated as follows:         for high-mass stellar evolution in MESA (Heger et al. 2000,",0.0
+                                                                  2005). This is combined with the five rotationally induced in-,66.0
+"    [X/Fe] = +ΞFe                  −2.5 < [Fe/H] < −1.0           stabilities MIST used: dynamical shear instability (DSI), sec-",4.0
+"    [X/Fe] = −ΞFe × [Fe/H]         −1.0 < [Fe/H] < +0.5           ular shear instability (SSI), Solberg-Høiland (SH) instability,",4.0
+"                                                                  Eddington-Sweet (ES) circulation, and Goldreich-Schubert-",66.0
+    [X/Fe] = −ΞFe × 0.5                      [Fe/H] > +0.5        Fricke (GSF) instability.,4.0
+                                                           (1)       The diffusion coefficients for these six rotational mixing,59.0
+                                                                  processes are combined with the diffusion coefficients for,66.0
+"where ΞFe is the iron-based scaling factor for each element,      non-rotational processes: convection, convection overshoot,",0.0
+"listed in Table 2 of Nicholls et al. (2017). The elements H,      semiconvective mixing, and thermohaline mising. The to-",0.0
+"He, Li, Be and B are not described by the Ξ parameter, be-        tal sum of the angular momentum and abundance diffusion",0.0
+"cause hydrogen is the reference element, we assume helium         equations describe the diffusion coefficients. MESA imple-",0.0
+scales simply with the oxygen scaling factor. Carbon and ni-      ments mixing using the common approach of treating the,0.0
+trogen are not well described by a simple piecewise linear        chemical composition D and angular momentum ν transport,0.0
+"fit because of the complexities of primary and secondary en-      in a diffusion approximation (e.g., Potter et al. 2012). We",0.0
+richment and are fit via the expression:                          calculate D and ν following Choi et al. (2016) with the addi-,0.0
+                                                                tional inclusion ST instabilities as implemented in Roy et al.,27.0
+"          log(X/O) = log 10a + 10[log(O/H)+b] ,            (2)    (2020) for high mass stellar evolution.",10.0
+                                                                     For further details of mixing mechanisms and angular mo-,69.0
+"                                                                  mentum transport in MIST, we refer readers to Choi et al.",66.0
+"where for carbon a = −0.8, b = 2.72, and for nitrogen a =",0.0
+                                                                  (2016).,66.0
+"−1.732, b = 2.19. For fluorine, chlorine, neon and argon,",0.0
+there are no extensive stellar abundance scaling data and we                                     2.4. Mass loss,0.0
+assume their abundances scale with oxygen.,0.0
+                                                                     Mass loss is one of the dominant uncertainties in evolu-,69.0
+                                                                  tionary models of massive stars (Smith 2014). Our treatment,66.0
+                    2.2. Radiative opacities                      of mass loss via stellar winds is based on the “Dutch” mass,20.0
+   The radiative opacity tables implemented in MESA are           loss recipe that is standard in MESA. We adopt the Vink,3.0
+divided into two temperature regimes and are treated sepa-        et al. (2001) mass loss prescription for metallicity-dependent,0.0
+"rately, high (log T /K > 4) and low (log T /K < 4) temper-        winds in hot T > 104 K stars. Mass loss is enhanced by rota-",0.0
+atures. Our model grids are all computed in the high mass         tion (Section 2.5) and our prescriptions for mass loss matches,0.0
+regime M > 10 M and thus we only use the high tem-                the stellar wind recipe of Choi et al. (2016) for MIST.,0.0
+"perature opacity tables. The radiative opacities implemented         As discussed in Roy et al. (2020), varying the mass-loss",0.0
+in MESA for the high temperature regime are from OPAL             rate by a constant factor has minimal impact on the He sur-,0.0
+"(Rogers & Iglesias 1992; Iglesias & Rogers 1993, 1996) or         face fraction for rapidly rotating stars. This is due to rota-",0.0
+"OP (Seaton 2005). Following Choi et al. (2016), we use            tional mixing providing a mechanism to bring He to the sur-",0.0
+"OPAL opacities. The OPAL opacity tables in MESA and               face that is independent of mass-loss. On the other hand,",0.0
+"as incorporated in MIST are computed using Asplund et al.         for non-rotating stars, varying the mass-loss rate by a con-",0.0
+(2009) photospheric abundances.                                   stant factor has a non-negligible impact on the enhancement,0.0
+   The Galactic Concordance non-uniform parametric scal-,3.0
+ing provides a more physically realistic approach than sim-,0.0
+                                                                     4 https://opalopacity.llnl.gov,69.0
+ple uniform abundance scaling with metallicity. For self-,0.0
+avr_spaces,12.774193548387096
+ 4                                                           G RASHA ET AL .,1.0
+of surface abundances. Roy et al. (2020) found that tripling          rate for models of massive stellar evolution and is supported,0.0
+the mass-loss rate for a 100 M star allows surface He en-             by theoretical models of massive star formation independent,0.0
+richment to occur for metallicites as low as [Fe/H] = −1.             of metallicity (Rosen et al. 2012). We do not implement ro-,0.0
+Reducing the mass-loss rate by a factor of 3 prevents the sur-        tation rates faster than v/vcrit = 0.4 as Roy et al. (2020) finds,0.0
+"face He mass fraction from ever reaching above 30%, elim-             qualitatively similar results for all models with v/vcrit > 0.4.",0.0
+"inating the WR evolutionary phase, even at solar metallic-            The results of our grid of stellar evolution models are de-",0.0
+ity. The main effect of increasing or decreasing the mass-            scribed in the following section.,0.0
+loss rate thus changes the maximum amount of surface He,0.0
+"enrichment, with a larger impact on non-rotating stars.                                           3. RESULTS",0.0
+                                                                         Our primary goal is to produce extensive grids of stellar,73.0
+                         2.5. Model grid                              evolutionary tracks for massive stars that cover a wide range,25.0
+"   We calculate extensive grids of stellar evolutionary tracks        in stellar masses, ages, evolutionary phases, and metallicities",3.0
+"that cover a wide range in stellar mass, rotation, and metal-         at non-solar scaled abundances for ease of comparison to so-",0.0
+licities as follows:                                                  lar scaled abundance stellar tracks. Our high mass models are,0.0
+"   Stellar mass: The stellar mass of evolutionary tracks              terminated at the end of core carbon burning (C-burn) stage,",3.0
+ranges from 10 to 300 M following the same spacing as                 the point at which the central 12 C mass fraction drops below,0.0
+MIST for a total of 55 models in our mass range: ∆M =                 10−4 .,0.0
+"1M in the range 10–20 M , ∆M = 2M in the range",0.0
+"22–40 M , ∆M = 5M in the range 45–150 M , and                                                  3.1. Stellar Tracks",0.0
+∆M = 25M in the range 175–300 M . We choose                              Figure 1 shows MIST (solar) and Galactic Concordance,0.0
+these masses to provide sufficient coverage of the range of           evolutionary tracks at [Fe/H] = 0.0 and v/vcrit = 0.4. The,0.0
+masses that dominate the photoionization budget for ease of           differences in the tracks are relatively minor. More massive,0.0
+input into atmosphere and nebular modeling. The models are            stars (> 150 M ) with solar abundances tend to burn hotter,0.0
+evolved through the end of carbon burning and are stopped             and more luminous than the galactic concordance abundance,0.0
+when the central 12 C abundance drops to 10−4 .                       tracks due to having a higher metal content. The change,0.0
+   Stellar abundance: We calculate grids with metallicity             in the solar and non-solar scaled abundance tracks becomes,3.0
+"values from [Fe /H] = −2.0 to +0.5, with 0.1 dex spacing.             more noticeable with increasing deviation at sub solar metal-",0.0
+"We calculate Galactic Concordance non-solar-scaled abun-              licities, a direct result of the non-uniform scaling of abun-",0.0
+dance (Nicholls et al. 2017) grids where the relative fraction        dances with metallcities in the Stromlo tracks. This implies,0.0
+of each elemental abundance as a function of metallicity is           that the inferred ionizing spectra from these stars will have,0.0
+calculated according to Eqn. 1. We also calculate protoso-            an increasingly important impact on the interpretation of HII,0.0
+lar abundance (Asplund et al. 2009) grids as implemented              region emission line spectra at metallicities less than solar.,0.0
+"in MIST. Following Choi et al. (2016), we calculate the ini-             Figure 2 shows the impact of rotation on the Galactic Con-",0.0
+"tial helium abundance adopting a scaling of ∆Y/∆Z = 1.5               cordance and solar stellar evolutionary tracks at [Fe/H] = 0.0,",0.0
+"with the primordial helium abundance Yp = 0.249. Once Y               [Fe/H] = −1.0, and [Fe/H] = −2.0. The rotating models tend",0.0
+"is computed for a value of Z, we calculate X as X = 1 – Y –           to be hotter and more luminous overall than the non-rotating",0.0
+Z.                                                                    star models as a result of the reduced mean opacity in rotating,0.0
+   Stellar rotation: Rotation can significantly alter the evo-        stars. The same effect in solar scaled MIST tracks was also,3.0
+"lution of massive stars (Heger et al. 2000, 2005) and is par-         reported in Choi et al. (2017). The effect of rotation on the",0.0
+ticularly important for our massive stellar models. We com-           stellar evolutionary tracks has the largest impact at the lowest,0.0
+"pute models both with and without rotation. Following the             metallicities ([Fe/H] = −2.0 in Figure 2). Overall, rotation in",0.0
+"prescription described Choi et al. (2016), we initialize our          stars has a larger impact than abundance ratio changes in the",0.0
+"rotating stars to begin with solid body rotation at the Zero          stellar tracks (Figure 1), with the differences most noticeable",0.0
+"Age Main-Sequence (ZAMS). We use v/vcrit values of 0,                 at the lowest metallicities ([Fe/H] = −2.0) as well.",0.0
+"0.2, and 0.4, where v/vcrit is the critical surface linear veloc-        Figures 3 and 4 show the stellar surface gravity g as a func-",0.0
+"ity, defined at the equator of the star as:                           tion of the effective temperature Teff and compares the im-",0.0
+                                                                    pact of abundances and stellar rotation. Similar to a star’s,27.0
+                    2              L      GM,20.0
+"                  vcrit = 1 −                  ,              (3)     luminosity(Figure 1), we find that for stars with metallicities",18.0
+"                                 LEdd       R3                        [Fe/H]& −1, the galactic concordance abundance patterns",33.0
+where the Eddington luminosity LEdd is:                               have an equally important role as rotation (Figure 4) in de-,0.0
+                                                                      termining the intrinsic stellar properties of Teff and surface,70.0
+"                                 4πGM c                               gravity g. For stars at low metalicities ([Fe/H] = −2), ro-",33.0
+"                        LEdd =            ,                   (4)",24.0
+                                    κ                                 tation has a larger impact in determining the stellar proper-,36.0
+"for a star with mass M , radius R, luminosity L, and opac-            ties (e.g., Teff , surface gravity g, luminosity) than the correct",0.0
+"ity κ, and speed of light c. We adopt a fiducial rotation rate        abundance patterns.",0.0
+v/vcrit = 0.4 wherever the rotation rate is not explicitly men-,0.0
+                                                                                             3.2. Rotational Mixing,93.0
+tioned as this value is frequently used as a standard rotating,0.0
+avr_spaces,7.5
+                                                                     S TROMLO S TAR TRACKS                                                               5,69.0
+                                  [Fe/H] = 0.0                                 [Fe/H] = -1.0                                   [Fe/H] = -2.0,34.0
+          7.0,10.0
+                                                              7.0                                              7.0,62.0
+          6.5,10.0
+                                                              6.5                                              6.5,62.0
+          6.0,10.0
+                                                              6.0                                              6.0,62.0
+          5.5 Gal Con A09,10.0
+                                                              5.5                                              5.5,62.0
+log L/L,0.0
+          5.0     10 M   10,10.0
+                  20     20                                   5.0                                              5.0,18.0
+          4.5       30           30,10.0
+                    50           50                           4.5                                              4.5,20.0
+                    70           70,20.0
+          4.0       80           80,10.0
+                    100          100,20.0
+                                                              4.0                                              4.0,62.0
+          3.5       150          150,10.0
+                    300          300,20.0
+                                                              3.5                                          3.5,62.0
+          3.0,10.0
+                          5.0            4.5      4.0   3.5    5.5      5.0        4.5          4.0     3.5 5.5         5.0        4.5          4.0    3.5,26.0
+                                log Teff (K)                                   log Teff (K)                                    log Teff (K),32.0
+" Figure 1. [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) grid of stellar evolutionary tracks over a wide range of stellar",1.0
+ masses computed with Asplund et al. (2009) solar abundances (colored dotted lines) and Stromlo Galactic Concordance (Gal Con) abundances,1.0
+ (solid pink lines) at different stellar masses. The stellar tracks for Galactic Concordance and Solar abundances are by design the same at [Fe/H],1.0
+ = 0.0 (left) and the tracks begin to deviate with decreasing metallicities due to non-uniform scaling of abundances with metallcities.,1.0
+                                   [Fe/H] = 0.0                                 [Fe/H] = -1.0                                   [Fe/H] = -2.0,35.0
+          7.0,10.0
+                                                           7.0                                                 7.0,59.0
+          6.5,10.0
+                                                           6.5                                                 6.5,59.0
+          6.0,10.0
+                                                           6.0                                                 6.0,59.0
+          5.5                                              5.5                                                 5.5,10.0
+log L/L,0.0
+          5.0   M                                          5.0,10.0
+                    10                                                                                         5.0,20.0
+          4.5       20                                     4.5,10.0
+                    30                                                                                         4.5,20.0
+          4.0       60                                     4.0,10.0
+                    100                                                                                        4.0,20.0
+          3.5       150         v/vcrit = 0.4              3.5,10.0
+                    300         v/vcrit = 0.0,20.0
+                                                           3.0                                                 3.5,59.0
+          3.0,10.0
+                          5.0        4.5      4.0       3.5 5.5          5.0       4.5      4.0          3.5             5.0         4.5         4.0,26.0
+                                 log Teff (K)                                  log Teff (K)                                    log Teff (K),33.0
+" Figure 2. [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) grid of Stromlo stellar evolutionary tracks showing the effect",1.0
+ of rotation on the evolutionary tracks computed with Galactic Concordance abundances at different stellar masses. Models with rotation are,1.0
+ shown in solid lines with v/vcrit = 0.4 and non-rotating v/vcrit = 0.0 models are shown in dashed lines. Rotation plays a significant role with,1.0
+ abundances (Figure 1) in determining Teff and luminosity.,1.0
+"    In the previous section, we examined the impact that ro-                             et al. 2020). Rotational mixing and the enhancement of the",4.0
+" tation plays in determining Teff and luminosity, which ap-                              surface He begins very fast; the surface He abundance rises",1.0
+ pears to be as important as the chemical abundances. Teff                               to over 40% just after ∼2 Myr for rotating v/vcrit = 0.4 stars,1.0
+ and luminosity are closely connected to mass-loss and sur-                              of &100 M at metallicity [Fe/H] = 0.0. The two con-,1.0
+ face abundances of different elements and we demonstrate                                vective zones (inner core and outer core) of rotating stars,1.0
+ here the measured surface abundance of our massive stars                                are connected by three dominant rotational transport mech-,1.0
+" and its relation with rotational mixing.                                                anisms: meridional circulation (ES circulation), GSF insta-",1.0
+"    Figure 5 shows the surface 4 He mass fraction as a func-                             bility, and Spruit dynamo mixing (Roy et al. 2020). For non-",4.0
+" tion of time for a sample of initial stellar masses, metal-                             rotating massive stars, there are no diffusion mechanisms for",1.0
+" licities ([Fe/H] = 0.0, −1.0, and −2.0), and three rotation                             the transport of chemical elements from the inner convec-",1.0
+" rates (v/vcrit = 0.4, 0.2, and 0.0). Figure 5 demonstrates                              tive core to the outer convective shell, and therefore there is",1.0
+ that rotation in stars more massive than ∼ 100 M heav-                                  no surface He enhancement. Rotational mixing enhances the,1.0
+" ily impacts the surface composition; massive, rotating stars                            surface composition of the massive stars with the effect in-",1.0
+ spend the vast majority of their lives on the main sequence                             creasing with decreasing metallicity.,1.0
+ with enhanced He surface abundances consistent with Wolfe                                  Figure 6 shows the enhancement of the surface mass frac-,1.0
+" Rayet stellar evolutionary phase (e.g, Abbott & Conti 1987;                             tions 14 N normalized by the initial 14 Ninitial abundance, as a",1.0
+" Crowther et al. 1995; Meynet & Maeder 2003, 2005; Roy                                   function of time and rotation rate for a range of initial stel-",1.0
+avr_spaces,17.38888888888889
+    6                                                                             G RASHA ET AL .,4.0
+                                           [Fe/H] = 0.0                                [Fe/H] = -1.0                               [Fe/H] = -2.0,43.0
+                 4.5                                                     4.5                                      4.5,17.0
+                 4.0                                                     4.0                                      4.0,17.0
+log g (cm s 2),0.0
+                 3.5                                                     3.5                                      3.5,17.0
+                       Gal Con       A09,23.0
+                 3.0             M                                       3.0                                      3.0,17.0
+                          50               50,26.0
+                          70               70,26.0
+                 2.5      100              100                           2.5                                      2.5,17.0
+                          150              150,26.0
+                          300              300,26.0
+                 2.0 80      70        60      50 40      30       20    2.0 80   70   60   50 40      30    20   2.0 80    70    60    50    40   30    20,17.0
+                                           Teff (kK)                                    Teff (kK)                                   Teff (kK),43.0
+" Figure 3. [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) grid of stellar evolutionary tracks showing the surface gravity as",1.0
+ a function of effective temperatures over a range of stellar masses computed with Asplund et al. (2009) solar abundances (A09; colored dotted,1.0
+ lines) and Stromlo Galactic Concordance abundances (Gal Con; solid pink lines) at different stellar masses. The stellar tracks for Galactic,1.0
+ Concordance and Solar abundances are similar at Solar metallicity and start to deviate and increase in their relative importance with decreasing,1.0
+ metallicities.,1.0
+                                           [Fe/H] = 0.0                                [Fe/H] = -1.0                               [Fe/H] = -2.0,43.0
+                                                               M,63.0
+                 4.5                                               50    4.5                                      4.5,17.0
+                                                                   70,67.0
+                                                                   100,67.0
+                 4.0                                               150   4.0                                      4.0,17.0
+log g (cm s 2),0.0
+                                                                   300,67.0
+                 3.5                                                     3.5                                      3.5,17.0
+                 3.0                                                     3.0                                      3.0,17.0
+                 2.5       v/vcrit = 0.4,17.0
+                                                                         2.5                                      2.5,73.0
+                           v/vcrit = 0.0,27.0
+                 2.0 80      70        60      50 40      30       20    2.0 80   70   60   50 40      30    20   2.0 80    70    60    50    40   30    20,17.0
+                                           Teff (kK)                                    Teff (kK)                                   Teff (kK),43.0
+" Figure 4. [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) grid of Stromlo stellar evolutionary tracks displaying the effect",1.0
+ of rotation on the surface gravity as a function of effective temperatures for stellar tracks computed with Galactic Concordance abundances at,1.0
+ different stellar masses. Models with rotation are shown in solid lines with v/vcrit = 0.4 and non-rotating v/vcrit = 0.0 models are shown in,1.0
+ dashed lines. Rotation starts to play a more significant role than abundances alone (Figure 3) determinations in determining the stellar properties,1.0
+ at low ([Fe/H] < −1.0) metallicities.,1.0
+" lar masses and metallicities. Figure 6 and Figure 5 demon-                                   output compared to stars with non-enhanced He, N surface",1.0
+" strate that the surface mass fractions of helium and nitrogen                                compositions (e.g., Choi et al. 2017; Roy et al. 2020).",1.0
+ are enhanced at low metallicity regardless of the rotation and,1.0
+ enhanced at high rotation regardless of the metallicity. The                                                 3.3. Main sequence lifetimes,1.0
+ enhancement is more prominent for more massive stars. At,1.0
+                                                                                                 The enhanced mixing in the cores of rotating stars respon-,97.0
+" [Fe/H] = 0.0, our Galactic Concordance stars show a max-",1.0
+                                                                                              sible for increasing their brightness also extends the main se-,94.0
+ imum nitrogen surface enhancement of ∼ 14. For the low,1.0
+                                                                                              quence lifetimes of the stars. Figure 7 shows the main se-,94.0
+" metallicity stars [Fe/H] <–1.0, the nitrogen enhancement is",1.0
+"                                                                                              quence lifetime–initial mass relation. As expected, the main",94.0
+ a factor of ∼30–32 relative to their initial 14 N abundances.,1.0
+                                                                                              sequence lifetime is longer for rotating stars due to rotational,94.0
+    The effect of rotational mixing on the observed surface,4.0
+                                                                                              mixing channeling additional fuel into the core of the star.,94.0
+ abundance chemical elements have been noted before (Heger,1.0
+                                                                                              The main sequence lifetimes for the Stromlo rotating models,94.0
+ et al. 2000; Meynet & Maeder 2005; Crowther 2007) and will,1.0
+"                                                                                              and MIST agree to within 10% at solar metallicity, though the",94.0
+ impact the observed surface opacity-age relationships. This,1.0
+                                                                                              main sequence lifetimes are shorter for the Stromlo tracks at,94.0
+ in turn will impact the modeled ionizing photon spectrum,1.0
+                                                                                              solar metallicity. Our rotating Galactic Concordance tracks,94.0
+                                                                                              at solar metallicity do not show the non-monotonic behavior,94.0
+avr_spaces,29.318181818181817
+                                                                                            S TROMLO S TAR TRACKS                                                           7,92.0
+                                                     [Fe/H] = 0.0                                    [Fe/H] = -1.0                               [Fe/H] = -2.0,53.0
+Surface He4 Mass Fraction,0.0
+                            1.0           v/vcrit = 0.4                           1.0                                           1.0,28.0
+                                          v/vcrit = 0.2,42.0
+                                          v/vcrit = 0.0,42.0
+                            0.8                                                   0.8                                           0.8,28.0
+                                      M,38.0
+                                          60,42.0
+                            0.6           100                                     0.6                                           0.6,28.0
+                                          200,42.0
+                            0.4                                                   0.4                                           0.4,28.0
+                            0.2 0               1         2         3       4     0.2 0          1      2       3       4       0.2 0       1      2      3      4      5,28.0
+                                                    Time (Myr)                                       Time (Myr)                                 Time (Myr),52.0
+"     Figure 5. Time evolution of the surface 4 He abundances for 60, 100, and 200 M stars with v/vcrit = 0.4 (solid lines), 0.2 (dash lines), and 0.0",5.0
+"     (dot lines) at metallicities of [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) for the Stromlo tracks. The gray line at 0.4",5.0
+     marks the He abundance that delineates the start of the WR phase of stellar evolution (Meynet & Maeder 2005).,5.0
+                                                     [Fe/H] = 0.0                                    [Fe/H] = -1.0                              [Fe/H] = -2.0,53.0
+                                          v/vcrit = 0.4                 M,42.0
+                            30                                                    30                                            30,28.0
+ Surface 14N / 14Ninitial,1.0
+                                          v/vcrit = 0.2                     60,42.0
+                                          v/vcrit = 0.0                     100,42.0
+                            25                                              200   25                                            25,28.0
+                            20                                                    20                                            20,28.0
+                            15                                                    15                                            15,28.0
+                            10                                                    10                                            10,28.0
+                             5                                                     5                                             5,29.0
+                                  0             1         2         3       4           0        1      2       3       4             0    1       2      3      4      5,34.0
+                                                    Time (Myr)                                       Time (Myr)                                 Time (Myr),52.0
+"     Figure 6. Time evolution of the surface 14 N abundances normalizes by the initial 14 Ninitial abundance for 60, 100, and 200 M stars with",5.0
+"     v/vcrit = 0.4 (solid lines), 0.2 (dash lines), and 0.0 (dot lines) at metallicities of [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0",5.0
+"     (right) for Stromlo tracks. The initial 14 Ninitial abundances are 6.11 × 10−4 , 8.70 × 10−5 , and 4.02 × 10−6 for [Fe/H] = 0.0, [Fe/H] = −1.0,",5.0
+"     and [Fe/H] = −2.0, respectively.",5.0
+     at 80 M with prolonged main sequence lifetimes as seen in                                              in this current paper ([Fe/H]=−4) as is done by Choi et al.,5.0
+"     the v/vcrit = 0.4, [Fe/H] = 0.0 metallicity MIST tracks. For                                           (2017) due to computational and convergence difficulties at",5.0
+"     all rotating stars, the boost to the main sequence lifetime at                                         these very low metallicities. The isochrones for our Stromlo",5.0
+     a fixed initial mass is marginally larger for the MIST tracks                                          stellar tracks are computed at three rotation rates v/vcrit =,5.0
+"     than for the Stromlo tracks, suggesting that rotational mixing                                         0.0, 0.2, 0.4 and at each metallicity point in our grid. Be-",5.0
+     may be marginally more efficient in solar-scaled stars.                                                cause we only compute the stellar evolutionary tracks from,5.0
+"                                                                                                            10–300 M , our isochrones are only valid for stars .25 Myr",108.0
+                                                    3.4. Stellar Isochrones                                 old. The Stromlo and solar stellar evolutionary tracks are,52.0
+                                                                                                            processed into isochrones following the procedure outlined,108.0
+"       We note that in any grid, there are subsets of models that do",7.0
+                                                                                                            in Dotter (2016).,108.0
+     not run to completion due to convergence issues (Choi et al.,5.0
+"                                                                                                               Figures 8 and 9 show 1, 3, 5, and 10 Myr isochrones at",111.0
+"     2017, Figure 7). In general this is not an issue because the",5.0
+                                                                                                            [Fe/H] = 0.0 and [Fe/H] = −1.0 and at varying rotations.,108.0
+     mass sampling is sufficiently fine that there are enough mod-,5.0
+"                                                                                                            The effect of faster rotation resulting in hotter, brighter, and",108.0
+     els to smoothly interpolate and construct smooth isochrones,5.0
+                                                                                                            longer-lived stars is immediately clear. The Stromlo tracks,108.0
+     with the tracks that are available using the same mass grid as,5.0
+                                                                                                            with Galactic Concordance abundances show the same fast,108.0
+"     MIST (Dotter 2016). We do note that at low metallicity, the",5.0
+                                                                                                            appearance of Wolf-Rayet (WR) stars (Teff > 104 K and sur-,108.0
+     mass grid sampling as laid out by MIST is not always suffi-,5.0
+                                                                                                            face hydrogen mass fraction X < 0.3; Meynet & Maeder,108.0
+"     cient to represent the fast evolutionary phases at early times,",5.0
+                                                                                                            2003; Georgy et al. 2012) from the massive star progenitors,108.0
+"     however, we do not model ancient, metal-poor populations",5.0
+avr_spaces,37.111111111111114
+      8                                                                     G RASHA ET AL .,6.0
+                    7                   [Fe/H] = 0.0               7              [Fe/H] = -1.0                7                [Fe/H] = -2.0,20.0
+                    6                                              6                                           6,20.0
+MS Lifetime (Myr),0.0
+                    5                                              5                                           5,20.0
+                    4                                              4                                           4,20.0
+                      A09,22.0
+                    3 Gal Con                                      3                                           3,20.0
+                             v/vcrit = 0.4,29.0
+                             v/vcrit = 0.0,29.0
+                    2   50       100         150   200   250   300 2   50   100     150     200    250     300 2    50    100     150     200   250    300,20.0
+                                 Initial Mass (M )                          Initial Mass (M )                             Initial Mass (M ),33.0
+   Figure 7. Main sequence lifetimes as a function of initial mass for two different values of initial rotation rates (v/vcrit = 0.4 in solid lines and,3.0
+"   v/vcrit = 0.0 in dotted lines) at [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right). Our new Stromlo tracks with Galactic",3.0
+"   Concordance (Gal Con) abundances are shown in pink and the MIST tracks (Choi et al. 2016) are shown in green. At a fixed initial mass,",3.0
+   higher rotation rates lengthen the main sequence lifetime due to more efficient rotational mixing. The jagged nature of the lines for decreasing,3.0
+   metallicity highlights convergence issues for models that do not run to completion.,3.0
+"   between 3–5 Myr (Figure 5), also observed in the massive                                abundances, we model the simple stellar populations (SSPs)",3.0
+   rotating stars with solar abundances (Choi et al. 2017).                                of our stellar isochrones (Section 3.4) using the Flexible Stel-,3.0
+                                                                                           lar Population Synthesis package (FSPS; Conroy et al. 2009;,91.0
+                                             4. DISCUSSION                                 Conroy & Gunn 2010). We predict the simulated SED for a,45.0
+"      In this section we discuss the implications of rotating, mas-                        106 M stellar population following an instantaneous burst",6.0
+   sive star models with non-Solar elemental abundances on the                             of star formation and a fully sampled Kroupa (2001) IMF,3.0
+   interpretation of high-redshift star-forming galaxies. We ex-                           with limits of 0.08 – 300 M . We implement the MILES em-,3.0
+   amine applications for physical conditions at high and low                              pirical library as the primary stellar spectral library (Sanchez-,3.0
+"   redsihft where these hot, rotating star models will have a dra-                         Blazquez et al. 2006; Falcón-Barroso et al. 2011).",3.0
+   matic impact.                                                                              We compute the time evolution of the ionizing photon lu-,3.0
+      Abundance scaling of elements at metallicities lower than                            minosity Q from 1 to 20 Myr for 106 M stellar population at,6.0
+"   the Solar standard has been explored in stars, but in the neb-                          [Fe/H] = −2.0, −1.0, and 0.0, shown in Figure 10 computed",3.0
+"   ular modelling community, only simple uniform scaling as-                               at v/vcrit = 0.4 for stellar models with Soloar and Galac-",3.0
+   sumptions are typically implemented. The surface enhance-                               tic Concordance abundances. The models produce compa-,3.0
+   ment of elements in massive rotating stars will have broad                              rable hydrogen and helium-ionizing photon output rates at,3.0
+"   implication for the ionizing spectra of high-redshift, low-                             [Fe/H] = 0.0. The difference of elemental abundances on",3.0
+   metallicity galaxies. Under the assumption that stars re-                               the resulting ionizing photon output begins to deviate more,3.0
+   tain their original surface composition until they leave the                            at lower metallicity with the impact occurring at the highest,3.0
+"   main sequence, there is minimal impact on the hydrogen-                                 energies blueward of 228 Å. The Stromlo models predicts a",3.0
+"   ionizing photon fluxes, and thus the effect of this assumption                          soften spectrum than the Solar models, primarily due to dif-",3.0
+   on the total ionizing photon budget is minimal. Moderate and                            ferences in the stellar populations of the underlying stellar,3.0
+   rapidly rotating stars heavily impact the original surface com-                         models (Figure 1). The Stromlo models cease to produce an,3.0
+   position of these massive stars and while the hydrogen ion-                             appreciable amount of photons blueward of 228 Å (the wave-,3.0
+"   izing flux remains relatively unchanged, the self-consistently                          length of photons capable of doubly ionizing helium) beyond",3.0
+"   evolved surface composition for fast rotating stars contains                            5 Myr, 1 Myr shorter than what is seen for the Solar mod-",3.0
+   fewer photons at the helium ionizing edge (Roy et al. 2020).                            els. Single-star models rely exclusively on the most massive,3.0
+   The different surface opacity-age relationships make signif-                            stars as the principal ionizing sources and the ionizing pho-,3.0
+   icant contribution to the photon ionizing budget than would                             ton output decreases dramatically upon the disappearance of,3.0
+   be expected if the surface composition were un-evolved. This                            the most massive stars the first few Myr.,3.0
+   increases the complexity in interpreting spectral line diag-                               It is important to stress that the only changes made to the,3.0
+   nostics and measuring reliable metallicity indicators. Conse-                           stellar tracks to compute the ionizing luminosity Q in Fig-,3.0
+"   quently, stellar models in conjunction with photoionization                             ure 10 is the relative elemental abundances from Solar to",3.0
+   models for nebulae with different metallicities need to take                            Galactic Concordance for the Stromlo tracks. The differ-,3.0
+   this variation into account in order to accurately model and                            ences in the the singly ionizing helium He I (24.6 eV) ion-,3.0
+   predict the properties of galaxies across cosmic time.                                  izing flux indicate this change to the tracks could affect im-,3.0
+      To investigate the impact on the ionizing spectrum of our                            portant nebula lines compared to tracks computed with so-,6.0
+   stellar evolutionary tracks computed using non-Solar scaled                             lar abundances. There are a large number of key nebular,3.0
+avr_spaces,9.163636363636364
+                                                                           S TROMLO S TAR TRACKS                                                        9,75.0
+                             [Fe/H] = 0.0                                            [Fe/H] = -1.0                               [Fe/H] = -2.0,29.0
+                                                                   7.0                                           7.0,67.0
+          6.5,10.0
+                                                                   6.5                                           6.5,67.0
+          6.0                                                      6.0                                           6.0,10.0
+          5.5                                                      5.5                                           5.5,10.0
+log L/L   5.0 Gal Con A09                                          5.0                                           5.0,0.0
+                    Myr,20.0
+          4.5     1      1                                         4.5                                           4.5,10.0
+                 3           3,17.0
+          4.0    5           5                                     4.0                                           4.0,10.0
+                 10          10,17.0
+                       5.0        4.5       4.0              3.5     5.5       5.0       4.5         4.0   3.5     5.5     5.0        4.5        4.0,23.0
+                             log Teff (K)                                            log Teff (K)                                log Teff (K),29.0
+" Figure 8. [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) isochrones for solar (A09; dotted colored lines) and Stromlo",1.0
+ Galactic Conordance (Gal Con; pink solid lines) abundances as a function of age for rotation rate v/vcrit = 0.4. The four colors correspond to,1.0
+" ages 1, 3, 5, and 10 Myr, respectively. At solar metallicity, solar abundance and Galactic Concordance tracks show similar results. At very low",1.0
+" metallicities [Fe/H] = −2.0, Galactic Concordance tracks are in general more luminous.",1.0
+                             [Fe/H] = 0.0                                            [Fe/H] = -1.0                               [Fe/H] = -2.0,29.0
+          6.5                                                      6.5                                           6.5,10.0
+          6.0                                                      6.0                                           6.0,10.0
+          5.5                                                      5.5                                           5.5,10.0
+log L/L   5.0                                                      5.0                                           5.0,0.0
+                 Myr,17.0
+          4.5    1 Myr                                             4.5                                           4.5,10.0
+                 3 Myr                            v/vcrit = 0.4,17.0
+          4.0    5 Myr                            v/vcrit = 0.2,10.0
+                                                  v/vcrit = 0.0,50.0
+                                                                   4.0                                           4.0,67.0
+                 10 Myr,17.0
+                       5.0        4.5       4.0              3.5               5.0       4.5         4.0   3.5             5.0        4.5        4.0,23.0
+                             log Teff (K)                                            log Teff (K)                                log Teff (K),29.0
+" Figure 9. [Fe/H] = 0.0 (left), [Fe/H] = −1.0 (middle), and [Fe/H] = −2.0 (right) Stromlo isochrones as a function of age and rotation. The",1.0
+" four colors correspond to ages 1, 3, 5, and 10 Myr, respectively. The linestyle refers to the rotation of the star. Fast rotation generally leads to",1.0
+" hotter, brighter, and longer-lived stars. The rotation of the star is significant in determining the luminosity and Teff as the initial abundances of",1.0
+ the stars (Figure 8).,1.0
+" lines between the energy necessary to singly ionize helium                                mining the ionizing photon output from the stellar properties,",1.0
+ (24.6 eV) and the energy required to doubly ionize helium                                 especially at lower metallicities; adopting stellar models that,1.0
+ (54.4 eV; Figure 11). This indicates that small changes in the                            are not solar-scaled are critical ingredients in modeled SEDS,1.0
+ stellar tracks between singly and doubly ionized helium will                              and the interpretation of observations using these models.,1.0
+ potentially have a large impact in the nebula ionization and                              Considering non-Solar scaled abundances in stellar models,1.0
+ subsequent nebula lines important for local metallicity and                               is critical for accurate measurements of the ionizing photon,1.0
+ star formation rates as well as predictions for photoioniza-                              budget from star clusters in local studies as well as mea-,1.0
+ tion calculations in the early universe.                                                  surements for the escape fraction of ionizing photons in,1.0
+    Figure 12 shows the impact of stellar rotation of the                                  high-redshift galaxies during cosmic reionization.,4.0
+ Stromlo models on the ionizing photon output. The rotat-                                     Constraining the impact of non-Solar scale elemental,1.0
+ ing and non-rotating stars show broad agreement with each                                 abundance self-consistently with atmosphere and nebular,1.0
+ other; discrepancies between the (non)rotating models are                                 modeling and its importance for spectral line diagnostics,1.0
+ only significant at the highest energies shortward of 228 Å.                             await a full spectral synthesis calculation in future work.,1.0
+ The minimal impact of the stellar rotation on the hydrogen                                This paper is the first in a series to approach this problem,1.0
+ ionizing luminosity compared to the helium ionizing lumi-                                 in a self-consistent manner and additionally requires a large,1.0
+ nosity has been demonstrated in prior studies (Levesque et al.                            library of atmospheres covering the full range of physical,1.0
+ 2012; Choi et al. 2017). The galactic concordance abundance                               properties and atmospheric compositions. The atmospheric,1.0
+ patterns have an equally important role as rotation in deter-                             library and and their application to complete nebular radia-,1.0
+avr_spaces,12.892857142857142
+   10                                                                                            G RASHA ET AL .,3.0
+                                              [Fe/H] = 0.0                                                 [Fe/H] = 1.0                              [Fe/H] = 2.0,46.0
+                          53                                    H i 912 Å         53                                                   53,26.0
+                                                                He i 504 Å,64.0
+                          52                                    He ii 228 Å       52                                                   52,26.0
+log Q (s 1),0.0
+                          51                                                       51                                                   51,26.0
+                          50                                                       50                                                   50,26.0
+                          49                                                       49                                                   49,26.0
+                          48 Solar                                                 48                                                   48,26.0
+                          47 Stromlo (Gal Con)                                     47                                                   47,26.0
+                            1       2 3 4 5                7    10      15 20        1           2         3 4 5     7    10    15 20     1      2    3 4 5      7   10    15 20,28.0
+                                              Age (Myr)                                                    Age (Myr)                                  Age (Myr),46.0
+ Figure 10. Time evolution of the ionizing photon luminosity Q for the Stromlo models (Gal Con; pink) and models assuming Solar abundances,1.0
+" (black) for a 106 M stellar population at [Fe/H] = 0.0 (left), −1.0 (middle), and −2.0 (right). The linestyle represent the ionizing photons",1.0
+" capable of ionizing hydrogen H I (912 Å; solid lines), singly ionizing helium He I (504 Å; long dashed lines), and doubly ionizing helium",1.0
+ He II (228 Å; short dotted lines). The ionizing photon output for solar versus galactic concordance abundances show broad agreement with the,1.0
+ galactic concordance stars showing a softer spectrum with the differences becoming more pronounced at lower metallicities.,1.0
+"                                                   Wavelength (Å, vac)                                            photon budget and spectral line diagnostics (K. Grasha et",51.0
+                                       1000,39.0
+"                                          900 800 700    600   500      400         300              200          al., in prep) and the implication of elemental abundances of",42.0
+                                         HI                      HeI         OII          HeII                    massive star models for cosmic reionization and the interpre-,41.0
+   Log[ λL λ ( erg/s) ],3.0
+                                                                                                                  tation of high-redshift star-forming galaxies.,114.0
+                          43.0,26.0
+                                                                                                                               5. SUMMARY AND CONCLUSIONS,127.0
+                          42.0,26.0
+                                                                                                                    In this paper we investigate the impact of the stellar el-,116.0
+                                                                                                                  emental abundances on the stellar evolutionary tracks in,114.0
+                          41.0,26.0
+                                    Continuous Star Formation                                                     massive rotating and non-rotating stars over a wide range,36.0
+"                                    1.0, 2.0, 4.0, 8.0 Myr                                                        of metallicities using the Galactic Concordance abundances",36.0
+                               Fe,31.0
+                                                                                                                  from resolved Milky Way H II regions. We use MESA,114.0
+                               Ar                                                                                 for our stellar evolutionary calculations and include all the,31.0
+                Element,16.0
+                                S                                                                                 same physical processes and parameters values as used in,32.0
+                                O,32.0
+                                N                                                                                 the MIST track library (Choi et al. 2016) for uniform scaled,32.0
+                                C,32.0
+                               He,31.0
+                                                                                                                  solar-abundances. We focus on massive stars evolved until,114.0
+                                H                                                                                 the end of the main-sequence phases and adopt the same the,32.0
+                                10.0                    20.0           30.0        40.0 50.0 60.0,32.0
+                                                                                                                  modifications to improve the treatment of massive stars and,114.0
+                                                                                                                  the implementation of Galactic Concordance abundances as,114.0
+                                                         Energy (eV),57.0
+                                                                                                                  outlined by Roy et al. (2020).,114.0
+                                                                                                                    We summarize our main conclusions below.,116.0
+ Figure 11. The spectral energy distribution for FSPS simulations,1.0
+ of star clusters with ages of 1−8 Myr (different colored lines) com-                                                1. The assumed elemental abundance ratios have minor,1.0
+ puted with a continuous star formation. The dotted black lines show                                                    influence on massive stellar evolutionary tracks at so-,1.0
+" the energy (wavelength on top axis) for singly ionized hydrogen H I,                                                   lar metallicities (Figure 1). The correct implementa-",1.0
+" singly ionized helium He I, doubly ionized oxygen O II, and doubly                                                     tion of non-uniformly scaled elemental abundance ra-",1.0
+ ionized helium He II. The stellar spectra have been normalized to                                                      tios becomes more significant at sub-solar metallici-,1.0
+" log Lλ = 40 erg/s/Å at 912 Å. The bottom panel shows select ions                                                     ties, where the differences between Stromlo stars and",1.0
+" and the corresponding energy bands where gray is neutral, red is the                                                   MIST uniform solar-scaled abundance stars are pri-",1.0
+" region where the ions are singly ionised, orange is doubly ionized,                                                    marily most pronounced for stars more massive than",1.0
+" yellow is triply ionized, and green is fourthly ionized.                                                               50 M at low metallicities.",1.0
+                                                                                                                     2. Rotation and abundances both play a significant role,117.0
+" tive transfer modeling will be investigated in the future (R.                                                          in determining the stellar parameters of Teff , luminos-",1.0
+" Sutherland et al., in prep). A future paper will investigate                                                           ity, and surface gravity g (Figure 2, Figure 3). Rotation",1.0
+ the variable non-Solar elemental abundances stellar tracks                                                             effects are more significant at lower metallicities in de-,1.0
+" and how these abundance composition changes affect the                                                                 termining Teff , luminosity, and surface gravity g than",1.0
+ modeled spectrum and quantify the impact on the ionizing                                                               abundance patterns as the stars become more compact,1.0
+avr_spaces,35.56060606060606
+                                                                   S TROMLO S TAR TRACKS                                                       11,67.0
+                               [Fe/H] = 0.0                                [Fe/H] = 1.0                               [Fe/H] = 2.0,31.0
+              53                              H i 912 Å     53                                         53,14.0
+                                              He i 504 Å,46.0
+              52                              He ii 228 Å   52                                         52,14.0
+log Q (s 1),0.0
+              51                                             51                                         51,14.0
+              50                                             50                                         50,14.0
+              49                                             49                                         49,14.0
+              48 v/v = 0.4                                   48                                         48,14.0
+                    crit,20.0
+              47 v/vcrit = 0.0                               47                                         47,14.0
+                1          2 3 4 5        7   10     15 20     1       2   3 4 5     7     10   15 20     1      2    3 4 5      7   10   15 20,16.0
+                              Age (Myr)                                    Age (Myr)                                  Age (Myr),30.0
+" Figure 12. Time evolution of the ionizing photon luminosity Q for the Stromlo models for a 106 M stellar population at [Fe/H] = 0.0 (left),",1.0
+" −1.0 (middle), and −2.0 (right) for two different values of initial rotation rates (v/vcrit = 0.4 in pink lines and v/vcrit = 0.0 in dark purple",1.0
+" lines). The linestyle represent the ionizing photons capable of ionizing hydrogen H I (912 Å; solid lines), singly ionizing helium He I (504 Å;",1.0
+" long dashed lines), and doubly ionizing helium He II (228 Å; short dotted lines). Non-rotating stars show a softer spectrum than rotating stars",1.0
+ and the differences become more pronounced at lower metallicities and is most significant at the highest energies shortward of 228 Å.,1.0
+"                   and angular momentum loss due to winds becomes less                    stellar populations in low metallicity environments,",19.0
+"                   important.                                                             common at high redshift, only require moderate rota-",19.0
+"                                                                                          tion rates to produce significant ionizing photons, de-",90.0
+          3. The significant effect of rotation in determining the                        creasing rapidly after the disappearance of the most,10.0
+"             stellar Teff , luminosity and surface gravity g, espe-                       massive stars after a few Myr.",13.0
+"             cially at low metallicities, has a large impact on mass-",13.0
+             loss and surface abundances of different elements (Fig-                 This paper is the first implementation of Galactic Concor-,13.0
+             ures 5 and 6). Rapidly rotating stars (v/vcrit = 0.4)                dance abundances to the stellar evolution models that does,13.0
+"             more massive than 100 M show helium surface abun-                    not implement solar, scaled-solar, or alpha-element enhanced",13.0
+             dance enhancement to 40% by ∼ 2 Myr. Even in non-                    abundances. These models will be applicable for extreme re-,13.0
+"             rotating stars, toward the end of the core H depletion,              gions of star formation, especially low metallicity systems",13.0
+"             stars experience the ‘classical’ WR phase, approaching               and active star-forming galaxies, where massive and rotating",13.0
+"             the Eddington limit and experiencing rapid mass-loss,                star models at non-uniform scaled metallicitices have the po-",13.0
+             which enhances the He surface abundance upwards to                   tential to heavily impact the resulting properties of the star-,13.0
+"             90%. At lower metallicities ([Fe/H] = −2), the effect                forming emission line regions. The importance of rotating,",13.0
+             of rotation on He surface abundance enhancement be-                  massive star models and their elemental abundance scaling,13.0
+             comes more significant with He surface enhancement                   have broad implications within the context of cosmic reion-,13.0
+             occurring as rapidly as 1.5 Myr for 100 M stars. Ro-                 ization and the interpretation of high-redshift star-forming,13.0
+             tation plays an extremely important role in the sur-                 galaxies.,13.0
+"             face enhancement of nitrogen, with the effect becom-                    The Galactic Concordance scale is not the sole scaling pa-",13.0
+             ing more important at lower metallicities.                           rameter that can be used for non-uniform scaling relations,13.0
+"                                                                                  between elements and metallicity. It is vital, however, that",82.0
+          4. Rotation lengthens the main sequence timescale of                    a single scale is implemented for all the necessary compo-,10.0
+             massive stars (Figure 7) and leads to brighter and hot-              nents involved within stellar population synthesis and pho-,13.0
+"             ter stars (Figure 9). The boost in the main sequence                 toionization models. In the future, we will investigate the ef-",13.0
+"             lifetime at a fixed mass is slight larger in our Galactic            fect of Galactic Concordance scaled abundances of massive,",13.0
+             Concordance Stromlo tracks than in the MIST solar-                   rotating stars in low metallicity environments using stellar,13.0
+             scaled models in both rotating and non-rotating stars                population synthesis applications using self-consistent atmo-,13.0
+"             at low metallicities ([Fe/H] = −2; Figure 8), a result of            sphere and nebular modeling with MAPPINGS to quantify",13.0
+             increased metallicity and a decrease in the mean opac-               the impact to the ionizing photon budget and spectral line,13.0
+             ity.                                                                 diagnostics.,13.0
+          5. The Stromlo tracks show a softer ionizing spectrum                     We are grateful for the valuable comments on this work,10.0
+             compared to expectations from the Solar-scaled ion-                  by an anonymous referee that improved the scientific out-,13.0
+             izing spectrum (Figure 10). The ionizing photon lumi-                come and quality of the paper. This research was conducted,13.0
+             nosity between Solar and Galactic Concordance mod-                   on Ngunnawal Indigenous land. KG gratefully acknowl-,13.0
+             els deviate most significantly at low metallicities. The             edges the support of Lisa Kewley’s ARC Laureate Fellow-,13.0
+avr_spaces,16.607142857142858
+ 12                                                                 G RASHA ET AL .,1.0
+ship (FL150100113). AR acknowledges the usage of Aus-                        search were supported by the Australian Research Council,0.0
+tralian National University RSAA cluster AVATAR and NCI                      Centre of Excellence for All Sky Astrophysics in 3 Dimen-,0.0
+"GADI via project jh2 for the implementation of the Galac-                    sions (ASTRO 3D), through project number CE170100013.",0.0
+tic Concordance (and also any arbitrary) abundance setups                    The authors thank the invaluable labor of the maintenance,0.0
+"for this work. Also, AR gratefully acknowledges the sup-                     and clerical staff at their institutions, whose contributions",0.0
+port of Mark Krumholz’s Discovery Project (DP160100695)                      make scientific discoveries a reality.,0.0
+and Future Fellowship (FT180100375) award grants. This,0.0
+research has made use of NASA’s Astrophysics Data System,0.0
+"                                                                                Software: Astropy (Astropy Collaboration et al. 2013,",80.0
+"                                                                             2018), iPython (Pérez & Granger 2007), Matplotlib (Hunter",77.0
+"Bibliographic Services. This research made use of Astropy,5",0.0
+"                                                                             2007), Numpy (van der Walt et al. 2011; Harris et al. 2020),",77.0
+a community-developed core Python package for Astronomy,0.0
+"                                                                             scipy (Jones et al. 2001), MESA (Paxton et al. 2011).",77.0
+"(Astropy Collaboration et al. 2013, 2018). Parts of this re-",0.0
+                                                                   REFERENCES,67.0
+"Abbott, D. C., & Conti, P. S. 1987, ARA&A, 25, 113                           Hidalgo, S. L., Pietrinferni, A., Cassisi, S., et al. 2018, ApJ, 856,",0.0
+"Anders, E., & Grevesse, N. 1989, Geochim. Cosmochim. Acta, 53,                  125",0.0
+"   197                                                                       Hopkins, P. F., Quataert, E., & Murray, N. 2012, MNRAS, 421,",3.0
+"Asplund, M., Grevesse, N., Sauval, A. J., & Scott, P. 2009,                     3488",0.0
+"   ARA&A, 47, 481                                                            Hunter, J. D. 2007, Comput. Sci. Eng., 9, 90",3.0
+"Astropy Collaboration, Robitaille, T. P., Tollerud, E. J., et al. 2013,      Iglesias, C. A., & Rogers, F. J. 1993, ApJ, 412, 752",0.0
+"   A&A, 558, 33                                                              —. 1996, ApJ, 464, 943",3.0
+"Astropy Collaboration, Price-Whelan, A. M., Sipőcz, B. M., et al.           Jones, E., Oliphant, T., & Peterson, P. 2001, SciPy Open source",0.0
+"   2018, AJ, 156, 123                                                           Sci. tools Python",3.0
+"Cazorla, C., Nazé, Y., Morel, T., et al. 2017, arXiv, 123                   Kewley, L. J., & Dopita, M. A. 2002, ApJS, 142, 35",0.0
+"                                                                             Kewley, L. J., Geller, M. J., & Jansen, R. A. 2004, AJ, 127, 2002",77.0
+"Choi, J., Conroy, C., & Byler, N. 2017, ApJ, 838, 159",0.0
+"                                                                             Kewley, L. J., Nicholls, D. C., & Sutherland, R. S. 2019a,",77.0
+"Choi, J., Dotter, A., Conroy, C., et al. 2016, ApJ, 823, 102",0.0
+"                                                                                ARA&A, 57, 511",80.0
+"Conroy, C., & Gunn, J. E. 2010, ApJ, 712, 833",0.0
+"                                                                             Kewley, L. J., Nicholls, D. C., Sutherland, R. S., et al. 2019b, ApJ,",77.0
+"Conroy, C., Gunn, J. E., & White, M. 2009, ApJ, 699, 486",0.0
+"                                                                                880, 16",80.0
+"Crowther, P. A. 2007, ARA&A, 45, 177",0.0
+"                                                                             Kroupa, P. 2001, MNRAS, 322, 231",77.0
+"Crowther, P. A., Smith, L. J., Hillier, D. J., & Schmutz, W. 1995,",0.0
+"                                                                             Krumholz, M. R., Dekel, A., & Mckee, C. F. 2012, ApJ, 745, 69",77.0
+"   A&A, 293, 427",3.0
+"                                                                             Levesque, E. M., Leitherer, C., Ekstrom, S., Meynet, G., &",77.0
+"Demarque, P., Woo, J., Kim, Y., & Yi, S. K. 2004, ApJS, 155, 667                Schaerer, D. 2012, ApJ, 751, 67",0.0
+"Denicoló, G., Terlevich, R., & Terlevich, E. 2002, MNRAS, 330,              Mckee, C. F., & Ostriker, E. C. 2007, ARA&A, 45, 565",0.0
+"   69                                                                        Meynet, G., & Maeder, A. 2003, A&A, 404, 975",3.0
+"Dopita, M. A., Kewley, L. J., Sutherland, R. S., & Nicholls, D. C.           —. 2005, A&A, 429, 581",0.0
+"   2016, Astrophys. Space Sci., 361, 1                                       Morel, T. 2009, Commun. Asteroseismol., 158, 122",3.0
+"Dotter, A. 2016, ApJS, 222, 8                                                Nicholls, D. C., Sutherland, R. S., Dopita, M. A., Kewley, L. J., &",0.0
+"Ekström, S., Georgy, C., Eggenberger, P., et al. 2012, A&A, 537,               Groves, B. A. 2017, MNRAS, 466, 4403",0.0
+"   A146                                                                      Nieva, M. F., & Przybilla, N. 2012, A&A, 539, A143",3.0
+"Falcón-Barroso, J., Sánchez-Blázquez, P., Vazdekis, A., et al. 2011,      Paxton, B., Bildsten, L., Dotter, A., et al. 2011, ApJS, 192, 3",0.0
+"   A&A, 532, A95                                                             Paxton, B., Cantiello, M., Arras, P., et al. 2013, ApJS, 208, 4",3.0
+"Georgy, C., Ekström, S., Meynet, G., et al. 2012, A&A, 542, A29             Paxton, B., Marchant, P., Schwab, J., et al. 2015, ApJS, 220, 15",0.0
+"Girardi, L., Grebel, E. K., Odenkirchen, M., & Chiosi, C. 2004,              Paxton, B., Schwab, J., Bauer, E. B., et al. 2018, ApJS, 234, 34",0.0
+"   A&A, 422, 205                                                             Paxton, B., Smolec, R., Schwab, J., et al. 2019, ApJS, 243, 10",3.0
+"Harris, C. R., Millman, K. J., van der Walt, S. J., et al. 2020,             Pérez, F., & Granger, B. E. 2007, Comput. Sci. Eng., 9, 21",0.0
+"   Nature, 585, 357                                                          Pettini, M., & Pagel, B. E. J. 2004, MNRAS, 348, L59",3.0
+"Heger, A., Langer, N., & Woosley, S. E. 2000, ApJ, 528, 368                  Pietrinferni, A., Cassisi, S., Salaris, M., & Castelli, F. 2004, ApJ,",0.0
+"Heger, A., Woosley, S. E., & Spruit, H. C. 2005, ApJ, 626, 350                  612, 168",0.0
+"                                                                             Potter, A. T., Tout, C. A., & Eldridge, J. J. 2012, MNRAS, 419, 748",77.0
+"                                                                             Przybilla, N. 2008, Rev. Mod. Astron., 20, 323",77.0
+"   5 http://www.astropy.org                                                  Rogers, F. J., & Iglesias, C. A. 1992, ApJS, 79, 507",3.0
+avr_spaces,18.904761904761905
+                                                        S TROMLO S TAR TRACKS                                                          13,56.0
+"Rosen, A. L., Krumholz, M. R., & Ramirez-Ruiz, E. 2012, ApJ,           van der Walt, S., Colbert, S. C., & Varoquaux, G. 2011, Comput.",0.0
+"  748, 97                                                                Sci. Eng., 13, 22",2.0
+"Roy, A., Sutherland, R. S., Krumholz, M. R., Heger, A., & Dopita,      Vink, J. S., de Koter, A., & Lamers, H. J. G. L. M. 2001, A&A,",0.0
+"  M. A. 2020, MNRAS, 494, 3861                                           369, 574",2.0
+"Sanchez-Blazquez, P., Peletier, R. F., Jimenez-Vicente, J., et al.     Wyse, R., & Gilmore, G. 1993, Astron. Soc. Pacific Conf. Ser., 48,",0.0
+"  2006, MNRAS, 371, 703                                                  727",2.0
+"                                                                       Yi, S., Demarque, P., Kim, Y., et al. 2001, ApJS, 136, 417",71.0
+"Seaton, M. J. 2005, Mon. Not. R. Astron. Soc. Lett., 362, 1",0.0
+"                                                                       Yi, S. K., Kim, Y., & Demarque, P. 2003, ApJS, 144, 259",71.0
+"Smith, N. 2014, ARA&A, 52, 487",0.0
+avr_spaces,17.0
