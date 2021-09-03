@@ -14,7 +14,7 @@ train_tokenized = tokenize_corpus(full_dataset)
 
 # print(train_tokenized[:5])
 
-model = gensim.models.Word2Vec(sentences=train_tokenized, size=2, window=5,
+model = gensim.models.Word2Vec(sentences=train_tokenized, size=100, window=5,
                                min_count=1, workers=4,
                                iter=10)  # an empty model, no training yet
 
@@ -81,5 +81,35 @@ def getAvgFeatureVecs(tweets, model, num_features):
 
 
 # Calculate the vector matrix
-X = getAvgFeatureVecs(train_tokenized, model, 2)
+X = getAvgFeatureVecs(train_tokenized, model, 100)
 
+from sklearn.cluster import KMeans
+
+# make the k-means model
+NUM_CLUSTERS = 2
+kmeans = KMeans(NUM_CLUSTERS, random_state=0, max_iter=100, n_init=1, verbose=True).fit_predict(X)
+labels = list(kmeans)
+
+# make a dictionary with tweets and labels
+values = labels
+keys = full_dataset
+KMeans_clusters = dict(zip(keys, values))
+
+import csv
+
+# write a table
+file_name = "clusters.csv"
+dictionary = KMeans_clusters
+row1 = "text"
+row2 = "cluster"
+
+
+def writeCsv(file_name, row1, row2, dictionary):
+    with open(file_name, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow((row1, row2))
+        for key, value in dictionary.items():
+            writer.writerow([key, value])
+
+
+writeCsv(file_name, row1, row2, dictionary)
