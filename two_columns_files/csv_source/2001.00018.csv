@@ -1,0 +1,1310 @@
+text,space_num
+"                                                Draft version August 5, 2020",48.0
+                                                Typeset using LATEX twocolumn style in AASTeX63,48.0
+"                                                 Connecting Optical Morphology, Environment, and H I Mass Fraction for Low-Redshift Galaxies",49.0
+                                                                                    Using Deep Learning,84.0
+"                                                                                                      John F. Wu1, 2",102.0
+"                                                     1 Department   of Physics & Astronomy, Johns Hopkins University, 3400 N. Charles Street, Baltimore, MD 21218, USA",53.0
+"                                                                      2 Space Telescope Science Institute, 3700 San Martin Drive, Baltimore, MD 21218, USA",70.0
+arXiv:2001.00018v2 [astro-ph.GA] 4 Aug 2020,0.0
+                                                                                                        ABSTRACT,104.0
+"                                                        A galaxy’s morphological features encode details about its gas content, star formation history, and",56.0
+"                                                      feedback processes, which play important roles in regulating its growth and evolution. We use deep",54.0
+                                                      convolutional neural networks (CNNs) to learn a galaxy’s optical morphological information in order,54.0
+                                                      to estimate its neutral atomic hydrogen (H I) content directly from SDSS gri image cutouts. We are,54.0
+"                                                      able to accurately predict a galaxy’s logarithmic H I mass fraction, M ≡ log(MHI /M? ), by training a",54.0
+"                                                      CNN on galaxies in the ALFALFA 40% sample. Using pattern recognition (PR), we remove galaxies",54.0
+"                                                      with unreliable M estimates. We test CNN predictions on the ALFALFA 100%, xGASS, and NIBLES",54.0
+"                                                      catalogs, and find that the CNN consistently outperforms previous estimators. The H I-morphology",54.0
+                                                      connection learned by the CNN appears to be constant in low- to intermediate-density galaxy environ-,54.0
+"                                                      ments, but it breaks down in the highest-density environments. We also use a visualization algorithm,",54.0
+"                                                      Gradient-weighted Class Activation Maps (Grad-CAM), to determine which morphological features",54.0
+                                                      are associated with low or high gas content. These results demonstrate that CNNs are powerful tools,54.0
+"                                                      for understanding the connections between optical morphology and other properties, as well as for",54.0
+"                                                      probing other variables, in a quantitative and interpretable manner.",54.0
+"                                                      Keywords: Galaxies, Galaxy evolution, Galaxy processes, Galaxy environments, Astronomy data anal-",54.0
+"                                                                ysis, Astronomy data visualization",64.0
+"                                                               1. INTRODUCTION                                    redshifts; see, e.g., Looking at the Distant Universe with",63.0
+"                                                 Neutral atomic hydrogen (H I) is the dominant com-               the MeerKAT Array (LADUMA; Blyth et al. 2016),",49.0
+                                              ponent of cool gas in the interstellar medium (ISM)                 MeerKAT International GHz Tiered Extragalactic Ex-,46.0
+"                                              for low-redshift galaxies (e.g., Saintonge et al. 2017).            ploration (MIGHTEE; Jarvis et al. 2016), Wide-field",46.0
+                                              Although neutral gas is crucial for understanding how               ASKAP L-Band Legacy All-sky Blind surveY (WAL-,46.0
+"                                              galaxies evolve and grow over cosmic timescales, H I                LABY; Koribalski et al. 2020), and Deep Investigation",46.0
+                                              is difficult to detect in extragalactic sources because of          of Neutral Gas Origins (DINGO).1,46.0
+                                              its weak 21-cm emission line. This observational chal-                Small and incomplete H I samples currently limit our,46.0
+                                              lenge has been partially mitigated by large H I surveys             ability to study gas properties in typical galaxies beyond,46.0
+                                              such as the H I Parkes All Sky Survey (HIPASS; Barnes               z ≈ 0.05. Since H I is so important to galaxy evolution,46.0
+"                                              et al. 2001), the Arecibo Legacy Fast ALFA Survey                   but challenging to measure, astronomers have devised",46.0
+"                                              (ALFALFA; Giovanelli et al. 2005), and the GALEX                    proxies for estimating galaxies’ gas content. For exam-",46.0
+"                                              Arecibo SDSS Survey (GASS; Catinella et al. 2010),                  ple, Kannappan (2004) proposed “photometric” gas frac-",46.0
+"                                              which have taken a census of the brightest H I sources              tions, leveraging the valuable connection between global",46.0
+                                              in the local Universe. New radio telescopes such as                 gas content and optical properties. Zhang et al. (2009),46.0
+"                                              MeerKAT, ASKAP (Australian Square Kilometre Ar-                     tightened the relationship by accounting for i-band sur-",46.0
+"                                              ray Pathfinder), and eventually the SKA will allow us to            face brightness in addition to g − r color. More com-",46.0
+                                              measure H I at much lower masses (MHI ) and at higher               plicated heuristics and machine learning models have,46.0
+"                                                                                                                  also been used (e.g., Teimoorinia et al. 2017; Rafiefer-",114.0
+                                              jfwu@jhu.edu,46.0
+                                                                                                                    1   https://dingo-survey.org/,116.0
+avr_spaces,54.42553191489362
+ 2,1.0
+"antsoa et al. 2018), although these estimators become      chine learning models and tests of CNN performance",0.0
+more difficult to interpret as the number of parameters    when artificial sources are added to the input images.,0.0
+"increases. Indeed, computer vision algorithms seem to      Throughout this paper, we assume a cosmology with",0.0
+"perform spectacularly well at predicting galaxy proper-    H0 = 70 km s−1 Mpc−1 , Ωm = 0.3, ΩΛ = 0.7. All",0.0
+"ties directly from optical imaging (e.g., Dieleman et al.  of the code used in our analysis is publicly available at",0.0
+2015; Huertas-Company et al. 2019; Morningstar et al.      https://github.com/jwuphysics/HI-convnets.,0.0
+"2019; Pasquet et al. 2019; Wu & Boada 2019), but be-",0.0
+"cause these models often have millions of parameters,                                  2. DATA",0.0
+it can be difficult to understand what makes them so          We make use of four H I data sets in our analysis:,0.0
+"successful.                                                α.40, α.100, NIBLES, and the xGASS representative",0.0
+   We train a deep convolutional neural network (CNN)      sample. Because these data sets have different selection,3.0
+"to directly predict the logarithm of the H I mass frac-    criteria, they are useful for testing our CNN methods on",0.0
+"tion, M ≡ log(MHI /M? ), using three-band optical im-      galaxy samples with varying H I mass fraction distribu-",0.0
+"age cutouts from the Sloan Digital Sky Survey (SDSS).      tions. In Figure 1, we show the cumulative distribution",0.0
+"After demonstrating that our trained model can predict     functions of M, the logarithmic H I mass fraction. The",0.0
+"M to within 0.23 dex for α.40, we test the CNN on in-      catalogs’ stellar and H I properties are also summarized",0.0
+dependent data sets and examine which factors result       in Table 1. We describe the data sets and our selection,0.0
+in poor predictions. We use the same CNN method to         criteria in greater detail below.,0.0
+"distinguish ALFALFA detections from non-detections,",0.0
+"and estimate a galaxy’s likelihood of detection in an       SDSS imaging —The ALFALFA, NIBLES, and xGASS",0.0
+ALFALFA-like survey from its gri imaging. Using this       data sets have publically available catalogs of optical,0.0
+"pattern recognition system, we evaluate only the ro-       counterparts. We obtain gri imaging from the SDSS",0.0
+bust predictions on test data sets again and compare       DR14 (Abolfathi et al. 2018) SkyServer using the Im-,0.0
+to results in the literature. We investigate how the rela- age Cutout service2 queried via a custom Python script.,0.0
+tionship between optical imaging and H I content varies    The conversion of gri imaging to RGB channels is a,0.0
+"with galaxy environment. We also use the Grad-CAM          modified version of the Lupton et al. (2004) algorithm,",0.0
+algorithm to localize image features that the CNN as-      as described on the SkyServer website.3 Downloaded,0.0
+sociates with high or low gas mass fraction in order to    JPG images have 224 × 224 pixels at the native SDSS,0.0
+"visually interpret which morphological features are rele-  pixel scale (0.39600 pixel−1 ), which corresponds to angu-",0.0
+vant to machine learning predictions; it essentially tells lar sizes of 1.480 × 1.480 .,0.0
+us which parts of the image the CNN is looking at in,0.0
+"                                                            Stellar masses —In order to compute gas mass fractions,",60.0
+"order to determine the gas mass fraction (see, e.g., Peek",0.0
+                                                           H I detections are crossmatched with galaxies in the,59.0
+& Burkhart 2019).,0.0
+                                                           SDSS DR7 MPA-JHU value-added catalog (Kauffmann,59.0
+   The paper is structured as follows. We describe the,3.0
+                                                           et al. 2003; Brinchmann et al. 2004; Tremonti et al. 2004;,59.0
+"H I catalogs and optical imaging in Section 2, and ex-",0.0
+                                                           Salim et al. 2007). All stellar mass estimates assume,59.0
+plain some details of the CNNs in Section 3. In Sec-,0.0
+                                                           a Chabrier (2003) initial mass function. ALFALFA is,59.0
+"tion 4, we present our results showing that a CNN",0.0
+                                                           crossmatched on the basis of PhotoObjID (α.40) or a,59.0
+"trained on ALFALFA can accurately recover M, and",0.0
+                                                           100 search radius (α.100). The xGASS and NIBLES cat-,59.0
+report test results on independent data sets. In Sec-,0.0
+                                                           alogs already include crossmatched stellar masses. We,59.0
+"tion 5, we use pattern recognition to identify galax-",0.0
+                                                           keep only the galaxies with valid stellar mass estimates.,59.0
+ies that are expected to be detected by an ALFALFA-,0.0
+"like survey, and in Section 6 we compare our results",0.0
+                                                                                2.1. ALFALFA α.40,80.0
+"to other M estimators in the literature. In Section 7,",0.0
+we quantify the impact of environmental effects and           The Arecibo Legacy Fast ALFA (ALFALFA) survey,0.0
+study how the connection between H I content and op-       is a z ≤ 0.06 blind search for H I at high Galactic,0.0
+tical morphology breaks down in the most overdense         latitudes (Giovanelli et al. 2005). The ALFALFA α.40,0.0
+"environments. In Section 8, we discuss and interpret       catalog covers 40% (2800 deg2 ) of the full survey area",0.0
+"the morphological features that a CNN “sees” in order      (Haynes et al. 2011); most of these detections (12,468",0.0
+to distinguish gas-rich systems from gas-poor galaxies.    sources) lie within the SDSS footprint. Our sample in-,0.0
+"We discuss future prospects in Section 9, and report",0.0
+"our conclusions in Section 10. In the Appendix, we            2 http://skyserver.sdss.org/dr14/en/help/docs/api.aspx",0.0
+present comparisons between CNNs and simpler ma-              3 https://www.sdss.org/dr14/imaging/jpg-images-on-skyserver/,0.0
+avr_spaces,10.430769230769231
+                                                                                                                                                           3,155.0
+                                                                               Table 1. H I data sets,79.0
+                                         Data seta       N       log(MHI /M )                  log(M? /M )                   Mtrue,41.0
+                                                               0.16   0.50    0.84          0.16   0.50    0.84      0.16     0.50    0.84,63.0
+                                         α.40A          7128   9.21   9.71   10.06          8.71    9.56   10.41     −0.52    0.15     0.68,41.0
+                                         α.40B          4644   9.21   9.68   10.02          8.73    9.41   10.07     −0.26    0.25     0.70,41.0
+                                         α.100          6087   9.22   9.67   10.03          8.62    9.38   10.24     −0.37    0.28     0.75,41.0
+                                         NIBLES          899   8.54   9.18    9.73          8.52    9.62   10.68     −1.19   −0.50     0.29,41.0
+                                         xGASS          1179   8.68   9.27     9.84         9.52   10.30   10.95    −1.78b   −1.11   −0.27,41.0
+"                                        Note— For each data set, we show the number of galaxies (N ) after crossmatching to SDSS,",40.0
+"                                          performing all cuts, and removing sources in common with other catalogs. We report 0.16,",42.0
+"                                          0.50 (median), and 0.84 quantile values for the H I mass, stellar mass, and gas mass fraction.",42.0
+"                                        a We have removed overlaps between the α.40A, α.100, NIBLES, and xGASS samples. α.40B",40.0
+                                          is a subset of α.40A.,42.0
+                                        b The xGASS catalog includes upper limits on M,40.0
+                                                                                      true (see text for details).,86.0
+"                                                                                                   4,797 galaxies with valid M? , SFR, gas metallicity, and",99.0
+                      1.0                .100                                                      spectroscopic redshift measurements.,22.0
+                                         .40A,41.0
+                      0.8,22.0
+                                        NIBLES                                                                      2.2. ALFALFA α.100,40.0
+"                                        xGASS                                                        The α.100 catalog contains 31,502 extragalactic",40.0
+Cumulative fraction,0.0
+                                                                                                   sources across the full ALFALFA sky (Haynes et al.,99.0
+                      0.6                                                                          2018). A large fraction of these sources do not over-,22.0
+"                                                                                                   lap with the SDSS footprint, and a significant subset of",99.0
+                                                                                                   α.100 is already catalogued in α.40. Since there is no,99.0
+"                      0.4                                                                          public combined catalog for α.100 with SDSS identifiers,",22.0
+                                                                                                   we perform a custom crossmatching exercise. We cross-,99.0
+                                                                                                   match sources in the ALFALFA Spring sky to the SDSS,99.0
+"                      0.2                                                                          MPA-JHU catalog using a 100 radius, exclude systems",22.0
+                                                                                                   with other H I counterparts within a 1.90 radius (to avoid,99.0
+"                                                                                                   ALFALFA source blending), and exclude SDSS galaxies",99.0
+                      0.0                                                                          with neighboring optical sources within a 5500 radius (to,22.0
+                            2.5   2.0      1.5   1.0     0.5   0.0    0.5    1.0      1.5,28.0
+                                                       log(MHI/M )                                 avoid fiber collisions). Since we will primarily be using,55.0
+"                                                                                                   α.100 as an independent test data set, we also remove",99.0
+                                                                                                   duplicates of α.40A and xGASS sources in α.100 via an-,99.0
+Figure 1. H I mass fraction cumulative distribution func-,0.0
+"tions for the ALFALFA parent samples, xGASS representa-                                            other positional crossmatch (with search radius of 100 ).",0.0
+"tive sample, and NIBLES SDSS-crossmatched sample.                                                  These selection criteria leave 6,087 galaxies in the α.100",0.0
+"                                                                                                   catalog. Among the H I catalogs, the α.100 sample has",99.0
+"cludes rare, high-mass H I systems that are not necessar-                                          the highest gas mass fractions (Figure 1).",0.0
+ily representative of the probed cosmic volume. There                                                                   2.3. NIBLES,0.0
+also exists a nearly volume-limited ALFALFA subsample,0.0
+                                                                                                      The Nançay Interstellar Baryons Legacy Extragalac-,102.0
+"at z ≤ 0.05, but we are interested in training our CNN",0.0
+                                                                                                   tic Survey (NIBLES) catalog of H I detections con-,99.0
+with the larger data set. We select sources with OCcode,0.0
+"                                                                                                   tains 1,864 low-redshift galaxies with heterogeneous ab-",99.0
+= I in order to retain α.40 detections with SDSS coun-,0.0
+                                                                                                   solute z-band magnitudes (van Driel et al. 2016). The,99.0
+"terparts, and we drop all sources with duplicate matches",0.0
+                                                                                                   NIBLES sample is characterized by a wide range of stel-,99.0
+to DR7 identifiers. This cut reduces the number of H I,0.0
+                                                                                                   lar masses and intermediate values of M relative to,99.0
+"sources to 11,739. We create the α.40A catalog, which",0.0
+                                                                                                   α.40 and xGASS (Table 1). We remove systems with,99.0
+"contains 7,399 galaxies with valid stellar mass estimates,",0.0
+                                                                                                   very low (< 108 M ) or unavailable MPA-JHU stellar,99.0
+"and the α.40B catalog, a subset of α.40A containing",0.0
+                                                                                                   mass estimates. We visually inspect the SDSS image,99.0
+avr_spaces,50.698412698412696
+ 4,1.0
+cutouts and eliminate sources with no apparent opti-           We implement and optimize our deep convolutional,0.0
+"cal counterpart near the center, those with only a point    neural network using fastai (Howard & Gugger 2020),",0.0
+"source in the center, and those significantly corrupted     which is built on PyTorch. All choices of CNN hyperpa-",0.0
+"by imaging artifacts, leaving 941 galaxies. Finally, we     rameters or tweaks have been empirically tuned in order",0.0
+also remove sources that overlap with ALFALFA and/or        to optimize training. Performance is primarily quanti-,0.0
+"xGASS. There are 899 remaining galaxies in the cleaned      fied by the root mean squared error (RMSE) metric,",0.0
+NIBLES data set.                                            which also serves as our loss function:,0.0
+            2.4. xGASS representative sample                                          q,12.0
+                                                                           RMSE ≡       h|Mpred − Mtrue |2 i.             (1),75.0
+   ALFALFA detections tend to be the most H I-rich,3.0
+"systems in the local Universe, and differ from the ma-      Another important metric of performance is the linear",0.0
+jority of galaxies found in optical surveys. We use the     regression slope between Mtrue and Mpred . A slope of,0.0
+"extended GALEX Arecibo SDSS Survey representative           unity indicates that there is no regression bias, and a",0.0
+sample (xGASS; Catinella et al. 2018) in order to repeat    shallower slope generally signifies that the CNN suffers,0.0
+our analysis on galaxies with more typical star forma-      from loss of predictive power (regression attenuation).4,0.0
+"tion and gas properties. xGASS consists of 1,179 galax-     Other works characterize the scatter using the stan-",0.0
+ies with stellar masses between 9 ≤ log(M? /M ) ≤ 11.5      dard deviation of the difference between predictions and,0.0
+"in the redshift range 0.01 ≤ z ≤ 0.05. It is evident from   truths, which is systematically lower than the RMSE if",0.0
+Figure 1 that xGASS galaxies are the most gas-poor of       there is non-zero mean error (or offset).,0.0
+"our three samples, in part due to their relatively high        We use the xresnet family of CNN architectures, which",0.0
+stellar masses (Table 1). All xGASS systems have an-        are enhanced versions of the original residual neural net-,0.0
+"cillary SDSS photometry and spectroscopy. The sample        works (He et al. 2015, 2018). Our 34-layer xresnets are",0.0
+"spans a range of galaxy morphologies, from passive el-      further modified such that the usual Rectified Linear",0.0
+"lipticals to starbursting mergers, and is complete down     Unit (ReLU) activation functions are replaced with Mish",0.0
+"to M ≈ −1.70 for galaxies with log(M? /M ) ≥ 9.7.           (Misra 2019), and simple self-attention layers are added",0.0
+The most gas-poor members of the xGASS sample only          after convolutions in the residual blocks (Zhang et al.,0.0
+"have 5 σ upper limits on MHI available. However, we         2018). We train each model from scratch, as no pre-",0.0
+include them in our sample because the more massive         trained CNN with this architecture is available. In order,0.0
+"systems have been observed to similar M completeness,       to iteratively update the CNN’s weights, we use a com-",0.0
+and the entire sample has a common gas mass limit           bined Rectified Adam (Liu et al. 2019) and LookAhead,0.0
+log(MHI /M ) = 8.                                           (Zhang et al. 2019) optimizer. Weight decay with a co-,0.0
+3. METHODOLOGY: DEEP NEURAL NETWORKS                        efficient of 0.01 is applied to all trainable layers except,0.0
+                                                            batch normalization layers (Goyal et al. 2017); note that,60.0
+   We optimize deep CNNs in order to predict the H I        we use true weight decay rather than the L2 norm (see,3.0
+"mass fraction directly from three-band SDSS images,         Loshchilov & Hutter 2017 for details).",0.0
+"i.e., arrays of 3 × 224 × 224 pixels. Because the goal         It is typical to evaluate deep learning models using",0.0
+"is to estimate M, a scalar quantity, we are optimizing      a validation set drawn from the same distribution as",0.0
+the CNN to solve a regression task rather than a classi-    the training set. If the model performs well on the,0.0
+fication problem (although in later sections we will also   training data but fails to perform well on the valida-,0.0
+"use CNNs for classification). Training a neural network     tion data, then it is a sign that the model suffers from",0.0
+"requires several steps, which can briefly described as fol- overfitting. We randomly split the data by 80%/20% for",0.0
+"lows. The CNN ingests a batch of images and outputs         training/validation sets, unless otherwise noted.",0.0
+predictions (Mpred ) one batch at a time. These pre-           We train batches of 64 images at a time using a,0.0
+"dictions are compared to their ground truth values (i.e.,   Nvidia P100 graphics processing unit (GPU). The learn-",0.0
+"Mtrue ) via the loss function, which measures the level of  ing rate is scheduled according to the “one-cycle” policy",0.0
+discrepancy. CNN model parameters are then updated          for 40 epochs (using the default hyperparameters set by,0.0
+"using an optimization algorithm that minimizes the loss.    fastai; Smith 2018), we set a maximum learning rate of",0.0
+This process iterates until all samples in the training     0.01. Dihedral group operations are randomly applied to,0.0
+"set have been used (signaling the end of an epoch), at      images in order to augment the training set by a factor",0.0
+which point the loss can be reported for the validation,0.0
+"set, and the training loop repeated. The optimization",0.0
+                                                               4,63.0
+details are very similar to the training routine described       A slope of zero and an RMSE equal to the inherent scatter can,0.0
+in Appendix A of Wu & Boada (2019).                              be achieved by always predicting the validation sample’s mean.,0.0
+avr_spaces,3.875
+                                                                                                                                            5,140.0
+                                                                         exists a strong relationship between the H I content and,73.0
+                                                                         the morphological information learned by a CNN from,73.0
+       2.0,7.0
+                                                                         SDSS gri image cutouts.,73.0
+                   Train: .40A (80%),19.0
+       1.5         Valid: .40A (20%)                                        We repeat the exercise using the smaller α.40B sam-,7.0
+"                                                                         ple, and find very similar results (RMSE = 0.235 dex),",73.0
+       1.0                                                               even though α.40A is larger than α.40B by 54%. When,7.0
+       0.5,7.0
+                                                                         we examine the standard deviation of M for both sub-,73.0
+"                                                                         samples, we find that α.40A has much larger scatter",73.0
+       0.0                                                               (0.68 dex) than α.40B (0.50 dex). The broader selec-,7.0
+pred,0.0
+                                                                         tion criteria for subsample A allows galaxies with poorer,73.0
+       0.5,7.0
+"                                                                         constraints on SFR or metallicity, which also means that",73.0
+       1.0                                                               galaxies with uncommon morphological or H I proper-,7.0
+"                                                                         ties are included. Therefore, it is not surprising that the",73.0
+"       1.5                                                               smaller α.40B subsample, which contains fewer outliers,",7.0
+                                                                         produces similar results to the larger α.40A subsample.5,73.0
+       2.0                                        RMSE = 0.235,7.0
+                                                  Slope = 0.830,50.0
+       2.5                                                                           4.2. Dependence on galaxy properties,7.0
+             2.5     2.0   1.5   1.0   0.5 0.0   0.5   1.0   1.5   2.0,13.0
+                                          true                             We find that a trained CNN can accurately recover M,42.0
+                                                                         from optical imaging for the α.40 data set. No system-,73.0
+"Figure 2. CNN-predicted logarithmic H I mass fraction                    atic biases are present, although incorrect predictions",0.0
+(Mpred ) plotted against measured values (Mtrue ) for the                tend to be scattered toward the center of the M distri-,0.0
+"α.40A validation subsample. The RMSE loss (in units of                   bution rather than toward the extrema. Generally, the",0.0
+dex) and the linear regression slope are shown.                          CNN tends to overpredict gas mass fractions for low-M,0.0
+                                                                         galaxies.,73.0
+of eight and to force the CNN to learn such symmetries.                    We examine trends between ∆M ≡ Mpred − Mtrue,0.0
+"The same transformations are applied during test-time                    and other physical properties of galaxies. For example,",0.0
+augmentation to the validation data. We always report                    it may be that the CNN tends to under- or overpre-,0.0
+RMSE performance for the validation or test set.                         dict M based on some image feature that also corre-,0.0
+"   We also consider simpler models for regressing M                      lates with other galaxy properties. However, we find",3.0
+based on the image data. These other regression models                   that ∆M does not vary systematically with any other,0.0
+"are tested in the Appendix A. Traditional statistical or                 property, and nor does the amount of scatter in ∆M.",0.0
+classical machine learning methods are unable to rep-                    The only trend that we find is a negative correlation,0.0
+"resent morphological features using pixels as features,                  between ∆M and Mtrue , which is expected when the",0.0
+"while CNNs are designed to encode image shapes, pat-                     regression slope is less than unity. In Figure 3, we show",0.0
+"terns, and textures over multiple scales in a translation-               trends between ∆M and Mtrue , redshift, stellar mass,",0.0
+"and rotation-invariant way. In Appendix B, we demon-                     SFR, and gas metallicity for the α.40B validation data",0.0
+strate that CNN predictions do not change significantly                  set (959 H I sources). ∆M also does not correlate with,0.0
+"if the input images are injected with artificial point                   specific SFR, 4000 Å break strength, or the δ5 environ-",0.0
+"sources, which reveals that the CNN has learned a ro-                    mental parameter (discussed in Section 7).",0.0
+"bust representation of galaxy morphology. Thus, we",0.0
+"continue our analysis and discussion using the CNN re-                           4.3. Testing on α.100, NIBLES, and xGASS",0.0
+sults.                                                                     We use the CNN trained on α.40A to estimate Mpred,0.0
+"                                 4. RESULTS                              for galaxies in the α.100, NIBLES, and xGASS test data",33.0
+"                                                                         sets. In the first set of entries in Table 2, we report our",73.0
+"                           4.1. Training on α.40                         results for each data set. We list the RMSE, slope, σ,",27.0
+"  We train a deep CNN using 80% of the α.40A data set,                   and mean offset in order to quantify performance, al-",2.0
+and evaluate its performance using the remaining 20%,0.0
+validation data set. The optimized model can predict M,0.0
+                                                                           5   Training a CNN on the α.40A sample leads to better validation,75.0
+"to within RMSE = 0.235 dex. In Figure 2, we show that                          performance than training on the full α.100 sample (RMSE =",0.0
+the predicted and true values of H I mass fraction agree                       0.25 dex). This is likely because the α.40A catalog (Haynes et al.,0.0
+"over two orders of magnitude in M, and that the slope                          2011) is more cleanly matched to SDSS than our custom cross-",0.0
+is close to unity. Our results demonstrate that there                          matching of α.100 to SDSS sources (Haynes et al. 2018).,0.0
+avr_spaces,22.951612903225808
+6,0.0
+    1.0,4.0
+    0.5                                                                                                                  2.0,4.0
+    0.0,4.0
+    0.5                                                                                                                  1.5       .100,4.0
+    1.0                                                 true,4.0
+                   1.0                  0.5            0.0              0.5                  1.0                         1.0,19.0
+    1.0,4.0
+    0.5                                                                                                                  0.5,4.0
+    0.0,4.0
+    0.5,4.0
+                                                  Redshift                                                        pred,50.0
+                                                                                                                         0.0,121.0
+    1.0,4.0
+      0.00,6.0
+    1.0,4.0
+                          0.01           0.02          0.03          0.04             0.05           0.06                0.5,26.0
+    0.5,4.0
+    0.0                                                                                                                  1.0,4.0
+    0.5,4.0
+    1.0                                         log(M /M )                                                               1.5,4.0
+    1.0,4.0
+                    8.5                 9.0            9.5            10.0               10.5,20.0
+                                                                                                                         2.0                     RMSE = 0.297,121.0
+    0.5                                                                                                                                          Slope = 0.733,4.0
+    0.0                                                                                                                  2.5,4.0
+    0.5,4.0
+    1.0                                         12 + log(O/H)                                                            2.0,4.0
+    1.0,4.0
+               8.2                8.4            8.6           8.8            9.0            9.2,15.0
+                                                                                                                         1.5     NIBLES,121.0
+    0.5,4.0
+    0.0                                                                                                                  1.0,4.0
+    0.5,4.0
+    1.0                                       log(SFR/M yr 1)                                                            0.5,4.0
+             1.5                 1.0             0.5           0.0              0.5                1.0,13.0
+                                                                                                                  pred,114.0
+                                                                                                                         0.0,121.0
+Figure 3.       Comparisons between logarithmic H I mass,0.0
+"fraction residuals (∆M) and observed H I mass fraction, red-",0.0
+                                                                                                                         0.5,121.0
+"shift, stellar mass, SFR, and gas metallicity. Only the α.40B                                                            1.0",0.0
+validation data are shown. Aside from an anti-correlation in,0.0
+"∆M vs Mtrue , which appears because the linear regression                                                                1.5",0.0
+                                                                                                                         2.0                     RMSE = 0.370,121.0
+                                                                                                                                                 Slope = 0.839,145.0
+"slope is shallower than unity, no correlation between residu-",0.0
+als and other galaxy properties is observed.,0.0
+                                                                                                                         2.5,121.0
+                                                                                                                         2.0,121.0
+though we primarily rely on the first two metrics. CNN,0.0
+predictions are also shown in Figure 4.                                                                                  1.5     xGASS,0.0
+                                       4.3.1. α.100 results                                                              1.0,39.0
+"   By construction, our α.100 test sample does not over-                                                                 0.5",3.0
+"lap with α.40, so it can be used as an independent test",0.0
+                                                                                                                  pred,114.0
+                                                                                                                         0.0,121.0
+"for the trained CNN. In the top panel of Figure 4, we",0.0
+                                                                                                                         0.5,121.0
+show a scatter plot of Mpred against Mtrue for α.100.,0.0
+"Overall, we find that the CNN recovers Mtrue accurately                                                                  1.0",0.0
+to within 0.30 dex. The performance is weaker than the                                                                   1.5,0.0
+"α.40 validation sample (RMSE = 0.235 dex), which im-",0.0
+                                                                                                                         2.0                     RMSE = 0.625,121.0
+plies that the CNN is unable to perfectly generalize to                                                                                          Slope = 0.472,0.0
+"the α.100 catalog. However, we note that our custom                                                                      2.5",0.0
+                                                                                                                               2.5 2.0 1.5 1.0 0.5 0.0 0.5 1.0 1.5 2.0,127.0
+crossmatch of α.100 to SDSS counterparts is different                                                                                            true,0.0
+from the published α.40 crossmatch to SDSS counter-,0.0
+"parts (Haynes et al. 2011), and that disparate selection",0.0
+                                                                                                            Figure 4. CNN-predicted logarithmic H I mass fraction,108.0
+effects may cause issues in generalization as well. One                                                     (Mpred ) plotted against measured values (Mtrue ) for the,0.0
+"consequence of the imperfect crossmatching is that sev-                                                     α.100, NIBLES, and xGASS test samples.",0.0
+eral sources apparently have implausibly high gas mass,0.0
+fractions. When 43 sources with Mtrue > 2 are removed,0.0
+                                                                                                              The NIBLES catalog presents another opportunity to,110.0
+"from the α.100 sample, we find that the test performance",0.0
+                                                                                                            test our CNN trained on α.40A. While the two samples,108.0
+"is RMSE = 0.23 dex, which is in agreement with our",0.0
+"                                                                                                            have comparable stellar mass distributions, NIBLES",108.0
+α.40 training sample. We will discuss the impacts of,0.0
+                                                                                                            extends to significantly lower gas mass fractions than,108.0
+additional selection effects in Section 6.,0.0
+                                                                                                            α.40. We find that the CNN is generally able to re-,108.0
+                                  4.3.2. NIBLES results                                                     cover Mtrue to within 0.37 dex (see center panel of,34.0
+avr_spaces,32.627906976744185
+                                                                                                                       7,119.0
+"Figure 4). We note that Mpred estimates for NIBLES          sively in astronomy (e.g., Zhu et al. 2014; Teimoorinia",0.0
+"are systematically high by about 0.14 dex (Table 2).        et al. 2017; Caldeira et al. 2019; Ćiprijanović et al. 2020),",0.0
+Our results are consistent with previous findings that      and they can supplement other machine learning estima-,0.0
+ALFALFA H I fluxes are about 0.16 dex (45%) higher          tors by classifying whether an input is representative of,0.0
+than NIBLES measurements for the overlapping sample         a training distribution. One such example is presented,0.0
+"(possibly due to a combination of flux calibration dif-     by Teimoorinia et al. (2017), where a shallow neural",0.0
+ferences and multi-beam flux reconstruction; van Driel      network is trained to distinguish ALFALFA H I detec-,0.0
+et al. 2016). If we rescale H I masses by the 0.16 dex      tions from non-detections. Their method relies on 15,0.0
+"systematic offset, then we find that the CNN’s predic-      galaxy parameters derived from SDSS spectroscopy and",0.0
+"tions are in better agreement with NIBLES measure-          photometry. However, one of the restrictions with this",0.0
+ments (RMSE = 0.34 dex).                                    approach is that it necessitates spectroscopic observa-,0.0
+                                                            tions and ancillary data in order to make predictions.,60.0
+                   4.3.3. xGASS results                     Our method only requires an image of the galaxy. We,19.0
+   The xGASS representative galaxy sample contains a        proceed by training a CNN PR algorithm based on opti-,3.0
+considerable number of massive elliptical galaxies with     cal imaging in order to distinguish ALFALFA detections,0.0
+little gas content (see Table 1). For these gas-poor sys-   from non-detections.,0.0
+"tems, the CNN tends to overpredict M because it has                   5.2. Pattern recognition with a CNN",0.0
+"been trained on α.40A, which comprises mostly H I-",0.0
+"rich, star-forming galaxies. We observe that the CNN          We obtain gri imaging for a sample of z < 0.06 SDSS",0.0
+does not output values below Mpred ≈ −1.3 for xGASS         galaxies that are located in the ALFALFA footprint,0.0
+(although this does not appear to be a severe problem       but are undetected in the α.100 catalog. To ensure a,0.0
+"for NIBLES). As a result, our metrics indicate that the     clean sample of ALFALFA non-detections, we impose",0.0
+"RMSE is large and the slope is too flat, as shown in the    the same selection cuts used for α.100 (Section 2.2), and",0.0
+"bottom panel of Figure 4. Therefore, the CNN is un-         remove all galaxies with neighboring H I sources within",0.0
+"able to generalize to out-of-distribution galaxies such as  an Arecibo beam radius. We randomly select 7,399 AL-",0.0
+"massive, gas-poor systems in xGASS.                         FALFA non-detections from this parent sample to en-",0.0
+                                                            force balanced classes with α.40A detections.,60.0
+          5. PATTERN RECOGNITION FOR                          We train a CNN PR algorithm using exactly the same,10.0
+"           OUT-OF-DISTRIBUTION SAMPLES                      architecture as before, except that the final layer now",11.0
+                                                            predicts two outputs. After applying a sigmoid func-,60.0
+             5.1. Out-of-distribution samples,13.0
+"                                                            tion, these two outputs represent the probabilities of",60.0
+   The trained CNN is capable of making accurate pre-       detection (pCNN ) and non-detection (1 − pCNN ) in an,3.0
+dictions where the training and test set distributions of   ALFALFA-like survey. The α.40A sample serves as,0.0
+"Mtrue overlap. For example, over 95% of the α.40A           ground truths for the ALFALFA detection category, and",0.0
+"training sample have Mtrue > −1, and it is evident          the non-detection sample serves as ground truths for the",0.0
+from Figure 4 that the CNN’s predictions for xGASS          non-detection category. We use the same optimization,0.0
+"are more accurate for higher values of Mtrue . How-         routine as before, except that cross-entropy loss is used",0.0
+"ever, for galaxies without measured H I masses, it is       as the optimization function since the objective now is",0.0
+not known a priori whether a galaxy’s Mtrue is within       binary classification. We also apply label smoothing,0.0
+"the distribution of the training sample, and we must        with  = 0.05, so that optimized values of pCNN gravitate",0.0
+"consider whether a galaxy is out-of-distribution in the     toward 0.05 and 0.95 for non-detections and detections,",0.0
+"input space (image data) rather than the target space       respectively (see, e.g., Müller et al. 2019). We optimize",0.0
+(Mtrue ). A CNN (or any regression algorithm) is essen-     the CNN using the same hyperparameters discussed in,0.0
+"tially a mapping between the input and output space,        Section 3.",0.0
+so it is feasible that the out-of-distribution Mtrue can,0.0
+be related to out-of-distribution galaxy images. For the                          5.3. PR results,0.0
+"rest of the paper, we will consider α.40A detections to       In the top and bottom panels of Figure 5, we show the",0.0
+be “in-distribution” and ALFALFA non-detections to be       distributions of pCNN for the α.40A and ALFALFA non-,0.0
+"“out-of-distribution” for the trained CNN.                  detection samples, i.e., the training subsamples. Their",0.0
+   A neural network can be trained to recognize patterns    pCNN distributions are strongly peaked at ∼ 0.95 and,3.0
+"in order to classify galaxies as in- or out-of-distribution 0.05, respectively, indicating that the CNN robustly",0.0
+(Hopfield 1987; Bishop 1995; Kinney et al. 1996). Pat-      identifies α.40A detections solely using optical imag-,0.0
+tern recognition (PR) algorithms have been used exten-      ing. The trained PR is able to distinguish ALFALFA,0.0
+avr_spaces,7.517857142857143
+ 8,1.0
+                                                                               non-detections. pCNN > 0.5 represents a natural deci-,79.0
+           0.4,11.0
+"                                         .40A                                  sion boundary, although in practice we may find that",41.0
+"           0.2                                                                 other values are better. For example, we have trained",11.0
+           0.0                                                                 the CNN PR using an equal ratio of detected and unde-,11.0
+           0.4,11.0
+"                                         .100                                  tected galaxies, but the ALFALFA survey only detects",41.0
+           0.2                                                                 about 20% of typical galaxies in the low-redshift Uni-,11.0
+"           0.0                                                                 verse (Catinella et al. 2010), which may imply that a",11.0
+           0.4                                                                 higher value of pCNN is desirable for rejecting false de-,11.0
+Fraction,0.0
+                                     NIBLES                                    tections in typical massive galaxy samples.,37.0
+           0.2,11.0
+"                                                                                  In Table 2, we present CNN regression results for all",82.0
+           0.0,11.0
+           0.4                                                                 H I data sets using several choices of PR decision bound-,11.0
+"                                     xGASS                                     ary. For the ALFALFA data sets, we find that different",37.0
+           0.2                                                                 cuts in pCNN does not significantly impact regression,11.0
+"           0.0                                                                 performance (as characterized by, e.g., RMSE). This",11.0
+           0.4,11.0
+                            ALFALFA non-detections                             is expected because the ALFALFA samples should not,28.0
+"           0.2                                                                 contain out-of-distribution examples, and thus the PR",11.0
+"           0.0                                                                 cuts will not strongly affect the results.7 For NIBLES,",11.0
+                 0.0       0.2     0.4          0.6     0.8        1.0         performance modestly improves as the pCNN threshold,17.0
+                                         pCNN                                  increases from zero (effectively the same as no cut) to,41.0
+"                                                                               0.5, 0.8, and 0.9. We find that strict pCNN cuts remove",79.0
+"Figure 5. Pattern recognition probability (pCNN ) distribu-                    gas-poor (e.g., Mtrue < −1) NIBLES systems for which",0.0
+tions for different galaxy samples. The α.40A and ALFALFA,0.0
+                                                                               Mpred is systematically overestimated. The most dra-,79.0
+"non-detections samples are used to train the CNN, while the",0.0
+"α.100, NIBLES, and xGASS are test galaxy samples.                              matic improvement is seen in xGASS, for which a PR",0.0
+                                                                               cut of pCNN > 0.5 removes nearly three quarters of the,79.0
+                                                                               sample. Increasing the pCNN threshold further refines,79.0
+detections from non-detections with 93% accuracy and,0.0
+"                                                                               the CNN performance; the RMSE, σ, and mean offset",79.0
+AUC = 0.93 (area under the curve for the receiver op-,0.0
+"                                                                               decrease, and the slope increases. For pCNN > 0.9, the",79.0
+erating characteristic).6,0.0
+                                                                               xGASS test set RMSE (0.24 dex) is comparable to that,79.0
+"   We examine the pCNN distributions for the α.100,",3.0
+                                                                               of the α.40A training set (0.23 dex).,79.0
+"NIBLES, and xGASS samples, which are also shown",0.0
+                                                                                  A larger threshold for pCNN enforces higher purity of,82.0
+"in Figure 5. As expected, the α.100 galaxies are pre-",0.0
+                                                                               ALFALFA-like galaxies. We recommend that pCNN >,79.0
+dominantly characterized by high values of pCNN . Most,0.0
+                                                                               0.9 be used for typical massive galaxy samples similar,79.0
+galaxies in the NIBLES sample are also at pCNN ≈ 0.95,0.0
+"                                                                               to the xGASS representative sample. However, purity",79.0
+and would be detected by an ALFALFA-like survey.,0.0
+"                                                                               comes at the cost of completeness, and we note that",79.0
+"The xGASS representative galaxy sample, conversely,",0.0
+                                                                               different science goals may call for a different balance,79.0
+"is characterized mostly by low values of pCNN , although",0.0
+                                                                               between complete versus clean samples. For optically,79.0
+there is a small fraction with high pCNN . Our results,0.0
+"                                                                               selected samples, we find that a pCNN > 0.9 threshold",79.0
+verify that the gas mass fraction estimates suffered from,0.0
+                                                                               can robustly remove H I non-detections.,79.0
+out-of-distribution error when evaluated on the xGASS,0.0
+"sample, but did not encounter the same issue for the                                   6. A COMPARISON OF M ESTIMATORS",0.0
+α.100 and NIBLES samples.,0.0
+                                                                                        6.1. Colors and morphological parameters,88.0
+                       5.4. Combining Mpred and pCNN                             Many works have studied the correlations between,23.0
+                                                                               galaxy properties and their H I content. Kannap-,79.0
+  We can use the CNN PR results to assess the relia-,2.0
+                                                                               pan (2004) finds that optical and near-infrared colors,79.0
+bility of Mpred on the test data. We consider various,0.0
+threshold values of pCNN to separate detections from,0.0
+                                                                                 7   There is a subtle effect with the α.100 test set that causes the,81.0
+                                                                                     RMSE to slightly increase as we restrict pCNN to higher values.,85.0
+     6   The receiver operating characteristic (ROC) curve evaluates a               Galaxies labeled with lower pCNN generally have moderate H I,5.0
+"         model’s performance at all classification decision boundaries.              properties (i.e., they are near the mode of the Mtrue distribu-",9.0
+"         Generally, the false positive rate is plotted against the true pos-         tion), whereas sources labeled with higher values of pCNN might",9.0
+"         itive rate, such that the expected area under the curve (AUC)               be extremely H I-rich (i.e., they have a broader distribution of",9.0
+"         is 0.5 for a completely random model with balanced classes, and             Mtrue ). The end result is a < 0.01 dex increase as we shift the",9.0
+         the AUC = 1 for a perfectly accurate and precise model.                     decision boundary from pCNN > 0.5 to 0.9.,9.0
+avr_spaces,30.443037974683545
+                                                                                                                            9,124.0
+                         1.5    .100                                          .100,25.0
+                               pCNN > 0.9                                    Cfgas > 0.5,31.0
+                         1.0,25.0
+                         0.5,25.0
+                  pred   0.0,18.0
+                         0.5,25.0
+                                                           CNN (this work)                                CNN (this work),59.0
+                                                           RMSE = 0.202                                   RMSE = 0.184,59.0
+                         1.0                               Slope = 0.840                                  Slope = 0.834,25.0
+                                                           Teimoorinia+17                                 Teimoorinia+17,59.0
+                                                           RMSE = 0.267                                   RMSE = 0.240,59.0
+                         1.5                               Slope = 0.824                                  Slope = 0.831,25.0
+                         1.5   NIBLES                                        NIBLES,25.0
+                               pCNN > 0.9                                    Cfgas > 0.5,31.0
+                         1.0,25.0
+                         0.5,25.0
+                  pred   0.0,18.0
+                         0.5,25.0
+                                                           CNN (this work)                                CNN (this work),59.0
+                                                           RMSE = 0.289                                   RMSE = 0.288,59.0
+                         1.0                               Slope = 0.809                                  Slope = 0.751,25.0
+                                                           Teimoorinia+17                                 Teimoorinia+17,59.0
+                                                           RMSE = 0.317                                   RMSE = 0.311,59.0
+                         1.5                               Slope = 0.774                                  Slope = 0.773,25.0
+                         1.5   xGASS                                         xGASS,25.0
+                               pCNN > 0.9                                    Cfgas > 0.5,31.0
+                         1.0,25.0
+                         0.5,25.0
+                  pred   0.0,18.0
+                         0.5,25.0
+                                                           CNN (this work)                                CNN (this work),59.0
+                                                           RMSE = 0.222                                   RMSE = 0.232,59.0
+                         1.0                               Slope = 0.739                                  Slope = 0.714,25.0
+                                                           Teimoorinia+17                                 Teimoorinia+17,59.0
+                                                           RMSE = 0.283                                   RMSE = 0.258,59.0
+                         1.5                               Slope = 0.722                                  Slope = 0.713,25.0
+                               1.5   1.0    0.5   0.0     0.5   1.0    1.5   1.5   1.0     0.5   0.0     0.5   1.0    1.5,31.0
+                                                   true                                           true,51.0
+Figure 6. Comparison of Mpred versus Mtrue for our CNN trained on α.40A (blue circles) and the fully connected neural,0.0
+"network presented (pink crosses; Teimoorinia et al. 2017). We show results for the α.100 (top), NIBLES (middle), and xGASS",0.0
+"(bottom) samples, using a selection of pCNN > 0.9 (left) or Cfgas > 0.5 (right). Performance metrics are listed in each panel.",0.0
+avr_spaces,35.13953488372093
+   10,3.0
+  Table 2. Combined pattern recognition and Mpred results                   tion for observed and simulated galaxy samples by us-,2.0
+"                                                                            ing a variety of machine learning algorithms, such as",76.0
+    PR cut       Data set    N      RMSE      Slope       σ      Offset,4.0
+"                                                                            random forests, gradient-boosted trees, and deep neu-",76.0
+                                    (dex)              (dex),36.0
+                                                                            ral networks. Their algorithms can achieve RMSE =,76.0
+                 α.40A      7128    0.2335   0.8427    0.2318     0.0285    0.25 − 0.3 dex when trained trained on real data (us-,17.0
+                 α.100      6087    0.2975   0.7325    0.2974   −0.0076,17.0
+     None,5.0
+                 NIBLES      899    0.3705   0.8395    0.3416     0.1438    ing photometric and environmental parameters as in-,17.0
+"                 xGASS      1179    0.6254   0.4724    0.4284     0.4558    put features), but the estimators are unable to accu-",17.0
+                 α.40A      6674    0.2320   0.8429    0.2302     0.0291    rately predict M when trained on simulated data (see,17.0
+                 α.100      5249    0.3043   0.7192    0.3042   −0.0086,17.0
+  pCNN > 0.5,2.0
+                 NIBLES      767    0.3566   0.8518    0.3238     0.1499,17.0
+                                                                            also Andrianomena et al. 2020). We also train classical,76.0
+                 xGASS       326    0.3237   0.6423    0.2962     0.1314    machine learning algorithms to model three-color im-,17.0
+"                 α.40A      6004    0.2334   0.8434    0.2316     0.0293    age inputs, and demonstrate that they predict M to",17.0
+                 α.100      4454    0.3123   0.7084    0.3122   −0.0077     RMSE = 0.31 dex for α.40A (Appendix A).,17.0
+  pCNN > 0.8,2.0
+                 NIBLES      663    0.3508   0.8586    0.3170     0.1506,17.0
+                 xGASS       217    0.2755   0.6882    0.2669     0.0706       Teimoorinia et al. (2017) show that a fully connected,17.0
+                 α.40A      5319    0.2322   0.8468    0.2304     0.0290    neural network (FCNN) can be used to estimate M to,17.0
+                 α.100      3787    0.3107   0.7116    0.3107   −0.0085     σ = 0.22 dex on independent test sets when trained us-,17.0
+  pCNN > 0.9,2.0
+                 NIBLES      572    0.3435   0.8703    0.3116     0.1451,17.0
+                 xGASS       143    0.2449   0.7486    0.2365     0.0667,17.0
+                                                                            ing 15 galaxy properties. Although several of these input,76.0
+"                                                                            features are known to individually covary with M, the",76.0
+Note— The scatter can be quantified using the RMSE or standard devia-,0.0
+" tion (σ) metrics, where lower is better. We also list the regression slope non-linear combination of these properties processed by",1.0
+ (closer to unity is better) and average offset (closer to zero is better). a shallow neural network is able to robustly outperform,1.0
+" All data sets are independent from each other, such that N is sometimes",1.0
+ smaller than the sample sizes listed in Table 1.                           traditional regression methods (see Ellison et al. 2016,1.0
+                                                                            for details on the network architecture). They find that,76.0
+                                                                            g − r color and µi are the most important parameters,76.0
+"                                                                            for regression (similar to previous results), and that a",76.0
+                                                                            galaxy’s bulge-to-total fraction also plays a role in gov-,76.0
+"  are connected to gas-to-stellar mass fraction, and re-",2.0
+                                                                            erning M. Teimoorinia et al. (2017) also present a pat-,76.0
+  ports a relationship between u − K and M with only,2.0
+                                                                            tern recognition method for rejecting galaxies that are,76.0
+  σ = 0.37 dex scatter. Zhang et al. (2009) use i-band sur-,2.0
+                                                                            not representative of the training sample and tend to,76.0
+"  face brightness, µi , in addition to g − r color to predict",2.0
+                                                                            be incorrectly predicted. The authors combine the PR,76.0
+  M. They find that the best-fit relation reduces the scat-,2.0
+                                                                            probability and the epistemic uncertainty determined,76.0
+  ter to 0.31 dex. Other morphological parameters have,2.0
+"                                                                            from an ensemble of neural network predictions, σfitN , to",76.0
+  been shown to tighten the relationship between galaxy,2.0
+"                                                                            form Cfgas , which parameterizes the robustness of their",76.0
+"  colors and M, such as stellar mass surface density and",2.0
+                                                                            M prediction. Teimoorinia et al. (2017) have publically,76.0
+"  axial ratios, which reduce σ ∼ 0.30 dex (e.g., Catinella",2.0
+                                                                            released M and Cfgas estimates for a sample of over,76.0
+  et al. 2010; Huang et al. 2012; Li et al. 2012; Catinella,2.0
+"                                                                            500,000 SDSS galaxies.",76.0
+  et al. 2013; Eckert et al. 2015).,2.0
+     Teimoorinia et al. (2017) extend the Zhang et al.,5.0
+  (2009) linear method by fitting a quadratic estimator                           6.3. Comparison to Teimoorinia et al. (2017),2.0
+  to the inputs. They report a best fit of σ = 0.22 dex                        The FCNN by Teimoorinia et al. (2017) predicts M,2.0
+"  on the training data; however, this estimator is unable                   with remarkably low scatter. Because their method out-",2.0
+  to generalize well to gas-poor samples such as GASS.                      performs previous photometric gas fraction techniques,2.0
+"  Conversely, Catinella et al. (2010) predict M for the                     (e.g., Kannappan 2004; Zhang et al. 2009), their results",2.0
+  GASS sample using UV-optical colors and stellar mass                      serve as a valuable baseline for comparison to our work.,2.0
+"  surface density, but their method begins to systemati-                    In order to make a fair comparison with their results,",2.0
+  cally fail in the gas-rich regime of very blue galaxies. The              we first crossmatch our data to their catalogs using a,2.0
+  lack of generalizability suggests that more robust esti-                  100 radius. This process removes a non-trivial fraction,2.0
+"  mators are needed, and that pattern recognition should                    of the test set before any PR cuts are made; after cross-",2.0
+"  be used to exclude galaxies that yield poor predictions                   matching, 67% of α.40A, 87% of α.100, 18% of NIBLES,",2.0
+"  (e.g., Catinella et al. 2013).                                            and 86% of xGASS remain.",2.0
+"                                                                               In Figure 7, we show Mpred versus Mtrue scatter plots",79.0
+                  6.2. Machine learning methods                             comparing our predictions with Teimoorinia et al. (2017),18.0
+"     Machine learning has recently become more popu-                        results. Overall, we find that the CNN outperforms the",5.0
+  lar for constructing powerful and flexible M estima-                      FCNN according in terms of scatter and slope. Using a,2.0
+"  tors. Rafieferantsoa et al. (2018) estimate gas mass frac-                conservative threshold of pCNN > 0.9, we observe that",2.0
+avr_spaces,25.430379746835442
+                                                                                                                                                                                                                                                                                              11,286.0
+                0.40,16.0
+                0.35                 CNN (this work)                                                                                                                                                                               0.634      0.383,16.0
+                                     Teimoorinia+ 17                                                                                                                              0.362                                            0.675,37.0
+                                                                                                                                                                                                        0.352,200.0
+                                                                                                                                                                                                0.287,192.0
+                                                                                                                                                                                                                                           0.324,235.0
+                0.30                                                                                                                                                                                 0.325,16.0
+                                                                                                                                                                                                 0.289                                                   0.319,193.0
+                                                                                                                                                                               0.299      0.291,175.0
+                                                                                                                                                                                                    0.317,196.0
+                0.25                                                                                                                                                                                                                                                      0.283,16.0
+                                                                                                  0.269,98.0
+                                                                                                                                                                                                0.288,192.0
+   RMSE (dex),3.0
+                          0.264      0.263      0.262      0.264                                             0.266      0.263      0.267                                                                                                              0.265,26.0
+                                                                                                                                                                                                   0.311,195.0
+                                                                      0.246                                                                   0.240      0.236      0.236,70.0
+                                                                                                                                                                                                                                                                    0.232,260.0
+                                                                                                                                                                                               0.274,191.0
+                0.20                                                                   0.232                                                                                                 0.258,16.0
+                                                                                                                                                                                                                                                                 0.222 0.258      0.176,257.0
+                       0.197      0.196      0.194      0.194                    0.173         0.198      0.197      0.198      0.202,23.0
+                0.15                                               0.187      0.172                                                        0.184                                                                                                                                      0.221,16.0
+                                                                                      0.224                                                           0.171,86.0
+                0.10,16.0
+                                                                                                                                                                 0.155,161.0
+                0.05,16.0
+                        4798 4409 3823 3263 3399 1606 29                                        5124 4387 3694 3126 3598 1720 34                                                 158 137 116                 99     103      44    1012 262 168 107 203                              53,24.0
+                0.00,16.0
+                         ut          0.5        0.8        0.9        0.5        0.7     0.9     ut          0.5        0.8        0.9        0.5        0.7        0.9          ut          0.5     0.8     0.9     0.5     0.7    ut        0.5        0.8        0.9     0.5      0.7,25.0
+                       no c        N>         N>         N>         as >       as >     as >,23.0
+                                                                                               no c        N>         N>         N>         as >       as >       as >,95.0
+                                                                                                                                                                               no c        N>       N>      N>      as >    as >,175.0
+                                                                                                                                                                                                                                   no c     N>         N>         N>       as >    as >,227.0
+                               pCN         pCN        pCN        Cfg        Cfg        Cfg             pCN         pCN        pCN        Cfg        Cfg        Cfg                     pCN         pCN     pCN     Cfg     Cfg            pCN       pCN        pCN        Cfg     Cfg,31.0
+                                                          .40A                                                               .100                                                                    NIBLES                                               xGASS,58.0
+Figure 7. Comparison of results using our CNN method (blue) and a fully connected neural network (red ; Teimoorinia et al.,0.0
+"2017) for ALFALFA, xGASS, and NIBLES galaxies crossmatched with the Teimoorinia et al. (2017) catalog. We show the",0.0
+RMSE for test subsamples selected using various choices of pattern recognition (Cfgas and pCNN ) or no cut at all; in every case,0.0
+the CNN recovers M with lower scatter. The number of galaxies in each test set is shown in at the bottom of each bar plot.,0.0
+Detailed comparisons with additional metrics are provided in Table 3.,0.0
+"the CNN predicts M to RMSE = 0.20 dex for α.100,                                                                                                                    for comparison only when the mean offset is small com-",0.0
+"compared to 0.27 dex for the FCNN. If we instead ap-                                                                                                                pared to the scatter.8 Nevertheless, we find that the",0.0
+ply Cfgas > 0.5 to both the CNN and Teimoorinia et al.                                                                                                              CNN consistently outperforms the FCNN according to,0.0
+"(2017) results, we find RMSE = 0.18 and 0.24 dex, re-                                                                                                               both RMSE and σ.",0.0
+"spectively, for α.100. Both methods give comparable                                                                                                                    It is intriguing that the CNN results are significantly",0.0
+results for the crossmatched NIBLES catalog (RMSE =                                                                                                                 improved after crossmatching with the Teimoorinia et al.,0.0
+"0.29 dex for the CNN, and 0.31 dex for the FCNN). For                                                                                                               (2017) catalog (i.e., comparing RMSE in Tables 2 and",0.0
+"xGASS, we find that the CNN predictions are robust us-                                                                                                              3). Although we previously find RMSE = 0.30 dex for",0.0
+"ing either pCNN > 0.9 (RMSE = 0.22 dex) or Cfgas > 0.5                                                                                                              the α.100 test set, we now report RMSE = 0.20 dex, in",0.0
+"(RMSE = 0.23 dex), whereas the FCNN performs better                                                                                                                 part because the sources with unrealistic Mtrue values",0.0
+using the latter (0.26 dex).                                                                                                                                        identified in Section 4.3.1 have have been removed. Sub-,0.0
+"  In Table 3, we provide detailed comparisons of our re-                                                                                                            stantial improvements are also evident for the other data",2.0
+sults with those published by Teimoorinia et al. (2017).                                                                                                            sets. This discrepancy is most likely due to selection,0.0
+"We test different pCNN and Cfgas thresholds in addi-                                                                                                                criteria introduced by Teimoorinia et al. (2017), which",0.0
+tion to the Cfgas > 0.5 threshold recommended by                                                                                                                    can remove galaxies with uncertain physical properties.,0.0
+"Teimoorinia et al. (2017). For all data sets, the CNN                                                                                                               A similar selection effect accounts for why α.40B has",0.0
+performs extremely well under the pCNN and Cfgas se-                                                                                                                smaller intrinsic scatter in M than α.40A. Teimoorinia,0.0
+"lection criteria. However, it is difficult to compare the                                                                                                           et al. (2017) restrict their analysis to galaxies with mag-",0.0
+"CNN and FCNN results for Cfgas thresholds higher than                                                                                                               nitudes in all SDSS bands, redshifts, sizes, morpho-",0.0
+"0.5. For example, a Cfgas > 0.9 cut removes all NIBLES                                                                                                              logical measurements, and environmental parameters.",0.0
+and xGASS galaxies and only leaves a few galaxies in al-                                                                                                            Galaxies with all 15 properties are characterized by,0.0
+pha.40 (N = 29) and alpha.100 (34). Even with a more                                                                                                                higher signal-to-noise observations and are more likely,0.0
+"moderate cut (Cfgas > 0.7), the sample size is small for                                                                                                            to have secure H I and stellar mass measurements. The",0.0
+"NIBLES (44) and xGASS (53). Therefore, our conclu-                                                                                                                  omitted galaxies tend to be redder and therefore more",0.0
+sions are based on the Cfgas = 0.5 decision boundary.                                                                                                               likely to contribute error and scatter. We conclude that,0.0
+  We primarily quantify our results using the RMSE                                                                                                                  the combination of selection criteria introduced during,2.0
+"scatter. However, previous works often report σ when",0.0
+discussing scatter (Zhang et al. 2009; Teimoorinia et al.                                                                                                                 8   It is worth noting that Teimoorinia et al. (2017) systematically,0.0
+"2017). When there is no mean offset between Mpred                                                                                                                             predict lower M than we do, which causes negative offsets in",0.0
+"and Mtrue , σ is comparable to the RMSE. However,                                                                                                                             their ALFALFA predictions relative to Mtrue . Equivalently, our",0.0
+the RMSE will more heavily penalize predictions when                                                                                                                          NIBLES and xGASS predictions have positive offsets relative to,0.0
+                                                                                                                                                                              Mtrue . The systematic offset between our CNN and their FCNN,174.0
+"there is an offset, such as the 0.14 dex offset in H I mass                                                                                                                   predictions is likely due to their strict exclusion of galaxies with",0.0
+"between NIBLES and ALFALFA, or the > 0.20 dex sys-                                                                                                                            neighboring H I sources, which leads to a 0.14 dex difference in",0.0
+tematic overpredictions for H I-poor galaxies in xGASS                                                                                                                        Mtrue between their clean and contaminated samples.,0.0
+(prior to applying PR cuts). We recommend using σ,0.0
+avr_spaces,51.34177215189873
+ 12,1.0
+                                             Table 3. Comparison of CNN and FCNN Results,45.0
+            PR cut       Data set     N                     CNN (this work)                            FCNN (Teimoorinia et al. 2017),12.0
+                                              RMSE (dex)       Slope    σ (dex)     Offset       RMSE (dex)      Slope    σ (dex)     Offset,46.0
+                         α.40A       4798           0.1967    0.8524     0.1953     0.0238             0.2637    0.8317    0.2556    −0.0647,25.0
+                         α.100       5124           0.1975    0.8462     0.1971     0.0125             0.2688    0.8243    0.2574    −0.0775,25.0
+             None,13.0
+                         NIBLES       158           0.2988    0.7890     0.2791      0.1090            0.3622    0.7194    0.3474     0.1060,25.0
+                         xGASS       1012           0.6338    0.4584     0.4258     0.4697             0.6751    0.4098    0.4793      0.4758,25.0
+                         α.40A       4409           0.1958    0.8531     0.1942     0.0247             0.2626    0.8297    0.2548    −0.0636,25.0
+                         α.100       4387           0.1968    0.8473     0.1963     0.0138             0.2660    0.8267    0.2550    −0.0758,25.0
+          pCNN > 0.5,10.0
+                         NIBLES       137           0.2909    0.7898     0.2739      0.1009            0.3518    0.7208    0.3435     0.0815,25.0
+                         xGASS        262           0.3235    0.6221     0.2953      0.1333            0.3829    0.5796    0.3649     0.1182,25.0
+                         α.40A       3823           0.1938    0.8574     0.1922     0.0250             0.2617    0.8343    0.2530    −0.0672,25.0
+                         α.100       3694           0.1980    0.8440     0.1974     0.0160             0.2634    0.8263    0.2521    −0.0765,25.0
+          pCNN > 0.8,10.0
+                         NIBLES       116           0.2869    0.7981     0.2760      0.0826            0.3252    0.7361    0.3226     0.0509,25.0
+                         xGASS        168           0.2645    0.6602     0.2568      0.0665            0.3185    0.6566    0.3182     0.0283,25.0
+                         α.40A       3263           0.1944    0.8589     0.1927     0.0261             0.2638    0.8340    0.2552    −0.0670,25.0
+                         α.100       3126           0.2021    0.8405     0.2015     0.0160             0.2665    0.8239    0.2548    −0.0783,25.0
+          pCNN > 0.9,10.0
+                         NIBLES        99           0.2895    0.8090     0.2822      0.0706            0.3167    0.7737    0.3174     0.0234,25.0
+                         xGASS        107           0.2216    0.7392     0.2098      0.0742            0.2826    0.7222    0.2835     0.0145,25.0
+                         α.40A       3399           0.1869    0.8306     0.1863     0.0157             0.2460    0.8179    0.2347    −0.0738,25.0
+                         α.100       3598           0.1838    0.8344     0.1837     0.0063             0.2404    0.8311    0.2243    −0.0867,25.0
+          Cfgas > 0.5,10.0
+                         NIBLES       103           0.2876     0.7507    0.2692      0.1044            0.3113   0.7734     0.3091     0.0476,25.0
+                         xGASS        203           0.2317    0.7138     0.2189      0.0777            0.2577    0.7127    0.2581     0.0112,25.0
+                         α.40A       1606           0.1725    0.8142     0.1725     0.0039             0.2321    0.7968    0.2083    −0.1025,25.0
+                         α.100       1720           0.1706     0.8238    0.1707    -0.0009             0.2356   0.8318     0.2074    −0.1119,25.0
+          Cfgas > 0.7,10.0
+                         NIBLES        44            0.2744    0.5946    0.2532      0.1124           0.2577    0.7070     0.2605    -0.0109,25.0
+                         xGASS         53           0.1758    0.7999     0.1589      0.1124            0.2208    0.7494    0.2134    -0.0640,25.0
+                         α.40A         29           0.1730    0.6614      0.1735   -0.0290             0.2236    0.6599   0.1666     −0.1523,25.0
+          Cfgas > 0.9,10.0
+                         α.100         34           0.1555    0.7549      0.1524   -0.0405             0.2358    0.7454   0.1446     −0.1879,25.0
+       Note— We compare Mpred from this work and from the fully connected neural network trained by Teimoorinia et al. (2017) using,7.0
+"         all data sets and several choices of pattern recognition cuts. In order to facilitate an equal comparison, only galaxies with matches",9.0
+         in the Teimoorinia et al. (2017) catalog are evaluated. Bolded values indicate superior performance for a given combination of PR,9.0
+"         cut, data set, and metric.",9.0
+the comparison with Teimoorinia et al. (2017) explains,0.0
+the major improvement in our CNN predictions.,0.0
+        7. THE IMPACT OF ENVIRONMENT,8.0
+  The morphology and H I properties of a galaxy are,2.0
+"strongly sensitive to its surrounding environment (e.g.,",0.0
+Serra et al. 2012; Jones et al. 2016). If a CNN can accu-,0.0
+rately learn a connection between galaxy optical imaging,0.0
+and M when trained only on systems in clustered envi-,0.0
+ronments but fails to accurately estimate H I content for,0.0
+"a test sample of isolated galaxies (or vice versa), then it",0.0
+may be a sign that the distribution of galaxy morpholo-,0.0
+"gies has shifted. In essence, we wish to probe whether                          Figure 8. Thick black lines show histogram distributions",0.0
+the H I-morphology relation learned by the CNN co-                              of normalized galaxy overdensity for the α.40 sample. Dot-,0.0
+varies with environment.                                                        ted and dashed vertical lines in both panels represent the,0.0
+"                                                                                20th and 80th percentile values for δ5 , respectively. We also",80.0
+                    7.1. Galaxy overdensity                                     show the parent α.40 sample in light gray (prior to optical,20.0
+                                                                                crossmatching with the SDSS catalog).,80.0
+  In order to quantitatively investigate the impacts of,2.0
+"environment, we parameterize the environment using",0.0
+"the projected galaxy density (e.g., Cooper et al. 2008):                        where D5 is the projected physical distance to each",0.0
+                                                                                galaxy’s fifth-nearest neighbor (including its own optical,80.0
+                                      3,38.0
+"                            Σ5 =          ,                         (2)         counterpart). We use neighboring galaxies in the NASA-",28.0
+                                    πD52,36.0
+avr_spaces,18.71212121212121
+                                                                                                                              13,126.0
+Sloan Atlas (version 1.0.1; Blanton et al. 2011) within a             significantly worse than those validated on random or,0.0
+velocity window of ±1000 km s−1 in order to compute                   lower-δ5 environments. We conclude that the CNN is,0.0
+Σ5 for each H I source. We enforce a D > 10 Mpc dis-                  able to generalize predictions in a way that yields good,0.0
+tance cut in order to prevent contamination or biases                 performance in underdense environments when exposed,0.0
+"from the Local Group. Following Cooper et al. (2008),                 to galaxies in more overdense environments (relative to",0.0
+"we divide Σ5 by its median over a sliding redshift box-               randomized validation subsamples), yet the opposite is",0.0
+"car window of size ∆z = 0.02, which removes redshift                  not true.",0.0
+dependence. The final result is a normalized overdensity                 These results can be interpreted as evidence that the,0.0
+"parameter, 1 + δ5 . In Figure 8, we show the distribution             H I-morphology connection is controlled by different",0.0
+of log(1 + δ5 ) for our α.40 sample crossmatched with                 physical mechanisms in the highest-δ5 environments.,0.0
+spectroscopically confirmed SDSS optical counterparts                 Galaxies residing in clusters are subject to ram pres-,0.0
+"(we also show the full α.40 sample in gray). It is appar-             sure stripping, tidal forces, galaxy-galaxy interactions,",0.0
+ent that the optical-H I crossmatching exercise removes               and other effects that can leave morphological imprints,0.0
+"α.40 systems in the lowest-density environments. In Fig-              and also depress their gas content (e.g., Chung et al.",0.0
+"ure 9, we provide examples of SDSS image cutouts for                  2009; Fabello et al. 2012). By training on subsamples",0.0
+ALFALFA galaxies at various environmental densities.                  of galaxies characterized by relatively lower-density sur-,0.0
+"   We select 80% of the higher-δ5 galaxies for training               roundings, a CNN is unlikely to learn about the morpho-",3.0
+and set aside the remaining 20% (with lower δ5 ) for                  logical cues associated with extreme physics of clustered,0.0
+"validation. In other words, we test whether a CNN                     environments, and therefore our experiment is able to",0.0
+trained on galaxies in higher-density environments can                distinguish between “typical” and “overdense” modes of,0.0
+accurately predict the H I content of galaxies in lower-              the H I-morphology connection. It is also worth noting,0.0
+"density environments. If this turns out to be the case,               that these tests may not even capture the full extent of",0.0
+"all else unchanged, then the environment does not sig-                the environmental effects, as the 3.80 Arecibo beam may",0.0
+nificantly impact the connection between H I richness                 cause overestimation of H I mass or misidentification of,0.0
+"and optical imaging learned by the CNN. We also split                 optical counterparts in groups and clusters (e.g., Serra",0.0
+the sample such that the 80% with lower δ5 is used for                et al. 2015; Stevens et al. 2019). Such errors may ar-,0.0
+"training, and the 20% with higher δ5 is used for valida-              tificially boost H I content and thereby ameliorate the",0.0
+"tion. As a baseline comparison, we test the case where                CNN’s performance in high-density environments.",0.0
+the training and validation set are randomly split (but,0.0
+trained in the same manner otherwise).9 We repeat tests                         7.2. The overdensity transition regime,0.0
+"five times for each training/validation split, and report",0.0
+                                                                         We observe a stark difference in CNN performance,73.0
+the RMSE average and standard deviation in Table 4.,0.0
+"                                                                      across different density regimes, but it is unlikely that",70.0
+   Our initial tests suggest that the galaxy H I-,3.0
+                                                                      there is a sharp transition in environmental effects. Gas,70.0
+morphology connection varies significantly with envi-,0.0
+                                                                      mass fraction is known to depend on a satellite galaxy’s,70.0
+ronment. We find that a CNN trained only on galaxies in,0.0
+                                                                      distance toward the center of its group or cluster host,70.0
+overdense environments and validated on systems in un-,0.0
+"                                                                      (e.g., Brown et al. 2017). “Pre-processing” in only mod-",70.0
+derdense environments performs better than the inverse.,0.0
+                                                                      erately overdense environments can also depress galax-,70.0
+"Surprisingly, the CNN validated on lower-δ5 systems",0.0
+                                                                      ies’ gas masses (Odekon et al. 2016). We probe the grad-,70.0
+"even outperforms the randomized baseline. However,",0.0
+                                                                      ual onset of environmental effects by repeating the anal-,70.0
+this effect is fully explained by the validation scatter in,0.0
+                                                                      ysis in Section 7.1 and reserving 20% of the galaxies for,70.0
+M when we select subsamples by a range in δ5 . When,0.0
+                                                                      validation based on their δ5 . We show the normalized,70.0
+we compare the CNN performance normalized by the,0.0
+                                                                      RMSE as a function of the validation set δ5 in Figure 10.,70.0
+inherent scatter of the validation subsample (the right-,0.0
+"                                                                      For example, one of the validation data sets in α.40A",70.0
+"most column in Table 4), it becomes apparent that the",0.0
+                                                                      comprises galaxies with δ5 values in the 0.1−0.3 quantile,70.0
+CNN validated on higher-δ5 environments still performs,0.0
+"                                                                      range, and the training set would consist of the remain-",70.0
+                                                                      der of the sample. The central validation δ5 quantile is,70.0
+"   9 For each environmental test run, a 34-layer xresnet is trained   0.2, corresponding to a value of log(1 + δ5 ) = −0.20),",3.0
+"     for 10 epochs using a learning rate of 0.03, batch size of 32,   and the normalized RMSE is approximately 0.40 ± 0.01.",5.0
+"     weight decay of 10−4 , and the validation subsample is evaluated",5.0
+     using test-time augmentation. These hyperparameters have been       We find that the H I-morphology relation transitions,5.0
+     chosen to best optimize the CNN in a smaller number of training  to a different “mode” at high δ5 . For low-density envi-,5.0
+"     epochs so that we can run multiple tests quickly.                ronments, a CNN is able to leverage the morphological",5.0
+                                                                      information learned in intermediate- and high-density,70.0
+avr_spaces,19.32857142857143
+ 14,1.0
+                                           Table 4. α.40A results split by environment,43.0
+                             Training    Validation  Validation σ    Validation RMSE    Normalized RMSE,29.0
+                            N = 5922     N = 1477        (dex)              (dex),28.0
+"                            [0.2, 1.0)   [0, 0.2)        0.5241       0.2184 ± 0.0022     0.4167 ± 0.0042",28.0
+"                            [0, 0.8)     [0.8, 1.0)      0.6706       0.3269 ± 0.0066     0.4874 ± 0.0098",28.0
+                            Random       Random          0.6036       0.2557 ± 0.0094     0.4237 ± 0.0156,28.0
+                           Note— Comparison of CNN performance using different training/validation splits,27.0
+                             for α.40A. The training and validation subsamples are either randomly selected,29.0
+                             or separated by δ5 quantile according to an 80%/20% ratio in the given quantile,29.0
+                             range.,29.0
+"regimes and accurately predict the gas mass fraction di-                 to perform poorly. Therefore, it is critical to investigate",0.0
+"rectly from imaging. For high-density environments, a                    whether or not trained CNNs make sensible predictions",0.0
+CNN is not able to generalize information learned from                   in line with our physical intuition.,0.0
+"low- and intermediate-density regimes as well, and the                     It is possible to decipher deep CNNs by examining",0.0
+normalized RMSE increases significantly. A physical ex-                  which parts of an image are most relevant for making,0.0
+planation for this transition is the growing importance                  certain predictions. This method of localizing image,0.0
+"of ram pressure stripping, tidal forces, and other gas de-               features is generally known as input attribution, because",0.0
+pletion effects in overdense environments. We determine                  output predictions can be directly attributed to pixels,0.0
+that these effects become increasingly significant at 0.8                from the input images. Input attribution methods such,0.0
+"quantile in δ5 for α.40A, corresponding to a normalized                  as saliency maps and class activation maps (Simonyan",0.0
+"overdensity of log(1 + δ5 ) ≥ 0.5; for lower values of δ5 ,              et al. 2013; Zhou et al. 2016) are useful for identifying",0.0
+the physics that govern this H I-morphology relation are                 the image features that a trained CNN “looks at” in or-,0.0
+constant.                                                                der to make its predictions. Other methods can also pro-,0.0
+"                                                                         vide valuable insights, such as by visualizing the learned",73.0
+"       8. INTERPRETING MORPHOLOGICAL                                     convolutional layers in optimzied CNNs (e.g., Zeiler &",7.0
+                         FEATURES                                        Fergus 2013).,25.0
+  Deep learning models often contain millions of train-,2.0
+"able parameters, which makes them difficult to inter-                                           8.1. Grad-CAM",0.0
+"pret compared to classical statistical or smaller ma-                      To interpret our results, we make use of the Gradient-",0.0
+"chine learning models. For this reason, deep neu-                        weighted Class Activation Map (Grad-CAM) visualiza-",0.0
+ral networks are often viewed as opaque systems that                     tion algorithm (Selvaraju et al. 2017). Grad-CAM is an,0.0
+"cannot be trusted. Indeed, there are many cases in                       input attribution tool that highlights the activated “neu-",0.0
+which deep learning algorithms make high-confidence                      rons” in a trained CNN corresponding to the pixels in,0.0
+"predictions while failing spectacularly; e.g., when a                    an input image that are most important for predicting",0.0
+"CNN is confronted with adversarial examples, out-of-                     a designated class. These visual explanations enable us",0.0
+"distribution predictions, or domain adaptation problems                  to directly attribute output predictions to input mor-",0.0
+"(e.g., Amodei et al. 2016). In Section 4.3, we exam-                     phological features represented as pixels. In order to",0.0
+"ined how a CNN trained on ALFALFA could not be                           use this algorithm, we reformulate our gas mass fraction",0.0
+used to make predictions for xGASS without pattern                       regression problem to a binary classification problem.,0.0
+"recognition, because the two galaxy populations have                       We train a CNN to classify gas-rich and gas-poor",0.0
+different distributions of physical properties. Alterna-                 galaxies in the α.40A sample. We define low-M (gas-,0.0
+"tively, poor generalization across domains can occur if                  poor) and high-M (gas-rich) as M < −0.5 (1,327 ob-",0.0
+"the training and test data sets are systematically dif-                  jects) and M > 0.5 (1,922 objects) respectively, so that",0.0
+"ferent, e.g., if the training data comprises images of                   the two classes are well-separated. According to this",0.0
+"simulated galaxies while the test set solely comprises                   classification, some star-forming galaxies are labeled as",0.0
+"images of observed galaxies (e.g., Rafieferantsoa et al.                 “gas-poor,” so this scheme is only appropriate for the",0.0
+"2018; Andrianomena et al. 2020). In Section 7, we ex-                    H I-rich ALFALFA sample.",0.0
+ploited these failure modes in order to probe how galaxy                   We also use a simple CNN for visualization purposes.,0.0
+environment impacts the learned H I-morphology rela-                     Our previous architecture (34-layer xresnet) contains,0.0
+"tion. However, other unknown factors may cause CNNs                      many pooling layers that each decrease the resolution",0.0
+avr_spaces,7.8076923076923075
+                                                                                                                              15,126.0
+                  AGC 732656         AGC 332876               AGC 232459               AGC 191900              AGC 213528,18.0
+log(1+ 5) = 0.5,0.0
+                   AGC 5573          AGC 243940               AGC 182942               AGC 258417              AGC 203857,19.0
+log(1+ 5) = 0.1,0.0
+                  AGC 205250         AGC 184203               AGC 205133               AGC 215142              AGC 332402,18.0
+log(1+ 5) = 0.2,0.0
+                  AGC 724540         AGC 220384               AGC 203003               AGC 733423              AGC 230546,18.0
+log(1+ 5) = 0.6,0.0
+                  AGC 723109         AGC 731404               AGC 170951               AGC 332810               AGC 9396,18.0
+log(1+ 5) = 1.3,0.0
+   Figure 9. Example SDSS images of α.40A galaxy image cutouts in different environmental regimes. Each row depicts five,3.0
+   galaxies with environmental overdensity closest to the value indicated on the left. The example galaxies range from below 10th,3.0
+   percentile to over 90th percentile in log(1 + δ5 ).,3.0
+avr_spaces,15.066666666666666
+       16,7.0
+                                                                                                                  red stellar populations can sometimes be conflated,114.0
+                               0.52,31.0
+                                                                                                                  with dust.,114.0
+                                         0.38   0.20   0.09        0.13   0.24    0.36   0.50   0.77,41.0
+Validation RMSE (normalized),0.0
+                                                       0.02,55.0
+"                               0.50                                                                             3. If the flocculent outer regions of a galaxy are blue,",31.0
+"                               0.48                                                                                then the CNN tends to predict that it is gas-rich,",31.0
+                                                                                                                   but if the outer regions are populated with redder,115.0
+                               0.46,31.0
+"                                                                                                                   stars (e.g., panel d of Figure 11), then the galaxy",115.0
+"                               0.44                                                                                is more often predicted to be gas-poor (e.g., Koop-",31.0
+                               0.42                                                                                mann & Kenney 2004).,31.0
+                               0.40,31.0
+                               0.38,31.0
+"                                                                                          .40A                  4. Nearby objects in the field of view, even ones that",90.0
+"                                                                                                                   are clearly background or foreground objects, are",115.0
+                                   0.0          0.2          0.4            0.6           0.8          1.0,35.0
+                                                      Validation   5   central quantile                            often considered by the CNN. They may be high-,54.0
+                                                                                                                   lighted as evidence for low or high M depending,115.0
+Figure 10. CNN validation performance across different                                                             on their relative color to the main system; how-,0.0
+"environmental densities shown in black markers and error                                                           ever, their contributions to the overall prediction",0.0
+bars. The performance is the RMSE normalized by the in-,0.0
+"                                                                                                                   are usually subdominant. In Appendix B, we ver-",115.0
+herent scatter in M for the validation set; we show the mean,0.0
+and standard deviation for five tests. Each validation set is                                                      ify that artificial point sources are generally unim-,0.0
+"constructed from a 20% range in δ5 , and the corresponding                                                         portant for the CNN’s decision-making process.",0.0
+central log(1 + δ5 ) value is shown at the top. Validation,0.0
+results from randomly drawn subsamples are shown in red.                                                              8.3. The value of single-band imaging,0.0
+                                                                                                               It is clear that the CNN relies on color information,111.0
+"by a factor of two, such that the final Grad-CAM result                                                      to identify gas-rich or gas-poor regions. Galaxy mor-",0.0
+"is a 7 × 7 pixel feature map. Instead, we use a shallower                                                    phology is another useful, albeit subdominant, parame-",0.0
+"CNN that consists of a basic CNN stem and two resid-                                                         ter for estimating gas mass fraction (e.g., Zhang et al.",0.0
+"ual blocks containing two convolutional layers each (see,                                                    2009; Eckert et al. 2015; Teimoorinia et al. 2017). How-",0.0
+"e.g., Howard & Gugger 2020). The final convolutional                                                         ever, morphological features often covary with color be-",0.0
+layer outputs a 56 × 56 pixel feature map. We use the                                                        cause galaxy structures are linked to their stellar pop-,0.0
+"same optimization methods as in Section 3, except that                                                       ulations. Therefore, we aim to identify the most cru-",0.0
+we train for only 10 epochs (at which point we reach                                                         cial morphological features using monochromatic imag-,0.0
+"convergence) and optimize using cross entropy loss with                                                      ing, i.e., single-channel image cutouts with summed g,",0.0
+" = 0.05 label smoothing. The shallow network classifies                                                     r, and i flux. We first verify that this is possible",0.0
+α.40A galaxies by gas richness with 98% accuracy.                                                            by repeating the regression analysis in Section 4 using,0.0
+"                                                                                                             single-band imaging for α.40A, and recover M to within",109.0
+                               8.2. The most important morphological features,31.0
+                                                                                                             RMSE = 0.29 dex. We also note that CNNs have had,109.0
+  The trained CNN outputs probabilities for each pre-                                                        some success predicting other gas-phase metallicity from,2.0
+dicted class for an input image. Grad-CAM can be used                                                        single-band imaging (see Section 5.3 of Wu & Boada,0.0
+to highlight the most important morphological features                                                       2019).,0.0
+"used for making correct and incorrect predictions, and                                                         We train a CNN to classify gas-rich and gas-poor",0.0
+"both sets of image features are valuable for understand-                                                     galaxies using monochromatic imaging. The data set,",0.0
+"ing what the CNN has learned. The association between                                                        model, and optimization steps are otherwise the same",0.0
+blue stellar populations at the edge of a galaxy’s star-                                                     as described in the previous section. We find that the,0.0
+"forming disk and a high-M classification, for example,                                                       shallow CNN is able to classify monochromatic α.40A",0.0
+strengthens our confidence in trained CNN. Examples of                                                       galaxies to over 90% accuracy.,0.0
+"the galaxy image cutout, low-M features, and high-M                                                            In Figure 11, we show Grad-CAM results on single-",0.0
+"features are shown in Figure 11. Below, we list the most                                                     band imaging. By examining the highlighted activations",0.0
+"commonly observed results.                                                                                   on monochromatic images, we are able to discern the",0.0
+                                                                                                             morphological indicators of gas richness. We find that,109.0
+"                               1. H II regions, often indicated by bright, blue, com-",31.0
+                                                                                                             the CNN inspects the outskirts of galaxies and highlights,109.0
+"                                  pact features, and spiral arms, usually signify that",34.0
+                                                                                                             point source-like objects when identifying gas-rich fea-,109.0
+                                  a galaxy has high gas mass fraction.,34.0
+                                                                                                             tures. Many of these compact features are star-forming,109.0
+"                               2. Red central regions due to older stellar popula-                           knots in spiral arms or the extended disk, but the CNN",31.0
+"                                  tions tend to be associated with low M. However,                           also takes background sources into consideration (e.g.,",34.0
+avr_spaces,34.25373134328358
+                                                                                                                                17,128.0
+"Figure 11. Grad-CAM heatmaps shown for SDSS images using trained CNNs. Each panel shows, from left to right, the SDSS",0.0
+"gri image cutout, the heatmap of activations corresponding to gas-poor features, and the heatmap of activations corresponding",0.0
+to gas-rich features. Grad-CAM heatmaps are shown for for gri color input images (upper) and monochromatic input images,0.0
+"(lower). Gas-poor/gas-rich labels are bolded for ground truth values, and CNN probabilities are provided for each class. The",0.0
+image contrast has been reduced for visualization purposes.,0.0
+panel c). Grad-CAM also reveals that the CNN focuses              part coordinates for the former). Legacy Survey imag-,0.0
+on galaxy centers when identifying gas-poor features in           ing is deeper than that of SDSS by about two magni-,0.0
+"monochromatic imaging. We surmise that it is relying              tudes, and has higher angular resolution (although it",0.0
+the central surface brightness to recognize whether a             remains seeing-limited). Deep optical imaging is partic-,0.0
+"galaxy is gas-poor; surprisingly, it is able to leverage          ularly critical for identifying low-surface brightness fea-",0.0
+this information even though no distance information is           tures in galaxies with complex star formation histories,0.0
+"provided.                                                         or recent gas accretion (e.g., Duc et al. 2015; Geréb et al.",0.0
+                                                                  2016; Hagen et al. 2016).,66.0
+  9. DEEPER IMAGING AND FUTURE SURVEYS,2.0
+"                                                                    Using Legacy Survey imaging, and the same train-",68.0
+"   Future optical-wavelength surveys will offer deeper            ing methodology as described in Section 3, we find",3.0
+imaging data sets useful for characterizing the gas prop-         similar results for α.40A as before. Our early results,0.0
+erties of galaxies. We obtain grZ imaging from the DESI           are promising and suggest that deeper optical imag-,0.0
+Legacy Imaging Surveys DR8 (Legacy Survey; Dey et al.             ing may be useful for improving M predictions.11 It is,0.0
+2019) in order to compare with our previous results. Us-,0.0
+"ing the online interface10 , we query 448 × 448 pixel JPG",0.0
+cutouts at the native 0.26200 pixel−1 scale for both the            11 It is difficult to directly compare the two imaging data sets:,0.0
+                                                                       Legacy Survey image cutouts have an expanded field-of-view,71.0
+"α.40 and xGASS samples (again using optical counter-                   (1.960 ) compared to SDSS imaging (1.480 ), and the use of Z",0.0
+                                                                       rather than i-band imaging in the reddest channel may also affect,71.0
+                                                                       CNN performance.,71.0
+   10 https://legacysurvey.org/viewer,3.0
+avr_spaces,16.655172413793103
+ 18,1.0
+"also worth noting that the Legacy Survey DR8 imaging       to new test data sets, and our experiments indicate that",0.0
+"suffers from some imaging issues, such as pixel bleed,     PR threshold of pCNN > 0.9 is best-suited for optically",0.0
+"sky subtraction, and inconsistent zero-points in differ-   selected galaxy samples. We find that the CNN consis-",0.0
+"ent bands, which may prevent the model from learning       tently outperforms previous machine learning methods",0.0
+"as much as it can. These effects must be remedied if       on matched test data; using a pCNN > 0.9 PR cut, we",0.0
+"we want to maximize scientific gains through the com-      report RMSE = 0.20 dex scatter for α.100, 0.29 dex",0.0
+"bination of deep learning and wide-field optical/near-     scatter for NIBLES, and 0.22 dex scatter for xGASS.",0.0
+"infrared surveys (e.g., the Vera C. Rubin Observatory      Our methodology can be augmented with deeper imag-",0.0
+"(VRO) Legacy Survey of Space and Time (LSST), Ivezić       ing or larger and more diverse galaxy samples. With",0.0
+et al. 2019; and the Nancy Grace Roman Space Telescope     the advent of next-generation H I 21-cm emission line,0.0
+"(RST, formerly WFIRST ; Spergel et al. 2015).              surveys with the SKA precursor telescopes, and LSST",0.0
+"   Current H I surveys are mostly mass-limited, but        and the Roman Space Telescope on the horizon, it will",3.0
+SKA precursor surveys such as DINGO and LADUMA             soon be possible to generate enormous CNN-predicted,0.0
+will be much more sensitive to gas-poor galaxy popu-       H I catalogs.,0.0
+lations. These new surveys will allow us to construct         We are able to the probe the environmental depen-,0.0
+data sets similar to the xGASS representative sample or    dence of the H I-morphology relation by independently,0.0
+the volume-limited RESOLVE survey (REsolved Spec-          training and validating CNNs using subsamples strati-,0.0
+"troscopy Of a Local VolumE; e.g., Stark et al. 2016),      fied by galaxy overdensity (i.e., δ5 , the normalized pro-",0.0
+"except with orders of magnitude more detections at the     jected density). For high-density environments, a CNN",0.0
+"same H I mass threshold. In the future, we may be          trained on lower-δ5 examples is unable to accurately es-",0.0
+"able to take deep H I 21-cm line observations of some      timate M from optical imaging. However, if the val-",0.0
+"small patch of sky, and then use deep optical imaging in   idation set comprises galaxies in low- or intermediate-",0.0
+"overlapping portions in order to generate M predictions    density environments, then a CNN has no trouble pre-",0.0
+"for galaxies across the entire optical survey area (e.g.,  dicting M. We propose that in the most overdense envi-",0.0
+"Domínguez Sánchez et al. 2019; Khan et al. 2019). The      ronments, log(1+δ5 ) & 0.5 for α.40A, physical processes",0.0
+"methods introduced in this paper may also allow us to      such as ram pressure stripping, tidal interactions, and",0.0
+probe the redshift evolution of the overdensity transition other gas depletion effects are responsible for “break-,0.0
+regime (Section 7) or evolution of the most relevant mor-  ing down” the H I-morphology relation observed in less,0.0
+phological features associated with gas richness over cos- dense environments.,0.0
+mic timescales (Section 8). These tantalizing prospects       We have also reformulated the problem of estimat-,0.0
+"can be realized, but only if the co-evolving H I and stel- ing M as a binary classification task in order to better",0.0
+"lar mass functions (e.g., Lemonias et al. 2013) and their  understand how CNNs are able to distinguish gas-poor",0.0
+effects on the priors baked into the trained CNN model     from gas-rich systems. We use Gradient-weighted Class,0.0
+"are taken into account (e.g., by sampling according to a   Activation Maps (Grad-CAM) to localize the optical fea-",0.0
+"known distribution; Buda et al. 2017). Moreover, cosmic    tures that are most important for predicting whether or",0.0
+variance effects for deep H I surveys need to be consid-   not a galaxy is gas-rich. Bright star-forming regions,0.0
+"ered (e.g., Moster et al. 2011). Finally, it is imperative and clumpy blue features usually imply high M, while",0.0
+to deploy robust pattern recognition algorithms in or-     central red bulges and older stellar populations at large,0.0
+der to safeguard against out-of-distribution errors and    radii often indicate low M. The CNN successfully dis-,0.0
+gauge the reliability of machine learning predictions.     tinguishes gas-rich and gas-poor galaxies with > 90% ac-,0.0
+"                                                           curacy using single-band optical images, implying that",59.0
+                                                           it is able to identify purely morphological features for,59.0
+                   10. CONCLUSIONS                         estimating gas content.,19.0
+                                                              We have highlighted several ways that deep learning,62.0
+"   In this work, we have found that deep CNNs can pre-",3.0
+                                                           and computer vision can be useful for understanding,59.0
+dict a galaxy’s H I mass fraction (M) solely from gri,0.0
+                                                           galaxy evolution. Apart from predicting M and the,59.0
+imaging to within RMSE = 0.23 dex for the α.40A sam-,0.0
+"                                                           gas fraction’s reliability directly from optical imaging,",59.0
+"ple, demonstrating that there is a strong connection be-",0.0
+                                                           CNNs can also be used to gauge the impact of co-,59.0
+tween galaxy morphology and H I content. We have,0.0
+                                                           varying galaxy properties such as environmental over-,59.0
+"also trained a CNN for pattern recognition (PR), e.g.,",0.0
+                                                           density. These methods are visually interpretable and,59.0
+determining whether a galaxy is likely to be detected by,0.0
+                                                           provide key insights into the physical processes and stel-,59.0
+an ALFALFA-like survey based on its optical imaging.,0.0
+                                                           lar/ISM structures that are most closely connected to,59.0
+The combined regression and PR results generalize well,0.0
+                                                           the H I properties in galaxies.,59.0
+avr_spaces,11.515625
+                                                                                                                                                        19,152.0
+        2.0,8.0
+        1.5    .40A,8.0
+        1.0,8.0
+        0.5,8.0
+ pred,1.0
+        0.0,8.0
+        0.5,8.0
+        1.0,8.0
+        1.5,8.0
+        2.0                       Linear                           PCA + Linear                      PCA + RF                         CNN,8.0
+                                  RMSE = 0.44                      RMSE = 0.31                       RMSE = 0.31                      RMSE = 0.23,34.0
+        2.5,8.0
+               2       1     0        1         2   2   1     0        1          2   2   1     0        1         2   2   1     0        1         2,15.0
+                           true                             true                              true                             true,27.0
+        2.0,8.0
+        1.5   NIBLES,8.0
+        1.0,8.0
+        0.5,8.0
+ pred,1.0
+        0.0,8.0
+        0.5,8.0
+        1.0,8.0
+        1.5,8.0
+        2.0                       Linear                           PCA + Linear                      PCA + RF                         CNN,8.0
+                                  RMSE = 0.57                      RMSE = 0.45                       RMSE = 0.41                      RMSE = 0.37,34.0
+        2.5,8.0
+               2       1     0        1         2   2   1     0        1          2   2   1     0        1         2   2   1     0        1         2,15.0
+                           true                             true                              true                             true,27.0
+Figure 12. Comparison of different regression models for estimating M using the ALFALFA α.40A validation sample (top),0.0
+and the NIBLES test sample (bottom). Each panel shows Mpred plotted against Mtrue for a linear model trained on block-,0.0
+"reduced images (left), a linear model trained on PCA-processed images (center-left), a random forest model trained on the",0.0
+"PCA-processed images (center-right), and a CNN trained on the original images (right).",0.0
+                                                                     APPENDIX,69.0
+                                                A. COMPARING CNNS TO SIMPLER MODELS,48.0
+  Classical machine learning algorithms and statistical methods are not well-suited for operating on image data because,2.0
+"they are not invariant to translation, scaling, or rotation. In other words, individual pixels may represent to different",0.0
+"galaxy features for different images, and any model that treats a pixel as a static feature will not perform well in",0.0
+computer vision problems. CNNs are able to encode optimized representations of galaxy features through convolution,0.0
+"operations, which largely do not depend on the feature’s absolute location within an image. Moreover, these invariances",0.0
+"can be learned via redundant convolutional filters by employing data augmentation (such as shifts, rotations, and crops;",0.0
+"e.g., Dieleman et al. 2015).",0.0
+  Our data set consists of SDSS image cutouts centered on the optical sources of various H I catalog members.,2.0
+"Although the galaxies are still observed at different position angles and inclinations, and have different physical scales",0.0
+"because they span 0 ≤ z ≤ 0.06, the galaxies’ central regions always occupy the center pixels. For this reason, it may",0.0
+"be possible to use simple models, rather than a CNN, in order to estimate the H I mass fraction. We use the sklearn",0.0
+Python package to pre-process and fit our data.,0.0
+  The image data are represented as arrays with 3×224×224 elements. Most simple regression models are ill-equipped,2.0
+"to handle 150, 528 inputs at a time, so we use either one of two methods to lower the dimensionality of the input data.",0.0
+"The first method is to block-reduce each training image using a 7×7 kernel (also known as average binning or pooling),",0.0
+"resulting in a 3 × 32 × 32-shaped input. Each block-reduced array is then flattened into a one-dimensional vector, so",0.0
+"that the independent variables can be written as a N × 3, 072 matrix, where N is the number of galaxies in the training",0.0
+"set. The second method is to use a principal components analysis (PCA) on the training set, where only the top",0.0
+avr_spaces,10.907407407407407
+ 20,1.0
+"Figure 13. Examples of artificial point source injection for AGC 9340 (upper), AGC 226075 (center), and AGC 220910 (lower).",0.0
+"For each row, starting from left to right, we show images with six artificial red sources, green sources, and blue sources. The",0.0
+right-most panel in each row compares the original Mpred (dashed vertical line) and Mtrue (solid vertical line) to histograms of,0.0
+"100 simulations for each injected source color (red, green, and blue).",0.0
+"16 components are flattened and saved. The PCA-processed independent variables can be written as a 16 × 150, 528",0.0
+matrix.,0.0
+"   After reducing the dimensionality of the training inputs, we select one of two algorithms for statistical regression.",3.0
+The first algorithm is an ordinary least-squares regression to fit a low-order polynomial model. In practice we find that,0.0
+"a linear model always outperforms a quadratic model, so only linear regression results are included in this discussion.",0.0
+"The linear regression model requires 3,073 trainable parameters for block-reduced images, and 17 trainable parameters",0.0
+"for PCA-processed images. The second algorithm is a random forest (RF), which bootstraps (i.e., samples with",0.0
+replacement) 100 random decision tree estimators. The RF regression model is optimized according to the mean,0.0
+squared error loss.,0.0
+"   In Figure 12, we compare different models trained on 80% of α.40A and validated on the remaining 20% for α.40A",3.0
+(left) and for the entire NIBLES test set (right). All model predictions are impacted by the 0.16 dex systematic offset,0.0
+in H I mass between NIBLES and ALFALFA (van Driel et al. 2016). The linear models fit to block-reduced images do,0.0
+"not perform well, as indicated by high scatter. PCA-processed data provide better results than block-reduced images,",0.0
+"although overall performance is still modest. Ultimately, CNNs outperform all of the simpler models that we test in",0.0
+terms of slope and scatter.,0.0
+                                        B. ROBUSTNESS TO PERTURBATIONS,40.0
+   A concern with CNNs and deep learning algorithms is whether or not their predictions can be significantly swayed by,3.0
+"image noise or other perturbations. For example, galaxy images with foreground stars or other faint background sources",0.0
+"should not cause predictions to vary wildly (unless they are located in regions where the CNN ascribes high importance,",0.0
+which we can probe using Grad-CAM; see Section 8). To test our method’s performance when small changes are added,0.0
+"to the images, we randomly add colored point sources (resembling artificial stars) to three representative galaxy images,",0.0
+avr_spaces,1.8518518518518519
+                                                                                                                            21,124.0
+"and allow the CNN to infer Mpred . Specifically, we add six artificial sources (two-dimensional circular Gaussian profiles",0.0
+"with a 5-pixel radius, all of which are red, green, or blue) to random locations in the original image. Figure 13 shows",0.0
+"examples of the three galaxy images with injected artificial sources. 100 trials are run for each of the three colors, and",0.0
+we compare these perturbed predictions to the original estimate (Mpred ) and the ground truth (Mtrue ). We find the,0.0
+CNN is able to make generalized predictions that does not depend on the injected point sources; the typical scatter,0.0
+"due to these injected sources is much smaller (< 0.05 dex) than the overall RMSE. Thus, we conclude that our trained",0.0
+CNNs are robust to perturbations such as artificial point sources.,0.0
+                                                         REFERENCES,57.0
+"Abolfathi, B., Aguado, D. S., Aguilar, G., et al. 2018,          Domínguez Sánchez, H., Huertas-Company, M., Bernardi,",0.0
+"  ApJS, 235, 42                                                    M., et al. 2019, MNRAS, 484, 93",2.0
+"Amodei, D., Olah, C., Steinhardt, J., et al. 2016, arXiv         Duc, P.-A., Cuillandre, J.-C., Karabal, E., et al. 2015,",0.0
+"  e-prints, arXiv:1606.06565                                       MNRAS, 446, 120",2.0
+"Andrianomena, S., Rafieferantsoa, M., & Davé, R. 2020,           Eckert, K. D., Kannappan, S. J., Stark, D. V., et al. 2015,",0.0
+"  MNRAS, 492, 5743                                                 ApJ, 810, 166",2.0
+"Barnes, D. G., Staveley-Smith, L., de Blok, W. J. G., et al.     Ellison, S. L., Teimoorinia, H., Rosario, D. J., & Mendel,",0.0
+"  2001, MNRAS, 322, 486                                            J. T. 2016, MNRAS, 455, 370",2.0
+"Bishop, C. M. 1995, Neural Networks for Pattern                  Fabello, S., Kauffmann, G., Catinella, B., et al. 2012,",0.0
+"  Recognition (USA: Oxford University Press, Inc.)                 MNRAS, 427, 2841",2.0
+"Blanton, M. R., Kazin, E., Muna, D., Weaver, B. A., &            Geréb, K., Catinella, B., Cortese, L., et al. 2016, MNRAS,",0.0
+"  Price-Whelan, A. 2011, AJ, 142, 31                               462, 382",2.0
+"Blyth, S., Baker, A. J., Holwerda, B., et al. 2016, in",0.0
+"                                                                 Giovanelli, R., Haynes, M. P., Kent, B. R., et al. 2005, AJ,",65.0
+  Proceedings of MeerKAT Science: On the Pathway to the,2.0
+"                                                                   130, 2598",67.0
+"  SKA. 25-27 May, 4",2.0
+"                                                                 Goyal, P., Dollár, P., Girshick, R., et al. 2017, arXiv",65.0
+"Brinchmann, J., Charlot, S., White, S. D. M., et al. 2004,",0.0
+"                                                                   e-prints, arXiv:1706.02677",67.0
+"  MNRAS, 351, 1151",2.0
+"                                                                 Hagen, L. M. Z., Seibert, M., Hagen, A., et al. 2016, ApJ,",65.0
+"Brown, T., Catinella, B., Cortese, L., et al. 2017, MNRAS,",0.0
+"                                                                   826, 210",67.0
+"  466, 1275",2.0
+"                                                                 Haynes, M. P., Giovanelli, R., Martin, A. M., et al. 2011,",65.0
+"Buda, M., Maki, A., & Mazurowski, M. A. 2017, arXiv",0.0
+"                                                                   AJ, 142, 170",67.0
+"  e-prints, arXiv:1710.05381",2.0
+"                                                                 Haynes, M. P., Giovanelli, R., Kent, B. R., et al. 2018, ApJ,",65.0
+"Caldeira, J., Wu, W. L. K., Nord, B., et al. 2019,",0.0
+"                                                                   861, 49",67.0
+"  Astronomy and Computing, 28, 100307",2.0
+"Catinella, B., Schiminovich, D., Kauffmann, G., et al. 2010,     He, K., Zhang, X., Ren, S., & Sun, J. 2015, arXiv e-prints,",0.0
+"  MNRAS, 403, 683                                                  arXiv:1512.03385",2.0
+"Catinella, B., Schiminovich, D., Cortese, L., et al. 2013,       He, T., Zhang, Z., Zhang, H., et al. 2018, arXiv e-prints,",0.0
+"  MNRAS, 436, 34                                                   arXiv:1812.01187",2.0
+"Catinella, B., Saintonge, A., Janowiecki, S., et al. 2018,       Hopfield, J. J. 1987, Proceedings of the National Academy",0.0
+"  MNRAS, 476, 875                                                  of Science, 84, 8429",2.0
+"Chabrier, G. 2003, PASP, 115, 763                                Howard, J., & Gugger, S. 2020, arXiv e-prints,",0.0
+"Chung, A., van Gorkom, J. H., Kenney, J. D. P., Crowl, H.,         arXiv:2002.04688",0.0
+"  & Vollmer, B. 2009, AJ, 138, 1741                              Huang, S., Haynes, M. P., Giovanelli, R., & Brinchmann, J.",2.0
+"Ćiprijanović, A., Snyder, G. F., Nord, B., & Peek, J. E. G.        2012, ApJ, 756, 113",0.0
+"  2020, Astronomy and Computing, 32, 100390                      Huertas-Company, M., Rodriguez-Gomez, V., Nelson, D.,",2.0
+"Cooper, M. C., Newman, J. A., Weiner, B. J., et al. 2008,          et al. 2019, MNRAS, 489, 1859",0.0
+"  MNRAS, 383, 1058                                               Hunter, J. D. 2007, Computing in Science and Engineering,",2.0
+"Dey, A., Schlegel, D. J., Lang, D., et al. 2019, AJ, 157, 168      9, 90",0.0
+"Dieleman, S., Willett, K. W., & Dambre, J. 2015, MNRAS,          Ivezić, Ž., Kahn, S. M., Tyson, J. A., et al. 2019, ApJ, 873,",0.0
+"  450, 1441                                                        111",2.0
+avr_spaces,14.898305084745763
+ 22,1.0
+"Jarvis, M., Taylor, R., Agudo, I., et al. 2016, in Proceedings Peek, J. E. G., & Burkhart, B. 2019, ApJL, 882, L12",0.0
+"  of MeerKAT Science: On the Pathway to the SKA. 25-27         Rafieferantsoa, M., Andrianomena, S., & Davé, R. 2018,",2.0
+"  May, 6                                                         MNRAS, 479, 4509",2.0
+"Jones, M. G., Papastergis, E., Haynes, M. P., & Giovanelli,    Saintonge, A., Catinella, B., Tacconi, L. J., et al. 2017,",0.0
+"  R. 2016, MNRAS, 457, 4393                                      ApJS, 233, 22",2.0
+"Kannappan, S. J. 2004, ApJL, 611, L89                          Salim, S., Rich, R. M., Charlot, S., et al. 2007, ApJS, 173,",0.0
+"Kauffmann, G., Heckman, T. M., White, S. D. M., et al.           267",0.0
+"  2003, MNRAS, 341, 33                                         Selvaraju, R. R., Cogswell, M., Das, A., et al. 2017, in 2017",2.0
+"Khan, A., Huerta, E. A., Wang, S., et al. 2019, Physics          IEEE International Conference on Computer Vision",0.0
+"  Letters B, 795, 248                                            (ICCV), 618–626",2.0
+"Kinney, A. L., Calzetti, D., Bohlin, R. C., et al. 1996, ApJ,  Serra, P., Oosterloo, T., Morganti, R., et al. 2012, MNRAS,",0.0
+"  467, 38                                                        422, 1835",2.0
+"Koopmann, R. A., & Kenney, J. D. P. 2004, ApJ, 613, 866        Serra, P., Koribalski, B., Kilborn, V., et al. 2015, MNRAS,",0.0
+"                                                                 452, 2680",65.0
+"Koribalski, B. S., Staveley-Smith, L., Westmeier, T., et al.",0.0
+"                                                               Simonyan, K., Vedaldi, A., & Zisserman, A. 2013, arXiv",63.0
+"  2020, arXiv e-prints, arXiv:2002.07311",2.0
+"                                                                 e-prints, arXiv:1312.6034",65.0
+"Lemonias, J. J., Schiminovich, D., Catinella, B., Heckman,",0.0
+"                                                               Smith, L. N. 2018, arXiv e-prints, arXiv:1803.09820",63.0
+"  T. M., & Moran, S. M. 2013, ApJ, 776, 74",2.0
+"                                                               Spergel, D., Gehrels, N., Baltay, C., et al. 2015, arXiv",63.0
+"Li, C., Kauffmann, G., Fu, J., et al. 2012, MNRAS, 424,",0.0
+"                                                                 e-prints, arXiv:1503.03757",65.0
+  1471,2.0
+"                                                               Stark, D. V., Kannappan, S. J., Eckert, K. D., et al. 2016,",63.0
+"Liu, L., Jiang, H., He, P., et al. 2019, arXiv e-prints,",0.0
+"                                                                 ApJ, 832, 126",65.0
+  arXiv:1908.03265,2.0
+"                                                               Stevens, A. R. H., Diemer, B., Lagos, C. d. P., et al. 2019,",63.0
+"Loshchilov, I., & Hutter, F. 2017, arXiv e-prints,",0.0
+"                                                                 MNRAS, 483, 5334",65.0
+"  arXiv:1711.05101                                             Teimoorinia, H., Ellison, S. L., & Patton, D. R. 2017,",2.0
+"Lupton, R., Blanton, M. R., Fekete, G., et al. 2004, PASP,       MNRAS, 464, 3796",0.0
+"  116, 133                                                     Tremonti, C. A., Heckman, T. M., Kauffmann, G., et al.",2.0
+"McKinney, W. 2010, in Proceedings of the 9th Python in           2004, ApJ, 613, 898",0.0
+"  Science Conference, ed. S. van der Walt & J. Millman, 51     van der Walt, S., Colbert, S. C., & Varoquaux, G. 2011,",2.0
+"  – 56                                                           Computing in Science and Engineering, 13, 22",2.0
+"Misra, D. 2019, arXiv e-prints, arXiv:1908.08681               van Driel, W., Butcher, Z., Schneider, S., et al. 2016, A&A,",0.0
+"Morningstar, W. R., Perreault Levasseur, L., Hezaveh,            595, A118",0.0
+"  Y. D., et al. 2019, ApJ, 883, 14                             Virtanen, P., Gommers, R., Oliphant, T. E., et al. 2019,",2.0
+"Moster, B. P., Somerville, R. S., Newman, J. A., & Rix,          arXiv e-prints, arXiv:1907.10121",0.0
+"  H.-W. 2011, ApJ, 731, 113                                    Wu, J. F., & Boada, S. 2019, MNRAS, 484, 4683",2.0
+"Müller, R., Kornblith, S., & Hinton, G. 2019, arXiv            Zeiler, M. D., & Fergus, R. 2013, arXiv e-prints,",0.0
+"  e-prints, arXiv:1906.02629                                     arXiv:1311.2901",2.0
+"Odekon, M. C., Koopmann, R. A., Haynes, M. P., et al.          Zhang, H., Goodfellow, I., Metaxas, D., & Odena, A. 2018,",0.0
+"  2016, ApJ, 824, 110                                            arXiv e-prints, arXiv:1805.08318",2.0
+"Pasquet, J., Bertin, E., Treyer, M., Arnouts, S., & Fouchez,   Zhang, M. R., Lucas, J., Hinton, G., & Ba, J. 2019, arXiv",0.0
+"  D. 2019, A&A, 621, A26                                         e-prints, arXiv:1907.08610",2.0
+"Paszke, A., Gross, S., Massa, F., et al. 2019, in Advances in  Zhang, W., Li, C., Kauffmann, G., et al. 2009, MNRAS,",0.0
+"  Neural Information Processing Systems 32, ed.                  397, 1243",2.0
+"  H. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché        Zhou, B., Khosla, A., Lapedriza, A., Oliva, A., & Torralba,",2.0
+"  Buc, E. Fox, & R. Garnett (Curran Associates, Inc.),           A. 2016, in 2016 IEEE Conference on Computer Vision",2.0
+"                                                                 and Pattern Recognition (CVPR), 2921–2929",65.0
+  8024–8035,2.0
+"                                                               Zhu, W. W., Berndsen, A., Madsen, E. C., et al. 2014, ApJ,",63.0
+"Pedregosa, F., Varoquaux, G., Gramfort, A., et al. 2011,",0.0
+"                                                                 781, 117",65.0
+"  Journal of Machine Learning Research, 12, 2825",2.0
+avr_spaces,14.459016393442623
+                                                                                                                   23,115.0
+"   Software: Numpy (van der Walt et al. 2011), scikit-learn (Pedregosa et al. 2011), Scipy (Virtanen et al. 2019),",3.0
+"matplotlib (Hunter 2007), Pandas (McKinney 2010), Pytorch (Paszke et al. 2019), Fastai (https://github.com/fastai/",0.0
+fastai),0.0
+                                              ACKNOWLEDGMENTS,46.0
+   The author would like to thank the anonymous referee for useful and detailed comments that have significantly,3.0
+improved this manuscript. The author would like to thank Josh Peek for suggesting the idea of using CNNs to probe,0.0
+galaxy environments and many other useful discussions. The author also thanks Luke Leisman and Mike Jones for,0.0
+helpful conversations regarding the ALFALFA data. The author acknowledges support from the National Science,0.0
+"Foundation under grants NSF AST-1517908 and NSF AST-1616177, and also thanks the Pascal Institute for their",0.0
+hospitality (The Self-organised Star Formation Process program). This research was supported by the Munich Institute,0.0
+"for Astro- and Particle Physics (MIAPP) which is funded by the Deutsche Forschungsgemeinschaft (DFG, German",0.0
+Research Foundation) under Germany’s Excellence Strategy - EXC-2094 - 390783311. This work made use of Google,0.0
+Colab and Google Compute Engine.,0.0
+"   Funding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Depart-",3.0
+"ment of Energy Office of Science, and the Participating Institutions. SDSS-IV acknowledges support and resources",0.0
+from the Center for High-Performance Computing at the University of Utah. The SDSS web site is www.sdss.org.,0.0
+   SDSS-IV is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS,3.0
+"Collaboration including the Brazilian Participation Group, the Carnegie Institution for Science, Carnegie Mellon",0.0
+"University, the Chilean Participation Group, the French Participation Group, Harvard-Smithsonian Center for As-",0.0
+"trophysics, Instituto de Astrofísica de Canarias, The Johns Hopkins University, Kavli Institute for the Physics and",0.0
+"Mathematics of the Universe (IPMU) / University of Tokyo, the Korean Participation Group, Lawrence Berkeley",0.0
+"National Laboratory, Leibniz Institut für Astrophysik Potsdam (AIP), Max-Planck-Institut für Astronomie (MPIA",0.0
+"Heidelberg), Max-Planck-Institut für Astrophysik (MPA Garching), Max-Planck-Institut für Extraterrestrische Physik",0.0
+"(MPE), National Astronomical Observatories of China, New Mexico State University, New York University, University",0.0
+"of Notre Dame, Observatário Nacional / MCTI, The Ohio State University, Pennsylvania State University, Shanghai",0.0
+"Astronomical Observatory, United Kingdom Participation Group, Universidad Nacional Autónoma de México, Univer-",0.0
+"sity of Arizona, University of Colorado Boulder, University of Oxford, University of Portsmouth, University of Utah,",0.0
+"University of Virginia, University of Washington, University of Wisconsin, Vanderbilt University, and Yale University.",0.0
+avr_spaces,5.766666666666667

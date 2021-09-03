@@ -1,0 +1,59 @@
+text,space_num
+                                                              Rapid and Robust Parameter Inference for Binary Mergers,62.0
+                                                                                               Neil J. Cornish,95.0
+"                                                                           eXtreme Gravity Institute, Department of Physics,",75.0
+"                                                                        Montana State University, Bozeman, Montana 59717, USA",72.0
+                                                        The detection rate for compact binary mergers has grown as the sensitivity of the global network,56.0
+"                                                     of ground based gravitational wave detectors has improved, now reaching the stage where robust",53.0
+                                                     automation of the analyses is essential. Automated low-latency algorithms have been developed,53.0
+                                                     that send out alerts when candidate signals are detected. The alerts include sky maps to facilitate,53.0
+"                                                     electromagnetic follow up observations, along with probabilities that the system might contain a",53.0
+"                                                     neutron star, and hence be more likely to generate an electromagnetic counterpart. Data quality is-",53.0
+"                                                     sues, such as loud noise transients (glitches), can adversely affect the low-latency algorithms, causing",53.0
+                                                     false alarms and throwing off parameter estimation. Here a new analysis method is presented that is,53.0
+"                                                     robust against glitches, and capable of producing fully Bayesian parameter inference, including sky",53.0
+"                                                     maps and mass estimates, in a matter of minutes. Key elements of the method are wavelet-based",53.0
+arXiv:2101.01188v4 [gr-qc] 6 May 2021,0.0
+"                                                     de-noising, penalized maximization of the likelihood during the initial search, rapid sky localization",53.0
+"                                                     using pre-computed inner products, and heterodyned likelihoods for full Bayesian inference.",53.0
+                                                         I.    INTRODUCTION                                duces low-latency sky maps and initial parameter es-,57.0
+"                                                                                                           timates, followed by full Bayesian parameter estima-",107.0
+                                           What started with a trickle in 2015 [1] has now turned          tion. For binary black holes the entire process takes,43.0
+"                                        into a veritable deluge [2, 3] of gravitational wave signals       just minutes on a laptop; for binary neutron stars, ini-",40.0
+                                        detected by the LIGO and Virgo instruments. Keep-                  tial sky maps and mass estimates are ready in min-,40.0
+"                                        ing up with the ever increasing event rate is challeng-            utes, and full results are ready in less than an hour.",40.0
+                                        ing. While the searches for gravitational wave signals are         The QuickCBC code is open source https://github.,40.0
+"                                        now highly automated and capable of producing near-                com/eXtremeGravityInstitute/QuickCBC, and can be",40.0
+"                                        real time alerts [4–8], full parameter inference [9, 10] has       used to analyze public LIGO-Virgo data hosted by the",40.0
+                                        lagged behind. This is in part due to the large compu-             Gravitational Wave Open Science Center https://www.,40.0
+"                                        tational cost of fully Bayesian parameter inference, and           gw-openscience.org. For testing purposes the algo-",40.0
+                                        in part due to the challenge of working with data that             rithm was run in real time during the LIGO-Virgo O3,40.0
+"                                        needs to be carefully calibrated [11, 12] and cleaned of           observing run, automatically generating results for trig-",40.0
+                                        various noise contaminants [13–16].                                gers sent to the Gravitational-Wave Candidate Event,40.0
+"                                           The instrument noise in the LIGO and Virgo data is,             Database.",43.0
+"                                        for the most part, well described as locally stationary               Existing algorithms can perform most of the indi-",40.0
+"                                        and Gaussian [17]. Short duration signals, such as high            vidual steps in the QuickCBC algorithm. For example,",40.0
+"                                        mass binary black holes, are in the sensitive band of the          the PyCBC search algorithm [20] performs low-latency",40.0
+"                                        detector for a second or less, and the odds of the signal          searches for CBC signals that incorporate glitch mit-",40.0
+"                                        encountering a noise transient is low. However, for longer         igation via a chi-squared test [19] and automatic gat-",40.0
+"                                        duration signals, such as low mass black hole binaries or          ing of loud glitches [20]. The BayesWave algorithm [16,",40.0
+"                                        systems that include a neutron star, the signals are in the        21, 22], produces on-source spectral estimates and per-",40.0
+"                                        sensitive band of the detectors for tens of seconds or even        forms glitch subtraction [3, 23, 24]. The BayesStar algo-",40.0
+"                                        minutes, and it is likely that the signal will encounter a         rithm [25] produces low-latency sky maps to help guide",40.0
+                                        noise transient. As the low-frequency sensitivity of the           the search for electromagnetic counterparts to binary,40.0
+"                                        detectors improve, low mass systems are virtually guar-            mergers, and several rapid parameter estimation algo-",40.0
+                                        anteed to encounter noise transients. The LIGO/Virgo               rithms have been developed [26–30]. What is novel is,40.0
+"                                        analyses have been fortified against noise transients using        that QuickCBC is a fully automated, end-to-end analy-",40.0
+"                                        a combination of vetoes [18], glitch robust search statis-         sis algorithm that is robust against glitches, and able to",40.0
+"                                        tics [19], gating [20] and glitch subtraction [16]. Gating         produce reliable results in a matter of minutes. Many",40.0
+"                                        of glitches is used in the online searches, while glitch sub-      of the methods used by QuickCBC, such as wavelet de-",40.0
+"                                        traction is performed prior to off-line parameter estima-          noising [31], banded likelihoods for glitch rejection, and",40.0
+"                                        tion.                                                              heterodyned likelihoods for rapid inference [32, 33], are",40.0
+                                           Here a proof of concept for a robust end-to-end                 new to LIGO-Virgo data analysis.,43.0
+                                        low-latency Bayesian parameter estimation algorithm -                 Core elements of the QuickCBC algorithm have been,40.0
+                                        QuickCBC - is presented. The QuickCBC algorithm reads              merged with the BayesWave algorithm [34]. The key,40.0
+"                                        in calibrated strain data, performs robust on-source spec-         difference between the implementations is that the",40.0
+"                                        tral estimation, executes a rapid search for compact bi-           BayesWave variant [35] jointly marginalizes over the CBC",40.0
+"                                        nary coalescence (CBC) signals, uses wavelet de-noising            signal parameters, a model for the power spectral density",40.0
+"                                        to subtract any glitches from the search residuals, pro-           (PSD) and a wavelet based model for noise transients.",40.0
+avr_spaces,45.44827586206897

@@ -1,0 +1,62 @@
+text,space_num
+                                                                                                                                                                                                    1,196.0
+                                            PSF Estimation in Crowded Astronomical Imagery,44.0
+                                             as a Convolutional Dictionary Learning Problem,45.0
+                                                                                           Brendt Wohlberg and Przemek Wozniak,91.0
+                                             Abstract—We present a new algorithm for estimating the Point                 signal from multiple PSF profiles. This situation naturally,45.0
+                                          Spread Function (PSF) in wide-field astronomical images with                    arises in densely populated sky areas and in very wide-field,42.0
+                                          extreme source crowding. Robust and accurate PSF estimation in                  imaging that aims to cover as many objects as possible [10].,42.0
+                                          crowded astronomical images dramatically improves the fidelity,42.0
+                                                                                                                          There is a scarcity of algorithms and software tools that,122.0
+arXiv:2101.01268v2 [eess.IV] 7 Feb 2021,0.0
+                                          of astrometric and photometric measurements extracted from,42.0
+                                          wide-field sky monitoring imagery. Our radically new approach                   can tackle extreme crowding. Standard source extraction and,42.0
+"                                          utilizes convolutional sparse representations to model the contin-              PSF estimation codes like DAOPHOT [11], DoPHOT [4],",42.0
+                                          uous functions involved in the image formation. This approach                   SExtractor [12] were not designed to handle images where not,42.0
+                                          avoids the need to detect and precisely localize individual point               a single star can be considered sufficiently isolated to ignore,42.0
+                                          sources that is shared by existing methods. In experiments involv-,42.0
+"                                          ing simulated astronomical imagery, it significantly outperforms                perturbations from neighbors. Their treatment of crowding",42.0
+                                          the recent alternative method with which it is compared.                        typically consists of identifying occasional PSF collisions,42.0
+                                                                                                                          to either fit special local models or eliminate them from,122.0
+                                          This is an extended version of an IEEE Signal Processing                        consideration. Recent PSF estimation work in astronomy has,42.0
+"                                          Letters paper (doi:10.1109/LSP.2021.3050706), with supple-                      focused primarily on super-resolution and sub-pixel sampling",42.0
+                                          mental material included as appendices.                                         by paying close attention to the correct image formation model,42.0
+"                                                                                                                          and introducing modern sparsity based approaches (e.g. [13],",122.0
+"                                                                    I. I NTRODUCTION                                      [14], [15]). These algorithms are an important step forward,",68.0
+                                             Astronomical images deliver a wealth of information on a                     but they still ignore the cross-talk between sources and rely,45.0
+                                          wide range of phenomena in natural objects such as stars and                    on user’s ability to identify isolated stars.,42.0
+                                          galaxies. Similar techniques have been successfully applied to                     In this paper we present a new PSF estimation algorithm,42.0
+"                                          tracking man made space objects, showing great promise to                       based on convolutional sparse representation (CSR). There",42.0
+"                                          address pressing problems in Space Traffic Management [1].                      is no need to detect and fit individual stars, eliminating",42.0
+                                          Point Spread Function (PSF) estimation in astronomical im-                      the uncertainties and instabilities associated with these local,42.0
+"                                          agery presents unique challenges [2], [3]. Stars are nearly                     modeling decisions. We are not aware of any prior use of CSR",42.0
+"                                          perfect point sources, so there is no shortage of fiducial points               methods for this application.1",42.0
+"                                          for analysis. At the same time, there are numerous factors                         We also note that the methods presented here include some",42.0
+"                                          that affect the PSF shape: atmospheric blur, imperfect optics                   more general contributions in CSR, including the use of",42.0
+"                                          and sky tracking, vibration etc. Modeling is often performed                    an interpolation kernel to generate a dictionary suitable for",42.0
+"                                          iteratively, using stars to improve the PSF model and using the                 approximating the translations of a continuous function, as",42.0
+                                          model to better fit all stars [4]. While deconvolution is often                 well as additional algorithm refinements described in Sec. III.,42.0
+"                                          considered more fundamental in signal processing [5], [6],                      Other authors have also devised techniques for CSR of con-",42.0
+"                                          many applications in astronomy are framed as PSF estimation                     tinuous signals [17], [18], [19], but employing very different",42.0
+"                                          and forward modeling in the convolved image [3], [7]. For ex-                   methods. The approach of [20], which we became aware",42.0
+"                                          ample, changes in brightness and motion of unresolved sources                   of during the final stages of preparation of this manuscript,",42.0
+                                          are typically extracted by fitting individual PSF profiles and                  exploits similar ideas to ours in the use of interpolation to,42.0
+"                                          ”streaks” in differenced (uncluttered) images of the same field                 generate the dictionary, but makes use of greedy algorithms",42.0
+                                          separated in time [8]. PSF fitting on the original crowded                      as opposed to our optimization-based approach. The latter,42.0
+                                          images is performed to measure positions and brightness of                      has the advantage of greater flexibility supporting different,42.0
+"                                          stars used for calibration and science. Reaching the required                   regularization terms and constraints, which is exploited in",42.0
+                                          fidelity is rarely possible without a good subpixel PSF model.                  constructing our proposed PSF estimation method.,42.0
+                                             The analysis of crowded stellar fields is an important and,45.0
+                                          challenging application of astronomical imaging [9]. When,42.0
+                                                                                                                                           II. I MAGE F ORMATION M ODEL,139.0
+"                                          deep source confusion sets in, every image pixel includes",42.0
+                                                                                                                            We restrict our attention to estimation of a spatially-invariant,124.0
+"                                            B. Wohlberg is with Theoretical Division, Los Alamos National Laboratory,",44.0
+"                                          Los Alamos, NM 87545, USA (Email: brendt@lanl.gov)",42.0
+                                                                                                                          PSF. In practice it is usually necessary to characterize imaging,122.0
+"                                            P. Wozniak is with Space and Remote Sensing Group, Los Alamos National",44.0
+"                                          Laboratory, Los Alamos, NM 87545, USA (Email: wozniak@lanl.gov)                    1 These methods have previously been considered for analysis of astronom-",42.0
+"                                            Research presented in this article was supported by the Laboratory Directed   ical imagery [16], but the application was background removal rather than",44.0
+"                                          Research and Development program of Los Alamos National Laboratory              PSF estimation, and no attempt was made to model the continuous nature of",42.0
+                                          under project numbers 20170183ER and 20200061DR.                                the underlying scene.,42.0
+avr_spaces,52.885245901639344

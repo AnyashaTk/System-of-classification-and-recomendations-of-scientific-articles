@@ -1,0 +1,1523 @@
+text,space_num
+"                                              MNRAS 000, 1–20 (2020)                             Preprint 3 February 2021              Compiled using MNRAS LATEX style file v3.0",46.0
+                                              Formation and evolution of protostellar accretion discs.,46.0
+"                                              I. Angular-momentum budget, gravitational self-regulation, and",46.0
+                                              numerical convergence,46.0
+"                                              Wenrui Xu1? and Matthew W. Kunz1,2",46.0
+"                                              1 Department    of Astrophysical Sciences, Princeton University, Peyton Hall, Princeton, NJ 08544, USA",46.0
+"                                              2 Princeton   Plasma Physics Laboratory, PO Box 451, Princeton, NJ 08543, USA",46.0
+arXiv:2101.00131v2 [astro-ph.SR] 1 Feb 2021,0.0
+                                              Accepted XXX. Received YYY; in original form ZZZ,46.0
+                                              ABSTRACT,46.0
+                                              We investigate the formation and early evolution of a protostellar disc from a magnetized pre-stellar core using non-,46.0
+                                              ideal magnetohydrodynamic (MHD) simulations including ambipolar diffusion and Ohmic dissipation. The dynamical,46.0
+"                                              contraction of the pre-stellar core ultimately leads to the formation of a first hydrostatic core, after ambipolar",46.0
+                                              diffusion decouples the magnetic field from the predominantly neutral gas. The hydrostatic core accumulates angular,46.0
+"                                              momentum from the infalling material, evolving into a rotationally supported torus; this ‘first hydrostatic torus’ then",46.0
+"                                              forms an accreting protostar and a rotationally supported disc. The disc spreads out by gravitational instability,",46.0
+                                              reaching ∼30 au in diameter at ∼3 kyr after protostar formation. The total mass and angular momentum of the,46.0
+"                                              protostar-disc system are determined mainly by accretion of gas from an infalling pseudo-disc, which has low specific",46.0
+                                              angular momentum because of magnetic braking; their removal from the protostar-disc system by outflow and disc,46.0
+"                                              magnetic braking are negligible, in part because the magnetic field is poorly coupled there. The redistribution of",46.0
+                                              angular momentum within the protostar-disc system is facilitated mainly by gravitational instability; this allows,46.0
+                                              formation of relatively large discs even when the specific angular momentum of infalling material is low. We argue,46.0
+"                                              that such discs should remain marginally unstable as they grow (with Toomre Q ∼ 1–2), an idea that is broadly",46.0
+"                                              consistent with recent observational estimates for Class 0/I discs. We discuss the numerical convergence of our results,",46.0
+                                              and show that properly treating the inner boundary condition is crucial for achieving convergence at an acceptable,46.0
+                                              computational cost.,46.0
+"                                              Key words: accretion, accretion discs – magnetic fields – MHD – ISM: clouds – stars: formation",46.0
+                                              1 INTRODUCTION                                                       strength of the magnetic fields have also been inferred via ob-,46.0
+"                                                                                                                   servations of Zeeman splitting (e.g., Crutcher 1999; Falgarone",115.0
+"                                              1.1 Motivation and observations of protostellar discs                et al. 2008) and dust polarization (e.g., Ward-Thompson et al.",46.0
+                                              The formation and subsequent evolution of protostellar ac-           2000; Crutcher et al. 2004; Girart et al. 2006; Maury et al.,46.0
+                                              cretion discs are very important events in the star-formation        2018; Auddy et al. 2019). For the later stages of star forma-,46.0
+"                                              process. Not only do protostellar discs modulate mass accre-         tion, high-quality observations of circumstellar discs after the",46.0
+"                                              tion onto young stellar objects and ultimately affect stellar        dispersal of the pre-stellar envelope (e.g., Class II protostel-",46.0
+"                                              properties such as mass and initial magnetic flux, but also          lar discs, or protoplanetary discs) have provided constraints",46.0
+"                                              they are directly responsible for establishing the initial con-      on disc size, mass, and structure (e.g., Andrews & Williams",46.0
+                                              ditions for the formation of planets.                                2007; Andrews et al. 2013; Piétu et al. 2014; Ansdell et al.,46.0
+                                                 The initial conditions for the star- and disc-formation           2018; Andrews et al. 2018).,49.0
+                                              processes have been observed extensively in molecular line,46.0
+"                                                                                                                      However, we have much less observational knowledge on",118.0
+                                              emission (Myers & Benson 1983; Jijina et al. 1999; Caselli,46.0
+                                                                                                                   how protostellar accretion discs form and grow. Disc forma-,115.0
+"                                              et al. 2002), infrared absorption (Teixeira et al. 2005;",46.0
+                                                                                                                   tion and growth (if they do grow) are thought to occur mainly,115.0
+"                                              Machaieie et al. 2017), and submillimetre dust emission",46.0
+"                                                                                                                   during the Class 0/I phase, but these phases are much shorter",115.0
+                                              (Ward-Thompson et al. 1994; Kirk et al. 2005; Könyves et al.,46.0
+"                                                                                                                   than either of the pre-stellar or Class II phases. Still, the",115.0
+"                                              2015), which provide information on the mass, size, temper-",46.0
+                                                                                                                   population of observed Class 0/I discs is growing quickly in,115.0
+"                                              ature, and rotation of pre-stellar cores. The morphology and",46.0
+                                                                                                                   recent years and has afforded some interesting insights. The,115.0
+                                                                                                                   frequent observation of Class 0 discs suggests that disc forma-,115.0
+"                                                                                                                   tion starts early, but the subsequent evolution is less certain.",115.0
+                                              ?   Contact e-mail: wenruix@princeton.edu                            A collection of studies measuring the rotational profiles of,46.0
+                                              © 2020 The Authors,46.0
+avr_spaces,56.59649122807018
+2      W. Xu and M. W. Kunz,0.0
+"individual systems suggest large, slowly growing (gas) discs     let et al. 2020). However, there is only one protostellar disc",0.0
+"(Yen et al. 2017 and references within), but surveys in dust     formation simulation to date that includes (part of) this kind",0.0
+"continuum tend to find smaller dust discs with either roughly    of active dust evolution (Lebreuilly et al. 2020), and the more",0.0
+constant (Segura-Cox et al. 2018; Andersen et al. 2019) or de-   common practice is to use a (somewhat arbitrarily) modified,0.0
+"caying (Tobin et al. 2020) size and mass.                        dust size distribution with small grains removed (e.g., Zhao",0.0
+   The current state of observation makes now a good time        et al. 2018a).,3.0
+"for simulations of protostellar disc formation and evolution        Finally, the thermal evolution of the disc may also be im-",0.0
+"through the Class 0/I phase, as physical insights obtained       portant. Relatively realistic modeling of the thermal evolu-",0.0
+from simulations are crucial for interpreting observed trends    tion of the disc in MHD star-formation simulations using,0.0
+"and understanding the physical picture of disc formation.        radiative transfer is included in a few recent studies (e.g.,",0.0
+"                                                                 Wurster et al. 2019), but it is not so clear whether the out-",65.0
+                                                                 come of disc formation is significantly different from the more,65.0
+1.2 Physics and simulations of protostellar disc formation       commonly used barotropic equation of state.,0.0
+"     and evolution                                                  Currently, there are no simulations that incorporate all of",5.0
+"There is now a large family of simulations that touch on var-    the potentially relevant physics mentioned above, but recent",0.0
+ious aspects of protostellar disc formation (see Zhao et al.     simulations are incorporating an increasingly large subset of,0.0
+"2020a for a review). The formation of a rotationally supported   them. Through these simulations, we gain some understand-",0.0
+protostellar disc is a natural consequence of the pre-stellar    ing of how the inclusion of various physics affect disc forma-,0.0
+"core hosting a finite amount of angular momentum. The            tion. However, a clear physical picture of disc formation is still",0.0
+"source of angular momentum can be inherited from (slow)          lacking. More precisely, we do not fully understand what are",0.0
+"rotation of the core, injected by turbulence in the molecular    the main mechanisms regulating the outcome of disc forma-",0.0
+"cloud (Seifried et al. 2012; Joos et al. 2013), or generated     tion, and there is no simple way (other than to run a relatively",0.0
+during the infall of a core with an asymmetric density profile   expensive simulation) to connect reliably and quantitatively,0.0
+"(Verliat et al. 2020). In hydrodynamic simulations, conserva-    the initial conditions of a pre-stellar core to the eventual for-",0.0
+"tion of angular momentum produces large, massive discs (e.g.,    mation of a rotationally supported accretion disc.",0.0
+"Bate 2018). In reality, however, the presence of a magnetic         Another issue present in many existing simulations is the",0.0
+"field leads to magnetic braking, which can remove most of the    difficulty of performing numerically converged, long-term",0.0
+initial angular momentum of a pre-stellar core (Mouschovias      simulations. Here ‘long-term’ means simulating the system,0.0
+"& Paleologou 1980; Basu & Mouschovias 1994).                     until the pre-stellar envelope is largely or fully dispersed, cov-",0.0
+   The efficacy of magnetic braking depends on the strength      ering most or all of Class 0/I phase. Such long-term simula-,3.0
+"and orientation of the initial magnetic flux (e.g., Basu &       tions are crucial for understanding observations in Class 0/I",0.0
+Mouschovias 1995; Joos et al. 2012; Li et al. 2013; Mas-         systems as well as for connecting with observations and sim-,0.0
+"son et al. 2016; Tsukamoto et al. 2018; Hirano et al. 2020),     ulations of protoplanetary (Class II) discs. This difficulty is",0.0
+as well as the strength of the non-ideal magnetic diffusiv-      essentially a problem of computational cost: the physics that,0.0
+"ity (e.g., Mouschovias & Paleologou 1986; Königl 1987; Li       need to be modeled, such as non-ideal MHD, often put a very",0.0
+"et al. 2011; Dapp et al. 2012), which decouples the magnetic     stringent limit on the numerical timestep, and the real-world",0.0
+"field from the poorly ionized gas. Generally, magnetic brak-     time of the simulation scales sharply with resolution. Sim-",0.0
+ing is weaker when the initial magnetic field is energetically   ulations that directly resolve the protostar show good con-,0.0
+"weak, the misalignment between the magnetic field and the        vergence, but can usually reach no more than 1–2 kyr after",0.0
+"rotation axis is significant and/or the magnetic diffusivity is  protostar formation (e.g., Machida & Basu 2019). The com-",0.0
+strong. These complex dependencies are compounded by the         putational cost of long-term simulations can be reduced to an,0.0
+"fact that, amongst the three types of non-ideal effects, Ohmic   acceptable level by significantly reducing resolution around",0.0
+"dissipation and ambipolar diffusion reduce the efficiency of     the protostar, often to ∼1 au per cell or more (e.g., Tomida",0.0
+"the braking, whereas the Hall effect can either decrease or      et al. 2017). However, simulations often fail to achieve good",0.0
+"increase the angular momentum of the infalling gas depend-       numerical convergence at such low resolution, and behaviour",0.0
+ing on whether the magnetic field is aligned or anti-aligned     may depend heavily on how the inner boundary (or sink par-,0.0
+with the rotation axis and which species is the dominant cur-    ticle) is treated (Machida et al. 2014; Vorobyov et al. 2019;,0.0
+"rent carrier (Wardle & Ng 1999; Wardle 2004; Braiding &          Hennebelle et al. 2020; Wurster & Bate 2019). Additionally,",0.0
+Wardle 2012; Tsukamoto et al. 2015; Zhao et al. 2020b). In       such simulations generally cannot vertically resolve a geomet-,0.0
+"cores that are not initially rotating, the Hall effect can even  rically thin disc, and it is questionable whether they can accu-",0.0
+"induce rotation, although realistic values of Hall diffusion in  rately capture the transport of angular momentum within the",0.0
+"dense cores may not be large enough to produce rotation-         disc (e.g., disc spreading by gravitational instability), which",0.0
+ally supported discs (Krasnopolsky et al. 2011). The exact       may be an important factor in determining disc size and mass.,0.0
+"strength of magnetic diffusivity is also important, and it de-",0.0
+"pends on the level of ionization, which is related to the cosmic",0.0
+                                                                 1.3 Our goals,65.0
+ray (CR) ionization rate as well as the abundance and size,0.0
+"distribution of dust grains (Zhao et al. 2018b), where low CR    In this series of studies, our main goals are to understand",0.0
+"ionization, less dust mass, and larger dust grain size generally better the physical picture of protostellar disc formation and",0.0
+"increase magnetic diffusivity. The initial dust profile may be   eventually to construct a simple, quantitative model that",0.0
+"inferred from observations, but during the collapse one gen-     links initial conditions to disc-formation outcomes and al-",0.0
+erally expects this distribution to change as grains coagulate   lows direct comparison with observations. We plan to work,0.0
+"and drift through gas at size-dependent velocities (e.g., Guil-  towards these goals with a focus on three aspects.",0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,3.121212121212121
+                                                                    Protostellar disc formation and evolution                    3,68.0
+"   First, in terms of simulations, we plan to perform long-term  2 METHOD OF SOLUTION",3.0
+"simulations of disc formation and evolution, and parameter",0.0
+                                                                 We perform a series of two-dimensional (2D; axisymmetric),65.0
+surveys covering a sufficiently large parameter space. As men-,0.0
+                                                                 and three-dimensional (3D) non-ideal MHD simulations in,65.0
+"tioned in Section 1.2, keeping the computational cost of such",0.0
+"                                                                 spherical-polar coordinates (r, θ, φ) that follow the evolution",65.0
+simulations reasonable while maintaining numerical accuracy,0.0
+"                                                                 of a self-gravitating, magnetic, poorly ionized pre-stellar core",65.0
+"is a challenging task. However, we will show in this paper",0.0
+                                                                 all the way to a few kyr after the formation of a central,65.0
+"that, with careful, physics-oriented modeling, one can achieve",0.0
+                                                                 protostar. This evolution includes the formation and early,65.0
+numerical convergence with relatively low resolution. We also,0.0
+"                                                                 evolution of a massive, rotationally supported, protostellar",65.0
+"note that, in order to obtain physically correct results, our",0.0
+                                                                 accretion disc. The simulations are performed using the code,65.0
+"simulations may need to incorporate a large subset, if not",0.0
+"                                                                 Athena++, equipped with new modules for computing the self-",65.0
+"all, of the physical processes discussed in Section 1.2. In this",0.0
+                                                                 gravitational potential and for solving an equilibrium chem-,65.0
+"paper, we will leave out some of them (Hall effect, radiative",0.0
+"                                                                 ical network. These modules, as well as other minor modifi-",65.0
+"transfer, dust evolution), but we plan on incorporating some",0.0
+"                                                                 cations of the code that are not covered in this section, are",65.0
+or all of these processes in future work.,0.0
+                                                                 detailed in Appendix A.,65.0
+   In terms of understanding the physical picture of disc for-,3.0
+"mation, we will carefully analyze our simulations with a focus",0.0
+on identifying the relative importance of different physical,0.0
+                                                                 2.1 Initial conditions,65.0
+mechanisms and exploring how the interplay between differ-,0.0
+ent mechanisms regulates (and puts physical constraints on)      We employ the same physical initial conditions for all sim-,0.0
+"disc evolution. Physical insights and constraints obtained in    ulations. The pre-stellar core is initially spherical, with the",0.0
+this fashion can then be compared against trends seen in ob-     number density of neutrals given by,0.0
+"servations (e.g., our discussion in §7.3).                                                         ",0.0
+                                                                                       n0,87.0
+"   Finally, in terms of modeling, we seek to develop either a    nn (r) = max                  , n ∞ .                         (1)",3.0
+                                                                                  1 + (r/r0 )2,82.0
+"semi-analytic model for disc formation, or a set of sub-grid",0.0
+models that would allow all important physics to be captured     We choose an initial central density n0 = 104 cm−3 and,0.0
+"in computationally inexpensive simulations with reduced di-      characteristic core size r0 = 0.1 pc, representative of a typ-",0.0
+mensionality and/or low resolution. This requires physical       ical NH3 core (Jijina et al. 1999). The background den-,0.0
+"insights from the previous two efforts, and could involve sim-   sity n∞ = 500 cm−3 , attained in the initial state at radii",0.0
+"plifying the problem by ignoring relatively unimportant phys-    r ≥ 0.436 pc, provides a numerical floor that physically rep-",0.0
+ical processes and by capturing the effect of certain physical   resents the density of the ambient molecular gas surrounding,0.0
+processes or regulation mechanisms through (analytic or em-      the core; this gas is excluded from the calculation of the self-,0.0
+pirical) parametrization.                                        gravitational potential in order to avoid unphysical behavior,0.0
+                                                                 at large r (see Appendix A). Adopting a mean mass per neu-,65.0
+                                                                 tral particle mn = 2.33mp (accounting for molecular hydro-,65.0
+"                                                                 gen with 20% He by number), the total self-gravitating mass",65.0
+1.4 This paper,0.0
+                                                                 enclosed within r0 is then '1.43 M . The initial temperature,65.0
+"In this first paper, we build a basic model including non-       of the gas is set to T0 = 10 K, giving an initial isothermal",0.0
+ideal MHD effects and use it to simulate the collapse of a       sound speed cs0 ≡ (kB T0 /mn )1/2 ' 0.188 km s−1 .,0.0
+"pre-stellar core until a few kyr after protostar formation. This    The core is threaded by an initially uniform, vertical mag-",0.0
+covers the formation and early evolution of a protostellar disc. netic field with strength B0 = 25 µG. In the innermost flux,0.0
+"We show that numerical convergence is achieved through a         tubes of the core, the ratio of self-gravitating mass to mag-",0.0
+"proper treatment of the inner boundary, and we motivate a        netic flux is '1.5 times the critical central value a for col-",0.0
+"relatively simple physical picture for disc formation based on   lapse, (3/2)(63G)−1/2 (Mouschovias & Spitzer 1976). The",0.0
+our simulation results. Future papers in this series will focus  core has supercritical mass-to-flux ratio out to a cylindrical,0.0
+mainly on incorporating additional physical processes in the     radius Rsc ' 1.27r0 .,0.0
+"model (viz. Hall effect, dust evolution), performing parameter      For r ≤ r0 , the core is set into uniform rotation with initial",0.0
+surveys to understand any dependencies on physical parame-       angular velocity Ω0 = 0.2cs0 /r0 ' 1.22 × 10−14 rad s−1 . This,0.0
+"ters, and making contact between our simulated protostellar      corresponds to a ratio between rotational and thermal energy",0.0
+"cores and discs and those now being increasingly imaged by       of '0.011, again consistent with a typical NH3 core (Bar-",0.0
+mm/sub-mm telescopes.                                            ranco & Goodman 1998). To avoid excessively high specific,0.0
+   This paper is organized as follows. In Section 2 we present   angular momentum in the outer part of our domain (where,3.0
+"our simulation setup. In Section 3, we provide an overview of    r/r0 can be at most ∼10), we set the angular velocity to",0.0
+"the qualitative evolution of our fiducial 3D simulation. We      Ω(r) = Ω0 (r/r0 )−2 for r > r0 , corresponding to constant",0.0
+then discuss the physical origin of the mass and angular-        specific angular momentum along radial lines.,0.0
+momentum budget of the protostar-disc system in Section             We note in passing that many recent simulations of proto-,0.0
+4 and how redistribution of angular momentum by gravita-         star and protostellar disc formation use initial density pro-,0.0
+tional instability shapes the disc evolution in Section 5. Sec-  files similar to equation (1) but with higher central density,0.0
+tion 6 concerns the numerical convergence of our solution        (often nn ∼ 105 –106 cm−3 ) and smaller characteristic size.,0.0
+and how that depends on the treatment of the inner bound-        This type of initial condition is meant to represent a later,0.0
+"ary. We conclude in Section 7 with a summary of our physical     phase of pre-stellar collapse. By contrast, our initial condi-",0.0
+"picture and numerical insights, as well as some discussions of   tion represents an earlier phase of the evolution, where most",0.0
+observational hints supporting our physical picture.             of the region within Rsc has approximately uniform density,0.0
+"                                                                                                           MNRAS 000, 1–20 (2020)",107.0
+avr_spaces,18.609756097560975
+4       W. Xu and M. W. Kunz,0.0
+(cf. figure 8a of Kunz & Mouschovias 2010). Starting the sim-        small grains also increases ambipolar diffusion and promotes,0.0
+ulation at a lower density affords enough time for the gas to        disc formation (Zhao et al. 2018a). In Appendix B we show,0.0
+flatten along magnetic-field lines before the core contracts         the abundance of different charged species and the resulting,0.0
+dynamically. Because the magnetic field evolves under near-          non-ideal diffusivities for our dust model.,0.0
+flux-freezing during the dynamical collapse of a supercritical,0.0
+"core, starting at a lower initial density also affords the initially",0.0
+uniform magnetic field time to adjust and evolve consistently        2.4 Computational domain and spatial resolution,0.0
+with the density profile.                                            We use a spherical-polar grid with an outer radial bound-,0.0
+"                                                                     ary at 218 au (1.27 pc, or 12.7r0 ) and a fiducial inner ra-",69.0
+2.2 Equation of state                                                dial boundary at rin = 1 au. The radial (r) grid is log-,0.0
+                                                                     uniform with a fiducial resolution of ≈14 cells per factor of 2,69.0
+"For physical simplicity and computational expediency, we             (dr/r ≈ 0.05). To reduce computational cost, we only simu-",0.0
+"model the thermal evolution of the system using the following        late θ ∈ [0, π/2] with a reflecting boundary condition at the",0.0
+"barotropic equation of state (EoS) for the temperature:              midplane; for our 3D simulations, we only simulate φ ∈ [0, π]",0.0
+             h                    i                                  with a periodic boundary condition. The polar (θ) grid is,13.0
+"T (nn ) = T0 1 + (nn /nadia )2/3 ,                               (2) non-uniform with the grid spacing decreasing towards the",0.0
+"                                                                     midplane; the midplane cell size is ≈1/3 of the polar cell size,",69.0
+where nadia = 2 × 1011 cm−3 is value of nn at which the,0.0
+"                                                                     and the fiducial resolution is 28 cells in 2D and 24 cells in 3D,",69.0
+gas transitions smoothly from an isothermal EoS (at lower,0.0
+"                                                                     resulting in a midplane dθ ≈ 0.03 rad (∼2 deg). In 3D, the",69.0
+densities) to a polytropic EoS with index γ = 5/3 mimick-,0.0
+                                                                     azimuthal (φ) grid is uniform with a fiducial resolution of 16,69.0
+ing adiabatic evolution (at higher densities). The break-point,0.0
+"                                                                     cells for φ ∈ [0, π].",69.0
+of the EoS is chosen such that equation (2) accurately repro-,0.0
+"                                                                        To test the numerical convergence of our simulations, in",72.0
+duces the dependence of the central core temperature on den-,0.0
+                                                                     Section 6 we compare simulations covering a range of different,69.0
+sity obtained in the radiative non-ideal MHD simulation of,0.0
+"                                                                     rin and resolutions. In particular, we vary rin between 0.25 au",69.0
+"protostar formation by Kunz & Mouschovias (2010, see their",0.0
+                                                                     and 2 au and increase the θ resolution by up to a factor of 4.,69.0
+"figures 4a and 4b), at least up to densities nn & 1013 cm−3 ,",0.0
+at which point the central temperature becomes &100 K and,0.0
+γ approaches 7/5. We plan to refine this EoS for future work.        2.5 Boundary conditions,0.0
+"                                                                     For the outer radial boundary, we use an open boundary con-",69.0
+2.3 Non-ideal MHD diffusivities                                      dition. We note that no visible artifacts appear at that bound-,0.0
+"We include Ohmic dissipation and ambipolar diffusion in our          ary, which is additionally placed far enough away (12.7r0 ) so",0.0
+simulations; the Hall effect is neglected. The associated dif-       as not to influence the evolution of the contracting core.,0.0
+"fusivities are calculated using an equilibrium chemical model           For the inner radial boundary, we also use an open bound-",0.0
+"that includes electrons, atomic and molecular ions, and a dis-       ary condition (density, velocity, and magnetic field in the",0.0
+"tribution of (neutral, singly negatively charged, and singly         ghost cells are copied from the adjacent active cell), but with",0.0
+positively charged) dust grains divided into 5 bins of differ-       the following modifications. To avoid unphysical mass flow,0.0
+"ent sizes. The chemical model is identical to that detailed          into the active domain from the inner boundary, we cap the",0.0
+"in Kunz & Mouschovias (2009, §4), except that we choose a            radial velocity in the boundary (‘ghost’) cells at zero. We also",0.0
+smaller CR ionization rate of ζCR = 10−17 s−1 (similar to            directly set the mass flux through a cell interface on the inner,0.0
+other contemporary numerical models of pre-stellar core con-         boundary to zero if the integrator returns a positive mass flux.,0.0
+"traction, e.g., Li et al. 2011; Marchand et al. 2016; Tomida         Most importantly,",0.0
+                                                                                  R        we set the flux of vertical angular momen-,82.0
+"et al. 2015; Zhao et al. 2018a) and use a slightly different dust    tum, Lz = dV ρvφ r sin θ, through all cell interfaces on the",0.0
+"profile.1 Namely, we assume spherical dust grains distributed        inner boundary to zero; this prevents any angular momen-",0.0
+in radius a according to a truncated MRN (Mathis et al. 1977)        tum from leaving the domain through the inner boundary.2,0.0
+"size distribution, in which the number density of grains with        This condition is motivated by the following. Physically, most",0.0
+radii between a and a + da satisfies dng /da ∝ a−3/5 from a          mass at r < rin ∼ 1 au is eventually concentrated in a small,0.0
+"minimum grain size amin = 0.1 µm to a maximum grain size             protostar, which cannot hold much angular momentum. As a",0.0
+"amax = 0.25 µm. The total dust mass is taken to be 1% of the         result, the net angular-momentum flux though r = rin should",0.0
+gas mass. The exclusion of dust grains smaller than 0.1 µm           be negligible compared to the angular-momentum flux that,0.0
+"is motivated by studies showing that dust drift and coag-            an open boundary condition would allow, which is on the or-",0.0
+ulation can efficiently remove small dust grains during star         der of the mass flux multiplied by the local Keplerian specific,0.0
+formation (Rossi et al. 1991; Ossenkopf 1993; Ormel et al.           angular momentum. This particular angular-momentum-flux,0.0
+"2009; Hirashita 2012; Guillet et al. 2020). The exclusion of         boundary condition is seldom, if ever, used in previous stud-",0.0
+"                                                                     ies, but, as we show in §6, it is crucial for achieving numerical",69.0
+"1  At high column densities (&102 g cm−2 , see Umebayashi &",0.0
+"Nakano 1980), CRs will be shielded by optically thick gas, leading   2 Normally, the code computes fluxes across interfaces by solving",0.0
+to lower ζCR and higher magnetic diffusivities. We ignore this ef-   the Riemann problem and updates the density and momentum,0.0
+fect in our model and use a constant ζCR . This should not affect    based on these fluxes. Our boundary condition for Lz is imple-,0.0
+"the evolution though, since in our simulation the magnetic field is  mented by zeroing out the radial flux of the φ-component of the",0.0
+already barely coupled to the gas (due to ambipolar diffusion) at    momentum on the inner radial boundary before updating the vari-,0.0
+such high densities.                                                 ables using the fluxes.,0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,13.63013698630137
+                                                                    Protostellar disc formation and evolution                      5,68.0
+convergence when rin is not very small. No special treatment     3.1 Pre-stellar flattening and collapse,0.0
+"for the magnetic field at the inner boundary was necessary,",0.0
+                                                                 The first phase of the evolution involves the flattening along,65.0
+as there does not seem to be any numerical artifacts.,0.0
+                                                                 magnetic-field lines and the dynamical contraction of the pre-,65.0
+"   To account for the mass inside the inner radial boundary,",3.0
+                                                                 stellar core before the formation of the protostar. This covers,65.0
+we set a point mass at r = 0 and update its mass according to,0.0
+                                                                 the first ∼1 Myr of evolution. The first row of Fig. 1 and,65.0
+the mass flux through the inner boundary. The gravitational,0.0
+                                                                 the first column of Fig. 2 show snapshots from some repre-,65.0
+potential of this point mass accretor adds to that of the self-,0.0
+                                                                 sentative epochs during this phase. The core is observed to,65.0
+gravitating gas inside the domain.,0.0
+"                                                                 contract slowly under its own self gravity, and the magnetic",65.0
+                                                                 field is dragged along by the collapsing core to acquire a clas-,65.0
+                                                                 sic hourglass shape (as in Fiedler & Mouschovias 1993). The,65.0
+2.6 Definitions                                                  contraction perpendicular to the magnetic field is slower than,0.0
+                                                                 the flattening along the field lines because of the additional,65.0
+"The protostar-disc system: We use this term to define the        magnetic tension and pressure, and the core becomes signifi-",0.0
+region that is supported against gravity (by pressure or ro-     cantly flattened into a pseudo-disc.,0.0
+"tation), plus the point mass enclosed within the inner ra-          During this phase, the evolution of the density and mag-",0.0
+dial boundary of the computational domain. When the pro-         netic field are largely self-similar (Fig. 2). Due to the initially,0.0
+"tostar first forms, this region is the pressure-supported first  slow rotation and further removal of angular momentum by",0.0
+"hydrostatic core; later on, it consists of a protostar (inside   magnetic braking, the rotation of the core remains negligible.",0.0
+the inner boundary) and a disc (which is mainly rotationally     Evolution during this phase is important for the mass and,0.0
+"supported).                                                      angular-momentum budget of the protostar-disc system, and",0.0
+   We define the boundary of the protostar-disc system as        will be discussed in more detail in Section 4.2 and 4.3.,3.0
+"follows. First, we select all cells above a density threshold",0.0
+"of 109 cm−3 . (For our simulations, the precise choice of this",0.0
+"threshold barely affects the results, as there is usually a very 3.2 The first hydrostatic core/torus",0.0
+large density contrast between the disc and its surrounding,0.0
+"envelope or outflow.) We then calculate the radial distribu-     Around 1026 kyr, the central density exceeds the break-point",0.0
+"tion of (azimuthally averaged) angular momentum dLz /d ln r      of the EoS, the temperature rises, and the first hydrostatic",0.0
+in this dense region. The magnitude of dLz /d ln r in the        core forms. This time marks the formation of the protostar.,0.0
+protostar-disc system is much higher than in the surrounding     The first hydrostatic core is initially approximately spherical,0.0
+"material, and there is a sharp local minimum of dLz /d ln r      (see Fig. 1, first panel in second row), matching the evolution",0.0
+"at disc boundary. We use this to define the radial boundary      found previously in non-rotating simulations. However, the",0.0
+"of the disc, Rd ; all cells with r < Rd and above the density    core quickly evolves into a rotationally supported torus due",0.0
+"threshold are counted as part of the protostar-disc system.      to its acquired angular momentum (Fig. 1, second and third",0.0
+"   Protostar, accretor, and disc: Although the boundary of the   panels in second row; at this point the mass within the inner",3.0
+"protostar-disc system is easy to define, defining the bound-     boundary is much less than the torus mass). This feature has",0.0
+ary between the protostar and the disc can be tricky. For        also been observed in some previous high-resolution simula-,0.0
+"simplicity, we identify the mass of the point-mass accretor      tions (e.g., Machida & Basu 2019) but has not been discussed",0.0
+within the inner boundary as the protostar mass and count        extensively.,0.0
+"the remainder of the protostar-disc system as the disc. Note        Just prior to the formation of the first hydrostatic core,",0.0
+that this definition will count most of the first hydrostatic    the magnetic diffusivity increases significantly as a result of,0.0
+"core as being part of the disc.                                  the high densities, which cause the gas-phase ions and elec-",0.0
+   Pseudo-disc and envelope: We use the term ‘pseudo-disc’       trons to be quickly adsorbed onto grain surfaces (see Ap-,3.0
+"to refer to the pre-stellar material that is pressure-supported  pendix B). This increases the ambipolar resistivity, which",0.0
+(and thus flattened) along magnetic-field lines but not ro-      facilitates the decoupling of the magnetic field from the pre-,0.0
+tationally supported in the cylindrical-radial direction. The    dominantly neutral gas (Desch & Mouschovias 2001; Tassis &,0.0
+envelope is the lower density region that has yet to reach       Mouschovias 2007). As shown in the bottom center panel of,0.0
+"vertical hydrostatic equilibrium.                                Fig. 2, this decoupling leads to a mainly vertical and approx-",0.0
+"                                                                 imately constant magnetic field in the first hydrostatic core,",65.0
+                                                                 as well as a pile-up of magnetic flux in the innermost ∼10 au,65.0
+                                                                 of the pseudo-disc.3 The magnetic-field strength saturates at,65.0
+3 THE FIDUCIAL RUN: EVOLUTION AND,0.0
+   MORPHOLOGY                                                    3  This pile-up of magnetic flux results in a mass-to-flux ra-,3.0
+"To begin the discussion of our results, we first provide an      tio that locally increases with increasing cylindrical radius,",0.0
+overview of the evolution found in our fiducial 3D run. This     d ln(Σ/Bz )/dR > 0. This is a necessary condition for the devel-,0.0
+run covers the evolution from an initially spherical pre-stellar opment of the magnetic interchange instability (Lubow & Spruit,0.0
+"                                                                 1995), a possibility suggested in the context of magnetic star",65.0
+core all the way to a few kyr after protostar formation. Some,0.0
+"                                                                 formation by Li & McKee (1996). However, it is not a suffi-",65.0
+"basic diagnostics of the simulation, including snapshots of      cient condition: damping due to inefficient coupling between the",0.0
+"the density, velocity, and magnetic field profiles at a number   magnetic field and the predominantly neutral fluid and erasing",0.0
+"of different epochs, are summarized in Figs 1 and 2. The         of the perturbations by the gravitationally driven inflow of the",0.0
+"evolution can be roughly divided into three different phases,    neutrals can prevent the instability from developing (Ciolek &",0.0
+"each of which are described in the following subsections.        Königl 1998). In other words, the minimum timescale of inter-",0.0
+"                                                                                                          MNRAS 000, 1–20 (2020)",106.0
+avr_spaces,15.945205479452055
+6     W. Xu and M. W. Kunz,0.0
+                                     t=1024.46 kyr                        t=1025.55 kyr                       t=1025.93 kyr,37.0
+                                    M10 = 0.00001 M                      M10 = 0.0001 M                      M10 = 0.001 M,36.0
+                       1000                                1000                                1000,23.0
+                        800                                 800                                 800,24.0
+                        600                                 600                                 600,24.0
+              z [au],14.0
+                        400                                 400                                 400,24.0
+                        200                                 200                                 200,24.0
+                                                                                                                                         14,137.0
+                            0                                    0                                   0,28.0
+                                0    250    500     750   1000       0   250    500     750   1000       0   250    500     750   1000,32.0
+                                     t=1026.15 kyr                       t=1026.31 kyr                       t=1026.64 kyr               12,37.0
+                                     M10 = 0.01 M                        M10 = 0.02 M                        M10 = 0.04 M,37.0
+                           20                                   20                                  20,27.0
+                                                                                                                                              log10 (nn [cm−3 ]),142.0
+                           15                                   15                                  15                                   10,27.0
+                  z [au]   10                                   10                                  10,18.0
+                                                                                                                                         8,137.0
+                            5                                    5                                   5,28.0
+                            0                                    0                                   0                                   6,28.0
+                                0     5     10      15     20        0    5     10      15     20        0    5     10      15     20,32.0
+                                     t=1027.00 kyr                       t=1027.41 kyr                        t=1027.84 kyr,37.0
+                                     M10 = 0.06 M                        M10 = 0.08 M                         M10 = 0.1 M                4,37.0
+                           20                                   20                                  20,27.0
+                           15                                   15                                  15,27.0
+                  z [au]   10                                   10                                  10,18.0
+                            5                                    5                                   5,28.0
+                            0                                    0                                   0,28.0
+                                0     5     10      15     20        0    5     10      15     20        0    5     10      15     20,32.0
+                                           x [au]                              x [au]                              x [au],43.0
+Figure 1. Azimuthally averaged profiles at different epochs from our fiducial 3D simulation. The total mass enclosed within 10 au (including,0.0
+"the accretor mass), M10 , is provided for reference. Each panel displays the density (colour), magnetic-field lines (black streamlines), and",0.0
+velocity (white quivers). Each row captures a different phase of evolution; from top to bottom: the flattening of the pre-stellar core,0.0
+"along magnetic-field lines and the advection-diffusion of the magnetic field into an hourglass shape, the formation of the first hydrostatic",0.0
+"core/torus on ∼au scales, and the spreading of the rotationally supported disc through gravitational instability.",0.0
+"≈0.2 G, a value similar to that found in previous calculations                           braking because of its high column density and weak coupling",0.0
+"(e.g., Kunz & Mouschovias 2010; Masson et al. 2016) and                                  to the magnetic field.",0.0
+consistent with estimates for the protosolar magnetic field as,0.0
+derived from meteoritic data (Levy & Sonett 1978). The ro-,0.0
+tationally supported torus is subject to very little magnetic                            3.3 Gravitational instability and disc spreading,0.0
+"                                                                                         About 1 kyr after its formation, the first hydrostatic torus",89.0
+"                                                                                         becomes gravitationally unstable, and remains so for the re-",89.0
+                                                                                         mainder of the simulation. This gravitational instability pro-,89.0
+"change instability, τII = [(Bz BR /2πΣ) d ln(Σ/Bz )/dR]−1/2 , must                       duces a pair of spiral arms that transport angular momentum",0.0
+"be smaller than both the gravitational timescale, τg = (R/|g|)1/2 ,                      outwards (Fig. 3). This angular-momentum transport leads",0.0
+                                                −1,48.0
+"and the ambipolar-diffusion timescale, τAD = ηAD   |d ln Bz /dR|−2 .",0.0
+                                                                                         to the formation of a rotationally supported disc that gradu-,89.0
+In agreement with a similar calculation by Tassis & Mouschovias,0.0
+"(2005), we find that this never occurs: only at radii where τAD ",0.0
+"                                                                                         ally spreads out (Fig. 1, last row) and the accretion onto the",89.0
+"τII does τII approach (from above) and become comparable to                              protostar, which now lies inside the inner boundary.",0.0
+τg . We see no indication of interchange in our simulations. This                           The evolution of disc size and mass are shown in Fig. 4.,0.0
+is likely to be dependent upon the assumed chemistry and initial                         The total mass of the protostar-disc system increases at an,0.0
+"condition (e.g., Machida & Basu 2020).                                                   approximately constant rate, and the disc-to-star mass ra-",0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,29.06896551724138
+                                                                                                                       Protostellar disc formation and evolution                              7,119.0
+                                 1015                                                     1015                                                    1015,33.0
+           midplane nn [cm−3 ],11.0
+                                                                   1024.46 kyr                                             1026.15 kyr                                    1027.00 kyr,67.0
+                                 1013                              1025.55 kyr            1013                             1026.31 kyr            1013                    1027.41 kyr,33.0
+                                                                   1025.93 kyr                                             1026.64 kyr                                    1027.84 kyr,67.0
+                                 1011                                                     1011                                                    1011,33.0
+                                  109                                                      109                                                     109,34.0
+                                  107 0                                                    107 0                                                   107 0,34.0
+                                    10           101               102           103         10          101               102           103         10    101            102           103,36.0
+                                  104                                                      104                                                     104,34.0
+                                  103                                                      103                                                     103,34.0
+                 Σ [g cm−2 ],17.0
+                                  102                                                      102                                                     102,34.0
+                                  101                                                      101                                                     101,34.0
+                                  100                                                      100                                                     100,34.0
+                                            0         1                 2             3              0        1                 2             3,44.0
+                                       10        10                10            10             10       10                10            10          100   101            102           103,39.0
+                                  101                                                      101                                                     101,34.0
+        midplane v [km s−1 ],8.0
+                                                −vr,48.0
+                                  100           vφ                                         100                                                     100,34.0
+                                 10−1                                                     10−1                                                    10−1,33.0
+                                 10−2                                                     10−2                                                    10−2,33.0
+                                 10−3 0                                                   10−3 0                                                  10−3 0,33.0
+                                    10           101               102           103         10          101               102           103         10    101            102           103,36.0
+                                  100                                                      100                                                     100,34.0
+                                      −1        midplane Bz                                    −1,38.0
+                                 10                                                       10                                                      10−1,33.0
+                                                max |Bφ |,48.0
+                                 10−2                                                     10−2                                                    10−2,33.0
+          B [G]                  10−3                                                     10−3                                                    10−3,10.0
+                                      −4                                                       −4,38.0
+                                 10                                                       10                                                      10−4,33.0
+                                 10−5                                                     10−5                                                    10−5,33.0
+                                    100          101               102           103         100         101               102           103         100   101            102           103,36.0
+                                                          r [au]                                                  r [au]                                         r [au],58.0
+Figure 2. Radial profiles of azimuthally averaged quantities at different epochs from our fiducial 3D simulation. Each column plots three,0.0
+"epochs corresponding to a row in Fig. 1. To facilitate comparison, earlier epochs are also plotted in later panels using thin lines.",0.0
+"tio gradually decreases. (In this figure, only the mass inte-                                                       (and how are they accumulated)? How is angular momentum",0.0
+rior to the inner boundary is counted towards the protostar                                                         redistributed within the protostar-disc system to determine,0.0
+mass; the part of the first hydrostatic core/torus in the ac-                                                       the disc size and mass? These two questions will be addressed,0.0
+"tive domain is counted towards the disc mass.) The disc size                                                        in this and the next section, respectively.",0.0
+"increases to ≈15 au towards the end of the simulation, which",0.0
+occurs ≈3.5 kyr after protostar formation. The rotation pro-,0.0
+"file of the disc at the end of the simulation, which is Keplerian                                                   4.1 Contribution to mass and angular-momentum budget",0.0
+"out to ∼10 au, is shown in Fig. 5.                                                                                      from different mechanisms",0.0
+"   In Section 5, we discuss the effect of gravitational insta-",3.0
+"bility and the evolution of disc size and mass in more detail,                                                      There are multiple mechanisms that contribute to the mass",0.0
+and provide some analytic estimates concerning the long-term                                                        and angular-momentum budget of the protostar-disc system.,0.0
+evolution of the disc.                                                                                              Inflow (from the pseudo-disc or envelope) and outflow (from,0.0
+                                                                                                                    the protostar-disc system) injects and removes both mass,116.0
+"                                                                                                                    and angular momentum by advection. Additionally, angu-",116.0
+                                                                                                                    lar momentum is transported by gravitational and magnetic,116.0
+4 THE MASS AND ANGULAR-MOMENTUM BUDGET,0.0
+"                                                                                                                    (Maxwell) stresses. To understand their relative importance,",116.0
+  OF THE PROTOSTAR-DISC SYSTEM,2.0
+                                                                                                                    we plot the mass and angular-momentum flux through a 20-,116.0
+We now turn to a more quantitative discussion of our simu-                                                          au sphere from each of these mechanisms in Fig. 6. The,0.0
+lation results. The evolution of the protostellar disc can be                                                       vast majority of mass and angular momentum within this,0.0
+"addressed by focusing on two questions: How much mass and                                                           20-au sphere belong to the protostar-disc system, so these",0.0
+angular momentum does the protostar-disc system possess                                                             fluxes are good approximations for dM/dt and dLz /dt of the,0.0
+"                                                                                                                                                                    MNRAS 000, 1–20 (2020)",164.0
+avr_spaces,33.421875
+8              W. Xu and M. W. Kunz,0.0
+                      1026.64 kyr                   1027.00 kyr                                                                                           103,22.0
+               10                             10                                                                                                                  Ω ∝ r−3/2,15.0
+    y [au],4.0
+                                                                                                                                             Ω [kyr−1 ],141.0
+                0                              0,16.0
+                                                                                                                                                          102,154.0
+                                                                                       14.5,87.0
+              −10                            −10,14.0
+                                                                                       14.0,87.0
+                                                                                                                                                          101,154.0
+                      −10      0        10          −10            0      10,22.0
+                                                                                       13.5,87.0
+                      1027.41 kyr                   1027.84 kyr,22.0
+                                                                                              log10 (nn [cm−3 ]),94.0
+               10                             10,15.0
+                                                                                       13.0,87.0
+                                                                                                                                                          100 0,154.0
+    y [au],4.0
+                                                                                                                                                            10                101             102,156.0
+                0                              0                                       12.5,16.0
+                                                                                                                                                                          r [au],170.0
+                                                                                       12.0,87.0
+              −10                            −10                                                                   Figure 5. Rotation profile of the disc at the end of the fiducial 3D,14.0
+                                                                                       11.5                        simulation.,87.0
+                      −10      0        10          −10            0      10,22.0
+                      1028.33 kyr                   1028.76 kyr                        11.0,22.0
+               10                             10,15.0
+                                                                                       10.5,87.0
+    y [au]      0                              0                                                                                            1021,4.0
+                                                                                                                                                                                            pseudo-disc,188.0
+                                                                                                                     mass flux [g s−1 ],117.0
+                                                                                                                                            1020                                            envelope,140.0
+              −10                            −10,14.0
+                                                                                                                                                                                            outflow,188.0
+                      −10      0        10          −10            0      10                                                                1019                                            inward,22.0
+                            x [au]                               x [au]                                                                                                                     outward,28.0
+                                                                                                                                            1018,140.0
+Figure 3. Snapshots of midplane density in the fiducial 3D sim-                                                                             1017,0.0
+ulation. The first four panels correspond to the last four epochs,0.0
+shown in Fig. 1. The initially axisymmetric first hydrostatic torus                                                                         1016,0.0
+develops spiral arms due to gravitational instability. These spirals                                                                          1026                1027              1028       1029,0.0
+"transport angular momentum outward, spreading the disc and aid-                                                                                                                t [kyr]",0.0
+ing protostar accretion. The disc size oscillates as spirals emerge,0.0
+and disperse.                                                                                                                               1041,0.0
+                                                                                                                                            1040,140.0
+                                                                                                                     Lz flux [g cm2 s−2 ],117.0
+                                                                 16                                                                         1039                                           pseudo-disc,65.0
+              0.150            protostar,14.0
+                               disc                                                                                                                                                        envelope,31.0
+                                                                 14                                                                         1038                                           outflow,65.0
+              0.125            total,14.0
+                                                                                                                                                                                           magnetic,187.0
+                                                                 12                                                                         1037,65.0
+     M [M ],5.0
+              0.100,14.0
+                                                       Rd [au],55.0
+                                                                                                                                                                                           gravitational,187.0
+              0.075                                              10                                                                         1036                                           inward,14.0
+                                                                                                                                                                                           outward,187.0
+                                                                  8,66.0
+              0.050                                                                                                                         1035,14.0
+                                                                                                                                              1026                1027              1028       1029,142.0
+              0.025                                               6                                                                                                            t [kyr],14.0
+              0.000                                               4,14.0
+                        1027        1028     1029                      1027     1028          1029                 Figure 6. Contribution to mass and angular-momentum flux,24.0
+                                   t [kyr]                                     t [kyr]                             through a 20-au sphere from different mechanisms. Both mass flux,35.0
+                                                                                                                   and angular-momentum flux are dominated by inflow (accretion),115.0
+"Figure 4. Time evolution of protostar mass, disc mass and disc size                                                from the pseudo-disc.",0.0
+in the fiducial simulation.,0.0
+                                                                                                                      The relative unimportance of outflow in our simulation may,118.0
+"protostar-disc system. For both mass and angular momen-                                                            appear somewhat surprising, given that several previous stud-",0.0
+"tum, inflow from the pseudo-disc dominates the flux. The                                                           ies (e.g., Machida & Hosokawa 2013; Tomida et al. 2017)",0.0
+effect of magnetic braking is also nontrivial (resulting in an                                                     found that outflow can remove a significant amount of mass,0.0
+"outward angular-momentum flux), but it is weaker than in-                                                          and angular momentum. One important difference between",0.0
+flow from the pseduo-disc by more than a factor of 5. Other                                                        our model and these studies is that we adopt a more real-,0.0
+"mechanisms are all weaker by orders of magnitude. Specifi-                                                         istic profile of magnetic diffusivity, which results in stronger",0.0
+"cally, while there are clear indications of outflow in our sim-                                                    magnetic diffusion inside our dense disc (see Appendix B),",0.0
+"ulation (see, for example, the last panel in Figure 1), the                                                        thereby leading to a weaker toroidal field (Fig. 2) and weaker",0.0
+mass-loss rate due to outflow is significantly lower than the                                                      outflow. Our result is also consistent with recent observation,0.0
+"accretion rate from the pseudo-disc.                                                                               from Sadavoy et al. (2019), which find no strong toroidal",0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,52.98795180722892
+                                                                                               Protostellar disc formation and evolution                       9,95.0
+                                                                                                                 1052,113.0
+                                    10−14                       gravity (negative),36.0
+ radial force density [dyn cm−3 ],1.0
+                                                                thermal pressure,64.0
+                                    10−16                       magnetic pressure,36.0
+                                                                magnetic tension,64.0
+                                                                                               Lz [g cm2 s−1 ],95.0
+                                    10−18                       centrifugal,36.0
+                                                                all support                                      1051,64.0
+                                    10−20,36.0
+                                                                                                                                         time evolution,137.0
+                                    10−22                                                                                                initial condition,36.0
+                                                                                                                                         protostar formation,137.0
+                                    10−24                                                                                                (M10 = 0.01M ),36.0
+                                                                                                                                         Lz ∝ M 1.5,137.0
+                                                                                                                 1050,113.0
+                                         −26,41.0
+                                    10,36.0
+                                           100   101    102        103               104                           10−2                  10−1,43.0
+                                                       r [au]                                                                M [M ],55.0
+Figure 7. Radial force density from gravity and various supporting                         Figure 8. Relation between the total mass M and angular momen-,0.0
+"forces at the midplane, taken from our fiducial simulation when                            tum Lz of the protostar-disc system (blue line). Here M can be",0.0
+"M10 = 0.01 M . Although some supporting forces are of the same                             considered as a proxy for time. Above ∼0.1 M , we see a power-law",0.0
+"order of magnitude as gravity, the sum of them (grey line) remains                         scaling with slope of ≈1.5. For reference, we also plot the relation",0.0
+"insufficient to balance gravity in the pseudo-disc, and the pseudo-                        between M (< r) and Lz (< r) at two different epochs: the initial",0.0
+"disc is in near free-fall.                                                                 condition (solid grey line) and when M10 = 0.01 M , which is",0.0
+                                                                                           around protostar formation (dashed grey line).,91.0
+                                                                                           tension (see Fig. 7).4 Although the initial mass-to-flux ratio,91.0
+field (at 35-au resolution) in a protostellar disc survey. There,0.0
+                                                                                           of the pre-stellar core is just slightly supercritical and Bz /Σ,91.0
+"are also some differences in the initial conditions, including",0.0
+"                                                                                           does not decrease significantly during most of the infall, the",91.0
+"our adoption of a stronger, near-critical initial magnetic field,",0.0
+                                                                                           pressure gradient and magnetic forces remain at least a factor,91.0
+which could lead to substantially weaker outflow as suggested,0.0
+"                                                                                           of a few smaller than gravity, and the acceleration is &50% of",91.0
+"by results from Machida & Hosokawa (2013). Overall, it is",0.0
+"                                                                                           free fall in the bulk of pseudo-disc. Still, this is not to say that",91.0
+important to verify in future studies whether our result is,0.0
+"                                                                                           these retarding forces are unimportant. On the contrary, the",91.0
+"applicable over a broader range of initial parameters. Finally,",0.0
+                                                                                           formation of the self-similar column density profile requires a,91.0
+"we note that, although observations of relatively high specific",0.0
+                                                                                           small but nontrivial ratio between these forces and self grav-,91.0
+"angular momentum in outflows (e.g., Bjerkeli et al. 2016) are",0.0
+                                                                                           ity (similar to the role of pressure in the spherical collapse,91.0
+sometimes used as evidence that outflows can remove a sig-,0.0
+"                                                                                           model of Larson 1969), and this sets a characteristic accre-",91.0
+"nificant amount of angular momentum, this argument is not",0.0
+                                                                                           tion rate that depends only on the isothermal sound speed,91.0
+grounded firmly unless the mass-loss rate by outflow and the,0.0
+                                                                                           cs and G (for a given mass-to-flux ratio). The mass accretion,91.0
+accretion rate of the disc are also known.,0.0
+                                                                                           rate calculated from the self-similar model of Basu (1997) is,91.0
+"   For the remainder of this section, we focus only on the",3.0
+"                                                                                           13c3s /G ∼ 2 × 10−5 M yr−1 , similar to our result.",91.0
+"pseudo-disc inflow (accretion), as it largely determines the",0.0
+mass and angular-momentum budget of the protostar-disc,0.0
+"system. The exclusion of the other mechanisms, which are                                   4.3 Angular momentum budget: magnetic braking",0.0
+"often highly variable, greatly simplifies the problem.",0.0
+"                                                                                           For the angular-momentum budget, we focus on the rela-",91.0
+                                                                                           tion between the total mass and angular momentum of the,91.0
+"                                                                                           protostar-disc system, which is shown in Fig. 8. We see a rel-",91.0
+"                                                                                           atively clean relation between M and Lz , which appears to",91.0
+4.2 Mass budget: accretion from a free-falling pseudo-disc                                 be a power law with slope ≈1.5 at late times. Unlike in the,0.0
+"                                                                                           previous subsection, we are unable to provide a good quanti-",91.0
+"The mass of the protostar-disc system, as discussed in the",0.0
+"                                                                                           tative explanation for this relation (or its slope) for now, and",91.0
+"previous subsection, comes mostly from the pseudo-disc. As",0.0
+                                                                                           our discussion will be restricted to understanding the results,91.0
+"Fig. 6 shows, the pseudo-disc accretion rate is approximately",0.0
+                                                                                           qualitatively.,91.0
+"constant at ≈3 × 1021 g s−1 , or 5 × 10−5 M yr−1 . Here",0.0
+                                                                                              The angular-momentum budget is shaped by two main fac-,94.0
+we discuss the origin of this accretion rate by analyzing the,0.0
+"                                                                                           tors: the initial condition, and magnetic braking. In Fig. 8 we",91.0
+pre-stellar collapse phase.,0.0
+                                                                                           plot the relation between M (< r) and Lz (< r) for the ini-,91.0
+   The pre-stellar collapse in our simulation is very similar to,3.0
+                                                                                           tial condition; the M –Lz relation should be similar (although,91.0
+"the collapse of a thin, slightly supercritical sheet discussed",0.0
+"                                                                                           not identical, since the collapse is not spherical) to this initial",91.0
+in the semi-analytic model of Basu (1997). The pseudo-disc,0.0
+                                                                                           M (< r)–Lz (< r) relation if there were no magnetic braking.,91.0
+shows a flat Σ in the central region where thermal pressure,0.0
+"                                                                                           The actual M –Lz relation gives much lower Lz , showing that",91.0
+smooths out any perturbation and a near-self-similar profile,0.0
+close to Σ ∝ 1/r outside this central region. The radial in-,0.0
+"fall of gas in the pseudo-disc is driven by self gravity and is                            4 Due to the slow rotation, it is only in the innermost .20 au that",0.0
+countered primarily by the pressure gradient and magnetic                                  the centrifugal force becomes dynamically important.,0.0
+"                                                                                                                                    MNRAS 000, 1–20 (2020)",132.0
+avr_spaces,47.02150537634409
+10     W. Xu and M. W. Kunz,0.0
+magnetic braking has reduced angular momentum by about                                           ×1041,0.0
+                                                                                           1.5,91.0
+an order of magnitude.,0.0
+                                                                                                         hydro-axisymmetric      magnetic,105.0
+   We can also look at when and how magnetic braking hap-                                  1.0           hydro-nonaxisymmetric   gravitational,3.0
+pens. In Fig. 8 we also plot the M (< r)–Lz (< r) relation,0.0
+                                                                   Lz flux [g cm2 s−2 ],67.0
+"at M10 = 0.01 M , which is around the epoch of protostar                                   0.5",0.0
+"formation. This curve has a slope of ≈2, consistent with that",0.0
+of a flattened core with uniform column density and rota-                                  0.0,0.0
+tion. This suggests that the bulk of the pre-stellar core has,0.0
+                                                                                          −0.5,90.0
+undergone a similar amount of magnetic braking. This is rea-,0.0
+sonable since most of magnetic braking takes place at the                                 −1.0,0.0
+beginning of the collapse phase; once the collapse becomes,0.0
+"dynamical (with near free-fall velocity), braking is generally                            −1.5 0",0.0
+                                                                                             10                         101                      102,93.0
+slower than the timescale of collapse and angular momen-,0.0
+                                                                                                                       r [au],119.0
+tum is approximately conserved. The M (< r)–Lz (< r) re-,0.0
+lation at M10 = 0.01 M is close to the M –Lz relation of,0.0
+                                                                 Figure 9. Angular-momentum flux due to different mechanisms,65.0
+"the protostar-disc system for M . 0.05 M , but the slope of",0.0
+"                                                                 through spherical shells at different radii, averaged for t >",65.0
+the protostar-disc M –Lz relation becomes less steep at later,0.0
+                                                                 1028 kyr. The axisymmetric hydrodynamic flux (grey) corresponds,65.0
+"time, suggesting that magnetic braking continues to decrease     to advection with the mass accretion and outflow and does not con-",0.0
+angular momentum after protostar formation.                      tribute to the radial transport of angular momentum with respect,0.0
+"   It is also worth pointing out why magnetic braking can be     to the gas. Inside the disc, the transport of angular momentum",3.0
+"important in the pseudo-disc but is always unimportant in the    with respect to the gas is dominated by gravitational instability,",0.0
+protostellar disc. This is mainly because the density and col-   which produces the non-axisymmetric hydrodynamic flux (blue),0.0
+umn density in the protostellar disc are much higher than in     and gravitational stress (green).,0.0
+"the pseudo-disc (for example, see Figs 1 and 2), which makes",0.0
+the magnetic field less well coupled and less dynamically im-,0.0
+"portant. The distinction between a dense, non-magnetized         angular-momentum transport within the disc. The sum of",0.0
+"disc and a thin, magnetized pseudo-disc has also been ob-        these two terms first increases then decreases back to zero,",0.0
+"served, for instance, in Masson et al. (2016).                   suggesting that gravitational instability takes angular mo-",0.0
+                                                                 mentum from the inner part of the disc and deposits it in the,65.0
+                                                                 outer part of the disc. This transport of angular momentum,65.0
+"5 EVOLUTION OF DISC SIZE AND MASS                                leads to disc spreading, and is the main mechanism that al-",0.0
+                                                                 lows protostar accretion when outflow and magnetic braking,65.0
+In the previous section we discussed the mass and angular-       in the disc are weak.,0.0
+momentum budget of the protostar-disc system as a whole.            One important consequence of this gravitational disc,0.0
+Now we will focus on the redistribution of angular momen-        spreading is that the disc can now have significantly higher,0.0
+"tum within the protostar-disc system, which determines the       specific angular momentum than the pseudo-disc inflow that",0.0
+"evolution of disc size and mass.                                 feeds the protostar-disc system. For example, Fig. 5 shows a",0.0
+                                                                 significant jump in Ω between the disc and the pseudo-disc;,65.0
+                                                                 similar jumps in vφ are also visible in the middle right panel,65.0
+5.1 Angular momentum transport by gravitational instability      of Fig. 2. This makes having relatively large discs possible,0.0
+"Soon after the formation of the first hydrostatic core/torus,    even when the pseudo-disc has low specific angular momen-",0.0
+"the dense torus becomes gravitationally unstable, and re-        tum due to magnetic braking.",0.0
+mains so for the rest of our fiducial simulation. Gravita-,0.0
+"tional instability plays an important role for disc growth,",0.0
+as it transports angular momentum outward and spreads            5.2 Gravitational self-regulation,0.0
+"the disc. To see this effect clearly, we plot the contribu-",0.0
+                                                                 The gravitational stability of a geometrically thin isothermal,65.0
+tion from different stresses to the angular-momentum flux,0.0
+"                                                                 disc can be described by the Toomre Q parameter, defined as",65.0
+through spheres at different radii during disc expansion in,0.0
+Fig. 9. The angular-momentum flux is the sum of hydrody-,0.0
+"namic advection (Reynolds stress ρvr vφ ), magnetic braking                                cs κ",0.0
+                                                                 Q≡                             .                                            (3),65.0
+"(Maxwell stress −Br Bφ /4π), and gravitational torque (grav-                              πGΣ",0.0
+itational stress gr gφ /4πG). The contribution from hydrody-     Here κ is the epicyclic frequency. The disc is unstable to ax-,0.0
+namic advection can be further decomposed into an axisym-        isymmetric perturbations for Q < 1; for non-axisymmetric,0.0
+"metric component, defined as the product of azimuthally          perturbations the stability threshold increases to Q ∼ 2. Sim-",0.0
+"averaged specific angular momentum and mass flux, and a          ulations generally find faster angular-momentum transport",0.0
+"non-axisymmetric component. Among these four terms, the          by gravitational instability for smaller values of Q (stronger",0.0
+axisymmetric hydrodynamic flux corresponds to advection          gravitational instability). For values of Q close to (or slightly,0.0
+"due to mass accretion, and does not change the specific          below) unity, the timescale of angular-momentum transport",0.0
+angular momentum at given radius. The Maxwell stress is          can be comparable to the orbital timescale (effective α is,0.0
+"weak inside the disc. The two remaining terms, the non-          ∼ 1), making gravitational instability a very efficient angular-",0.0
+"axisymmetric hydrodynamic flux and the gravitational stress,     momentum transport mechanism (see Kratter & Lodato 2016",0.0
+are mainly due to gravitational instability and dominate         for a review).,0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,16.7012987012987
+                                                                                                  Protostellar disc formation and evolution                   11,98.0
+               5,15.0
+                                                                                                  Vorobyov & Basu 2007; also see Laughlin & Bodenheimer,98.0
+                                                                                                  1994; Tomida et al. 2017).,98.0
+"                                                                                                     We also comment that, historically, gravitational instabil-",101.0
+               4,15.0
+                                                                                                  ity is often considered to regulate mainly the disc temper-,98.0
+                                                                           1026.31   kyr          ature by balancing radiative cooling with heating through,75.0
+    Toomre Q,4.0
+"               3                                                           1026.64   kyr          spiral shocks and turbulence. This thermal self-regulation,",15.0
+"                                                                           1027.00   kyr          first proposed by Paczynski (1978), is missing in our current",75.0
+"               2                                                           1027.41   kyr          model due to the adoption of a barotropic EoS. In reality,",15.0
+                                                                           1027.84   kyr          gravitational instability controls disc evolution through both,75.0
+"               1                                                           1028.33   kyr          spreading (angular-momentum transport) and heating, and",15.0
+                                                                           1028.76   kyr          they should be equally important. When the disc is in steady-,75.0
+"               100                                       101                                      state, the rate of heating and angular-momentum transport",15.0
+                                                r [au]                                            are comparable since both are proportional to the rate at,48.0
+                                                                                                  which gravitational instability extracts energy from differen-,98.0
+                                                                                                  tial rotation (Gammie 2001).,98.0
+Figure 10. Toomre Q (computed using azimuthally averaged pro-,0.0
+files) in the fiducial 3D simulation. Each curve corresponds to a,0.0
+panel in Fig. 3. The gravitationally unstable disc generally has Q                                5.3 Predicting disc evolution,0.0
+between 1 and 2.,0.0
+"                                                                                                  Using the idea of gravitational self-regulation, for given to-",98.0
+                                                                                                  tal mass M and angular momentum Lz of the protostar-disc,98.0
+"                                                                                 3.0              system, one can obtain a robust estimate for the surface den-",81.0
+"               15                                                                                 sity profile, mass, and size of the disc if the thermal profile",15.0
+                                                                                 2.5              of the disc is known. Here we perform this estimate for an,81.0
+                                                                                       Toomre Q,87.0
+                                                                                                  isothermal disc (with sound speed cs0 ) as an example.,98.0
+    r [au],4.0
+               10,15.0
+"                                                                                 2.0                 Since we know most of the disc should be marginally stable,",81.0
+                                                                                                  we may assume that the whole disc has constant Q = Q0 . For,98.0
+"                   5                                                             1.5              simplicity, we also assume",19.0
+"                                                                                                                          p that the disc is not very massive, so",122.0
+                                                                                                  M? ≈ M and κ(R) ≈ GM/R3 . The surface density profile,98.0
+                                                                                 1.0              of the disc is then,81.0
+               1026.5   1027.0   1027.5     1028.0       1028.5   1029.0                                          r,15.0
+                                          t [kyr]                                                            cs0     GM,42.0
+                                                                                                  Σ(R) ≈                  .                                  (4),98.0
+                                                                                                           πGQ0       R3,107.0
+Figure 11. Similar to Fig. 10 but shows time evolution of the                                     This Σ ∝ R−3/2 profile is also observed in the gravitationally,0.0
+Toomre Q profile. The disc size is also plotted (white curve) for                                 regulated disc evolution of Vorobyov & Basu (2007). For disc,0.0
+"reference.                                                                                        size Rd and disc inner boundary Rd,in  Rd , the mass and",0.0
+                                                                                                  angular momentum of the disc are then,98.0
+                                                                                                                                           1/2,139.0
+  The steep dependence of the angular-momentum trans-                                                                          4cs0 M 1/2 Rd,2.0
+                                                                                                        Z Rd,104.0
+"port rate on disc column density (through Q) implies a self-                                      Md ≈        2πRdR Σ(R) ≈                     ,             (5)",0.0
+                                                                                                          0                       G1/2 Q0,106.0
+regulation mechanism. Higher column density (lower Q) leads                                             Z Rd               √            2cs0 M Rd,0.0
+to faster angular-momentum transport and disc spreading (as                                        Ld ≈       2πRdR Σ(R) GM R ≈                   .          (6),0.0
+well as faster protostar accretion). Thus there exists a stable                                           0                                Q0,0.0
+equilibrium where disc spreading (which tends to decrease                                         Since most angular momentum of the protostar-disc system,0.0
+"disc column density) balances accretion from the pseudo-disc                                      is within the disc, we have Ld ≈ Lz , which gives",0.0
+(which tends to increase disc column density). Maintaining,0.0
+                                                                                                       Lz Q0,103.0
+"this kind of self-regulated disc spreading requires a small but                                   Rd ≈         ,                                              (7)",0.0
+                                                                                                       2cs0 M,103.0
+"nonzero effective α. Therefore, most of the disc should be                                                      1/2",0.0
+marginally gravitationally unstable with 1 . Q . 2.                                                      8cs0 Lz,0.0
+                                                                                                  Md ≈                .                                       (8),98.0
+"  This idea of gravitational self-regulation, which implies a                                             GQ0",2.0
+"marginally unstable disc, is confirmed in Figs 10 and 11,                                         Using the M –Lz relation of our fiducial simulation (extrapo-",0.0
+"which show that the value of Q does indeed stay between                                           lated assuming a power-law slope of 1.5), the above estimate",0.0
+1 and 2 for most of the disc during its spreading.5 Similar                                       gives disc mass ≈0.15 M and size ≈80 au when the protostar,0.0
+"results have also been observed in several other studies (e.g.,                                   reaches ≈1 M .",0.0
+"                                                                                                     In reality, a marginally gravitationally unstable disc is of-",101.0
+5,0.0
+                                                                                                  ten optically thick and not isothermal. The estimate above is,98.0
+   Toomre Q becomes a good description of gravitational instability                               generally an upper limit of the disc size due to gravitational,3.0
+"only at later times (t & 1027 kyr in our simulation), when the disc",0.0
+"                                                                                                  spreading. Moreover, if the temperature scales too steeply",98.0
+is relatively thin and less massive than the protostar. When the,0.0
+first hydrostatic torus first becomes gravitationally unstable (the                               with radius (which is the case for the particular barotropic,0.0
+"first two curves in Fig. 10), most of the mass is still in the torus                              EoS we use in this work, but is generally not true for a disc",0.0
+"(with the central point mass being negligible), and the stability of                              with realistic cooling), most of disc mass and angular mo-",0.0
+"the torus is not directly determined by Q (see Tohline & Hachisu                                  mentum will be concentrated near the inner edge of the disc,",0.0
+1990).                                                                                            making the estimates above invalid. This problem is discussed,0.0
+"                                                                                                                                         MNRAS 000, 1–20 (2020)",137.0
+avr_spaces,44.646341463414636
+12         W. Xu and M. W. Kunz,0.0
+                                           3D vs. 2D                                15,43.0
+                                                                                                                               log10 (nn [cm−3 ]),127.0
+                                                                                             3D fiducial                14,93.0
+                                   3D fiducial                                                                          13,35.0
+                         1052                                                       10,25.0
+                                                                           r [au],75.0
+"                                   3D, half φ resolution",35.0
+                                                                                                                        12,120.0
+       Lz [g cm2 s−1 ],7.0
+                                   2D fiducial,35.0
+                                                                                     5,85.0
+                                                                                                                        11,120.0
+                         1051                                                                                           10,25.0
+                                                                                         0        1        2        3,89.0
+                                                                                    15,84.0
+                         1050,25.0
+                                                                                             3D half φ resolution,93.0
+                                                                                    10,84.0
+                                                                           r [au],75.0
+                           10−2                            10−1,27.0
+                                        inner boundary                               5,40.0
+                         1052      2 au              1 au (fiducial),25.0
+                                   0.5 au            0.25 au                             0        1        2        3    4                          5,35.0
+       Lz [g cm2 s−1 ],7.0
+                                   without bc for Lz                                15,35.0
+                         1051                                                                2D fiducial,25.0
+                                                                                    10,84.0
+                         1050                                              r [au],25.0
+                                                                                     5,85.0
+                         1049 −2,25.0
+                           10                              10−1                          0        1        2        3    4                          5   6   7,27.0
+                                            resolution                                                          t − t0 [kyr],44.0
+                                   fiducial,35.0
+                         1052      2× r and θ                            Figure 13. Space-time plots of midplane density for simulations,25.0
+"                                                                         with different φ resolution. To align the time axes, we choose a",73.0
+       Lz [g cm2 s−1 ],7.0
+                                   2× θ,35.0
+                                                                         reference time t0 defined as the epoch when M10 = 0.01M . Low-,73.0
+                                   3× θ,35.0
+                                                                         ering φ resolution delays the appearance of gravitationally excited,73.0
+                         1051      4× θ,25.0
+"                                                                         spirals, and for an axisymmetric simulation gravitational instabil-",73.0
+                                                                         ity leads to radial disc oscillations instead of spreading. Directly,73.0
+                                                                         resolving gravitational instability requires a φ resolution no lower,73.0
+                         1050                                            than our fiducial value.,25.0
+                           10−2                            10−1,27.0
+                                              M [M ]                     M –Lz relation of the protostar-disc system is robust against,46.0
+                                                                         changing numerical parameters. We also illustrate that con-,73.0
+                                                                         vergence on the M –Lz relation can only be achieved if the,73.0
+Figure 12. Mass–angular-momentum relation of the protostar-disc,0.0
+                                                                         inner boundary is very small or an angular-momentum flux,73.0
+system for different numerical setups. Top panel: comparison be-,0.0
+tween 3D simulations with different φ resolutions and a 2D simu-,0.0
+                                                                         boundary condition similar to ours is applied.,73.0
+lation. Middle panel: 2D simulations with different inner boundary,0.0
+sizes. Simulations without the Lz flux boundary condition are also,0.0
+                                                                         6.1 2D vs. 3D and φ resolution,73.0
+plotted as dashed lines. Bottom panel: different resolutions in r,0.0
+and θ. (See more discussion on θ resolution in text.) We also test       First we compare our fiducial 3D simulation with a 3D sim-,0.0
+the dependence on the value of numerical caps of diffusivity and         ulation at half φ resolution and an axisymmetric 2D simu-,0.0
+"velocity, but the results are not shown here since there is no visible   lation. All three simulations have nearly identical setup, ex-",0.0
+difference.,0.0
+                                                                         cept the φ resolution. In the top panel of Fig. 12 we compare,73.0
+"                                                                         their M –Lz relations, and find them to be nearly identical.",73.0
+"in more detail in Appendix C. We plan to study how a re-                 This good agreement is not surprising, since in Section 4 we",0.0
+alistic cooling model (together with heating by gravitational            concluded that the mass and angular-momentum budget of,0.0
+"instability) sets the thermal profile of an accreting, gravita-          the protostar-disc system is mainly controlled by accretion",0.0
+"tionally unstable disc in future work.                                   through the pseudo-disc, which is axisymmetric and there-",0.0
+                                                                         fore insensitive to φ resolution.,73.0
+"                                                                            The details of disc evolution, however, can look very dif-",76.0
+                                                                         ferent between different φ resolutions and between 3D and,73.0
+6 NUMERICAL CONVERGENCE,0.0
+"                                                                         2D, as shown in Fig. 13. In both 3D simulations, we see disc",73.0
+In previous sections we focused on analyzing results from the            spreading by gravitational instability. But for low φ resolu-,0.0
+"fiducial 3D simulation. Here we compare this fiducial simu-              tion, the onset of gravitational instability (marked by the",0.0
+lation to a set of 3D and 2D simulations to discuss whether              sudden increase in disc size) occurs much later and the disc,0.0
+our results are sensitive to numerical parameters such as res-           size is smaller. Disc spreading is also more bursty in this case:,0.0
+olution and inner boundary size. We find that details of the             the disc suddenly increases size in an episode of strong grav-,0.0
+"3D disc evolution may still be sensitive to resolution, but the          itational instability, then has to wait a relatively long time",0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,39.792682926829265
+                                                                      Protostellar disc formation and evolution                  13,70.0
+                                                                      6.2 Inner boundary size and boundary condition,70.0
+                       rin = 1 au                  rin = 1 au,23.0
+                       fiducial bc              without bc for Lz     Now we consider the effect of the inner boundary size rin,23.0
+              8                         8,14.0
+                                                                      and inner boundary condition. In Fig. 12 we show the M –Lz,70.0
+              6                         6                             relation of a set of 2D simulations with rin ranging from 0.25,14.0
+"                                                                      au to 2 au. We see a very good agreement, even when the",70.0
+     z [au]   4                         4                             largest rin we use is already comparable to the size of the,5.0
+                                                                      first hydrostatic core/torus.,70.0
+              2                         2                                To test whether our inner boundary condition is correct,14.0
+"                                                                      and necessary, we run another set of 2D simulations with",70.0
+              0                         0,14.0
+                  0           5             0             5           a different boundary condition where we do not force the,18.0
+                                                                      angular-momentum flux through the inner boundary to be,70.0
+                      rin = 0.25 au               rin = 0.25 au,22.0
+                       fiducial bc              without bc for Lz     zero. The result for the two different boundary conditions,23.0
+"              8                         8                             are similar for rin . 0.5 au, suggesting that our boundary",14.0
+                                                                      condition does not introduce any artifact that affects the,70.0
+"              6                         6                             angular-momentum budget of the system. For larger rin , how-",14.0
+     z [au],5.0
+"                                                                      ever, simulations without the angular-momentum flux bound-",70.0
+              4                         4,14.0
+                                                                      ary condition show very poor numerical convergence and,70.0
+              2                         2,14.0
+"                                                                      much lower Lz . And for rin ≥ 1 au, removing the angular-",70.0
+                                                                      momentum flux boundary condition makes the torus disap-,70.0
+"              0                         0                             pear completely (Fig. 14). Therefore, having a boundary con-",14.0
+                  0           5             0             5           dition that limits the angular-momentum flux through the,18.0
+"                         x [au]                      x [au]           inner boundary is necessary, unless one can afford an inner",25.0
+                                                                      boundary size as small as 0.5 au or less.,70.0
+Figure 14. Snapshots at M10 = 0.1M for 2D simulations with,0.0
+                                                                         The necessity of having a small inner boundary or limit-,73.0
+different rin and inner boundary condition. The plotting scheme,0.0
+and colour scale are the same as in Fig. 1. Simulations show good     ing the angular-momentum flux through the inner bound-,0.0
+agreement if rin is sufficiently small or the boundary condition on   ary has a physical origin. The mean specific angular mo-,0.0
+Lz flux is applied. When rin is relatively large and the Lz flux      mentum coming from the pseudo-disc is quite low; for our,0.0
+"boundary condition is not used (top right panel), disc formation is   fiducial simulation, the circularization radius is ∼1 au. (Note",0.0
+fully suppressed.                                                     that Lz ∝ M 1.5 gives approximately constant circularization,0.0
+"                                                                      radius.) In order to form a disc, mass has to be accumu-",70.0
+                                                                      lated around this circularization radius until the torus be-,70.0
+                                                                      comes gravitationally unstable and starts transporting angu-,70.0
+"before it becomes unstable again (which is not covered by our         lar momentum. However, when the inner boundary is larger",0.0
+simulation). These differences are mainly because the low φ           than this circularization radius and angular momentum can,0.0
+"resolution suppresses non-axisymmetric perturbations and a            be freely advected through the inner boundary, all infalling",0.0
+disc has to reach smaller Q to excite spiral waves and ini-           angular momentum will be lost through the inner boundary,0.0
+"tiate disc spreading. For 2D, the disc no longer spreads but          and the disc cannot form.",0.0
+"undergoes radial oscillations, because the gravitationally ex-",0.0
+"                                                                         Additionally, the two boundary conditions compared here",73.0
+cited spiral waves that transport angular momentum are no,0.0
+                                                                      correspond to two limiting scenarios of angular-momentum,70.0
+"longer allowed in axisymmetry. In summary, correctly cap-",0.0
+                                                                      transport at r < rin . Our fiducial boundary condition with,70.0
+turing disc spreading by gravitational self-regulation through,0.0
+                                                                      zero Lz flux effectively assumes that all angular momentum,70.0
+direct simulation requires a φ resolution no lower than our,0.0
+                                                                      that gets within rin eventually returns to r > rin ; remov-,70.0
+fiducial value.,0.0
+                                                                      ing the Lz flux boundary condition effectively assumes that,70.0
+"   As a side note, certain details of disc evolution, such as the     all angular momentum that gets past rin is eventually re-",3.0
+"amplitude of spiral waves and the exact Q value, could require        moved from the protostar-disc system. The fact that these",0.0
+a much higher resolution to fully converge. Local shearing-           two boundary conditions give very similar evolution when,0.0
+box simulations find that gravitational instability creates           rin . 0.5 au suggests that the evolution is not sensitive to,0.0
+"small-scale perturbations (‘gravitoturbulence’), which can af-        the details of the angular-momentum transport at small radii",0.0
+fect (and sometimes disrupt) the large-scale spiral waves             (.0.5 au). One caveat is that these two boundary conditions,0.0
+(Gammie 2001; Riols et al. 2017). The amplitude of spiral             both implicitly assume that nothing occurring inside of the,0.0
+waves and the relation between Q and the rate of angular-             inner boundary can affect angular-momentum transport in,0.0
+momentum transport requires at least 8–16 cells per scale             the active domain.,0.0
+height to fully converge; such resolution is basically impossi-,0.0
+"ble for 3D disc-formation simulations in the near future. Still,",0.0
+these details should not affect the basic picture that the disc,0.0
+"                                                                      6.3 Resolution in r, θ",70.0
+spreads at marginal gravitational instability.,0.0
+"   There is another interesting conclusion one can draw from          Finally, we test convergence with respect to r, θ resolution",3.0
+this comparison. The similarity in the M –Lz relation even            using a set of 2D simulations with different resolutions. The,0.0
+when disc evolution is very different in 2D and 3D implies            resulting M –Lz relations are plotted in the bottom panel of,0.0
+"a lack of feedback. In other words, the protostar-disc system         Fig. 12. The convergence in r resolution is good, as suggested",0.0
+"cannot affect the pseudo-disc accretion process, which deter-         by the comparison between the green and orange curves. The",0.0
+"mines the M –Lz relation.                                             result also converges as θ resolution increases, but the con-",0.0
+"                                                                                                            MNRAS 000, 1–20 (2020)",108.0
+avr_spaces,25.77777777777778
+14      W. Xu and M. W. Kunz,0.0
+vergence is slower. We find that this is associated with an      (§5.3). Another important implication is that the specific an-,0.0
+numerical artifact in the polar region. We discuss this arti-    gular momentum of the disc can be much larger than of the,0.0
+"fact in Appendix D and introduce a simple correction for 2D      material being accreted by the disc, allowing the formation",0.0
+simulations that can remove this artifact. Comparing results     of large discs even when magnetic braking in the pseudo-disc,0.0
+"with and without this correction in Appendix D, we find that     is strong.",0.0
+"the 4× θ resolution run gives a good estimate of the actual         Together, we now have a relatively simple picture of disc",0.0
+"M –Lz relation, which has Lz about a factor of 2 smaller than    formation. Large-scale processes (collapse of the pre-stellar",0.0
+"the fiducial resolution runs.                                    core and pseudo-disc evolution), which are mostly laminar",0.0
+"   In summary, after inspecting convergence with respect to      and axisymmetric, determine the evolution of total mass and",3.0
+"all numerical parameters (including resolution), we are confi-   angular momentum of the protostar-disc system. The total",0.0
+dent that the M –Lz scaling in our fiducial simulation (Fig. 8)  mass and angular momentum of the protostar-disc system,0.0
+"has the correct shape and is accurate to within a factor of 2.   then directly determine the properties of the disc, including",0.0
+"                                                                 size and density profile, through gravitational self-regulation.",65.0
+"                                                                    Of course, this physical picture is based on simulations that",68.0
+"                                                                 cover only the first several kyr of disc evolution, and which",65.0
+7 SUMMARY AND DISCUSSION                                         use one particular set of initial conditions and chemical abun-,0.0
+"                                                                 dances. In future studies, we will determine if this picture is",65.0
+In this paper we use non-ideal MHD simulations to investi-,0.0
+                                                                 still applicable for the long-term evolution of discs through-,65.0
+gate the evolution of a pre-stellar core until a few kyr after,0.0
+                                                                 out the Class 0/I phase and for different initial conditions,65.0
+protostar formation. We observe the formation of an initially,0.0
+                                                                 and dust populations.,65.0
+"small disc, which then spreads by gravitational instability to",0.0
+∼30 au in diameter (§3). Here we summarize the main re-,0.0
+sults of our simulations in terms of the physical picture of,0.0
+"disc formation and requirements for numerical convergence,       7.2 Numerical convergence: the importance of the inner",0.0
+and discuss how our results connect to recent observational           boundary,0.0
+estimates of protostellar disc masses. The robustness of our,0.0
+results with respect to physical initial conditions and disc     Poor numerical convergence has been a significant problem,0.0
+chemistry will be evaluated in a parameter study in a subse-     for simulations of protostellar disc formation with relatively,0.0
+quent publication.                                               low resolution. We use a set of 2D and 3D simulations to,0.0
+                                                                 study the numerical convergence of our results for all nu-,65.0
+"                                                                 merical parameters (including resolution) in our model, and",65.0
+                                                                 find relatively good convergence for the mass and angular-,65.0
+7.1 Disc formation: a simple physical picture,0.0
+                                                                 momentum budget of the protostar-disc system.,65.0
+"Broadly speaking, the formation and evolution of the pro-           Our relatively good numerical convergence is mainly due",0.0
+"tostellar disc is determined by two processes: the injection     to two reasons. First, we use a sufficiently small inner bound-",0.0
+"of mass and angular momentum to (and the removal from)           ary rin , which helps to conserve angular momentum and re-",0.0
+"the protostar-disc system, and the redistribution of angular     solve the early evolution of the disc. We use rin as small as",0.0
+"momentum within the protostar-disc system.                       0.25 au for 2D simulations and 1 au for 3D simulations, which",0.0
+"   Regarding the first process, we find that the mass and an-    is significantly smaller than used in most previous studies.6",3.0
+"gular momentum of the protostar-disc system is determined        Second, we use an inner boundary condition that limits the",0.0
+"mainly by injection from a pseudo-disc in near free-fall, whose  angular-momentum flux through the inner boundary, which",0.0
+specific angular momentum is low due to magnetic braking         relaxes the requirement on rin for numerical convergence by,0.0
+(§4). The removal of mass and angular momentum by outflow        at least a factor of a few (which translates to more than an or-,0.0
+and magnetic braking in the protostar-disc system is negli-      der of magnitude in computational cost; see more discussion,0.0
+gible (contrary to some earlier studies that may have under-     on computational cost in Appendix E).,0.0
+"estimated magnetic diffusivity in disc), and there is barely        We also explain the origin of this sensitive dependence on",0.0
+any feedback from the protostar-disc system that affects the     the inner boundary: disc formation requires angular momen-,0.0
+"pseudo-disc injection rate (§4.1, §6.1). In other words, disc    tum to be accumulated first near the protostar and then be",0.0
+formation is hierarchical: the mass and angular-momentum         transported outwards by gravitational instability. If the inner,0.0
+budget of the small scale (protostar-disc system) is solely      boundary is too large and angular momentum can flow freely,0.0
+"determined by large scale (collapse of pre-setllar core and      through the inner boundary, the initial accumulation of an-",0.0
+pseudo-disc evolution).                                          gular momentum is prohibited and disc formation is strongly,0.0
+"   Regarding the second process, we find that the redistri-      suppressed.7",3.0
+bution of angular momentum within the protostar-disc sys-,0.0
+tem is mainly facilitated by gravitational instability and the,0.0
+associated non-axisymmetric angular-momentum transport           6,0.0
+"(§5.1). Transport by gravitational instability serves as a self-    In simulations using a Cartesian grid, our small rin corresponds",0.0
+                                                                 to both a small sink particle and sufficiently high resolution close,65.0
+regulation mechanism that holds most of the disc marginally,0.0
+                                                                 to the protostar.,65.0
+"unstable, with a Toomre Q ∼ 1–2 (§5.2). For a given mass and     7 For a Cartesian grid, one must also ensure that angular momen-",0.0
+"angular momentum of the protostar-disc system, the size and      tum is not appreciably lost to the grid when the angular sizes of",0.0
+column density profile of the disc is determined by this grav-   the cells are large. This is especially problematic when a signifi-,0.0
+itational self-regulation and can be estimated analytically if   cant amount of angular momentum may have to remain near the,0.0
+the thermal profile of the disc is known or can be constrained   protostar for many orbits before being transported outwards.,0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,11.902777777777779
+                                                                  Protostellar disc formation and evolution                     15,66.0
+"7.3 Observational hints of gravitational self-regulation         & Ilee 2020). Therefore, it is likely that typical young Class",0.0
+                                                                 II discs have once been (or still are) gravitationally unstable.,65.0
+Our simulation suggests that protostellar discs are likely,0.0
+marginally gravitationally unstable for at least a significant,0.0
+fraction of Class 0/I phase. Here we discuss how this predic-,0.0
+tion compares with recent observations of young discs.           ACKNOWLEDGMENTS,0.0
+"   The most direct way of determining whether a disc is grav-    It is a pleasure to thank Patrick Hennebelle, Jim Stone, and",3.0
+itationally unstable is through estimating its Toomre Q. This    Kengo Tomida for useful discussions; the referee for construc-,0.0
+"requires estimating disc mass, which for Class 0/I discs is usu- tive feedback; and especially Shantanu Basu for comments",0.0
+"ally inferred from dust continuum emission. However, such a      on a draft version of this manuscript. The simulations pre-",0.0
+measurement typically assumes optically thin emission at the     sented in this article were performed on computational re-,0.0
+"observed wavelength, which is likely untrue for some systems     sources managed and supported by Princeton Research Com-",0.0
+"(Galván-Madrid et al. 2018; Liu 2020) and may lead to sig-      puting, a consortium of groups including the Princeton Insti-",0.0
+"nificant underestimation of disc mass. To calibrate this effect, tute for Computational Science and Engineering (PICSciE)",0.0
+one has to observe the disc at a very long wavelength to en-     and the Office of Information Technology’s High Performance,0.0
+"sure optically thin emission, or multiple wavelengths to con-    Computing Center and Visualization Laboratory at Prince-",0.0
+"strain opacity. For example, Sharma et al. (2020) use ALMA       ton University. Partial support was provided by an Alfred",0.0
+0.87-mm data and VLA 8-mm data to show that the disc             P. Sloan Research Fellowship in Physics to M.W.K.,0.0
+around an outbursting Class 0 protostar likely has Q < 1,0.0
+before outburst. They also comment that using the ALMA,0.0
+data (more optically thick because of the shorter wavelength)    DATA AVAILABILITY,0.0
+alone would underestimate disc mass by at least a factor of,0.0
+10. A similar trend is also visible in the VANDAM survey of      The data underlying this article will be shared on reasonable,0.0
+"Orion protostars (Tobin et al. 2020), where ALMA 0.87-mm         request to the authors.",0.0
+data suggest most discs have Q well above unity (assum-,0.0
+"ing optically thin dust emission), but VLA 8-mm data, when",0.0
+"available, gives much smaller Q values that are usually con-     REFERENCES",0.0
+sistent with marginally unstable discs (see their Table 9). It,0.0
+"                                                                 Andersen B. C., et al., 2019, ApJ, 873, 54",65.0
+is also worth noting that the protostar mass in these systems,0.0
+"                                                                 Andrews S. M., Williams J. P., 2007, ApJ, 659, 705",65.0
+"are usually unknown. The estimates discussed above both as-      Andrews S. M., Rosenfeld K. A., Kraus A. L., Wilner D. J., 2013,",0.0
+"sume a certain fiducial protostar mass when calculating Q,           ApJ, 771, 129",0.0
+"and that leads to large uncertainty. (On the other hand, if      Andrews S. M., et al., 2018, ApJ, 869, L41",0.0
+"gravitational self regulation is indeed applicable to a wide     Ansdell M., et al., 2016, ApJ, 828, 46",0.0
+"range of Class 0/I systems, one can use disc mass observa-       Ansdell M., et al., 2018, ApJ, 859, 21",0.0
+"tions to put rough constraints on protostar mass.) Overall,      Auddy S., Myers P. C., Basu S., Harju J., Pineda J. E., Friesen",0.0
+"although there are several important uncertainties, observed         R. K., 2019, ApJ, 872, 207",0.0
+"Class 0/I disc masses, when the dust optical depth is prop-      Barranco J. A., Goodman A. A., 1998, ApJ, 504, 207",0.0
+"                                                                 Basu S., 1997, ApJ, 485, 240",65.0
+"erly accounted for, should be in broad agreement with our",0.0
+"                                                                 Basu S., Mouschovias T. Ch., 1994, ApJ, 432, 720",65.0
+prediction.,0.0
+"                                                                 Basu S., Mouschovias T. Ch., 1995, ApJ, 453, 271",65.0
+"   Less direct evidence for gravitationally unstable circum-     Bate M. R., 2018, MNRAS, 475, 5618",3.0
+"protostellar discs in the Class 0/I stage may be obtained        Bjerkeli P., van der Wiel M. H. D., Harsono D., Ramsey J. P.,",0.0
+"via measurements of Toomre Q in Class II discs. If discs are         Jørgensen J. K., 2016, Nature, 540, 406",0.0
+"marginally unstable in the Class 0/I phase, then it is reason-   Booth A. S., Ilee J. D., 2020, MNRAS, 493, L108",0.0
+"able to expect young Class II discs often to have Q of a few.    Booth A. S., Walsh C., Ilee J. D., Notsu S., Qi C., Nomura H.,",0.0
+"Early measurements of Class II discs usually use CO (or CO           Akiyama E., 2019, ApJ, 882, L31",0.0
+"                                                                 Braiding C. R., Wardle M., 2012, MNRAS, 422, 261",65.0
+"isotope) lines to estimate gas mass, or use dust continuum to",0.0
+"                                                                 Caselli P., Benson P. J., Myers P. C., Tafalla M., 2002, ApJ, 572,",65.0
+"estimate dust mass. These studies (e.g., Ansdell et al. 2016)",0.0
+                                                                     238,69.0
+"generally find that Class II discs are not very massive, with    Ciolek G. E., Königl A., 1998, ApJ, 504, 257",0.0
+"disc-to-star mass ratios of a few percent or less. However,      Crutcher R. M., 1999, ApJ, 520, 706",0.0
+"these estimates suffer from uncertainties such as CO/H2 ra-      Crutcher R. M., Nutter D. J., Ward-Thompson D., Kirk J. M.,",0.0
+"tio, dust-to-gas ratio, and optical depth of observed lines or       2004, ApJ, 600, 279",0.0
+"wavelength, and such uncertainties often lead to systematic      Dapp W. B., Basu S., Kunz M. W., 2012, A&A, 541, A35",0.0
+"underestimation of disc mass. A recent study by Powell et al.    Desch S. J., Mouschovias T. C., 2001, ApJ, 550, 314",0.0
+"(2019) discusses these issues and proposes a new method for      Falgarone E., Troland T. H., Crutcher R. M., Paubert G., 2008,",0.0
+"constraining disc mass using dust disc visibility at multiple        A&A, 487, 247",0.0
+"                                                                 Fiedler R. A., Mouschovias T. Ch., 1993, ApJ, 415, 680",65.0
+wavelengths. This method is immune to the aforementioned,0.0
+"                                                                 Galván-Madrid R., Liu H. B., Izquierdo A. F., Miotello A., Zhao",65.0
+uncertainties and tends to give much higher disc mass: Out,0.0
+"                                                                     B., Carrasco-González C., Lizano S., Rodrı́guez L. F., 2018,",69.0
+"of the 7 discs modeled in this study, 6 show Q . 3. Observa-         ApJ, 868, 39",0.0
+"tions using 13 C17 O, a rare isotope, also suggest that earlier  Gammie C. F., 2001, ApJ, 553, 174",0.0
+"studies may have significantly underestimated disc opacity       Girart J. M., Rao R., Marrone D. P., 2006, Science, 313, 812",0.0
+"and mass, and the two discs observed with this method are        Guillet V., Hennebelle P., Pineau des Forêts G., Marcowith A.,",0.0
+"both likely gravitationally unstable (Booth et al. 2019; Booth       Commerçon B., Marchand P., 2020, A&A, 643, A17",0.0
+"                                                                                                         MNRAS 000, 1–20 (2020)",105.0
+avr_spaces,12.697368421052632
+16       W. Xu and M. W. Kunz,0.0
+"Hennebelle P., Commerçon B., Lee Y.-N., Charnoz S., 2020, A&A,     Tomida K., Machida M. N., Hosokawa T., Sakurai Y., Lin C. H.,",0.0
+"     635, A67                                                            2017, ApJ, 835, L11",5.0
+"Hirano S., Tsukamoto Y., Basu S., Machida M. N., 2020, ApJ, 898,    Tsukamoto Y., Iwasaki K., Okuzumi S., Machida M. N., Inutsuka",0.0
+"     118                                                                 S., 2015, ApJ, 810, L26",5.0
+"Hirashita H., 2012, MNRAS, 422, 1263                                Tsukamoto Y., Okuzumi S., Iwasaki K., Machida M. N., Inutsuka",0.0
+"Jijina J., Myers P. C., Adams F. C., 1999, ApJS, 125, 161                S., 2018, ApJ, 868, 22",0.0
+"Joos M., Hennebelle P., Ciardi A., 2012, A&A, 543, A128             Umebayashi T., Nakano T., 1980, PASJ, 32, 405",0.0
+"Joos M., Hennebelle P., Ciardi A., Fromang S., 2013, A&A, 554,      Verliat A., Hennebelle P., Maury A. J., Gaudel M., 2020, A&A,",0.0
+"     A17                                                                 635, A130",5.0
+"Kirk J. M., Ward-Thompson D., André P., 2005, MNRAS, 360,          Vorobyov E. I., Basu S., 2007, MNRAS, 381, 1009",0.0
+"     1506                                                           Vorobyov E. I., Skliarevskii A. M., Elbakyan V. G., Pavlyuchenkov",5.0
+"Königl A., 1987, ApJ, 320, 726                                          Y., Akimkin V., Guedel M., 2019, A&A, 627, A154",0.0
+"Könyves V., et al., 2015, A&A, 584, A91                            Ward-Thompson D., Scott P. F., Hills R. E., Andre P., 1994, MN-",0.0
+"Krasnopolsky R., Li Z.-Y., Shang H., 2011, ApJ, 733, 54                  RAS, 268, 276",0.0
+"Kratter K., Lodato G., 2016, ARA&A, 54, 271                         Ward-Thompson D., Kirk J. M., Crutcher R. M., Greaves J. S.,",0.0
+"Kunz M. W., Mouschovias T. Ch., 2009, ApJ, 693, 1895                     Holland W. S., André P., 2000, ApJ, 537, L135",0.0
+"Kunz M. W., Mouschovias T. Ch., 2010, MNRAS, 408, 322               Wardle M., 2004, Ap&SS, 292, 317",0.0
+"Larson R. B., 1969, MNRAS, 145, 271                                 Wardle M., Ng C., 1999, MNRAS, 303, 239",0.0
+"Laughlin G., Bodenheimer P., 1994, ApJ, 436, 335                    Wurster J., Bate M. R., 2019, arXiv e-prints, p. arXiv:1906.12276",0.0
+"Lebreuilly U., Commerçon B., Laibe G., 2020, A&A, 641, A112        Wurster J., Bate M. R., Price D. J., 2019, MNRAS, 489, 1719",0.0
+"Levy E. H., Sonett C. P., 1978, in Gehrels T., Matthews M. S.,      Yen H.-W., Koch P. M., Takakuwa S., Krasnopolsky R., Ohashi",0.0
+"     eds, IAU Colloq. 52: Protostars and Planets. p. 516                 N., Aso Y., 2017, ApJ, 834, 178",5.0
+"Li Z.-Y., McKee C. F., 1996, ApJ, 464, 373                          Zhao B., Caselli P., Li Z.-Y., Krasnopolsky R., 2018a, MNRAS,",0.0
+"Li Z.-Y., Krasnopolsky R., Shang H., 2011, ApJ, 738, 180                 473, 4868",0.0
+"Li Z.-Y., Krasnopolsky R., Shang H., 2013, ApJ, 774, 82             Zhao B., Caselli P., Li Z.-Y., 2018b, MNRAS, 478, 2723",0.0
+"Liu H. B., 2020, arXiv e-prints, p. arXiv:2010.05392                Zhao B., et al., 2020a, Space Sci. Rev., 216, 43",0.0
+"Lubow S. H., Spruit H. C., 1995, ApJ, 445, 337                      Zhao B., Caselli P., Li Z.-Y., Krasnopolsky R., Shang H., Lam",0.0
+"Machaieie D. A., Vilas-Boas J. W., Wuensche C. A., Racca G. A.,          K. H., 2020b, MNRAS, 492, 3375",0.0
+"     Myers P. C., Hickel G. R., 2017, ApJ, 836, 19",5.0
+"Machida M. N., Basu S., 2019, ApJ, 876, 149",0.0
+"Machida M. N., Basu S., 2020, MNRAS, 494, 827",0.0
+"Machida M. N., Hosokawa T., 2013, MNRAS, 431, 1719",0.0
+                                                                    APPENDIX A: DETAILS OF NUMERICAL SETUP,68.0
+"Machida M. N., Inutsuka S.-i., Matsumoto T., 2014, MNRAS, 438,      A1 Self gravity",0.0
+     2278,5.0
+"Marchand P., Masson J., Chabrier G., Hennebelle P., Commerçon      The gravitational potential in the domain can be separated",0.0
+"     B., Vaytet N., 2016, A&A, 592, A18                             into two components, one corresponding to the mass in the",5.0
+"Masson J., Chabrier G., Hennebelle P., Vaytet N., Commerçon B.,    domain, and the other the point accretor Macc :",0.0
+"     2016, A&A, 587, A32",5.0
+"Mathis J. S., Rumpl W., Nordsieck K. H., 1977, ApJ, 217, 425        Φ = Φs + Φacc .                                              (A1)",0.0
+"Maury A. J., et al., 2018, MNRAS, 477, 2760",0.0
+                                                                    Here Φacc = −GMacc /r and Φs is obtained by solving the,68.0
+"Mouschovias T. Ch., Paleologou E. V., 1980, ApJ, 237, 877",0.0
+"Mouschovias T. Ch., Paleologou E. V., 1986, ApJ, 308, 781           Poisson equation",0.0
+"Mouschovias T. Ch., Spitzer L. J., 1976, ApJ, 210, 326              ∇2 Φs = 4πG(ρ − ρ∞ ).                                        (A2)",0.0
+"Myers P. C., Benson P. J., 1983, ApJ, 266, 309",0.0
+"Ormel C. W., Paszun D., Dominik C., Tielens A. G. G. M., 2009,      We adopt an open boundary condition for equation (A2): Φs",0.0
+"     A&A, 502, 845                                                  is finite at r → 0 and approaches zero at r → ∞ if we were",5.0
+"Ossenkopf V., 1993, A&A, 280, 617                                   to continue solving ∇2 Φ = 0 outside the domain.",0.0
+"Paczynski B., 1978, Acta Astron., 28, 91                               On the right-hand side of equation (A2), we have replaced",0.0
+"Piétu V., Guilloteau S., Di Folco E., Dutrey A., Boehler Y., 2014, the usual density term ρ with (ρ − ρ∞ ), where ρ∞ is the",0.0
+"     A&A, 564, A95",5.0
+                                                                    background mass density corresponding to the background,68.0
+"Powell D., Murray-Clay R., Pérez L. M., Schlichting H. E., Rosen-",0.0
+"     thal M., 2019, ApJ, 878, 116",5.0
+                                                                    number density n∞ in equation (1). We also replace ρg with,68.0
+"Riols A., Latter H., Paardekooper S. J., 2017, MNRAS, 471, 317      (ρ − ρ∞ )g in the momentum equation. This modification, to-",0.0
+"Rossi S. C. F., Benevides-Soares P., Barbuy B., 1991, A&A, 251,     gether with an open boundary condition for Φs , corresponds",0.0
+     587                                                            physically to a situation where the system is embedded in,5.0
+"Sadavoy S. I., et al., 2019, ApJS, 245, 2                           an infinite uniform ambient density ρ∞ . In reality, protostars",0.0
+"Segura-Cox D. M., et al., 2018, ApJ, 866, 161                       are not in vacuum but are embedded in dense molecular gas",0.0
+"Seifried D., Banerjee R., Pudritz R. E., Klessen R. S., 2012, MN-   (with density ∼ρ∞ ), and so this ‘Jeans swindle’ modification",0.0
+"     RAS, 423, L40                                                  is likely a better approximation of reality than the standard",5.0
+"Sharma R., Tobin J. J., Sheehan P. D., Megeath S. T., Fischer       Poisson equation.",0.0
+"     W. J., Jørgensen J. K., Safron E. J., Nagy Z., 2020, ApJ, 904,",5.0
+                                                                       We solve equation (A2) numerically in spherical-polar co-,71.0
+     78,5.0
+                                                                    ordinates using spherical harmonic decomposition. The trans-,68.0
+"Tassis K., Mouschovias T. C., 2005, ApJ, 618, 783",0.0
+"Tassis K., Mouschovias T. C., 2007, ApJ, 660, 388                   formations to and from the spherical harmonic basis are per-",0.0
+"Teixeira P. S., Lada C. J., Alves J. F., 2005, ApJ, 629, 276        formed using a fast Fourier transform (FFT) in the φ di-",0.0
+"Tobin J. J., et al., 2020, ApJ, 890, 130                            rection (necessary only for 3D simulations) and an inner",0.0
+"Tohline J. E., Hachisu I., 1990, ApJ, 361, 394                      product with the associated Legendre polynomials through",0.0
+"Tomida K., Okuzumi S., Machida M. N., 2015, ApJ, 801, 117           direct summation. In this basis of spherical harmonics, the",0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,6.376623376623376
+                                                                                    Protostellar disc formation and evolution                    17,84.0
+              1.2                                                                   and the Alfvén speed vA . The cap on η is applied directly,14.0
+"                                                initial condition                   when calculating η at each timestep, and the caps on v and",48.0
+              1.0                               analytic result at t = 0.5          vA are applied by increasing the density when the velocity,14.0
+                                                numerical result at t = 0.5         magnitude is greater than the cap value (while holding mo-,48.0
+"                                                                                    mentum and magnetic field constant). In other words, the",84.0
+              0.8,14.0
+                                                                                    velocity cap is implemented as a density floor.,84.0
+"                                                                                       These caps are often applied to star-formation simulations,",87.0
+    density,4.0
+              0.6                                                                   but sometimes their values are chosen somewhat arbitrarily.,14.0
+                                                                                    Here we try to give a more physical choice of cap values that in,84.0
+              0.4                                                                   principle should not affect the dynamics of the protostar-disc,14.0
+"                                                                                    system. In order to do this, we choose the caps so that the",84.0
+"                      cell size                                                     characteristic timescale associated with the diffusivity cap,",22.0
+              0.2,14.0
+"                                                                                    r2 /ηcap , is at most comparable to the free-fall timescale; and",84.0
+              0.0,14.0
+"                                                                                    the characteristic timescale associated with the velocity cap,",84.0
+"                                                                                    r/vcap , is much smaller than the free-fall timescale. (Note",84.0
+                0.0     0.5       1.0     1.5     2.0     2.5       3.0       3.5,16.0
+                              distance from center of overdensity                   that both free-fall timescale and Keperian timescale are ∼,30.0
+                                                                                    p,84.0
+"                                                                                       −gr /r.) The rationale for the first criteria is that, when",87.0
+                                                                                    the diffusion timescale is smaller than the gravitational (free-,84.0
+"Figure A1. Test problem for our self gravity algorithm. We simulate                 fall, or Keplerian) timescale, the field is largely decoupled",0.0
+the collapse of a spherical overdensity whose centre is not at the,0.0
+                                                                                    from the gas and the behaviour is not sensitive to the exact,84.0
+coordinate origin. The numerical result shows good agreement with,0.0
+                                                                                    value of η. We also want to choose the cap values such that,84.0
+analytic prediction. The initial condition and typical cell size in the,0.0
+overdense region are also shown for reference.                                      the CFL timestep corresponding to the caps are similar in,0.0
+                                                                                    the whole domain. This allows us to choose higher caps for,84.0
+                                                                                    larger r without affecting the timestep. Since the cell size are,84.0
+"Poisson equation becomes a second-order ordinary differen-                          ∝ r, we choose ηcap ∝ r2 and vcap ∝ r. Combining the two",0.0
+"tial equation for each Y lm component. The (second-order                            motivations above, we choose the following caps for diffusivity",0.0
+accurate) finite-difference version of this differential equa-                      and velocity:,0.0
+"tion corresponds to a tri-diagonal matrix equation, which we                        ηcap = fη τg−1 r2 ,   vcap = fv τg−1 r.                 (A3)",0.0
+solve using LU factorization with pre-computed coefficients.,0.0
+                                                                                    Here τg−1 is defined as the global maximum of −gr /r on,84.0
+                                                                                                                                     p,133.0
+This allows a solution cost of O(Nr ) for each Y lm compo-,0.0
+"nent. Overall, the computational cost for a single solve is                         the midplane, and fη , fv are constant factors. Our default",0.0
+"O(N ) + O(N log Nφ ) + O(N Nθ ), where Nr , Nθ , Nφ are num-                        choices are fη = 1 and fv = 50. To check that these caps do",0.0
+"ber of cells in each direction and N ≡ Nr Nθ Nφ is the total                        not affect the dynamics, we re-ran some 2D simulations with",0.0
+"number of cells. On paper, this scaling does not look very                          fv = 100 and with fη = 0.5, 2, and 4. All of these runs show",0.0
+"good. In practice, however, the simplicity of the algorithm                         nearly identical behaviour.",0.0
+"lends it good performance, and the cost of solving Φs be-",0.0
+comes significant (compared to everything else) only when,0.0
+                                                                                    A3 Polar averaging,84.0
+"Nθ & 100. At our fiducial resolution, the cost of the self-",0.0
+gravity solver constitutes only ∼15% of the total computa-                          One major disadvantage of using spherical-polar coordinates,0.0
+tional cost.8                                                                       for 3D simulations is that the cells become narrow wedges,0.0
+"   To test our implementation of self gravity, we simulate the                      towards the pole, which may limit the timestep severely. This",3.0
+collapse of an isothermal spherical overdensity whose cen-                          problem is usually tackled using mesh refinement near the,0.0
+"tre is not at the coordinate origin. We set 4πG = 1 and                             midplane, which allows the φ resolution near the midplane to",0.0
+"isothermal sound speed cs = 1. The overdensity is centred                           be higher than that around the pole. However, this choice is",0.0
+"at (r, θ, φ) = (4, 1, 0.7), with initial density profile given in                   not suitable for our simulation since our self gravity solver is",0.0
+Figure A1. At a resolution of dr/r ≈ dθ ≈ 0.05 (comparable                          not (yet) compatible with mesh refinement.,0.0
+"to our fiducial resolution) and dφ ≈ 0.1, the evolution agrees                         To circumvent this problem, we need to ‘de-refine’ cells near",0.0
+"well with analytic results, and the overdensity remains spher-                      the pole in the φ direction. This is achieved by performing a",0.0
+"ical during the collapse without visible artifacts (Figure A1).                     ‘polar averaging’. That is, after each update of cell quantities",0.0
+                                                                                    we perform a Fourier transform in the φ direction for cells,84.0
+                                                                                    near the pole and truncate the high-frequency terms of den-,84.0
+"A2 Velocity and diffusivity caps                                                    sity, momentum, and magnetic field. (For magnetic field, we",0.0
+"                                                                                    do this to Br and Bθ , and then Bφ follows from ∇ · B = 0.)",84.0
+"To avoid very short timesteps, we apply caps on the magnetic",0.0
+                                                                                    We also perform the same truncation for the EMF before,84.0
+"diffusivities (both Ohmic and ambipolar), the flow speed v,",0.0
+                                                                                    using it to update the magnetic field. The number of terms,84.0
+"                                                                                    kept, nφ , is chosen such that the effective cell size in the φ",84.0
+"8                                                                                   direction,",0.0
+"  As a side note, O(N ) algorithms such as multigrid tend to be-",2.0
+"come much less efficient when there are too few cells per thread                    dφeff = r sin θ(dφ)Nφ /nφ ,                                (A4)",0.0
+"(e.g., when each thread owns 83 or 163 cells); this problem is less",0.0
+severe for our spherical harmonic solver. This makes our solver                     is no smaller than r(dθ)min . Here θ is the poloidal angle of,0.0
+"suitable for reducing the real-world time of a simulation by using                  the cell centre, and dθ and dφ are the mesh spacings in the",0.0
+more cores.                                                                         poloidal and azimuthal directions; (dθ)min is the minimum,0.0
+"                                                                                                                              MNRAS 000, 1–20 (2020)",126.0
+avr_spaces,31.9
+18     W. Xu and M. W. Kunz,0.0
+"dθ, which is located in the midplane. We then use this ef-                        10−3",0.0
+fective cell size to replace the actual cell size when comput-                                       electron,0.0
+                                                                                                                                     1022,133.0
+                                                                                                     molecular ion,101.0
+ing the CFL condition for the next timestep. This averaging                       10−5,0.0
+                                                                                                     atomic ion,101.0
+procedure is necessary only when we need nφ < Nφ to get                                              grain (+),0.0
+                                                                                  10−7               grain (−),82.0
+"dφeff ≥ r(dθ)min . For example, in our fiducial 3D simulation,                                       grain (0)",0.0
+                                                                                                                                     1020,133.0
+                                                                                                                      η [cm2 s−1 ],118.0
+the averaging is only applied to the first two cells in the θ                     10−9,0.0
+direction near the pole.                                            ns /nn                                                           1018,0.0
+                                                                              10−11,78.0
+                                                                              10−13,78.0
+                                                                                                                                     1016,133.0
+APPENDIX B: DIFFUSIVITY FOR OUR DUST PROFILE                                                                                                   Ohmic,0.0
+                                                                              10−15                                                            ambipolar,78.0
+In Fig. C1 we show the fractional abundances of the species                                                                                    Hall,0.0
+                                                                              10−17 2                                                1014 2,78.0
+in our chemical network and the resulting magnetic diffu-                         10           106   1010      1014                     10      106        1010   1014,0.0
+sivities as functions of the neutral number density. Because                                          −3                                                    −3,0.0
+                                                                                                nn [cm ]                                            nn [cm ],96.0
+magnetic diffusivities in general depend also on the strength,0.0
+"of the magnetic field, for the purposes of this figure we take      Figure C1. Left: Fractional abundances of species for our chemical",0.0
+"                                                                    network. Right: Magnetic diffusivities as a function of density, as-",68.0
+"B = (nn /100 cm−3 )1/2 µG, which is similar to the midplane",0.0
+                                                                    suming B = 0.1 µG (nn /cm−3 )1/2 . (The Hall effect is not included,68.0
+B-nn relation during the pre-stellar collapse phase of our sim-     in our simulations.),0.0
+ulations. We also plot the midplane magnetic diffusivities in,0.0
+our fiducial 3D simulation in Fig. C2.,0.0
+"   For the range of density in which we are interested here,",3.0
+ambipolar diffusion is the dominant non-ideal effect. Also                                                                                                 ambipolar,0.0
+                                                                                      1020,86.0
+note that our choice of dust size gives significantly higher dif-                                                                                          Ohmic,0.0
+fusion at intermediate densities (∼107 –1010 cm−3 ) compared,0.0
+to the standard MRN profile (cf. Zhao et al. 2018b).                                  1019,0.0
+                                                                       η [cm2 s−1 ]   1018,71.0
+APPENDIX C: ESTIMATING THE SIZE AND MASS OF,0.0
+A NON-ISOTHERMAL DISC                                                                 1017,0.0
+In Section 5.3 we estimated the size and mass of the disc,0.0
+under the assumption that disc is isothermal and marginally                           1016 0,0.0
+                                                                                         10                 101                               102                      103,89.0
+"gravitationally unstable. However, the resulting disc surface                                                          r [au]",0.0
+"density from equation (4) is ∝R−3/2 , suggesting that the",0.0
+isothermal assumption may no longer be good at small cylin-,0.0
+drical radius R where disc column density is high. In this          Figure C2. Midplane magnetic diffisivity η of the fiducial 3D simula-,0.0
+appendix we discuss the effect of a non-isothermal inner disc.      tion at different epochs. The epochs plotted and the colour scheme,0.0
+"                                                                    are the same as in Fig. 2. The numerical cap on η, which is only",68.0
+"   For a non-isothermal disc, we can still apply equation",3.0
+                                                                    applied when the diffusion timescale is shorter than dynamical,68.0
+"(4), except now cs0 must be replaced by an R-dependent",0.0
+"                                                                    timescale, is evident at small r.",68.0
+sound speed cs (R). Suppose cs (R) ∝ R−β at small R. A,0.0
+marginally gravitationally unstable Keplerian disc would sat-,0.0
+             3,13.0
+"isfy Σ ∝ R− 2 −β and                                                For the EoS used in our simulations, at high density p ∝ ργ",0.0
+"dMd        1                                                        with γ = 5/3, so that cs ∝ ρ1/3 ∝ R−1 and β = 1. In this case,",0.0
+"       ∝ R 2 −β ,                                           (C1)    both the disc mass and size depend sensitively on Rd,in . In our",7.0
+d ln R,0.0
+" dLd                                                                3D simulation Rd,in is similar to, and probably controlled by,",1.0
+       ∝ R1−β .                                             (C2)    the size of the inner boundary of the computational domain;,7.0
+d ln R,0.0
+                                                                    it is therefore possible that the disc size will be different for,68.0
+For sufficiently large β (β ≥ 1/2 for mass and ≥ 1 for angular      a different inner boundary size for the particular barotropic,0.0
+"momentum), the disc mass and angular momentum diverge               EoS we adopt.",0.0
+"if we integrate the above equations to R → 0. Physically, this         We can also ask whether one should expect such a large",0.0
+means that most of the mass and angular momentum are                β in reality. The γ = 5/3 EoS at high density corresponds,0.0
+"concentrated near the inner edge of the marginally unstable         physically to a trivial level of cooling. In reality, however,",0.0
+"region (Rd,in ), and that the total disc mass and size are very     the cooling rate may still be nontrivial in an optically thick,",0.0
+"sensitive to the exact value of Rd,in . For example, when β = 1,    gravitationally unstable disc. This is in part because the mix-",0.0
+"dLd /d ln R ∼ const and Rd ∝ Rd,in for a given M and Lz .           ing due to the turbulent motion from gravitational instabil-",0.0
+"   Now we estimate the value of β for the EoS used in our           ity gives very effective convection (mixing time is .Ω−1 ),",3.0
+simulation. Since we assume a geometrically thin disc with          and for midplane temperature T the cooling per unit area,0.0
+"Q = Q0 ∼ 1 (i.e., self gravity and pressure support are com-        will be ∼σT 4 , as opposed to ∼σT 4 /τ for an optically thick,",0.0
+"parable), the disc scale height is ∼cs /Ω and Σ ∼ ρcs /Ω, where     non-convective disc with optical depth τ . When a nontrivial",0.0
+"ρ is the midplane mass density. Using equation (4), we find         amount of cooling is present, the EoS will be less steep; and γ",0.0
+      GM                                                            just needs to be slightly less steep than 5/3 to have β > 1 and,6.0
+"ρ∼           .                                              (C3)    a disc size insensitive to Rd,in . Meanwhile, although most of",0.0
+     πGQ0 R3,5.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,23.02409638554217
+                                                                    Protostellar disc formation and evolution                                         19,68.0
+the disc mass will still be near the inner edge when γ is close               3000                            3000                            0.00100,0.0
+"to 5/3, the density profile in the outer part of the disc remains",0.0
+"insensitive to the location of the inner edge. Therefore, when                                                                                0.00075",0.0
+                                                                                                                                                        Ω [kyr−1 ],152.0
+                                                                              2000                            2000,78.0
+                                                                     z [au],69.0
+disc evolution is regulated by gravitational instability and a,0.0
+                                                                                                                                              0.00050,142.0
+"realistic thermal profile is assumed, our estimate for disc size",0.0
+                                                                              1000                            1000,78.0
+and density profile should be insensitive to the exact location                                                                               0.00025,0.0
+of the disc inner edge.,0.0
+                                                                                 0                               0                            0.00000,81.0
+                                                                                     0   1000   2000   3000          0   1000   2000   3000,85.0
+                                                                              3000                            3000                            0.010,78.0
+APPENDIX D: POLAR CORRECTION,0.0
+                                                                                                                                              0.005,142.0
+                                                                                                                                                        Bφ [µG],152.0
+D1 Problem description and possible origin                                    2000                            2000,0.0
+                                                                     z [au]                                                                   0.000,69.0
+"During the first few 100 kyr of pre-stellar collapse, the evo-                1000                            1000",0.0
+lution is slow and we expect the rotation in the inner part of                                                                                −0.005,0.0
+the core to be approximately uniform (similar to the initial                     0                               0                            −0.010,0.0
+"condition). However, as the top left panel of Fig. D1 shows,                         0   1000   2000   3000          0   1000   2000   3000",0.0
+our simulations often show a faster rotating region near the                               x [au]                          x [au],0.0
+"pole, where the rotation rate is well above the initial rota-",0.0
+                                                                    Figure D1. Comparison between 2D simulations with (right) and,68.0
+"tion. This spin-up is unphysical, and the resulting unphysical",0.0
+"                                                                    without (left) the polar correction at t = 100 kyr. Physically, the",68.0
+increment of angular momentum in the innermost few 100 au,0.0
+                                                                    inner few 1000 au shown here should still be rotating approxi-,68.0
+"is likely tied to the relatively slow convergence with respect      mately uniformly. Without the polar correction, positive Bφ is gen-",0.0
+to θ resolution shown in Fig. 12.                                   erated unphysically; this leads to spin-up of the polar region. This,0.0
+   This problem is related to geometric truncation errors in        problem can be fixed (in 2D) by introducing the polar correction,3.0
+"the EMF calculation, which eventually lead to unphysical            discussed in Appendix D.",0.0
+generation of a toroidal magnetic field (Fig. D1 bottom left,0.0
+panel) and unphysical angular-momentum transport. The ori-,0.0
+gin of this problem can be illustrated by considering a uni-        kind of error generally will not cancel out in the path integral,0.0
+"formly rotating system threaded by a vertical magnetic field.       of the EMF, making it possible to generate unphysical Bφ .",0.0
+"Physically, one expects the path integral of the poloidal EMF          Our fix to the problem is fairly simple. Instead of di-",0.0
+"around a cell to be zero, so that the toroidal field remains        rectly interpolating vφ , we first calculate cell-centered Ω =",0.0
+"zero. However, in a simulation with finite resolution, the EMF      vφ /(r sin θ) and then interpolate Ω to the cell interface. We",0.0
+"on each edge are subject to different geometric errors, and         then compute the edge-averaged vφ on the interface based on",0.0
+"these errors in general do not cancel out. Additionally, in a       the interpolated Ω, and use that as input for the Riemann",0.0
+"spherical polar grid the amplitudes of such errors do not de-       solver. (Here, ‘edge-averaged’ means averaging along an edge",0.0
+crease quickly as resolution increases because the error for        in the r direction for a θ interface and along the θ direction,0.0
+the first couple of cells around the pole is always ∼O(1).          for an r interface.) This eliminates geometric error when the,0.0
+                                                                    system is uniformly rotating. This correction works very well,68.0
+"                                                                    for uniformly rotating systems, and applying it to our 2D",68.0
+"D2 Implementing a polar correction                                  simulations removes the artifact near the pole (Fig. D1, right",0.0
+D2.1 2D axisymmetric                                                panels) without introducing any new artifacts.,0.0
+"To avoid the unphysical spin-up observed in Fig. D1, we in-",0.0
+troduce a correction in our code to ensure that a uniformly         D2.2 3D,0.0
+"rotating system remains uniformly rotating, with no unphys-",0.0
+                                                                    In 3D the correction above can no longer fully solve the prob-,68.0
+"ical generation of Bφ or artifact in Ω. This can be achieved,",0.0
+"                                                                    lem. This is because the r, θ edge-centered EMFs are not the",68.0
+"e.g., by modifying how the left and right interface values of",0.0
+                                                                    same as the corresponding interface EMFs in the absence of,68.0
+vφ are interpolated in the Riemann solver. (This correction,0.0
+"                                                                    axisymmetry. Instead, now an edge EMF depends on all four",68.0
+is not applied to simulations shown in the main text.),0.0
+                                                                    adjacent cells and interfaces and that introduces additional,68.0
+"   In Athena++, for a 2D axisymmetric spherical polar grid,",3.0
+                                                                    geometric errors that are harder to account for.,68.0
+the poloidal EMF on cell edges (the path integral of which is,0.0
+used to update the toroidal field) is calculated using a Rie-,0.0
+mann solver on the cell interface in r and θ directions. For,0.0
+                                                                    D3 Comparison between simulations with and without polar,68.0
+"each interface, the code first interpolates cell-centered quan-",0.0
+                                                                       correction,71.0
+"tities to get left and right states on the interface, and then",0.0
+uses these left and right interface states to compute fluxes on     To check whether the unphysical spin-up we observed has a,0.0
+"the interface, including the face-centered EMF. Note that, for      significant impact on our physical results regarding disc for-",0.0
+"the r and θ directions, the face-centered EMF is the same as        mation, we rerun most of our 2D simulations with the polar",0.0
+the edge-centered EMF because of axisymmetry. The prob-             correction discussed above and compare the results. We find,0.0
+"lem lies in how the azimuthal velocity vφ is interpolated: the      the qualitative evolution to be overall similar, and simula-",0.0
+interpolation algorithm in Athena++ directly interpolates vφ        tions with polar correction show good numerical convergence,0.0
+"and, for a uniformly rotating system, the interpolated state        with respect to inner-boundary size and resolution (Fig. D2).",0.0
+"on the interface sometimes differs from the actual vφ . This        Also, comparing simulations with and without polar correc-",0.0
+"                                                                                                                         MNRAS 000, 1–20 (2020)",121.0
+avr_spaces,26.602409638554217
+20             W. Xu and M. W. Kunz,0.0
+                                         with polar correction                              30                       30                       15,41.0
+                                                                                                                                                   log10 (nn [cm−3 ]),147.0
+                             1051      Rin =1 au (fiducial)                                 20                       20,29.0
+                                                                                   z [au],83.0
+                                       Rin =0.5 au                                                                                            10,39.0
+           Lz [g cm2 s−1 ],11.0
+                                       Rin =0.25 au                                         10                       10,39.0
+                             1050,29.0
+                                                                                                                                              5,142.0
+                                                                                             0                        0,93.0
+                                                                                                 0   10    20   30        0   10    20   30,97.0
+                             1049,29.0
+                                                                                            30                       30                       40,92.0
+                                                                                                                                              20,142.0
+                                                                                                                                                            Bφ [mG],156.0
+                                                                                            20                       20,92.0
+                             1048,29.0
+                                                                                   z [au],83.0
+                                          10−2                       10−1                                                                     0,42.0
+                                                                                            10                       10,92.0
+                             1051      fiducial                                                                                               −20,29.0
+                                       2× θ resolution                                       0                        0                       −40,39.0
+           Lz [g cm2 s−1 ],11.0
+                                       4× θ resolution                                           0   10    20   30        0   10    20   30,39.0
+                             1050                                                                     x [au]                   x [au],29.0
+                                                                                Figure D4. Comparison between 2D simulations with (right) and,80.0
+                             10   49                                            without (left) the polar correction at M10 ≈ 0.05 M . Unlike at,29.0
+"                                                                                earlier times, the behaviours are qualitatively very similar.",80.0
+"                             1048                                                  It is also worth noting that, although the unphysical spin-",29.0
+                                          10−2                       10−1,42.0
+                                                    M [M ]                      up significantly affects the evolution of the innermost few,52.0
+"                                                                                ∼100 au at early times (Fig. D1), the qualitative evolution",80.0
+"                                                                                after the formation of the protostar is much less affected, as",80.0
+Figure D2. Mass–angular-momentum relation in 2D simulations,0.0
+                                                                                is shown in Fig. D4.,80.0
+with the polar correction. Better convergence in θ resolution than,0.0
+shown in Fig. 12 is achieved. Note that the drop in angular momen-,0.0
+"tum at larger M for runs with rin = 1 au comes from mass ejection,",0.0
+which happens because the dense torus undergoes a violent insta-                APPENDIX E: A NOTE ON COMPUTATIONAL COST,0.0
+bility when its size is very similar to the inner boundary. (The,0.0
+"tori in these simulations are smaller than those in the main text,              As we mentioned in Section 1.2, a main challenge for long-",0.0
+because the polar correction lowers their angular momentum.)                    term simulations of protostellar disc formation is the compu-,0.0
+"                                                                                tational cost, or more precisely the timestep. Here we discuss",80.0
+                                                                                how we tackle this problem.,80.0
+"                                                                                   Typically, the numerical timestep is limited by magnetic",83.0
+                                                                                diffusion at the inner edge of the disc. One approach to over-,80.0
+                       1051,23.0
+                                                                                coming this obstacle is to increase the cell size there. This in,80.0
+"                                                                                turn requires increasing the inner boundary size, since verti-",80.0
+     Lz [g cm2 s−1 ],5.0
+                       1050                                                     cally resolving the disc already poses a requirement on angu-,23.0
+"                                                                                lar resolution. As we show in §6, this can be achieved without",80.0
+                       1049                                   no correction     hurting numerical convergence by treating the inner bound-,23.0
+"                                                              with correction   ary carefully. For example, the maximum rin one can take",62.0
+                                                              1× θ resolution   while maintaining numerical convergence differs by at least,62.0
+                       1048                                   2× θ resolution,23.0
+                                                              4× θ resolution   a factor of four between a simple open boundary condition,62.0
+"                                                                                and our boundary condition, and this can speed up simula-",80.0
+                              10−3           10−2                 10−1          tions by above an order of magnitude. This allows numerically,30.0
+"                                                 M [M ]                         converged long-term 3D simulations to be performed, for our",49.0
+"                                                                                code, on ∼100 processors over a timescale of several weeks.",80.0
+Figure D3. Mass–angular-momentum relation in 2D simulations,0.0
+                                                                                   Another option to reducing the computational cost is to,83.0
+with and without the polar correction at different θ resolutions.,0.0
+"                                                                                perform 2D simulations, while using parametrized sub-grid",80.0
+All runs use rin = 1 au. The two different treatments converge,0.0
+towards the same result.                                                        models to account for the effects of non-axisymmetric struc-,0.0
+"                                                                                ture (e.g., spiral waves induced by gravitational instability,",80.0
+                                                                                which transport angular momentum). We plan to model the,80.0
+"tion, we find that the mass–angular-momentum relation con-                      effects of gravitational self-regulation in this fashion in a fu-",0.0
+verges to the same limit from two different directions as res-                  ture paper. If such modelling is possible (and gives results in,0.0
+"olution increases (Fig. D3). Assuming that simulations with                     good agreement with 3D simulations), this will be a partic-",0.0
+and without the polar correction both converge to the true                      ularly useful tool for performing large parameter surveys for,0.0
+"mass–angular-momentum relation, we conclude that our fidu-                      which each long-term 2D simulation would only cost a few",0.0
+cial resolution simulations without polar correction overesti-                  days on a few tens of cores.,0.0
+mate the angular momentum by roughly a factor of 2 at late,0.0
+times (after the formation of protostar).,0.0
+"MNRAS 000, 1–20 (2020)",0.0
+avr_spaces,45.175

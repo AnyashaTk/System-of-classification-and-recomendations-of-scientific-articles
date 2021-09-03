@@ -1,0 +1,839 @@
+text,space_num
+"                                              MNRAS 000, 1–13 (2020)                                              Preprint 6 January 2021               Compiled using MNRAS LATEX style file v3.0",46.0
+                                              The growth of H ii regions around massive stars: the role of metallicity and,46.0
+                                              dust,46.0
+                                              Ahmad A. Ali★,46.0
+"                                              Department of Physics and Astronomy, University of Exeter, Stocker Road, Exeter EX4 4QL, United Kingdom",46.0
+                                              Accepted ???. Received ???; in original form ???,46.0
+arXiv:2101.01193v1 [astro-ph.GA] 4 Jan 2021,0.0
+                                              ABSTRACT,46.0
+                                              Gas metallicity 𝑍 and the related dust-to-gas ratio 𝑓d can influence the growth of H ii regions via metal line cooling and,46.0
+                                              UV absorption. We model these effects in star-forming regions containing massive stars. We compute stellar feedback from,46.0
+"                                              photoionization and radiation pressure (RP) using Monte Carlo radiative transfer coupled with hydrodynamics, including stellar",46.0
+"                                              and diffuse radiation fields. We follow a 105 M turbulent cloud with 𝑍/Z = 2, 1, 0.5, 0.1 and 𝑓d = 0.01𝑍/Z with a cluster-sink",46.0
+                                              particle method for star formation. The models evolve for at least 1.5 Myr under feedback. Lower 𝑍 results in higher temperatures,46.0
+"                                              and therefore larger H ii regions. For 𝑍 > Z , radiation pressure 𝑃rad can dominate locally over the gas pressure 𝑃gas in the inner",46.0
+"                                              half-parsec around sink particles. Globally, the ratio of 𝑃rad /𝑃gas is around 1 (2 Z ), 0.3 (Z ), 0.1 (0.5 Z ), and 0.03 (0.1 Z ). In",46.0
+"                                              the solar model, excluding RP results in an ionized volume several times smaller than the fiducial model with both mechanisms.",46.0
+"                                              Excluding RP and UV attenuation by dust results in a larger ionized volume than the fiducial case. That is, UV absorption",46.0
+"                                              hinders growth more than RP helps it. The radial expansion velocity of ionized gas reaches +15 km s−1 outwards, while neutral",46.0
+"                                              gas has inward velocities for most of the runtime, except for 0.1 Z which exceeds +4 km s−1 . 𝑍 and 𝑓d do not significantly alter",46.0
+"                                              the star formation efficiency, rate, or cluster half-mass radius, with the exception of 0.1 Z due to the earlier expulsion of neutral",46.0
+                                              gas.,46.0
+                                              Key words: hydrodynamics – radiative transfer – stars: massive – HII regions – ISM: clouds,46.0
+"                                              1 INTRODUCTION                                                               LMC, where the inner region is dominated by radiation pressure and",46.0
+                                                                                                                           the outer parts by ionization.,123.0
+                                              Stars form in clusters and associations inside giant molecular clouds,46.0
+"                                              (GMCs). In the Milky Way, the star formation efficiency (SFE; the",46.0
+                                              proportion of gas mass converted into stars) is of the order 10 to 30           One parameter that could modify the effectiveness of feedback is,46.0
+"                                              per cent at the cluster scale and a few per cent at the global GMC           the metallicity, 𝑍. The LMC and SMC have sub-solar metallicities",46.0
+"                                              scale (Lada & Lada 2003). This inefficiency may be explained by              with 𝑍 ≈ 0.5 Z and 0.2 Z , respectively (Russell & Dopita 1992).",46.0
+"                                              stellar feedback driven primarily by O stars (Matzner 2002). These           Observations show that metallicity varies within the Milky Way, de-",46.0
+                                              massive stars are sources of energy and momentum for the interstellar        creasing with distance from the Galactic Centre where 𝑍 ≈ 2 Z,46.0
+"                                              medium via mechanisms such as photoionization, radiation pressure,           (Deharveng et al. 2000). This will factor into radiative transfer pro-",46.0
+"                                              stellar winds, and supernovae (e.g. see the review by Dale 2015). In         cesses. The dominant cooling sources for ionized gas are collision-",46.0
+"                                              this paper, we focus on the radiative processes.                             ally excited forbidden lines from metal ions (Osterbrock & Ferland",46.0
+                                                 There remains much uncertainty as to the relative impact of the dif-      2006). The dust-to-gas ratio is proportional to metallicity (Draine,49.0
+"                                              ferent feedback mechanisms. One way of assessing this is to compare          et al. 2007), and radiation pressure is exerted primarily onto dust",46.0
+"                                              the pressures associated with each process in a particular star-forming      grains which can be dynamically coupled to the gas. Furthermore,",46.0
+                                              region. This has been done for a variety of H ii regions in the Small        the heating/cooling processes of dust grains can inhibit fragmen-,46.0
+"                                              and Large Magellanic Clouds (SMC and LMC, respectively; Lopez                tation around protostars (Krumholz et al. 2007; Bate 2009; Offner",46.0
+"                                              et al. 2011; Pellegrini et al. 2011; Lopez et al. 2014; McLeod et al.        et al. 2009), and scaling this with metallicity can alter the density and",46.0
+"                                              2019), in the Galactic Centre (Barnes et al. 2020), and more recently        temperature structure even in low-mass clusters (Bate 2019). When",46.0
+"                                              in the Galactic disc (Olivier et al. 2020, submitted). Most regions          considering feedback from massive stars, changing the metallicity",46.0
+                                              in these studies show low levels of radiation pressure compared to           and dust fraction can modify the D-type expansion of H ii regions.,46.0
+"                                              the thermal pressure from ionized gas, while other regions (typically        Haworth et al. (2015) investigated this with detailed photoionization",46.0
+"                                              the smaller ones) show the opposite result. This can also vary as a          modelling in 1D, with a single ionizing source in a uniform-density",46.0
+"                                              function of distance from the stellar sources, as in 30 Doradus in the       medium. Including dust grains resulted in the attenuation of ionizing",46.0
+"                                                                                                                           radiation, which made the H ii region smaller compared to the model",123.0
+                                                                                                                           without dust. A higher gas metallicity resulted in a lower electron,123.0
+"                                                                                                                           temperature, decreasing the expansion rate of H ii regions. Apply-",123.0
+                                              ★   E-mail: A.Ali2@exeter.ac.uk                                              ing this in 3D to turbulent star-forming regions could provide key,46.0
+                                              © 2020 The Authors,46.0
+avr_spaces,50.21153846153846
+2     A. A. Ali,0.0
+information for interpreting the observations which probe different                                                                                       Z/Zsol,0.0
+metallicity environments.                                                                                                                                     2,0.0
+                                                                                                                                                              1,158.0
+                                                                                                    103                                                       0.5,100.0
+"   Over the last decade and a half, there has been a growing body",3.0
+                                                                                                                                                              0.1,158.0
+of work in 3D simulations of photoionization to investigate star for-,0.0
+mation and gas dynamics (including but not limited to Dale et al.,0.0
+                                                                                                    102,100.0
+                                                                            dust opacity (cm2g 1),76.0
+2005; Mellema et al. 2006; Peters et al. 2010; Arthur et al. 2011;,0.0
+Dale et al. 2012; Walch et al. 2012; Colín et al. 2013; Geen et al.,0.0
+2015; Howard et al. 2016; Gavagnin et al. 2017; Ali et al. 2018;,0.0
+Kim et al. 2018; Zamora-Avilés et al. 2019; Vandenbroucke & Wood,0.0
+2019; Bending et al. 2020; Fukushima et al. 2020; Sartorio et al.                                   101,0.0
+2021). Models span a wide range of initial cloud conditions across,0.0
+"mass, density, morphology, turbulence, and stellar population. In",0.0
+"general, SFEs are reduced by the impact of photoionization com-                                     100",0.0
+"pared to hydrodynamics-only runs, with some calculations showing                                                    EUV FUV",0.0
+only a modest reduction (e.g. Dale et al. 2014; Howard et al. 2017),0.0
+while others reach the low values seen in the Milky Way (e.g. Geen,0.0
+et al. 2017).                                                                                       10   1,0.0
+                                                                                                             102       103     104        105       106       107,109.0
+                                                                                                                               wavelength (Å),127.0
+   Radiation pressure is now routinely included in models of massive,3.0
+star formation on the scale of individual cores (Krumholz et al. 2009;   Figure 1. Dust opacities used in torus as a function of wavelength and metal-,0.0
+Kuiper et al. 2010; Harries et al. 2017; Rosen et al. 2019; Mignon-      licity 𝑍 . Also marked are the upper limits of the extreme and far ultraviolet,0.0
+"Risse et al. 2020) and implementations are becoming more common          (EUV, FUV, respectively).",0.0
+"for the cluster/GMC scale. For example, radiation pressure has been",0.0
+investigated on its own (Skinner & Ostriker 2015; Tsang & Milosavl-,0.0
+jević 2018) and in conjunction with photoionization (Howard et al.       Table 1. Abundances at solar metallicity (Asplund et al. 2009) and ion states,0.0
+"2016, 2017; Kim et al. 2018; Ali et al. 2018; Ali & Harries 2019;        used in the photoionization scheme",0.0
+"Fukushima et al. 2020). Overall, radiation pressure appears to be a                                                Element     𝑁𝑋 /𝑁H       Ion states",0.0
+"secondary effect at the GMC scale, except possibly at the highest                                                  Hydrogen        1        I–II",0.0
+masses/luminosities/surface densities where it becomes more impor-                                                 Helium     8.5 × 10−2    I–III,0.0
+tant (Fall et al. 2010; Howard et al. 2018).                                                                       Carbon     2.7 × 10−4    I–IV,0.0
+                                                                                                                   Nitrogen   6.8 × 10−5    I–III,115.0
+"   However, radiative transfer methods for photoionization are often                                               Oxygen     4.9 × 10−4    I–III",3.0
+"simplified by prescribing a single temperature for ionized gas, using                                              Neon       8.5 × 10−5    I–III",0.0
+"the on-the-spot approximation, or neglecting dust which absorbs UV                                                 Sulphur    1.3 × 10−5    I–IV",0.0
+radiation and reprocesses it into the IR. Models which include ra-,0.0
+diation pressure typically only use ∼2 frequency bins (e.g. ionizing     2 NUMERICAL METHODS,0.0
+"and non-ionizing photons), use an average dust opacity, and neglect",0.0
+"the pressure from either direct (stellar) radiation or indirect (dust-   We use the torus code, which couples Monte Carlo radiative trans-",0.0
+"processed) radiation, depending on the regime of interest. This does     fer (MCRT) with hydrodynamics on a 3D grid (for a full description",0.0
+"not accurately capture all the microphysics, as wavelength-dependent     of the code, see Harries et al. 2019). We use the same methods",0.0
+"dust opacities span many orders of magnitude, and dust-processed         as Ali et al. (2018) and Ali & Harries (2019), with different ini-",0.0
+radiation may undergo multiple absorption/re-emission/scattering         tial conditions and the addition of a cluster-sink particle approach,0.0
+"events that can particularly affect high-surface density gas (Crocker    detailed in section 2.1. As a summary, the hydrodynamics scheme",0.0
+"et al. 2018). Likewise, for photoionization, the presence of diffuse     is flux conserving, finite volume, and total variation diminishing.",0.0
+ionizing radiation and dust absorption can change the size and mor-      Poisson’s equation for self-gravity is calculated using a V-cycling,0.0
+phology of H ii regions (Ercolano & Gritschneder 2011; Haworth           multigrid method with Dirichlet boundary conditions based on a,0.0
+"& Harries 2012; Haworth et al. 2015). Furthermore, capturing the         multipole expansion. Gas can flow out of the grid but not in. The",0.0
+"metallicity-dependence of the electron temperature requires comput-      hydrodynamics evolves isothermally, with temperatures set by an",0.0
+ing heating/cooling rates which take into account metal ions.            MCRT calculation at the beginning of each time step. The MCRT,0.0
+                                                                         scheme is based on the method of Lucy (1999). The source luminos-,73.0
+"  In previously published models (Ali et al. 2018; Ali & Harries         ity is split into photon packets which propagate through the medium,",2.0
+"2019), we included these processes using a detailed Monte Carlo          undergoing absorption/re-emission/scattering events until they exit",0.0
+radiative transfer scheme for clouds of 103 and 104 M and a single       the grid. Photoionization equilibrium is computed for the ion states,0.0
+"massive star. In this paper, we model a 105 M cloud with 𝑍/Z =           listed in Table 1 using the method described by Haworth & Harries",0.0
+"0.1, 0.5, 1, and 2, with dust-to-gas ratio scaling linearly with 𝑍. We   (2012), with abundances scaling linearly with metallicity. Photon",0.0
+have extended the method to track star formation using cluster-sink      wavelengths are interpolated from 1000 logarithmically spaced bins,0.0
+"particles which form on the fly, accrete gas, and sample stars from      between 102 and 107 Å. The MCRT scheme therefore follows the",0.0
+"an initial mass function. They emit photon packets from across the       diffuse radiation field as well as the stellar radiation field, including",0.0
+"spectrum which then propagate through gas/dust in the interstellar       ionizing photons re-emitted by gas, and photons reprocessed by dust.",0.0
+"medium. We detail the numerical methods in section 2, go through         The method naturally takes into account shadowed regions, penetra-",0.0
+"the results in section 3, discuss them in section 4, and conclude in     tion of shadows by diffuse radiation, and radiation hardening. We",0.0
+section 5.                                                               use Draine & Lee (1984) silicate grains with an MRN (Mathis et al.,0.0
+"MNRAS 000, 1–13 (2020)",0.0
+avr_spaces,14.464788732394366
+                                                                          The growth of H ii regions around massive stars                        3,74.0
+"1977) density distribution,                                                Table 2. Model parameters",0.0
+𝑛(𝑎) ∝ 𝑎 −3.5                                                         (1)           Model             𝑍 (Z )    dust/gas     ionization RP,0.0
+where the grain size 𝑎 is between 0.005 and 0.25 µm. The dust                       z2                      2       0.02         X       X,0.0
+                                                                                    z1                      1       0.01         X       X,84.0
+"opacity is plotted in Fig. 1. We do not include dust destruction,",0.0
+                                                                                    z0.5                  0.5      0.005         X       X,84.0
+as on GMC scales this occurs primarily through supernova shocks                     z0.1                  0.1      0.001         X       X,0.0
+(Jones 2004). We assume the dust is dynamically well-coupled to                     z1_norp                 1       0.01         X       ×,0.0
+the gas. Elemental abundances at solar metallicity are taken from                   z1_norp_nodust          1      10−20         X       ×,0.0
+Asplund et al. (2009) and are listed in Table 1. Thermal balance                    hydro                 n/a         n/a        ×       ×,0.0
+between photon absorption and thermal emission provides the dust,0.0
+temperature. This is connected to the gas temperature by a collisional,0.0
+"heat exchange rate from Hollenbach & McKee (1979),",0.0
+"Γgas-dust = 2 𝑓 𝑛H 𝑛d 𝜎d 𝑣 p 𝑘 B (𝑇 − 𝑇d )                            (2)  more massive than 8 M , with non-massive stars also contributing",0.0
+"                                                                           to the spectrum. A sink with only low-mass stars does not radiate, as",75.0
+"where 𝑇d , 𝑛d , 𝜎d , are the dust temperature, number density, and         the photoionization calculation is more stable without the ionizing",0.0
+"cross-section respectively, 𝑇 is the gas temperature, 𝑣 p is the thermal   flux which is negligible but non-zero. Radiation is emitted from the",0.0
+"speed of protons at 𝑇, and 𝑓 is a factor which depends on 𝑇 and the        sink particle as a point source, with the sink’s luminosity being the",0.0
+ionization fraction. The gas thermal balance uses heating rates from                                                                  Í,0.0
+"                                                                           sum of its component stellar luminosities (𝐿 sink = 𝐿 ∗ ), and the",75.0
+"H and He photoionization, cooling from H and He recomination               sink’s spectral energy distribution (SED) being an addition of its",0.0
+"lines, collisionally excited lines from H and metals, and free-free        component stellar SEDs. SEDs for O stars are interpolated from the",0.0
+continuum. This takes into account the frequency dependence of the         tlusty OSTAR2002 (Lanz & Hubeny 2003) grid of models using,0.0
+"stellar spectra and diffuse radiation field. The momentum-transfer         the relevant gas metallicity, while later-type stars use Kurucz (1993)",0.0
+"method of Harries (2015) provides a value for the radiation pressure,      models. In the next hydrodynamical step, the sink particle may con-",0.0
+which is added onto the momentum equation in the hydrodynamics             tinue accreting and the population procedure is repeated. Spectra,0.0
+"step. We do not include magnetic fields in these models.                   are only recalculated every ten hydrodynamical time steps, as this",0.0
+                                                                           reduces the computation time and the hydrodynamical timescale is,75.0
+"2.1 Cluster-sink particles                                                 much shorter than the stellar evolutionary timescale; however, a cal-",0.0
+                                                                           culation is forced for sinks which have just been populated.,75.0
+We use the sink particle algorithm described by Harries (2015) which,0.0
+uses formation criteria based on Federrath et al. (2010). Due to the,0.0
+"spatial resolution of the calculations we present here, we do not follow",0.0
+"the formation of individual stars, so we have extended the method",0.0
+to make sink particles represent clusters or sub-clusters. Sinks are       2.2 Initial conditions,0.0
+"formed above a density threshold of 104 cm−3 , which corresponds",0.0
+to the density above which stars are observed to form in cores in the      Our initial condition is a spherical cloud with mass 𝑀 = 105 M,0.0
+Galactic disc (Lada & Lada 2003; Barnes et al. 2019 and references         and radius 𝑅 = 11.9 pc. These parameters are based on observa-,0.0
+therein; see also Howard et al. 2014 who use this criterion with a         tions of molecular clouds by Roman-Duval et al. (2010). The sphere,0.0
+"similar method in their simulations).                                      has a uniform-density inner core up to 𝑟 = 𝑅/2, then a power-",0.0
+"   Before starting the simulations, we pre-tabulate a list of stars by     law decrease with 𝜌(𝑟) ∝ 𝑟 −1.5 . The density outside the sphere is",3.0
+randomly sampling from a Chabrier (2003) initial mass function             0.01𝜌(𝑅). The mean mass density and number density of the sphere,0.0
+"(IMF) up to a total of 105 M . This is similar to the method by Geen       is 1.05 × 10−21 g cm−3 and 629 cm−3 , respectively. The free-fall time",0.0
+"et al. (2018), but we retain the stars below 8 M as well. We use the       associated with this average density is h𝑡ff i = 2.1 Myr. The mean sur-",0.0
+same pre-tabulated IMF for every model. Each sink has a reservoir of       face density is Σ = 0.05 g cm−2 = 240 M pc−2 . The temperature is,0.0
+mass available for star formation which is replenished by accretion        initially 10 K for both gas and dust. The grid size from end to end is,0.0
+"onto the sink. The sink mass gets converted into a stellar population      45.4 pc, giving a linear resolution of 0.18 pc per cell with 2563 cells.",0.0
+"with an efficiency 𝜖 = 0.3, such that the reservoir mass 𝑀reservoir =      The grid structure is fixed, uniform, and Cartesian.",0.0
+           Í,11.0
+"𝜖 𝑀sink − 𝑀∗ , where 𝑀∗ are the individual stellar masses in that             We investigate four metallicities, 𝑍/Z = 2, 1, 0.5, 0.1. For each",0.0
+"sink. The value of 𝜖 is based on observational constraints from Lada       metallicity, we assume a dust-to-gas mass ratio = 0.01×𝑍/Z follow-",0.0
+"& Lada (2003); the simulations by Howard et al. (2014) use a similar       ing Draine et al. (2007). For 𝑍 = Z , we carry out two more models",0.0
+approach with an efficiency of 0.2 per free-fall time. After each          to investigate the effects of radiation pressure and UV absorption:,0.0
+"hydrodynamical time step, we check which reservoirs are massive            one with dust but no radiation pressure, and one with no dust and",0.0
+enough to take the next star off the list and select one of those at       no radiation pressure. The models and their labels are summarised,0.0
+"random. The stellar mass is subtracted from the reservoir, and the         in Table 2. Metallicity and dust-to-gas ratio remain fixed over the",0.0
+process continues down the list until no sink reservoirs are massive       simulation.,0.0
+enough.                                                                       We apply a random Gaussian turbulent velocity field over the,0.0
+   While the position and velocity of each star simply follow the par-     sphere. This is taken from Bate et al. (2002) and has a power spectrum,3.0
+"ent sink particle, other stellar properties including mass, radius, and    𝑃(𝑘) ∝ 𝑘 −4 for wavenumber 𝑘, such that the kinetic energy equals",0.0
+"luminosity vary independently with time. These evolve using inter-         the gravitational potential energy, i.e. the virial parameter 𝛼vir ≡",0.0
+"polated values from the MESA Isochrones & Stellar Tracks (MIST;            2𝐸 kin /𝐸 grav = 2. We check the criteria for sink particle formation,",0.0
+"Choi et al. 2016) with rotational parameter 𝑣/𝑣 crit = 0 and metallicity   accretion, and star population as described in section 2.1 at every",0.0
+"[Fe/H] following the gas metallicity set in the initial conditions (sec-   time step (unlike our previous models, Ali et al. 2018 and Ali &",0.0
+"tion 2.2). A sink is allowed to radiate after it is populated with a star  Harries 2019, where star particles were placed at 0.75 h𝑡ff i).",0.0
+"                                                                                                                           MNRAS 000, 1–13 (2020)",123.0
+avr_spaces,10.029411764705882
+4      A. A. Ali,0.0
+      z2                                           z1                                               z0.5,6.0
+      1.46 Myr                                     1.70 Myr                                         2.03 Myr,6.0
+      1.6e+07 Lsol                                 1.9e+07 Lsol                                     2.1e+07 Lsol                              100,6.0
+                                                                                                                                              10    1,142.0
+                                                                                                                                                        column density (g cm 2),152.0
+                             10 pc,29.0
+                                                                                                                                              10    2,142.0
+      z0.1                                         z1_norp                                          z1_norp_nodust,6.0
+      1.67 Myr                                     2.38 Myr                                         2.40 Myr,6.0
+      1.6e+07 Lsol                                 3.5e+07 Lsol                                     2.5e+07 Lsol,6.0
+                                                                                                                                              10    3,142.0
+                                                                                                                                              10    4,142.0
+"Figure 2. Final snapshots of column density Σ integrated along the 𝑧-axis. White dots show radiating sinks, black dots show non-radiating sinks. Labels show",0.0
+"the model name, the time since the formation of the first massive star, and the total bolometric luminosity. The grid is 45.4 pc on each side.",0.0
+                                                                                                                                               108,143.0
+      z2                                            z1                                               z0.5,6.0
+      1.46 Myr                                      1.70 Myr                                         2.03 Myr,6.0
+      1.6e+07 Lsol                                  1.9e+07 Lsol                                     2.1e+07 Lsol,6.0
+                                                                                                                                               107,143.0
+                                                                                                                                               106,143.0
+                                                                                                                                                        emission measure (cm 6 pc),152.0
+                             10 pc                                                                                                             105,29.0
+      z0.1                                          z1_norp                                          z1_norp_nodust,6.0
+      1.67 Myr                                      2.38 Myr                                         2.40 Myr,6.0
+      1.6e+07 Lsol                                  3.5e+07 Lsol                                     2.5e+07 Lsol,6.0
+                                                                                                                                               104,143.0
+                                                                                                                                               103,143.0
+                                                                                     ∫,85.0
+                                     Figure 3. Final snapshots of emission measure       𝑛e2 d𝑧. See also the caption of Fig. 2.,37.0
+"MNRAS 000, 1–13 (2020)",0.0
+avr_spaces,57.46875
+                                                                            The growth of H ii regions around massive stars                                                5,76.0
+3 RESULTS                                                                                                                     time (free-fall time),0.0
+                                                                                                               0.0   0.2    0.4       0.6       0.8    1.0      1.2,111.0
+The spherical cloud evolves under self-gravity and a decaying tur-,0.0
+bulent velocity field. This creates filaments in which sink particles,0.0
+                                                                                                           104,107.0
+"eventually form, especially in the inner half of the sphere where the",0.0
+density is highest. The first sink forms after 0.42 Myr (0.2 h𝑡ff i). The,0.0
+first massive star (19 M ) forms at 0.80 Myr (0.38 h𝑡 ff i) – beyond                                       103,0.0
+                                                                                ionized mass (Msol),80.0
+"this point in the text and in all plots, we define this as 𝑡 = 0 as this",0.0
+is also when the radiative feedback starts. H ii regions are created                                       102,0.0
+around sinks which accrete enough mass to form massive stars. As,0.0
+"the H ii regions expand, they collect gas into shells. Because the den-                                    101",0.0
+"sity structure is non-uniform, radiation is able to penetrate through",0.0
+"lower-density gas, ionizing areas of the cloud further away (including                                                                      Z/Zsol",0.0
+the diffuse environment outside the cloud). Individual H ii regions                                        100                     2           1 (no RP),0.0
+also combine with neighbouring ones. Dense structures resist being,0.0
+"                                                                                                                                   1           1 (no RP, no dust)",131.0
+                                                                                                                                   0.5,131.0
+"ionized, but their star-facing surfaces get photoevaporated. The mor-                                     10   1",0.0
+                                                                                                                                   0.1,131.0
+"phology of the gas and H ii regions can be seen in     ∫ Figs. 2 and 3,",0.0
+which show the final snapshots of column density 𝜌 d𝑧 and emis-                                                0.0    0.5       1.0       1.5        2.0        2.5,0.0
+               ∫                                                                                                                  time (Myr),15.0
+"sion measure 𝑛2e d𝑧, where 𝜌 and 𝑛e are the mass volume density",0.0
+"and electron number density, respectively. Projected positions of sink                                                        time (free-fall time)",0.0
+"particles are shown as circles, with white circles for radiating sinks",0.0
+                                                                                                               0.0   0.2    0.4       0.6       0.8    1.0      1.2,111.0
+(those which have massive stars >8 M ) and black circles for non-                                                                                            102 cm   3,0.0
+radiating sinks (no massive stars). The five most massive stars in the                                     100,0.0
+"z1 model were (in order of formation time), 78.5 M (0.56 Myr),",0.0
+"97.8 M (0.92 Myr), 103.5 M (1.31 Myr), 88.0 M (1.42 Myr),                                                                                                    103 cm   3",0.0
+                                                                                ionized volume fraction,80.0
+and 115.9 M (1.69 Myr) at which point the computation ended.                                              10   1,0.0
+Simulations were stopped due to small time steps caused by the,0.0
+                                                                                                                                                             104 cm   3,157.0
+"acceleration from radiation pressure. In section 3.1, we analyse the",0.0
+"growth of the ionized gas as a function of time, and examine the kine-                                    10   2",0.0
+"matics of both the neutral and ionized components. In section 3.2,",0.0
+we calculate star formation rates/efficiencies and cluster properties.,0.0
+"Finally in section 3.3, we compare the thermal and radiation pres-",0.0
+                                                                                                          10   3,106.0
+sures to determine how each feedback mechanism contributes to the,0.0
+dynamics.,0.0
+                                                                                                          10 40.0     0.5       1.0       1.5         2.0        2.5,106.0
+3.1 H ii region expansion                                                                                                         time (Myr),0.0
+The total ionized mass and volume as a function of time in each              Figure 4. H ii region properties - the top panel shows total ionized mass. The,0.0
+model is shown in Fig. 4. We count cells as being ionized if the ion-        bottom panel shows total ionized volume as a fraction of the total grid volume,0.0
+ization fraction of hydrogen is greater than 0.9. The solid lines show       (45.43 pc3 ). The bottom plot also shows Spitzer expansion profiles (dot-dash,0.0
+"the different metallicities, while the dashed line shows z1_norp and         lines) for three densities (𝑛e = 102 , 103 , 104 cm−3 , going downwards; see",0.0
+the dotted line shows z1_norp_nodust (see Table 2 for the parameters         text for more detail). Times in all figures are since the formation of the first,0.0
+and physics in each model). Lower-metallicity models grow larger             massive star and initiation of feedback.,0.0
+H ii regions – a lower cooling rate from metal ions results in a higher,0.0
+"temperature, which produces a larger pressure gradient between ion-",0.0
+"ized and neutral gas; furthermore, a lower dust-to-gas ratio means           function of time 𝑡,",0.0
+less attenuation of ionizing photons by dust. The mean electron tem-                     ,0.0
+                                                                                              7𝑐 𝑡 4/7,94.0
+                                                                                                  ,98.0
+"peratures that we find at each metallicity are 5.6 × 103 K at 2 Z ,          𝑅I (𝑡) = 𝑅S 1 + I         ,                                                                  (3)",0.0
+                                                                                              4𝑅S,94.0
+"8.2 × 103 K at 1 Z , 11 × 103 K at 0.5 Z , and 17 × 103 K at 0.1 Z",0.0
+"– this is the temperature averaged over the ionized volume then aver-        where 𝑅S is the Strömgren radius,",0.0
+aged over time. The effect of dust absorption and radiation pressure                        ! 1/3,0.0
+"is seen in the difference between z1_norp_nodust, z1_norp, and z1.                   3𝑄 0",0.0
+"                                                                             𝑅S =                 ,                                                                       (4)",77.0
+"Of the three, z1_norp_nodust grows the largest – photoionization is                4𝜋𝑛2e 𝛼B",0.0
+"the only feedback mechanism, but there is no shielding from dust.",0.0
+"Adding dust (z1_norp) results in the smallest H ii region, by an order       for three densities (𝑛e = 102 , 103 , 104 cm−3 ), using an ionizing pho-",0.0
+"of magnitude, as now there are dust grains which attenuate the ion-          ton production rate 𝑄 0 = 8 × 1050 s−1 , which is the time-average",0.0
+izing photons. Enabling radiation pressure (z1) gives a result in the        rate for the longest-running model (z1_norp_nodust). The canonical,0.0
+"middle, showing that the additional pressure component from dust             temperature 104 K is used for the ionized sound speed 𝑐 I , and the case",0.0
+is not effective enough to counter the stunting caused by absorption.        B recombination coefficient 𝛼B = 2.7 × 10−13 cm3 s−1 . The Spitzer,0.0
+z0.5 has practically the same amount of ionized mass and volume as           profiles are not meant to be exactly representative of the modelled H ii,0.0
+"z1_norp_nodust, and z0.1 has the most of all the models. For illus-          regions, but they show that the variation between different models is",0.0
+"trative purposes, we also plot Spitzer (1978) expansion profiles as a        similar to the variation between orders of magnitude in density.",0.0
+"                                                                                                                                                MNRAS 000, 1–13 (2020)",144.0
+avr_spaces,23.705128205128204
+6                  A. A. Ali,0.0
+                                     neutral gas                                                                                        Z/Zsol,37.0
+                                                                                                                 2         0.5           1 (no RP)                   hydro,113.0
+"                                                Z/Zsol                                                           1         0.1           1 (no RP, no dust)",48.0
+                       15              2           1 (no RP)                                              10,23.0
+"                                       1           1 (no RP, no dust)                                                MW",39.0
+                                       0.5         hydro                                                             LMC,39.0
+                       10              0.1                                                                                                                    RSGC03,23.0
+    mean vr (km s 1),4.0
+                       5                                                                                                                               NGC 2136,23.0
+                                                                                                                                                ChiPer          RSGC02,144.0
+                       0,23.0
+                                                                                  half-mass radius (pc),82.0
+                                                                                                                                 ONC               hPer,129.0
+                                                                                                                                             Quintuplet,141.0
+                        5                                                                                                                                              R136,24.0
+                                                                                                                                                              RSGC01,158.0
+                       10                                                                                                              DSB2003,23.0
+                                                                                                                                                              Wd 1,158.0
+                        0.0    0.5   1.0       1.5        2.0        2.5                                                                     Wd 2,24.0
+                                       time (Myr)                                                         1                                    NGC 3603,39.0
+                                     ionized gas,37.0
+                                                                                                                                             Trumpler 14,141.0
+                       15                                                                                                                             Arches,23.0
+                       10                                                                                  103                               104                              105,23.0
+                                                                                                                                 total stellar mass (Msol),129.0
+    mean vr (km s 1),4.0
+                       5,23.0
+                                                                                  Figure 6. Cluster half-mass radius vs total stellar mass (which increases with,82.0
+"                       0                                                          time). For comparison, the plot also shows young massive clusters observed",23.0
+                                                                                  in the Milky Way and LMC (Portegies Zwart et al. 2010).,82.0
+                        5,24.0
+                                                                                  sink particles form inside dense clumps and ionize them from the,82.0
+"                       10                                                         inside, creating new compact H ii regions. These expand and break",23.0
+"                                                                                  out, joining up with H ii regions formed by neighbouring sinks.",82.0
+                        0.0    0.5   1.0       1.5        2.0        2.5             The neutral gas is infalling for the majority of the runtime for all,24.0
+                                       time (Myr)                                 models except z0.1 and (in the final 0.5 Myr) z0.5. Compared to the,39.0
+"                                                                                  hydrodynamics-only run, the feedback models have slightly higher",82.0
+"Figure 5. Mass-weighted mean radial velocity in a sphere of radius 10 pc          velocities (i.e. if gas is flowing inwards, it is doing so more slowly).",0.0
+"around the simulation centre. Positive values indicate outflowing gas, negative   Furthermore, the gradients eventually turn positive, showing that",0.0
+values show infalling gas.                                                        feedback is accelerating the neutral gas too. The hydrodynamics-only,0.0
+                                                                                  model is the only one which shows the rate of infall continually in-,82.0
+"                                                                                  creasing. h𝑣 𝑟 i for z1_hydro reaches a minimum value of −5.9 km s−1 ,",82.0
+   We calculate the mass-weighted mean velocity in the radial direc-,3.0
+                                                                                  while the lowest velocity among the feedback models is −2.8 km s−1,82.0
+"tion,",0.0
+"        Í                                                                         – this is reached by z1_norp, which retains a constant infall velocity",8.0
+"          𝑚 𝑖 v𝑖 · r̂                                                             over its lifetime. z0.1, the most outflowing model, reaches a velocity",10.0
+h𝑣 𝑟 i = 𝑖Í                                                      (5),0.0
+"            𝑖 𝑚𝑖                                                                  of +4.4 km s−1 . Overall, feedback does affect the kinematics of the",12.0
+"                                                                                  neutral gas, providing resistance against infall. However, z0.1 is the",82.0
+summing over cells 𝑖 with mass 𝑚 𝑖 and velocity 𝑣 𝑖 inside a radius of,0.0
+                                                                                  only model which exhibits neutral outflow for a significant period,82.0
+10 pc around the simulation origin. r̂ is the unit vector pointing away,0.0
+                                                                                  of the runtime. In addition to the support given by a higher thermal,82.0
+"from the origin. This is plotted in Fig. 5 for each model, separating out",0.0
+"                                                                                  pressure against gravitational infall, neutral structures can experience",82.0
+"the neutral and ionized gas components. In both components, higher",0.0
+                                                                                  a rocket effect when photoevaporated gas pushes off the surface (see,82.0
+"velocities belong to lower metallicities. Additionally, the two models",0.0
+"                                                                                  also Mellema et al. 1998, 2006; Arthur et al. 2011), providing an-",82.0
+without radiation pressure have smaller velocities than the other mod-,0.0
+                                                                                  other source of acceleration not present in the hydrodynamics-only,82.0
+"els, especially z1_norp (which has UV-attenuating dust and has the",0.0
+                                                                                  model.,82.0
+smallest H ii region). The ionized gas is accelerated radially outwards,0.0
+"for the entire duration of every model, with mean velocities reaching",0.0
+in excess of +10 km s−1 and still increasing as the models evolve.,0.0
+                                                                                  3.2 Star formation,82.0
+Velocities can be higher than the ionized sound speed as other dy-,0.0
+"namical mechanisms are involved, even in the ionization-only models               Our cluster-sink method allows particles to form and accrete on the",0.0
+"– the surfaces of dense, neutral material can be photoevaporated, and             fly, which is an improvement on our previous method of placing",0.0
+this newly ionized gas can be accelerated to ∼30 km s−1 (see also Ali             individual stars manually at one pre-defined moment in time. The,0.0
+"et al. 2018, where we show this in a lower-mass cloud with a single               drawback is that a particular sink’s stars are all lumped together into",0.0
+"massive star). An improvement on our previous models is that new                  a point – instead of having many 1000s of real star particles, we have",0.0
+"MNRAS 000, 1–13 (2020)",0.0
+avr_spaces,42.0
+                                                                             The growth of H ii regions around massive stars                                                                7,77.0
+∼100 ‘cluster’ particles. While this provides a clear computational                                                                         time (free-fall time),0.0
+                                                                                                                        0.0   0.2     0.4           0.6          0.8          1.0   1.2,120.0
+"advantage, it makes it difficult to separate the ensemble of particles",0.0
+"into several well-defined, distinct clusters, and to analyse individual",0.0
+"clusters by themselves. For this reason, our analysis treats the whole",0.0
+                                                                                                                   10   1,115.0
+system as one cluster.,0.0
+                                                                                 sink accretion rate (Msol yr 1),81.0
+   Fig. 6 shows the evolution of the cluster half-mass radius 𝑟 hm vs,3.0
+"total stellar mass for each model. In this case, ‘cluster’ means all",0.0
+"sinks which are populated with at least one star, and the relevant                                                 10   2",0.0
+mass is the stellar mass not the sink mass (see section 3.2 for details,0.0
+about the sink particle method). 𝑟 hm is the radius from the centre of,0.0
+"mass which encloses half the total mass. For comparison, we also                                                   10   3",0.0
+show data for young massive clusters (YMCs) in the Milky Way                                                                                        Z/Zsol,0.0
+                                                                                                                                        2              1 (no RP),136.0
+"and Large Magellanic Cloud from Portegies Zwart et al. (2010). All                                                                      1              1 (no RP, no dust)",0.0
+the clusters lie between the Milky Way YMCs. With the exception                                                                         0.5            hydro,0.0
+                                                                                                                   10   4               0.1,115.0
+"of z0.1, all the models are indistinguishable from one another and                                                      0.0     0.5        1.0                 1.5          2.0      2.5",0.0
+"become more compact as mass (i.e. time) increases, especially as they                                                                             time (Myr)",0.0
+approach 104 M . Similar behaviour is seen by Liow & Dobbs (2020),0.0
+"in models of cloud-cloud collisions which do not include feedback,                                                                          time (free-fall time)",0.0
+                                                                                                                        0.0   0.2     0.4          0.6          0.8          1.0    1.2,120.0
+where massive clusters contract once gravity becomes important.,0.0
+"The results imply that variations in metallicity, dust absorption, and",0.0
+                                                                                                                   0.20,115.0
+"radiation pressure do not guarantee changes in cluster compactness,",0.0
+even though the H ii regions produced by each model are of different,0.0
+                                                                                     star formation efficiency,85.0
+"sizes and masses (as shown in Fig. 4) – for example, z1_norp has                                                   0.15",0.0
+"the smallest H ii region, while both z1_norp_nodust and z0.5 have",0.0
+"an ionized volume which is an order of magnitude larger. That is,",0.0
+a larger H ii region does not guarantee a larger cluster. z0.1 is an                                               0.10,0.0
+outlier as its cluster does not contract as much as the other feedback,0.0
+"models, which all follow the same relationship as each other. This is",0.0
+"because the neutral gas has a higher mean velocity, which is directed                                              0.05",0.0
+radially outwards for z0.1 instead of radially inwards as in the other,0.0
+models (see Fig. 5). Since the turnover from infall to outflow occurs                                              0.00,0.0
+"relatively early in the evolution (by 𝑡 = 1 Myr = 0.5 h𝑡 ff i), this halts                                            0.0       0.5         1.0             1.5             2.0     2.5",0.0
+the collapse of the gas and hence the sinks – the turnover happens                                                                                time (Myr),0.0
+too late (or not at all) for the other models. The hydrodynamics-only,0.0
+"calculation is shifted to the right as it accretes more mass, due to the       Figure 7. Sink accretion rate (top) and star formation efficiency (bottom).",0.0
+lack of pressure support from feedback and the accelerating rate of,0.0
+neutral-gas infall.,0.0
+                                                                              the differences between the feedback and hydrodynamics runs are,78.0
+"   Fig. 7 shows the total accretion rate summed over all sink particles,",3.0
+"                                                                              modest, with the hydrodynamics model having approximately 1.5 to",78.0
+                                                                              2 times greater SFE. Higher metallicity results in higher accretion,78.0
+                ∑︁ Δ𝑀,16.0
+"𝑀¤ sink,tot =        sink",0.0
+"                                                                      (6)     rates and SFEs, although we stress the deviation at this stage is",70.0
+                    Δ𝑡                                                        marginal.,20.0
+where Δ𝑡 is the hydrodynamical time step. The result is processed,0.0
+through a 3𝜎 Gaussian filter to smooth some of the variation and              3.3 Pressure contributions,0.0
+show the trend more clearly. Fig. 7 also shows the star formation,0.0
+"efficiency over all sink particles relative to the initial cloud mass,        In this section, we calculate the radiation pressure as the magnitude",0.0
+         Í                                                                    of the radiative force per unit area,9.0
+            𝑀∗,12.0
+SFE = 5                                                                (7)    𝑃rad = |f rad |Δ𝑥                                                                                            (8),0.0
+        10 M,8.0
+                                                                              where f rad is the force per unit volume as calculated in the MCRT,78.0
+"Sink accretion rates lie around 10−2 M yr−1 for the majority of the           step, and Δ𝑥 is the cell size. The thermal pressure is given by the",0.0
+"runtime, with the hydrodynamics-only run being consistently higher            ideal gas equation of state",0.0
+than the feedback models by a factor of a few to 10 at most. The,0.0
+SFE does not exceed 20 per cent within a free-fall time except for                                                  𝜌𝑘 B𝑇,0.0
+                                                                              𝑃gas =                                                                                                       (9),78.0
+the hydrodynamics-only model. The different metallicities cannot be                                                 𝜇𝑚 H,0.0
+"easily distinguished, although they show signs of deviating from each         where 𝜌 is mass density, 𝑘 B is Boltzmann’s constant, 𝑇 is tempera-",0.0
+"other approximately 0.6 h𝑡ff i after the first massive star is formed. Of     ture, 𝜇 is the mean molecular weight, and 𝑚 H is the hydrogen mass.",0.0
+"the models which run the longest, z1_norp (dashed line) has a higher          Fig. 8 shows a zoomed-in snapshot of the z1 model, plotting the",0.0
+"SFE than z1_norp_nodust (dotted line) – 0.2 vs 0.15. The former has           mean 𝑃rad along the line of sight, the mean 𝑃gas , and the ratio of",0.0
+a smaller H ii region (Fig. 4) and smaller radial expansion velocities        the means. This focuses on the inner 7 pc around the cluster centre,0.0
+"both for ionized gas and neutral gas (Fig. 5), meaning more mass can          of mass at 𝑡 = 1.47 Myr. These projections are analogues of what",0.0
+"funnel into sink particles, creating more stars; the sink accretion rate      can be inferred from observations (such as in Lopez et al. 2011; Pel-",0.0
+for this model is higher by about a factor of 10 at late times. Overall       legrini et al. 2011; although see caveats in section 4.1). The region,0.0
+"                                                                                                                                                                     MNRAS 000, 1–13 (2020)",165.0
+avr_spaces,21.0126582278481
+8       A. A. Ali,0.0
+            log[ (g cm 2)]                           log[Prad (dyn cm 2)]                   log[Pgas (dyn cm 2)]                     log[Prad/Pgas],12.0
+                                       0.0                                      9.0                                      9.0                                 1.00,39.0
+                                                                                9.5                                      9.5                                 0.75,80.0
+                                         0.5                                                                                                                 0.50,41.0
+                                                                                10.0                                     10.0,80.0
+                                                                                                                                                             0.25,157.0
+                                         1.0                                    10.5                                     10.5,41.0
+                                                                                                                                                             0.00,157.0
+                                                                                11.0                                     11.0                                  0.25,80.0
+                                         1.5,41.0
+                                                                                11.5                                     11.5                                  0.50,80.0
+                                                                                12.0                                     12.0                                  0.75,80.0
+                                         2.0,41.0
+                       5 pc                                                                                                                                    1.00,23.0
+Figure 8. Zoomed-in snapshot showing a radiation pressure-dominated region in the z1 model at 𝑡 = 1.47 Myr. 𝑃rad and 𝑃gas are the mean values integrated,0.0
+"along the line of sight; the final frame is the ratio of the mean pressures. Images are centred on the cluster centre of mass (shown with an ×), with sink particle",0.0
+"positions plotted as circles (using the same colour scheme as Fig. 2). These projections are integrals along the 𝑦-axis, not the 𝑧-axis as in Figs. 2 and 3.",0.0
+"is, on the whole, dominated by the thermal pressure from ionization.                  4 DISCUSSION",0.0
+Radiation pressure is only significant near the sink particles. For ex-,0.0
+"ample, the figure shows an area in the H ii region which is dominated                 4.1 Comparison of pressures with observations",0.0
+"by radiation pressure, to the bottom right of the centre of mass (the",0.0
+"                                                                                      In this subsection, we compare the pressure contributions with obser-",86.0
+cross symbol). This is where several sink particles are concentrated,0.0
+"                                                                                      vational studies of the LMC, SMC, and more recently of the Galactic",86.0
+"near a neutral, high-density clump. Additionally, a lone sink particle",0.0
+"                                                                                      Centre in the Milky Way. These regions have different metallicities,",86.0
+near the right edge of the frame is growing its own compact H ii,0.0
+"                                                                                      with 𝑍 ≈ 2 in the Galactic Centre, 0.5 Z in the LMC, and 0.2 Z in",86.0
+region and radiation-pressure bubble. To characterise these pressure,0.0
+                                                                                      the SMC (Russell & Dopita 1992; Deharveng et al. 2000). First we,86.0
+"hotspots and identify trends as a function of radius, we also calculate",0.0
+                                                                                      consider the different definitions used in the literature. Lopez et al.,86.0
+"radial averages of 𝑃gas , 𝑃rad , and the ratio 𝑃rad /𝑃gas . To do this, we",0.0
+"                                                                                      (2011, 2014) define the direct radiation pressure as",86.0
+"compute each quantity in every cell, bin it according to distance from",0.0
+"the origin, then find the median, first quartile, and third quartile in                             ∑︁ 𝐿",0.0
+                                                                                                            bol,108.0
+"each radial bin. This creates a series of concentric shells around the                𝑃dir (𝑟) =                 ,                                            (10)",0.0
+"origin, with average values being found for each shell. These results                                    4𝜋𝑟 2 𝑐",0.0
+are shown in Fig. 9.,0.0
+                                                                                      where the sum is over stars with bolometric luminosity 𝐿 bol at a,86.0
+   The origin of the first column of Fig. 9 is the first H ii region,3.0
+"                                                                                      projected distance 𝑟 away from the point of interest, and 𝑐 is the",86.0
+at 𝑡 = 0.43 Myr. The ionizing sources are the same in each model,0.0
+                                                                                      speed of light. The volume-averaged value is defined as,86.0
+"and have masses of 31.7, 27.8, and 18.7 M . The H ii region is",0.0
+"approximately 2 pc in radius. In the innermost radial bins, 𝑃rad /𝑃gas                            ∫",0.0
+                                                                                                      𝑃dir (𝑟) d𝑉    3𝐿 bol,102.0
+"has values around 10 for the z2 model, 3 for z1, 1 for z0.5, and                      h𝑃dir i =         ∫          =          .                               (11)",0.0
+                                                                                                           d𝑉        4𝜋𝑅  2𝑐,107.0
+"0.1 for z0.1. That is, radiation pressure dominates over (or is at least",0.0
+comparable to) the gas pressure for all but the lowest metallicity case.,0.0
+"This drops off with radius, with all metallicities having 𝑃rad /𝑃gas < 1              where 𝑅 is the radius of the H ii region (or aperture). McLeod et al.",0.0
+"by 0.7 pc.                                                                            (2019) and Barnes et al. (2020) use a similar expression, except they",0.0
+"   The origin of the second column of Fig. 9 is the cluster centre                    assume 𝐿 bol ≈ 𝑄 0 hℎ𝜈i, the rate of ionizing photons emitted by the",3.0
+of mass at 𝑡 = 1.22 Myr. 𝑃rad /𝑃gas is approximately constant in the                  source population multiplied by the mean SED energy. It is important,0.0
+"inner 5 pc, before tailing off at the ionization front. The median is                 to note that this does not have a dependence on gas/dust properties",0.0
+"just below 1 for z2, around 0.3 for z1, 0.1 for z0.5, and 0.03 for z0.1.              (density, opacity, metallicity, etc). Therefore, as noted by the authors,",0.0
+The smaller ratio at low metallicity is a caused by a combination of                  these expressions are strictly a property of the radiation field – they,0.0
+𝑃rad being smaller (lower dust-to-gas ratio) and 𝑃gas being higher                    show the radiative momentum flux at position 𝑟 given a luminos-,0.0
+(higher temperature).                                                                 ity which only decreases by geometric dilution. This is delivered,0.0
+"   In summary, radiation pressure can be important at sub-pc scales                   as momentum in the gas if radiation streams through an optically",3.0
+"near sink particles, while ionization becomes the dominant term fur-                  thin medium before getting absorbed at the position 𝑟. Beyond 𝑟,",0.0
+"ther out. On the cluster scale, radiation pressure is at best comparable              the deposited momentum would be further reduced by attenuation.",0.0
+"to the gas pressure (𝑍 > Z ), and at worst negligible (𝑍 = 0.1 Z ).                   Alternatively, radiation could leak out through holes in the density",0.0
+"For the z1 model, the total ionized mass and volume are larger when                   structure instead of interacting with gas at all. Determining this ob-",0.0
+radiation pressure is enabled compared to when it is switched off                     servationally is made more complicated by projecting stars and gas to,0.0
+"(see Fig. 4). This can be caused by the high 𝑃rad in the vicinity of                  2D. In short, this 𝑃dir measures the potential for a source to provide",0.0
+"sink particles clearing material away with a similar force as the ther-               momentum, not how much momentum is actually deposited in the",0.0
+"mal pressure from ionization. However, as explained in section 3.1,                   gas. Without accounting for density, it is possible that 𝑃dir is being",0.0
+"a more effective way of producing a larger H ii region is to remove                   overestimated in the observations, particularly for larger radii/optical",0.0
+"the dust altogether; even though this removes the source of radia-                    depths, as 𝑃dir is propagating as ∝ 𝑟 −2 instead of ∝ 𝑟 −2 e−𝜏 (𝑟 ) . Pel-",0.0
+"tion pressure, it means more ionizing photons are absorbed by gas                     legrini et al. (2011) use a different method, carrying out a grid of",0.0
+rather than processed away by dust – feedback is more efficient when                  cloudy (Ferland et al. 1998) photoionization models for varying po-,0.0
+photons are ionizing gas instead of imparting momentum to dust.                       sitions 𝑟 and densities 𝑛H (keeping 𝑄 0 fixed). Therefore instead of,0.0
+"MNRAS 000, 1–13 (2020)",0.0
+avr_spaces,27.41025641025641
+                                                                                          The growth of H ii regions around massive stars                            9,90.0
+                                             origin = first HII region (t=0.43 Myr)                origin = cluster COM (t=1.22 Myr),45.0
+                                                                              Z/Zsol,78.0
+                                  10   20                                    2          0.5,34.0
+                                                                             1          0.1,77.0
+                                  10   21,34.0
+            density (g cm 3)      10   22,12.0
+                                  10   23,34.0
+                                  10   24,34.0
+                                                                          Pgas for Z/Zsol,74.0
+                                  10    9                                    2           0.5,34.0
+                                                                             1           0.1,77.0
+                                  10   10,34.0
+            pressure (dyn cm 2),12.0
+                                  10   11,34.0
+                                  10   12,34.0
+                                            Prad for Z/Zsol,44.0
+                                               2           0.5,47.0
+                                               1           0.1,47.0
+                                  10 13,34.0
+                                   100,35.0
+                                                                              Z/Zsol,78.0
+                                                                             2          0.5,77.0
+                                                                             1          0.1,77.0
+                                       10,39.0
+                                       1,39.0
+            Prad/Pgas,12.0
+                                    0.1,36.0
+                                   0.01,35.0
+                                  0.001                     1                  10                               1                        10,34.0
+                                                                 r (pc)                                               r (pc),65.0
+"Figure 9. Radial profiles of density, gas thermal pressure 𝑃gas , radiation pressure 𝑃rad , and the ratio 𝑃rad /𝑃gas . Points show the median value in each radial bin.",0.0
+Filled regions show the first and third quartiles in the bin. The origin for the left-hand column is the first massive-star H ii region. The right-hand column has the,0.0
+origin at the cluster centre of mass.,0.0
+"                                                                                                                                          MNRAS 000, 1–13 (2020)",138.0
+avr_spaces,43.72222222222222
+10        A. A. Ali,0.0
+"equation (10), they have                                                lations and using the observational methodology on those outputs. In",0.0
+"                       !                                                summary, our work is broadly in agreement with the observational",23.0
+                𝑄0               𝐿,16.0
+𝑃dir (𝑟) =       2,0.0
+"                         𝑛H hℎ𝜈i bol                               (12) results – if radiation pressure is the dominant feedback mechanism,",25.0
+"             4𝜋𝑟 𝑐𝑛H             𝐿 ion                                  this occurs at small scales, while the thermal pressure dominates on",13.0
+where the term in brackets is the best-fitting output of the photoion-  larger scales.,0.0
+"ization models, and 𝐿 ion is the ionizing luminosity. This does take",0.0
+into account some of the density and positional information of the,0.0
+                                                                        4.2 Comparison with theory,72.0
+source and H ii region.,0.0
+"   With these caveats, we can compare with the trends found by Lopez    Our star formation efficiency results are almost the same for each",3.0
+"et al. (2011) (equation 10) and Pellegrini et al. (2011) (equation 12)  metallicity, although it is possible they may diverge were the models",0.0
+who both observed 30 Doradus in the LMC and computed pressure           to be evolved for longer. Fukushima et al. (2020) did find differences,0.0
+ratios at multiple points inside the region. Both studies found that    as a function of metallicity in their models of photoionization and,0.0
+"the direct radiation pressure was greater than or comparable to the     radiation pressure at 𝑍/Z = 1, 0.1, and 0.01. They found lower",0.0
+"ionized gas pressure in the inner region, but was less important fur-   SFEs at lower metallicities, attributing this to the greater disruption",0.0
+"ther out, by up to an order of magnitude. However, they disagree        at higher temperature. For a similar surface density as our model, the",0.0
+"about the distances involved – Pellegrini et al. say radiation pressure different metallicities showed SFEs of around 20 per cent at 1 Z ,",0.0
+"dominated the inner 10 pc, while this is closer to 70 pc for Lopez      10 per cent at 0.1 Z , and 3 per cent at 0.01 Z . The SFE was set by",0.0
+et al.. The maximum of 𝑃dir /𝑃gas was around 3 for Pellegrini et al.    photoionization – the fiducial model with both mechanisms was the,0.0
+"and 10 for Lopez et al.; the discrepancies may be attributed to dif-    same as the model with only photoionization, while the model with",0.0
+"ferences in the method. Compared with our models, 30 Doradus is         only radiation pressure had a greater SFE by a factor of 4 (a more",0.0
+an extreme example containing stars with higher luminosities and        drastic variation than we find).,0.0
+effective temperatures (thus more energetic spectra). This makes the       Kim et al. (2018) also found that radiation pressure was secondary,0.0
+                                               4 . The ratio 𝑃 /𝑃,47.0
+"radiation pressure larger, as 𝑃dir ∝ 𝐿 bol ∝ 𝑇eff                       to photoionization in their parameter study of GMC mass and surface",0.0
+                                                               dir gas,63.0
+"is similarly affected, as the ionized gas temperature 𝑇 does not scale  density. In particular, radiation pressure started to become important",0.0
+"significantly with 𝑇eff (and 𝑃gas ∝ 𝑇).                                 above 200 M pc−2 (for reference, our cloud is 240 M pc−2 ). In",0.0
+"   A later study by Lopez et al. (2014) examined 32 H ii regions in     general, lower SFEs were reached by photoionization-only models",3.0
+"the LMC and SMC using volume-averaged pressures (equation 11).          compared to radiation pressure-only runs, and combined-feedback",0.0
+"They found that the ionization pressure was the dominant term,          models were slightly lower; around this surface density, the SFEs",0.0
+while the direct radiation pressure was up to two orders of mag-        were around 20 to 40 per cent. It should be noted that Kim et al.,0.0
+"nitude smaller (∼ few × 10−12 dyn cm−2 ). These results were con-       convert 100 per cent of the sink mass to stars, while we limit this to",0.0
+"sistent across H ii region sizes between 10 and 100 pc. McLeod et al.   30 per cent. As in our models, the ratio between the hydrodynamics",0.0
+(2019) observed LMC H ii regions with higher angular resolution         and feedback SFE was around 0.5.,0.0
+"and identified younger, more compact sub-regions (down to 3 pc).           Howard et al. (2017) also carried out combined photoionization-",0.0
+"They reached similar conclusions to Lopez et al. (2014), although       radiation pressure simulations. They saw SFEs around 16 to 21 per",0.0
+"values of h𝑃dir i were even smaller (by a factor of 10) which they at-  cent in GMCs between 104 and 106 M , which are only slightly",0.0
+tribute to the method being dependent on morphology. Barnes et al.      higher than the results we find here (albeit their simulations are,0.0
+(2020) examined H ii regions in the super-solar metallicity of the      evolved for a longer fraction of the free-fall time). The reductions in,0.0
+Central Molecular Zone (CMZ) of the Milky Way. The authors note         the SFE compared with hydrodynamics-only runs were 20 to 50 per,0.0
+"that the CMZ has higher ambient pressures than the LMC/SMC,             cent, which are also exhibited by longer-running models in our set of",0.0
+which would affect the expansion of the H ii region and the point       simulations. Their star formation method and definition of the SFE,0.0
+"where pressure equilibrium between ionized gas and neutral gas is       are similar to ours, perhaps making this a more direct comparison",0.0
+reached (see Raga et al. 2012 for the theoretical description). They    than with Kim et al. (2018). Howard et al. (2018) also applied the,0.0
+"used equation (11) which is not metallicity-dependent, but the ther-    two mechanisms in a 107 M cloud at 𝑍/Z = 1 and 0.1. Radiation",0.0
+"mal gas pressure (and hence the ratio between them) is, as 𝑃gas ∝ 𝑇.    pressure drove an outflow bubble around the central cluster, but only",0.0
+"For a sample of H ii regions up to a few pc in size, they found a trend in the solar metallicity cloud. On those scales, photoionization was",0.0
+"with radius showing the direct radiation pressure was dominant up       insignificant, with the SFE being the same as the hydrodynamics",0.0
+"to 0.1 pc, beyond which the ionization pressure became important.       model when radiation pressure was switched off. They found the",0.0
+"The largest ratios were reached on the smallest scales within Sgr B2,   SFE at 0.1 Z was higher than the solar model by a factor of 4,",0.0
+"with 𝑃dir /𝑃gas ≈ 10.                                                   which is the opposite trend to Fukushima et al. (2020). However,",0.0
+   A final note can be made on the role of the indirect radiation       Howard et al. only emitted radiation from sink particles once they,3.0
+"pressure. Although our models do include both components, they          exceeded 104 M , and this could affect the evolution at early times.",0.0
+can not be disentangled explicitly as we track the net momentum            The right-most panel of Fig. 8 shows a region of high radiation,0.0
+"change in each cell, not the momentum transferred with each photon      pressure where gas is accelerated in the cells around a dense group",0.0
+"interaction event – in the notation of the observational papers, our    of sink particles. This creates a cavity in the ionized gas at this",0.0
+"𝑃rad = 𝑃dir + 𝑃IR . The observational studies which calculate both      location, comparable to the descriptions by Mathews (1967) and",0.0
+components show one of them being much larger than the other.           Draine (2011). It should be noted that dust is dynamically well-,0.0
+"Lopez et al. (2014) found 𝑃IR ∼ 0.1𝑃gas (∼ few × 10−11 dyn cm−2 ),      coupled to the gas in our numerical scheme. Taking into account",0.0
+"except for two sources where they were comparable, and 𝑃IR  𝑃dir .     separate dust dynamics can result in a dust cavity with variations",0.0
+"Conversely, Lopez et al. (2011) found 𝑃IR  𝑃dir . Therefore, it        in dust-to-gas ratio and grain size distribution, as well as shallower",0.0
+"seems reasonable to compare our 𝑃rad to whichever component is          gradients in gas density (Akimkin et al. 2015, 2017; Ishiki et al.",0.0
+dominant for a particular region. A more analogous comparison           2018).,0.0
+could be made by computing synthetic observations from our simu-           Variation in the initial conditions between simulations clearly adds,0.0
+"MNRAS 000, 1–13 (2020)",0.0
+avr_spaces,3.8285714285714287
+                                                                          The growth of H ii regions around massive stars                          11,74.0
+complexity when trying to make direct comparisons – the structure            tween them. As these quantities are used to observationally constrain,0.0
+of the density and velocity before stars form and feedback initiates         the relative importance of different feedback mechanisms (e.g. as a,0.0
+"will affect cloud evolution. In addition to mass, average density, and       function of radius), it is necessary for simulations to provide accurate",0.0
+"radial dependence of density, different models use different turbulent       results. Our key findings are:",0.0
+velocity fields. The effects of this were investigated by Geen et al.,0.0
+                                                                                 (i) lower-metallicity H ii regions have higher temperatures and,81.0
+"(2018), who carried out a suite of models with photoionization feed-",0.0
+                                                                             therefore expand faster. This is because metal forbidden lines are the,77.0
+"back, varying the velocity structure and hence final cloud length and",0.0
+                                                                             dominant cooling mechanism for ionized gas. Temperatures range,77.0
+filamentary structure. Separately they varied the random sampling,0.0
+                                                                             from 5.6 × 103 K at 2 Z to 17 × 103 K at 0.1 Z,77.0
+of the IMF in the star formation prescription. Resulting SFEs varied,0.0
+                                                                                 (ii) feedback disperses ionized gas and provides support against,81.0
+"between 6 and 23 per cent, showing that a relatively large margin",0.0
+                                                                             gravitational infall for neutral gas. Ionized gas is accelerated outwards,77.0
+of error can be caused by the model setup and not just the feedback,0.0
+                                                                             for the entire duration of each model – the mass-weighted mean,77.0
+"physics. In the context of those results, our work would imply that",0.0
+"                                                                             expansion velocity, h𝑣 𝑟 i, approaches +15 km s−1 by the end of the",77.0
+variations in metallicity are not as important as other initial condi-,0.0
+                                                                             simulations. Neutral gas has h𝑣 𝑟 i directed inwards for most of the,77.0
+tions such as morphology when it comes to setting the star formation,0.0
+                                                                             evolution. The pure hydrodynamics run is the only model where infall,77.0
+efficiency.,0.0
+"                                                                             accelerates, reaching h𝑣 𝑟 i = −5.9 km s−1 . For the feedback models,",77.0
+   Radial velocities for Kim et al. (2018) were between +18 and,3.0
+                                                                             the most negative h𝑣 𝑟 i is −2.8 km s−1 – the velocity either stabilises,77.0
+"+26 km s−1 for ionized gas, and between +5 and +15 km s−1 for",0.0
+                                                                             or turns into outflow. This happens in the first Myr (0.5 h𝑡 ff i) at,77.0
+"neutral gas. The magnitudes are similar to our results, particularly for",0.0
+"                                                                             0.1 Z , which by the end of its runtime has neutral gas flowing out",77.0
+"the lowest metallicity model, and are consistent with the rocket effect",0.0
+                                                                             at +4.4 km s−1,77.0
+"(Oort & Spitzer 1955; Mellema et al. 1998, 2006; Arthur et al. 2011).",0.0
+                                                                                 (iii) switching off radiation pressure results in a smaller H ii re-,81.0
+The fact that feedback in our clouds must first overcome infall could,0.0
+                                                                             gion than the fiducial model with both photoionization and radiation,77.0
+be due to the initial radial density profile – Kim et al. use clouds with,0.0
+                                                                             pressure (at solar metallicity),77.0
+"uniform density, while ours are centrally concentrated. The radiation",0.0
+"                                                                                 (iv) however, switching off radiation pressure and removing dust",81.0
+pressure-only model by Tsang & Milosavljević (2018) shows infall,0.0
+                                                                             results in an H ii region larger than the fiducial one. This is because,77.0
+"being stabilised by feedback to a near-constant velocity, while the",0.0
+                                                                             UV photons are absorbed by dust grains and reprocessed to lower,77.0
+"hydrodynamics run collapses at an accelerating pace. Again, the",0.0
+"                                                                             energies, diluting the ionizing flux. In terms of H ii region size, the",77.0
+"initial conditions differ, as Tsang & Milosavljević use a turbulent",0.0
+                                                                             growth caused by radiation pressure is not enough to completely,77.0
+"box with 100 times more mass and 30 times the density of our cloud,",0.0
+                                                                             offset the stunting caused by UV absorption. This highlights the,77.0
+so the infall velocities were also faster – inside a 1 pc radius around,0.0
+                                                                             importance of including dust radiative transfer in models of pho-,77.0
+"the central cluster, this approached −100 km s−1 after a free-fall time",0.0
+"                                                                             toionization feedback, whether or not radiation pressure is included",77.0
+"in the hydrodynamics run, and around −20 km s−1 in the feedback",0.0
+                                                                                 (v) we calculate the radial dependence of each pressure compo-,81.0
+"case. Nonetheless, the qualitative behaviour matches what we find.",0.0
+"                                                                             nent. Radiation pressure dominates over the gas pressure, or is at",77.0
+   Our general results show that photoionization is the dominant,3.0
+"                                                                             least comparable to it, in the inner 0.7 parsec around sink particles",77.0
+"feedback mechanism driving the evolution of the cloud, while radi-",0.0
+                                                                             for 𝑍 > 1 Z . The maximum ratio of the radiation pressure to gas,77.0
+"ation pressure plays a secondary, local role. This is similar to the di-",0.0
+                                                                             thermal pressure 𝑃rad /𝑃gas ≈ 10 at 𝑍 = 2 Z,77.0
+chotomy between photoionization and momentum-only stellar winds,0.0
+"                                                                                 (vi) on the global scale, 𝑃rad /𝑃gas is around 1 at 2 Z , 0.3 at Z ,",81.0
+"as described by Dale et al. (2014), where the momentum injected by",0.0
+"                                                                             0.1 at 0.5 Z , and 0.03 at 0.1 Z .",77.0
+"winds created cavities around sink particles. Likewise, our SFEs are",0.0
+"higher than expected for the GMC scale, which could be attributed                Our results show that although radiation pressure is less impor-",0.0
+"to the initial conditions, or to the lack of other feedback mechanisms       tant than photoionization on large scales (∼ 10 pc), it still aids in the",0.0
+(such as energy-injecting stellar winds and supernovae which pro-            growth of H ii regions via radiation-pressure hotspots on small scales,0.0
+"duce hot gas around ∼ 106 K). While there is still uncertainty about         (< 1 pc), especially above solar metallicity. This can explain differ-",0.0
+"the impact of metallicity on star formation, its role in gas disper-         ences in the observations, where Lopez et al. (2014) and McLeod",0.0
+"sal is clearer – lower metallicity aids photoionization, while higher        et al. (2019) infer negligible radiation pressure in H ii regions larger",0.0
+"metallicity aids radiation pressure.                                         than 3 pc at low metallicity, whereas Barnes et al. (2020) estimate",0.0
+                                                                             radiation pressure is dominant on the sub-pc scale at high metallicity.,77.0
+"                                                                             To fully understand how the feedback processes affect the dynamics,",77.0
+                                                                             it is necessary to observe pressure contributions in young and com-,77.0
+5 SUMMARY AND CONCLUSIONS,0.0
+"                                                                             pact H ii regions, in addition to the older, larger H ii regions which",77.0
+We have modelled a 105 M turbulent cloud with different gas metal-           have until recently been the primary focus of observational stud-,0.0
+"licities, 𝑍/Z = 2, 1, 0.5, 0.1 and dust-to-gas ratio scaling linearly        ies. Furthermore, this shows the metallicity-dependence of radiation",0.0
+"with 𝑍. We included stellar feedback from cluster-sink particles in the      pressure must be taken into account, which is not yet apparent in the",0.0
+form of photoionization and radiation pressure. We also computed             literature.,0.0
+thermal balance to consistently calculate electron temperatures at               Our models specifically investigate the impact of metallicity and,0.0
+"the different metallicities. We used a Monte Carlo radiative transfer        dust in radiative feedback, so we keep the same initial cloud con-",0.0
+method which is able to capture the microphysical detail in each             ditions for all models. We do not take into account environmental,0.0
+feedback mechanism – photon packets spanning orders of magni-                factors such as variations in external pressure (Barnes et al. 2020) or,0.0
+tude in wavelength interact with gas and dust grains in the same             galactic-scale forces (Rey-Raposo et al. 2017; Bending et al. 2020),0.0
+"way as real photons, getting absorbed, re-processed, and scattered.          which can influence the evolution of H ii regions and GMCs. We",0.0
+This presents a key advancement compared to previous studies of              use the same turbulent velocity field for each model and the same,0.0
+stellar feedback in GMCs. The method provides robust calculations            ordering of stars which populate cluster-sink particles; varying ei-,0.0
+"of ionization pressure, radiation pressure, and hence the ratio be-          ther can affect cloud morphology and star formation measures (Geen",0.0
+"                                                                                                                             MNRAS 000, 1–13 (2020)",125.0
+avr_spaces,31.09090909090909
+12        A. A. Ali,0.0
+"et al. 2018). Finally, we neglect other feedback mechanisms such as          Ercolano B., Gritschneder M., 2011, MNRAS, 413, 401",0.0
+"stellar winds, which may be needed to attain lower star formation            Fall S. M., Krumholz M. R., Matzner C. D., 2010, ApJ, 710, L142",0.0
+"efficiencies.                                                                Federrath C., Banerjee R., Clark P. C., Klessen R. S., 2010, ApJ, 713, 269",0.0
+"                                                                             Ferland G. J., Korista K. T., Verner D. A., Ferguson J. W., Kingdon J. B.,",77.0
+"                                                                                  Verner E. M., 1998, PASP, 110, 761",82.0
+"                                                                             Fukushima H., Yajima H., Sugimura K., Hosokawa T., Omukai K., Mat-",77.0
+"ACKNOWLEDGEMENTS                                                                  sumoto T., 2020, MNRAS, 497, 3830",0.0
+"                                                                             Gavagnin E., Bleuler A., Rosdahl J., Teyssier R., 2017, MNRAS, 472, 4155",77.0
+"We thank the referee for an insightful report, and Tim Harries and           Geen S., Hennebelle P., Tremblin P., Rosdahl J., 2015, MNRAS, 454, 4484",0.0
+"Clare Dobbs for useful discussions. AAA acknowledges funding                 Geen S., Soler J. D., Hennebelle P., 2017, MNRAS, 471, 4844",0.0
+"from the European Research Council for the Horizon 2020 ERC                  Geen S., Watson S. K., Rosdahl J., Bieri R., Klessen R. S., Hennebelle P.,",0.0
+"consolidator grant project ICYBOB, grant number 818940. The cal-                  2018, MNRAS, 481, 2548",0.0
+"culations for this paper were performed on DiRAC Data Intensive              Harries T. J., 2015, MNRAS, 448, 3156",0.0
+"(DIaL) at the University of Leicester, and the DiRAC@Durham                  Harries T. J., Douglas T. A., Ali A., 2017, MNRAS, 471, 4111",0.0
+"facility managed by the Institute for Computational Cosmology.               Harries T. J., Haworth T. J., Acreman D., Ali A., Douglas T., 2019, Astronomy",0.0
+"DIaL was funded by BEIS capital funding via STFC capital grants                   and Computing, 27, 63",0.0
+"                                                                             Harris C. R., et al., 2020, Nature, 585, 357",77.0
+ST/K000373/1 and ST/R002363/1 and STFC DiRAC Operations,0.0
+"                                                                             Haworth T. J., Harries T. J., 2012, MNRAS, 420, 562",77.0
+grant ST/R001014/1. DiRAC@Durham was funded by BEIS capi-,0.0
+"                                                                             Haworth T. J., Harries T. J., Acreman D. M., Bisbas T. G., 2015, MNRAS,",77.0
+"tal funding via STFC capital grants ST/P002293/1, ST/R002371/1                    453, 2277",0.0
+"and ST/S002502/1, Durham University and STFC operations grant                Hollenbach D., McKee C. F., 1979, ApJS, 41, 555",0.0
+"ST/R000832/1. These form part of the STFC DiRAC HPC Facility                 Howard C. S., Pudritz R. E., Harris W. E., 2014, MNRAS, 438, 1305",0.0
+"(www.dirac.ac.uk). DiRAC is part of the National e-Infrastructure.           Howard C. S., Pudritz R. E., Harris W. E., 2016, MNRAS, 461, 2953",0.0
+"This paper used NumPy (Harris et al. 2020), Matplotlib (Hunter               Howard C. S., Pudritz R. E., Harris W. E., 2017, MNRAS, 470, 3346",0.0
+"2007), Pandas (McKinney 2010), and Astropy (Astropy Collabora-               Howard C. S., Pudritz R. E., Harris W. E., 2018, Nature Astronomy, 2, 725",0.0
+"tion et al. 2013).                                                           Hunter J. D., 2007, Computing in Science & Engineering, 9, 90",0.0
+"                                                                             Ishiki S., Okamoto T., Inoue A. K., 2018, MNRAS, 474, 1935",77.0
+"                                                                             Jones A. P., 2004, in Witt A. N., Clayton G. C., Draine B. T., eds, Astronomical",77.0
+"                                                                                  Society of the Pacific Conference Series Vol. 309, Astrophysics of Dust.",82.0
+DATA AVAILABILITY                                                                 p. 347,0.0
+"                                                                             Kim J.-G., Kim W.-T., Ostriker E. C., 2018, ApJ, 859, 68",77.0
+"The data underlying this paper will be shared on reasonable request          Krumholz M. R., Klein R. I., McKee C. F., 2007, ApJ, 656, 959",0.0
+"to the corresponding author.                                                 Krumholz M. R., Klein R. I., McKee C. F., Offner S. S. R., Cunningham A. J.,",0.0
+"                                                                                  2009, Science, 323, 754",82.0
+"                                                                             Kuiper R., Klahr H., Dullemond C., Kley W., Henning T., 2010, A&A, 511,",77.0
+                                                                                  A81,82.0
+REFERENCES,0.0
+"                                                                             Kurucz R., 1993, ATLAS9 Stellar Atmosphere Programs and 2 km/s grid.",77.0
+"Akimkin V. V., Kirsanova M. S., Pavlyuchenkov Y. N., Wiebe D. S., 2015,           Kurucz CD-ROM No. 13. Cambridge, Mass.: Smithsonian Astrophysical",0.0
+"     MNRAS, 449, 440                                                              Observatory, 13",5.0
+"Akimkin V. V., Kirsanova M. S., Pavlyuchenkov Y. N., Wiebe D. S., 2017,      Lada C. J., Lada E. A., 2003, ARA&A, 41, 57",0.0
+"     MNRAS, 469, 630                                                         Lanz T., Hubeny I., 2003, ApJS, 146, 417",5.0
+"Ali A. A., Harries T. J., 2019, MNRAS, 487, 4890                             Liow K. Y., Dobbs C. L., 2020, MNRAS, 499, 1099",0.0
+"Ali A., Harries T. J., Douglas T. A., 2018, MNRAS, 477, 5422                 Lopez L. A., Krumholz M. R., Bolatto A. D., Prochaska J. X., Ramirez-Ruiz",0.0
+"Arthur S. J., Henney W. J., Mellema G., de Colle F., Vázquez-Semadeni E.,         E., 2011, ApJ, 731, 91",0.0
+"     2011, MNRAS, 414, 1747                                                  Lopez L. A., Krumholz M. R., Bolatto A. D., Prochaska J. X., Ramirez-Ruiz",5.0
+"Asplund M., Grevesse N., Sauval A. J., Scott P., 2009, ARA&A, 47, 481             E., Castro D., 2014, ApJ, 795, 121",0.0
+"Astropy Collaboration et al., 2013, A&A, 558, A33                            Lucy L. B., 1999, A&A, 344, 282",0.0
+"Barnes A. T., et al., 2019, MNRAS, 486, 283                                  Mathews W. G., 1967, ApJ, 147, 965",0.0
+"Barnes A. T., Longmore S. N., Dale J. E., Krumholz M. R., Kruĳssen J. M. D., Mathis J. S., Rumpl W., Nordsieck K. H., 1977, ApJ, 217, 425",0.0
+"     Bigiel F., 2020, MNRAS, 498, 4906                                       Matzner C. D., 2002, ApJ, 566, 302",5.0
+"Bate M. R., 2009, MNRAS, 392, 1363                                           McKinney W., 2010, in van der Walt S., Millman J., eds, Proceedings of",0.0
+"Bate M. R., 2019, MNRAS,                                                          the 9th Python in Science Conference. pp 56–61, doi:10.25080/Majora-",0.0
+"Bate M. R., Bonnell I. A., Bromm V., 2002, MNRAS, 332, L65                        92bf1922-00a",0.0
+"Bending T. J. R., Dobbs C. L., Bate M. R., 2020, MNRAS, 495, 1672            McLeod A. F., Dale J. E., Evans C. J., Ginsburg A., Kruĳssen J. M. D.,",0.0
+"Chabrier G., 2003, PASP, 115, 763                                                 Pellegrini E. W., Ramsay S. K., Testi L., 2019, MNRAS, 486, 5263",0.0
+"Choi J., Dotter A., Conroy C., Cantiello M., Paxton B., Johnson B. D., 2016, Mellema G., Raga A. C., Canto J., Lundqvist P., Balick B., Steffen W.,",0.0
+"     ApJ, 823, 102                                                                Noriega-Crespo A., 1998, A&A, 331, 335",5.0
+"Colín P., Vázquez-Semadeni E., Gómez G. C., 2013, MNRAS, 435, 1701           Mellema G., Arthur S. J., Henney W. J., Iliev I. T., Shapiro P. R., 2006, ApJ,",0.0
+"Crocker R. M., Krumholz M. R., Thompson T. A., Baumgardt H., Mackey               647, 397",0.0
+"     D., 2018, MNRAS, 481, 4895                                              Mignon-Risse R., González M., Commerçon B., Rosdahl J., 2020, A&A, 635,",5.0
+"Dale J. E., 2015, New Astron. Rev., 68, 1                                         A42",0.0
+"Dale J. E., Bonnell I. A., Clarke C. J., Bate M. R., 2005, MNRAS, 358, 291   Offner S. S. R., Klein R. I., McKee C. F., Krumholz M. R., 2009, ApJ, 703,",0.0
+"Dale J. E., Ercolano B., Bonnell I. A., 2012, MNRAS, 424, 377                     131",0.0
+"Dale J. E., Ngoumou J., Ercolano B., Bonnell I. A., 2014, MNRAS, 442, 694    Olivier G. M., Lopez L. A., Rosen A. L., Nayak O., Rieter M., Krumholz",0.0
+"Deharveng L., Peña M., Caplan J., Costero R., 2000, MNRAS, 311, 329               M. R., Bolatto A. D., 2020, arXiv e-prints, p. arXiv:2009.10079",0.0
+"Draine B. T., 2011, ApJ, 732, 100                                            Oort J. H., Spitzer Jr. L., 1955, ApJ, 121, 6",0.0
+"Draine B. T., Lee H. M., 1984, ApJ, 285, 89                                  Osterbrock D., Ferland G., 2006, Astrophysics of Gaseous Nebulae and Active",0.0
+"Draine B. T., et al., 2007, ApJ, 663, 866                                         Galactic Nuclei, 2nd edn. University Science Books",0.0
+"MNRAS 000, 1–13 (2020)",0.0
+avr_spaces,16.283783783783782
+                                                                          The growth of H ii regions around massive stars       13,74.0
+"Pellegrini E. W., Baldwin J. A., Ferland G. J., 2011, ApJ, 738, 34",0.0
+"Peters T., Banerjee R., Klessen R. S., Mac Low M.-M., Galván-Madrid R.,",0.0
+"    Keto E. R., 2010, ApJ, 711, 1017",4.0
+"Portegies Zwart S. F., McMillan S. L. W., Gieles M., 2010, ARA&A, 48, 431",0.0
+"Raga A. C., Cantó J., Rodríguez L. F., 2012, MNRAS, 419, L39",0.0
+"Rey-Raposo R., Dobbs C., Agertz O., Alig C., 2017, MNRAS, 464, 3536",0.0
+"Roman-Duval J., Jackson J. M., Heyer M., Rathborne J., Simon R., 2010,",0.0
+"    ApJ, 723, 492",4.0
+"Rosen A. L., Li P. S., Zhang Q., Burkhart B., 2019, ApJ, 887, 108",0.0
+"Russell S. C., Dopita M. A., 1992, ApJ, 384, 508",0.0
+"Sartorio N. S., Vandenbroucke B., Falceta-Goncalves D., Wood K., 2021,",0.0
+"    MNRAS, 500, 1833",4.0
+"Skinner M. A., Ostriker E. C., 2015, ApJ, 809, 187",0.0
+"Spitzer L., 1978, Physical Processes in the Interstellar Medium. Wiley-",0.0
+"    Interscience, New York, doi:10.1002/9783527617722",4.0
+"Tsang B. T.-H., Milosavljević M., 2018, MNRAS, 478, 4142",0.0
+"Vandenbroucke B., Wood K., 2019, MNRAS, 488, 1977",0.0
+"Walch S. K., Whitworth A. P., Bisbas T., Wünsch R., Hubber D., 2012,",0.0
+"    MNRAS, 427, 625",4.0
+"Zamora-Avilés M., et al., 2019, MNRAS, 487, 2200",0.0
+This paper has been typeset from a TEX/LATEX file prepared by the author.,0.0
+"                                                                                                             MNRAS 000, 1–13 (2020)",109.0
+avr_spaces,8.458333333333334

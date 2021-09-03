@@ -1,0 +1,784 @@
+text,space_num
+"                                                 Draft version January 5, 2021",49.0
+                                                 Typeset using LATEX twocolumn style in AASTeX63,49.0
+                                                                        Metastable Helium Absorptions with 3D Hydrodynamics and,72.0
+                                                                                     Self-Consistent Photochemistry II:,85.0
+"                                                                      WASP-107b, Stellar Wind, Radiation Pressure, and Shear Instability",70.0
+"                                                                                                       Lile Wang1 , Fei Dai2",103.0
+                                                                                                             ABSTRACT,109.0
+"                                                            This paper presents simulations of the metastable helium (He∗ ) observations of WASP-107b, so",60.0
+arXiv:2101.00045v1 [astro-ph.EP] 31 Dec 2020,0.0
+                                                         far the highest signal-to-noise ratio detection that is confirmed by three different instruments. We,57.0
+                                                         employ full 3D hydrodynamics coupled with co-evolving non-equilibrium thermochemistry and ray-,57.0
+"                                                         tracing radiation, predicting mass loss rates, temperature profiles, and synthetic He∗ line profiles and",57.0
+                                                         light curves from first principles. We found that a stellar wind stronger than solar is demanded by,57.0
+                                                         the observed heavily blueshifted line profile and asymmetric transit light curve. Contrary to previous,57.0
+"                                                         beliefs, we argue that radiation pressure can be important for Lyα observations but not He∗ . We",57.0
+                                                         found WASP-107b is losing mass at a rate of Ṁ ' 1.0 × 10−9 M⊕ yr−1 . Although Ṁ varies by,57.0
+"                                                         < 1 % given constant wind and irradiation from the host, shear instabilities still emerge from wind",57.0
+"                                                         impacts, producing ∼ 10 % fluctuations of He∗ transit depths over hour-long timescales. The common",57.0
+                                                         assumption that He∗ transit depth indicates the fluctuation of Ṁ is problematic. The trailing tail is,57.0
+"                                                         more susceptible than planet adjacency to the shear instabilities, thus the line profile is more variable",57.0
+"                                                         in the blue-shifted wing, while the transit light curve is more variable after mid-transit. We stress",57.0
+"                                                         the synergy between Lyα (higher altitudes, lower density) and He∗ (lower altitudes, higher density)",57.0
+"                                                         transit observations, particularly simultaneous ones, yield better understanding of planetary outflows",57.0
+                                                         and stellar wind properties.,57.0
+                                                         Keywords: planets and satellites: atmospheres — planets and satellites: composition — planets and,57.0
+                                                                   satellites: physical evolution — method: numerical,67.0
+                                                                    1. INTRODUCTION                                  have been made since then (e.g. Allart et al. 2018; Nort-,68.0
+                                                  The “He i 10830 Å line” or the “metastable helium                 mann et al. 2018; Salz et al. 2018; Kirk et al. 2020; Ninan,50.0
+                                               line” (He∗ line for short) transitions between the 23 S               et al. 2020).,47.0
+"                                               and the upper 23 PJ (J = 0, 1, 2) states are radiatively                 There is no surprise that WASP-107b was the first",47.0
+                                               decoupled from the ground state (for a magnetic dipole                exoplanet to show He∗ detection. The host is young,47.0
+                                               transition) and have slow spontaneous decay rates: A '                (∼ 600 Myr from gyrochronology) and active (chromo-,47.0
+"                                               1.3 × 10−3 s−1 (Drake 1971). The high cosmic abun-                    spheric activity index S = 0.89), expected to give out",47.0
+"                                               dance of helium, the absence of interstellar absorption               strong high-energy radiation that powers planetary pho-",47.0
+"                                               and the observability from the ground together enable                 toevaporative outflow. The host’s spectral type is K6,",47.0
+                                               the He∗ lines as a unique probe of atmospheric outflows               which is right at the sweet spot of EUV-FUV flux ra-,47.0
+                                               from exoplanets. The first secure detection of He∗ in                 tio that maximally favors the He∗ absorption (Oklopčić,47.0
+                                               transmission was made for WASP-107b with the Hub-                     2019; Paper I). The planet is puffy and susceptible to,47.0
+                                               ble Space Telescope (Spake et al. 2018). This detection               outflows: it has a mass of an icy giant (0.12 MJup ) but,47.0
+                                               rekindled decade-long interest in this transition (Seager             a radius closer to that of Jupiter (0.94 MJup ). The op-,47.0
+"                                               & Sasselov 2000; Turner et al. 2016; Oklopčić & Hirata              tical transit depth is ∼ 2.2 %, while the He∗ transit",47.0
+                                               2018); many more detections around other exoplanets                   depth is a whopping ∼ 7 %. The mean density of the,47.0
+"                                                                                                                     planet is only ∼ 0.19 g cm−3 , which is reminiscent of",117.0
+                                                                                                                     the anomalously low-density planets ”super-puffs” (e.g.,117.0
+"                                                 1   Center for Computational Astrophysics, Flatiron Institute,      Libby-Roberts et al. 2020; Chachan et al. 2020). Wang",49.0
+"                                                     New York, NY 10010; lwang@flatironinstitute.org",53.0
+                                                 2,49.0
+                                                                                                                     & Dai (2019) and Gao & Zhang (2020) proposed that,117.0
+"                                                     Division of Geological and Planetary Sciences,",53.0
+"                                                     California Institute of Technology, Pasadena, CA 91125",53.0
+                                                                                                                     “super-puffs” may appear inflated due to high-altitude,117.0
+                                                                                                                     dusts or hazes elevated by an outflowing atmosphere; the,117.0
+avr_spaces,60.264150943396224
+ 2,1.0
+"near-infrared HST observation (Kreidberg et al. 2018)       the first paper in the series, Wang, L. & Dai, F., submit-",0.0
+is indeed suggestive of high-altitude condensates par-      ted; Paper I hereafter). Starting from the observed stel-,0.0
+"tially muting the transmission features. WASP-107b          lar and planetary properties, and making assumptions",0.0
+is also dynamically interesting. Dai & Winn (2017)          of the high energy spectral energy distribution (SED) of,0.0
+"suspected the planet is on a polar orbit due to the         the host, we can predict the mass loss rate, the temper-",0.0
+"lack of repeating spot-crossing events. More recently,      ature profile, the ionization states and the various He∗",0.0
+"a Rossiter-McLaughlin measurement by Rubenzahl, R.          simulations of WASP-107b. We will also use WASP-",0.0
+"et al (in prep) confirmed this suspicion and thus de-       107b as a case study to investigate how stellar wind,",0.0
+mands a dynamically hot formation and evolution path-       radiation pressure and shear instability affect planetary,0.0
+way that may involve the non-transiting planet 107c         outflows and their observability.,0.0
+"(P ∼ 1100 days, M sin i ∼ 110 M⊕ ; Piaulet, C. et al.,         This paper is structured as follows: in §2, we will",0.0
+"submitted)                                                  briefly described our model and simulation setup. In §3,",0.0
+   These reasons render WASP-107b a unique and inter-       we present the fiducial model of WASP-107b that shows,3.0
+"esting system. The He∗ transits of WASP-107b have           remarkable agreement with observation. §4, we perturb",0.0
+been observed multiple times (Spake et al. 2018; Al-        the fiducial model in various parameters to investigate,0.0
+lart et al. 2018; Kirk et al. 2020). Its well-resolved line §6 summarize the paper and figure out prospective im-,0.0
+profile exhibits asymmetric shape skewing towards the       provements for the future.,0.0
+"blue-shifted wing, which suggests a comet-like tail. The",0.0
+line ratio of three different 23 PJ levels also seems to,0.0
+deviate from the simple quantum degeneracy ratio of                               2. METHODS,0.0
+1:3:5 (or 1:8 given that the two latters are not distin-                         2.1. Basic Setup,0.0
+guishable). Having been confirmed by different instru-,0.0
+                                                               Our numerical simulation suite was described in de-,63.0
+"ments (CARMENES; Keck/NIRSPEC), these features",0.0
+"                                                            tail in Paper I. For a brief re-cap, our simulation is car-",60.0
+are likely attributed to the morphology and kinematics,0.0
+                                                            ried in 3D with gravity of both the host star and the,60.0
+"of planetary outflows, rather than instrumental effects.",0.0
+"                                                            planet, and the effects of orbital motion including cen-",60.0
+   The He∗ dataset of WASP-107b potentially very re-,3.0
+                                                            trifugal and Coriolis forces. Our code computes ray-,60.0
+vealing and should be analyzed in detail. Two models,0.0
+                                                            tracing radiative transfer and non-equilibrium thermo-,60.0
+have been presented in the literature: the 1D isothermal,0.0
+                                                            chemistry simultaneously with hydrodynamics. For sim-,60.0
+model by Oklopčić & Hirata (2018) assumes the density,0.0
+"                                                            plicity, we assume circular orbit and that the planet",60.0
+and velocity profile of a Parker Wind (Parker 1958). The,0.0
+"                                                            is tidally locked, adopting a co-rotating planet-centric",60.0
+"model has to assume, rather than predict, the mass loss",0.0
+"                                                            frame. We focus on the upper layer of the atmosphere,",60.0
+"rate and temperature of the outflow. Moreover, 1D mod-",0.0
+                                                            including a quasi-isothermal layer assumed to have equi-,60.0
+els are unable to capture the full orbital dynamics and,0.0
+"                                                            librium temperature, and an outflowing region irradi-",60.0
+cannot produce a comet-like tail. The alternative model,0.0
+                                                            ated by high-energy photons. The boundary conditions,60.0
+is the EVaporating Exoplanets code (EVE; see Bourrier,0.0
+                                                            are set so that the observed mass and transit radius of,60.0
+et al. 2015; Allart et al. 2018). The lower layer (ther-,0.0
+                                                            the planet can be reproduced. We describe the high-,60.0
+mosphere) of this model is also a Parker Wind solution;,0.0
+                                                            energy spectral energy distribution (SED) of the host,60.0
+the upper layer is a Monte-Carlo particle simulations,0.0
+                                                            star with 6 characteristic energy bins: (1) 2 eV for the,60.0
+with He particles under the influence of planetary and,0.0
+                                                            near-infrared and optical bands; (2) 7 eV for far ultravi-,60.0
+stellar gravity and radiation pressure. As we will elabo-,0.0
+                                                            olet (FUV) photons (“soft FUV”; note that these pho-,60.0
+"rate later in this work, nevertheless, particle-based code",0.0
+                                                            tons can ionize He∗ ); (3) 12 eV for the Lyman-Werner,60.0
+may not be appropriate for simulating He∗ transits. The,0.0
+                                                            (“LW”) band FUV photons that photodissociate molec-,60.0
+authors of EVE acknowledged that the particle-based,0.0
+"                                                            ular hydrogen, (4) 20 eV for “soft” extreme ultraviolet",60.0
+treatment of radiation pressure accelerates the outflow,0.0
+                                                            (“soft EUV”) photons that ionize hydrogen but not he-,60.0
+way too quickly: they had to artificially decrease the,0.0
+"                                                            lium, (5) 40 eV for EUV and soft X-ray (“hard EUV”)",60.0
+stellar spectrum near the He∗ lines by a factor of ∼ 50,0.0
+"                                                            photons that ionize helium, and (6) 3 keV photons for",60.0
+to achieve reasonable agreement with the observations,0.0
+                                                            the X-ray. We make synthetic observations including,60.0
+of WASP-107b.,0.0
+                                                            He∗ line profiles and transit light curves in the vicinity of,60.0
+"   In this work, we applied to WASP-107b our model",3.0
+                                                            He∗ line. To further facilitate comparisons between ob-,60.0
+"that conducts 3D hydrodynamics, self-consistent ther-",0.0
+"                                                            servation and simulations, we compute summary         statis-",60.0
+"mochemistry, ray-tracing radiative transfer, and espe-                                                      R",0.0
+"                                                            tics such as the equivalent widths hWλ i ≡ ∆(λ) dλ,",60.0
+cially the processes that populate and destroy He∗ (see,0.0
+"                                                            the radial velocity shift of the absorption peak ∆vpeak ,",60.0
+avr_spaces,22.03529411764706
+                                                                                                                                                        3,152.0
+      Stellar Wind (vwind – vK)        Bow Shock          Stellar Wind (vwind – vK)      Bow Shock          Stellar Wind (vwind – vK)   Bow Shock,6.0
+                                     Contact Surface                                   Contact Surface                                Contact Surface,37.0
+                     Planet                                              Planet                                            Planet,21.0
+"                                Inner Sonic    ""Typical""                                          ""Typical""                                     ""Typical""",32.0
+                                  Surface       Outflow                                            Outflow                                       Outflow,34.0
+                                               Streamline                            Inner Sonic Streamline                                     Streamline,47.0
+                                                                             Reverse Surface,77.0
+                          Reverse Shock                                       Shock,26.0
+                                                                                        Outer Sonic Surface,88.0
+                                           vK                                                vK                               Sonic        vK,43.0
+                                          ΩK                                                ΩK                                           ΩK,42.0
+                 Outer Sonic Surface           Case A                                            Case B                      Surface            Case C,17.0
+Figure 1. Schematic diagrams (not to scale) of the interactions between a stellar wind and a planetary atmospheric outflow,0.0
+"(see also §2.2). In all panels, the host star resides to the left of the diagrams, and the planet’s linear Keplerian velocity points",0.0
+upwards within the paper plane (see the indicators of vK and ΩK at the lower-left corner of all panels). Subsonic regions are,0.0
+"illustrated by grey shades. Typical streamlines are indicated by thin solid lines with arrow heads. Shock fronts, including the",0.0
+"bow shocks and the reverse shock, are indicated by dash-dotted lines. Contact surfaces (contact discontinuities) are shown by",0.0
+"heavy solid lines. Dotted lines indicate the sonic critical surfaces. The left panel, marked as Case A, shows a typical case that",0.0
+"part of the the planet outflow experiences initial thermally driven acceleration, reverse shock deceleration (due to the stagnation",0.0
+"and deflection by the stellar wind), and final acceleration by expansion. Note that the outer sonic surface is connected to the",0.0
+"reverse shock, and any streamline crossing the outer sonic surface must go through the reverse shock front. The middle panel",0.0
+"presents Case B, which is qualitatively similar to Case A but has different topologies. The right panel presents another",0.0
+"typical Case C, which does not have a reverse shock: the planet outflow stays subsonic before the stagnation and deflection,",0.0
+and only become supersonic after it already escapes from the “trap” shaped by the stellar wind.,0.0
+and the full-width-half-maximum (FWHM) of the ab-                                      The regions of interactions between the stellar wind,0.0
+sorption line profile.                                                              and the planet outflow are illustrated by Figure 1. De-,0.0
+"   Specifically for WASP-107, Anderson et al. (2017) re-                            pending on whether the velocity already becomes su-",3.0
+ported a K6 host star with a mass of M∗ = 0.69 M and                                personic before being decelerated and deflected by the,0.0
+"a radius of R∗ = 0.66 R , and an effective temperature                              impinging stellar wind, a fluid element in the planet out-",0.0
+"of T∗,eff = 4430 K. Planet b orbits its host on a near-                             flow should go through the sonic critical surface twice",0.0
+"circular but polar orbit (Dai & Winn 2017, Piaulet, C.                              (part of streamlines in “Case A” and “Case B”) or once",0.0
+"et al, submitted; Rubenzahl, R. et al, submitted). The                              (the complement part of streamlines in Cases A and B,",0.0
+semi-major axis is a = 0.055 AU where the equilibrium                               and all streamlines in “Case C”). We note that a stream-,0.0
+temperature is Teq = 740 K; the transit light curve in-                             line in Cases A and B must go through the reverse shock,0.0
+dicates a small impact parameter (b = 0.07 Dai & Winn                               when and only when it crosses the sonic critical surface,0.0
+2017). WASP-107b has an optical transiting radius of                                twice. The first sound crossing occurs at smaller radii,0.0
+Rp ' 0.94 RJup and a mass Mp ' 0.12 MJup .                                          (“inner” sonic surface) as the fluid element is acceler-,0.0
+"                                                                                    ated by the thermal pressure gradient. However, as the",84.0
+"   2.2. Including Stellar Wind and Radiation Pressure                               upwind part is impinged by the stellar wind, the stream-",3.0
+   The He∗ observables of WASP-107b is highly sugges-                               line travels through a reverse shock and is decelerated to,3.0
+"tive of an outflow morphology similar to a comet-like                               subsonic. The fluid element then changes its direction,",0.0
+"tail, as the reader will find out shortly (§3.1, 3.2). We                           and become deflected to move in the night side. The con-",0.0
+"explore two possible mechanisms that may give rise to                               finement due to stellar wind then becomes weaker, and",0.0
+the comet-like tail: stellar wind and radiation pressure.                           the fluid element is allowed to expand like in a de Laval,0.0
+"For stellar winds, although realistic patterns of stellar                           nozzle before eventually becoming supersonic again at",0.0
+"winds could be very complicated, we take a very basic                               a second (“outer”) sonic surface. Other streamlines go",0.0
+"approach here. The stellar wind is injected as a hydro-                             through the inner sonic surface only, and never touches",0.0
+"dynamic flow in a simulation, with two velocity com-                                the outer sonic surface or the reverse shock front.",0.0
+ponents in the planet frame: (1) a radial component                                    Stellar winds impose more stringent Courant-,0.0
+"centered at the host star, and (2) a headwind due to                                Friedrichs-Lewy conditions: each model takes ∼ 51 hr to",0.0
+"orbital motion of the planet. The first component has                               run on a 40-core, 4-GPU computing node of the Popeye-",0.0
+the radial wind speed as a parameter; the second one is                             Simons Computing Cluster. To accelerate the conver-,0.0
+"set to be equivalent to the orbital velocity of the planet.                         gence of our simulations, in addition to the “adaptive",0.0
+avr_spaces,13.0
+ 4,1.0
+"coarsening” technique in Paper I, we also adopt a two-         Table 1. Properties of the fiducial model for WASP-107b",0.0
+"step scheme of simulation: (1) turn on hydrodynamics,",0.0
+"thermochemistry and radiative transfer, run the simu-                            Item                             Value",0.0
+lation for ∼ 15 τdyn until the model almost reaches the         Simulation domain,0.0
+quasi-steady state without stellar winds; (2) turn on the       Radial range                           10.21 R⊕ ≤ r ≤ 400 R⊕,0.0
+stellar wind and continue the simulation for & 200 τdyn         Latitudinal range                                       0≤θ≤π,0.0
+until the final quasi-steady state is reached. The dynam-       Azimuthal range                                         0≤φ≤π,0.0
+                                                                Resolution (Nlog r × Nθ × Nφ )                    144 × 128 × 64,64.0
+ical timescale for a T ∼ 104 K photoevaporative outflow,0.0
+around WASP-107b is estimated as τdyn ∼ 4.8 × 103 s:            Planet interior†,0.0
+                                                                Mrcb                                                     38.1 M⊕,64.0
+                                                  −3/2      hreff i                                                   10.6 R⊕,35.0
+         GMp                 3         Mp       T,9.0
+τdyn ∼           ∼  1.2 × 10   s ×                          .,0.0
+           c3s                       10 M⊕    104 K             Radiation flux [photon cm     −2,11.0
+                                                                                                 s−1 ],97.0
+                                                          (1)   2 eV (IR/optical)                                       2.1 × 1019,58.0
+To ensure that the simulations are not limited by the           7 eV (Soft FUV)                                         1.2 × 1016,0.0
+"spatial resolution of simulation grid, we ran a model with      12 eV (LW)                                                3 × 1012",0.0
+                                                                20 eV (Soft EUV)                                          2 × 1013,64.0
+a higher resolution (Nlog r × Nθ × Nφ = 192 × 192 × 128)        40 eV (Hard EUV)                                          6 × 1013,0.0
+and the results are most identical to that of our standard      3 keV (X-ray)                                             2 × 1012,0.0
+grid (Figure 3).,0.0
+   Another potentially influential factor is the radiation      Initial abundances [nX /nH ]                     Same as Paper I,3.0
+                                                                Dust/PAH properties                              Same as Paper I,64.0
+pressure. We added this effect to our ray-tracing ra-,0.0
+diative transfer procedures by explicitly computing the         Stellar wind (at a = 0.055 AU),0.0
+momenta deposited by the photons absorbed or scat-              Density                                     1.7 × 10−19 g cm−3,0.0
+"tered. As §5.1 will discuss, the radiative pressure on          Temperature                                                 106 K",0.0
+                                                                Radial velocity                                       270 km s−3,64.0
+He∗ transitions plays a very minor role on the overall          Tangential velocity∗                                  106 km s−3,0.0
+dynamics and He∗ observables.                                   Abundances‡ [nX /nH ],0.0
+                                                                e−                                                         ' 1.1∗∗,64.0
+                        3. WASP-107b:                           H+                                                             1.0,24.0
+                                                                He+                                                            0.1,64.0
+   AN OUTFLOW SHAPED BY STELLAR WINDS,3.0
+                                                                O+                                                     3.2 × 10−4,64.0
+                   3.1. Observation Results                     C+                                                     1.4 × 10−4,19.0
+                                                                S+                                                     2.8 × 10−5,64.0
+"   Quantitatively, we directly compare our synthetic ob-        Si+                                                    1.7 × 10−6",3.0
+servations to He∗ line profiles and light curves. The He∗,0.0
+                                                               Note— †: Mass and transit radius of the planet core; see also,63.0
+transmission spectrum of WASP-107b is both spectrally            Appendix A of Paper I for details of planet core setups.,0.0
+"and temporally resolved with different spectrographs:            ‡: Because the wind injection has a star-centered geometry, these",0.0
+"                                                                 values are calibrated at the planetary orbit, viz. a = 0.055 AU.",65.0
+NIRSPEC and CARMENES (Spake et al. 2018; Allart                  ∗: Head wind component; same as the Keplerian velocity.,0.0
+                                                                 ‡: Calibrated at the domain boundary of wind injection.,65.0
+et al. 2019; Kirk et al. 2020). We also carried out an           ∗∗: Electrical neutrality is guaranteed.,0.0
+independent analysis of the transit observed from NIR-,0.0
+"SPEC on the Keck telescope on April 6th, 2019 (same",0.0
+as Kirk et al. 2020). Our data reduction is carried out,0.0
+"using the procedures described in Zhang, Z. et al. (sub-",0.0
+                                                              blueshifted compared to the mid-transit (see also Fig-,62.0
+mitted). He∗ transits have been observed by several,0.0
+                                                              ure 5).,62.0
+different instruments and different transit events (Fig-,0.0
+ure 4). Despite the differences in instrumental charac-,0.0
+"teristics and reduction pipelines, previous He∗ observa-        3.2. Fiducial Model Setup and Necessity of Stellar",0.0
+tions agree with each other on the following features: (1)                                       Winds,0.0
+"a non-Keplerian, blueshifted (∼ 2 − 3 km s−1 ) line pro-        As noted in Paper I, consistent 3D hydrodynamic sim-",0.0
+file; (2) a line ratio that deviates from the 1:3:5 (viz. the ulations with all physics are not sufficiently fast for a,0.0
+quantum degeneracies; apparently 1:8) among three He∗         comprehensive exploration of the parameter space using,0.0
+transitions; (3) elongated ingress and egress timescales      Markov Chain Monte Carlo or even just gradient de-,0.0
+"in He∗ transit light curves. Finally, in the temporally       scent. Instead, we adopt the parameters based on the",0.0
+"resolved observation (Kirk et al. 2020), there is a hint      reported stellar and planetary conditions. The optical",0.0
+of asymmetry in the outflow morphology that the egress        and near-infrared fluxes (represented by the hν = 2 eV,0.0
+lasts longer than the ingress while the egress is more        bin) simply accord with the host star radius and effective,0.0
+avr_spaces,16.753623188405797
+                                                                                                                                    5,132.0
+  vK,2.0
+ΩK,0.0
+Figure 2. Key hydrodynamics and chemistry profiles of the simulation for WASP-107b (fiducial model 107-0) in the quasi-,0.0
+"steady-state, averaged through the last 15 τdyn . Stellar radiation comes from the left of the plot, and the orbital angular velocity",0.0
+ΩK points out of the paper plane; the Keplerian motion of the planet is upwards vK . White streamlines are separated at the,0.0
+wind base by ∆θ = π/16. Note that only the inner sonic surface is shown (in dashed black curve; see also the Case A in,0.0
+Figure 1). The heavy streamline are the reference lines on which the profiles are plotted in Figure 3).,0.0
+"temperature. The high energy SED of the host star is                     In addition to tuning the high-energy SED, we found",0.0
+much more uncertain. Guided by the results in our Pa-                 it crucial to include stellar wind components in our sim-,0.0
+"per I, i.e. how various high-energy radiation bins affect             ulations to adequately reproduce the existing He∗ ob-",0.0
+"the atmospheric outflow and He∗ observables, we hand-                 servations. We first run a series of no-wind model as",0.0
+tuned the high-energy SED until reasonable agreement                  we did in Paper I for WASP-69b. The resultant out-,0.0
+"with the observations. The resulting high-energy SED                  flow is largely spherically isotropic, without prominent",0.0
+is fairly typical or slightly more active than a K5 star              comet-like tail. Figure 4 presents the He∗ line pro-,0.0
+(Gudel 1992; France et al. 2016; Youngblood et al. 2016;              file and light curves produced in the no-wind fiducial,0.0
+"Loyd et al. 2016; Youngblood et al. 2017; Oklopčić 2019),           model (other parameters are the same as those in Ta-",0.0
+but we also note that WASP-107b has a relatively short                ble 1). The overall equivalent width of the line pro-,0.0
+"rotation period of 17 days, and the ∼ 600 Myr host star               file is weaker (hWλ i ' (7.6 ± 0.2) Å in the fiducial",0.0
+"has a strong chromospheric S index (0.89) (Dai & Winn                 model, but hWλ i ' 5.0 Å in the no-wind model). More",0.0
+"2017).                                                                importantly, the line profile does not have a stronger",0.0
+"                                                                      blueshifted wing, which has been validated by several",70.0
+avr_spaces,8.869565217391305
+6,0.0
+                                                                                                     0.00,101.0
+                                                                  Time-averaged Excess Absorption,66.0
+                                                                                                    −0.02,100.0
+                                                                                                    −0.04,100.0
+                                                                                                    −0.06             Fiducial,100.0
+                                                                                                                      Convergence Test                       Observation,118.0
+                                                                                                                      No-wind Test                           Observation (A19),118.0
+                                                                                                    −0.08             1D Model (S18)                         Observation (K20),100.0
+                                                                                                            1.0     1.5     2.0     2.5       3.0     3.5     4.0     4.5        5.0,108.0
+                                                                                                                                         (λ/Å) − 10830,137.0
+                                                                                                     1.00,101.0
+                                                                                                     0.98,101.0
+                                                                                                     0.96,101.0
+                                                                  Flux,66.0
+                                                                                                     0.94,101.0
+                                                                                                     0.92,101.0
+                                                                                                     0.90,101.0
+                                                                                                                      Core Only,118.0
+                                                                                                                  −0.06   −0.04    −0.02      0.00    0.02     0.04     0.06,114.0
+                                                                                                                                            ∆t/day,140.0
+                                                                  Figure 4. The observed and synthesized line profiles and,66.0
+                                                                  light curves for the fiducial model of WASP-107b and its,66.0
+Figure 3. Key quantities of our fiducial model for WASP-          corresponding test models. Curves for all models indicate,0.0
+"107b (Model 107-0), time-averaged over the last 15 τdyn ,         the averages of the spectral profile and light curves over the",0.0
+along the reference streamlines (plotted as the heavy stream-     last 15 τdyn (note that they are obtained by calculating the,0.0
+"line in Figure 2). The top abscissa is the radial coordinate      profiles for each snapshot before taking the average, not by",0.0
+r corresponding to the curve length along the streamline on       evaluating the profiles for the time-averaged model). Grey,0.0
+the bottom abscissa. As explained by §2.2 and the Case A          shades around the curves for the fiducial model in both pan-,0.0
+"in Figure 1, the fluid elements along this streamline experi-     els express the range of two-times standard deviation (2σ)",0.0
+ence two smooth crossings of sonic speed (indicated by ver-       over the last 15 τdyn . The observation results in Kirk et al.,0.0
+tical dotted lines; note that the right of them is close to the   (2020) are denoted by black “+” and labeled with “Obser-,0.0
+dash-dotted line for the Roche radius) and a reverse shock        vation (K20)”; those marked with red triangles and “Ob-,0.0
+(indicated by vertical dashed lines) along the streamline.        servation (A19)” presents the results in Allart et al. (2019).,0.0
+                                                                  The 1D spherical symmetric model in Spake et al. (2018) is,66.0
+"                                                                  included for reference, marked by the magenta curve with",66.0
+different instruments.The impinging stellar wind stag-,0.0
+                                                                  label “1D Model (S18)” in the upper panel. For reasonable,66.0
+"nates the outflow flowing towards the host star (i.e. the         comparisons, the window function for light curves is taken",0.0
+"redshifted wing), pushing the outflow to the night-side           to be the same as Kirk et al. (2020), i.e. a top-hat function",0.0
+"(the blueshifted wing). The transit light curve in the no-        which has unitary value in (λ/Å) ∈ [10833.05, 10833.48] and",0.0
+wind model is also much more symmetric compared due               zero elsewhere (note that the window in Allart et al. (2019),0.0
+"to the lack of comet-like tail trailing behind the planet.        is different, (λ/Å) ∈ [10832.80, 10833.55]). Vertical dotted",0.0
+"In short, a no-wind model struggles, if ever possible, to         lines in the upper panel shows the centers of the three He∗",0.0
+"                                                                  lines, and mark the start/end of the nominal ingress/egress",66.0
+reproduce the various He∗ observations of WASP-107b.,0.0
+                                                                  (ti through tiv ) in the lower panel.,66.0
+"On the other hand, the windy model successfully repro-",0.0
+duced observed He∗ line profiles and light curves. We,0.0
+now examine the windy model in detail.,0.0
+               3.3. Fiducial Model Results,15.0
+avr_spaces,49.40384615384615
+                                                                                                                                  7,130.0
+"Figure 5. Left panel: Comparison of the excess absorption features, as functions of transit time ∆t and wavelength λ, between",0.0
+the observation data (left panel) and the synthesized results (right panel). The simulation used to produce the right panel is the,0.0
+"time-averaged fiducial Model 107-0 (averaging is taken in the same way as Figure 4, viz. averaging after the excess absorption",0.0
+map being obtained for each snapshot concerned). Both panels already have the wavelength shifts by orbital motion subtracted.,0.0
+Three vertical dotted lines in each panel indicate the the line centers. Four horizontal dashed lines indicate the starts (ends) of,0.0
+"the ingress (egress). Right panel: transmission spectra at different stages of a transit, based on the fiducial Model 107-0.",0.0
+   Figure 2 presents the simulation results of our fiducial          tion by soft FUV photons starts to take over. This is,3.0
+"model, with a stellar wind modulating the outflow mor-               very similar to our results in Paper I for WASP-69b.",0.0
+phology. Each panel centers at the planet’s frame; the                  The middle panel of Figure 3 shows another interest-,0.0
+"host star is located to the left of the this plot, and the           ing feature. When the streamline crosses the the planet’s",0.0
+"stellar wind impinges on the photoevaporative outflow                shadow, photoionization due to soft FUV from the host",0.0
+"at an angle given by the ratio between the radial veloc-             star vanishes. However, recombination excitation con-",0.0
+ity component and the headwind (orbital) component.                  tinues in the shadow of the planet and thus creates a lo-,0.0
+A bow shock of Mach number ∼ 2.0 forms above the                     cal bump of higher He∗ abundances. We call this effect,0.0
+"day-side of the planet, heating the downstream flow to               the “shadow tail”. Such a feature is difficult to observe",0.0
+T ∼ 4 × 106 K (second panel of Figure 2). As shown by                in transits as it always hides in the planet’s shadow. If,0.0
+"the streamlines, the photoevaporative outflow from the               one is ever able to resolve this photoevaporative outflow,",0.0
+planet is stalled at the day-side and directed by stellar            one may see the shadow tail emitting more strongly in,0.0
+"wind to the night-side, forming a prominent tail trailing            He∗ compared to other parts of the outflow. Such a",0.0
+the planet’s orbital motion.                                         “two-tail” morphology is remarkably similar to the dust,0.0
+"   Along the thick streamline in Figure 2 (which quali-              and ion tails of a comets, although with different under-",3.0
+"tatively resembles the “typical” streamline in Figure 1),            lying physics.",0.0
+"we plot the spatial variation of key hydrodynamic and                   Figure 6 offers a transverse view of the outflow, taken",0.0
+thermochemical quantities both as a function of radius               from the perspective of an observer looking into the host,0.0
+from the planet core and the arc length along the stream-            star (outlined as the white dashed-line) during a transit.,0.0
+"line in Figure 3. Looking at the outflow velocity first,             The planet is moving towards the right-hand-side, and",0.0
+a fluid element traveling on the streamline may experi-              is instantaneously close to the center of the host star.,0.0
+"ence multiple sound crossings, as is shown by the Case               These plots illustrate the spatial distribution of extinc-",0.0
+A in Figure 1 (see also §2.2). We note that this ef-                 tion at three characteristic wavelengths of the He∗ tran-,0.0
+"fect is strongest at the upwind side where outflow is                sition. At the bluer wavelength λ = 10832.5 Å, which",0.0
+impinged by stellar wind; it is much weaker elsewhere                falls into the “valley” between the J = 0 transition and,0.0
+"and the reverse shock may no longer exist. The lower                 two blended J = 1, 2 transitions, the extinction is dom-",0.0
+panel of Figure 3 indicates that the population of He∗               inated by blueshifted materials in the tail trailing be-,0.0
+"is determined primarily by the equilibrium between re-               hind the planet. On the red wing λ = 10833.7 Å, the",0.0
+"combination excitation and collisional de-excitation at              tail is much less relevant, and the extinction are gen-",0.0
+"smaller radii. At larger radii (& 102 R⊕ ), photoioniza-             erated by materials much closer to the planet. Again,",0.0
+avr_spaces,3.5789473684210527
+ 8,1.0
+  ΩK,2.0
+      vK,6.0
+    Star,4.0
+Figure 6. First row: extinction [1 − exp(−τ )] for Model 107-0 with time-averaging over the last ∼ 15 τdyn (note that the,0.0
+averaging is computed after the extinction function is calculated for each snapshot concerned) at three representative wavelengths,0.0
+"(λ/Å) ∈ {10832.5, 10833.2, 10833.7} near the He∗ transitions. The profiles are measured at mid-transit. Second row presents",0.0
+the root-mean-squared variations of extinction (σ[1 − exp(−τ )]). Plotted up to the impact parameter b = 150 R⊕ . The white,0.0
+dashed circles presenting the host star size have R∗ ' 74.2 R⊕ and orbit impact parameter b ' 0.07 R∗ .,0.0
+this is attributed to the kinematics and morphology: the              symmetry; the part ahead of the planet and behind,0.0
+"planetary outflow is impinged by the stellar wind, and                the planet are both blueshifted. As a result, the He∗",0.0
+the outflow on the day-side or the headwind direction is              line profiles seen pre-ingress and post-egress are both,0.0
+stagnated.                                                            more blueshifted compared to the mid-transit line pro-,0.0
+"   Finally, we remind the reader that due to its large                file. This is again consistent with the NIRSPEC obser-",3.0
+"aperture, Keck/NIRSPEC is able to resolve the He∗                     vation.",0.0
+both spectrally and temporally. Figure 5 presents the,0.0
+observed and simulated variation of He∗ absorption in                               4. PARAMETRIC STUDIES,0.0
+time and wavelength space together as a heatmap. The                     The previous section elaborates the fiducial model,0.0
+"vertical dotted lines are the rest-frame wavelengths of               for WASP-107b. We found that, by including stellar",0.0
+"three He∗ transitions, the horizontal dashed lines are the            winds, the simulation quantitatively reproduces various",0.0
+expected ti to tiv (starts/ends of the ingress/egress) of             observed features of the He∗ transits. This section in-,0.0
+the planet’s transit. Our simulation with stellar winds               vestigates how the outflow morphology and He∗ observ-,0.0
+successfully reproduces the key feature: since most of                ables are affected by each model parameter (Figures 7,0.0
+"the He∗ is produced by the comet-like tail trailing the               and 8). We set a series of models, each differs from the",0.0
+"planet (Figure 6), the strongest absorption occurs after              fiducial model by one parameter only unless specifically",0.0
+"mid-transit, while the pre-ingress absorption is much                 indicated. Table 2 and Figure 8 summarize the models",0.0
+weaker than the post-egress one. This feature is also                 and their corresponding key He∗ observables.,0.0
+manifested by the asymmetry in the transit light curve,0.0
+(Figure 4). The outflow morphology loses spherical                               4.1. High-Energy Radiation Fluxes,0.0
+avr_spaces,0.5333333333333333
+                                                                                                                              9,126.0
+                               Model 107-1                               Model 107-2                              Model 107-3,31.0
+                               (10× Soft FUV)                            (10× Soft EUV)                           (10× Hard EUV),31.0
+                               Model 107-4                               Model 107-5                              Model 107-6,31.0
+"                               (4× ρwind, 1/2× vwind)                    (1/4× ρwind, 2× vwind)                   (2× ρwind)",31.0
+  vK,2.0
+ΩK,0.0
+"Figure 7. He∗ number density profiles in the orbital plane, with streamlines (spaced with the same scheme as Figure 2) and",0.0
+sonic surfaces overlaid. The panel for Model 107-3 has different spatial scales. Some lines appear to overlap with other lines,0.0
+or to terminate before reaching the outer boundary because the streamlines are projected. Note that Models 107-4 and 107-6,0.0
+comply with the Case C in Figure 1.,0.0
+  Paper I found that He∗ transit observation are pri-                Model 107-1 increases the soft FUV flux by a factor,2.0
+"marily determined by soft FUV (which destroys the He∗             of 10. As we have noted earlier, soft FUV does not",0.0
+state) and the EUV bands (which is most important in              inject significant heat into the atmosphere and has mi-,0.0
+driving the photoevaporative outflow; interested read-            nor effects in driving the planetary outflow. Its mass,0.0
+ers are referred to Paper I for more details); the Lyman-         loss rate is very similar to that in the fiducial model,0.0
+Werner and X-ray bands play secondary roles. We found             [(Ṁ /10−9 M⊕ yr−1 ) = 1.08 versus 1.02]. Soft FUV is,0.0
+very similar results for WASP-107b after including stel-          nonetheless capable of photoionizing the He∗ state ef-,0.0
+"lar winds, by running a separate test simulation exclud-          ficiently, slicing the equivalent widths by a factor of 2",0.0
+ing X-ray photons (not presented in this paper) that              [(hWλ i/10−2 Å = 3.7 versus 7.6). Models 107-2 and 107-,0.0
+"yields almost identical morphology and observables to             3 raise the soft and hard EUV flux level by a factor of 10,",0.0
+"the fiducial one. In Model 107-1 through 107-3, we raise          respectively. As expected, intense EUV fluxes boosted",0.0
+"stellar fluxes in the soft FUV (hν = 7 eV), soft EUV              the photoevaporation rates, indicated by the stronger",0.0
+"(20 eV), and hard EUV (40 eV) bands, respectively.                mass loss rate and equivalent width. What is curious,",0.0
+avr_spaces,10.16
+ 10,1.0
+Figure 8. Similar to Figures 4 but for the models in §4.2 and Table 2. Left column compares Models 107-1 through 107-3 to,0.0
+"the fiducial 107-0, and the right column does the comparison for Models 107-4 through 107-6 to 107-0. The window function",0.0
+for the light curves are the same as the one used to yield Figure 4.,0.0
+"                        Table 2. Results of various models, based on the fiducial model for WASP-107b",24.0
+                          Model           Description                 Ṁ              hWλ i      ∆vpeak       FWHM,26.0
+                                                               (10−9 M⊕ yr−1 )     (10−2 Å)    (km s−1 )   (km s−1 ),63.0
+                          107-0             Fiducial              1.02 ± 0.01       7.6 ± 0.2      −3.5        22.7,26.0
+                          107-1     10× Flux at hν = 7 eV         1.09 ± 0.01       3.7 ± 0.1      −1.7        17.2,26.0
+                          107-2    10× Flux at hν = 20 eV         1.23 ± 0.01      11.3 ± 0.9      −3.7        34.6,26.0
+                          107-3    10× Flux at hν = 40 eV         3.47 ± 0.03      12.1 ± 1.1       2.4        55.1,26.0
+"                          107-4     4 × ρwind , 1/2 × vwind       0.98 ± 0.02       8.6 ± 0.1      −4.5        20.4",26.0
+"                          107-5     1/4 × ρwind , 2 × vwind       1.02 ± 0.01       7.4 ± 0.4      −2.3        22.6",26.0
+                          107-6            2 × ρwind              0.99 ± 0.02       8.2 ± 0.1      −5.6        28.2,26.0
+"                        Note—The values and errors are time averages and three times the standard deviations (3σ),",24.0
+                          respectively; the time averages are taken over the last 25 τdyn of the simulations.,26.0
+avr_spaces,20.352941176470587
+                                                                                                                                                                11,160.0
+"however, is that in 107-3, the planetary outflow is so                                                                   Total Inertial",0.0
+                                                                            [a/(GMp /Rp2 )] or [n(He∗)/nHe ],76.0
+strong that it is push back the bow shock with stellar                                                          102      103 ×Radiative,0.0
+wind on the day-side to much higher altitudes. In order                                                                  |∇p/ρ|,0.0
+to fully contain the pushed-back contact surface and the                                                        101      105 × n(He∗)/nHe,0.0
+"bow shock, we use rout = 800 R⊕ for the outer radial",0.0
+                                                                                                                100,112.0
+boundary of 107-3. 1 This effect is so strong that we be-,0.0
+"gin to see the day-side (pre-ingress) material in redshift,",0.0
+                                                                                                               10−1,111.0
+and the overall He∗ line profile is now biased towards the,0.0
+"red wing (Figure 8, upper panel). This strong day-side                                                         10−2",0.0
+outflow also manifests as a reversed asymmetry in the,0.0
+"He∗ light curve, where the ingress is more extended and                                                        10−3",0.0
+"stronger than the egress (Figure 8, lower panel). This                                                                      100              101       102",0.0
+                                                                                                                                        (r − Rp )/R⊕,136.0
+qualitative change in behavior will possibly constrain,0.0
+the balance of high-energy radiation strengths between,0.0
+                                                                            Figure 9. Profiles of acceleration magnitudes (normal-,76.0
+the stellar wind and the planetary outflow.                                 ized by GMp /Rp2 ) that contains extra photon energy bins,0.0
+                                                                            at Lyα and 10833 Å radiated by the host star. Inertial,76.0
+           4.2. How Stellar Winds Shape Outflows,11.0
+"                                                                            acceleration (including planet and stellar gravity, centrifu-",76.0
+"   In hydrodynamic simulations (no magnetic effects in-                     gal force, and Coriolis force), radiation pressure acceleration",3.0
+"cluded), the interactions between stellar winds and plan-                   (multiplied by 103 ) and pressure gradient acceleration pro-",0.0
+"etary outflows should be determined by the wind ram                         files are measured along the θ = π/4, φ = 0 radial line. The",0.0
+                     2,21.0
+"pressure (∼ ρwind vwind  ), as a function of the density                    Radiation pressure profile is multiplied by 103 for clearer",0.0
+"                                                                            presentation. As a reference, the relative abundance of He∗",76.0
+"(ρwind ) and velocity (~vwind ). Fortunately, this degener-",0.0
+                                                                            (multiplied by 105 ) is also shown.,76.0
+acy between wind density and velocity can be potentially,0.0
+"broken by orbital motion, i.e. the headwind component",0.0
+"of the stellar wind.                                                        ratio of vwind /vK as in the fiducial model, Model 107-6",0.0
+"   On one hand, Model 107-4 quadruples the density                          produces a tail that has similar direction as the fiducial",3.0
+"ρwind and halves the velocity vwind , thus keeping the                      model. Increased ram pressure still pushes the outflow",0.0
+radial (from host to planet) component of ram pressure                      to greater blueshift velocities [(∆vpeak /km s−1 ) = −5.6,0.0
+roughly the same as in the fiducial model. The headwind                     versus −3.5].,0.0
+"component, caused by the Keplerian motion vK of the",0.0
+"planet, is held constant here. Lower velocity shear yields",0.0
+a less turbulent trailing tail with weaker shear instabili-                                                                   5. DISCUSSIONS,0.0
+"ties. As a result, the tail lags behind the planet in both                                                     5.1. Tail: Stellar Wind or Radiation Pressure?",0.0
+"velocity and spatial sense, producing a more blueshifted",0.0
+"line profile [(∆vpeak /km s−1 ) = −4.5, versus −3.5 for                        As we have shown in the previous sections, the exist-",0.0
+"the fiducial], and a more asymmetric light curve. On the                    ing He∗ observations of WASP-107b are suggestive of a",0.0
+"other hand, in Model 107-5 which doubles the velocity                       comet-like tails that trail the photoevaporating planet.",0.0
+"but quartered the density, the tail is now influenced by                    What is the mechanism that give rise to these tails? Is",0.0
+the radial component more heavily. It is primarily di-                      it stellar wind or radiation pressure or a combination,0.0
+"rected towards the night-side, and displays considerably                    of these two effects? When studying the Lyα outflow",0.0
+"more vigorous shear instabilities due to greater velocity                   for exoplanets, previous studies often attributed tran-",0.0
+shears. The He∗ light curve has much weaker post-egress                     sit asymmetry to radiation pressure (e.g. Bourrier et al.,0.0
+"absorption, while the equivalent width sees more vari-                      2015, 2016). Recent works in He∗ followed suit: in an",0.0
+"ability [(hWλ i/10−3 Å) = 7.4 ± 0.4, versus 7.6 ± 0.2 in                   EVE simulation of WASP-107b (a collisionless particle-",0.0
+"the fiducial model]. Finally, Model 107-6, only increases                   based simulations; Allart et al. 2018, 2019), the authors",0.0
+the density ρwind by a factor of two. Having the same                       found that their prescription of radiation pressure ac-,0.0
+"                                                                            celerates the outflow way too quickly, producing a tail",76.0
+                                                                            that is directly pointing away from the night-side of the,76.0
+  1   We carried out another simulation run that has rout = 400 R⊕          planet. Their prescribed effect of radiation pressure is,2.0
+"      (same as other runs) for the radial boundary, while all other phys-",6.0
+                                                                            so strong that the authors had to artificially decrease,76.0
+      ical conditions remain the same as Model 107-3. It is confirmed,6.0
+      that this test run (not shown in the paper) has all quantitative      the stellar spectrum near the He∗ lines by a factor 50,6.0
+"      characteristics almost identical to 107-3, despite that its mass      to achieve reasonable agreement with the observations of",6.0
+"      loss rate is ∼ 5 % greater.                                           WASP-107b. We argue, in this work, that their particle-",6.0
+avr_spaces,19.28787878787879
+12,0.0
+"       0.16                                                           lisionless particle-based one. What is more, the mo-",7.0
+                 Metastable Helium,17.0
+       0.14                                                           menta deposited into He∗ by absorption are quickly di-,7.0
+       0.12,7.0
+"                                                                      luted and thermalized by more collisions. In contrast,",70.0
+                                                                      the collisionless particle-based treatment such as EVE is,70.0
+       0.10,7.0
+"                                                                      more appropriate for simulating the Lyα outflow, since",70.0
+ hWλ i/Å,1.0
+       0.08                                                           the density where most Lyα absorption occurs is much,7.0
+"       0.06                                                           lower: in our simulations, we have n(H+ ) . 10−1 cm−3",7.0
+                                                                      and the MFP is λ ∼ 1010 cm ∼ 10 R⊕ . Neutral hy-,70.0
+       0.04,7.0
+                                                                      drogen atom there are essentially decoupled from other,70.0
+                       107-0         107-2         107-4      107-6,23.0
+"       0.02                                                           components of the gas, and are indeed susceptible to",7.0
+                       107-1         107-3         107-5,23.0
+       0.00                                                           the momentum deposited by the absorption of Lyα .,7.0
+"                 Lyman α                                              Nonetheless, as far as the He∗ observations are con-",17.0
+       0.50,7.0
+"                                                                      cerned, the radiation pressure on Lyα can be safely ig-",70.0
+       0.45                                                           nored.,7.0
+       0.40,7.0
+                                                                         Figure 9 compares the magnitudes of acceleration,73.0
+ hWλ i/Å                                                             (force per unit mass) by radiation pressure (where most,1.0
+"       0.35                                                           He∗ absorption occurs), gas pressure gradient, and in-",7.0
+       0.30,7.0
+"                                                                      ertial force (including stellar and planetary gravitation,",70.0
+"                                                                      centrifugal force, and Coriolis force). Radiation pres-",70.0
+       0.25                                                           sure in this model is more than three orders of magni-,7.0
+       0.20,7.0
+"                                                                      tude weaker than the pure hydrodynamic effects. Again,",70.0
+           0.0       0.2       0.4    0.6    0.8       1.0   1.2      the high density of He∗ absorbing region maintains suf-,11.0
+                                        ∆t/day                        ficiently strong momentum coupling of different species,40.0
+                                                                      and guarantees quick dilution of the momenta injected,70.0
+Figure 10. Temporal variation of the equivalent widths,0.0
+of the metastable helium absorption lines (upper panel) and           by Lyα photons. The photons here heat rather than,0.0
+"Lyα (lower panel), for the models described in Table 2. Such          push the planetary outflow.",0.0
+"fluctuations are mainly the results of the instabilities emerg-          In addition, we set up a verification test simulation to",0.0
+ing in the interactions between stellar wind and planetary            numerically examine the effect of radiation pressure. We,0.0
+"outflows. For each simulation, the last 1.4 day ∼ 25 τdyn of          added two more photon energy bins in our ray-tracing",0.0
+its simulated time duration is shown.                                 radiative transfer module: one has hν = 10.2 eV for,0.0
+"                                                                      Lyα , and hν = 1.15 eV for the metastable helium",70.0
+based simulation is not adequate to account for the effect            lines whose flux is of a typical K-type stars (Wood et al.,0.0
+"of radiation pressure on He∗ transitions.                             2005). For simplicity, we assume that the cross-sections",0.0
+   We must first clearly distinguish the Lyα transition               for photon momentum absorption for these two energy,3.0
+"and the He∗ transitions. The lower state of Lyα is the                bins are equal to the line-center value, and we ignored",0.0
+"ground state of neutral hydrogen, while He∗ (i.e. the                 the dispersion of photons in the frequency space. We",0.0
+23 S state of helium) is relatively much more difficult to            note that these assumptions should only amplify the ef-,0.0
+"populate, and has a much lower abundances throughout                  fects of radiation pressure. This simulation produced",0.0
+"the domain of interest (. 10−5 , Figure 3; see also Paper             almost identical result as a no-radiation-pressure model",0.0
+"I; Oklopčić 2019). Meanwhile, the product of Einstein A             in terms of hydrodynamic and thermochemical profiles,",0.0
+coefficient and the overall element abundance for helium              as well as He∗ observables.,0.0
+"is also ∼ 102 times smaller than Lyα . Consequently, the                 In summary, at least for He∗ lines, radiation pressure",0.0
+altitude where most He∗ absorption occurs is often much               only plays a minor role in shaping the outflow morphol-,0.0
+"lower than Lyα absorption region. The gas density in                  ogy and kinematics. Stellar wind, as we have shown in",0.0
+"these regions is significantly higher, and the mean free              previous section, is essential in reproducing various ob-",0.0
+"path (MFP) of momentum transfer are much shorter.                     served features He∗ transitions. We propose that, should",0.0
+"In our simulations, we typically see n(H+ ) & 106 cm−3 ,              future observation of He∗ show strong deviations from",0.0
+and an MFP of λ = 1/[n(H+ )σ] . 103 cm (see also                      a “quiescent” line ratio (∼ 1 : 8) or an asymmetry in,0.0
+"Thomas & Humberston 1972; Draine 2011). This is                       line profile or light curve, it may be regarded as an in-",0.0
+"∼ 6 orders of magnitude smaller than the hydrody-                     dication of stellar winds, whose properties can be con-",0.0
+namic length scales. Such a contrast in length scales                 strained with detailed 3D hydrodynamic simulations.,0.0
+"demands a hydrodynamic treatment, instead of a col-",0.0
+avr_spaces,16.53030303030303
+                                                                                                                          13,122.0
+  ΩK,2.0
+      vK,6.0
+    Star,4.0
+"           Figure 11. Similar to Figure 6 but for the wavelengths (λ/Å) ∈ {1215.3, 1215.7, 1215.9} near the Lyα line.",11.0
+                   5.2. Shear Instability                          in the blueshifted wings of He∗ line profiles. More-,19.0
+"   At the contact surface that separates the stellar wind          over, in the He∗ light curve, the variability should be",3.0
+"and the photoevaporative outflow, there is region of               much stronger after the mid-transit point. The reason",0.0
+large shears in velocity. Shear instabilities are gener-           is that shear instability takes time and space to grow:,0.0
+"ated here, manifesting themselves as billowing outflows.           its spatial extent is still small in the redshifted head",0.0
+"We found that since the sonic surface is located at much           part of the outflow, but fully developed when it enters",0.0
+"lower altitude (Figure 1; see also Figure 3), the outflow          the blueshifted tail. In Figure 4, the gray shaded region",0.0
+mass-loss rate is not affected by these shear instabili-           indicates the amplitudes of variability due to shear bil-,0.0
+"ties. If the host star high-energy SED is held constant,           lows, and clearly demonstrates this fluctuation-induced",0.0
+"the mass loss rate stays rather stable (< 1 % fluctua-             asymmetry. Up to the composition of this paper, two",0.0
+"tion) at about Ṁ ' 1.02 × 10−9 M⊕ yr−1 in our fidu-               He∗ transits have been reported; more transits, prefer-",0.0
+"cial model of WASP-107b. However, the He∗ absorption               ably from the same instruments, are needed to evaluate",0.0
+"takes place at higher altitudes (Figure 6), and is directly        the fluctuation asymmetries.",0.0
+influenced by shear instabilities. Fluctuations of tran-,0.0
+                                                                    5.3. Line Ratio Probes Kinematics Instead of Density,68.0
+sit depths have relative amplitudes ∼ 5 % to ∼ 20 %,0.0
+"at different wavelength, while the typical timescale is               It has been suggested that the line ratios between",0.0
+"∼ 0.2 day (Figure 10). In contrast, in our WASP-69b                three transition of the He∗ can tell us about the den-",0.0
+"model in Paper I, shear instabilities are not excited since        sity of the underlying outflow. If all three lines are",0.0
+"stellar wind was not included. He∗ absorption shows a              not saturated, the line ratios between the triplet should",0.0
+". 0.5 % temporal variations.                                       be proportional to 1:3:5, or their quantum degeneracies.",0.0
+   An interesting prediction associated with shear insta-          Considering that the two longer-wavelength transitions,3.0
+"bility is that there should be much stronger fluctuations          are often blended together thermally and kinematically,",0.0
+                                                                   the line ratio should be 1:8. Now if the density of the,67.0
+avr_spaces,10.166666666666666
+14,0.0
+                                   0.0                            Fiducial                                     wavelength transitions are blueshifted by the wind by,35.0
+Time-averaged Excess Absorption,0.0
+"                                                                  No-wind Test                                 up to ∼ 20 − 30 km s−1 , that its blueshifted wing start",66.0
+                                  −0.2                                                                         to invade the shorter-wavelength transition. We will see,34.0
+                                                                                                               in the next subsection that the line ratio and the exact,111.0
+                                  −0.4                                                                         shape of the He∗ will serve as a probe of the outflow,34.0
+                                                                                                               kinematics and in turn the properties of stellar wind.,111.0
+                                  −0.6                                                                           Here we present an example that one can semi-,34.0
+                                                                                                               quantitatively constrain the stellar wind density and ve-,111.0
+                                  −0.8                                                                         locity using the He∗ observation. We shall focus on the,34.0
+"                                                                                                               contact discontinuity, i.e. the boundary separating the",111.0
+"                                  −1.0                                                                         stellar wind and the planetary outflow (Figures 1, 2).",34.0
+                                    1215.0   1215.2   1215.4     1215.6          1215.8     1216.0    1216.2   The distance of contact discontinuity from the planet,36.0
+                                                                   λ/Å                                        can be estimated by equating the total pressure of a pho-,67.0
+                                                                                                               toevaporative outflow to the ram pressure of the stellar,111.0
+                                   1.0                                                                                      2,35.0
+                                                                                                               wind ρwind vwind  :,111.0
+"                                                                                                                       ""                #1/2",119.0
+                                   0.9,35.0
+                                                                                                                              Ṁ cs,126.0
+                                                                                                                 rcd ∼              2,113.0
+                                                                                                                         πρwind vwind,121.0
+                                   0.8,35.0
+Flux,0.0
+                                                                                                                                                      !1/2         1/4,150.0
+                                                                                                                                             Ṁ                 T,141.0
+                                   0.7                                                                                ∼ 500 R⊕ ×,35.0
+                                                                                                                                       10−9 M⊕ yr−1           104 K,135.0
+                                   0.6                                                                                                      −1/2               −1,35.0
+                                                                                                                                   ρwind                vwind,131.0
+"                                                                                                                        ×                                             ,",120.0
+                                   0.5                                                           Core Only,35.0
+                                                                                                                            10−20 g cm−3             100 km s−1,124.0
+                                                                                                                                                                        (2),168.0
+                                    −0.10     −0.05       0.00            0.05            0.10       0.15,36.0
+                                                                 ∆t/day                                        where the subscript “cd” stands for the contact discon-,65.0
+"                                                                                                               tinuity. In our fiducial model, this estimation yields",111.0
+Figure 12. Similar to Figure 4 but for the Lyα synthetic                                                       rcd ∼ 45 R⊕ with the parameters in Table 1. This is,0.0
+spectra based on Model 107-0 and its corresponding test                                                        reasonably accurate with visual inspection of Figure 2.,0.0
+models only. The wavelength window for the light curves is,0.0
+                                                                                                               We note that if the stellar wind intensity is similar to,111.0
+"(λ/Å) ∈ [1215.0, 1216.25]. Note that the line profiles in the",0.0
+upper panel has a saturated shape but the excess absorption,0.0
+"                                                                                                               the Sun at an a = 0.055 AU orbit, which roughly has",111.0
+"does not reach h∆i = −1, because (1) the extinction by                                                        ρwind ∼ 3 × 103 mp cm−3 and vwind ∼ 300 km s−1 at",0.0
+"planet core is subtracted from the total absorption, and (2)                                                   ∼ 0.05 AU (see Venzmer & Bothmer 2018 and refer-",0.0
+"the full ingress of the Lyα absorption region is delayed by                                                    ences therein), rcd ∼ 240 R⊕ would be inconsistent with",0.0
+the stellar wind.                                                                                              the observations on WASP-107b. Such stronger stellar,0.0
+                                                                                                               wind experienced by WASP-107b is perhaps not surpris-,111.0
+"outflow is high enough that the transitions start to sat-                                                      ing, given its closer-in orbit, and the relative youth and",0.0
+"urate, the line ratio may begin to deviate from 1:8 and                                                        higher activity of the host star.",0.0
+hint us about the number density of He∗ in the outflow.,0.0
+                                                                                                                  5.4. Synergy between Lyα and He∗ Observations,114.0
+"However, as we have seen in Paper I for WASP-69b,",0.0
+"most of the He∗ extinction happens at high-altitude,                                                             This section briefly discusses how observing transits",0.0
+"low-density regions of 101−2 R⊕ (see Figure 6, showing                                                         of an exoplanets in both Lyα and He∗ can be syner-",0.0
+the mid-transit extinction at three characteristic wave-                                                       gistic in helping us understand its atmospheric outflow.,0.0
+"lengths near the He∗ transitions). The lines are far from                                                      First of all, we reiterate the point made in §5.1 that",0.0
+"saturation in these regions. In other words, the line ra-                                                      most Lyα absorption happens at much higher altitudes",0.0
+tios can not directly probe the density distribution at                                                        than He∗ absorption. The low density at higher alti-,0.0
+least for WASP-107b.                                                                                           tude means that Lyα radiation pressure may start to,0.0
+   We do observe a line ratio of about 1:4 in our fidu-                                                        reshape the morphology of neutral hydrogen; while the,3.0
+"cial model of WASP-107b, which is significantly differ-                                                        at lower altitude of He∗ absorption, radiation pressure",0.0
+ent from the 1:8 expected by quantum degeneracies. It                                                          heats rather than pushes the planetary outflow. This,0.0
+is noted that this deviation is primarily caused by the                                                        potentially allows us to disentangle the influence of ra-,0.0
+"kinematics of the outflow: the peak due to two longer-                                                         diation pressure and stellar wind, and disentangle the",0.0
+                                                                                                               inner and outer parts of the planet outflow.,111.0
+avr_spaces,50.30434782608695
+                                                                                                                          15,122.0
+   We produced synthetic line profiles and light curves        observation in both Lyα and He∗ ; we note that previous,3.0
+in the Lyα band for WASP-107b in Figure 12 and Fig-            works often have to assume or prescribe the first two.,0.0
+"ure 11. Note that we did not account for the extinc-              By exploring the parameter space, we find a plau-",0.0
+tion due to the interstellar medium. We also note that         sible model for WASP-107b that also involves a stel-,0.0
+Lyα observations are currently unavailable for WASP-           lar wind stronger than the solar wind. This model,0.0
+107b and will probably remain the case given the dis-          launches a photoevaporative outflow with a mass-loss,0.0
+tant host and the expected strong UV extinction. How-          rate of Ṁ ' 1.0 × 10−9 M⊕ yr−1 . The predicted He∗,0.0
+"ever, we still notice that the line profile is blueshifted     line profiles and light curves exhibit reasonable agree-",0.0
+significantly while Lyα light curve shows much more            ment with existing observations. Time-averaged trans-,0.0
+"pronounced asymmetry with elongated egress. Both of            mission spectrum has a ∼ 1 : 4 > 1 : 8 line ratio, while",0.0
+these observations are qualitatively similar to other exo-     the light curve holds a considerable asymmetry about,0.0
+"planets observed in Lyα (e.g., GJ 436b; see also Ehren-        the transit median. A comet-like tail trailing the planet",0.0
+"reich et al. 2015; Bourrier et al. 2015, 2016). It is also cu- is a natural explanation of these observations. We argue",0.0
+rious that radiation pressure alone could not produce as       that such a tail is the result of a relatively strong stellar,0.0
+"strong as an asymmetry produced by stellar wind. The           wind rather than radiation pressure, because (1) the low",0.0
+"no-wind model produces deep Lyα transit light curve            overall abundance ofHe∗ , and (2) the photon momenta",0.0
+that ingress and egress elongated to similar extent. An-       deposited by absorption and scattering are quickly ther-,0.0
+other prediction we can predict from joint Lyα and He∗         malized by collisional momentum relaxation. The in-,0.0
+"is that the absorption fluctuation due to shear insta-         coming stellar wind triggers shear instabilities, and the",0.0
+bilities should be stronger in Lyα than in He∗ ; and           He∗ transit depth fluctuates by 5 − 20 % at a roughly,0.0
+Lyα fluctuations should lag behind He∗ fluctuations.           ∼ 0.2 day timescale consequently. Tuning the character-,0.0
+"The reason is, again, most Lyα absorption happen at            istics of stellar wind in a plausible range does affect the",0.0
+higher altitude than He∗ absorption. Instabilities grows       spectral line shapes through alternating the direction,0.0
+"as it propagates from lower altitude region to higher al-      and configuration of the tail, yet the equivalent width",0.0
+titudes. The shaded bands in Figure 12 illustrate the          is largely invariant. The Lyα transmission spectra and,0.0
+simulated variations in Lyα absorption.                        light curve synthesized using the fiducial Model 107-0,0.0
+   Some of the points raised here were also suggested by       suggest stronger light curve asymmetry and variabilities,3.0
+McCann et al. (2019) who focused hot Jupiters. Af-             due to shear instabilities. We propose that surveys of,0.0
+"ter all, transit observations in He∗ and Lyα , particu-        exoplanets in Lyα and He∗ simultaneously are crucial",0.0
+"larly multiple simultaneous transit observations, will be      for understanding planetary outflow and stellar wind.",0.0
+"instrumental in helping us understand the morphology              Looking ahead, planetary outflow modulated by stel-",0.0
+and kinematics of atmospheric loss on different spatial        lar winds may extract positive or negative orbital an-,0.0
+"scales. With such observations, we may also acquire            gular momentum from the planet via dynamical (anti-",0.0
+"more knowledge about the characteristics and variabil-         )friction (Li et al. 2020), and may then lead to migra-",0.0
+ities of stellar wind from the host star. Hybrid models        tions of planetary orbits. Planetary magnetic fields and,0.0
+combining hydrodynamics with particles-based simula-           the fields carried by stellar winds or coronal ejecta may,0.0
+tions are perhaps mandatory to fully characterize the          also play essential roles in shaping the dynamics of an,0.0
+various species of the outflow at highest altitude espe-       evaporating close-in planet. Future simulations should,0.0
+cially neutral hydrogen.                                       have magnetohydrodynamics involved in these processes,0.0
+"                                                               with improved consistency, and potentially shed light on",63.0
+                                                               the evolution of magnetic fields when compared to ob-,63.0
+                      6. SUMMARY                               servations.,22.0
+   This paper presents simulations of the metastable he-,3.0
+lium absorption lines in the transmission of WASP-107b.           This work is supported by the Center for Computa-,0.0
+"We employ full 3D hydrodynamic simulations to model            tional Astrophysics of the Flatiron Institute, and the",0.0
+"the dynamics of evaporating planetary atmospheres, in          Division of Geological and Planetary Sciences of the",0.0
+which non-equilibrium thermochemistry and ray-tracing          California Institute of Technology. L. Wang acknowl-,0.0
+radiative transfer are co-evolved. The processes that          edges the computing resources provided by the Simons,0.0
+populate and de-populate the metastable state of neu-          Foundation and the San Diego Supercomputer Center.,0.0
+tral helium are included in the thermochemical network         We thank our colleagues (alphabetical order): Philip,0.0
+"and solved consistently. These allow us to predict the         Armitage, Zhuo Chen, Jeremy Goodman, Xinyu Li,",0.0
+"mass loss rate, the temperature profile, and synthetic",0.0
+avr_spaces,5.166666666666667
+ 16,1.0
+"                                                                 Mordecai Mac-Low, Songhu Wang, and Andrew Youdin,",65.0
+                                                                 for helpful discussions and comments.,65.0
+                                                          REFERENCES,58.0
+"Allart, R., Bourrier, V., Lovis, C., et al. 2018, Science, 362,  Loyd, R. O. P., France, K., Youngblood, A., et al. 2016,",0.0
+"  1384, doi: 10.1126/science.aat5879                               ApJ, 824, 102, doi: 10.3847/0004-637X/824/2/102",2.0
+"—. 2019, A&A, 623, A58,                                          McCann, J., Murray-Clay, R. A., Kratter, K., & Krumholz,",0.0
+"  doi: 10.1051/0004-6361/201834917                                 M. R. 2019, ApJ, 873, 89, doi: 10.3847/1538-4357/ab05b8",2.0
+"Anderson, D. R., Collier Cameron, A., Delrez, L., et al.",0.0
+"                                                                 Ninan, J. P., Stefansson, G., Mahadevan, S., et al. 2020,",65.0
+"  2017, A&A, 604, A110,",2.0
+"                                                                   ApJ, 894, 97, doi: 10.3847/1538-4357/ab8559",67.0
+  doi: 10.1051/0004-6361/201730439,2.0
+"Bourrier, V., Ehrenreich, D., & Lecavelier des Etangs, A.        Nortmann, L., Pallé, E., Salz, M., et al. 2018, Science, 362,",0.0
+"  2015, A&A, 582, A65, doi: 10.1051/0004-6361/201526894            1388, doi: 10.1126/science.aat5348",2.0
+"Bourrier, V., Lecavelier des Etangs, A., Ehrenreich, D.,         Oklopčić, A. 2019, ApJ, 881, 133,",0.0
+"  Tanaka, Y. A., & Vidotto, A. A. 2016, A&A, 591, A121,            doi: 10.3847/1538-4357/ab2f7f",2.0
+"  doi: 10.1051/0004-6361/201628362                               Oklopčić, A., & Hirata, C. M. 2018, ApJL, 855, L11,",2.0
+"Chachan, Y., Jontof-Hutter, D., Knutson, H. A., et al.             doi: 10.3847/2041-8213/aaada9",0.0
+"  2020, AJ, 160, 201, doi: 10.3847/1538-3881/abb23a              Parker, E. N. 1958, ApJ, 128, 664, doi: 10.1086/146579",2.0
+"Dai, F., & Winn, J. N. 2017, AJ, 153, 205,",0.0
+"                                                                 Salz, M., Czesla, S., Schneider, P. C., et al. 2018, A&A,",65.0
+  doi: 10.3847/1538-3881/aa65d1,2.0
+"                                                                   620, A97, doi: 10.1051/0004-6361/201833694",67.0
+"Draine, B. T. 2011, Physics of the Interstellar and",0.0
+"                                                                 Seager, S., & Sasselov, D. D. 2000, ApJ, 537, 916,",65.0
+  Intergalactic Medium (Princeton University Press),2.0
+"Drake, G. W. 1971, PhRvA, 3, 908,                                  doi: 10.1086/309088",0.0
+"  doi: 10.1103/PhysRevA.3.908                                    Spake, J. J., Sing, D. K., Evans, T. M., et al. 2018, Nature,",2.0
+"Ehrenreich, D., Bourrier, V., Wheatley, P. J., et al. 2015,        557, 68, doi: 10.1038/s41586-018-0067-5",0.0
+"  Nature, 522, 459, doi: 10.1038/nature14501                     Thomas, M. A., & Humberston, J. W. 1972, Journal of",2.0
+"France, K., Loyd, R. O. P., Youngblood, A., et al. 2016,           Physics B: Atomic and Molecular Physics, 5, L229,",0.0
+"  ApJ, 820, 89, doi: 10.3847/0004-637X/820/2/89                    doi: 10.1088/0022-3700/5/11/002",2.0
+"Gao, P., & Zhang, X. 2020, ApJ, 890, 93,                         Turner, J. D., Christie, D., Arras, P., Johnson, R. E., &",0.0
+"  doi: 10.3847/1538-4357/ab6a9b                                    Schmidt, C. 2016, MNRAS, 458, 3880,",2.0
+"Gudel, M. 1992, A&A, 264, L31",0.0
+                                                                   doi: 10.1093/mnras/stw556,67.0
+"Kirk, J., Alam, M. K., López-Morales, M., & Zeng, L. 2020,",0.0
+"                                                                 Venzmer, M. S., & Bothmer, V. 2018, A&A, 611, A36,",65.0
+"  AJ, 159, 115, doi: 10.3847/1538-3881/ab6e66",2.0
+                                                                   doi: 10.1051/0004-6361/201731831,67.0
+"Kreidberg, L., Line, M. R., Thorngren, D., Morley, C. V.,",0.0
+"  & Stevenson, K. B. 2018, ApJL, 858, L6,                        Wang, L., & Dai, F. 2019, ApJL, 873, L1,",2.0
+  doi: 10.3847/2041-8213/aabfce                                    doi: 10.3847/2041-8213/ab0653,2.0
+"Li, X., Chang, P., Levin, Y., Matzner, C. D., & Armitage,        Wood, B. E., Redfield, S., Linsky, J. L., Müller, H.-R., &",0.0
+"  P. J. 2020, MNRAS, 494, 2327,                                    Zank, G. P. 2005, ApJS, 159, 118, doi: 10.1086/430523",2.0
+"  doi: 10.1093/mnras/staa900                                     Youngblood, A., France, K., Loyd, R. O. P., et al. 2016,",2.0
+"Libby-Roberts, J. E., Berta-Thompson, Z. K., Désert,              ApJ, 824, 101, doi: 10.3847/0004-637X/824/2/101",0.0
+"  J.-M., et al. 2020, AJ, 159, 57,                               —. 2017, ApJ, 843, 31, doi: 10.3847/1538-4357/aa76dd",2.0
+  doi: 10.3847/1538-3881/ab5d36,2.0
+avr_spaces,14.882352941176471

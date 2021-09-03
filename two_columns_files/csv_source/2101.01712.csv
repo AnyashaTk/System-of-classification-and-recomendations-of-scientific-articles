@@ -1,0 +1,835 @@
+text,space_num
+"                                              MNRAS 000, 1–17 (2021)                                                      Preprint 6 May 2021                 Compiled using MNRAS LATEX style file v3.0",46.0
+                                              The impact of inhomogeneous subgrid clumping on cosmic reionization II:,46.0
+                                              modelling stochasticity,46.0
+"                                              Michele Bianco,1★ Ilian T. Iliev1 , Kyungjin Ahn2 , Sambit K. Giri3,4 ,",46.0
+"                                              Yi Mao5 , Hyunbae Park6 , and Paul R. Shapiro7",46.0
+"                                              1 Astronomy    Centre, Department of Physics & Astronomy, Pevensey III Building, University of Sussex, Falmer, Brighton, BN1 9QH, UK",46.0
+"                                              2  Department of Earth Science, Chosun University, Gwangju 501-759, Korea",46.0
+"                                              3 Institute for Computational Science, University of Zurich, Winterthurerstrasse 190, 8057 Zurich, Switzerland",46.0
+arXiv:2101.01712v2 [astro-ph.CO] 5 May 2021,0.0
+"                                              4 Department of Astronomy and Oskar Klein Centre, AlbaNova, Stockholm University, SE-106 91 Stockholm, Sweden",46.0
+"                                              5 Department of Astronomy Tsinghua University, Beĳing 100084, China",46.0
+"                                              6 Kavli Institute for the Physics and Mathematics of the Universe (WPI), The University of Tokyo Institutes for Advanced Study, The University of Tokyo,",46.0
+"                                              Kashiwa, Chiba 277-8583, Japan",46.0
+"                                              7 Department of Astronomy and Texas Cosmology Center, University of Texas, Austin, TX 78 712, USA",46.0
+                                              Accepted 2021 March 14. Received 2021 February 8; in original form 2021 February 8,46.0
+                                              ABSTRACT,46.0
+"                                              Small-scale density fluctuations can significantly affect reionization, but are typically modelled quite crudely. Unresolved",46.0
+"                                              fluctuations in numerical simulations and analytical calculations are included using a gas clumping factor, typically assumed to",46.0
+"                                              be independent of the local environment. In Paper I we presented an improved, local density-dependent model for the sub-grid",46.0
+                                              gas clumping. Here we extend this using an empirical stochastic model based on the results from high-resolution numerical,46.0
+                                              simulations which fully resolve all relevant fluctuations. Our model reproduces well both the mean density-clumping relation,46.0
+"                                              and its scatter. We applied our stochastic model, along with the mean clumping one and the Paper I deterministic model, to",46.0
+"                                              create a large-volume realisations of the clumping field, and used these in radiative transfer simulations of cosmic reionization.",46.0
+"                                              Our results show that the simplistic mean clumping model delays reionization compared to local density-dependent models,",46.0
+"                                              despite producing fewer recombinations overall. This is due to the very different spatial distribution of clumping, resulting in",46.0
+                                              much higher photoionization rates in the latter cases. The mean clumping model produces smaller H II regions throughout most,46.0
+"                                              of reionization, but those percolate faster at late times. It also causes significant delay in the 21-cm fluctuations peak and yields",46.0
+                                              lower non-Gaussianity and many fewer bright pixels in the PDF distribution. The stochastic density-dependent model shows,46.0
+"                                              relatively minor differences from the deterministic one, mostly concentrated around overlap, where it significantly suppresses",46.0
+"                                              the 21-cm fluctuations, and at the bright tail of the 21-cm PDFs, where it produces noticeably more bright pixels.",46.0
+"                                              Key words: Cosmology: theory, dark ages, reionization, first stars – Methods: numerical – Galaxies: intergalactic medium",46.0
+                                              1 INTRODUCTION                                                                    2015; Robertson et al. 2015; Ali et al. 2015; Pober et al. 2015; Patil,46.0
+                                                                                                                                et al. 2017; Mertens et al. 2020; Ghara et al. 2020) and Lyman-𝛼,128.0
+                                              The Epoch of Reionization (EoR) is an important period in the his-,46.0
+                                                                                                                                damping wings (Davies et al. 2018; Greig et al. 2019). Such simula-,128.0
+"                                              tory of the Universe, which encompasses the creation of the first stars",46.0
+"                                                                                                                                tions require large volumes, of several hundreds cMpc size in order",128.0
+                                              and galaxies that subsequently influenced the formation and evolu-,46.0
+"                                                                                                                                to correctly derive the cosmic reionization history, to account for",128.0
+                                              tion of latter-day structures. These luminous objects have produced,46.0
+                                                                                                                                abundance and clustering of expected sources and to sample vast,128.0
+                                              enough UV-radiation to both alter their host galaxy composition and,46.0
+                                                                                                                                regions of the universe for detection of the redshifted 21cm hyper-,128.0
+"                                              to propagate into the intergalactic medium (IGM), ultimately ioniz-",46.0
+                                                                                                                                fine transition of neutral hydrogen (Mellema et al. 2006b; Iliev et al.,128.0
+                                              ing it for a second time (Furlanetto et al. 2006; Zaroubi 2012; Ferrara,46.0
+"                                                                                                                                2014), as relevant for current and upcoming experiments (e.g. LO-",128.0
+                                              & Pandolfi 2014).,46.0
+"                                                                                                                                FAR1 , SKA2 ). At the same time, EoR simulations need to include",128.0
+                                                 The key goal of reionization simulations is to provide numerical,49.0
+                                                                                                                                fluctuations in the density distribution down to the Jeans mass of the,128.0
+"                                              framework for constraining EoR observables, for example the detec-",46.0
+"                                                                                                                                cold gas, which is in sub-kpc scale, so as to correctly model recombi-",128.0
+                                              tion of the 21cm hyperfine transition of neutral hydrogen fluctuations,46.0
+                                                                                                                                nation effects and thus properly track the expansion of ionizing fronts,128.0
+                                              (Bowman & Rogers 2010; Paciga et al. 2013; Yatawatta et al. 2013;,46.0
+"                                                                                                                                throughout reionization (Park et al. 2016). Unfortunately, because of",128.0
+                                              Parsons et al. 2014; Jelić et al. 2014; Jacobs et al. 2015; Dillon et al.,46.0
+                                                                                                                                1   http://lofar.org,128.0
+                                              ★   Contact e-mail: M.Bianco@sussex.ac.uk                                         2   https://skatelescope.org,46.0
+                                              © 2021 The Authors,46.0
+avr_spaces,63.08064516129032
+2       M. Bianco et al.,0.0
+"limited dynamic range, satisfying both of these requirements in a            This paper is organized as follows. In § 2 we present the N-body",0.0
+"single fully-numerical simulation is currently unachievable, and will     and radiative transfer (RT) simulation used, the numerical methods,",0.0
+"remain challenging in the future. Hence, in large-scale simulations,      §2.2 and our models in §2.3. In §2.4 we discuss the realisation of",0.0
+the sources and sinks of ionizing radiation often act on scales much      the clumping factor for large volumes from sub-grid inhomogeneity,0.0
+smaller than the resolution level and need to be treated using sub-grid   correlation. In §3 we analyse our RT simulation results and look into,0.0
+"prescriptions. Consequently, simulations may adopt incorrect values       how our models influence the basic features of EoR: the reionization",0.0
+"for various relevant quantities (e.g. density, temperature, gas pres-     history in §3.1, the volume-averaged ionization fraction evolution,",0.0
+"sure, etc.) smoothed on the (relatively coarse) grid scales and this      the integrated Thompson optical depth and then the Bubble size",0.0
+could influence the predicted observational signatures.                   distribution in §3.3. To better understand the change in ionization,0.0
+"   In this work, our focus is on how sub-grid density inhomogeneities     morphology we describe a side-by-side comparison of box slice shot",3.0
+are considered within the volume elements of large-scale simula-          with zoom §3.2. In §3.4 we analyse the 21cm signal power spec-,0.0
+tions. Depending on how gas density fluctions vary in space and over      tra and the brightness temperature distribution. Our conclusions are,0.0
+"time (local degree of ""clumpiness""), the recombinations in the IGM        summarized in §4.",0.0
+can significantly affect the progress and nature of the reionization,0.0
+process. For every ionized atom that recombines with a free elec-,0.0
+"tron, an additional ionizing photon should be produced in order to",0.0
+ionize it again and keep the IGM highly ionized. In this way po-          2 METHODOLOGY,0.0
+tentially a substantial portion of the sources photon budget could        2.1 Numerical Simulations,0.0
+"be depleted. In simulations, the recombination",0.0
+"                                      D              Erate R is discrete,",38.0
+                                               2   2,47.0
+"averaged on a mesh giving hRi = 𝛼B (T)xi n , where 𝛼 𝐵 (𝑇) is             We use N-body simulations to follow the evolution of cosmic struc-",0.0
+"                                                                          tures, performed with the CUBEP3 M code (Harnois-Déraps et al.",74.0
+"the (temperature-dependent) Case B recombination coefficient, 𝑥 𝑖",0.0
+                                                                          2013). The code uses particle-particle on short-range and particle-,74.0
+"is the ionized fraction, 𝑛 is the number density and for simplic-",0.0
+                                                                          mesh on long-range to calculate gravitational forces. We use set of,74.0
+ity we assumed pure hydrogen gas. This indicates the number of,0.0
+"                                                                          three N-body simulations, whose parameters are summarized in Ta-",74.0
+"electron-proton recombination per second in a volume, for a given gas",0.0
+                                                                          ble 1.,74.0
+"chemistry, within each grid cell. Early semi-analytical models have",0.0
+"                                                                             Our clumping factor modeling is based on small, high resolution",77.0
+"adopted a common methodology named Clumping Factor Approach,",0.0
+"                                                                          volume box (6.3 ℎ−1 Mpc= 9 Mpc, 17283 particles, labelled SB in",74.0
+that defines the averaged recombination rate in terms of a clumping,0.0
+                                                                          Table 1). This has sufficient spatial and mass resolution to resolve,74.0
+"factor C = n2 /hni 2 , which corrects for the difference between the",0.0
+"                                                                          the smallest halos that can hold cold, neutral gas. Our main larger-",74.0
+"cell-averaged h𝑛i 2 and the actual value, thereby accounting for un-      volume N-body simulation is referred to as LB-1 (500 ℎ−1 Mpc=",0.0
+"resolved small-scale (sub-grid) structure in simulations (Gnedin &        714 Mpc, 69123 ≈ 330 billion particles). A smaller simulation, LB-",0.0
+"Ostriker 1997; Tegmark et al. 1996; Ciardi & Ferrara 1997; Madau          2, (244 ℎ−1 Mpc= 349 Mpc, 40003 = 64 billion particles) will be used",0.0
+"et al. 1999; Valageas & Silk 2004). If not correctly treated, this ap-    as comparison to analyse possible influence of box size and resolution",0.0
+proach can underestimate the impact of sub-grid inhomogeneities on        in the realisation of sub-grid clumping factor and prove the stability of,0.0
+absorption of radiation. In some cases this term is just completely       our method. For both of the large-volume simulations the minimum,0.0
+"ignored, i.e.: C = 1 (Onken & Miralda-Escudé 2004; Kohler et al.          halos mass resolved is 109 𝑀 , while halos with 108 𝑀 < 𝑀ℎ𝑎𝑙𝑜 <",0.0
+"2007), but the more common and simplistic approaches consist in           109 𝑀 are implemented using a sub-grid model (Ahn et al. 2014),",0.0
+either a constant global term (Cen 2003; Zhang et al. 2007) or a          thereby all atomically-cooling halos (ACHs) with minimum mass,0.0
+time evolving global term (Iliev et al. 2005; Mellema et al. 2006b;       Mhalo & 5 × 108 M are included. We are using updated N-body,0.0
+"Iliev et al. 2007; Pawlik et al. 2009), averaged on the entire box        simulations compared to Paper I, we illustrate this further in §A.",0.0
+"volume, also referred as the biased homogeneous or globally aver-            An on-the-fly spherical overdensity halo finder (Harnois-Déraps",0.0
+"aged clumping model. Recently we presented our first work (see Mao        et al. 2013; Watson et al. 2013), with overdensity parameter Δ = 130,",0.0
+"et al. 2019, for reference), hereafter Paper I, where we investigated     creates an halo catalogues at given redshift, that is later used as",0.0
+"the impact of a spatially varying, local density dependent sub-grid       inputs for the radiative transfer simulation. The remaining particles",0.0
+clumping factor on reionization observables. In the present paper         are categorized as part of the IGM. In this work we do not include,0.0
+we extend the discussion and propose a more realistic and accurate        any effects from minihaloes Mhalo < 108 M . Even though these,0.0
+"treatment of the Clumping Factor Approach, that takes into account        sources could have driven ionization in the early phase of EoR, their",0.0
+also the scatter around the mean clumping-density relation observed       effect on later stage is expected to be minor because of molecular,0.0
+in high-resolution simulations.                                           dissociation by UV background radiation from primordial luminous,0.0
+"   We use a high-resolution N-body simulation of a small volume           sources, up to a point that their contribution is negligible compared",3.0
+"of side length 9 cMpc, with spatial and mass resolution of approx-        to heavier ACHs (Ahn et al. 2009). Initial conditions are generated",0.0
+"imately 200 pc and 5000 M , to statistically describe IGM density         using the Zel’dovich approximation and the power spectrum of the",0.0
+"fluctuations down to the Jeans mass in the cold, pre-reonization gas      linear fluctuations is given by the CAMB code (Lewis et al. 2000). The",0.0
+"and then to implement these sub-grid density fluctuations into two        SB N-body simulation starts at redshift z = 300, while LB-1 and",0.0
+"large volume (714 cMpc and 349 cMpc os side length) reionization          LB-2 at 𝑧 = 150, which gives enough time to significantly reduced",0.0
+"simulations. By adapting the small-scale sub-grid to the resolution       non-linear decaying modes (Crocce et al. 2006), while at the same",0.0
+of larger boxes we then model the correlation between density and         time fluctuations are small enough to ensure linearity of density field,0.0
+"clumping factor, comparing three different models (details in §2.3),      at the respective resolutions. The cosmological parameter are based",0.0
+in order to infer the clumping factor from the coarse density grid        on WMAP 5 years data observation and consistent with final Planck,0.0
+"of the large volume, see §2.4. Finally we perform a radiative trans-      results, for a flat, ΛCDM cosmology with the following parameters,",0.0
+"fer simulation to study the effect of this sub-grid inhomogeneity         ΩΛ = 0.73, Ωm = 0.27, Ωb = 0.044, H0 = 70 km s−1 cMpc−1 ,",0.0
+"approach on observables of reionization.                                  𝜎8 = 0.8, ns = 0.96 and the cosmic helium abundance 𝜂He = 0.074",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,10.133333333333333
+                                                                                                                         Subgrid clumping II              3,121.0
+"Table 1. N-body simulation parameters. Minimum halo mass is 105 𝑀 , 109 𝑀 and 109 𝑀 , corresponding to 20, 40 and 25 particles, respectively in SB,",0.0
+LB-1 and LB-2. In all cases the force smoothing length is fixed at 1/20 of the mean inter-particle spacing.,0.0
+   Label     Box size    𝑁 𝑝𝑎𝑟 𝑡𝑖𝑐𝑙𝑒    fine mesh   spatial resolution       𝑚 𝑝𝑎𝑟 𝑡𝑖𝑐𝑙𝑒      RT coarse-grained mesh 𝑎     RT coarse-grained cell size𝑏,3.0
+"     SB      9 cMpc         17283          34563           260 pc          5.12 × 103 M         83  (53%), 133  (50%)           2.381, 1.394 cMpc",5.0
+    LB-1    714 cMpc        69123         138243         5.17 kpc          4.05 × 107 M                  3003                      2.381 cMpc,4.0
+    LB-2    349 cMpc        40003          80003         4.36 kpc          2.43 × 107 M                  2503                      1.394 cMpc,4.0
+"𝑎 SB density grid is coarsened to the to the required resolution for the LBs. In the column for SB, the coarsened mesh size and respective percentage of the",0.0
+"overlapping volume for windows mesh function, calculated with Equation 3.",0.0
+"𝑏 Spatial resolution of the RT coarse-grained mesh for SB, for the calculation of Equation 5 and 6.",0.0
+(Komatsu et al. 2011). Our method is general and can be applied in                 2.2 Coarse-Grid Method,0.0
+"any cosmological background, but the specific fitting parameters we",0.0
+                                                                                   Our clumping factor calculations are based on N-body data and ne-,83.0
+provide are based on the above values.,0.0
+                                                                                   glect any hydrodynamical effects on the clumping factor. Accounting,83.0
+                                                                                   for the gas pressure provides additional smoothing at small scales and,83.0
+    We simulate the Epoch of Reionization using the C2 -Ray code,4.0
+                                                                                   therefore our clumping factor values should be considered as upper,83.0
+"(Mellema et al. 2006b), a photon-conserving radiative transfer (RT)",0.0
+"                                                                                   limits. Moreover, we are interested in the reionization of the IGM",83.0
+code based on short characteristic ray-tracing. The LB-1 and LB-2 N-,0.0
+                                                                                   and therefore exclude the halos from our calculations. The contri-,83.0
+body simulations provide the IGM density fields and halo catalogues,0.0
+                                                                                   bution of recombinations inside haloes is already taken into account,83.0
+"with masses, velocities, position and other variables, for a total of 76",0.0
+                                                                                   in Equation 1 through the photon escape fraction and should not be,83.0
+"snapshots, equally spaced in time (Δ𝑡 = 11.54 Myr) in the redshfit",0.0
+                                                                                   counted again.,83.0
+"interval z ∈ [6; 50]. For computational feasibility, the density grid",0.0
+"                                                                                      In order to represent the N-body particles into a regular grid, we",86.0
+"is coarsened for the radiative transfer simulation to 3003 (LB-1),",0.0
+                                                                                   adopt the SPH-like smoothing technique described in §2.2 of Paper,83.0
+and 2503 (LB-2). The high-resolution N-body simulation (SB) data,0.0
+"                                                                                   I, we refer the readers to e.g. Shapiro et al. (1996) for more general",83.0
+"input is initially interpolated onto a 12003 (SB) grid, which can",0.0
+                                                                                   details on SPH smoothing methods. In LB-1 and LB-2 simulations we,83.0
+then be coarsened to the required resolution as discussed in the next,0.0
+                                                                                   use regular meshes directly produced by the SPH code at the required,83.0
+section. These grids correspond respectively to cell sizes of length,0.0
+                                                                                   resolution (the specific values used here are listed in Table 1). In the,83.0
+"2.381 cMpc, 1.394 cMpc and 7.5 kpc. For brevity we will refer to",0.0
+"                                                                                   SB simulation we adopt a more flexible approach, whereby we first",83.0
+"these grids as the sub-grid volumes for SB, and coarse volumes in",0.0
+"                                                                                   produce all quantities on a very fine mesh (here 12003 ), which is",83.0
+"LB-1 and LB-2, noted h.i 𝑐𝑟 𝑠 . Just as in Paper I, the interpolation",0.0
+                                                                                   later coarsened as required in order to approximately match the cell,83.0
+of the particles onto a grid is performed with a Smoothed-Particle-,0.0
+                                                                                   sizes used in the LB simulations.,83.0
+"Hydrodynamic-like method (SPH-like), which then yields coarse-",0.0
+                                                                                      A window mesh function smooths the SB mesh-grid on a coarser-,86.0
+"grid density, velocity and clumping fields (see sect. 2.2 in Paper I for",0.0
+"                                                                                   grained mesh, with size defined by Equation 3. The method allows",83.0
+details).,0.0
+                                                                                   the windows function to overlap. The percentage of overlap N% is,83.0
+    Ionization sources for the radiative transfer simulations are char-,4.0
+                                                                                   chosen in order to achieve the required resolution size of the LBs and,83.0
+"acterised by the ionizing photon production rate per unit time 𝑁¤ 𝛾 ,",0.0
+"                                                                                   at the same time obtain a large enough set of coarsened SB data, since",83.0
+given by,0.0
+                                                                                   Mesh3crs−gr gives the total number of data point then interpolated by,83.0
+           𝑀        Ω                                                              the clumping models (see Figure 1).,11.0
+𝑁¤ 𝛾 = 𝑓 𝛾 ℎ𝑎𝑙𝑜 𝑏                                                        (1),0.0
+           Δ𝑡 𝑠 𝑚 𝑝 Ω0                                                                                  BoxSizeSB,11.0
+                                                                                   Meshcrs−gr =                                                          (3),83.0
+"where 𝑚 𝑝 is the proton mass, 𝑀ℎ𝑎𝑙𝑜 is the total halo mass within                                    (1 − N% ) · ResLB",0.0
+"coarse-grid cell, Δ𝑡 𝑠 = 11.53 Myr, the lifetime of stars set equal to the          where ResLB is the coarse grained resolution of the large box and",0.0
+"time between N-body snapshots. f𝛾 is the efficiency factor, defined                BoxSizeSB the box size of the small box. We employ the SB cell-",0.0
+as                                                                                 wise quantities expressed with equations (4) and (7) to compute,0.0
+" 𝑓 𝛾 = 𝑓★ 𝑓𝑒𝑠𝑐 𝑁𝑖                                                        (2)       the parametrization of the correlation models. Hereafter, we will",1.0
+"                                                                                   refer to them as the sub-coarse-grid or SB data, whereas in the",83.0
+"where 𝑓★ is the star formation efficiency, 𝑓esc is the photons escape              case of LBs we name them RT-mesh grid. In our case we have",0.0
+fraction and 𝑁𝑖 is the stars ionizing photon production efficiency                 Meshcrs−gr = 8 with percentage overlap N% = 53% for 714 cMpc,0.0
+"per stellar atom, it depends on the initial mass function (IMF) of the             (LB-1) and Meshcrs−gr = 13 with N% = 50% for 349 cMpc (LB-2).",0.0
+"stellar population, e.g. for Pop II (Salpeter IMF) 𝑁¤ 𝛾 ∼ 4000, the                   We define the gas clumping factor based on the cell-wise averaged",0.0
+"value for 𝑓★ and 𝑓𝑒𝑠𝑐 are still uncertain, therefore these parameters              quantities (e.g. Iliev et al. 2007; Jeeson-Daniel et al. 2014; Mao et al.",0.0
+can be tuned in order to match the observational constrain that we                 2019),0.0
+will discuss in §3. Here we adopt the partial suppression model,0.0
+"of (Dixon et al. 2015), whereby for LMACHs located in a neutral                                   hn2N, IGM icell",0.0
+"                                                                                   CIGM, cell =              2",83.0
+                                                                                                                                                         (4),153.0
+"cell the efficiency factor is set to 𝑓 𝛾 = 8.2, while in an ionized cell                          hnN, IGM icell",0.0
+(above 10%) we set 𝑓 𝛾 = 5 to account for feedback. For HMACHs,0.0
+"the efficiency factor has a constant value of 𝑓 𝛾 = 5, equivalent to               where",0.0
+"e.g. Ni = 5000, 𝑓★ = 0.05 and 𝑓esc = 0.02.",0.0
+                                                                                                            ∫,108.0
+                                                                                                        1,104.0
+"                                                                                   hnN, IGM icell ≡               n       (r) d3 r                       (5)",83.0
+"                                                                                                       Vcell cell N, IGM",103.0
+"                                                                                                                                    MNRAS 000, 1–17 (2021)",132.0
+avr_spaces,35.34444444444444
+4        M. Bianco et al.,0.0
+"Figure 1. Sample correlation between local coarse IGM overdensity and coarse clumping factor at redshift z = 7.305 for LB-1 resolution (1.394 Mpc cells,",0.0
+"left panels) and LB-2 resolution (2.391 Mpc, right). Shown are the coarsened SB N-body data at these resolutions (black crosses), the IC model (deterministic)",0.0
+fit (red line) and the globally-averaged clumping factor (horizontal dashed line). The (blue) points with error bars represent the expected value and standard,0.0
+"deviation of the log-normal distribution (see text) in each overdensity bin. Vertical lines (solid grey) indicate the bin limits, whose sizes are adjusted so that",0.0
+each bin contains the same number of data points (approximately ∼ 400 (left) and 100 (right)). For each figure the right panel shows the log-normal distribution,0.0
+"(solid line) of the clumping within each density bin vs. the actual data (shadow area), where we include in the legend below each panels a short description of",0.0
+the relevant parameters.,0.0
+"and                                                                                the recombination rate, effectively biasing recombinations towards",0.0
+                                                                                   high-density regions.,83.0
+                          ∫,26.0
+                      1,22.0
+"hn2N, IGM icell ≡               n2      (r) d3 r.                          (6)",0.0
+"                    Vcell cell N, IGM",20.0
+The mean cell over-density is defined                                              II) Inhomogeneous Subgrid Clumping (IC) Model,0.0
+"                 hnN, IGM icell                                                    This model, where the local gas clumping is set based on one-to-one,",17.0
+1 + h𝛿icell =                                                              (7),0.0
+"                   nN, IGM                                                         deterministic relation with the cell density, was first presented in",19.0
+where nIGM is the global average of the IGM number density over                    Paper I. We include it here for comparison purposes. The relation of,0.0
+"the entire box volume (in this paper, we always refer to quantities in             the clumping with the overdensity in Equation 4 is fit by a quadratic",0.0
+comoving units).                                                                   function:,0.0
+                                                                                   log10 (CIC (x | zi )) ≡ y = ai x2 + bi x + ci                               (9),83.0
+"                                                                                   where x = log10 (1 + h𝛿icell ) and y = log10 (CIGM, cell ), the cellwise",83.0
+2.3 Modeling the Overdensity-Clumping Correlation                                  quantity from SB simulation. For each snapshot 𝑧 𝑖 we evaluate the,0.0
+"In this work we consider several models for the parametrisation of                 fitting parameters ai , bi and ci using the coarse-grid field we derived",0.0
+the correlation between the local coarse overdensity 1 + h𝛿icell and               in §2.2.,0.0
+"the coarse clumping factor CIGM, cell .",0.0
+                                                                                   III) Stochastic Subgrid Clumping (SC) Model,83.0
+"I) Biased Homogeneous Subgrid Clumping (BHC)                                       This model, first presented here, aims to account for the natural",0.0
+"The simplest approach is to set a constant (redshift-dependent)                    stochasticity of the relation between local clumping and overdensity,",0.0
+"clumping factor 𝐶 (𝑧), for the entire simulation volume (e.g. Madau                as observed in full numerical simulations. This stochasticity is due to",0.0
+et al. 1999; Mellema et al. 2006b; Iliev et al. 2007; Kohler et al. 2007;          various environmental effects beyond the dependence of the clump-,0.0
+"Raičević & Theuns 2011). In our case, we evaluate this globally av-                ing on the local density, and results in a significant scatter around the",0.0
+eraged clumping for every SB simulation snapshot at the appropriate                mean relation used in the IC model (Fig. 1).,0.0
+coarse resolution and then fit it with an exponential function of the                  We model this scatter from the simple one-to-one relation by,0.0
+form:                                                                              binning the SB coarse-grained clumping in several (here five) wide,0.0
+                                          2                                        bins of overdensity Δ𝛿j . In each bin we fit the scatter using a log-,42.0
+"CBHC (z) ≡ CIGM, cell = C0 ec1 z+c2 z + 1                                  (8)     normal distribution.",0.0
+"where C0 , c1 and c2 are the fitting parameters. We refer to this                                                                         2",0.0
+model as biased homogeneous clumping (Paper I) since that volume-                                            1           © (ln(x) − 𝜇ij ) ª,0.0
+"                                                                                    P (x | zi , Δ𝛿j ) ≡       √ exp ­−                                       (10)",84.0
+                                                                                                                                  2 𝜎ij2,130.0
+                                                                                                                                            ®,140.0
+averaged value is then multiplied by the local cell density to obtain                                   x 𝜎ij 2𝜋,0.0
+                                                                                                                         «                  ¬,121.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,20.27659574468085
+                                                                                                                            Subgrid clumping II               5,124.0
+Figure 2. Realization of clumping factor for LB-2 at different redshift. The horizontal line (solid black) is the globally averaged clumping factor BHC. In red,0.0
+the one-to-one fit IC. Blue error barred points represent the expected value and standard deviation of the log-normal distribution. Vertical lines (grey dashed),0.0
+"indicate the bin limits. The green area indicates the SC realization estimated by Equation 11. We plot the 38% (0.5 𝜎), 68% (1 𝜎) and 95% (2 𝜎) confidence",0.0
+interval to highlight the realization distribution. Cross point are the coarse SB data used to calibrate the model parameters. In the case of z = 7.305 they,0.0
+correspond to the one of Figure 1 (left column).,0.0
+"                                                                                                                                      MNRAS 000, 1–17 (2021)",134.0
+avr_spaces,32.25
+6       M. Bianco et al.,0.0
+"where x = CIGM, cell . For each snapshot zi and bin Δ𝛿j we evaluate              First, as noted in § 2.3, the large volumes generally sample much",0.0
+and record the parameters 𝜇ij and 𝜎ij .                                       wider range of environments than smaller ones used to produce the,0.0
+"   A stochastic process is then applied to generate log-normal random         model, thus inevitably the large-volume realisation should extrapo-",3.0
+"values from two dimensional uniformly distributed variable u1 , u2 ∈          late to over-densities outside the range sampled by the direct N-body",0.0
+"[0, 1], by using a modified3 Box-Müller transformation.                       data, for both larger and smaller over-densities. Second, again as dis-",0.0
+"                                      √                                       cussed above, for statistical reasons we fixed the bin sizes so that they",38.0
+"CSC (z, Δ𝛿| 𝜇ij , 𝜎ij ) = e 𝜇ij +𝜎ij · −2 ln(u1 ) ·cos(2 𝜋 u2 )          (11) contain same number of data points, which inevitably results in quite",0.0
+   where 𝜇ij and 𝜎ij are the weighed log-normal parameters for LB-1           uneven bin widths. These are very narrow near the peak density of,3.0
+"and LB-2. Finally, we note that the range of overdensities in the SB          points and are quite wide for extreme values of the over-density. The",0.0
+simulation is inevitably narrower due to the smaller volume compared          combination of these factors yields the ’flairing’ of the realisaion,0.0
+"to our target reionization volumes. For data beyond the SB limits, for        (green) points at both large and small values of the over-density, and",0.0
+"high and low densities, we fix the mean value to the one given by the         thus possible minor discrepancies with what we find in simulations.",0.0
+"IC model, while standard deviation is fixed to the one obtained in the        However, only small fraction of the points are in these regions, as",0.0
+"closest density bin.                                                          demonstrated by the density of points, and therefore it is unlikely this",0.0
+"   These distributions are then sampled randomly to create real-              will affect the results in any significant way. Obviously, the IC model",3.0
+"isations of the clumping in large-volume simulations. A similar               is potentially affected in a similar way, since the quadratic fit is used",0.0
+"approach, but in a different context, has been used previously                beyond the range of the original data points.",0.0
+"by Tomassetti et al. (2014) and Lupi et al. (2018), motivated by                 As a consistency check, we compare the redshift evolution of the",0.0
+observation of density distribution in giant molecular clouds.                volume average of the clumping realizations based on the SC and IC,0.0
+                                                                              models vs. the actual global mean Cglob based on the simulated data,78.0
+   In Figure 1 we show examples of the resulting parametrization              (Figure 3). The vertical line indicates the redshift at which the SB,3.0
+"obtained from the three models at redshift z = 7.305, applied at the          simulation was stopped, thus data beyond that is extrapolated. The",0.0
+LB-1 and LB-2 RT resolutions. We show the coarse-grained N-body               relative errors of the mean values (bottom panels) are in agreement,0.0
+"data, along with the BHC and IC models, as well as the mean,                  within the 6 − 7% for LB-2 (right) and within 10% for LB-1 (left),",0.0
+     1  2                                                       1 2,5.0
+                                                                    √︁ E[X] = throughout the relevant redshift range 6 ≤ z ≤ 30. At the highest,68.0
+                                                                       2,71.0
+"e 𝜇+ 2 𝜎 , and the standard deviation, SD[X] = e 𝜇+ 2 𝜎 e 𝜎 − 1, of           redshifts (𝑧 > 30) the errors appear larger, however over that redshift",0.0
+our proposed log-normal distribution of the stochasticity. On the             range the density fluctuations are small and thus all clumping factors,0.0
+side plot we show the coarse-data distribution (shadow histogram)             converge to 1 and do not contribute to the recombination rate.,0.0
+"and the resulting log-normal fit (solid line) with brief description of       Hence, the local density inhomogeneity does not significantly affect",0.0
+"the density-bin limits and fitting parameters shown in the legend.            the global averages; however, we expect that the local clumping",0.0
+                                                                              factor plays a greater role in the recombination and ionization at,78.0
+"2.4 Clumping Implementation in Large-Scale Volumes                            small scales (e.g. on the H II region size distribution, ionized bubble",0.0
+"                                                                              volume evolution, etc.). The proposed models are roughly consistent",78.0
+"We used simulations LB-1 and LB-2 as examples of our method                   with results of previous papers Park et al. (2016), Iliev et al. (2007)",0.0
+for creating large-volume simulation sub-grid clumping realisation.           and once our the RT-simulation are performed we expect to obtain,0.0
+Results are shown in Figure 2. In the figures we show the N-body              similar confirmation from the work of Iliev et al. (2012).,0.0
+"data upon which the model is based (black crosses), the volume-",0.0
+"averaged clumping factor BHC (black horizontal line), the one-to-",0.0
+"one quadratic fit IC (red solid line), the expectation value E[X]",0.0
+and the standard deviation SD[X] of the log-normal distribution in,0.0
+each density bin (blue error-bar points) with the relative bins limits,0.0
+"also shown (dashed vertical line). Finally, our SC model clumping",0.0
+realisation (green area) based on the density field of LB-2 is shown,0.0
+"with contours corresponding to the 95% (outer), 68% (middle) and              3 CLUMPING MODEL EFFECT ON OBSERVATIONAL",0.0
+38% (inner) confidence interval. Tables with parameters of the three             SIGNATURE,0.0
+models used in this paper can be found online4 .                              The sub-grid clumping model employed affects the local IGM re-,0.0
+"   The results illustrate the extend to which each subgrid clumping           combination rates, which is then reflected in the derived observable",3.0
+model reproduces the trends in the direct N-body data throughout              signatures of reionization. In order to understand and try to quan-,0.0
+"the evolution. The BHC (mean-clumping) model roughly matches                  tify the importance of this choice, we perform three RT simulations",0.0
+the peak of the contours and its evolution over time. The IC                  where we fix the source production efficiencies of ionizing photons,0.0
+model (quadractic fit) captures well the general trend of the density-        and vary solely the clumping model. At each time step the precom-,0.0
+clumping relation and tracks well the highest density of data points.         puted N-body density fields are used to create a realisation of the,0.0
+"Finally, our new SC model realisation fully reproduces the data,              corresponding gridded clumping factor, as described in §2.3. These",0.0
+including the scatter around the mean relation. The contours trace            clumping grids are then stored and provided as additional inputs to,0.0
+"the majority of the simulation data quite closely, apart from a few           full radiative transfer simulations with the C2 -RAY code (Mellema",0.0
+"outliers. However, a few things should be noted here.                         et al. 2006a). Specifically, the simulation used for this section is",0.0
+                                                                              LB-1.,78.0
+"3  A random variable is defined log-normal distributed when the natural          The simulation redshifts span the range 𝑧 = 40 to 6, for a total of",0.0
+logarithm of the variable is normal distributed. Therefore our modification   125 snapshots. The corresponding aperture on the sky vary from 3.6,0.0
+"simply consist in taking the exponential of the transformation.               to 4.7 deg per side, and covers the redshifted 21-cm frequency range",0.0
+4 table for model parameters:                                                 from 26 to 45 MHz. The resolution evolves from 43.5 00 to 56 00 in the,0.0
+"https://github.com/micbia/SubgridClumping                                     spatial direction, and from 0.08 to 0.15 MHz in frequency.",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,7.597014925373134
+                                                                                                                           Subgrid clumping II                7,123.0
+                                                                                [t],80.0
+"Figure 3. Comparison of mean clumping values for the three different models, the redshift evolution of the mean clumping factor for the three models,",0.0
+"respectively, shows the range of the standard deviation. On the bottom plot we show the relative where the left image is for LB-1 and right for LB-2. On the",0.0
+"upper plot we have the dashed black line is BHC, in red IC and in green SC model, the shadow error in percentage of the difference with BHC.",0.0
+"Figure 4. Left plot, the volume-averaged neutral fraction for BHC (solid red),      Figure 5. Thomson scattering optical depth to CMB photons integrated",0.0
+"IC (dashed blue) and SC (solid green) clumping models applied to simulation         through our simulations, as labelled. Hown are also the Planck observa-",0.0
+SB-2. On the right we show the redshift delay of IC and SC models compared          tional constraint (black dashed line) along with its relative 1-𝜎 confidence,0.0
+to BHC. As a comparison we include observational constrains (see legend)            interval (violet shaded),0.0
+"from Ly𝛼 emitters (cyan circle) (Ota et al. 2008; Ouchi et al. 2010), Ly𝛼",0.0
+clustering (orange circle) (Ouchi et al. 2010) and from high redshift quasars,0.0
+spectra (pink) (Davies et al. 2018).                                                faster evolution and an earlier end of reionization compared to the,0.0
+"                                                                                    BHC model. The former models diverge from BHC around 𝑧 6 12,",84.0
+                                                                                    and thereafter the mean reionization is accelerated with a maximum,84.0
+"    Model           𝑧10%      𝑧30%      𝑧50%      𝑧70%        𝑧90%    𝑧𝑟 𝑒𝑖𝑜𝑛       difference at 𝑥¯𝑖 = 70%, of Δ𝑧 ' 0.3 at 𝑧 ' 7.5, corresponding to",4.0
+     BHC           11.918     9.533     8.118    7.221       6.721     6.483        a time difference of approximately 36 Myr. The end of reionization,5.0
+"      IC           11.918     9.611     8.340    7.480       6.905     6.583        is delayed by Δ𝑧 = 0.1, or 17 Myr. Here there is very little differ-",6.0
+      SC           11.918     9.611     8.340    7.480       6.905     6.549        ence between the SC and IC models. Compared to the observational,6.0
+"      Δ𝑧              0       0.078     0.222    0.259       0.184      0.1         constraints, all three models reionize somewhat early, however these",6.0
+  Δ𝑡 [𝑀 𝑦𝑟 ]          0        5.8       22.9     34.4        28.9     17.2,2.0
+"                                                                                    constraints are largely upper limits, and with significant uncertain-",84.0
+"Table 2. Mean volume-averaged ionized fractions, 𝑥¯ 𝑖 , at a reionization mile-     ties. Moreover, our main interest is the relative effect of different",0.0
+"stones: 10%, 30%, 50%, 70% and 90% volume of the gas ionized. The last              sub-grid clumping models, rather than a faithful reproduction of the",0.0
+"column 𝑧𝑟 𝑒𝑖𝑜𝑛 lists the end of reionization, defined as 𝑥¯ 𝑖 = 99%. The second     constraints.",0.0
+"section lists the redshift and time differences with respect to the BSC model.         During reionization, free electrons scatter CMB photons via in-",0.0
+"                                                                                    verse Compton scattering, suppressing CMB anisotropies on all",84.0
+                                                                                    scales and introducing polarization on large angular sizes. The contri-,84.0
+3.1 Reionization History                                                            bution from free electron can be quantified by the integrated Thomson,0.0
+"Our results on the reionization histories are presented in Fig. 4 and               scattering optical depth along the line of sight, given by",0.0
+"Table 2. Perhaps counter-intuitively, either of the more realistic,                                           𝑛𝑒 (𝑧 0 )",0.0
+                                                                                                     ∫ 𝑧,101.0
+                                                                                                                             0,125.0
+density-dependent clumping treatments (SC and IC) yield somewhat                    𝜏𝑒 (𝑧) = 𝑐 𝜎𝑇               0       0 𝑑𝑧                                (12),0.0
+                                                                                                      0 (1 + 𝑧 ) 𝐻 (𝑧 ),102.0
+"                                                                                                                                      MNRAS 000, 1–17 (2021)",134.0
+avr_spaces,30.944444444444443
+8       M. Bianco et al.,0.0
+Figure 6. Evolution of the number of recombinations per hydrogen atom and per Hubble time throughout reionization (left) and the volume-averaged,0.0
+photoionization rate (right). The bottom plots show the relative difference compared to BHC in each case. Dashed and respectively dashed-dotted lines of the,0.0
+same colour indicate the relative quantity in under-dense and over-dense regions.,0.0
+"where 𝜎𝑇 = 6.65 × 10−25 𝑐𝑚 2 is the Thomson cross section, 𝑐 the                  to the stochastic nature of the realization process, also related to the",0.0
+speed of light and 𝑛𝑒 is the electron density at a given redshift.                broader scatter in Figure 3 (shaded areas).,0.0
+"In Figure 5 we plot the volume mean of Equation 12, integrated                       In Figure 6 (right panels) we compare the (non-equilibrium) pho-",0.0
+"back in redshift. In agreement with the global reionization histories,            toionization rates Γ𝑖 computed during the run by the C2 -Ray code.",0.0
+"the inhomogeneity-dependent models are very similar to each other                 Just as above, all mean photoionization rates are essentially the same",0.0
+"and are slightly optically thicker than the BHC case, due to the                  until 𝑧 ∼ 12, after which the BHC model one rises more slowly,",0.0
+more advanced reionization in the latter. Regardless of this small                lagging behind the other two cases by about factor of 2.5 throughout,0.0
+"difference, all three cases are in close agreement with the Planck-               most of the evolution, eventially catching up by 𝑧 ∼ 6. The average",0.0
+"LFI 2015 results Ade et al. (2016), which found 𝜏𝑒 = 0.066 ± 0.016                rates in the overdense regions are higher than the mean (reflecting",0.0
+"corresponding to an instantaneous reionization for redshift 𝑧𝑟 𝑒𝑖𝑜𝑛 =             the inside-out nature of reionization) by a similar amount, while the",0.0
+8.8+1.7,0.0
+    −1.4,4.0
+         .                                                                        mean photoionization rates in the under-dense regions lag behind by,9.0
+"   The importance of recombinations throughout reionization could                 larger factors, up to several hundred, before again rising steeply and",3.0
+"be quantified by the (dimensionless) mean rate of recombinations per              catching up with the mean by 𝑧 ∼ 6. Interestingly, the mean rate",0.0
+hydrogen atom per Hubble time:                                                    in BHC overdense regions is again very close to the whole volume,0.0
+                                                                                  means of IC and SC models. The average values in the under-dense,82.0
+"                  hRi                   𝛼 (1 + z) 3 𝜌¯ c,0 Ωb                     regions remain the same for all models until much later, 𝑧 ∼ 9.5, in-",18.0
+hNrec i =                       = 0.72 B                       CHII hxHII i 2,0.0
+           tH (z) hnH i Vcell               H(z)       𝜇 H mp                     dicating that the specific clumping model has little influence before,11.0
+                                                                         (13)     that redshift.,73.0
+"                                                                                     At first glance, it seems somewhat counter-intuitive that reion-",85.0
+"   In Figure 6 (top left) we show the evolution of the mean of this               ization proceeds faster in the denity-dependent models IC and SC,",3.0
+"quantity over the full simulation volume (solid lines), as well as                despite their notably higher recombination rates. The reason for this",0.0
+averaged only over the over-dense (dashed lines) and under-dense                  is that in the former cases also the suppression of low-mass galaxies,0.0
+"(dot-dashed lines) regions. Colours indicate the model used, as per               (LMACHs) due to radiative feedback is weaker than in the BHC",0.0
+"legend. We also show (bottom left) the relative percentage difference             case, as illustrated in Figure 7. In the BHC case essentially all such",0.0
+"compared to the BHC model. As could be expected, the number                       galaxies are suppressed by 𝑧 ∼ 8.5, while in the density-dependent",0.0
+"of recombinations grows strongly over time, starting close to zero,               models the suppression is slowed down, allowing LMACHs to last",0.0
+"departing from BHC model around 𝑧 ∼ 12, and then all reaching ∼ 15                longer in high density regions. This is further clarified in Figure 8",0.0
+"at late times, as more and more structures form over time. Although               where we show the number density distribution of ionized fraction of",0.0
+"all models end up at similar values by 𝑧 ∼ 6, the BHC model lags                  cells at five different reionization stages, 𝑥¯𝑖 = 0.1, 0.3, 0.5, 0.7, 0.9,",0.0
+behind throughout the evolution. The IC and SC models yield very                  approximately corresponding to redshift between 𝑧 ' 12 − 6 (see,0.0
+similar values at all times. The over-/under-dense volumes yield much             Table 2). The vertical line indicates the partial suppression thresh-,0.0
+"higher/lower number of recombinations, respectively, demonstrating                old for LMACHs. Early on (𝑥¯𝑖 = 0.1) the gas clumping has yet had",0.0
+"the wide variety of outcomes dependent on the local conditions.                   very litte effect, due to the still small ionized fraction and the short",0.0
+"Interestingly, the over-dense average for the BHC model results in                time available for recombinations, thus all models yield very similar",0.0
+"very similar recombinations to the full-volume averages of SC and                 results, with only BHC showing slightly fewer highly ionized cells.",0.0
+"IC models, showing that at least on average the clumping in these                 As reionization progresses (𝑥¯𝑖 = 0.3), IC and SC models remain",0.0
+"last models behaves the same way as the over-dense regions in BHC.                very similar, while BHC is gaining more ionized cells, and at the",0.0
+"Overall, the SC model shows a few percent higher recombination                    same time it is starting to show a lack of neutral regions. Starting",0.0
+"rate (∼ 1 − 5%) compared to the IC model. This is most likely due                 from roughly mid-point of reionization (𝑥¯𝑖 = 0.5), the dearth of neu-",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,6.0
+                                                                                                                  Subgrid clumping II              9,114.0
+                                                                             to understand how the sub-grid gas clumping model affects the,77.0
+                                                                             propagation of radiation and the local features of reionization.,77.0
+                                                                             In Figure 9 we show box slice of LB-2 and compare simulation,77.0
+                                                                             snapshots with similar globally averaged ionized fraction and the,77.0
+                                                                             three gas clumping models. From top to bottom row we have,77.0
+"                                                                             𝑥¯𝑖 = 0.3, 0.5, 0.7, 0.9 (in Table 2 we list the corresponding redshift",77.0
+                                                                             at which this occurs and its consequent time delay compared to the,77.0
+                                                                             BHC model) and from left to right column we have the different,77.0
+"                                                                             models BHC, IC and SC. Red/crimson regions indicate highly",77.0
+"                                                                             ionized cells 𝑥i > 0.9, in dark blue neutral regions 𝑥i < 0.1, and in",77.0
+                                                                             green/aquamarine the transition phase 𝑥i ≈ 0.5. Within each image,77.0
+"                                                                             we embed a zoom-in region, of 85 cMpc per side, to better appreciate",77.0
+Figure 7. The number density evolution of unsuppressed LMACHs ( 𝑓𝛾 =         the morphological changes of a randomly selected under-dense,0.0
+"8.2). Solid red line the BHC model, dashed blue line the IC model and in     neutral clump, as ionized fronts expand (bluer blob, right column",0.0
+gree the SC model.                                                           plots).,0.0
+                                                                                 Our simulations reproduce the general reionization features found,81.0
+                                                                             in previous simulations (e.g. Iliev et al. 2014; Hutter et al. 2021). In,77.0
+                                                                             high density regions LMACH are the first halos to form. In our sim-,77.0
+"                                                                             ulations they make their first appearance at redshift 𝑧 = 21, and by",77.0
+                                                                             𝑧 ∼ 12 every volume element contains at least one ionizing source.,77.0
+"                                                                             At first, a modest number of isolated sources, highly clustered on",77.0
+"                                                                             small scale but homogeneously distributed on large scale, start to",77.0
+"                                                                             ionize their surrounding gas, forming small regions of a few Mpc",77.0
+                                                                             size. The presence of sub-grid gas clumping slows down the propa-,77.0
+"                                                                             gation of the I-fronts and yields somewhat smaller, more fragmented",77.0
+"                                                                             H II regions. Throughout reionization, these HII bubbles grow and",77.0
+"                                                                             eventually overlap, at which point the ionization process accelerates",77.0
+                                                                             and many of the smaller bubbles percolate to much larger connected,77.0
+                                                                             volumes.,77.0
+                                                                                 The side-by-side comparison shows some notable differences be-,81.0
+"                                                                             tween BHC and the two density-dependent models, with the latter",77.0
+"                                                                             starting at a faster pace, with earlier local percolation, then slow-",77.0
+                                                                             ing down compared to the former case. Modest differences appear,77.0
+"                                                                             between the three models in terms of large scale morphology, with",77.0
+                                                                             a higher degree of ioniziation around early sources in the density-,77.0
+                                                                             dependent models IC and SC (respectively central and right panel).,77.0
+                                                                             From around the mid-point of reionization (50% ionization by vol-,77.0
+"                                                                             ume, second row of images) we can see neighbouring growing re-",77.0
+                                                                             gions connecting to each other and starting to highly ionize the link-,77.0
+"                                                                             ing filament. At this point, accordingly to Figure 8, all cells in BHC",77.0
+                                                                             have surpassed the threshold limit 𝑥i = 0.1 for the partial suppression,77.0
+                                                                             of low mass haloes. For IC (middle) and SC (right column) the de-,77.0
+                                                                             gree of ionization around sources is visibly more intense compared,77.0
+"                                                                             to BHC, in fact we can distinguish highly ionized cells clustered",77.0
+"                                                                             around the high density peak, whereas under-dense regions are kept",77.0
+                                                                             fairly neutral. This diversity is due to the higher recombination rate,77.0
+"                                                                             in inhomogeneity dependent model, shown in Figure 6 (left), that",77.0
+Figure 8. Ionized cell number density at reionization milestone x̄i =,0.0
+                                                                             effectively reduces the number of photons able to escape the cells of,77.0
+"0.1, 0.3, 0.5, 0.7, 0.9, top to bottom, for model BHC (red), IC (blue) and",0.0
+"SC (green). Vertical line (black dashed) indicates the ionization threshold, origin and spread into the neighbour grid elements. This is not the",0.0
+"𝑥i = 0.1, for partial suppression of LMACHs.                                 case for BHC, to which clumping factor in high density regions is",0.0
+                                                                             underestimated and ionizing photons are free to percolate and been,77.0
+"                                                                             absorbed elsewhere in the surrounding IGM, therefore interconnect-",77.0
+tral cells becomes ever more prominent whereas the peak of highly            ing filament cells between sources clearly appears extended and in a,0.0
+ionized cells stays roughly similar for all models. A faint difference       more advanced neutral-ionized transition (blue/aquamarine).,0.0
+"between SC and IC is visible at late times, where slightly more cells            Later on (𝑥i = 0.7, third row of images), ionized regions have",0.0
+remain neutral in SC.                                                        grown substantially and become strongly ionized. A first look sug-,0.0
+"                                                                             gests similar structure patchiness on large scale, although from the",77.0
+                                                                             zoom-in we can observe that BHC has a wider and smoother tran-,77.0
+3.2 Reionization morphology,0.0
+"                                                                             sition between the ionized/neutral phases, whereas IC and SC show",77.0
+"The globally-averaged quantities discussed above (Figure 4, 5 and            a narrower front, allowing more cells that host under-density to stay",0.0
+6) give an overall idea of the reionization history. Next step is            neutral. When the same transition region dwell across the three,0.0
+"                                                                                                                             MNRAS 000, 1–17 (2021)",125.0
+avr_spaces,61.149253731343286
+10        M. Bianco et al.,0.0
+"Figure 9. Box slice comparison of LB-2 ionization fraction for different clumping models. In red/crimson highly ionized regions 𝑥i > 0.9, in green/aquamarine",0.0
+transition 𝑥i ≈ 0.5 and in dark blue neutral regions 𝑥i < 0.1. The zoom-in covers an area of 85 cMpc per side and each pixel represent a volume element of,0.0
+"2.381 cMpc per side. We compare slices at same global average ionization fraction, from top to bottom row we have x̄i = 0.3, 0.5, 0.7, 0.9 (see Table 2 for",0.0
+"corresponding redshifts). From left to right column respectively we show the models BHC, IC and SC.",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,0.0
+                                                                                                            Subgrid clumping II                11,108.0
+"model, density dependent model show more irregularity with oc-          has started (Iliev et al. 2006b, 2014; Furlanetto & Oh 2016). Com-",0.0
+"casionally one or few cells appearing slightly more ionized then their  pared to BHC, the IC distribution is shifted toward larger sizes, such",0.0
+surrounding.                                                            that the limit for the plateau and the percolation cluster are up to,0.0
+   The morphology differences are more evident at late times (𝑥i =      one order of magnitude higher. A narrower separation between these,3.0
+"90%, bottom row of images), whereby HII bubbles connect together        two volume range indicates that the merging of ionized region in",0.0
+to form one vast interconnected highly ionized region. At this stage    BHC has just started (Iliev et al. 2014; Furlanetto & Oh 2016; Giri,0.0
+"the vast ionized IGM in IC and SC show variations that follow the       et al. 2018a), whereas in the case of IC this process is already on-",0.0
+"higher recombinations due to density fluctuations, which is not the     going. On the other hand, IC and SC distribution show similarity",0.0
+case in BHC model and therefore the same regions appear uniformly       at small scale but they differ for larger volumes. The former distri-,0.0
+"highly ionized, 𝑥 ≈ 1. On the other hand there are no striking differ-  bution shows a constant and continuous range of scales from large",0.0
+"ence between IC and SC, except for small variations, of a few pixels    volumes V ∼ 106 cMpc3 down to one cell, sign that ionized regions",0.0
+"of size, on the ionized/neutral boundaries. We suspect that this is nu- are in principle less interconnected and therefore the presence of one",0.0
+meric artefact due to the stochastic nature of SC. We are developing a  dominant super cluster has not yet occurred.,0.0
+"more complete clumping model, that we will present in future work,         During the later stages of the reionization process (x̄i = 0.7, bottom",0.0
+"to exclude this uncertainty.                                            left) this bifurcation of the FOF-BSD continues and strenghtens, with",0.0
+"                                                                        ever more small patches merging into the large one, while smaller",72.0
+                                                                        patches become fewer and on average ever smaller. At this stage,72.0
+"3.3 Bubble Size Distribution                                            the three models present similar volume distributions, whereas their",0.0
+"One of the key characteristics of reionization, which directly af-      MFP-BSD varies. BHC distribution starts to show a clear character-",0.0
+"fects all observables is the normalized distribution of bubble sizes    istic size peak. Albeit of similar shape, the BHC size distribution is",0.0
+"𝑅 𝑑𝑁/𝑑𝑅 or volume sizes 𝑉 2 𝑑𝑁/𝑑𝑉 of ionized regions (Furlanetto        clearly shifted to smaller scales, with the average bubble size smaller",0.0
+et al. 2004). A number of complementary approaches to calculate         by a few Mpc and the distribution peak at scale about a factor of 2,0.0
+these distributions have been proposed (e.g. Friedrich et al. 2011; Lin smaller (8 vs 15 Mpc).,0.0
+"et al. 2016; Giri et al. 2018a). Here we employ the Mean-Free-Path         Towards late reionization (x̄i = 0.9, bottom right), the volume",0.0
+"(MFP) method to calculate 𝑅 𝑑𝑁/𝑑𝑅, and the Friends-of-Friends           limit for isolated regions to grow before merging is further reduced",0.0
+"(FOF) algorithm (Iliev et al. 2006a) to obtain 𝑉 2 𝑑𝑁/𝑑𝑉 bubble size    to V ∼ 103 cMpc3 , while the percolation cluster surpass volumes of",0.0
+distributions (BSD). For both methods we employ the TOOLS21CM5          108 cMpc3 (i.e. close to the full simulation volume) in all the three,0.0
+"python package for EoR simulations analysis (Giri et al. 2020). In      cases. In Figure 10, the sizes distribution in the BHC model has",0.0
+"both cases, we apply a threshold value of 𝑥 𝑡 ℎ = 0.9, since we want    surpassed the other two, with average radius of 54.84 cMpc. IC and",0.0
+"to highlight differences in distribution of highly ionized regions that SC show again similar distribution but with an increasing, although",0.0
+"develop around sources.                                                 still minor, difference in the mean radius. Volume distribution in",0.0
+"   Results are shown in Figure 10 and Figure 11, respectively we        Figure 11 present a similar situation, the only difference between IC",3.0
+"see the typical traits of the percolation process, with volume ranges   and SC consists in the value of the volume merging limit, with a",0.0
+that roughly corresponding to what is expected from large simu-         difference up to 1 cMpc3 .,0.0
+lated box (Iliev et al. 2014). We present our results at four different,0.0
+"reionization milestones, 𝑥¯𝑖 = 0.3, 0.5, 0.7, 0.9, see Table 2 for cor- 3.4 21-cm Signal Statistics and Power Spectra",0.0
+"responding redshifts.∫ In the case of MFP-BSD, we calculate the mean",0.0
+"bubble size by 𝑅¯ = (𝑅 𝑑𝑁/𝑑𝑅) 𝑑𝑅, represented by the correspond-        The hyperfine transition of neutral hydrogen redshifed into meter",0.0
+ing vertical lines for each simulation. The sharp cut-off at small      wavelengths is a key observable of reionization. Its characteristic,0.0
+"scales 2.381 cMpc, for MFP-BSD, and 13.498 cMpc3 for FOF-BSD            emission/absorption line has rest-frame wavelength 𝜆0 = 21.1 cm",0.0
+correspond to the simulation cells size and volume respectively.        and corresponding frequency 1.42 GHz. Radio interferometry tele-,0.0
+"   Early-on (x̄i = 0.3, top left panel, Figure 10), LB-2 hosts small    scopes measure the intensity of this signal by quantifying the differ-",3.0
+H II bubbles with radius smaller then 10 cMpc. For inhomogeneity-       ential brightness temperature 𝛿Tb ≡ Tb − TCMB signal from patches,0.0
+"dependent models IC and SC, distributions present many more             of the sky, given as:",0.0
+"highly-ionized regions, indication of a faster radiation propagation                                                        √︄ ",0.0
+                                                                                                                    Ωb h2,116.0
+                                                                                                                                           ,100.0
+around sources. All three distributions peak at the size correspond-                                     TCMB                     1 + z 0.24,0.0
+                                                                        𝛿Tb ≈ 28 mK(1 + 𝛿)xHI 1 −,72.0
+ing to one cell. The same trend is confirmed by the topologically-                                         TS      0.0223          10      Ωm,0.0
+"connected FOF volumes (Figure 11), which are however typically                                                                                (14)",0.0
+"larger than MFP, with volumes between 30 − 700 cMpc3 for BHC",0.0
+"and a wider distribution for IC and SC, from one cell up to a few       here 𝑥HI is the fraction of neutral hydrogen and 1 + 𝛿 =",0.0
+"thousand Mpc3 .                                                           nN,IGM /n̄N,IGM is the local IGM overdensity. The differential",0.0
+   Even though the number of bubbles increase as reionization           brightness is characterized by the relation between the CMB tem-,3.0
+"progress, at x̄i = 0.5 (top right), the MFP-BSD remain similar. How-    perature TCMB and spin temperature TS (see e.g. Furlanetto et al.",0.0
+"ever, the FOF-BSD shows a qualitative transition when the small H II    2006 and Zaroubi 2012 for extended discussion). Equation 14 satu-",0.0
+"regions start to percolate into much larger, connected one. Their sizes rates when the neutral hydrogen decouples from CMB photons and",0.0
+"vary widely, with a broad flat distribution (plateau) at smaller scales couples with the IGM gas heated by X-ray sources (e.g. Ross et al.",0.0
+"(V < 105 − 106 cMpc3 ). However, BHC and IC also show a bifur-          2019), so that TS  TCMB , which is the approximation we adopt",0.0
+"cated distribution, with a second peak at large scales, at 105 cMpc3    here. This is known as the heating-saturated approximation where",0.0
+"for BHC and 106 cMpc3 for IC, indicating that percolation process       the signal is for the majority observable in emission, 𝛿Tb > 0, true",0.0
+                                                                        only at low redshift 𝑧 < 15. Thus in our simulation the approximated,72.0
+                                                                        differential brightness is dependent on the√density distribution of the,72.0
+"5 https://github.com/sambit-giri/tools21cm                              neutral gas and redshift, such that 𝛿Tb ∝ 1 + z (1 + 𝛿) xHI .",0.0
+"                                                                                                                        MNRAS 000, 1–17 (2021)",120.0
+avr_spaces,12.0
+12       M. Bianco et al.,0.0
+"Figure 10. Ionized bubble size distribution for simulation LB-2 and the three gas clumping models BHC (red, solid), IC (blue,  ∫ dashed) and SC (green, solid)",0.0
+"at volume averaged ionized fractions x̄i = 0.3, 0.5, 0.7, 0.9, as labelled. Vertical lines indicate the mean bubble radius R̄ = (R dN/dR)dR for the respective",0.0
+models.,0.0
+"Figure 11. Ionized volume size distribution for LB-2. In red the result for BHC, in blue for IC and in green for SC. Distribution represents stages where the",0.0
+"volume averaged ionized fraction is 𝑥¯ 𝑖 = 0.3, 0.5, 0.7, 0.9.",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,0.0
+                                                                                                                      Subgrid clumping II                 13,118.0
+"Figure 12. Smoothed differential brightness temperature lightcones, the colour map that shows the smoothed differential brightness ΔTb intensity as a function",0.0
+"of redshifted 21 cm signal frequency 𝜈obs and aperture ΔΩ. The angular smoothing is performed by a Gaussian Kernel with FWHM Δ𝜃, on frequency direction",0.0
+"is done by a top-hat kernel with same width, we use a baseline of B = 2 km (maximum baseline of the core of SKA1-Low). The figure shows slice through the",0.0
+"simulation and a comparison between BHC (top), IC (middle) and SC (bottom).",0.0
+"   From the RT and N-body simulation outputs we calculate the                    clumping models, BHC, IC and SC, respectively from top to bottom.",3.0
+differential brightness coeval cube at each time step. The cube is then          This type of data maps the 21-cm differential brightness evolution at,0.0
+"smoothed in the angular direction by a Gaussian kernel with a FWHM               the observed frequency 𝜈obs = 𝜈0 /(1 + z), where 𝜈0 = 1.42 GHz is",0.0
+"of 𝜆 0 (1 + z)/B, where B = 2 km corresponds to the maximum                      the rest frame frequency when the signal was emitted at redshift z.",0.0
+baseline of SKA1-Low core. Smoothing along the frequency axis is                 We then express the comoving box length in corresponding angular,0.0
+done by a top-hat kernel with the same width and the above Gaussian              aperture of 4.65◦ at z = 6.583.,0.0
+kernel. SKA1-Low will not observe the coeval cube. Instead it will,0.0
+"observe a lightcone, in which the signal evolves along the line of                  Early on, the IGM remains mostly neutral, the average signal",0.0
+sight direction. We construct lightcones from our simulation results             largely follows Eq. 14 (𝛿Tb > 30 mK) and the fluctuations are driven,0.0
+using the method described in Giri et al. (2018a). This method is also           by the density distribution. The gas clumping also remains low and,0.0
+"implemented in TOOLS21CM.                                                        therefore at low frequencies, 𝜈obs > 120 MHz, there is no visible",0.0
+"                                                                                 difference between simulations. As radiation escapes the host halos,",81.0
+   In Figure 12 we show the smoothed lightcone for the three different           it starts to form small isolated transparent regions around sources,3.0
+"                                                                                                                                   MNRAS 000, 1–17 (2021)",131.0
+avr_spaces,16.8
+14        M. Bianco et al.,0.0
+Figure 13. Differential brightness statistic quantities derived from the light-,0.0
+cones data smoothed on the core baseline of SKA1-Low (B = 2 km). Plot on,0.0
+top shows the frequency evolution of the signal root mean squared (RMS).,0.0
+Bottom plot shows the skewness and an inset panel show the frequency evo-,0.0
+lution of the averaged differential brightness in logarithmic scale.,0.0
+and gradually suppresses the average signal. The H II regions are,0.0
+still small and thus are smoothed over by the observation beam.,0.0
+Figure 12 shows very similar evolution for the three simulations at             Figure 14. Probability distribution functions of the differential brightness,0.0
+"frequency higher then 130 MHz (𝑧 < 10), but with different intensity            temperature at ionized fractions 𝑥i = 0.1, 0.3, 0.5, 0.7 and 0.9, for the three",0.0
+"of signal suppression. For example the appearances of the first trans-          clumping models, as labelled.",0.0
+"parent regions, due to lack of neutral hydrogen, at 𝜈𝑜𝑏𝑠 ' 147 MHz",0.0
+and angular position 3.2◦ and 1.1◦ shows that ionization around,0.0
+"sources are more consistent for the simulation with inhomogene-                 and with a steeper slope than the BHC model, indication that signal",0.0
+ity dependent clumping. This is the case even at higher frequency               fluctuations increase faster and stronger. Moreover the peak value of,0.0
+"𝜈𝑜𝑏𝑠 > 180 𝑀 𝐻𝑧 (𝑧 < 7), during the final phases of reionization the            the RMS fluctuations varies, in the case of IC and SC models the",0.0
+"morphology and size of the percolation cluster strongly depends on              amplitude is 14% higher, despite having a lower averaged brightness",0.0
+"the clumping model employed by the simulation. BHC model has                    temperature then the homogeneous case, indicating that the signal is",0.0
+large regions of feeble emission ∼ 3 mK that are extensively linked             sensitiive to a more physical treatment of the clumping factor. This,0.0
+together. The IC model shows the same morphology but with con-                  is the consequence of a lower clumping factor values in under-dense,0.0
+"siderably smaller and more isolated regions of signal. The SC model,            regions, consistent with the conclusion in subsection 3.1. The faster",0.0
+"in the other hand, shows a conspicuous lack of signal and regions of            propagation of I-fronts, in the vast low density regions, leads to a",0.0
+emission have only of a few Mpc size.                                           earlier second peak in the RMS of the two former approaches. In,0.0
+"   These differences between models are more clearly observed in                order of appearance at 𝜈obs = 165 MHz (z = 7.56) for SC, 169 MHz",3.0
+"the statistics of the 21-cm differential brightness temperature fluc-           (z = 7.34) for IC and slightly later at 176 MHz (z = 7.06) for BHC,",0.0
+"tuations. are significant variation in the statistics of the differential       respectively when the average neutral fraction is x̄n = 0.33, 0.28 and",0.0
+"brightness temperature - rms, PDFs, skewness and power spectra -                0.25. The subsequent decline is the results of reionization reaching",0.0
+"shown in Figure 13, Figure 14, and Figure 15. The low frequency                 its final stage, with almost complete ionization.",0.0
+cut-off is chosen for range where differences between models be-                   The averaged 21-cm fluctuations level at different scales is re-,0.0
+"comes noticeable. The high density peaks get ionized early, and the             flected in the power spectra (Figure 15), where we compare the",0.0
+"corresponding H II regions are smaller then the interferometer res-             results for models BHC, IC and SC at epochs at which the mean",0.0
+"olution, thus their effect on rms (Figure 13, top) is to diminish the           ionization fractions are 𝑥i = 0.1, 0.3, 0.5, 0.7, 0.9, as well as around",0.0
+"averaged 𝛿Tb without increasing fluctuations. At this stage the signal          reionization completion 𝑥 i = 0.99. At first, the 21-cm signal fol-",0.0
+"mostly follows the underlying density field, apart from the peaks and           lows the underlying density distribution of neutral hydrogen and the",0.0
+there is little difference between the models. The observed frequency           power spectra are very similar and approximatively a power law in,0.0
+of the RMS dip indicates the timing at which HII regions become                 all three cases. The flattening of the power spectra is an indication,0.0
+"larger then the interferometry smoothing scale and eventually start             of the expanding ionized region, shifting the signal toward larger",0.0
+"to overlap locally. This is the case at frequency larger then 120 MHz           scales while suppressing small structures. Interestingly, this charac-",0.0
+"(𝑧 ≈ 11). For the IC and SC models, the turnover occurs earlier                 teristic appears at the same scale regardless of the clumping model",0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,0.07317073170731707
+                                                                                                                      Subgrid clumping II                  15,118.0
+"Figure 15. The effect of clumping factor on the 21-cm power spectra compared at volume ionization fraction 𝑥i = 0.1, 0.3, 0.5, 0.7, 0.9 and 0.99 for the models",0.0
+"under study: BHC (red, solid), IC (blue, dashed) and SC (green, solid).",0.0
+but modest difference in amplitude of signal. The BHC model yields              4 CONCLUSION,0.0
+systematically lower power at all scales and at all redshifts except,0.0
+close to overlap. The stochastic relation between local overdensity             Studies of the large scale reionization morphology and its imprint,0.0
+and clumping factor does not have a large effect throughout most of             on the observable signatures requires large simulated volumes of a,0.0
+"reionization, and is noticeable predominantly at small scales later on.         several hundred cMpc per side. Due to computational limitations",0.0
+"The most significant differences between IC and SC models emerges               which limit the dynamic range, uniformly high resolution cannot be",0.0
+"at the end of reionization (𝑥i = 0.99), where the SC model has less             achieved in such a volume. Therefore no general model of the local",0.0
+"power on all scales, by factor of up to a few. In fact, at that time the        recombinations on scale below the resolution of large numerical",0.0
+"SC model has less power than even the BHC, except at the small                  simulation exists. Typically a constant value of clumping factor is",0.0
+"scales 𝑘 > 0.3Mpc−1 .                                                           used, but recently we presented a more general model (Paper I),",0.0
+"                                                                                that depends on the local density, and we demonstrated how an over-",80.0
+                                                                                simplistic treatment of the clumping factor can have a strong effect on,80.0
+"   The 21-cm signal fluctuations are strongly non-Gaussian (e.g.                the simulated reionization timescale, topology and size distributions",3.0
+Mellema et al. 2006b; Giri et al. 2019) and therefore are not fully             of the ionized region.,0.0
+described by the power spectra. We therefore also present the 21-                  In the current work we extend and improve this method by includ-,0.0
+cm differential brightness temperature distribution moments of first            ing an empirical stochastic subgrid gas clumping (SC) model (see,0.0
+"(PDFs; Figure 14) and second order (skewness; Figure 13, lower                  §2.3) based on the results from high-resolution N-body simulation,",0.0
+"panel). For all the models and all times, 21-cm PDFs are bimodal in             where the full range of relevant fluctuations is fully resolved. Our",0.0
+"nature, which is a clear signature of non-Gaussianity (e.g. Ichikawa            approach considers a novel parametrization of the correlation be-",0.0
+"et al. 2010; Giri et al. 2018b). Even though all the models show                tween local IGM overdensity and clumping factor, which take into",0.0
+"non-Gaussinity, there are significant variations between models. The            accounts the scatter due to e.g. tidal forces. We employ a high res-",0.0
+"SC and IC models are much more non-Gaussian, with many more                     olution N-body simulation SB, of spatial resolution 260 pc per side,",0.0
+"pixels at both high low values. Particularly, they show a very strong           that resolve the Jeans length of the cold IGM and structure evolu-",0.0
+tail at high values. This is somewhat stronger for the SC model at              tion on scale much smaller then the resolution of EoR simulations.,0.0
+"all redshifts, indicating that the clumping scatter yields more high            The density-binned scatter is then modelled with a log-normal dis-",0.0
+"brightness temperature peaks, by factor of a few. The signal skew-              tribution. Those distributions are then randomly sampled to create",0.0
+ness confirms these observations. It is going from negative to positive         a realization of the scatter. We then apply our method to the den-,0.0
+"symmetry at 𝜈obs ' 170 MHz, when the volume ionized fraction is                 sity fields of larger volumes LB-1 (714 cMpc per side) and LB-2",0.0
+close to 𝑥i = 0.6 − 0.7 and the RMS fluctuations reach maximum.                 (349 Mpc) to infer its sub-grid clumping factor (see §2.4). Subse-,0.0
+"Differences between models are noticeable only later, once the simu-            quently we post-process the large scale N-body snapshot with C2 Ray",0.0
+"lation overpass the peak in fluctuations, at frequency larger then 180          radiative transfer cosmic reionization simulation code, in order to",0.0
+MHz. At this point the skewness increases exponentially.                        present the impact of various modeling approaches for gas clumping,0.0
+"                                                                                                                                    MNRAS 000, 1–17 (2021)",132.0
+avr_spaces,11.162162162162161
+16        M. Bianco et al.,0.0
+"on reionization observables (see §3). We then compare our stochastic     Gaussian, the IC and SC yield significantly more non-Gaussianity,",0.0
+"model SC with the inhomogeneous clumping model, IC, which is a           with long tail of bright pixels, which is very different from the BHC",0.0
+"simple deterministic density-dependent fit, and a globally redshift      model. The bright tail is longer for the SC model compared to IC,",0.0
+"dependent averaged clumping factor BHC, whereby the subgrid gas          predicting many more and brighter pixels at all redshifts.",0.0
+clumping is independent of the local density.                               The power spectra of the 21-cm signal (see Figure 15) show that in,0.0
+"    We find that density-dependent clumping models, IC and SC, ex-       early phase of reionization, the BHC scenario yields a weaker signal,",4.0
+"hibit similar behaviour for globally averaged quantities, meanwhile      when compared to density dependent models on all scales. IC and SC",0.0
+there is a tangible difference when compared to the volume-averaged      differ somewhat at large scale k < 0.1 cMpc− 1 for 𝑥)𝑖 = 0.3 − 0.5.,0.0
+"model BHC. For instance, the reionization history (Figure 4) is de-      This largely disappears by x̄i = 0.7. Towards the final stages of",0.0
+layed by as much as Δz ∼ 0.3 at xi = 0.7 (z ∼ 7.5) and the average       reionization (𝑥𝑖 = 99%) results for three models differ. The IC model,0.0
+"neutral fraction decrease swiftly for z < 10. The evolution of ionized   predicts the highest signal at all scales, higher by a feactor of a few",0.0
+regions in IC and SC models is a bit faster due to the on average        compared to SC. The BHC model signal is intermediate between,0.0
+lower gas clumping factor that decreases gas recombination in the        them for most except the smallest scales.,0.0
+"under-dense regions. Meanwhile, as structure formation advance, the         The results presented here are not intended as a detailed predic-",0.0
+"higher clumping factor C > 20 in high-density regions considerably       tion of the reionization observables, but rather a demonstration that",0.0
+"increase the recombination rate, such that recombination is twice        an over-simplistic treatment of the clumping factor can have strong",0.0
+as effective as in the BHC model case for z < 12. We find that           effect on the reionization morphology and thus on simulated observ-,0.0
+"the increase of rate in these regions, due to the different density-     ables. The widely-used BHC model, overestimates the rate at which",0.0
+"dependent gas clumping approach, is responsible for the divergence       the ionized IGM recombines, and therefore have a strong influence",0.0
+"in the simulated observables. Despite the fact that the over-dense       on the timescale of reionization, morphology of the ionized region",0.0
+"medium constitute a minor fraction of the box volume, compared to        and the intensity of the expected 21-cm signal. We demonstrated that",0.0
+"the vast under-dense IGM, it is responsible for the majority of recom-   density dependent model takes better account the cumulative effect of",0.0
+"binations. Our model and the IC method behave similarly, with only       the clumping factor on the gas recombination rate. On the other hand,",0.0
+5% of relative error to each other. This difference is mainly due to the we have also shown that accounting for the scatter around the aver-,0.0
+"broad scatter at high density in the clumping-density correlation plot   age, deterministic local density-clumping relation has only modest",0.0
+"(Figure 2). The clumping factor for IGM in the proximity of sources,     effects on the reionization morphology and observables, predomi-",0.0
+is extremely high C ∼ 100 and the introduced stochasticy can extend      nantly towards the end of the reionization process. This indicates,0.0
+"it to a factor of few hundreds more. Moreover, the simulated electron    that the deterministic IC model is usually sufficient except possibly",0.0
+scattering optical depth is very similar in IC and SC models and the     around and after overlap.,0.0
+choice of the clumping model has little effect on the feedback of           The gas clumping factors presented here should be considered as,0.0
+sources.                                                                 an upper limit to the actual clumping since they are derived based,0.0
+    The density-dependence of the subgrid gas clumping accelerates       on high-resolution N-body simulations and thus do not capture the,4.0
+"the propagation of ionizing fronts in the low density IGM (Figure 12),   photo-ionization feedback that would suppress small-scale density",0.0
+By z < 10 (𝜈obs > 130 MHz) the regions with low 21-cm signal             fluctuations. Consequently it overestimates the recombination rate,0.0
+"around the sources are more pronounced than in the BHC case. The         throughout reionization. We leave a more realistic approach, that",0.0
+"differences between the new stochastic approach and the IC model         follows the feedback effects, and the complex physics of the cold gas",0.0
+"are minor, mostly appearing at late times (𝑧 < 7, 𝜈𝑜𝑏𝑠 > 175),           (T < 104 K) in IGM, for future work.",0.0
+where the SC scenario presents considerably less residual neutral,0.0
+gas then the other two models. These last region of neutral gas are,0.0
+"mostly in large voids and distant from any ionizing sources, therefore",0.0
+                                                                         ACKNOWLEDGEMENTS,73.0
+our interpretation is that at lower redshift the empirical stochastic,0.0
+"model becomes predominant in under-dense IGM, accelerating the           ITI was supported by the Science and Technology Facilities Coun-",0.0
+"propagation of ionizing radiation in these regions. Meanwhile, at        cil (grant numbers ST/I000976/1 and ST/T000473/1) and the",0.0
+early stages of reionization the gas recombination in high density       Southeast Physics Network (SEPNet). MB was supported by PhD,0.0
+"region drives the reionization process, resulting in reduction of the    Studentship from the Science and Technology Facilities Coun-",0.0
+ionizing photons propagating into the neutral surroundings.              cil. HP was supported by the World Premier International Re-,0.0
+"    We compared the simulation-derived observables at the same           search Center Initiative (WPI), MEXT, Japan and JSPS KAK-",4.0
+"reionization milestones, xi = 0.1, 0.3, 0.5, 0.7, 0.9. Compared to       ENHI Grant Number 19K23455. YM is supported by the Na-",0.0
+"our previous work, the bubble-size distributions (based on both mean     tional Key R&D Program of China (Grant No. 2020SKA0110401,",0.0
+"free path and FOF methods) do not show large variation, as an indi-      2017YFB0203302, 2018YFA0404502) and the NSFC Grant (No.",0.0
+"cation that the SC model does not increase the recombination rate in     11761141012, 11673014, 11821303). We acknowledge that the re-",0.0
+a way that significantly alters the morphology and sizes of the ion-     sults of this research have been achieved using the DECI resources,0.0
+ized regions. The same conclusion can be deduced from statistics of      Kay based in Ireland at ICHEC and Cartesius based in Netherlands at,0.0
+the 21-cm differential brightness temperature. As we demonstrated        SURFSara with support from the PRACE aisbl. KA was supported,0.0
+"in Paper I, the density-dependent model increase the amplitude and       by NRF-2016R1D1A1B04935414 and NRF-2016R1A5A1013277,",0.0
+shift the fluctuations peak position to lower frequency with a differ-   and appreciates APCTP and KASI for hospitality during comple-,0.0
+"ence of approximately 20 MHz compared to BHC model, and just a           tion of this work. We acknowledge PRACE for awarding us access",0.0
+"few MHz of difference when compared to the SC model. Hence, the          to Piz Daint facility hosted by the Swiss National Supercomputer",0.0
+peak occurs at stage of reionization that differ only of few percentage  Centre (CSCS) and the MareNostrum IV hosted by the Barcelona,0.0
+x̄n ≈ 0.3 for SC and IC models and 0.25 for BHC.                         Supercomputing Centre (BSC). The authors gratefully acknowledge,0.0
+    The PDFs of the redshifted 21-cm distributions show some notable     the Gauss Centre for Supercomputing e.V. (www.gauss-centre.eu),4.0
+differences between our models. While all distributions are non-         for partly funding this project by providing computing time through,0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,1.3484848484848484
+                                                                                                                      Subgrid clumping II                 17,118.0
+"the John von Neumann Institute for Computing (NIC) on the GCS                   Mao Y., Koda J., Shapiro P. R., Iliev I. T., Mellema G., Park H., Ahn K.,",0.0
+"Supercomputer JUWELS at Juelich Supercomputing Centre (JSC).                         Bianco M., 2019, MNRAS, 491, 1600",0.0
+"    Data Availability: The data and codes underlying this article are           Mellema G., Iliev I. T., Alvarez M. A., Shapiro P. R., 2006a, New Astron.,",4.0
+"available upon request, but can also be re-generated from scratch                    11, 374",0.0
+"                                                                                Mellema G., Iliev I. T., Pen U. L., Shapiro P. R., 2006b, MNRAS, 372, 679",80.0
+using the publicly available CUBEP3 M and C2 Ray code. The code,0.0
+"                                                                                Mertens F. G., et al., 2020, MNRAS, 26, 1",80.0
+"and table of parameters for Equation 8, 9 and 11 presented in §2.3",0.0
+"                                                                                Onken C., Miralda-Escudé J., 2004, ApJ, 610, 1",80.0
+"are available on the author’s Github page: https://github.com/                  Ota K., et al., 2008, ApJ, 677, 12",0.0
+"micbia/SubgridClumping.                                                         Ouchi M., et al., 2010, ApJ, 723, 869",0.0
+"                                                                                Paciga G., et al., 2013, MNRAS, 433, 639",80.0
+"                                                                                Park H., Shapiro P. R., Choi J.-h., Yoshida N., Hirano S., Ahn K., 2016, ApJ,",80.0
+"                                                                                     831, 86",85.0
+"REFERENCES                                                                      Parsons A. R., et al., 2014, ApJ, 788",0.0
+"Ade P. A., et al., 2016, A&A, 594                                               Patil A., et al., 2017, ApJ, 838, 65",0.0
+"Ahn K., Shapiro P. R., Iliev I. T., Mellema G., Pen U.-L., 2009, ApJ, 695,      Pawlik A. H., Schaye J., van Scherpenzeel E., 2009, MNRAS, 394, 1812",0.0
+"     1430                                                                       Pober J. C., et al., 2015, 6",5.0
+"Ahn K., Iliev I. T., Shapiro P. R., Srisawat C., 2014, MNRAS, 450, 1486         Raičević M., Theuns T., 2011, MNRAS, 412, 1",0.0
+"Ali Z. S., et al., 2015, ApJ, 809                                               Robertson B. E., Ellis R. S., Furlanetto S. R., Dunlop J. S., 2015, ApJ, 802,",0.0
+"Bowman J. D., Rogers A. E. E., 2010, Nature, 468, 796                                L19",0.0
+"Cen R., 2003, ApJ, 591, 12                                                      Ross H. E., Dixon K. L., Ghara R., Iliev I. T., Mellema G., 2019, MNRAS,",0.0
+"Ciardi B., Ferrara A., 1997, ApJ, 483, L5                                            487, 1101–1119",0.0
+"Crocce M., Pueblas S., Scoccimarro R., 2006, MNRAS, 373, 369                    Shapiro P. R., Martel H., Villumsen J. V., Owen J. M., 1996, ApJ, pp 270–330",0.0
+"Davies F. B., et al., 2018, ApJ                                                 Tegmark M., Silk J., Rees M., Blanchard A., Abel T., Palla F., 1996, ApJ, 12,",0.0
+"Dillon J. S., et al., 2015, Phys. Rev. D, 91, 023002                                 1",0.0
+"Dixon K. L., Iliev I. T., Mellema G., Ahn K., Shapiro P. R., 2015, MNRAS,       Tomassetti M., Porciani C., Romano-Díaz E., Ludlow A. D., 2014, MNRAS,",0.0
+"     456, 3011                                                                       446, 3330",5.0
+"Ferrara A., Pandolfi S., 2014, in Proceedings of the International School of    Valageas P., Silk J., 2004, A&A, 413, 1087",0.0
+"     Physics ""Enrico Fermi"". pp 1–57 (arXiv:1409.4946)                          Watson W. A., Iliev I. T., D’Aloisio A., Knebe A., Shapiro P. R., Yepes G.,",5.0
+"Friedrich M. M., Mellema G., Alvarez M. A., Shapiro P. R., Iliev I. T., 2011,        2013, MNRAS, 433, 1230",0.0
+"     MNRAS, 413, 1353                                                           Yatawatta S., et al., 2013, A&A, 550, 136",5.0
+"Furlanetto S. R., Oh S. P., 2016, MNRAS, 28, 303                                Zaroubi S., 2012, Astrophysics and Space Science Library, p. 45–101",0.0
+"Furlanetto S. R., Zaldarriaga M., Hernquist L., 2004, ApJ, 613, 1               Zhang J., Hui L., Haiman Z., 2007, MNRAS, 375, 324–336",0.0
+"Furlanetto S. R., Peng Oh S., Briggs F. H., 2006, Physics Reports, 433, 181",0.0
+"Ghara R., et al., 2020, MNRAS, 20, 1",0.0
+"Giri S. K., Mellema G., Dixon K. L., Iliev I. T., 2018a, MNRAS, 473, 2949",0.0
+                                                                                APPENDIX A: COMPARISON BETWEEN OLD AND NEW,80.0
+"Giri S. K., Mellema G., Ghara R., 2018b, MNRAS, 479, 5596",0.0
+"Giri S. K., D’Aloisio A., Mellema G., Komatsu E., Ghara R., Majumdar S.,        In the N-body simulations used in our Paper I (Mao et al. 2019), we",0.0
+"     2019, J. Cosmology Astropart. Phys., 2019, 058                             employed the version 1 of the CUBEP3 M code, the most recent version",5.0
+"Giri S. K., Mellema G., Jensen H., 2020, Journal of Open Source Software,       of the code at the time. Meanwhile in this paper we employed the",0.0
+"     5, 2363",5.0
+"                                                                                updated version 2 of that code, that reduces the error of the near-",80.0
+"Gnedin N. Y., Ostriker J. P., 1997, ApJ, 486",0.0
+"Greig B., Mesinger A., Bañados E., 2019, MNRAS, 484, 5094",0.0
+                                                                                grid point interpolation by extending the particle-particle (PP) force,80.0
+"Harnois-Déraps J., Pen U. L., Iliev I. T., Merz H., Emberson J. D., Desjacques  calculation for a particle out to arbitrary number of cells. With the",0.0
+"     V., 2013, MNRAS, 436, 540                                                  latest version, the user can therefore choose how far outside the",5.0
+"Hutter A., Dayal P., Yepes G., Gottlöber S., Legrand L., Ucci G., 2021,         hosting cell the PP-force is active. A detailed discussion of this",0.0
+     MNRAS                                                                      update can be found in §7.3 of Harnois-Déraps et al. (2013).,5.0
+"Ichikawa K., Barkana R., Iliev I. T., Mellema G., Shapiro P. R., 2010, MN-         As an illustration of the effect of that change, in Figure A1, we show",0.0
+"     RAS, 406, 2521                                                             the IC model of the correlation between coarse IGM over-density and",5.0
+"Iliev I. T., Evan S., Shapiro P. R., 2005, ApJ                                  coarse clumping factor at z = 7.305 for the SB simulation. In red, the",0.0
+"Iliev I. T., Mellema G., Pen U.-L., Merz H., Shapiro P. R., Alvarez M. A.,      interpolation obtained from N-body simulation run with first version",0.0
+"     2006a, MNRAS, 369, 1625",5.0
+"                                                                                of the code, in blue, the updated code with PP-force that extend for 2",80.0
+"Iliev I. T., Mellema G., Pen U.-L., Merz H., Shapiro P. R., Alvarez M. A.,",0.0
+"                                                                                neighbour cells. In both cases, we kept the same cosmology, initial",80.0
+"     2006b, MNRAS, 369, 1625",5.0
+"Iliev I. T., Pen U., Bond J. R., Mellema G., Shapiro P. R., 2007, ApJ, 660, 933 condition and simulation parameters. In the lower panel of the figure,",0.0
+"Iliev I. T., Mellema G., Shapiro P. R., Pen U. L., Mao Y., Koda J., Ahn K.,     we show the ratio between the two old and the new result. The result",0.0
+"     2012, MNRAS, 423, 2222                                                     of this more precise gravity forces calculation is that the gas clumping",5.0
+"Iliev I. T., Mellema G., Ahn K., Shapiro P. R., Mao Y., Pen U. L., 2014,        is somewhat boosted, while the curve retains the same shape, which",0.0
+"     MNRAS, 439, 725                                                            has no significant effect on our method and results.",5.0
+"Jacobs D. C., et al., 2015, ApJ, 801",0.0
+"Jeeson-Daniel A., Ciardi B., Graziani L., 2014, MNRAS, 11, 1",0.0
+"Jelić V., de Bruyn A., Mevius M., al. E., 2014, A&A, 568, A101",0.0
+"Kohler K., Gnedin N. Y., Hamilton A. J. S., 2007, ApJ, 657, 15",0.0
+"Komatsu E., et al., 2011, ApJS, 192, 18",0.0
+"Lewis A., Challinor A., Lasenby A., 2000, ApJ, 2, 2",0.0
+"Lin Y., Oh S. P., Furlanetto S. R., Sutter P. M., 2016, MNRAS, 461, 3361",0.0
+"Lupi A., Bovino S., Capelo P. R., Volonteri M., Silk J., 2018, MNRAS, 474,",0.0
+     2884,5.0
+"Madau P., Haardt F., Rees M. J., 1999, ApJ, 514, 648",0.0
+"                                                                                                                                    MNRAS 000, 1–17 (2021)",132.0
+avr_spaces,15.5
+18        M. Bianco et al.,0.0
+[h],0.0
+Figure A1. Correlation between local coarse IGM over-density and coarse,0.0
+"clumping factor at redshift z = 7.305 for the SB simulation. In red, the IC",0.0
+"model interpolation ran with the version 1 of the N-body code, with the solid",0.0
+"blue line the same quantity but with the updated code. Lower panel, the ratio",0.0
+between the old and new quantity.,0.0
+"MNRAS 000, 1–17 (2021)",0.0
+avr_spaces,0.0

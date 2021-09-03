@@ -1,0 +1,48 @@
+text,space_num
+                                                      Implementing CUDA Streams into AstroAccelerate – A Case Study,54.0
+"                                                                         Jan Novotný1,3 , Karel Adámek1,2 , and Wes Armour1",73.0
+                                                  1,50.0
+"                                                  Oxford e-Research Centre, Department of Engineering Science, University of Oxford, 7 Keble Rd,",50.0
+"                                                                                Oxford OX1 3QG, United Kingdom.",80.0
+                                               2,47.0
+"                                                 Faculty of Information Technology, Czech Technical University, Thákurova 9, 160 00, Prague, Czech",49.0
+arXiv:2101.00941v3 [astro-ph.IM] 6 May 2021,0.0
+                                                                                             Republic.,93.0
+                                              3,46.0
+"                                                Research Centre for Theoretical Physics and Astrophysics, Institute of Physics, Silesian University in",48.0
+"                                                                   Opava, Bezručovo nám. 13, CZ-74601 Opava, Czech Republic.",67.0
+"                                                                                                May 7, 2021",96.0
+"                                              Abstract                                                       using the power of GPUs, which provide excellent en-",46.0
+"                                                                                                             ergy efficiency [Mittal and Vetter, 2015, Cebri’n et al.,",109.0
+                                              To be able to run tasks asynchronously on NVIDIA               2012]. To efficiently use such a system we need to,46.0
+                                              GPUs a programmer must explicitly implement asyn-              ensure that the applications ideally execute functions,46.0
+                                              chronous execution in their code using the syntax of           (kernels) concurrently and the data transfers are hid-,46.0
+"                                              CUDA streams. Streams allow a programmer to launch             den by computations. Beginning with CUDA 7, we",46.0
+"                                              independent concurrent execution tasks, providing the          can manage this asynchronous behaviour by introduc-",46.0
+                                              ability to utilise different functional units on the GPU       ing “streams”. One of the simplest guides to using this,46.0
+"                                              asynchronously. For example, it is possible to transfer        functionality is provided by Harris [2012, 2015].",46.0
+                                              the results from a previous computation performed on              In this paper we study the implementation of streams,46.0
+"                                              input data n-1, over the PCIe bus whilst computing             into the AstroAccelerate (AA) project. AA is a GPU-",46.0
+"                                              the result for input data n, by placing different tasks        enabled software package that focuses on enabling real-",46.0
+                                              in different CUDA streams. The benefit of such an              time processing of time-domain radio-astronomy data.,46.0
+                                              approach is that the time taken for the data transfer          It uses the CUDA programming language for NVIDIA,46.0
+"                                              between the host (server hosting the GPU) and device           GPUs and can perform tasks such as dedispersion,",46.0
+"                                              (the GPU) can be hidden with computation. This case            single pulse searching [Adámek and Armour, 2020]",46.0
+                                              study deals with the implementation of CUDA streams            and Fourier Domain Acceleration Searches (FDAS),46.0
+"                                              into AstroAccelerate. AstroAccelerate is a GPU ac-             [Dimoudi et al., 2018, Adámek et al., 2017] in real time",46.0
+                                              celerated real-time signal processing pipeline for time-       on very large data-sets which are comparable to those,46.0
+                                              domain radio astronomy.                                        which will be produced by next generation radio-,46.0
+                                                                                                             telescopes such as the Square Kilometre Array (SKA).,109.0
+                                              1       Introduction                                             The AA code can be divided into few main parts,46.0
+                                                                                                             as show in Fig. 1. The first part performs the prepa-,109.0
+                                              With new coming technological instruments in all fields        ration of system and reading user data. The second,46.0
+                                              of science the need to improve computational algo-             part consists of mapping tasks to suitable resources,46.0
+"                                              rithms, fully utilise hardware architectures, improve          and allocation of all necessary memory. The third part,",46.0
+"                                              softwares, and compete in upcoming data challenges             which is the part of the code in which we have imple-",46.0
+"                                              [Geist and Lucas, 2009], is becoming ever more impor-          mented streams, is responsible for the dedispersion of",46.0
+"                                              tant. Today, by looking to the worlds most powerful            data and single pulse searching. The fourth part offers",46.0
+"                                              machines [TOP500.org, a,b], we can be certain that to          optional features like FDAS (Fourier Domain Acceler-",46.0
+"                                              reach exaFLOPS performance, heterogeneous comput-              ation Search) or periodicity searching.",46.0
+                                              ing is necessary. Clear leaders in this area are systems         To achieve the desired asynchronous behaviour (as,46.0
+                                                                                                         1,105.0
+avr_spaces,53.59574468085106
