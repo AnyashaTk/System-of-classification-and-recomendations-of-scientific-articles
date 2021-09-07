@@ -5,8 +5,8 @@ import os
 tika.initVM()
 from tika import parser
 
-os.chdir("../")
-for file_name in sorted(os.listdir("../PDF_data/astro-ph"))[:200]:
+os.chdir("../../")
+for file_name in sorted(os.listdir("../../PDF_data/astro-ph"))[:200]:
     rpoint = file_name.rfind(".")
     name_without_extension = file_name[:rpoint]
     parsed = parser.from_file('../PDF_data/astro-ph/' + file_name)

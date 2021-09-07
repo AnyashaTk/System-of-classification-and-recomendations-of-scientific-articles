@@ -11,7 +11,7 @@ def start_space_num(line):
     return num
 
 
-file_names = sorted(os.listdir("../PDF_data/astro-ph"))[:20]
+file_names = sorted(os.listdir("../../PDF_data/astro-ph"))[:20]
 # Load PDF file
 for file_name in file_names:
     with open("../PDF_data/astro-ph/" + file_name, "rb") as f:
