@@ -11,4 +11,4 @@ pd.set_option('display.max_columns', None)
 # Сброс ограничений на количество символов в записи
 pd.set_option('display.max_colwidth', 100)
 BASE_DATA_PATH = "/SCRSA/PDF_data/"
-CSV_SAVE_PATH = "/home/stork/PycharmProjects/ClsRecArticles/SCRSA/csv_data/"
+CSV_SAVE_PATH = "/SCRSA/parsed_data/csv_data/"

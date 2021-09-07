@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-for file_name in sorted(os.listdir("../PTT_first_pages"))[:3]:
+for file_name in sorted(os.listdir("../parsed_data/PTT_first_pages"))[:3]:
     df = pd.read_csv("../PTT_first_pages/" + file_name)
     abstr_block_space_num = 150
     abstract_finded = False
