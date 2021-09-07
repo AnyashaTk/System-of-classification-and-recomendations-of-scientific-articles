@@ -1,10 +1,32 @@
-import collections
-import re
-
-import numpy as np
+from constants import *
 
 TOKEN_RE = re.compile(r'[\w\d]+')
 
+
+def get_texts(files_names):
+    texts_all = [pd.read_csv(path1 + file)['0'].dropna() for file in files_names]
+    all_tokenized = [(tokenize_corpus(text)) for text in texts_all]
+    texts_like_one = []
+    for token_text in all_tokenized:
+        for str in token_text:
+            texts_like_one.append(str)
+    return all_tokenized, texts_like_one
+
+def get_many_columns(files_names):
+    files = [pd.read_csv(path + file).dropna()for file in files_names]
+    data = []
+    texts = pd.DataFrame()
+    for file in files:
+        for num in range(file.shape[0]):
+            '''txt = 0
+            for word in tokenize_corpus(file['text'])[num]:
+                txt += model_w2v.wv[word]'''
+            data.append([float(file['space_num'][num]), float(file['symbolic_percent'][num]),
+                         float(file['space_percent'][num]), float(file['num_world'][num]),
+                         float(file['num_columns'][num]), float(file['front_spaces_perc'][num]),
+                         float(file['back_spaces'][num])])
+        texts = pd.concat([texts, file['text']], ignore_index=True)
+    return data, texts
 
 def tokenize_text_simple_regex(txt, min_token_size=4):
     txt = txt.lower()
