@@ -1,0 +1,805 @@
+text,space_num,symbolic_percent,space_percent,num_world,num_columns,front_spaces_perc,back_spaces
+                                                              Rapid and Robust Parameter Inference for Binary Mergers,62.0,0.41025641025641024,0.5897435897435898,8.0,1.0,0.37575757575757573,0.2909090909090909
+                                                                                               Neil J. Cornish,95.0,0.11818181818181818,0.8818181818181818,3.0,1.0,0.5757575757575758,0.33333333333333337
+"                                                                           eXtreme Gravity Institute, Department of Physics,",75.0,0.3548387096774194,0.6451612903225806,6.0,1.0,0.45454545454545453,0.24848484848484853
+"                                                                        Montana State University, Bozeman, Montana 59717, USA",72.0,0.376,0.624,7.0,1.0,0.43636363636363634,0.24242424242424243
+                                                        The detection rate for compact binary mergers has grown as the sensitivity of the global network,56.0,0.5328947368421053,0.4671052631578947,16.0,1.0,0.3393939393939394,0.07878787878787874
+"                                                     of ground based gravitational wave detectors has improved, now reaching the stage where robust",53.0,0.5510204081632653,0.44897959183673475,14.0,1.0,0.3212121212121212,0.10909090909090913
+                                                     automation of the analyses is essential. Automated low-latency algorithms have been developed,53.0,0.5616438356164384,0.4383561643835616,12.0,1.0,0.3212121212121212,0.11515151515151512
+                                                     that send out alerts when candidate signals are detected. The alerts include sky maps to facilitate,53.0,0.5526315789473685,0.4473684210526315,16.0,1.0,0.3212121212121212,0.07878787878787874
+"                                                     electromagnetic follow up observations, along with probabilities that the system might contain a",53.0,0.5637583892617449,0.43624161073825507,13.0,1.0,0.3212121212121212,0.09696969696969693
+"                                                     neutron star, and hence be more likely to generate an electromagnetic counterpart. Data quality is-",53.0,0.5592105263157895,0.4407894736842105,15.0,1.0,0.3212121212121212,0.07878787878787874
+"                                                     sues, such as loud noise transients (glitches), can adversely affect the low-latency algorithms, causing",53.0,0.5796178343949044,0.42038216560509556,14.0,1.0,0.3212121212121212,0.048484848484848464
+                                                     false alarms and throwing off parameter estimation. Here a new analysis method is presented that is,53.0,0.5526315789473685,0.4473684210526315,16.0,1.0,0.3212121212121212,0.07878787878787874
+"                                                     robust against glitches, and capable of producing fully Bayesian parameter inference, including sky",53.0,0.5723684210526315,0.4276315789473685,13.0,1.0,0.3212121212121212,0.07878787878787874
+"                                                     maps and mass estimates, in a matter of minutes. Key elements of the method are wavelet-based",53.0,0.5342465753424658,0.4657534246575342,16.0,1.0,0.3212121212121212,0.11515151515151512
+arXiv:2101.01188v4 [gr-qc] 6 May 2021,0.0,0.8918918918918919,0.10810810810810811,5.0,1.0,0.0,0.7757575757575758
+"                                                     de-noising, penalized maximization of the likelihood during the initial search, rapid sky localization",53.0,0.5806451612903226,0.4193548387096774,13.0,1.0,0.3212121212121212,0.06060606060606055
+"                                                     using pre-computed inner products, and heterodyned likelihoods for full Bayesian inference.",53.0,0.5625,0.4375,11.0,1.0,0.3212121212121212,0.12727272727272732
+                                                         I.    INTRODUCTION                                duces low-latency sky maps and initial parameter es-,57.0,0.3710691823899371,0.628930817610063,10.0,19.0,0.34545454545454546,0.036363636363636376
+"                                                                                                           timates, followed by full Bayesian parameter estima-",107.0,0.2893081761006289,0.7106918238993711,7.0,1.0,0.6484848484848484,0.036363636363636376
+                                           What started with a trickle in 2015 [1] has now turned          tion. For binary black holes the entire process takes,43.0,0.55625,0.44375,20.0,6.0,0.2606060606060606,0.030303030303030276
+"                                        into a veritable deluge [2, 3] of gravitational wave signals       just minutes on a laptop; for binary neutron stars, ini-",40.0,0.6012269938650306,0.39877300613496935,20.0,4.0,0.24242424242424243,0.012121212121212088
+                                        detected by the LIGO and Virgo instruments. Keep-                  tial sky maps and mass estimates are ready in min-,40.0,0.5286624203821656,0.4713375796178344,18.0,10.0,0.24242424242424243,0.048484848484848464
+"                                        ing up with the ever increasing event rate is challeng-            utes, and full results are ready in less than an hour.",40.0,0.5590062111801242,0.44099378881987583,21.0,7.0,0.24242424242424243,0.024242424242424288
+                                        ing. While the searches for gravitational wave signals are         The QuickCBC code is open source https://github.,40.0,0.5935483870967742,0.40645161290322585,16.0,5.0,0.24242424242424243,0.06060606060606055
+"                                        now highly automated and capable of producing near-                com/eXtremeGravityInstitute/QuickCBC, and can be",40.0,0.5741935483870968,0.4258064516129032,12.0,9.0,0.24242424242424243,0.06060606060606055
+"                                        real time alerts [4–8], full parameter inference [9, 10] has       used to analyze public LIGO-Virgo data hosted by the",40.0,0.5974842767295597,0.4025157232704403,19.0,4.0,0.24242424242424243,0.036363636363636376
+                                        lagged behind. This is in part due to the large compu-             Gravitational Wave Open Science Center https://www.,40.0,0.569620253164557,0.430379746835443,17.0,7.0,0.24242424242424243,0.042424242424242475
+"                                        tational cost of fully Bayesian parameter inference, and           gw-openscience.org. For testing purposes the algo-",40.0,0.5987261146496815,0.4012738853503185,14.0,6.0,0.24242424242424243,0.048484848484848464
+                                        in part due to the challenge of working with data that             rithm was run in real time during the LIGO-Virgo O3,40.0,0.5443037974683544,0.45569620253164556,21.0,7.0,0.24242424242424243,0.042424242424242475
+"                                        needs to be carefully calibrated [11, 12] and cleaned of           observing run, automatically generating results for trig-",40.0,0.5975609756097561,0.4024390243902439,17.0,6.0,0.24242424242424243,0.0060606060606061
+                                        various noise contaminants [13–16].                                gers sent to the Gravitational-Wave Candidate Event,40.0,0.4873417721518987,0.5126582278481013,11.0,17.0,0.24242424242424243,0.042424242424242475
+"                                           The instrument noise in the LIGO and Virgo data is,             Database.",43.0,0.4396551724137931,0.5603448275862069,11.0,7.0,0.2606060606060606,0.296969696969697
+"                                        for the most part, well described as locally stationary               Existing algorithms can perform most of the indi-",40.0,0.559748427672956,0.44025157232704404,17.0,8.0,0.24242424242424243,0.036363636363636376
+"                                        and Gaussian [17]. Short duration signals, such as high            vidual steps in the QuickCBC algorithm. For example,",40.0,0.5786163522012578,0.42138364779874216,17.0,7.0,0.24242424242424243,0.036363636363636376
+"                                        mass binary black holes, are in the sensitive band of the          the PyCBC search algorithm [20] performs low-latency",40.0,0.5849056603773585,0.41509433962264153,18.0,6.0,0.24242424242424243,0.036363636363636376
+"                                        detector for a second or less, and the odds of the signal          searches for CBC signals that incorporate glitch mit-",40.0,0.575,0.42500000000000004,20.0,6.0,0.24242424242424243,0.030303030303030276
+"                                        encountering a noise transient is low. However, for longer         igation via a chi-squared test [19] and automatic gat-",40.0,0.5962732919254659,0.40372670807453415,18.0,5.0,0.24242424242424243,0.024242424242424288
+"                                        duration signals, such as low mass black hole binaries or          ing of loud glitches [20]. The BayesWave algorithm [16,",40.0,0.5864197530864198,0.4135802469135802,19.0,6.0,0.24242424242424243,0.018181818181818188
+"                                        systems that include a neutron star, the signals are in the        21, 22], produces on-source spectral estimates and per-",40.0,0.5987654320987654,0.4012345679012346,19.0,5.0,0.24242424242424243,0.018181818181818188
+"                                        sensitive band of the detectors for tens of seconds or even        forms glitch subtraction [3, 23, 24]. The BayesStar algo-",40.0,0.5975609756097561,0.4024390243902439,20.0,5.0,0.24242424242424243,0.0060606060606061
+"                                        minutes, and it is likely that the signal will encounter a         rithm [25] produces low-latency sky maps to help guide",40.0,0.5838509316770186,0.4161490683229814,20.0,5.0,0.24242424242424243,0.024242424242424288
+                                        noise transient. As the low-frequency sensitivity of the           the search for electromagnetic counterparts to binary,40.0,0.6,0.4,15.0,6.0,0.24242424242424243,0.030303030303030276
+"                                        detectors improve, low mass systems are virtually guar-            mergers, and several rapid parameter estimation algo-",40.0,0.59375,0.40625,15.0,7.0,0.24242424242424243,0.030303030303030276
+                                        anteed to encounter noise transients. The LIGO/Virgo               rithms have been developed [26–30]. What is novel is,40.0,0.5660377358490566,0.4339622641509434,16.0,8.0,0.24242424242424243,0.036363636363636376
+"                                        analyses have been fortified against noise transients using        that QuickCBC is a fully automated, end-to-end analy-",40.0,0.6125,0.38749999999999996,16.0,5.0,0.24242424242424243,0.030303030303030276
+"                                        a combination of vetoes [18], glitch robust search statis-         sis algorithm that is robust against glitches, and able to",40.0,0.6,0.4,19.0,5.0,0.24242424242424243,0.0
+"                                        tics [19], gating [20] and glitch subtraction [16]. Gating         produce reliable results in a matter of minutes. Many",40.0,0.59375,0.40625,18.0,5.0,0.24242424242424243,0.030303030303030276
+"                                        of glitches is used in the online searches, while glitch sub-      of the methods used by QuickCBC, such as wavelet de-",40.0,0.5911949685534591,0.4088050314465409,21.0,4.0,0.24242424242424243,0.036363636363636376
+"                                        traction is performed prior to off-line parameter estima-          noising [31], banded likelihoods for glitch rejection, and",40.0,0.6121212121212121,0.38787878787878793,16.0,6.0,0.24242424242424243,0.0
+"                                        tion.                                                              heterodyned likelihoods for rapid inference [32, 33], are",40.0,0.3353658536585366,0.6646341463414633,9.0,32.0,0.24242424242424243,0.0060606060606061
+                                           Here a proof of concept for a robust end-to-end                 new to LIGO-Virgo data analysis.,43.0,0.48201438848920863,0.5179856115107914,14.0,9.0,0.2606060606060606,0.1575757575757576
+                                        low-latency Bayesian parameter estimation algorithm -                 Core elements of the QuickCBC algorithm have been,40.0,0.5660377358490566,0.4339622641509434,14.0,9.0,0.24242424242424243,0.036363636363636376
+                                        QuickCBC - is presented. The QuickCBC algorithm reads              merged with the BayesWave algorithm [34]. The key,40.0,0.5641025641025641,0.4358974358974359,16.0,8.0,0.24242424242424243,0.054545454545454564
+"                                        in calibrated strain data, performs robust on-source spec-         difference between the implementations is that the",40.0,0.6050955414012739,0.39490445859872614,15.0,5.0,0.24242424242424243,0.048484848484848464
+"                                        tral estimation, executes a rapid search for compact bi-           BayesWave variant [35] jointly marginalizes over the CBC",40.0,0.5950920245398773,0.4049079754601227,17.0,6.0,0.24242424242424243,0.012121212121212088
+"                                        nary coalescence (CBC) signals, uses wavelet de-noising            signal parameters, a model for the power spectral density",40.0,0.5975609756097561,0.4024390243902439,16.0,7.0,0.24242424242424243,0.0060606060606061
+"                                        to subtract any glitches from the search residuals, pro-           (PSD) and a wavelet based model for noise transients.",40.0,0.58125,0.41874999999999996,18.0,6.0,0.24242424242424243,0.030303030303030276
+avr_spaces,45.44827586206897,1.0,0.0,1.0,1.0,0.2754440961337513,0.9393939393939394
+                                                                                                                      2,118.0,0.008403361344537815,0.9915966386554622,1.0,1.0,0.7151515151515152,0.2787878787878788
+The QuickCBC algorithm uses a fixed PSD and a point         first five stages complete the algorithm will have pro-,0.0,0.7739130434782608,0.22608695652173916,19.0,5.0,0.0,0.303030303030303
+"estimate for any noise transients. The other key differ-    duced a full three-dimensional sky map (RA, DEC and",0.0,0.8198198198198198,0.18018018018018023,18.0,3.0,0.0,0.32727272727272727
+"ence is speed: QuickCBC can be provide results with a la-   luminosity distance), along with estimates for the com-",0.0,0.8260869565217391,0.17391304347826086,19.0,2.0,0.0,0.303030303030303
+"tency of minutes, while the more refined BayesWave+CBC      ponent masses and spins. All in about the time is took",0.0,0.7982456140350878,0.20175438596491224,19.0,4.0,0.0,0.3090909090909091
+analysis [35] takes hours.                                  you to read this paragraph. The precise run time will,0.0,0.5929203539823009,0.4070796460176991,14.0,18.0,0.0,0.3151515151515152
+                                                            depend on the duration and bandwidth of the signal and,60.0,0.39473684210526316,0.6052631578947368,10.0,1.0,0.36363636363636365,0.3090909090909091
+                                                            the speed and number of computations cores. For binary,60.0,0.40350877192982454,0.5964912280701755,9.0,1.0,0.36363636363636365,0.3090909090909091
+ II.   OVERVIEW OF THE QUICKCBC ALGORITHM                   black hole systems at current LIGO/Virgo sensitivity it is,1.0,0.7033898305084746,0.2966101694915254,15.0,11.0,0.006060606060606061,0.2848484848484848
+                                                            usually sufficient to use 4 seconds of data sampled at 2048,60.0,0.4117647058823529,0.5882352941176471,11.0,1.0,0.36363636363636365,0.2787878787878788
+                                                            Hz. For neutron star - black hole systems it is enough,60.0,0.38596491228070173,0.6140350877192983,11.0,1.0,0.36363636363636365,0.3090909090909091
+   The QuickCBC algorithm works with short snippets of,3.0,0.8148148148148148,0.18518518518518523,8.0,1.0,0.01818181818181818,0.6727272727272727
+"                                                            to use 8 to 16 seconds of data sampled at 2048 Hz, while",60.0,0.3793103448275862,0.6206896551724138,13.0,1.0,0.36363636363636365,0.296969696969697
+"LIGO-Virgo data, typically 4 to 8 seconds in length when",0.0,0.8392857142857143,0.1607142857142857,10.0,1.0,0.0,0.6606060606060606
+                                                            for binary neutron star systems we need 16 to 32 seconds,60.0,0.39655172413793105,0.603448275862069,11.0,1.0,0.36363636363636365,0.296969696969697
+searching for binary black holes and 16 to 32 seconds in,0.0,0.8214285714285714,0.1785714285714286,11.0,1.0,0.0,0.6606060606060606
+                                                            of data sampled at 4096 Hz. For a binary black hole,60.0,0.36936936936936937,0.6306306306306306,11.0,1.0,0.36363636363636365,0.32727272727272727
+length when searching for binary neutron stars. The run,0.0,0.8545454545454545,0.1454545454545455,9.0,1.0,0.0,0.6666666666666667
+"                                                            system, running on a 2016 MacBook Pro laptop with",60.0,0.3761467889908257,0.6238532110091743,9.0,1.0,0.36363636363636365,0.33939393939393936
+time scales roughly linearly with the data volume.,0.0,0.86,0.14,8.0,1.0,0.0,0.696969696969697
+"                                                            a 2.9 GHz quad-core processor, it takes ∼ 60 seconds",60.0,0.38392857142857145,0.6160714285714286,10.0,1.0,0.36363636363636365,0.32121212121212117
+"   The first step is to produce estimates for the power     for the PSD estimation and intrinsic parameter search,",3.0,0.7894736842105263,0.21052631578947367,18.0,3.0,0.01818181818181818,0.3090909090909091
+spectral density in each detector. On-source spectral es-   and an additional ∼ 30 seconds to complete the extrin-,0.0,0.8333333333333334,0.16666666666666663,18.0,2.0,0.0,0.3090909090909091
+"timation, where the short segment of data to be searched    sic parameter search and produce sky maps. The cost",0.0,0.8108108108108109,0.18918918918918914,19.0,3.0,0.0,0.32727272727272727
+"is also used to estimate the power spectral density (PSD),  of the intrinsic parameter search scales linearly with the",0.0,0.8389830508474576,0.1610169491525424,19.0,2.0,0.0,0.2848484848484848
+"can be thrown off by the presence of loud signals or loud   data duration, while the cost of the extrinsic parameter",0.0,0.8103448275862069,0.18965517241379315,21.0,2.0,0.0,0.296969696969697
+"glitches. To avoid such biases, QuickCBC uses an itera-     search scales linearly with the sample rate. Thus, the in-",0.0,0.8135593220338984,0.18644067796610164,19.0,3.0,0.0,0.2848484848484848
+tive approach that combines a running median estimate       trinsic parameter search for neutron-star black hole bina-,0.0,0.8220338983050848,0.17796610169491522,16.0,4.0,0.0,0.2848484848484848
+for the spectrum with spectral line identification and      ries takes either two to four times longer than for binary,0.0,0.8050847457627118,0.19491525423728817,19.0,4.0,0.0,0.2848484848484848
+"wavelet de-noising [31]. The de-noising removes signals     black holes, but time to produce a sky map is the same.",0.0,0.808695652173913,0.19130434782608696,19.0,3.0,0.0,0.303030303030303
+"and glitches, so only the spectral estimate from the first  Sky maps can be produced in very low latency by skip-",0.0,0.8141592920353983,0.18584070796460173,21.0,2.0,0.0,0.3151515151515152
+stage of the analysis is passes to the second stage. The    ping the intrinsic search and instead using the intrinsic,0.0,0.811965811965812,0.18803418803418803,20.0,3.0,0.0,0.2909090909090909
+"second stage performs a rapid, network coherent search      parameters provided by the search pipelines (as is done",0.0,0.8173913043478261,0.18260869565217386,17.0,4.0,0.0,0.303030303030303
+for CBC signals using a parallel tempered Markov Chain      by BayesStar [25]). The run time to produce a sky map,0.0,0.7876106194690266,0.21238938053097345,20.0,4.0,0.0,0.3151515151515152
+"Monte Carlo algorithm (PTMCMC) [36] with a banded           with QuickCBC is comparable to, or a little faster than,",0.0,0.7672413793103449,0.23275862068965514,18.0,6.0,0.0,0.296969696969697
+"likelihood that is analytically maximized over amplitude,   BayesStar. The main difference is that the QuickCBC",0.0,0.8558558558558559,0.14414414414414412,15.0,2.0,0.0,0.32727272727272727
+"phase and arrival time. Only the intrinsic parameters       maps are fully Bayesian, while BayesStar maps are only",0.0,0.8070175438596491,0.19298245614035092,17.0,4.0,0.0,0.3090909090909091
+of the signal - masses and spins - are explored by the      approximately so.,0.0,0.7662337662337663,0.23376623376623373,14.0,4.0,0.0,0.5333333333333333
+PTMCMC. The banded likelihood automatically identi-,0.0,0.9019607843137255,0.0980392156862745,6.0,1.0,0.0,0.6909090909090909
+                                                               The final stage of the algorithm refines the initial pa-,63.0,0.3949579831932773,0.6050420168067228,10.0,1.0,0.38181818181818183,0.2787878787878788
+fies and rejects frequency bands that are impacted by,0.0,0.8490566037735849,0.15094339622641506,9.0,1.0,0.0,0.6787878787878787
+                                                            rameter estimates using a PTMCMC algorithm and a,60.0,0.37962962962962965,0.6203703703703703,8.0,1.0,0.36363636363636365,0.34545454545454546
+noise transients. The removal is done separately for each,0.0,0.8596491228070176,0.14035087719298245,9.0,1.0,0.0,0.6545454545454545
+"                                                            fast, heterodyned likelihood function [32, 33]. The het-",60.0,0.4224137931034483,0.5775862068965517,8.0,1.0,0.36363636363636365,0.296969696969697
+"time delay, resulting in a robust time-frequency glitch",0.0,0.8727272727272727,0.12727272727272732,8.0,1.0,0.0,0.6666666666666667
+"                                                            erodyned likelihood offers significant speed advantages,",60.0,0.4396551724137931,0.5603448275862069,6.0,1.0,0.36363636363636365,0.296969696969697
+rejection method that can detect signals in the presence,0.0,0.8571428571428571,0.1428571428571429,9.0,1.0,0.0,0.6606060606060606
+                                                            especially for long duration signals such as binary neu-,60.0,0.41379310344827586,0.5862068965517242,9.0,1.0,0.36363636363636365,0.296969696969697
+of glitches. The third stage subtracts the best-fit CBC,0.0,0.8545454545454545,0.1454545454545455,9.0,1.0,0.0,0.6666666666666667
+                                                            tron star inspirals. The run-time for the final PTMCMC,60.0,0.40350877192982454,0.5964912280701755,9.0,1.0,0.36363636363636365,0.3090909090909091
+"waveform from the data, and performs a second round",0.0,0.8431372549019608,0.1568627450980392,9.0,1.0,0.0,0.6909090909090909
+                                                            stage scales linearly with the sample rate and is indepen-,60.0,0.4152542372881356,0.5847457627118644,10.0,1.0,0.36363636363636365,0.2848484848484848
+of spectral estimation and wavelet de-noising. The de-,0.0,0.8703703703703703,0.12962962962962965,8.0,1.0,0.0,0.6727272727272727
+                                                            dent of the observation time. On the same laptop com-,60.0,0.3893805309734513,0.6106194690265487,10.0,1.0,0.36363636363636365,0.3151515151515152
+noising produces a glitch model that is subtracted from,0.0,0.8545454545454545,0.1454545454545455,9.0,1.0,0.0,0.6666666666666667
+"                                                            puter described earlier, the PTMCMC stage takes four",60.0,0.4017857142857143,0.5982142857142857,8.0,1.0,0.36363636363636365,0.32121212121212117
+"the original data, while preserving any gravitational wave",0.0,0.8793103448275862,0.12068965517241381,8.0,1.0,0.0,0.6484848484848484
+                                                            minutes for black hole binaries and neutron star - black,60.0,0.4051724137931034,0.5948275862068966,10.0,1.0,0.36363636363636365,0.296969696969697
+signals. The cleaned data and updated spectral estimates,0.0,0.875,0.125,8.0,1.0,0.0,0.6606060606060606
+"                                                            hole binaries, and eight minutes for neutron star bina-",60.0,0.40869565217391307,0.5913043478260869,9.0,1.0,0.36363636363636365,0.303030303030303
+are used in the subsequent stages of the analysis. The,0.0,0.8333333333333334,0.16666666666666663,10.0,1.0,0.0,0.6727272727272727
+                                                            ries. These run-times are several orders magnitude faster,60.0,0.42735042735042733,0.5726495726495726,8.0,1.0,0.36363636363636365,0.2909090909090909
+fourth stage refines the estimates of the intrinsic param-,0.0,0.8620689655172413,0.13793103448275867,9.0,1.0,0.0,0.6484848484848484
+"                                                            than the hours or days it takes for LALinference [9, 10]",60.0,0.39655172413793105,0.603448275862069,11.0,1.0,0.36363636363636365,0.296969696969697
+eters using a standard non-maximized and non-banded,0.0,0.8823529411764706,0.11764705882352944,7.0,1.0,0.0,0.6909090909090909
+                                                            to produce results.,60.0,0.21518987341772153,0.7848101265822784,3.0,1.0,0.36363636363636365,0.5212121212121212
+"likelihood function. Consequently, the amplitude, phase",0.0,0.9090909090909091,0.09090909090909094,6.0,1.0,0.0,0.6666666666666667
+and arrival time at each detector also have to be explored,0.0,0.8275862068965517,0.1724137931034483,11.0,1.0,0.0,0.6484848484848484
+by the PTMCMC. The refined estimates for the intrinsic,0.0,0.8518518518518519,0.14814814814814814,9.0,1.0,0.0,0.6727272727272727
+parameters are then passed to the fifth stage of the anal-     A.    Spectral Estimation and Wavelet De-noising,0.0,0.7927927927927928,0.2072072072072072,17.0,5.0,0.0,0.32727272727272727
+"ysis, which uses a PTMCMC algorithm with an algebraic",0.0,0.8490566037735849,0.15094339622641506,9.0,1.0,0.0,0.6787878787878787
+likelihood function to map out the extrinsic parameters        The QuickCBC algorithm is design to work with short,0.0,0.7982456140350878,0.20175438596491224,17.0,5.0,0.0,0.3090909090909091
+"of the source - sky location, luminosity distance, inclina- stretches of data, typically between Tobs = 4 and Tobs =",0.0,0.8362068965517241,0.1637931034482759,20.0,1.0,0.0,0.296969696969697
+tion and polarization angles while holding the intrinsic    32 seconds in duration. Traditional spectral estimation,0.0,0.8521739130434782,0.14782608695652177,15.0,3.0,0.0,0.303030303030303
+"parameters fixed. Since the extrinsic parameters only im-   techniques, such as Welch averaging, can not be used on",0.0,0.8347826086956521,0.16521739130434787,18.0,2.0,0.0,0.303030303030303
+"pact the projection of the waveform onto the detectors,     short data segments like these. The advantages of work-",0.0,0.8173913043478261,0.18260869565217386,18.0,3.0,0.0,0.303030303030303
+"the inner products in the likelihood can be pre-computed,   ing with short data segments are speed and robustness",0.0,0.831858407079646,0.16814159292035402,18.0,2.0,0.0,0.3151515151515152
+resulting in an algebraic likelihood function that can be   against non-stationary drifts in the power spectrum. The,0.0,0.8448275862068966,0.15517241379310343,17.0,2.0,0.0,0.296969696969697
+evaluated in a fraction of a microsecond [37]. With the     disadvantages are low spectral resolution and possible bi-,0.0,0.8220338983050848,0.17796610169491522,18.0,3.0,0.0,0.2848484848484848
+avr_spaces,18.85,1.0,0.0,1.0,1.0,0.11424242424242426,0.9393939393939394
+                                                                                                                                  3,130.0,0.007633587786259542,0.9923664122137404,1.0,1.0,0.7878787878787878,0.20606060606060606
+                                                                   FIG. 2: Time-frequency maps illustrating the spectral es-,67.0,0.4032258064516129,0.5967741935483871,8.0,1.0,0.40606060606060607,0.24848484848484853
+                                                                   timation and de-noising procedure applied to four seconds,67.0,0.4032258064516129,0.5967741935483871,8.0,1.0,0.40606060606060607,0.24848484848484853
+                                                                   of LIGO Hanford data surrounding GPS time 1126259462.,67.0,0.38333333333333336,0.6166666666666667,8.0,1.0,0.40606060606060607,0.2727272727272727
+                                                                   The initial spectral estimation and whitening (upper panel),67.0,0.4126984126984127,0.5873015873015873,8.0,1.0,0.40606060606060607,0.23636363636363633
+                                                                   is impacted by the loud signal from GW150914. Wavelet de-,67.0,0.3870967741935484,0.6129032258064516,10.0,1.0,0.40606060606060607,0.24848484848484853
+"                                                                   noising is used to remove the excess power, then the spectral",67.0,0.3984375,0.6015625,11.0,1.0,0.40606060606060607,0.22424242424242424
+                                                                   estimation is repeated. The original data is re-whitened (mid-,67.0,0.4186046511627907,0.5813953488372092,9.0,1.0,0.40606060606060607,0.21818181818181814
+                                                                   dle panel) ready for the next iteration. The process is iterated,67.0,0.4122137404580153,0.5877862595419847,11.0,1.0,0.40606060606060607,0.20606060606060606
+                                                                   until the excess SNR plateaus. The bottom panel shows the,67.0,0.3870967741935484,0.6129032258064516,10.0,1.0,0.40606060606060607,0.24848484848484853
+                                                                   de-noised data used to produce the final spectral estimate.,67.0,0.40476190476190477,0.5952380952380952,9.0,1.0,0.40606060606060607,0.23636363636363633
+                                                                   smoothing window ∆f is chosen to strike a balance be-,67.0,0.36666666666666664,0.6333333333333333,10.0,1.0,0.40606060606060607,0.2727272727272727
+                                                                   tween following the slope of the spectrum (small ∆f ’s,67.0,0.371900826446281,0.628099173553719,10.0,1.0,0.40606060606060607,0.2666666666666667
+"                                                                   follow the slope), and ignoring sharp spectral lines (large",67.0,0.40476190476190477,0.5952380952380952,9.0,1.0,0.40606060606060607,0.23636363636363633
+"FIG. 1: Workflow diagram for the QuickCBC algorithm. The           ∆f ’s are robust against lines). More accurately, it is the",0.0,0.7698412698412699,0.23015873015873012,20.0,6.0,0.0,0.23636363636363633
+"time domain data, d(t), is read in, windowed, and Fourier",0.0,0.8421052631578947,0.1578947368421053,10.0,1.0,0.0,0.6545454545454545
+                          ˜ ). An initial on-source PSD esti-      number of Fourier samples in the smoothing window that,26.0,0.6198347107438017,0.3801652892561983,16.0,4.0,0.15757575757575756,0.2666666666666667
+transform to produce d(f,0.0,0.875,0.125,4.0,1.0,0.0,0.8545454545454545
+"                                                                   is critical, so for longer observation times smaller win-",67.0,0.3951612903225806,0.6048387096774194,9.0,1.0,0.40606060606060607,0.24848484848484853
+mate S(f ) is produced using wavelet de-noising to remove,0.0,0.8421052631578947,0.1578947368421053,10.0,1.0,0.0,0.6545454545454545
+glitch and signal power. Next the data is searched using a,0.0,0.8275862068965517,0.1724137931034483,11.0,1.0,0.0,0.6484848484848484
+                                                                   dows can be used. For the shortest 4 second segments,67.0,0.36134453781512604,0.6386554621848739,10.0,1.0,0.40606060606060607,0.2787878787878788
+glitch-robust likelihood function that maximizes over extrin-      the default width is ∆f = 16 Hz. The smoothed spectral,0.0,0.8181818181818182,0.18181818181818177,18.0,4.0,0.0,0.2666666666666667
+"sic parameters and returns initial estimates for the intrinsic     estimate Ss (f ) is used to identify spectral lines, which",0.0,0.816,0.18400000000000005,20.0,3.0,0.0,0.24242424242424243
+"parameters ~ η . The PSD estimation is then repeated on the        are found by taking the ratio R(f ) = Sp (f )/Ss (f ), with",0.0,0.7380952380952381,0.26190476190476186,27.0,5.0,0.0,0.23636363636363633
+"residual d − h(~η ), and wavelet de-noising is used to fit and re- lines defined as regions where this ratio exceeds R∗ = 10.",0.0,0.808,0.19199999999999995,25.0,1.0,0.0,0.24242424242424243
+move any glitches g̃(f ) that might be present in the data. The    The full spectral estimate is then given by,0.0,0.7909090909090909,0.2090909090909091,21.0,3.0,0.0,0.33333333333333337
+"de-glitched data, d(f˜ ) − g̃(f ), is used to pre-compute various",0.0,0.8307692307692308,0.16923076923076918,12.0,1.0,0.0,0.6060606060606061
+                                                                                         ,89.0,0.011111111111111112,0.9888888888888889,1.0,1.0,0.5393939393939394,0.4545454545454546
+"inner products for the projected network likelihood, allowing                              Ss (f ), for R(f ) ≤ R∗",0.0,0.6140350877192983,0.38596491228070173,16.0,16.0,0.0,0.3090909090909091
+                                                    ~ such as the               S(f ) =                             .           (1),52.0,0.1450381679389313,0.8549618320610687,9.0,27.0,0.3151515151515151,0.20606060606060606
+"for a rapid mapping of the extrinsic parameters ξ,                                         Sp (f ), for R(f ) > R∗",0.0,0.5087719298245614,0.49122807017543857,17.0,21.0,0.0,0.3090909090909091
+sky position and luminosity distance. The initial estimates,0.0,0.8813559322033898,0.11864406779661019,8.0,1.0,0.0,0.6424242424242423
+for the full set of parameters θ~ = {~      ~ are used along with,0.0,0.7230769230769231,0.27692307692307694,14.0,4.0,0.0,0.6060606060606061
+"                                        η , ξ},                    The initial spectral estimate p      is used to whiten the",40.0,0.392,0.608,13.0,14.0,0.24242424242424243,0.24242424242424243
+the de-glitched data and refined PSD estimate to initialize the    data: d(f˜ ) → d˜w (f ) = d(f  ˜ )/ S(f ). The whitened,0.0,0.7704918032786885,0.2295081967213115,25.0,4.0,0.0,0.2606060606060606
+heterodyned likelihood function that is used by the PTMCMC         data is wavelet transformed using an over-complete col-,0.0,0.8032786885245902,0.19672131147540983,17.0,5.0,0.0,0.2606060606060606
+algorithm to rapidly produce full posterior distribution.          lection of Morlet-Gabor continuous wavelets (see the,0.0,0.8151260504201681,0.18487394957983194,14.0,6.0,0.0,0.2787878787878788
+                                                                   top panel of Figure 2). A wavelet de-noising proce-,67.0,0.3644067796610169,0.6355932203389831,9.0,1.0,0.40606060606060607,0.2848484848484848
+                                                                   dure [31] is then used to remove any non-Gaussian fea-,67.0,0.371900826446281,0.628099173553719,10.0,1.0,0.40606060606060607,0.2666666666666667
+ases due to the presence of loud signals or glitches. To           tures from the data. Wavelet de-noising is basically a,0.0,0.7603305785123967,0.23966942148760328,20.0,6.0,0.0,0.2666666666666667
+guard against such biases an iterative wavelet de-noising          time-frequency thresholding technique. For stationary,0.0,0.825,0.17500000000000004,13.0,6.0,0.0,0.2727272727272727
+"approach is used to remove non-Gaussian features from              Gaussian noise, the wavelet power spectrum, Snm , should",0.0,0.7642276422764228,0.2357723577235772,17.0,8.0,0.0,0.2545454545454545
+the data.                                                          follow a chi-squared distribution with two degrees of free-,0.0,0.46825396825396826,0.5317460317460317,11.0,30.0,0.0,0.23636363636363633
+   The iterative spectral estimation procedure proceeds            dom. Wavelet pixels with power above a certain thresh-,3.0,0.768595041322314,0.23140495867768596,15.0,7.0,0.01818181818181818,0.2666666666666667
+"as follows: A Tukey window is applied to the data to               old are identified, then an inverse wavelet transform of",0.0,0.7317073170731707,0.2682926829268293,20.0,8.0,0.0,0.2545454545454545
+limit spectral leakage. A FFT is then used to produce              these pixels is used to produce a whitened time domain,0.0,0.7355371900826446,0.2644628099173554,20.0,8.0,0.0,0.2666666666666667
+a periodogram Sp (f ). A running median of width ∆f                reconstruction of the excess power. The reconstructed,0.0,0.7333333333333333,0.2666666666666667,18.0,9.0,0.0,0.2727272727272727
+is used to smooth the periodogram. The width of the                feature is re-colored using the smooth component of the,0.0,0.7295081967213115,0.2704918032786885,19.0,9.0,0.0,0.2606060606060606
+avr_spaces,29.58,1.0,0.0,1.0,1.0,0.17927272727272725,0.9393939393939394
+                                                                                                                                                   4,147.0,0.006756756756756757,0.9932432432432432,1.0,1.0,0.8909090909090909,0.10303030303030303
+"power spectrum Ss (f ) and subtracted from the original                        BayesWave trans-dimensional spectral model [21, 22] to",0.0,0.706766917293233,0.29323308270676696,17.0,13.0,0.0,0.19393939393939397
+time domain data. The thresholding procedure starts by                         the glitch-subtracted data. The spectral model includes,0.0,0.7164179104477612,0.28358208955223885,15.0,13.0,0.0,0.18787878787878787
+"identifying pixels with Snm > S0 , then surrounding pix-                       a smooth component described by a cubic spline, and line",0.0,0.6962962962962963,0.3037037037037037,20.0,12.0,0.0,0.18181818181818177
+"els with Sn±1m±1 > S1 are also flagged, with the goal                          features described by a Lorentzian line model. The run-",0.0,0.6716417910447762,0.32835820895522383,20.0,14.0,0.0,0.18787878787878787
+of identifying clusters of excess power. The standard                          ning median is used to initialize the spline model. The,0.0,0.6865671641791045,0.31343283582089554,18.0,14.0,0.0,0.18787878787878787
+threshold values are S0 = 10 and S1 = 6. The power                             spacing of the spline points is determined by comparing,0.0,0.6417910447761194,0.35820895522388063,21.0,15.0,0.0,0.18787878787878787
+"spectral estimation is repeated using the de-noised data.                      two running averages of the running median, one with a",0.0,0.7142857142857143,0.2857142857142857,18.0,12.0,0.0,0.19393939393939397
+The updated power spectrum is then used to whiten the                          window twice as wide as the other. The usual choice is to,0.0,0.6617647058823529,0.3382352941176471,22.0,14.0,0.0,0.17575757575757578
+"original data, and the wavelet de-noising procedure is re-                     use 4 Hz and an 8 Hz window. The spline control points",0.0,0.6992481203007519,0.3007518796992481,21.0,11.0,0.0,0.19393939393939397
+peated. The entire procedure is iterated until the signal-                     are spaced more closely in regions where the two aver-,0.0,0.7142857142857143,0.2857142857142857,19.0,11.0,0.0,0.19393939393939397
+"to-noise of the non-Gaussian excess plateaus. This typi-                       ages diverge, and spaced further apart in regions where",0.0,0.7164179104477612,0.28358208955223885,17.0,12.0,0.0,0.18787878787878787
+"cally takes just one or two iterations, but data with very                     the two averages converge. The minimum spacing of the",0.0,0.7045454545454546,0.2954545454545454,20.0,11.0,0.0,0.19999999999999996
+loud glitches may require as many as five or six iterations                    spline control points is set at 4 Hz and the maximum,0.0,0.6946564885496184,0.30534351145038163,22.0,11.0,0.0,0.20606060606060606
+for the procedure to converge.                                                 spacing is set at 32 Hz. The threshold on the ratio of the,0.0,0.5255474452554745,0.4744525547445255,18.0,25.0,0.0,0.16969696969696968
+   Figure 2 illustrates the spectral estimation and de-                        the two averages is set at 20%. The Lorentzian line model,3.0,0.6764705882352942,0.32352941176470584,19.0,13.0,0.01818181818181818,0.17575757575757578
+noising procedure using 4 seconds of data surrounding                          is initialized using the outliers from the running median,0.0,0.6985294117647058,0.30147058823529416,17.0,14.0,0.0,0.17575757575757578
+"GW150914. The initial spectral estimate used to whiten                         to set the initial location, amplitude and width of the",0.0,0.6940298507462687,0.30597014925373134,18.0,13.0,0.0,0.18787878787878787
+the data (top panel) overestimates the height of the spec-                     lines. A simple fixed dimension MCMC is then used to,0.0,0.7022900763358778,0.2977099236641222,20.0,11.0,0.0,0.20606060606060606
+trum through the band between ∼ 40Hz → 120Hz due                               refine the model parameters. To control unphysical oscil-,0.0,0.6544117647058824,0.34558823529411764,18.0,16.0,0.0,0.17575757575757578
+"to the loud gravitational wave signal. The data in the                         lations in the spline model, a prior is used that penalizes",0.0,0.6811594202898551,0.3188405797101449,21.0,13.0,0.0,0.1636363636363637
+middle panel is whitened using the updated spectrum                            points with large second derivatives. Figure 4 compares,0.0,0.6865671641791045,0.31343283582089554,16.0,15.0,0.0,0.18787878787878787
+found after the initial round of wavelet de-noising. More                      the QuickCBC spectral estimate to the estimate from the,0.0,0.7164179104477612,0.28358208955223885,18.0,12.0,0.0,0.18787878787878787
+"features are now visible in the mid-band frequencies. In                       BayesWave algorithm [21, 22]. The QuickCBC estimate",0.0,0.7153846153846154,0.2846153846153846,16.0,12.0,0.0,0.21212121212121215
+this example the procedure converged after two itera-                          agrees very well with the BayesWave estimate. The key,0.0,0.6893939393939394,0.31060606060606055,17.0,14.0,0.0,0.19999999999999996
+tions. The lower panel shows the de-noised data that                           difference is that the QuickCBC estimate is produced in,0.0,0.6791044776119403,0.32089552238805974,18.0,14.0,0.0,0.18787878787878787
+"was used to produce the final spectral estimate. Figure                        seconds, while the more refined BayesWave estimate takes",0.0,0.7111111111111111,0.28888888888888886,17.0,13.0,0.0,0.18181818181818177
+3 shows the whitened time domain reconstruction of the                         tens of minutes or longer to produce.,0.0,0.6637931034482759,0.3362068965517241,16.0,13.0,0.0,0.296969696969697
+feature that was removed by the de-noising process. In,0.0,0.8518518518518519,0.14814814814814814,9.0,1.0,0.0,0.6727272727272727
+this instance the feature is the gravitational wave signal                                   1x10-39,0.0,0.57,0.43000000000000005,10.0,18.0,0.0,0.3939393939393939
+                                                                                                                                Welch Average,128.0,0.0851063829787234,0.9148936170212766,2.0,1.0,0.7757575757575758,0.1454545454545455
+from a binary black hole merger. It would be a bad idea                                                                                H1 BW,0.0,0.34285714285714286,0.6571428571428571,14.0,41.0,0.0,0.1515151515151515
+                                                                                             1x10-40                             H1 QuickCBC,93.0,0.12142857142857143,0.8785714285714286,3.0,15.0,0.5636363636363636,0.1515151515151515
+to use the wavelet de-noised data from the spectral esti-,0.0,0.8421052631578947,0.1578947368421053,10.0,1.0,0.0,0.6545454545454545
+mation procedure for subsequent stages in the analysis!                                      1x10-41,0.0,0.55,0.44999999999999996,9.0,20.0,0.0,0.3939393939393939
+"Instead, just the spectral estimate is used.",0.0,0.8636363636363636,0.13636363636363635,7.0,1.0,0.0,0.7333333333333334
+                                                                                             1x10-42,93.0,0.07,0.9299999999999999,1.0,1.0,0.5636363636363636,0.3939393939393939
+                                                                               S(f) (Hz-1),79.0,0.1111111111111111,0.8888888888888888,2.0,1.0,0.47878787878787876,0.4545454545454546
+       6                                                                                     1x10-43,7.0,0.08,0.92,2.0,43.0,0.04242424242424243,0.3939393939393939
+                  H1 excess,18.0,0.2962962962962963,0.7037037037037037,2.0,1.0,0.10909090909090909,0.8363636363636364
+                                                                                             1x10-44,93.0,0.07,0.9299999999999999,1.0,1.0,0.5636363636363636,0.3939393939393939
+       4,7.0,0.125,0.875,1.0,1.0,0.04242424242424243,0.9515151515151515
+                                                                                             1x10-45,93.0,0.07,0.9299999999999999,1.0,1.0,0.5636363636363636,0.3939393939393939
+       2                                                                                     1x10-46,7.0,0.08,0.92,2.0,43.0,0.04242424242424243,0.3939393939393939
+                                                                                             1x10-47,93.0,0.07,0.9299999999999999,1.0,1.0,0.5636363636363636,0.3939393939393939
+g(t)   0,0.0,0.625,0.375,2.0,2.0,0.0,0.9515151515151515
+                                                                                                                 100                            1000,113.0,0.0472972972972973,0.9527027027027027,2.0,15.0,0.6848484848484848,0.10303030303030303
+                                                                                                                       f (Hz),119.0,0.04,0.96,2.0,1.0,0.7212121212121212,0.24242424242424243
+       -2,7.0,0.2222222222222222,0.7777777777777778,1.0,1.0,0.04242424242424243,0.9454545454545454
+                                                                               FIG. 4:      A comparison of power spectral density esti-,79.0,0.3235294117647059,0.6764705882352942,9.0,4.0,0.47878787878787876,0.17575757575757578
+       -4                                                                      mates using four seconds of LIGO Hanford data surround-,7.0,0.3656716417910448,0.6343283582089552,10.0,36.0,0.04242424242424243,0.18787878787878787
+                                                                               ing GW150914 centered on GPS time 1126259462. The low-,79.0,0.3458646616541353,0.6541353383458647,9.0,1.0,0.47878787878787876,0.19393939393939397
+       -6,7.0,0.2222222222222222,0.7777777777777778,1.0,1.0,0.04242424242424243,0.9454545454545454
+                                                                               latency QuickCBC algorithm produces a good approximation,79.0,0.37037037037037035,0.6296296296296297,7.0,1.0,0.47878787878787876,0.18181818181818177
+            0.3        0.32   0.34   0.36   0.38    0.4   0.42   0.44   0.46   to the reference BayesWave estimate. A Welch average us-,12.0,0.6074074074074074,0.3925925925925926,18.0,14.0,0.07272727272727272,0.18181818181818177
+                                            t (s)                              ing 2048 seconds of data surrounding the event is shown for,44.0,0.38405797101449274,0.6159420289855073,13.0,16.0,0.26666666666666666,0.1636363636363637
+                                                                               comparison.,79.0,0.12222222222222222,0.8777777777777778,1.0,1.0,0.47878787878787876,0.4545454545454546
+FIG. 3: The non-Gaussian feature removed by wavelet de-,0.0,0.8545454545454545,0.1454545454545455,9.0,1.0,0.0,0.6666666666666667
+noising during the iterative spectral estimation procedure ap-,0.0,0.8870967741935484,0.11290322580645162,8.0,1.0,0.0,0.6242424242424243
+plied to four seconds of LIGO Hanford data centered on GPS,0.0,0.8275862068965517,0.1724137931034483,11.0,1.0,0.0,0.6484848484848484
+time 1126259462. In this instance the non-Gaussian feature,0.0,0.8793103448275862,0.12068965517241381,8.0,1.0,0.0,0.6484848484848484
+is the gravitational wave signal from the binary black hole                     B.              Parallel Tempered Markov Chain Monte Carlo,0.0,0.644927536231884,0.35507246376811596,17.0,18.0,0.0,0.1636363636363637
+merger GW150914.,0.0,0.9375,0.0625,2.0,1.0,0.0,0.9030303030303031
+                                                                                 The QuickCBC algorithm uses a Parallel Tempered,81.0,0.3203125,0.6796875,7.0,1.0,0.4909090909090909,0.22424242424242424
+"  The final stage of the QuickCBC spectral estimation                          Markov Chain Monte Carlo (PTMCMC) algorithm [36,",2.0,0.6771653543307087,0.3228346456692913,15.0,14.0,0.012121212121212121,0.23030303030303034
+"procedure is to fit a fixed dimension version of the                           38, 39] for both the initial search, the fast sky map-",0.0,0.6541353383458647,0.3458646616541353,21.0,14.0,0.0,0.19393939393939397
+avr_spaces,23.417910447761194,1.0,0.0,1.0,1.0,0.1419267299864315,0.9393939393939394
+                                                                                                                            5,124.0,0.008,0.992,1.0,1.0,0.7515151515151515,0.24242424242424243
+ping and the full parameter inference. The implemen-             The reference value θ~ is updated to the current value of,0.0,0.7540983606557377,0.24590163934426235,19.0,7.0,0.0,0.2606060606060606
+"tation varies slightly between the different stages, mostly      the chain every few hundred iterations and the Fisher",0.0,0.8220338983050848,0.17796610169491522,17.0,4.0,0.0,0.2848484848484848
+"in terms of the likelihood function used, but the central        matrix is recomputed at the new location. The Fisher",0.0,0.7863247863247863,0.2136752136752137,19.0,5.0,0.0,0.2909090909090909
+engine is the same.                                              matrix proposal employs the eigenvectors v(k) and eigen-,0.0,0.5371900826446281,0.4628099173553719,12.0,24.0,0.0,0.2666666666666667
+"   The PTMCMC algorithm uses a collection of chains              values λk , found by solving the linear system",3.0,0.7117117117117117,0.28828828828828834,17.0,8.0,0.01818181818181818,0.32727272727272727
+that explore likelihoods that are scaled by “inverse tem-                                  j         i,0.0,0.5,0.5,11.0,22.0,0.0,0.38181818181818183
+                          ~ = βi ln L(θ).,26.0,0.2682926829268293,0.7317073170731707,5.0,1.0,0.15757575757575756,0.7515151515151515
+"peratures” βi : ln L(βi , θ)                  ~      Chains with                      Γij v(k) = λk v(k) .                (4)",0.0,0.408,0.5920000000000001,17.0,32.0,0.0,0.24242424242424243
+"βi = 1 explore the target posterior, while chains with",0.0,0.8333333333333334,0.16666666666666663,10.0,1.0,0.0,0.6727272727272727
+"βi > 1 range more widely, and help chains to escape              Jumps from the current location x to candidate loca-",0.0,0.7264957264957265,0.27350427350427353,20.0,8.0,0.0,0.2909090909090909
+from local maxima. Chains with βi < 1 can be used to             tion y are proposed by first randomly selecting an eigen-,0.0,0.7295081967213115,0.2704918032786885,22.0,7.0,0.0,0.2606060606060606
+"help lock on to weak signals. The temperature ladder             direction p, and setting",0.0,0.7303370786516854,0.2696629213483146,13.0,7.0,0.0,0.4606060606060606
+is set so that there are multiple “cold” chains: βi = 1                                          γ,0.0,0.45918367346938777,0.5408163265306123,13.0,22.0,0.0,0.406060606060606
+"for i = [1, Nc ] that interact with Nh “hot” chains on a                             y = x + p v(p) ,                     (5)",0.0,0.448,0.552,22.0,25.0,0.0,0.24242424242424243
+                                                                                                  λp,98.0,0.02,0.98,1.0,1.0,0.593939393939394,0.3939393939393939
+geometrically spaced temperature ladder: βk = αk for,0.0,0.8653846153846154,0.13461538461538458,8.0,1.0,0.0,0.6848484848484848
+"k = [1, Nh ]. The choice of increment α and the num-",0.0,0.7692307692307693,0.23076923076923073,13.0,1.0,0.0,0.6848484848484848
+"                                                                 where γ ∼ N (0, 1) is a zero mean, unit variance Gaus-",65.0,0.35294117647058826,0.6470588235294117,13.0,1.0,0.3939393939393939,0.2787878787878788
+ber of hot chains are tunable parameters. Setting α too,0.0,0.8363636363636363,0.1636363636363637,10.0,1.0,0.0,0.6666666666666667
+                                                                 sian deviate. The proposal densities for this jump can-,65.0,0.39166666666666666,0.6083333333333334,9.0,1.0,0.3939393939393939,0.2727272727272727
+large will result in poor exchange between chains. Set-,0.0,0.8545454545454545,0.1454545454545455,9.0,1.0,0.0,0.6666666666666667
+                                                                 cel in the Metropolis-Hastings ratio since the Fisher ma-,65.0,0.4016393442622951,0.5983606557377049,9.0,1.0,0.3939393939393939,0.2606060606060606
+ting α too small will require a prohibitive number of,0.0,0.8301886792452831,0.16981132075471694,10.0,1.0,0.0,0.6787878787878787
+                                                                 trix is held fixed (aside from occasional infrequent up-,65.0,0.39669421487603307,0.6033057851239669,9.0,1.0,0.3939393939393939,0.2666666666666667
+chains to reach the desired maximum temperature. A,0.0,0.86,0.14,8.0,1.0,0.0,0.696969696969697
+                                                                 dates). Jumping along eigen-directions is more robust,65.0,0.3983050847457627,0.6016949152542372,7.0,1.0,0.3939393939393939,0.2848484848484848
+good rule-of-thumb for the maximum temperature is that,0.0,0.8703703703703703,0.12962962962962965,8.0,1.0,0.0,0.6727272727272727
+"                                                                 that drawing from the full Fisher matrix, as the matri-",65.0,0.38333333333333336,0.6166666666666667,10.0,1.0,0.3939393939393939,0.2727272727272727
+"the effective signal-to-noise  ratio for the hottest chain,",0.0,0.864406779661017,0.13559322033898302,8.0,2.0,0.0,0.6424242424242423
+                  p                                              ces are often poorly-conditioned. The poor conditioning,18.0,0.4166666666666667,0.5833333333333333,8.0,24.0,0.10909090909090909,0.2727272727272727
+SNRNh = SNR βNk should be of order 4-5. For typ-,0.0,0.7916666666666666,0.20833333333333337,11.0,1.0,0.0,0.7090909090909091
+"                                                                 typically only impacts one or two eigen-directions, and",65.0,0.4,0.6,8.0,1.0,0.3939393939393939,0.2727272727272727
+ical LIGO-Virgo signals with SNR ∼ 10 → 20 we need,0.0,0.8,0.19999999999999996,11.0,1.0,0.0,0.696969696969697
+                                                                 still allows for good acceptance of jumps along the other,65.0,0.39344262295081966,0.6065573770491803,10.0,1.0,0.3939393939393939,0.2606060606060606
+βNk ∼ 1/4 → 1/16. Using a spacing of α = 0.8 requires,0.0,0.7735849056603774,0.2264150943396226,13.0,1.0,0.0,0.6787878787878787
+                                                                 eigen-directions. Small Gaussian jumps along individual,65.0,0.4166666666666667,0.5833333333333333,6.0,1.0,0.3939393939393939,0.2727272727272727
+of order Nh ∼ 6 → 12 hot chains to reach the desired,0.0,0.7692307692307693,0.23076923076923073,13.0,1.0,0.0,0.6848484848484848
+                                                                 parameter directions are included in the proposal mix to,65.0,0.39669421487603307,0.6033057851239669,9.0,1.0,0.3939393939393939,0.2666666666666667
+maximum temperature. These rule-of-thumb settings for,0.0,0.9056603773584906,0.09433962264150941,6.0,1.0,0.0,0.6787878787878787
+                                                                 help cover directions that might not be explored well by,65.0,0.3884297520661157,0.6115702479338843,10.0,1.0,0.3939393939393939,0.2666666666666667
+the PTMCMC temperature ladder have been found to,0.0,0.8541666666666666,0.14583333333333337,8.0,1.0,0.0,0.7090909090909091
+                                                                 the Fisher matrix jumps.,65.0,0.23595505617977527,0.7640449438202247,4.0,1.0,0.3939393939393939,0.4606060606060606
+"work in practice, but the efficiency could be improved",0.0,0.8518518518518519,0.14814814814814814,9.0,1.0,0.0,0.6727272727272727
+                                                                    Differential evolution (DE) proposals [40] are particu-,68.0,0.3983739837398374,0.6016260162601625,7.0,1.0,0.4121212121212121,0.2545454545454545
+by using dynamic temperature spacing [39]. When loud,0.0,0.8653846153846154,0.13461538461538458,8.0,1.0,0.0,0.6848484848484848
+                                                                 larly good at exploring degenerate directions in parame-,65.0,0.4049586776859504,0.5950413223140496,8.0,1.0,0.3939393939393939,0.2666666666666667
+"signals (SNR > 30) are detected, it may be necessary to",0.0,0.8181818181818182,0.18181818181818177,11.0,1.0,0.0,0.6666666666666667
+                                                                 ter space - the very same directions that cause the Fisher,65.0,0.3902439024390244,0.6097560975609756,11.0,1.0,0.3939393939393939,0.2545454545454545
+start a new analysis with additional chains to have a high,0.0,0.8275862068965517,0.1724137931034483,11.0,1.0,0.0,0.6484848484848484
+                                                                 matrix to become ill-conditioned. The variant of differ-,65.0,0.4049586776859504,0.5950413223140496,8.0,1.0,0.3939393939393939,0.2666666666666667
+enough maximum temperature.,0.0,0.9259259259259259,0.07407407407407407,3.0,1.0,0.0,0.8363636363636364
+                                                                 ential evolution used by QuickCBC works as follows: A,65.0,0.3813559322033898,0.6186440677966102,9.0,1.0,0.3939393939393939,0.2848484848484848
+"   Each chain is updated using a mixture of proposal             history array of past samples, z is collected for each tem-",3.0,0.7258064516129032,0.27419354838709675,20.0,7.0,0.01818181818181818,0.24848484848484853
+distributions. The standard mix includes draws from              perature level (with multiple copies for the cold chains).,0.0,0.7723577235772358,0.22764227642276424,16.0,8.0,0.0,0.2545454545454545
+"the prior distribution, jumps along eigenvectors of the          The array is initialized with draws from the prior. Sam-",0.0,0.7851239669421488,0.2148760330578512,18.0,6.0,0.0,0.2666666666666667
+"Fisher information matrix, differential evolution, Gaus-         ples are added to the history array after every ∼ 10 it-",0.0,0.7933884297520661,0.20661157024793386,18.0,5.0,0.0,0.2666666666666667
+sian jumps along each intrinsic parameter direction and          erations. A counter j keeps track of how many samples,0.0,0.7796610169491526,0.22033898305084743,18.0,6.0,0.0,0.2848484848484848
+a dedicated extrinsic parameter proposal that draws new          have been added. The new sample added is added to the,0.0,0.7711864406779662,0.22881355932203384,19.0,6.0,0.0,0.2848484848484848
+"sky locations that maintain the time delay between a             array at index j(modNH ). That is, when j reaches NH",0.0,0.7350427350427351,0.2649572649572649,20.0,7.0,0.0,0.2909090909090909
+"randomly selected pair of detectors, while analytically          the first entry in the array gets replaced and so on. The",0.0,0.7786885245901639,0.2213114754098361,19.0,6.0,0.0,0.2606060606060606
+"adjusting the other extrinsic parameters to keep the de-         DE proposal is made as follows: Two samples, k, l, are",0.0,0.773109243697479,0.22689075630252098,20.0,5.0,0.0,0.2787878787878788
+tector frame waveforms unchanged. The extrinsic pro-             drawn from the history array and used to propose a new,0.0,0.7563025210084033,0.24369747899159666,18.0,7.0,0.0,0.2787878787878788
+posal is described in detail in section IVa of Ref. [16].        location,0.0,0.7534246575342466,0.2465753424657534,12.0,5.0,0.0,0.5575757575757576
+   The Fisher information matrix proposal is based on a,3.0,0.8,0.19999999999999996,9.0,1.0,0.01818181818181818,0.6666666666666667
+quadratic expansion of the log likelihood:                                           y = x + γ(zk − zl ) .                (6),0.0,0.424,0.5760000000000001,16.0,30.0,0.0,0.24242424242424243
+                                                                                                                     √,117.0,0.00847457627118644,0.9915254237288136,1.0,1.0,0.7090909090909091,0.2848484848484848
+                ~ = −∂i ∂j ln L,16.0,0.3225806451612903,0.6774193548387097,6.0,1.0,0.09696969696969697,0.8121212121212121
+           Γij (θ)                                               Here γ is drawn from a Gaussian of width 2.38/ 2d for,11.0,0.4067796610169492,0.5932203389830508,14.0,24.0,0.06666666666666667,0.2848484848484848
+"                   X Z Aab     ab       2      ab ab             90% of the DE updates, where d is number of parameters,",19.0,0.475,0.525,18.0,15.0,0.11515151515151516,0.2727272727272727
+"                           ,i A,j + Aab Φ,i Φ,j",27.0,0.3191489361702128,0.6808510638297872,6.0,1.0,0.16363636363636364,0.7151515151515151
+             =4                                       df .   (2) and set to γ = 1 for the rest. The proposal is symmet-,13.0,0.42016806722689076,0.5798319327731092,17.0,21.0,0.07878787878787878,0.2787878787878788
+"                                  S a (f )                       ric, so the proposal densities cancel in the Metropolis-",34.0,0.4380165289256198,0.5619834710743802,13.0,12.0,0.20606060606060606,0.2666666666666667
+                   ab,19.0,0.09523809523809523,0.9047619047619048,1.0,1.0,0.11515151515151516,0.8727272727272728
+                                                                 Hastings ratio. The Gaussian DE jumps are good for,65.0,0.3652173913043478,0.6347826086956522,9.0,1.0,0.3939393939393939,0.303030303030303
+"Here the derivatives are taken with respect to the wave-         exploring local correlations, while the γ = 1 DE jumps",0.0,0.773109243697479,0.22689075630252098,20.0,5.0,0.0,0.2787878787878788
+form parameters θi centered on some reference value θ.        ~  allow the chains to move between discrete modes of the,0.0,0.773109243697479,0.22689075630252098,20.0,6.0,0.0,0.2787878787878788
+"The sum is over the detectors, a, in the network, and the        posterior.",0.0,0.7466666666666667,0.2533333333333333,13.0,5.0,0.0,0.5454545454545454
+"harmonics, b, of the gravitational wave signal:                     The QuickCBC sampler is currently limited to using",0.0,0.711864406779661,0.288135593220339,15.0,11.0,0.0,0.2848484848484848
+"                                                                 waveform templates that describe non-precessing, quasi-",65.0,0.4166666666666667,0.5833333333333333,6.0,1.0,0.3939393939393939,0.2727272727272727
+                          X                ab,26.0,0.06666666666666667,0.9333333333333333,2.0,9.0,0.15757575757575756,0.7272727272727273
+                ha (f ) =     Aab (f )eiΦ     (f ),16.0,0.36,0.64,9.0,5.0,0.09696969696969697,0.696969696969697
+                                                   .         (3) circular binaries. These templates can be parameterized,51.0,0.44166666666666665,0.5583333333333333,9.0,5.0,0.3090909090909091,0.2727272727272727
+                          b                                      in terms of four intrinsic parameters and seven extrinsic,26.0,0.4098360655737705,0.5901639344262295,10.0,20.0,0.15757575757575756,0.2606060606060606
+avr_spaces,22.211764705882352,1.0,0.0,1.0,1.0,0.13461675579322638,0.9393939393939394
+                                                                                                                                            6,140.0,0.0070921985815602835,0.9929078014184397,1.0,1.0,0.8484848484848485,0.1454545454545455
+"parameters. The intrinsic parameters are the individual           where a labels the detector, F+a (α, β, ψ) and F×a (α, β, ψ)",0.0,0.7619047619047619,0.23809523809523814,21.0,6.0,0.0,0.23636363636363633
+"mass m1 , m2 and the aligned dimensionless spins χ1 , χ2 .        are the antenna response patterns, ∆ta is the arrival time",0.0,0.7661290322580645,0.2338709677419355,23.0,5.0,0.0,0.24848484848484853
+"Here χ = χ   ~ · L̂, where χ  ~ = S/m  ~ 2 is the dimensionless   relative to the geocenter time, φc is the merger phase, and",0.0,0.736,0.264,28.0,5.0,0.0,0.24242424242424243
+spin vector and L̂ is a unit vector aligned with the orbital      DL is the luminosity distance. The reference geocenter,0.0,0.8,0.19999999999999996,20.0,4.0,0.0,0.2727272727272727
+"angular momentum. The seven extrinsic parameters are              waveform h+ (~η , f ) is generated using an arbitrary fidu-",0.0,0.752,0.248,19.0,8.0,0.0,0.24242424242424243
+"the sky location RA, DEC = (α, β), luminosity distance            cial luminosity distance D∗ , with merger time and phase",0.0,0.7540983606557377,0.24590163934426235,20.0,7.0,0.0,0.2606060606060606
+"DL , polarization and inclination (ψ, ι), merger time and         set equal to zero. As such, the reference waveform only",0.0,0.7768595041322314,0.22314049586776863,20.0,5.0,0.0,0.2666666666666667
+"merger phase (tc , φc ).                                          depends on the four intrinsic parameters ~η . Defining",0.0,0.5416666666666666,0.45833333333333337,15.0,22.0,0.0,0.2727272727272727
+   The QuickCBC sampler uses the modified collection                                                                     1/2,3.0,0.376,0.624,8.0,35.0,0.01818181818181818,0.24242424242424243
+                                                                                                 D∗  a 2,97.0,0.047619047619047616,0.9523809523809523,4.0,1.0,0.5878787878787879,0.36363636363636365
+"of parameters ~η → {ln M, ln M, χ1 , χ2 } and ξ~ →                                     Fa =            F+ + 2 F×a 2                      (9)",0.0,0.3617021276595745,0.6382978723404256,23.0,36.0,0.0,0.1454545454545455
+"{α, sin β, ln DL , ψ, cos ι, φc , tc , }, where M = m1 + m2 is                                  DL",0.0,0.4489795918367347,0.5510204081632653,22.0,18.0,0.0,0.406060606060606
+the total mass and M = (m1 m2 )3/5 /M 1/5 is the chirp            and,0.0,0.6376811594202898,0.3623188405797102,15.0,7.0,0.0,0.5818181818181818
+mass. The priors are taken to be uniform in all the pa-,0.0,0.8,0.19999999999999996,12.0,1.0,0.0,0.6666666666666667
+"rameters save for M, M, DL . For the masses the pri-                                       λa = atan(F×a /F+a ) + φc                    (10)",0.0,0.46099290780141844,0.5390070921985816,20.0,30.0,0.0,0.1454545454545455
+"ors are uniform in m1 , m2 , which can √          be enforced us-",0.0,0.6615384615384615,0.3384615384615385,14.0,6.0,0.0,0.6060606060606061
+ing the Jacobian factor JM = M m1 m2 / M 2 − 4m1 m2 .             the response can be written as,0.0,0.65625,0.34375,22.0,7.0,0.0,0.4181818181818182
+"For the distance, the prior is taken to be uniform in lu-",0.0,0.8070175438596491,0.19298245614035092,12.0,1.0,0.0,0.6545454545454545
+"minosity distance volume, which can be enforced using                                   ~ f ) = h+ (~η , f )Fa eiλa e2πif ∆ta .",0.0,0.5748031496062992,0.4251968503937008,21.0,18.0,0.0,0.23030303030303034
+"                                                                                   ha (θ,                                                (11)",83.0,0.06382978723404255,0.9361702127659575,3.0,25.0,0.503030303030303,0.1454545454545455
+                                       3,39.0,0.025,0.975,1.0,1.0,0.23636363636363636,0.7575757575757576
+the Jacobian factor JD = DL              . Some waveform mod-,0.0,0.639344262295082,0.360655737704918,10.0,8.0,0.0,0.6303030303030304
+"els, such as the IMRPhenomD model [41, 42] used to                We see that the waveforms in each detector are identi-",0.0,0.7166666666666667,0.2833333333333333,20.0,9.0,0.0,0.2727272727272727
+"produce the plots in this paper, are only considered              cal up to an overall amplitude scaling, time shift and",0.0,0.7416666666666667,0.2583333333333333,19.0,8.0,0.0,0.2727272727272727
+"to be reliable for a sub-set of mass ratios and spins.            phase shift. Denoting the data in detector a as da (f ),",0.0,0.7295081967213115,0.2704918032786885,23.0,7.0,0.0,0.2606060606060606
+"To account for this, the prior ranges for the IMRPhe-             the Gaussian log likelihood is given by",0.0,0.7333333333333333,0.2666666666666667,17.0,7.0,0.0,0.36363636363636365
+nomD analyses are restricted such that m1 /m2 < 18 and,0.0,0.8148148148148148,0.18518518518518523,11.0,1.0,0.0,0.6727272727272727
+|χ| < χmax = 0.85. The default prior on the spins is uni-                                               1                 1,0.0,0.3821138211382114,0.6178861788617886,15.0,32.0,0.0,0.2545454545454545
+                                                                                ln La = (da |ha ) − (ha |ha ) − (da |da ) .              (12),80.0,0.23404255319148937,0.7659574468085106,16.0,8.0,0.48484848484848486,0.1454545454545455
+form in the aligned spin component. To facilitate com-                                                  2                 2,0.0,0.3902439024390244,0.6097560975609756,11.0,34.0,0.0,0.2545454545454545
+"parison with the IMRPhenomPv2 precessing model [43],              Here (x|y) denotes the noise weighted inner product",0.0,0.7692307692307693,0.23076923076923073,15.0,8.0,0.0,0.2909090909090909
+"which uses a uniform-in-direction spin prior, a second",0.0,0.8703703703703703,0.12962962962962965,8.0,1.0,0.0,0.6727272727272727
+                                                                                                     Z ∗,101.0,0.019230769230769232,0.9807692307692307,2.0,1.0,0.6121212121212121,0.36969696969696975
+spin prior option can be selected that is uniform in the                                                  x y + y∗ x,0.0,0.4482758620689655,0.5517241379310345,16.0,26.0,0.0,0.296969696969697
+"aligned spin component for isotopically distributed spins,                                (x|y) = 2                      df ,            (13)",0.0,0.46808510638297873,0.5319148936170213,13.0,34.0,0.0,0.1454545454545455
+                                                                                                               S(f ),111.0,0.034482758620689655,0.9655172413793104,2.0,1.0,0.6727272727272727,0.296969696969697
+"namely, p(χ) = ln(χmax /|χ|)/(2χmax ).",0.0,0.868421052631579,0.13157894736842102,6.0,1.0,0.0,0.7696969696969697
+                                                                  where S(f ) is the power spectral density of the noise.,66.0,0.371900826446281,0.628099173553719,11.0,1.0,0.4,0.2666666666666667
+                                                                  The network log likelihood is found                 by summing the in-,66.0,0.33088235294117646,0.6691176470588236,10.0,9.0,0.4,0.17575757575757578
+           C.   Glitch Robust Coherent Search                     dividual contributions: ln L = a ln La .,11.0,0.5660377358490566,0.4339622641509434,14.0,12.0,0.06666666666666667,0.35757575757575755
+                                                                                                                P,112.0,0.008849557522123894,0.9911504424778761,1.0,1.0,0.6787878787878788,0.3151515151515152
+   The QuickCBC algorithm can be used to search for CBC,3.0,0.7818181818181819,0.21818181818181814,10.0,1.0,0.01818181818181818,0.6666666666666667
+signals in segments of LIGO/Virgo data. The standard                                         1.  Maximized likelihood,0.0,0.5641025641025641,0.4358974358974359,11.0,22.0,0.0,0.2909090909090909
+usage is to follow-up triggers from template-bank based,0.0,0.8727272727272727,0.12727272727272732,8.0,1.0,0.0,0.6666666666666667
+"CBC search pipelines, but any valid GPS time will do.                During the search stage, the power spectral density",0.0,0.7333333333333333,0.2666666666666667,18.0,9.0,0.0,0.2727272727272727
+QuickCBC executes a stochastic search using a PTMCMC              is held fixed and the (da |da ) term is a constant that,0.0,0.7272727272727273,0.2727272727272727,21.0,8.0,0.0,0.2666666666666667
+algorithm and a glitch-robust maximized likelihood func-          can be ignored. Standard tricks are used to maximize,0.0,0.7966101694915254,0.2033898305084746,16.0,6.0,0.0,0.2848484848484848
+"tion. The search is limited to the dominant waveform              over the amplitude, phase and arrival time of the wave-",0.0,0.743801652892562,0.25619834710743805,19.0,8.0,0.0,0.2666666666666667
+"harmonic for non-precessing, quasi-circular binaries. As          forms. Writing the signal in terms of unit normalized",0.0,0.8067226890756303,0.19327731092436973,15.0,6.0,0.0,0.2787878787878788
+"such, the search may fail to detect systems with signifi-         sine and cosine quadratures, (ha,s |ha,s ) = (ha,c |ha,c ) = 1,",0.0,0.7674418604651163,0.2325581395348837,23.0,5.0,0.0,0.21818181818181814
+"cant contributions from higher modes, strongly precess-           (ha,s |ha,c ) = 0:",0.0,0.75,0.25,12.0,6.0,0.0,0.49090909090909096
+"ing systems, or highly eccentric systems. Extending the",0.0,0.8727272727272727,0.12727272727272732,8.0,1.0,0.0,0.6666666666666667
+"search to include higher modes is straightforward. In-                 ha (f ) = Aa (ha,s (f ) sin φa + ha,c (f ) cos φa ) ,             (14)",0.0,0.6170212765957447,0.3829787234042553,27.0,15.0,0.0,0.1454545454545455
+cluding precession and eccentricity is far more challeng-,0.0,0.8771929824561403,0.1228070175438597,8.0,1.0,0.0,0.6545454545454545
+ing.                                                              the log likelihood (dropping the (da |da ) constant term),0.0,0.42276422764227645,0.5772357723577235,11.0,32.0,0.0,0.2545454545454545
+"   The dominant waveform harmonic for non-precessing,             becomes",3.0,0.7123287671232876,0.28767123287671237,7.0,7.0,0.01818181818181818,0.5575757575757576
+quasi-circular binaries has polarization states related:,0.0,0.9107142857142857,0.0892857142857143,6.0,1.0,0.0,0.6606060606060606
+                                                                                                                                 1,129.0,0.007692307692307693,0.9923076923076923,1.0,1.0,0.7818181818181819,0.21212121212121215
+"h× (f ) = ih+ (f ) where                                             ln La = Aa ρa (ta , ~η ) cos(φa − ϕa (ta , ~η )) − A2a ,           (15)",0.0,0.425531914893617,0.574468085106383,28.0,28.0,0.0,0.1454545454545455
+                                                                                                                                 2,129.0,0.007692307692307693,0.9923076923076923,1.0,1.0,0.7818181818181819,0.21212121212121215
+                                   2 cos ι,35.0,0.11904761904761904,0.8809523809523809,3.0,1.0,0.21212121212121213,0.7454545454545455
+"                        =−                   .               (7) where ~η are the intrinsic parameters of the source, and",24.0,0.4426229508196721,0.5573770491803278,13.0,17.0,0.14545454545454545,0.2606060606060606
+                               (1 + cos2 ι),31.0,0.20930232558139536,0.7906976744186046,4.0,1.0,0.18787878787878787,0.7393939393939394
+"                                                                  ρa (ta , ~η ) = |za (ta , ~η )|, ϕa (ta , ~η ) = arg{za (ta , ~η )} where",66.0,0.3669064748201439,0.6330935251798562,23.0,1.0,0.4,0.1575757575757576
+The detector response can be written as:,0.0,0.85,0.15000000000000002,7.0,1.0,0.0,0.7575757575757576
+"                                                                                                      da (f )h∗a,c (f, ~η ) 2πif ta",102.0,0.16793893129770993,0.83206106870229,8.0,1.0,0.6181818181818182,0.20606060606060606
+                                                                                                   Z,99.0,0.01,0.99,1.0,1.0,0.6,0.3939393939393939
+"        ~ f ) = h+ (~η , f ) D∗ F a + iF a e2πif ∆ta eiφc",8.0,0.5689655172413793,0.43103448275862066,18.0,1.0,0.048484848484848485,0.6484848484848484
+                                                ,48.0,0.02040816326530612,0.9795918367346939,1.0,1.0,0.2909090909090909,0.703030303030303
+"    ha (θ,                          +        ×                (8)                za (ta , ~η ) = 4                         e        .    (16)",4.0,0.19148936170212766,0.8085106382978724,15.0,52.0,0.024242424242424242,0.1454545454545455
+                             DL                                                                               Sn (f ),29.0,0.05982905982905983,0.9401709401709402,4.0,40.0,0.17575757575757575,0.2909090909090909
+avr_spaces,22.17808219178082,1.0,0.0,1.0,1.0,0.13441261934412618,0.9393939393939394
+                                                                                                                                          7,138.0,0.007194244604316547,0.9928057553956835,1.0,1.0,0.8363636363636363,0.1575757575757576
+The likelihood is maximized with respect to amplitude               40,0.0,0.6857142857142857,0.3142857142857143,9.0,8.0,0.0,0.5757575757575757
+                                                                                                                              H1,126.0,0.015625,0.984375,1.0,1.0,0.7636363636363637,0.22424242424242424
+and phase by setting Aa = ρa and φa = ϕa :                          35                                                        L1,0.0,0.2734375,0.7265625,14.0,42.0,0.0,0.22424242424242424
+                                        1 2                         30,40.0,0.05714285714285714,0.9428571428571428,3.0,13.0,0.24242424242424243,0.5757575757575757
+"               ln La,max (ta , ~η ) =    ρ (ta , ~η ) .   (17)",15.0,0.46774193548387094,0.532258064516129,14.0,4.0,0.09090909090909091,0.6242424242424243
+                                        2 a                         25,40.0,0.05714285714285714,0.9428571428571428,3.0,13.0,0.24242424242424243,0.5757575757575757
+"The complex SNR time series za (ta , ~η ) can be computed           20",0.0,0.6714285714285714,0.3285714285714286,14.0,6.0,0.0,0.5757575757575757
+using an inverse fast Fourier transform. The likelihood           ρ-,0.0,0.7352941176470589,0.2647058823529411,9.0,6.0,0.0,0.5878787878787879
+                                                                    15,68.0,0.02857142857142857,0.9714285714285714,1.0,1.0,0.4121212121212121,0.5757575757575757
+can then be maximized with respect to the time offset ta,0.0,0.8214285714285714,0.1785714285714286,11.0,1.0,0.0,0.6606060606060606
+"by sorting the resulting time series ρa (ta , ~η ). The network     10",0.0,0.7571428571428571,0.24285714285714288,14.0,3.0,0.0,0.5757575757575757
+likelihood                                                             5,0.0,0.1527777777777778,0.8472222222222222,2.0,31.0,0.0,0.5636363636363637
+                                    1X 2                               0,36.0,0.05555555555555555,0.9444444444444444,3.0,16.0,0.21818181818181817,0.5636363636363637
+"             ln Lmax ({ti }, ~η ) =     ρ (ta , ~η )       (18)",13.0,0.4444444444444444,0.5555555555555556,13.0,6.0,0.07878787878787878,0.6181818181818182
+                                    2 a a                              -5,36.0,0.0684931506849315,0.9315068493150684,4.0,16.0,0.21818181818181817,0.5575757575757576
+                                                                            50   100           150      200        250        300   350,76.0,0.14814814814814814,0.8518518518518519,7.0,19.0,0.46060606060606063,0.18181818181818177
+can be maximized with respect to the arrival times in                                                 f (Hz),0.0,0.4537037037037037,0.5462962962962963,12.0,25.0,0.0,0.34545454545454546
+"each detector, {ti }, subject to the constraint that the",0.0,0.8392857142857143,0.1607142857142857,10.0,1.0,0.0,0.6606060606060606
+time differences ∆tij = |ti − tj | are less than the light        FIG. 5: The banded ρ̄ statistic as a function of central fre-,0.0,0.7559055118110236,0.2440944881889764,25.0,5.0,0.0,0.23030303030303034
+"travel times between the detector sites. The maximiza-            quency for a template with chirp mass M = 1.197M , total",0.0,0.7540983606557377,0.24590163934426235,20.0,7.0,0.0,0.2606060606060606
+"tion is done pair-wise between detectors, starting with           mass M = 2.8M and merger time tc = 1187008882.4486",0.0,0.7672413793103449,0.23275862068965514,18.0,6.0,0.0,0.296969696969697
+a reference detector. For networks with three or more             GPS seconds. The ρ̄ statistic successfully identifies the fre-,0.0,0.7734375,0.2265625,18.0,7.0,0.0,0.22424242424242424
+                                                                  quency bands where the signal track crosses a loud noise tran-,66.0,0.40625,0.59375,11.0,1.0,0.4,0.22424242424242424
+detectors the pair-wise approach can yield collections of,0.0,0.8771929824561403,0.1228070175438597,8.0,1.0,0.0,0.6545454545454545
+                                                                  sient in the LIGO Livingston detector.,66.0,0.3173076923076923,0.6826923076923077,6.0,1.0,0.4,0.36969696969696975
+time delays that do not correspond to any physical sky lo-,0.0,0.8275862068965517,0.1724137931034483,11.0,1.0,0.0,0.6484848484848484
+"cation. Similarly, the relative phases may not correspond",0.0,0.8771929824561403,0.1228070175438597,8.0,1.0,0.0,0.6545454545454545
+"to any physical sky location, inclination and polarization           Here we introduce a variant of this approach with",0.0,0.7796610169491526,0.22033898305084743,17.0,6.0,0.0,0.2848484848484848
+angle. In most cases this is not a problem as the extrin-         fixed-width frequency bands. Defining the ρ̄ statistic:,0.0,0.7851239669421488,0.2148760330578512,19.0,5.0,0.0,0.2666666666666667
+sic parameters get refined in the subsequent sky-mapping,0.0,0.875,0.125,8.0,1.0,0.0,0.6606060606060606
+stage of the analysis.                                                                                (d − h|h)maxφ0,0.0,0.2672413793103448,0.7327586206896552,7.0,41.0,0.0,0.296969696969697
+"   When glitches are present in the data, the log likeli-                              ρ̄(f, ∆f ) =                                 (20)",3.0,0.4264705882352941,0.5735294117647058,15.0,32.0,0.01818181818181818,0.17575757575757578
+                                                                                                         (h|h)1/2,105.0,0.07079646017699115,0.9292035398230089,1.0,1.0,0.6363636363636364,0.3151515151515152
+"hood times series in each detector, ln La,max (ta , ~η ), may",0.0,0.8032786885245902,0.19672131147540983,13.0,1.0,0.0,0.6303030303030304
+have multiple distinct maxima. Some of these maxima               where the noise-weighted inner products are computed,0.0,0.7627118644067796,0.23728813559322037,15.0,8.0,0.0,0.2848484848484848
+"will be associated with glitches and some will be asso-           across a frequency band of width ∆f , centered at fre-",0.0,0.75,0.25,21.0,6.0,0.0,0.2727272727272727
+"ciated with the signal. To account for this possibility,          quency f . The inner product of the residual, d − h, and",0.0,0.7540983606557377,0.24590163934426235,22.0,6.0,0.0,0.2606060606060606
+"all maxima that are at least 50 ms apart are recored for          the template, h, is analytically maximized with respect to",0.0,0.7661290322580645,0.2338709677419355,21.0,6.0,0.0,0.24848484848484853
+each detector before applying the network time-delay re-          the overall phase in that band using sine/cosine quadra-,0.0,0.7950819672131147,0.20491803278688525,17.0,6.0,0.0,0.2606060606060606
+"striction. The algorithm can return multiple solutions,           tures. In pure Gaussian noise, d = n, we have",0.0,0.7657657657657657,0.23423423423423428,17.0,6.0,0.0,0.32727272727272727
+"each with different arrival times, amplitudes and phases.",0.0,0.8771929824561403,0.1228070175438597,8.0,1.0,0.0,0.6545454545454545
+"A glitch rejection step is then applied to each candidate                         E[ρ̄] = 1 − SNR,             Var[ρ̄] = 1.         (21)",0.0,0.5441176470588235,0.4558823529411765,19.0,23.0,0.0,0.17575757575757578
+solution before arriving at a unique maximum likelihood,0.0,0.8727272727272727,0.12727272727272732,8.0,1.0,0.0,0.6666666666666667
+"solution.                                                         When the template matches a signal in the data, d =",0.0,0.42735042735042733,0.5726495726495726,12.0,29.0,0.0,0.2909090909090909
+"                                                                  n + h, we have",66.0,0.125,0.875,5.0,1.0,0.4,0.5151515151515151
+"                                                                                         E[ρ̄] = 1,    Var[ρ̄] = 1.                 (22)",89.0,0.16176470588235295,0.8382352941176471,7.0,11.0,0.5393939393939394,0.17575757575757578
+                2.   Banded Glitch Rejection,16.0,0.5227272727272727,0.4772727272727273,4.0,2.0,0.09696969696969697,0.7333333333333334
+"                                                                  When a glitch is present in the data, d = n + g the",66.0,0.3247863247863248,0.6752136752136753,14.0,1.0,0.4,0.2909090909090909
+"  CBC searches use variants of the ρ search statistic,            template rings-off against a glitch and ρ̄(f, ∆f ) becomes",2.0,0.75,0.25,19.0,7.0,0.012121212121212121,0.24848484848484853
+"defined for data d and templates h as                             large and positive. Frequency bands where ρ̄(f, ∆f ) > 4",0.0,0.6229508196721312,0.3770491803278688,19.0,15.0,0.0,0.2606060606060606
+                               (d|h)                              are excluded from the likelihood calculation. The am-,31.0,0.42857142857142855,0.5714285714285714,9.0,16.0,0.18787878787878787,0.2787878787878788
+                        ρ=             .                  (19)    plitude and phase maximization are repeated for the full,24.0,0.45081967213114754,0.5491803278688525,12.0,18.0,0.14545454545454545,0.2606060606060606
+                              (h|h)1/2                            template with any glitch-impacted bands removed. The,30.0,0.4576271186440678,0.5423728813559322,8.0,15.0,0.18181818181818182,0.2848484848484848
+"When a glitch is present in the data, d = n + g, the              banded glitch rejection is applied to the collection of can-",0.0,0.7142857142857143,0.2857142857142857,24.0,8.0,0.0,0.23636363636363633
+template can ring-off against the glitch. Usually this oc-        didate solutions from the original likelihood maximiza-,0.0,0.8181818181818182,0.18181818181818177,16.0,5.0,0.0,0.2666666666666667
+curs across a narrow band of frequencies. Looking at              tion step. The solution with the largest banded likelihood,0.0,0.7580645161290323,0.24193548387096775,18.0,8.0,0.0,0.24848484848484853
+how ρ accumulates with frequency can be used to detect            is returned and used by the PTMCMC search algorithm.,0.0,0.7542372881355932,0.2457627118644068,19.0,7.0,0.0,0.2848484848484848
+"glitches. Rather than steadily accumulating, ρ gets a big",0.0,0.8596491228070176,0.14035087719298245,9.0,1.0,0.0,0.6545454545454545
+boost in the frequency band where the signal crosses a,0.0,0.8333333333333334,0.16666666666666663,10.0,1.0,0.0,0.6727272727272727
+"glitch. Motivated by these considerations, a chi-squared                                  D.     Glitch Removal",0.0,0.5855855855855856,0.4144144144144144,10.0,20.0,0.0,0.32727272727272727
+test for glitch rejection has been incorporated into CBC,0.0,0.8571428571428571,0.1428571428571429,9.0,1.0,0.0,0.6606060606060606
+searches [19]. The statistic uses frequency bands on vary-           The PTMCMC search using the banded maximum,0.0,0.7747747747747747,0.22522522522522526,16.0,6.0,0.0,0.32727272727272727
+"ing width, with",0.0,0.8666666666666667,0.1333333333333333,3.0,1.0,0.0,0.9090909090909091
+              p the width chosen so that the template has         likelihood function returns an initial estimate for the ex-,14.0,0.688,0.31200000000000006,18.0,5.0,0.08484848484848485,0.24242424242424243
+"equal SNR= (h|h) in each band.                                    trinsic parameters of the signal, along with the arrival",0.0,0.5983606557377049,0.4016393442622951,15.0,19.0,0.0,0.2606060606060606
+avr_spaces,17.402985074626866,1.0,0.0,1.0,1.0,0.1054726368159204,0.9393939393939394
+                                                                                                                                              8,142.0,0.006993006993006993,0.993006993006993,1.0,1.0,0.8606060606060606,0.1333333333333333
+"times, amplitudes and phases in each detector. This",0.0,0.8627450980392157,0.13725490196078427,8.0,1.0,0.0,0.6909090909090909
+solution is then used to subtract the CBC signal from,0.0,0.8301886792452831,0.16981132075471694,10.0,1.0,0.0,0.6787878787878787
+the data. The residual is then processed through the,0.0,0.8461538461538461,0.15384615384615385,9.0,1.0,0.0,0.6848484848484848
+same spectral estimation procedure that was applied to,0.0,0.8703703703703703,0.12962962962962965,8.0,1.0,0.0,0.6727272727272727
+the original data. Figure 6 shows the reconstructed,0.0,0.8627450980392157,0.13725490196078427,8.0,1.0,0.0,0.6909090909090909
+glitch model for residual in the LIGO Livingston detec-,0.0,0.8545454545454545,0.1454545454545455,9.0,1.0,0.0,0.6666666666666667
+tor roughly a second before the merger of binary neutron,0.0,0.8392857142857143,0.1607142857142857,10.0,1.0,0.0,0.6606060606060606
+star GW170817.,0.0,0.9285714285714286,0.0714285714285714,2.0,1.0,0.0,0.9151515151515152
+       100,7.0,0.3,0.7,1.0,1.0,0.04242424242424243,0.9393939393939394
+                   L1 glitch,19.0,0.2857142857142857,0.7142857142857143,2.0,1.0,0.11515151515151516,0.8303030303030303
+        50,8.0,0.2,0.8,1.0,1.0,0.048484848484848485,0.9393939393939394
+g(t)     0,0.0,0.5,0.5,2.0,3.0,0.0,0.9393939393939394
+                                                                                 FIG. 7: Time-frequency maps of the LIGO Livingston data,81.0,0.34558823529411764,0.6544117647058824,9.0,1.0,0.4909090909090909,0.17575757575757578
+        -50                                                                      centered at GPS time 1187008882. The upper panel shows the,8.0,0.37410071942446044,0.6258992805755396,11.0,36.0,0.048484848484848485,0.1575757575757576
+                                                                                 raw whitened data. The black line indicates the reconstructed,81.0,0.3732394366197183,0.6267605633802817,9.0,1.0,0.4909090909090909,0.1393939393939394
+                                                                                 time-frequency track for GW170817 found using the banded,81.0,0.35766423357664234,0.6423357664233577,8.0,1.0,0.4909090909090909,0.16969696969696968
+       -100                                                                      maximum likelihood. The best-fit signal is subtracted from,7.0,0.39568345323741005,0.60431654676259,9.0,36.0,0.04242424242424243,0.1575757575757576
+"              -1      -0.9     -0.8   -0.7   -0.6    -0.5   -0.4   -0.3   -0.2   the data, then wavelet de-noising is used to identify any noise",14.0,0.6041666666666666,0.39583333333333337,20.0,14.0,0.08484848484848485,0.12727272727272732
+                                             t (s),45.0,0.08,0.92,2.0,1.0,0.2727272727272727,0.696969696969697
+                                                                                 transients in the data. The noise transients are removed from,81.0,0.36619718309859156,0.6338028169014085,10.0,1.0,0.4909090909090909,0.1393939393939394
+                                                                                 the original data in preparation for more refined parameter,81.0,0.36428571428571427,0.6357142857142857,9.0,1.0,0.4909090909090909,0.1515151515151515
+FIG. 6: The whitened glitch model in LIGO Livingston data                        estimation (lower panel).,0.0,0.6698113207547169,0.33018867924528306,13.0,13.0,0.0,0.35757575757575755
+centered at GPS time 1187008882. The glitch reconstruc-,0.0,0.8727272727272727,0.12727272727272732,8.0,1.0,0.0,0.6666666666666667
+tion was performed after a low-latency point estimate for the,0.0,0.8524590163934426,0.14754098360655743,10.0,1.0,0.0,0.6303030303030304
+"GW170817 signal, which is coincident with the glitch, was",0.0,0.8596491228070176,0.14035087719298245,9.0,1.0,0.0,0.6545454545454545
+"subtracted from the data.                                                        equation 11). Taking a reference waveform ĥ+ , scaled to",0.0,0.5072463768115942,0.49275362318840576,14.0,29.0,0.0,0.1636363636363637
+"                                                                                 unity at some reference distance Da , the log likelihood",81.0,0.34306569343065696,0.656934306569343,10.0,1.0,0.4909090909090909,0.16969696969696968
+   Figure 7 shows time-frequency maps of the LIGO Liv-                           can be written as,3.0,0.5816326530612245,0.41836734693877553,13.0,14.0,0.01818181818181818,0.406060606060606
+ingston data surrounding the GW170817 event. The up-,0.0,0.8653846153846154,0.13461538461538458,8.0,1.0,0.0,0.6848484848484848
+per panel shows the time-frequency track for the point                                     X Fa Da                                   F 2 D2,0.0,0.4,0.6,16.0,36.0,0.0,0.1515151515151515
+estimate of the signal that was subtracted from the data                          ln L =               e−iλa C(ta ) + eiλa C ∗ (ta ) − a 2a .,0.0,0.5460992907801419,0.45390070921985815,26.0,21.0,0.0,0.1454545454545455
+                                                                                           a,91.0,0.010869565217391304,0.9891304347826086,1.0,1.0,0.5515151515151515,0.4424242424242424
+                                                                                                DL                                     2DL,96.0,0.036231884057971016,0.9637681159420289,2.0,19.0,0.5818181818181818,0.1636363636363637
+prior to the second round of spectral estimation and,0.0,0.8461538461538461,0.15384615384615385,9.0,1.0,0.0,0.6848484848484848
+wavelet de-noising. The lower panel shows the whitened                                                                                     (23),0.0,0.35664335664335667,0.6433566433566433,9.0,43.0,0.0,0.1333333333333333
+data after the noise transient has been removed. All sub-                        where,0.0,0.6162790697674418,0.38372093023255816,11.0,13.0,0.0,0.47878787878787876
+sequent stages of the analysis are performed using the,0.0,0.8518518518518519,0.14814814814814814,9.0,1.0,0.0,0.6727272727272727
+                                                                                                                 da ĥ∗+ 2πif ta,113.0,0.09375,0.90625,4.0,1.0,0.6848484848484848,0.22424242424242424
+                                                                                                             Z,109.0,0.00909090909090909,0.990909090909091,1.0,1.0,0.6606060606060606,0.33333333333333337
+glitch subtracted data.,0.0,0.9130434782608695,0.08695652173913049,3.0,1.0,0.0,0.8606060606060606
+"                                                                                                Ca (ta ) =               e       df ,       (24)",96.0,0.10416666666666667,0.8958333333333334,8.0,14.0,0.5818181818181818,0.12727272727272732
+                                                                                                                 Sn (f ),113.0,0.041666666666666664,0.9583333333333334,3.0,1.0,0.6848484848484848,0.2727272727272727
+                       E.      Low Latency Sky Mapping,23.0,0.4074074074074074,0.5925925925925926,5.0,4.0,0.1393939393939394,0.6727272727272727
+                                                                                 can be evaluated using a Fast Fourier transform (FFT).,81.0,0.34074074074074073,0.6592592592592592,9.0,1.0,0.4909090909090909,0.18181818181818177
+                                                                                 In order to have sufficient time resolution (typically a,81.0,0.35036496350364965,0.6496350364963503,9.0,1.0,0.4909090909090909,0.16969696969696968
+"   The search phase delivers an estimate for the intrinsic                       tenth of a millisecond or less), it is necessary to zero-",3.0,0.6811594202898551,0.3188405797101449,20.0,12.0,0.01818181818181818,0.1636363636363637
+"parameters, in addition to the amplitudes, phases and                            pad the frequency series prior to performing the FFT.",0.0,0.6791044776119403,0.32089552238805974,17.0,15.0,0.0,0.18787878787878787
+"arrival times in each detector. The next step is to find ex-                     Nonetheless, the computational cost is small. Putting",0.0,0.7164179104477612,0.28358208955223885,19.0,11.0,0.0,0.18787878787878787
+trinsic parameters that are consistent with the waveforms                        everything together we have,0.0,0.6851851851851852,0.31481481481481477,12.0,13.0,0.0,0.34545454545454546
+seen in each detector. With three or more detectors the,0.0,0.8363636363636363,0.1636363636363637,10.0,1.0,0.0,0.6666666666666667
+problem of solving for the extrinsic parameters ξ~ given,0.0,0.8571428571428571,0.1428571428571429,9.0,1.0,0.0,0.6606060606060606
+"the relative amplitudes, arrival times and phases is over-                            ~ θ)",0.0,0.5888888888888889,0.4111111111111111,11.0,15.0,0.0,0.4545454545454546
+                                                                                         ~ =,89.0,0.021739130434782608,0.9782608695652174,2.0,1.0,0.5393939393939394,0.4424242424242424
+                                                                                               X                                       Fa2 Da2,95.0,0.04929577464788732,0.9507042253521126,3.0,20.0,0.5757575757575758,0.1393939393939394
+"                                                                                 ln L(ξ,           2Fa |Ca (ta )| cos(λa −arg{Ca (ta )})−   2 .",81.0,0.2727272727272727,0.7272727272727273,12.0,7.0,0.4909090909090909,0.1333333333333333
+"constrained, and often ill-posed due to noise. Rather                                          a",0.0,0.4895833333333333,0.5104166666666667,9.0,22.0,0.0,0.4181818181818182
+                                                                                                                                        2DL,136.0,0.02158273381294964,0.9784172661870504,1.0,1.0,0.8242424242424242,0.1575757575757576
+"than trying to solve the problem analytically, we once                                                                                   (25)",0.0,0.3546099290780142,0.6453900709219857,10.0,42.0,0.0,0.1454545454545455
+"again resort to a Monte Carlo approach, this time aided                          The quantities Da and Ca (ta ) can be pre-computed and",0.0,0.6666666666666666,0.33333333333333337,21.0,14.0,0.0,0.18181818181818177
+by an extremely cheap-to-compute likelihood function.                            stored for any choice of intrinsic parameters ~η . The like-,0.0,0.6950354609929078,0.3049645390070922,17.0,15.0,0.0,0.1454545454545455
+"   When the intrinsic parameters ~η are held fixed, the                          lihood for any set of extrinsic parameters can then be",3.0,0.6592592592592592,0.3407407407407408,19.0,14.0,0.01818181818181818,0.18181818181818177
+"response in each detector can be found by applying pro-                          found at the cost of a few multiplications and a cosine,",0.0,0.6715328467153284,0.3284671532846716,21.0,14.0,0.0,0.16969696969696968
+jections to a reference geocenter waveform that amount                           allowing for millions of likelihood evaluations per second.,0.0,0.7071428571428572,0.2928571428571428,16.0,14.0,0.0,0.1515151515151515
+"to amplitude re-scalings, phase shifts and time shifts (see                      Similar techniques can be used to accelerate the calcula-",0.0,0.7246376811594203,0.2753623188405797,18.0,12.0,0.0,0.1636363636363637
+avr_spaces,29.53030303030303,1.0,0.0,1.0,1.0,0.17897153351698808,0.9393939393939394
+                                                                                                                                           9,139.0,0.007142857142857143,0.9928571428571429,1.0,1.0,0.8424242424242424,0.1515151515151515
+"tion of the extrinsic Fisher matrix, ΓE          ij = (∂ξ i h|∂ξ j h):   ΓE ij ; small Gaussian jumps along each extrinsic parameter",0.0,0.7424242424242424,0.25757575757575757,24.0,7.0,0.0,0.19999999999999996
+                    X                                                   direction; and deterministic jumps along sky rings that,20.0,0.390625,0.609375,9.0,26.0,0.12121212121212122,0.22424242424242424
+"            ΓEij =        (Fa,i Fa,j + Fa2 λa,i λa,j )H0a                preserve the time delay between a randomly selected pair",12.0,0.6046511627906976,0.39534883720930236,18.0,13.0,0.07272727272727272,0.21818181818181814
+                     a                                                   of detectors [16]. Samples from the chains with unit in-,21.0,0.37209302325581395,0.627906976744186,11.0,26.0,0.12727272727272726,0.21818181818181814
+"               +δitc (2πFa2 λ,i ta,j λ,j ta,i )H1a                       verse temperature are used to produce low latency sky",15.0,0.5873015873015873,0.4126984126984127,16.0,12.0,0.09090909090909091,0.23636363636363633
+                                                                         maps such as the example shown in Figure 8.,73.0,0.3017241379310345,0.6982758620689655,9.0,1.0,0.44242424242424244,0.296969696969697
+"                +δitc δjtc (4π 2 Fa2 ta,i ta,j )H2a",16.0,0.5490196078431373,0.4509803921568627,8.0,1.0,0.09696969696969697,0.6909090909090909
+                                                    ,52.0,0.018867924528301886,0.9811320754716981,1.0,1.0,0.3151515151515151,0.6787878787878787
+                                                                    (26),68.0,0.05555555555555555,0.9444444444444444,1.0,1.0,0.4121212121212121,0.5636363636363637
+where Hka = (f k h+ |h+ )a . The inner products Hka are                                 F.    CBC Parameter Estimation,0.0,0.559322033898305,0.44067796610169496,18.0,19.0,0.0,0.2848484848484848
+computed once and stored. The luminosity distance can,0.0,0.8679245283018868,0.13207547169811318,8.0,1.0,0.0,0.6787878787878787
+be extracted from the reference waveform by re-scaling,0.0,0.8703703703703703,0.12962962962962965,8.0,1.0,0.0,0.6727272727272727
+                                                                             The rapid coherent search and low latency sky map-,77.0,0.33070866141732286,0.6692913385826771,9.0,1.0,0.4666666666666667,0.23030303030303034
+"the response function such that Fa → (Da /DL )Fa , with",0.0,0.8,0.19999999999999996,12.0,1.0,0.0,0.6666666666666667
+                                                                         ping yield a good starting solution for a Bayesian explo-,73.0,0.36923076923076925,0.6307692307692307,10.0,1.0,0.44242424242424244,0.21212121212121215
+Da scaled such that H0a = 1. The derivatives of ar-,0.0,0.803921568627451,0.196078431372549,11.0,1.0,0.0,0.6909090909090909
+                                                                         ration of source parameters. The inference is performed,73.0,0.375,0.625,8.0,1.0,0.44242424242424244,0.22424242424242424
+"rival time at each detector, ta,i , are non-vanishing for",0.0,0.8421052631578947,0.1578947368421053,10.0,1.0,0.0,0.6545454545454545
+"                                                                         using the PTMCMC sampler Fisher matrix proposals,",73.0,0.3524590163934426,0.6475409836065573,7.0,1.0,0.44242424242424244,0.2606060606060606
+"{α, β, tc }. The phase derivatives are non-vanishing for",0.0,0.8392857142857143,0.1607142857142857,10.0,1.0,0.0,0.6606060606060606
+"                                                                         differential evolution, deterministic sky ring jumps in the",73.0,0.3939393939393939,0.6060606060606061,8.0,1.0,0.44242424242424244,0.19999999999999996
+"{α, β, ψ, ι, φc }:",0.0,0.7222222222222222,0.2777777777777778,6.0,1.0,0.0,0.8909090909090909
+                                                                         extrinsic parameters and small Gaussian jumps along,73.0,0.3629032258064516,0.6370967741935484,7.0,1.0,0.44242424242424244,0.24848484848484853
+"                            (F+a (F×a ),i − F+,i a",28.0,0.35294117647058826,0.6470588235294117,6.0,1.0,0.1696969696969697,0.6909090909090909
+                                                    (F×a ))             each parameter direction. The analysis is sped up by,52.0,0.408,0.5920000000000001,11.0,7.0,0.3151515151515151,0.24242424242424243
+"           λa,i = δiφc +                                      .     (27) using a heteroydned likelihood function [32, 33].",11.0,0.47540983606557374,0.5245901639344263,13.0,22.0,0.06666666666666667,0.2606060606060606
+                                           Fa2                               The heteroydyned likelihood uses a reference waveform,43.0,0.38461538461538464,0.6153846153846154,8.0,16.0,0.2606060606060606,0.21212121212121215
+"while the derivatives of the re-scaled antenna pattern are               h̄, in this case the maximum likelihood solution from the",0.0,0.7538461538461538,0.24615384615384617,19.0,8.0,0.0,0.21212121212121215
+"non-vanishing for {α, β, ψ, ι, DL }:                                     search, to re-write the log likelihood as",0.0,0.5614035087719298,0.4385964912280702,15.0,19.0,0.0,0.3090909090909091
+                                                                                                   1                         1,99.0,0.015873015873015872,0.9841269841269842,2.0,13.0,0.6,0.23636363636363633
+                Fa                   a,16.0,0.07894736842105263,0.9210526315789473,2.0,10.0,0.09696969696969697,0.7696969696969697
+"                             (F+a F+,i    + (F×a )(F×a ),i )             ln La = (r̄a |h̄a ) + (h̄a |h̄a ) − (r̄a |∆h̄a ) − (∆h̄a |∆h̄a ).",29.0,0.5142857142857142,0.48571428571428577,25.0,9.0,0.17575757575757575,0.1515151515151515
+"    Fa,i = −       δiDL +                                       .   (28)                           2                         2",4.0,0.14285714285714285,0.8571428571428572,9.0,49.0,0.024242424242424242,0.23636363636363633
+               DL                            Fa                                                                                        (29),15.0,0.05755395683453238,0.9424460431654677,3.0,59.0,0.09090909090909091,0.1575757575757576
+                                                                         where r̄a = da − h̄a and ∆ha = h̄a − ha . The (r̄a |h̄a ) and,73.0,0.3283582089552239,0.6716417910447761,18.0,1.0,0.44242424242424244,0.18787878787878787
+                                                                         (h̄a |h̄a ) terms in the likelihood can be computed once and,73.0,0.3684210526315789,0.631578947368421,12.0,1.0,0.44242424242424244,0.19393939393939397
+                                                                         stored. The (∆ha |∆ha ) term can be written as,73.0,0.31092436974789917,0.6890756302521008,10.0,1.0,0.44242424242424244,0.2787878787878788
+                                                                                    ∆h∆h∗                Ā2 + A2 − 2ĀA cos ∆Φ,84.0,0.16535433070866143,0.8346456692913385,8.0,9.0,0.509090909090909,0.23030303030303034
+                                                                                Z                    Z,80.0,0.0196078431372549,0.9803921568627451,2.0,11.0,0.48484848484848486,0.38181818181818183
+                                                                             4               df = 4                               df (30),77.0,0.08029197080291971,0.9197080291970803,6.0,23.0,0.4666666666666667,0.16969696969696968
+                                                                                      S(f )                           S(f ),86.0,0.06504065040650407,0.9349593495934959,4.0,14.0,0.5212121212121212,0.2545454545454545
+"                                                                         where we have used h = A(f )eiΦ(f ) , h̄ = Ā(f )eiΦ̄(f ) and",73.0,0.34328358208955223,0.6567164179104478,16.0,1.0,0.44242424242424244,0.18787878787878787
+                                                                         ∆Φ(f ) = Φ̄(f ) − Φ(f ). The phase difference between the,73.0,0.34615384615384615,0.6538461538461539,13.0,1.0,0.44242424242424244,0.21212121212121215
+"                                                                         reference waveform h̄, and waveforms drawn from the",73.0,0.3548387096774194,0.6451612903225806,8.0,1.0,0.44242424242424244,0.24848484848484853
+"                                                                         posterior distribution h will always be small, so using a",73.0,0.36923076923076925,0.6307692307692307,10.0,1.0,0.44242424242424244,0.21212121212121215
+                                                                         reference waveform effectively heterodynes the numera-,73.0,0.3858267716535433,0.6141732283464567,6.0,1.0,0.44242424242424244,0.23030303030303034
+"                                                                         tor of equation (30), rending it a slowly varying function",73.0,0.37404580152671757,0.6259541984732824,10.0,1.0,0.44242424242424244,0.20606060606060606
+                                                                         of frequency. The (r̄a |∆ha ) in the likelihood can be writ-,73.0,0.3684210526315789,0.631578947368421,12.0,1.0,0.44242424242424244,0.19393939393939397
+                                                                         ten as,73.0,0.06329113924050633,0.9367088607594937,2.0,1.0,0.44242424242424244,0.5212121212121212
+                                                                                                Z,96.0,0.010309278350515464,0.9896907216494846,1.0,1.0,0.5818181818181818,0.4121212121212121
+"FIG. 8: Low latency sky map for GW170817. The blue star                         (r̄a |∆ha ) = 4 (<r̄w <∆hw + =r̄w =∆hw )df ,           (31)",0.0,0.5899280575539568,0.41007194244604317,24.0,18.0,0.0,0.1575757575757576
+indicates the location of the electromagnetic counterpart to,0.0,0.8833333333333333,0.1166666666666667,8.0,1.0,0.0,0.6363636363636364
+the BNS merger.                                                          where,0.0,0.23076923076923078,0.7692307692307692,4.0,30.0,0.0,0.5272727272727273
+                                                                                                                     1/2,117.0,0.025,0.975,1.0,1.0,0.7090909090909091,0.2727272727272727
+   A PTMCMC algorithm is used to explore the extrinsic                                                 r̄ e−iΦ̄(f ) Ss (f ),3.0,0.4715447154471545,0.5284552845528455,15.0,25.0,0.01818181818181818,0.2545454545454545
+parameters. The initial “burn-in” phase can be acceler-                                         r̄w =                                  (32),0.0,0.4028776978417266,0.5971223021582734,11.0,38.0,0.0,0.1575757575757576
+                                                                                                               S(f ),111.0,0.034482758620689655,0.9655172413793104,2.0,1.0,0.6727272727272727,0.296969696969697
+ated by randomly trying out sky locations until one is,0.0,0.8333333333333334,0.16666666666666663,10.0,1.0,0.0,0.6727272727272727
+found that yields the correct time delays between the de-                is the whitened reference residual heterodyned by the,0.0,0.746031746031746,0.25396825396825395,18.0,9.0,0.0,0.23636363636363633
+tectors to within some pre-defined tolerance. However                    reference phase and,0.0,0.6956521739130435,0.30434782608695654,10.0,11.0,0.0,0.4424242424242424
+the likelihood evaluation is so fast that such acceleration,0.0,0.864406779661017,0.13559322033898302,9.0,1.0,0.0,0.6424242424242423
+                                                                                                     Ā(f ) − A(f )e−i∆Φ(f ),101.0,0.14516129032258066,0.8548387096774194,6.0,1.0,0.6121212121212121,0.24848484848484853
+                                                                                                                             ,125.0,0.007936507936507936,0.9920634920634921,1.0,1.0,0.7575757575757576,0.23636363636363633
+"is not necessary, and the chains can simply be initialized",0.0,0.8448275862068966,0.15517241379310343,10.0,1.0,0.0,0.6484848484848484
+                                                                                           ∆hw =                                       (33),91.0,0.05755395683453238,0.9424460431654677,3.0,20.0,0.5515151515151515,0.1575757575757576
+at some random draw from the prior distribution. During                                                         1/2,0.0,0.43478260869565216,0.5652173913043479,10.0,29.0,0.0,0.303030303030303
+                                                                                                              Ss (f ),110.0,0.042735042735042736,0.9572649572649573,3.0,1.0,0.6666666666666666,0.2909090909090909
+the burn-in phase the extrinsic PTMCMC uses the same,0.0,0.8461538461538461,0.15384615384615385,9.0,1.0,0.0,0.6848484848484848
+"number of chains and the same temperature ladder as                      is the heterodyned difference in the waveforms, whitened",0.0,0.7131782945736435,0.28682170542635654,17.0,12.0,0.0,0.21818181818181814
+the intrinsic PTMCMC from the coherent search. Each                      by the smooth component of the amplitude spectral den-,0.0,0.7086614173228346,0.2913385826771654,17.0,12.0,0.0,0.23030303030303034
+chain inherits the intrinsic parameters from the search                  sity. The integrands in (30) and (31) can be written as,0.0,0.7265625,0.2734375,19.0,10.0,0.0,0.22424242424242424
+phase. A mixture of proposal distributions are employed:                 products of a slowly varying function s(f ) and a rapidly,0.0,0.7384615384615385,0.2615384615384615,19.0,9.0,0.0,0.21212121212121215
+Jumps along eigenvectors of the extrinsic Fisher matrix                  varying function r(f ). In equation (30) the numerator,0.0,0.7401574803149606,0.25984251968503935,17.0,10.0,0.0,0.23030303030303034
+avr_spaces,40.52,1.0,0.0,1.0,1.0,0.2455757575757576,0.9393939393939394
+                                                                                                                      10,118.0,0.016666666666666666,0.9833333333333333,1.0,1.0,0.7151515151515152,0.2727272727272727
+"is a slowly varying function, while the inverse of the      GW190924 021846, was chosen as it was one of the",0.0,0.7777777777777778,0.2222222222222222,20.0,4.0,0.0,0.34545454545454546
+"full power spectral density is a rapidly varying function   signals flagged for glitch removal.The second example,",0.0,0.8508771929824561,0.14912280701754388,16.0,2.0,0.0,0.3090909090909091
+"due to the spectral lines. In equation (31) the real and    GW190719 215514, was chosen as it has among the low-",0.0,0.7946428571428571,0.2053571428571429,21.0,3.0,0.0,0.32121212121212117
+"imaginary parts of ∆hw are slowly varying while the real    est signal-to-noise ratios, and thus posed more of a chal-",0.0,0.8135593220338984,0.18644067796610164,20.0,3.0,0.0,0.2848484848484848
+and imaginary parts of the heterodyned residual r̄w are     lenge for the initial search.,0.0,0.8089887640449438,0.1910112359550562,14.0,3.0,0.0,0.4606060606060606
+rapidly varying. The integrals (in practice sums over fre-     The prior ranges on the masses were set between,0.0,0.8090909090909091,0.19090909090909092,18.0,3.0,0.0,0.33333333333333337
+quency) can be evaluated accurately and rapidly using a     0.25M and 150M . The priors on the aligned spin com-,0.0,0.7946428571428571,0.2053571428571429,20.0,3.0,0.0,0.32121212121212117
+Legendre polynomial expansion. The sum over frequency       ponents were chosen to correspond to a uniform distri-,0.0,0.8157894736842105,0.1842105263157895,16.0,4.0,0.0,0.3090909090909091
+is broken up into bands of width ∆f and the discrete        bution of spin directions and magnitudes in an effort to,0.0,0.7672413793103449,0.23275862068965514,21.0,5.0,0.0,0.296969696969697
+Legendre polynomial expansions of the rapidly varying       mimic the priors used in the reference LIGO/Virgo anal-,0.0,0.8173913043478261,0.18260869565217386,16.0,4.0,0.0,0.303030303030303
+function r(f ) are computed once and stored for each fre-   yses which using the IMRPhenomPv2 precessing spin,0.0,0.8256880733944955,0.17431192660550454,18.0,2.0,0.0,0.33939393939393936
+quency band. Each frequency band covers M = Tobs ∆f         model [43]. The analyses shown here used the IMRPhe-,0.0,0.7678571428571429,0.2321428571428571,19.0,5.0,0.0,0.32121212121212117
+"frequencies, and the number of bands is K = 2fring /∆f ,    nomD phenomenological model [42], which describes the",0.0,0.8141592920353983,0.18584070796460173,19.0,3.0,0.0,0.3151515151515152
+"where fring is the ringdown frequency of the reference      dominant ` = |m| = 2 mode of a quasi-circular, spin-",0.0,0.7857142857142857,0.2142857142857143,20.0,4.0,0.0,0.32121212121212117
+waveform. The discrete values of the rapidly varying        aligned binary system. To stay within the domain of,0.0,0.7927927927927928,0.2072072072072072,17.0,5.0,0.0,0.32727272727272727
+function in each band can be expanded in a sum of dis-      validity of this model the maximum spin magnitude was,0.0,0.7787610619469026,0.22123893805309736,21.0,4.0,0.0,0.3151515151515152
+crete Legendre polynomials:                                 set to χmax = 0.85 and the maximum mass ratio was set,0.0,0.5929203539823009,0.4070796460176991,15.0,17.0,0.0,0.3151515151515152
+                                                            to m1 /m2 < 18.,60.0,0.14666666666666667,0.8533333333333333,5.0,1.0,0.36363636363636365,0.5454545454545454
+                            XM,28.0,0.06666666666666667,0.9333333333333333,1.0,1.0,0.1696969696969697,0.8181818181818181
+                      rk =      ρ` P` (k)             (34),22.0,0.2413793103448276,0.7586206896551724,6.0,10.0,0.13333333333333333,0.6484848484848484
+                            `=0,28.0,0.0967741935483871,0.9032258064516129,1.0,1.0,0.1696969696969697,0.8121212121212121
+where P` (k) are the discrete Legendre polynomials of or-,0.0,0.8421052631578947,0.1578947368421053,10.0,1.0,0.0,0.6545454545454545
+der ` [44] and the expansion coefficients are given by,0.0,0.8333333333333334,0.16666666666666663,10.0,1.0,0.0,0.6727272727272727
+                             XM,29.0,0.06451612903225806,0.935483870967742,1.0,1.0,0.17575757575757575,0.8121212121212121
+"                    ρ` = α`       P` (k)rk ,          (35)",20.0,0.29310344827586204,0.7068965517241379,7.0,9.0,0.12121212121212122,0.6484848484848484
+                             k=0,29.0,0.09375,0.90625,1.0,1.0,0.17575757575757575,0.806060606060606
+where α` is a normalization constant. The contribution,0.0,0.8703703703703703,0.12962962962962965,8.0,1.0,0.0,0.6727272727272727
+to the inner products from each frequency band are given,0.0,0.8392857142857143,0.1607142857142857,10.0,1.0,0.0,0.6606060606060606
+by,0.0,1.0,0.0,1.0,1.0,0.0,0.9878787878787879
+                  XM          X 1,18.0,0.12121212121212122,0.8787878787878788,3.0,6.0,0.10909090909090909,0.8
+"                      sk rk '      α`−1 ρ` σ` ,       (36)",22.0,0.3103448275862069,0.6896551724137931,8.0,7.0,0.13333333333333333,0.6484848484848484
+                  k=0          `=0,18.0,0.17647058823529413,0.8235294117647058,2.0,6.0,0.10909090909090909,0.793939393939394
+where σ` are the expansion coefficients for the slowly,0.0,0.8518518518518519,0.14814814814814814,9.0,1.0,0.0,0.6727272727272727
+varying function s(f ) and the sum has been restricted to,0.0,0.8245614035087719,0.17543859649122806,11.0,1.0,0.0,0.6545454545454545
+"just the first two terms in the Legendre expansion, which",0.0,0.8421052631578947,0.1578947368421053,10.0,1.0,0.0,0.6545454545454545
+"is usually sufficient when using short frequency bands,     FIG. 9: Time-frequency maps of LIGO Livingston data cen-",0.0,0.8275862068965517,0.1724137931034483,17.0,3.0,0.0,0.296969696969697
+∆f ≤ 4 Hz. For the slowly varying function s(f ) the        tered at GPS time 1253326744. The black line indicates the,0.0,0.7627118644067796,0.23728813559322037,22.0,5.0,0.0,0.2848484848484848
+required expansion coefficients in the k < K frequency      reconstructed time-frequency track for GW190924 021846.,0.0,0.8347826086956521,0.16521739130434787,15.0,4.0,0.0,0.303030303030303
+"band are given by σ0 = (s((k + 1)∆f ) + s(k∆f ))/2 and      The upper panel shows the raw whitened data, while the lower",0.0,0.7583333333333333,0.2416666666666667,25.0,4.0,0.0,0.2727272727272727
+σ1 = (s((k + 1)∆f ) − s(k∆f ))/2. The sum (36) includes     panel shows the whitened data after wavelet de-noising.,0.0,0.7913043478260869,0.20869565217391306,21.0,3.0,0.0,0.303030303030303
+"the first and last bins in each frequency band, so there is",0.0,0.8135593220338984,0.18644067796610164,12.0,1.0,0.0,0.6424242424242423
+"a double counting of the contributions from these bins,        Figure 9 illustrates the output of the search phase and",0.0,0.788135593220339,0.211864406779661,19.0,5.0,0.0,0.2848484848484848
+which can be corrected for by subtracting the sum over      glitch removal for GW190924 021846. A moderately loud,0.0,0.8053097345132744,0.19469026548672563,18.0,4.0,0.0,0.3151515151515152
+the K − 2 repeated values values. The heterodyning pro-     glitch that intersects the time-frequency track of the sig-,0.0,0.8151260504201681,0.18487394957983194,19.0,3.0,0.0,0.2787878787878788
+cedure speeds up the likelihood calculations by a factor    nal was identified and removed from the data.,0.0,0.819047619047619,0.18095238095238098,17.0,3.0,0.0,0.36363636363636365
+"of ∼ M , with the largest speed up being for low mass,         Figure 10 compares the output of the full QuickCBC",0.0,0.7433628318584071,0.2566371681415929,22.0,5.0,0.0,0.3151515151515152
+long duration signals such as those from binary neutron     analysis using the internally de-noised with the pub-,0.0,0.8230088495575221,0.17699115044247793,17.0,3.0,0.0,0.3151515151515152
+star mergers.                                               licly released LALinference samples available from the,0.0,0.5263157894736842,0.4736842105263158,9.0,24.0,0.0,0.3090909090909091
+                                                            GWOSC website. The LALinference used a BayesWave,60.0,0.3888888888888889,0.6111111111111112,7.0,1.0,0.36363636363636365,0.34545454545454546
+                                                            PSD and glitch model. The results show good agree-,60.0,0.38181818181818183,0.6181818181818182,9.0,1.0,0.36363636363636365,0.33333333333333337
+"              G.   Examples from GWTC-2                     ment, the main difference being that the QuickCBC anal-",14.0,0.5826086956521739,0.4173913043478261,13.0,12.0,0.08484848484848485,0.303030303030303
+                                                            ysis took a few minutes while the LALinference analysis,60.0,0.40869565217391307,0.5913043478260869,9.0,1.0,0.36363636363636365,0.303030303030303
+"   To illustrate the performance of the sampler, two ex-    took a few days.",3.0,0.7631578947368421,0.23684210526315785,13.0,3.0,0.01818181818181818,0.5393939393939393
+amples were chosen from the second Gravitational Wave          Figure 11 compares the QuickCBC and LALinference,0.0,0.7927927927927928,0.2072072072072072,15.0,6.0,0.0,0.32727272727272727
+"Transient Catalog, GWTC-2 [3]. The first example,           analyses for the low signal-to-noise ratio event",0.0,0.7870370370370371,0.2129629629629629,14.0,6.0,0.0,0.34545454545454546
+avr_spaces,10.333333333333334,1.0,0.0,1.0,1.0,0.06262626262626263,0.9393939393939394
+                                                                                                                 11,113.0,0.017391304347826087,0.9826086956521739,1.0,1.0,0.6848484848484848,0.303030303030303
+                                                         iterations. The posterior distributions from the two,57.0,0.42201834862385323,0.5779816513761468,7.0,1.0,0.34545454545454546,0.33939393939393936
+                                                         samplers are again in good agreement.,57.0,0.3404255319148936,0.6595744680851063,6.0,1.0,0.34545454545454546,0.4303030303030303
+                                                                             III.  SUMMARY,77.0,0.12222222222222222,0.8777777777777778,2.0,2.0,0.4666666666666667,0.4545454545454546
+"                                                            The QuickCBC analysis pipeline is an end-to-end, open-",60.0,0.41228070175438597,0.5877192982456141,8.0,1.0,0.36363636363636365,0.3090909090909091
+                                                         source tool for gravitational wave data analysis. Its key,57.0,0.4298245614035088,0.5701754385964912,9.0,1.0,0.34545454545454546,0.3090909090909091
+                                                         features are speed and robustness against noise tran-,57.0,0.41818181818181815,0.5818181818181818,8.0,1.0,0.34545454545454546,0.33333333333333337
+                                                         sients. The main limitation of the pipeline is that it,57.0,0.40540540540540543,0.5945945945945945,10.0,1.0,0.34545454545454546,0.32727272727272727
+                                                         currently only works with the IMRPhenomD waveform,57.0,0.4056603773584906,0.5943396226415094,7.0,1.0,0.34545454545454546,0.35757575757575755
+                                                         model. A near-term development goal is to expand,57.0,0.3904761904761905,0.6095238095238096,8.0,1.0,0.34545454545454546,0.36363636363636365
+"                                                         the range of waveform models, starting with the IM-",57.0,0.39814814814814814,0.6018518518518519,9.0,1.0,0.34545454545454546,0.34545454545454546
+"                                                         RPhenomHM model [45], which includes contributions",57.0,0.4205607476635514,0.5794392523364487,6.0,1.0,0.34545454545454546,0.35151515151515156
+"                                                         from higher modes, and the IMRPhenomD NRTidal",57.0,0.38235294117647056,0.6176470588235294,7.0,1.0,0.34545454545454546,0.38181818181818183
+                                                         model [46] which includes tidal effects for binanry neu-,57.0,0.4247787610619469,0.5752212389380531,9.0,1.0,0.34545454545454546,0.3151515151515152
+                                                         tron star mergers. A longer term goal is to add precessing,57.0,0.41739130434782606,0.5826086956521739,11.0,1.0,0.34545454545454546,0.303030303030303
+                                                         spin models.,57.0,0.15942028985507245,0.8405797101449275,2.0,1.0,0.34545454545454546,0.5818181818181818
+                                                            Possible uses for the QuickCBC pipeline for researchers,60.0,0.41739130434782606,0.5826086956521739,8.0,1.0,0.36363636363636365,0.303030303030303
+                                                         outside the LIGO/Virgo collaboration are as a platform,57.0,0.42342342342342343,0.5765765765765766,8.0,1.0,0.34545454545454546,0.32727272727272727
+                                                         to develop novel analyses that can be applied to the pub-,57.0,0.41228070175438597,0.5877192982456141,11.0,1.0,0.34545454545454546,0.3090909090909091
+FIG. 10:      A comparison of parameter inference for    licly released data. Within the LIGO/Virgo collabora-,0.0,0.8,0.19999999999999996,15.0,6.0,0.0,0.33333333333333337
+GW190924 021846 showing the preferred LALinference IM-   tion the pipeline could be used to generate low latency,0.0,0.8392857142857143,0.1607142857142857,17.0,2.0,0.0,0.32121212121212117
+"RPhenomPv2 samples and the QuickCBC IMRPhenomD sam-      sky maps, and to provide estimates for how likely it is",0.0,0.8035714285714286,0.1964285714285714,18.0,4.0,0.0,0.32121212121212117
+ples.                                                    that the system will result in the disruption of a neu-,0.0,0.44642857142857145,0.5535714285714286,12.0,27.0,0.0,0.32121212121212117
+"                                                         tron star, and thus a good candidate for producing an",57.0,0.4,0.6,10.0,1.0,0.34545454545454546,0.33333333333333337
+                                                         electromagnetic counterpart.,57.0,0.3176470588235294,0.6823529411764706,2.0,1.0,0.34545454545454546,0.48484848484848486
+                                                                             Acknowledgments,77.0,0.16304347826086957,0.8369565217391304,1.0,1.0,0.4666666666666667,0.4424242424242424
+                                                            The author is grateful for the support provided by,60.0,0.38181818181818183,0.6181818181818182,9.0,1.0,0.36363636363636365,0.33333333333333337
+                                                         NSF award PHY1912053. This work was initiated while,57.0,0.4074074074074074,0.5925925925925926,8.0,1.0,0.34545454545454546,0.34545454545454546
+                                                         the author was on sabbatical at the Observatoire de la,57.0,0.40540540540540543,0.5945945945945945,10.0,1.0,0.34545454545454546,0.32727272727272727
+"                                                         Côte d’Azur, kindly hosted by Nelson Christensen. Dis-",57.0,0.42857142857142855,0.5714285714285714,8.0,1.0,0.34545454545454546,0.32121212121212117
+"                                                         cussions with Tyson Littenberg, Katerina Chatziioannou",57.0,0.44144144144144143,0.5585585585585586,6.0,1.0,0.34545454545454546,0.32727272727272727
+                                                         and Marcella Wijngaarden were very helpful. The author,57.0,0.42342342342342343,0.5765765765765766,8.0,1.0,0.34545454545454546,0.32727272727272727
+                                                         greatly appreciates Marcella Wijngaarden’s help in track-,57.0,0.4473684210526316,0.5526315789473684,7.0,1.0,0.34545454545454546,0.3090909090909091
+"                                                         ing down an error in the sky localization algorithm, Char-",57.0,0.4260869565217391,0.5739130434782609,10.0,1.0,0.34545454545454546,0.303030303030303
+                                                         lie Hoy’s help in extracting the LALinference samples,57.0,0.41818181818181815,0.5818181818181818,8.0,1.0,0.34545454545454546,0.33333333333333337
+                                                         and Bence Bécsy’s for writing the scripts for automating,57.0,0.4298245614035088,0.5701754385964912,9.0,1.0,0.34545454545454546,0.3090909090909091
+                                                         the running of the pipeline in response to triggers from,57.0,0.415929203539823,0.584070796460177,10.0,1.0,0.34545454545454546,0.3151515151515152
+                                                         the Gravitational-Wave Candidate Event Database. The,57.0,0.43119266055045874,0.5688073394495412,6.0,1.0,0.34545454545454546,0.33939393939393936
+                                                         author appreciates feedback on a draft version from Will,57.0,0.4247787610619469,0.5752212389380531,9.0,1.0,0.34545454545454546,0.3151515151515152
+                                                         Farr and Nelson Christensen. This research has made,57.0,0.4074074074074074,0.5925925925925926,8.0,1.0,0.34545454545454546,0.34545454545454546
+                                                         use of data obtained from the Gravitational Wave Open,57.0,0.4090909090909091,0.5909090909090908,9.0,1.0,0.34545454545454546,0.33333333333333337
+"                                                         Science Center (https://www.gw-openscience.org), a ser-",57.0,0.45535714285714285,0.5446428571428572,5.0,1.0,0.34545454545454546,0.32121212121212117
+"FIG. 11:      A comparison of parameter inference for    vice of LIGO Laboratory, the LIGO Scientific Collabo-",0.0,0.7909090909090909,0.2090909090909091,16.0,6.0,0.0,0.33333333333333337
+GW190719 215514 showing the preferred LALinference IM-   ration and the Virgo Collaboration. LIGO is funded by,0.0,0.8454545454545455,0.15454545454545454,16.0,2.0,0.0,0.33333333333333337
+RPhenomPv2 samples and the QuickCBC IMRPhenomD sam-      the U.S. National Science Foundation. Virgo is funded,0.0,0.8272727272727273,0.17272727272727273,15.0,4.0,0.0,0.33333333333333337
+ples.                                                    by the French Centre National de Recherche Scientifique,0.0,0.4732142857142857,0.5267857142857143,9.0,27.0,0.0,0.32121212121212117
+"GW190719 215514.        The weakness of the signal       (CNRS), the Italian Istituto Nazionale della Fisica Nu-",0.0,0.7589285714285714,0.2410714285714286,15.0,8.0,0.0,0.32121212121212117
+"posed no obstacle to the QuickCBC analysis, with the     cleare (INFN) and the Dutch Nikhef, with contributions",0.0,0.8198198198198198,0.18018018018018023,17.0,3.0,0.0,0.32727272727272727
+search phase locking onto the signal after a few hundred by Polish and Hungarian institutes.,0.0,0.8478260869565217,0.15217391304347827,15.0,1.0,0.0,0.4424242424242424
+avr_spaces,45.42,1.0,0.0,1.0,1.0,0.2752727272727273,0.9393939393939394
+                                                                                                                            12,124.0,0.015873015873015872,0.9841269841269842,1.0,1.0,0.7515151515151515,0.23636363636363633
+" [1] B. P. Abbott et al. (Virgo, LIGO Scientific), Phys. Rev.  [16] N. J. Cornish, T. B. Littenberg, B. Bécsy, K. Chatziioan-",1.0,0.8174603174603174,0.18253968253968256,22.0,2.0,0.006060606060606061,0.23636363636363633
+"     X6, 041015 (2016), 1606.04856.                                 nou, J. A. Clark, S. Ghonge, and M. Millhouse (2020),",5.0,0.5867768595041323,0.4132231404958677,14.0,17.0,0.030303030303030304,0.2666666666666667
+" [2] B. Abbott et al. (LIGO Scientific, Virgo), Phys. Rev. X        2011.09494.",1.0,0.759493670886076,0.240506329113924,12.0,5.0,0.006060606060606061,0.5212121212121212
+"     9, 031040 (2019), 1811.12907.                             [17] B. P. Abbott et al. (LIGO Scientific, Virgo), Class.",5.0,0.6166666666666667,0.3833333333333333,14.0,15.0,0.030303030303030304,0.2727272727272727
+" [3] R. Abbott et al. (LIGO Scientific, Virgo) (2020),              Quant. Grav. 37, 055002 (2020), 1908.11170.",1.0,0.7477477477477478,0.25225225225225223,15.0,8.0,0.006060606060606061,0.32727272727272727
+"     2010.14527.                                               [18] B. P. Abbott, R. Abbott, T. D. Abbott, M. R. Aber-",5.0,0.4661016949152542,0.5338983050847458,13.0,24.0,0.030303030303030304,0.2848484848484848
+" [4] C. Messick, K. Blackburn, P. Brady, P. Brockill, K. Can-       nathy, F. Acernese, K. Ackley, C. Adams, T. Adams,",1.0,0.7796610169491526,0.22033898305084743,20.0,4.0,0.006060606060606061,0.2848484848484848
+"     non, R. Cariou, S. Caudill, S. J. Chamberlin, J. D.            P. Addesso, R. X. Adhikari, et al., Classical and Quan-",5.0,0.7154471544715447,0.2845528455284553,20.0,7.0,0.030303030303030304,0.2545454545454545
+"     Creighton, R. Everett, et al., Physical Review D 95            tum Gravity 35, 065010 (2018), ISSN 1361-6382, URL",5.0,0.7288135593220338,0.27118644067796616,17.0,7.0,0.030303030303030304,0.2848484848484848
+"     (2017), ISSN 2470-0029, URL http://dx.doi.org/10.              http://dx.doi.org/10.1088/1361-6382/aaaafa.",5.0,0.7927927927927928,0.2072072072072072,6.0,8.0,0.030303030303030304,0.32727272727272727
+"     1103/PhysRevD.95.042001.                                  [19] B. Allen, Phys. Rev. D 71, 062001 (2005), gr-qc/0405045.",5.0,0.6129032258064516,0.3870967741935484,11.0,18.0,0.030303030303030304,0.24848484848484853
+" [5] S. Klimenko, G. Vedovato, M. Drago, F. Salemi, V. Ti-     [20] S. A. Usman et al., Class. Quant. Grav. 33, 215004",1.0,0.7796610169491526,0.22033898305084743,22.0,3.0,0.006060606060606061,0.2848484848484848
+"     wari, G. Prodi, C. Lazzaro, K. Ackley, S. Tiwari,              (2016), 1508.02357.",5.0,0.6781609195402298,0.32183908045977017,11.0,8.0,0.030303030303030304,0.4727272727272728
+"     C. Da Silva, et al., Physical Review D 93 (2016),         [21] N. J. Cornish and T. B. Littenberg, Class. Quant. Grav.",5.0,0.7317073170731707,0.2682926829268293,21.0,5.0,0.030303030303030304,0.2545454545454545
+"     ISSN 2470-0029, URL http://dx.doi.org/10.1103/                 32, 135012 (2015), 1410.3835.",5.0,0.711340206185567,0.28865979381443296,8.0,9.0,0.030303030303030304,0.4121212121212121
+"     PhysRevD.93.042004.                                       [22] T. B. Littenberg and N. J. Cornish, Phys. Rev. D",5.0,0.5344827586206896,0.4655172413793104,12.0,20.0,0.030303030303030304,0.296969696969697
+" [6] T. D. Canton, A. H. Nitz, B. Gadre, G. S. Davies,              91, 084034 (2015), URL https://link.aps.org/doi/",1.0,0.7413793103448276,0.2586206896551724,17.0,8.0,0.006060606060606061,0.296969696969697
+"     V. Villa-Ortega, T. Dent, I. Harry, and L. Xiao, Real-         10.1103/PhysRevD.91.084034.",5.0,0.7578947368421053,0.2421052631578947,11.0,5.0,0.030303030303030304,0.4242424242424242
+"     time search for compact binary mergers in advanced ligo   [23] B. Abbott et al. (LIGO Scientific, Virgo), Phys. Rev.",5.0,0.7933884297520661,0.20661157024793386,19.0,2.0,0.030303030303030304,0.2666666666666667
+"     and virgo’s third observing run using pycbc live (2020),       Lett. 119, 161101 (2017), 1710.05832.",5.0,0.7714285714285715,0.22857142857142854,14.0,4.0,0.030303030303030304,0.36363636363636365
+"     2008.07494.                                               [24] C. Pankow et al., Phys. Rev. D 98, 084016 (2018),",5.0,0.4700854700854701,0.5299145299145299,12.0,24.0,0.030303030303030304,0.2909090909090909
+" [7] T. Adams, D. Buskulic, V. Germain, G. M. Guidi,                1808.03619.",1.0,0.6708860759493671,0.3291139240506329,11.0,9.0,0.006060606060606061,0.5212121212121212
+"     F. Marion, M. Montani, B. Mours, F. Piergiovanni, and     [25] L. P. Singer and L. R. Price, Phys. Rev. D 93, 024013",5.0,0.7520661157024794,0.2479338842975206,22.0,3.0,0.030303030303030304,0.2666666666666667
+"     G. Wang, Classical and Quantum Gravity 33, 175012              (2016), 1508.03634.",5.0,0.6896551724137931,0.31034482758620685,10.0,8.0,0.030303030303030304,0.4727272727272728
+"     (2016), ISSN 1361-6382, URL http://dx.doi.org/10.         [26] C. Pankow, P. Brady, E. Ochsner, and R. O’Shaughnessy,",5.0,0.7786885245901639,0.2213114754098361,15.0,5.0,0.030303030303030304,0.2606060606060606
+"     1088/0264-9381/33/17/175012.                                   Phys. Rev. D 92, 023002 (2015), 1502.04370.",5.0,0.5855855855855856,0.4144144144144144,8.0,18.0,0.030303030303030304,0.32727272727272727
+" [8] Q. Chu, Ph.D. thesis, The University of Western Aus-      [27] D. George and E. Huerta, Phys. Lett. B 778, 64 (2018),",1.0,0.7786885245901639,0.2213114754098361,22.0,4.0,0.006060606060606061,0.2606060606060606
+     tralia (2017).                                                 1711.03121.,5.0,0.3037974683544304,0.6962025316455696,3.0,25.0,0.030303030303030304,0.5212121212121212
+" [9] J. Veitch, V. Raymond, B. Farr, W. Farr, P. Graff, S. Vi- [28] D. Wysocki, R. O’Shaughnessy, J. Lange, and Y.-L. L.",1.0,0.8083333333333333,0.19166666666666665,23.0,1.0,0.006060606060606061,0.2727272727272727
+"     tale, B. Aylott, K. Blackburn, N. Christensen, M. Cough-       Fang, Phys. Rev. D 99, 084026 (2019), 1902.04934.",5.0,0.7692307692307693,0.23076923076923073,17.0,4.0,0.030303030303030304,0.2909090909090909
+"     lin, et al., Physical Review D 91 (2015), ISSN 1550-      [29] R. J. Smith, G. Ashton, A. Vajpeyi, and C. Talbot, Mon.",5.0,0.7479674796747967,0.2520325203252033,22.0,4.0,0.030303030303030304,0.2545454545454545
+"     2368, URL http://dx.doi.org/10.1103/PhysRevD.91.               Not. Roy. Astron. Soc. 498, 4492 (2020), 1909.11873.",5.0,0.7583333333333333,0.2416666666666667,11.0,8.0,0.030303030303030304,0.2727272727272727
+"     042003.                                                   [30] A. Delaunoy, A. Wehenkel, T. Hinderer, S. Nissanke,",5.0,0.46218487394957986,0.5378151260504201,10.0,26.0,0.030303030303030304,0.2787878787878788
+"[10] G. Ashton, M. Hübner, P. D. Lasky, C. Talbot, K. Ack-         C. Weniger, A. R. Williamson, and G. Louppe (2020),",0.0,0.7647058823529411,0.23529411764705888,21.0,5.0,0.0,0.2787878787878788
+"     ley, S. Biscoveanu, Q. Chu, A. Divakarla, P. J. Easter,        2010.12931.",5.0,0.7215189873417721,0.2784810126582279,11.0,5.0,0.030303030303030304,0.5212121212121212
+"     B. Goncharov, et al., The Astrophysical Journal Sup-      [31] C. Torrence and G. P. Compo, Bulletin of the American",5.0,0.768595041322314,0.23140495867768596,19.0,4.0,0.030303030303030304,0.2666666666666667
+"     plement Series 241, 27 (2019), ISSN 1538-4365, URL             Meteorological Society 79, 61 (1998).",5.0,0.7238095238095238,0.2761904761904762,13.0,7.0,0.030303030303030304,0.36363636363636365
+"     http://dx.doi.org/10.3847/1538-4365/ab06fc.               [32] N. J. Cornish (2010), 1007.4820.",5.0,0.75,0.25,7.0,8.0,0.030303030303030304,0.3939393939393939
+"[11] A. D. Viets, M. Wade, A. L. Urban, S. Kand-               [33] N. J. Cornish and K. Shuman, Phys. Rev. D 101, 124008",0.0,0.7024793388429752,0.2975206611570248,23.0,8.0,0.0,0.2666666666666667
+"     hasamy, J. Betzwieser, D. A. Brown, J. Burguet-Castell,        (2020), 2005.03610.",5.0,0.7586206896551724,0.24137931034482762,10.0,5.0,0.030303030303030304,0.4727272727272728
+"     C. Cahillane, E. Goetz, K. Izumi, et al., Classical and   [34] K. Chatziioannou, N. J. Cornish, M. Wijngaarden, and",5.0,0.7916666666666666,0.20833333333333337,19.0,2.0,0.030303030303030304,0.2727272727272727
+"     Quantum Gravity 35, 095015 (2018), ISSN 1361-6382,             T. B. Littenberg (2020), unpublished Manuscript.",5.0,0.75,0.25,13.0,7.0,0.030303030303030304,0.296969696969697
+"     URL http://dx.doi.org/10.1088/1361-6382/aab658.           [35] K. Chatziioannou, N. Cornish, M. Wijngaarden, and",5.0,0.7948717948717948,0.20512820512820518,10.0,6.0,0.030303030303030304,0.2909090909090909
+"[12] V. Collaboration, F. Acernese, T. Adams, K. Agatsuma,          T. B. Littenberg (2021), 2101.01200.",0.0,0.7884615384615384,0.21153846153846156,14.0,6.0,0.0,0.36969696969696975
+"     L. Aiello, A. Allocca, M. A. Aloy, A. Amato, S. Antier,   [36] R. H. Swendsen and J.-S. Wang, Phys. Rev. Lett.",5.0,0.7652173913043478,0.23478260869565215,21.0,2.0,0.030303030303030304,0.303030303030303
+"     M. Arène, et al., Calibration of advanced virgo and re-       57, 2607 (1986), URL https://link.aps.org/doi/10.",5.0,0.7863247863247863,0.2136752136752137,15.0,4.0,0.030303030303030304,0.2909090909090909
+     construction of the gravitational wave signal h(t) during      1103/PhysRevLett.57.2607.,5.0,0.8064516129032258,0.19354838709677424,9.0,4.0,0.030303030303030304,0.4363636363636364
+"     the observing run o2 (2018), 1807.03275.                  [37] N. J. Cornish (2016), 1606.00953.",5.0,0.6732673267326733,0.3267326732673267,12.0,10.0,0.030303030303030304,0.38787878787878793
+"[13] J. Driggers, S. Vitale, A. Lundgren, M. Evans,            [38] T. B. Littenberg and N. J. Cornish, Physical Review D",0.0,0.7520661157024794,0.2479338842975206,20.0,7.0,0.0,0.2666666666666667
+"     K. Kawabe, S. Dwyer, K. Izumi, R. Schofield, A. Effler,        80 (2009), ISSN 1550-2368, URL http://dx.doi.org/",5.0,0.7692307692307693,0.23076923076923073,16.0,5.0,0.030303030303030304,0.2909090909090909
+"     D. Sigg, et al., Physical Review D 99 (2019), ISSN 2470-       10.1103/PhysRevD.80.063007.",5.0,0.7684210526315789,0.2315789473684211,12.0,4.0,0.030303030303030304,0.4242424242424242
+"     0029, URL http://dx.doi.org/10.1103/PhysRevD.99.          [39] W. D. Vousden, W. M. Farr, and I. Mandel, Monthly No-",5.0,0.768595041322314,0.23140495867768596,15.0,6.0,0.030303030303030304,0.2666666666666667
+"     042001.                                                        tices of the Royal Astronomical Society 455, 1919–1937",5.0,0.4426229508196721,0.5573770491803278,9.0,29.0,0.030303030303030304,0.2606060606060606
+"[14] D. Davis, T. Massinger, A. Lundgren, J. C. Driggers,           (2015), ISSN 1365-2966, URL http://dx.doi.org/10.",0.0,0.7948717948717948,0.20512820512820518,15.0,6.0,0.0,0.2909090909090909
+"     A. L. Urban, and L. Nuttall, Classical and Quantum             1093/mnras/stv2422.",5.0,0.7011494252873564,0.29885057471264365,10.0,7.0,0.030303030303030304,0.4727272727272728
+"     Gravity 36, 055011 (2019), ISSN 1361-6382, URL http:      [40] C. J. Ter Braak, Statistics and Computing 16, 239",5.0,0.7692307692307693,0.23076923076923073,18.0,4.0,0.030303030303030304,0.2909090909090909
+     //dx.doi.org/10.1088/1361-6382/ab01c5.                         (2006).,5.0,0.6,0.4,2.0,13.0,0.030303030303030304,0.5454545454545454
+"[15] G. Vajente, Y. Huang, M. Isi, J. Driggers, J. Kissel,     [41] S. Husa, S. Khan, M. Hannam, M. Pürrer, F. Ohme,",0.0,0.7863247863247863,0.2136752136752137,22.0,3.0,0.0,0.2909090909090909
+"     M. Szczepańczyk, and S. Vitale, Physical Review D 101         X. Jiménez Forteza, and A. Bohé, Phys. Rev. D 93,",5.0,0.7394957983193278,0.26050420168067223,19.0,5.0,0.030303030303030304,0.2787878787878788
+"     (2020), ISSN 2470-0029, URL http://dx.doi.org/10.              044006 (2016), 1508.07250.",5.0,0.7340425531914894,0.26595744680851063,8.0,8.0,0.030303030303030304,0.4303030303030303
+"     1103/PhysRevD.101.042003.                                 [42] S. Khan, S. Husa, M. Hannam, F. Ohme, M. Pürrer,",5.0,0.5897435897435898,0.41025641025641024,12.0,17.0,0.030303030303030304,0.2909090909090909
+avr_spaces,5.761904761904762,1.0,0.0,1.0,1.0,0.03492063492063492,0.9393939393939394
+                                                                                                                        13,120.0,0.01639344262295082,0.9836065573770492,1.0,1.0,0.7272727272727273,0.2606060606060606
+"     X. Jiménez Forteza, and A. Bohé, Phys. Rev. D 93,       [45] L. London, S. Khan, E. Fauchon-Jones, C. Garcı́a,",5.0,0.7521367521367521,0.24786324786324787,19.0,4.0,0.030303030303030304,0.2909090909090909
+"     044007 (2016), 1508.07253.                                     M. Hannam, S. Husa, X. Jiménez-Forteza, C. Kalaghatgi,",5.0,0.5853658536585366,0.41463414634146345,11.0,19.0,0.030303030303030304,0.2545454545454545
+"[43] M. Hannam, P. Schmidt, A. Bohé, L. Haegel, S. Husa,           F. Ohme, and F. Pannarale, Phys. Rev. Lett. 120,",0.0,0.75,0.25,20.0,6.0,0.0,0.296969696969697
+"     F. Ohme, G. Pratten, and M. Pürrer, Physical Review           161102 (2018), URL https://link.aps.org/doi/10.",5.0,0.7652173913043478,0.23478260869565215,13.0,6.0,0.030303030303030304,0.303030303030303
+"     Letters 113 (2014), ISSN 1079-7114, URL http://dx.             1103/PhysRevLett.120.161102.",5.0,0.75,0.25,8.0,7.0,0.030303030303030304,0.4181818181818182
+"     doi.org/10.1103/PhysRevLett.113.151101.                   [46] T. Dietrich, S. Khan, R. Dudi, S. J. Kapadia, P. Ku-",5.0,0.7083333333333334,0.29166666666666663,13.0,10.0,0.030303030303030304,0.2727272727272727
+"[44] C. P. Neuman and D. I. Schonbach, International Jour-          mar, A. Nagar, F. Ohme, F. Pannarale, A. Samaj-",0.0,0.7652173913043478,0.23478260869565215,19.0,6.0,0.0,0.303030303030303
+"     nal for Numerical Methods in Engineering 8, 743 (1974),        dar, S. Bernuzzi, et al., Physical Review D 99 (2019),",5.0,0.7540983606557377,0.24590163934426235,19.0,5.0,0.030303030303030304,0.2606060606060606
+"     https://onlinelibrary.wiley.com/doi/pdf/10.1002/nme.1620080406,ISSN 2470-0029, URL http://dx.doi.org/10.1103/",5.0,0.9298245614035088,0.07017543859649122,4.0,1.0,0.030303030303030304,0.3090909090909091
+     URL https://onlinelibrary.wiley.com/doi/abs/10.                PhysRevD.99.024029.,5.0,0.7471264367816092,0.25287356321839083,3.0,9.0,0.030303030303030304,0.4727272727272728
+     1002/nme.1620080406.,5.0,0.8,0.19999999999999996,1.0,1.0,0.030303030303030304,0.8484848484848485
+avr_spaces,12.692307692307692,1.0,0.0,1.0,1.0,0.07692307692307691,0.9393939393939394
