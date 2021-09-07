@@ -57,3 +57,19 @@ def build_vocabulary(tokenized_texts, max_size=1000000, max_doc_freq=0.8, min_co
 
     return word2id, word2freq
 
+
+def vectorize(line, w2v_indices, w2v_vectors):
+    words = []
+    for word in line:  # line - iterable, for example list of tokens
+        try:
+            w2v_idx = w2v_indices[word]
+        except KeyError:  # if you does not have a vector for this word in your w2v model, continue
+            continue
+        words.append(w2v_vectors[w2v_idx])
+        if words:
+            words = np.asarray(words)
+            min_vec = words.min(axis=0)
+            max_vec = words.max(axis=0)
+            return np.concatenate((min_vec, max_vec))
+        if not words:
+            return None
