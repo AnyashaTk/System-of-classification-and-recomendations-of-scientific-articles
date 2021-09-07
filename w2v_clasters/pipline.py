@@ -1,5 +1,6 @@
 import pandas as pd
 import gensim
+import os
 from matplotlib import pyplot
 from numpy import unique, where
 from sklearn.cluster import DBSCAN, Birch
@@ -8,13 +9,20 @@ from sklearn.datasets import make_classification
 from utils import *
 from constants import *
 
-full_dataset = list(pd.read_csv(path)['0'].dropna())
+files_names = [file for file in os.listdir(path) if file.endswith(".csv")]
+texts_all = [pd.read_csv(path + file)['0'].dropna() for file in files_names]
+all_tokenized = [(tokenize_corpus(text)) for text in texts_all]
+texts_like_one = []
+for token_text in all_tokenized:
+    for str in token_text:
+        texts_like_one.append(str)
 
-train_tokenized = tokenize_corpus(full_dataset)
 
-# print(train_tokenized[:5])
 
-model = gensim.models.Word2Vec(sentences=train_tokenized, size=100, window=5,
+one_text = list(pd.read_csv(path_t)['0'].dropna())
+one_text_tokenized = tokenize_corpus(one_text)
+
+model = gensim.models.Word2Vec(sentences=texts_like_one, size=EMB_SIZE, window=5,
                                min_count=1, workers=4,
                                iter=10)  # an empty model, no training yet
 
@@ -22,23 +30,6 @@ model = gensim.models.Word2Vec(sentences=train_tokenized, size=100, window=5,
 
 w2v_vectors = model.wv.vectors  # here you load vectors for each word in your model
 w2v_indices = {word: model.wv.vocab[word].index for word in model.wv.vocab}
-'''
-sett = (vectorize(x, w2v_indices, w2v_vectors) for x in train_tokenized)
-print(sett)
-
-model1 = Birch(threshold=0.01, n_clusters=2)
-# fit the model
-yhat = model1.fit(model.wv.vectors)
-# assign a cluster to eac
-clusters = unique(yhat)
-# create scatter plot for samples from each cluster
-for cluster in clusters:
-    # get row indexes for samples with this cluster
-    row_ix = where(yhat == cluster)
-    # create scatter of these samples
-    print(row_ix)
-# show the plot
-pyplot.show()'''
 
 
 def featureVecMethod(words, model, num_features):
@@ -51,15 +42,16 @@ def featureVecMethod(words, model, num_features):
     for word in words:
         if word in index2word_set:
             nwords = nwords + 1
-            v = model[word]
-            # print(v)
+            v = model.wv[word]
+            #print(v)
             if np.isnan(v).any():
                 print(word, v)
-            featureVec = featureVec + model[word]
+            featureVec = featureVec + model.wv[word]
         else:
             not_in_model.append(word)
-    # Here we can see if some of the words are not in the model, if so, we cannot use them for the clustering
-    print(not_in_model)
+    if not_in_model:
+        # Here we can see if some of the words are not in the model, if so, we cannot use them for the clustering
+        print('not_in_model', not_in_model)
     # Dividing the result by number of words to get average
     if nwords != 0:
         featureVec = featureVec / nwords
@@ -81,7 +73,7 @@ def getAvgFeatureVecs(tweets, model, num_features):
 
 
 # Calculate the vector matrix
-X = getAvgFeatureVecs(train_tokenized, model, 100)
+X = getAvgFeatureVecs(one_text_tokenized, model, EMB_SIZE)
 
 from sklearn.cluster import KMeans
 
@@ -92,7 +84,7 @@ labels = list(kmeans)
 
 # make a dictionary with tweets and labels
 values = labels
-keys = full_dataset
+keys = one_text
 KMeans_clusters = dict(zip(keys, values))
 
 import csv
@@ -103,7 +95,7 @@ dictionary = KMeans_clusters
 row1 = "text"
 row2 = "cluster"
 
-
+# here will be a cycle
 def writeCsv(file_name, row1, row2, dictionary):
     with open(file_name, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -113,3 +105,4 @@ def writeCsv(file_name, row1, row2, dictionary):
 
 
 writeCsv(file_name, row1, row2, dictionary)
+
